@@ -1,0 +1,11 @@
+D:\Hygieia-master\Hygieia-master\collectors\scm\gitlab\src\main\java\com\capitalone\dashboard\gitlab\GitlabGitClient.java
+D:\Hygieia-master\Hygieia-master\collectors\scm\gitlab\src\main\java\com\capitalone\dashboard\gitlab\GitlabCommitsResponseMapper.java
+D:\Hygieia-master\Hygieia-master\collectors\scm\gitlab\src\main\java\com\capitalone\dashboard\collector\GitlabGitCollectorTask.java
+D:\Hygieia-master\Hygieia-master\collectors\scm\gitlab\src\main\java\com\capitalone\dashboard\collector\RestOperationsSupplier.java
+D:\Hygieia-master\Hygieia-master\collectors\scm\gitlab\src\main\java\com\capitalone\dashboard\Application.java
+D:\Hygieia-master\Hygieia-master\collectors\scm\gitlab\src\main\java\com\capitalone\dashboard\model\GitlabGitRepo.java
+D:\Hygieia-master\Hygieia-master\collectors\scm\gitlab\src\main\java\com\capitalone\dashboard\repository\GitlabGitCollectorRepository.java
+D:\Hygieia-master\Hygieia-master\collectors\scm\gitlab\src\main\java\com\capitalone\dashboard\collector\GitlabSettings.java
+D:\Hygieia-master\Hygieia-master\collectors\scm\gitlab\src\main\java\com\capitalone\dashboard\gitlab\GitlabUrlUtility.java
+D:\Hygieia-master\Hygieia-master\collectors\scm\gitlab\src\main\java\com\capitalone\dashboard\gitlab\DefaultGitlabGitClient.java
+D:\Hygieia-master\Hygieia-master\collectors\scm\gitlab\src\main\java\com\capitalone\dashboard\gitlab\model\GitlabCommit.java

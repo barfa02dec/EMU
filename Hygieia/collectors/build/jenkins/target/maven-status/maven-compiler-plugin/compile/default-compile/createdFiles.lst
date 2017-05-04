@@ -1,0 +1,10 @@
+com\capitalone\dashboard\repository\HudsonCollectorRepository.class
+com\capitalone\dashboard\collector\HudsonClient.class
+com\capitalone\dashboard\collector\HudsonCollectorTask.class
+com\capitalone\dashboard\model\HudsonCollector.class
+com\capitalone\dashboard\model\HudsonJob.class
+com\capitalone\dashboard\repository\HudsonJobRepository.class
+com\capitalone\dashboard\collector\DefaultHudsonClient.class
+com\capitalone\dashboard\collector\RestOperationsSupplier.class
+com\capitalone\dashboard\Application.class
+com\capitalone\dashboard\collector\HudsonSettings.class

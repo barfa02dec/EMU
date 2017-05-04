@@ -1,0 +1,12 @@
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\model\FeatureCollector.java
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\repository\FeatureCollectorRepository.java
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\collector\FeatureCollectorTask.java
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\collector\StoryDataClient.java
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\datafactory\versionone\VersionOneDataFactory.java
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\Application.java
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\collector\ProjectDataClient.java
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\datafactory\versionone\VersionOneDataFactoryImpl.java
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\collector\TeamDataClient.java
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\util\DateUtil.java
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\collector\BaseClient.java
+D:\Hygieia-master\Hygieia-master\collectors\feature\versionone\src\main\java\com\capitalone\dashboard\collector\FeatureSettings.java

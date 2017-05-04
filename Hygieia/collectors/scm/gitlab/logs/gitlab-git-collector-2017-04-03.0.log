@@ -1,0 +1,38 @@
+2017-04-03 12:41:02,830 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:02,861 INFO  c.c.d.collector.CollectorTask - Starting...
+2017-04-03 12:41:02,861 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:02,872 INFO  c.c.d.c.GitlabGitCollectorTask - Failed to retrieve data, the repo or collector is most likey misconfigured: null, 400 BAD_REQUEST
+2017-04-03 12:41:02,909 INFO  c.c.d.collector.CollectorTask - Repo Count              1        0s
+2017-04-03 12:41:02,910 INFO  c.c.d.collector.CollectorTask - New Commits             0        0s
+2017-04-03 12:41:02,911 INFO  c.c.d.collector.CollectorTask - Finished                         0s
+2017-04-03 12:41:02,963 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:02,964 INFO  c.c.d.collector.CollectorTask - Starting...
+2017-04-03 12:41:02,964 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:02,965 INFO  c.c.d.collector.CollectorTask - Repo Count              1        0s
+2017-04-03 12:41:02,966 INFO  c.c.d.collector.CollectorTask - New Commits             0        0s
+2017-04-03 12:41:02,966 INFO  c.c.d.collector.CollectorTask - Finished                         0s
+2017-04-03 12:41:02,977 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:02,977 INFO  c.c.d.collector.CollectorTask - Starting...
+2017-04-03 12:41:02,978 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:02,981 INFO  c.c.d.collector.CollectorTask - Repo Count              1        0s
+2017-04-03 12:41:02,981 INFO  c.c.d.collector.CollectorTask - New Commits             1        0s
+2017-04-03 12:41:02,982 INFO  c.c.d.collector.CollectorTask - Finished                         0s
+2017-04-03 12:41:03,007 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:03,008 INFO  c.c.d.collector.CollectorTask - Starting...
+2017-04-03 12:41:03,008 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:03,010 INFO  c.c.d.c.GitlabGitCollectorTask - Failed to retrieve data, the repo or collector is most likey misconfigured: null, Bad
+2017-04-03 12:41:03,011 INFO  c.c.d.collector.CollectorTask - Repo Count              1        0s
+2017-04-03 12:41:03,014 INFO  c.c.d.collector.CollectorTask - New Commits             0        0s
+2017-04-03 12:41:03,015 INFO  c.c.d.collector.CollectorTask - Finished                         0s
+2017-04-03 12:41:03,030 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:03,031 INFO  c.c.d.collector.CollectorTask - Starting...
+2017-04-03 12:41:03,031 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:03,033 INFO  c.c.d.collector.CollectorTask - Repo Count              1        0s
+2017-04-03 12:41:03,034 INFO  c.c.d.collector.CollectorTask - New Commits             0        0s
+2017-04-03 12:41:03,034 INFO  c.c.d.collector.CollectorTask - Finished                         0s
+2017-04-03 12:41:03,045 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:03,046 INFO  c.c.d.collector.CollectorTask - Starting...
+2017-04-03 12:41:03,046 INFO  c.c.d.collector.CollectorTask - -----------------------------------
+2017-04-03 12:41:03,047 INFO  c.c.d.collector.CollectorTask - Repo Count              0        0s
+2017-04-03 12:41:03,047 INFO  c.c.d.collector.CollectorTask - New Commits             0        0s
+2017-04-03 12:41:03,047 INFO  c.c.d.collector.CollectorTask - Finished                         0s
