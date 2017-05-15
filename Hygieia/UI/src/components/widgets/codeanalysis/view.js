@@ -63,7 +63,23 @@
                 getMetric(caData.metrics, 'blocker_violations', 'Blocker'),
                 getMetric(caData.metrics, 'critical_violations', 'Critical'),
                 getMetric(caData.metrics, 'major_violations', 'Major'),
-                getMetric(caData.metrics, 'violations', 'Issues')
+                getMetric(caData.metrics, 'minor_violations', 'Minor'),
+                getMetric(caData.metrics, 'info_violations', 'Info'),
+                getMetric(caData.metrics, 'violations', 'Total Issues')
+            ];
+            
+            ctrl.techDebts = [
+                getMetric(caData.metrics, 'sqale_index', 'Technical Debt'),
+                getMetric(caData.metrics, 'security_remediation_effort', 'Security Remediation Effort'),
+                getMetric(caData.metrics, 'reliability_remediation_effort', 'Reliability Remediation Effort'),
+                getMetric(caData.metrics, '', '')
+            ];
+            
+            ctrl.qualityGates = [
+                getMetric(caData.metrics, 'security_rating', 'Security'),
+                getMetric(caData.metrics, 'reliability_rating', 'Reliability'),
+                getMetric(caData.metrics, 'sqale_rating', 'Maintanability'),
+                getMetric(caData.metrics, 'quality_gate_details', 'Quality Gate')
             ];
 
             ctrl.unitTests = [
