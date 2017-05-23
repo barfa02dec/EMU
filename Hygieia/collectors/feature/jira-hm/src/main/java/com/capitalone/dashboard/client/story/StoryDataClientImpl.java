@@ -162,7 +162,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 			List<Issue> issues = null;
 			for(int j=0;j<featureSettings.getJiraBaseUrl().size();j++)
 			{
-				issues = jiraClient.getIssues(startTime, i, featureSettings.getJiraIssueTypeNames().get(i),featureSettings.getStoryQuery().get(i));
+				issues = jiraClient.getIssues(startTime, i, featureSettings.getJiraIssueTypeNames().get(j),featureSettings.getStoryQuery().get(j));
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("Story information query took " + (System.currentTimeMillis() - queryStart) + " ms");
 			}
@@ -272,7 +272,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 			for (Feature feature : featuresToSave) {
 				String epicKey = issueEpics.get(feature.getsId());
 				
-				processEpicData(feature, epicKey);
+				processEpicData(feature, epicKey,baseUrl);
 			}
 			
 			if (LOGGER.isDebugEnabled()) {
@@ -397,7 +397,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		feature.setsOwnersIsDeleted(TOOLS.toCanonicalList(Collections.<String>emptyList()));
 	}
 	
-	private void processEpicData(Feature feature, String epicKey) {
+	private void processEpicData(Feature feature, String epicKey, String baseUrl) {
 		if (epicKey != null && !epicKey.isEmpty()) {
 			Issue epicData = getEpicData(epicKey);
 			if (epicData != null) {
@@ -417,9 +417,9 @@ public class StoryDataClientImpl implements StoryDataClient {
 				feature.setsEpicName(TOOLS.sanitizeResponse(epicName));
 				
 				// sEpicUrl (Example: 'http://my.jira.com/browse/KEY-1001')
-		       /*feature.setsEpicUrl(featureSettings.getJiraBaseUrl() 
-		                + (featureSettings.getJiraBaseUrl().substring(featureSettings.getJiraBaseUrl().length()-1).equals("/") ? "" : "/")
-		                + "browse/" + TOOLS.sanitizeResponse(epicNumber));*/
+		       feature.setsEpicUrl(featureSettings.getJiraBaseUrl() 
+		                + (baseUrl.substring(baseUrl.length()-1).equals("/") ? "" : "/")
+		                + "browse/" + TOOLS.sanitizeResponse(epicNumber));
 	
 				// sEpicBeginDate - mapped to create date
 				if ((epicBeginDate != null) && !(epicBeginDate.isEmpty())) {
