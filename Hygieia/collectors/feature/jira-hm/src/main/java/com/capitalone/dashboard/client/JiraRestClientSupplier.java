@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -175,5 +176,47 @@ public class JiraRestClientSupplier implements Supplier<JiraRestClient> {
 				return null;
 			}
 		}
+	}
+
+	@Override
+	public List<JiraRestClient> getDetails() {
+JiraRestClient client = null;
+		List<JiraRestClient> clients = new ArrayList<JiraRestClient>();
+		List<String> jiraCredentials = featureSettings.getJiraCredentials();
+		List<String> jiraBaseUrl = featureSettings.getJiraBaseUrl();
+		List<String> proxyUri = null;
+		List<String> proxyPort = null;
+		
+		URI jiraUri = null;
+		for(int i=0;i<jiraBaseUrl.size();i++)
+		{
+		try {
+			if (featureSettings.getJiraProxyUrl() != null && i<=featureSettings.getJiraProxyUrl().size()-1  && (featureSettings.getJiraProxyPort() != null && i<=featureSettings.getJiraProxyPort().size()-1)) {
+				proxyUri = this.featureSettings.getJiraProxyUrl();
+				proxyPort = this.featureSettings.getJiraProxyPort();
+				
+				jiraUri = this.createJiraConnection(jiraBaseUrl.get(i),
+						proxyUri + ":" + proxyPort, 
+						this.decodeCredentials(jiraCredentials.get(i)).get("username"),
+						this.decodeCredentials(jiraCredentials.get(i)).get("password"));
+			} else {
+				jiraUri = new URI(jiraBaseUrl.get(i));
+			}
+			
+			InetAddress.getByName(jiraUri.getHost());
+			client = new AsynchronousJiraRestClientFactory()
+					.createWithBasicHttpAuthentication(jiraUri, 
+							decodeCredentials(jiraCredentials.get(i)).get("username"),
+							decodeCredentials(jiraCredentials.get(i)).get("password"));
+			clients.add(client);
+			
+		} catch (UnknownHostException | URISyntaxException e) {
+			LOGGER.error("The Jira host name is invalid. Further jira collection cannot proceed.");
+			
+			LOGGER.debug("Exception", e);
+		}
+		}
+		
+		return clients;
 	}
 }

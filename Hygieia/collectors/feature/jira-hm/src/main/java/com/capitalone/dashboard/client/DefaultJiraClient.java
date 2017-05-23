@@ -73,7 +73,9 @@ public class DefaultJiraClient implements JiraClient {
 	private final FeatureSettings featureSettings;
 	private final FeatureWidgetQueries featureWidgetQueries;
 	
-	private JiraRestClient client;
+	//private JiraRestClient client;
+	
+	List<JiraRestClient> clients;
 	
 	
 		
@@ -81,15 +83,18 @@ public class DefaultJiraClient implements JiraClient {
 	public DefaultJiraClient(FeatureSettings featureSettings, FeatureWidgetQueries featureWidgetQueries, JiraRestClientSupplier restSupplier) {
 		this.featureSettings = featureSettings;
 		this.featureWidgetQueries = featureWidgetQueries;
-		this.client = restSupplier.get();
+		this.clients = restSupplier.getDetails();
 	}
 	
 	@Override
 	public List<Issue> getIssues(long startTime, int pageStart, String[] issueTypeName, String storyQuery) {
 		List<Issue> rt = new ArrayList<>();
 		
-		if (client != null) {
-				 
+		JiraRestClient jiraClient;
+		if (clients != null && !clients.isEmpty() && clients.size()>0) {
+			for(JiraRestClient jira: clients)
+			{
+				
 			try {
 				
 				// example "1900-01-01 00:00"
@@ -98,7 +103,7 @@ public class DefaultJiraClient implements JiraClient {
 				String query = featureWidgetQueries.getStoryQuery(startDateStr,
 						issueTypeName, storyQuery);
 				
-				Promise<SearchResult> promisedRs = client.getSearchClient().searchJql(
+				Promise<SearchResult> promisedRs = jira.getSearchClient().searchJql(
 						query, featureSettings.getPageSize(), pageStart, DEFAULT_FIELDS);
 				
 				SearchResult sr = promisedRs.claim();
@@ -123,6 +128,7 @@ public class DefaultJiraClient implements JiraClient {
 				}
 				LOGGER.debug("Exception", e);
 			}
+		}
 			
 		} else {
 			LOGGER.warn("Jira client setup failed. No results obtained. Check your jira setup.");
@@ -135,9 +141,11 @@ public class DefaultJiraClient implements JiraClient {
 	public List<BasicProject> getProjects() {
 		List<BasicProject> rt = new ArrayList<>();
 		
-		if (client != null) {
+		if (clients != null && !clients.isEmpty() && clients.size()>0) {
+			for(JiraRestClient jira: clients)
+			{
 			try {
-				Promise<Iterable<BasicProject>> promisedRs = client.getProjectClient().getAllProjects();
+				Promise<Iterable<BasicProject>> promisedRs = jira.getProjectClient().getAllProjects();
 				
 				Iterable<BasicProject> jiraRawRs = promisedRs.claim();
 				if (jiraRawRs != null) {
@@ -151,6 +159,7 @@ public class DefaultJiraClient implements JiraClient {
 				}
 				LOGGER.debug("Exception", e);
 			}
+		}
 		} else {
 			LOGGER.warn("Jira client setup failed. No results obtained. Check your jira setup.");
 		}
@@ -245,12 +254,14 @@ public class DefaultJiraClient implements JiraClient {
 	public Issue getEpic(String epicKey) {
 		List<Issue> rt = new ArrayList<>();
 		
-		if (client != null) {
+		if (clients != null && !clients.isEmpty() && clients.size()>0) {
+			for(JiraRestClient jira: clients)
+			{
 			
 			try {
 				String query = this.featureWidgetQueries.getEpicQuery(epicKey, "epic");
 				
-				Promise<SearchResult> promisedRs = client.getSearchClient().searchJql(
+				Promise<SearchResult> promisedRs = jira.getSearchClient().searchJql(
 						query, featureSettings.getPageSize(), 0, DEFAULT_FIELDS);
 				
 				SearchResult sr = promisedRs.claim();
@@ -268,7 +279,7 @@ public class DefaultJiraClient implements JiraClient {
 				}
 				LOGGER.debug("Exception", e);
 			}
-			
+		}	
 		} else {
 			LOGGER.warn("Jira client setup failed. No results obtained. Check your jira setup.");
 		}
@@ -283,7 +294,9 @@ public class DefaultJiraClient implements JiraClient {
 	public List<Issue> getEpics(List<String> epicKeys) {
 		List<Issue> rt = new ArrayList<>();
 		
-		if (client != null) {
+		if (clients != null && !clients.isEmpty() && clients.size()>0) {
+			for(JiraRestClient jira: clients)
+			{
 			try {
 				String query = this.featureWidgetQueries.getEpicQuery(epicKeys, "epics");
 				
@@ -291,7 +304,7 @@ public class DefaultJiraClient implements JiraClient {
 				int total = Integer.MAX_VALUE;
 				for (int j = 0; j < total; j += featureSettings.getPageSize()) {
 
-					Promise<SearchResult> promisedRs = client.getSearchClient().searchJql(
+					Promise<SearchResult> promisedRs = jira.getSearchClient().searchJql(
 							query, featureSettings.getPageSize(), j, DEFAULT_FIELDS);
 					
 					SearchResult sr = promisedRs.claim();
@@ -311,6 +324,7 @@ public class DefaultJiraClient implements JiraClient {
 				}
 				LOGGER.debug("Exception", e);
 			}
+		}
 		} else {
 			LOGGER.warn("Jira client setup failed. No results obtained. Check your jira setup.");
 		}
@@ -351,14 +365,14 @@ public class DefaultJiraClient implements JiraClient {
 							return new PasswordAuthentication(uname, pword.toCharArray());
 						}
 					});
-					connection.setRequestProperty("Proxy-Authorization", "Basic " + featureSettings.getJiraCredentials());
+					connection.setRequestProperty("Proxy-Authorization", "Basic " + featureSettings.getJiraCredentials().get(i));
 				}
 			} else {
 				connection = url.openConnection();
 			}
 
 			HttpURLConnection request = (HttpURLConnection) connection;
-			request.setRequestProperty("Authorization" , "Basic " + featureSettings.getJiraCredentials());
+			request.setRequestProperty("Authorization" , "Basic " + featureSettings.getJiraCredentials().get(i));
 			request.connect();
 			
 			InputStream in = (InputStream) request.getContent();

@@ -101,11 +101,11 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 		int count = 0;
 
 		try {
-			long teamDataStart = System.currentTimeMillis();
-			TeamDataClientImpl teamData = new TeamDataClientImpl(this.featureCollectorRepository,
+			//long teamDataStart = System.currentTimeMillis();
+			/*TeamDataClientImpl teamData = new TeamDataClientImpl(this.featureCollectorRepository,
 					this.featureSettings, this.teamRepository, jiraClient);
 			count = teamData.updateTeamInformation();
-			log("Team Data", teamDataStart, count);
+			log("Team Data", teamDataStart, count);*/
 	
 			long projectDataStart = System.currentTimeMillis();
 			ProjectDataClientImpl projectData = new ProjectDataClientImpl(this.featureSettings,
@@ -119,7 +119,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			count = storyData.updateStoryInformation();
 			
 			log("Story Data", storyDataStart, count);
-			log("Finished", teamDataStart);
+			//log("Finished", teamDataStart);
 		} catch (Exception e) {
 			// catch exception here so we don't blow up the collector completely
 			LOGGER.error("Failed to collect jira information", e);
