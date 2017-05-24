@@ -39,4 +39,14 @@ public class ProjectServiceImpl implements ProjectService {
 
 	}
 
+	@Override
+	public void delete(String projectName) {
+
+		Project project = projectRepository.findByProjectName(projectName);
+		if (project != null) {
+			projectRepository.delete(project);
+		}
+
+	}
+
 }

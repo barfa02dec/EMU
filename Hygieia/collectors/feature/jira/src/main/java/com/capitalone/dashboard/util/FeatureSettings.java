@@ -16,6 +16,8 @@
 
 package com.capitalone.dashboard.util;
 
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -33,7 +35,7 @@ public class FeatureSettings {
 	private String deltaCollectorItemStartDate;
 	private String masterStartDate;
 	private String queryFolder;
-	private String storyQuery;
+	private List<String> storyQuery;
 	private String epicQuery;
 	private String projectQuery;
 	private String memberQuery;
@@ -44,15 +46,15 @@ public class FeatureSettings {
 	private int sprintEndPrior;
 	private int scheduledPriorMin;
 	// Jira-connection details
-	private String jiraBaseUrl;
-	private String jiraQueryEndpoint;
-	private String jiraCredentials;
+	private List<String> jiraBaseUrl;
+	private List<String> jiraQueryEndpoint;
+	private List<String> jiraCredentials;
 	private String jiraOauthAuthtoken;
 	private String jiraOauthRefreshtoken;
 	private String jiraOauthRedirecturi;
 	private String jiraOauthExpiretime;
-	private String jiraProxyUrl;
-	private String jiraProxyPort;
+	private List<String> jiraProxyUrl;
+	private List<String> jiraProxyPort;
 	/**
 	 * In Jira, general IssueType IDs are associated to various "issue"
 	 * attributes. However, there is one attribute which this collector's
@@ -67,7 +69,7 @@ public class FeatureSettings {
 	 * https://[your-jira-domain-name]/rest/api/2/issuetype/
 	 * Multiple comma-separated values can be specified.
 	 */
-	private String[] jiraIssueTypeNames;
+	private List<String[]> jiraIssueTypeNames;
 	/**
 	 * In Jira, your instance will have its own custom field created for "sprint" or "timebox" details, which includes a list of information.  This field allows you to specify that data field for your instance of Jira.
 	 * <p>
@@ -76,7 +78,7 @@ public class FeatureSettings {
 	 * via the following URI, and look for a package name <em>com.atlassian.greenhopper.service.sprint.Sprint</em>; your custom field name describes the values in this field:
 	 * https://[your-jira-domain-name]/rest/api/2/issue/[some-issue-name]
 	 */
-	private String jiraSprintDataFieldName;
+	private List<String> jiraSprintDataFieldName;
 	/**
 	 * In Jira, your instance will have its own custom field created for "super story" or "epic" back-end ID, which includes a list of information.  This field allows you to specify that data field for your instance of Jira.
 	 * <p>
@@ -85,11 +87,11 @@ public class FeatureSettings {
 	 * via the following URI where your queried user story issue has a super issue (e.g., epic) tied to it; your custom field name describes the epic value you expect to see, and is the only field that does this for a given issue:
 	 *  https://[your-jira-domain-name]/rest/api/2/issue/[some-issue-name]
 	 */
-	private String jiraEpicIdFieldName;
+	private List<String> jiraEpicIdFieldName;
 	
-	private String jiraStoryPointsFieldName;
+	private List<String> jiraStoryPointsFieldName;
 	
-	private String jiraTeamFieldName;
+	private List<String> jiraTeamFieldName;
 
 	public String getCron() {
 		return this.cron;
@@ -139,16 +141,18 @@ public class FeatureSettings {
 		this.queryFolder = queryFolder;
 	}
 
-	public String getStoryQuery() {
-		return this.storyQuery;
+	public List<String> getStoryQuery() {
+		return storyQuery;
 	}
 
-	public void setStoryQuery(String storyQuery) {
+	public void setStoryQuery(List<String> storyQuery) {
 		this.storyQuery = storyQuery;
 	}
+	
+	
 
 	public String getEpicQuery() {
-		return this.epicQuery;
+		return epicQuery;
 	}
 
 	public void setEpicQuery(String epicQuery) {
@@ -219,29 +223,7 @@ public class FeatureSettings {
 		this.scheduledPriorMin = scheduledPriorMin;
 	}
 
-	public String getJiraBaseUrl() {
-		return this.jiraBaseUrl;
-	}
-
-	public void setJiraBaseUrl(String jiraBaseUrl) {
-		this.jiraBaseUrl = jiraBaseUrl;
-	}
 	
-	public String getJiraQueryEndpoint() {
-		return this.jiraQueryEndpoint;
-	}
-
-	public void setJiraQueryEndpoint(String jiraQueryEndpoint) {
-		this.jiraQueryEndpoint = jiraQueryEndpoint;
-	}
-
-	public String getJiraCredentials() {
-		return this.jiraCredentials;
-	}
-
-	public void setJiraCredentials(String jiraCredentials) {
-		this.jiraCredentials = jiraCredentials;
-	}
 
 	public String getJiraOauthAuthtoken() {
 		return this.jiraOauthAuthtoken;
@@ -275,59 +257,93 @@ public class FeatureSettings {
 		this.jiraOauthExpiretime = jiraOauthExpiretime;
 	}
 
-	public String getJiraProxyUrl() {
-		return this.jiraProxyUrl;
-	}
-
-	public void setJiraProxyUrl(String jiraProxyUrl) {
-		this.jiraProxyUrl = jiraProxyUrl;
-	}
-
-	public String getJiraProxyPort() {
-		return this.jiraProxyPort;
-	}
-
-	public void setJiraProxyPort(String jiraProxyPort) {
-		this.jiraProxyPort = jiraProxyPort;
-	}
 	
-	public String[] getJiraIssueTypeNames() {
+
+	public List<String[]> getJiraIssueTypeNames() {
 		return jiraIssueTypeNames;
 	}
 
-	public void setJiraIssueTypeNames(String[] jiraIssueTypeNames) {
+	public void setJiraIssueTypeNames(List<String[]> jiraIssueTypeNames) {
 		this.jiraIssueTypeNames = jiraIssueTypeNames;
 	}
+	
+	
 
-	public String getJiraSprintDataFieldName() {
+	public List<String> getJiraSprintDataFieldName() {
 		return jiraSprintDataFieldName;
 	}
 
-	public void setJiraSprintDataFieldName(String jiraSprintDataFieldName) {
+	public void setJiraSprintDataFieldName(List<String> jiraSprintDataFieldName) {
 		this.jiraSprintDataFieldName = jiraSprintDataFieldName;
 	}
 
-	public String getJiraEpicIdFieldName() {
+	public List<String> getJiraEpicIdFieldName() {
 		return jiraEpicIdFieldName;
 	}
 
-	public void setJiraEpicIdFieldName(String jiraEpicIdFieldName) {
+	public void setJiraEpicIdFieldName(List<String> jiraEpicIdFieldName) {
 		this.jiraEpicIdFieldName = jiraEpicIdFieldName;
 	}
+	
+	
 
-	public String getJiraStoryPointsFieldName() {
+	public List<String> getJiraStoryPointsFieldName() {
 		return jiraStoryPointsFieldName;
 	}
 
-	public void setJiraStoryPointsFieldName(String jiraStoryPointsFieldName) {
+	public void setJiraStoryPointsFieldName(List<String> jiraStoryPointsFieldName) {
 		this.jiraStoryPointsFieldName = jiraStoryPointsFieldName;
 	}
+
 	
-	public String getJiraTeamFieldName() {
+
+	public List<String> getJiraTeamFieldName() {
 		return jiraTeamFieldName;
 	}
 
-	public void setJiraTeamFieldName(String jiraTeamFieldName) {
+	public void setJiraTeamFieldName(List<String> jiraTeamFieldName) {
 		this.jiraTeamFieldName = jiraTeamFieldName;
 	}
+
+	public List<String> getJiraBaseUrl() {
+		return jiraBaseUrl;
+	}
+
+	public void setJiraBaseUrl(List<String> jiraBaseUrl) {
+		this.jiraBaseUrl = jiraBaseUrl;
+	}
+
+	public List<String> getJiraQueryEndpoint() {
+		return jiraQueryEndpoint;
+	}
+
+	public void setJiraQueryEndpoint(List<String> jiraQueryEndpoint) {
+		this.jiraQueryEndpoint = jiraQueryEndpoint;
+	}
+
+	public List<String> getJiraCredentials() {
+		return jiraCredentials;
+	}
+
+	public void setJiraCredentials(List<String> jiraCredentials) {
+		this.jiraCredentials = jiraCredentials;
+	}
+
+	public List<String> getJiraProxyUrl() {
+		return jiraProxyUrl;
+	}
+
+	public void setJiraProxyUrl(List<String> jiraProxyUrl) {
+		this.jiraProxyUrl = jiraProxyUrl;
+	}
+
+	public List<String> getJiraProxyPort() {
+		return jiraProxyPort;
+	}
+
+	public void setJiraProxyPort(List<String> jiraProxyPort) {
+		this.jiraProxyPort = jiraProxyPort;
+	}
+	
+	
 }

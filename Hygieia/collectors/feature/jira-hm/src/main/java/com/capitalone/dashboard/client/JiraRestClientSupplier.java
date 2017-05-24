@@ -40,6 +40,7 @@ public class JiraRestClientSupplier implements Supplier<JiraRestClient> {
 	
 	@Autowired
 	private FeatureSettings featureSettings;
+	private DefaultJiraClient defaultJiraClient;
 	
 	@Override
 	public JiraRestClient get() {
@@ -49,6 +50,7 @@ public class JiraRestClientSupplier implements Supplier<JiraRestClient> {
 		List<String> jiraBaseUrl = featureSettings.getJiraBaseUrl();
 		List<String> proxyUri = null;
 		List<String> proxyPort = null;
+		defaultJiraClient.clients = new ArrayList<>();
 		
 		URI jiraUri = null;
 		for(int i=0;i<jiraBaseUrl.size();i++)
@@ -77,6 +79,7 @@ public class JiraRestClientSupplier implements Supplier<JiraRestClient> {
 			
 			LOGGER.debug("Exception", e);
 		}
+		defaultJiraClient.clients.add(client);
 		}
 		
 		return client;
@@ -178,8 +181,8 @@ public class JiraRestClientSupplier implements Supplier<JiraRestClient> {
 		}
 	}
 
-	@Override
-	public List<JiraRestClient> getDetails() {
+	/*@Override
+	public List<JiraRestClient> get() {
 JiraRestClient client = null;
 		List<JiraRestClient> clients = new ArrayList<JiraRestClient>();
 		List<String> jiraCredentials = featureSettings.getJiraCredentials();
@@ -218,5 +221,5 @@ JiraRestClient client = null;
 		}
 		
 		return clients;
-	}
+	}*/
 }

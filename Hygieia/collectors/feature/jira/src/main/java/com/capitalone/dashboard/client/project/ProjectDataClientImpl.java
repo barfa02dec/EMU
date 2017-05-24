@@ -7,7 +7,7 @@ import com.capitalone.dashboard.repository.FeatureCollectorRepository;
 import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.util.ClientUtil;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
-import com.capitalone.dashboard.util.FeatureSettings;
+import com.capitalone.dashboard.util.NewFeatureSettings;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +27,7 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProjectDataClientImpl.class);
 	private static final ClientUtil TOOLS = ClientUtil.getInstance();
 	
-	private final FeatureSettings featureSettings;
+	private final NewFeatureSettings featureSettings;
 	private final ScopeRepository projectRepo;
 	private final FeatureCollectorRepository featureCollectorRepository;
 	private final JiraClient jiraClient;
@@ -36,7 +36,7 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 	 * Extends the constructor from the super class.
 	 *
 	 */
-	public ProjectDataClientImpl(FeatureSettings featureSettings, ScopeRepository projectRepository, 
+	public ProjectDataClientImpl(NewFeatureSettings featureSettings, ScopeRepository projectRepository, 
 			FeatureCollectorRepository featureCollectorRepository, JiraClient jiraClient) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Constructing data collection for the feature widget, project-level data...");
@@ -55,7 +55,7 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 	public int updateProjectInformation() {
 		int count = 0;
 		
-		List<BasicProject> projects = jiraClient.getProjects();
+		List<BasicProject> projects = jiraClient.getProjects(featureSettings);
 		
 		if (projects != null && !projects.isEmpty()) {
 			updateMongoInfo(projects);

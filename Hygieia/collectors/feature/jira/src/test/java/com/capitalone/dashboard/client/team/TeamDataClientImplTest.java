@@ -22,13 +22,13 @@ import com.capitalone.dashboard.model.Team;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
 import com.capitalone.dashboard.repository.ScopeOwnerRepository;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
-import com.capitalone.dashboard.util.FeatureSettings;
+import com.capitalone.dashboard.util.NewFeatureSettings;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TeamDataClientImplTest {
 	private final ObjectId JIRA_COLLECTORID = new ObjectId("ABCDEF0123456789ABCDEF01");
 
-	@Mock FeatureSettings featureSettings;
+	@Mock NewFeatureSettings featureSettings;
 	@Mock TeamRepository teamRepo;
 	@Mock FeatureCollectorRepository featureCollectorRepository;
 	@Mock JiraClient jiraClient;
@@ -51,7 +51,7 @@ public class TeamDataClientImplTest {
 				new Team(String.valueOf(100L), "name1"),
 				new Team(String.valueOf(200L), "name2"));
 				
-		Mockito.when(jiraClient.getTeams()).thenReturn(jiraResponse);
+		//Mockito.when(jiraClient.getTeams()).thenReturn(jiraResponse);
 		ArgumentCaptor<Team> captor = ArgumentCaptor.forClass(Team.class);
 		int cnt = teamDataClient.updateTeamInformation();
 

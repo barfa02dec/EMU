@@ -33,7 +33,7 @@ import com.capitalone.dashboard.util.ClientUtil;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
 import com.capitalone.dashboard.util.CoreFeatureSettings;
 import com.capitalone.dashboard.util.DateUtil;
-import com.capitalone.dashboard.util.FeatureSettings;
+import com.capitalone.dashboard.util.NewFeatureSettings;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -88,7 +88,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	// works with ms too (just ignores them)
 	private final DateFormat SETTINGS_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
-	private final FeatureSettings featureSettings;
+	private final NewFeatureSettings featureSettings;
 	private final FeatureRepository featureRepo;
 	private final FeatureCollectorRepository featureCollectorRepository;
 	private final TeamRepository teamRepository;
@@ -103,7 +103,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	/**
 	 * Extends the constructor from the super class.
 	 */
-	public StoryDataClientImpl(CoreFeatureSettings coreFeatureSettings, FeatureSettings featureSettings,
+	public StoryDataClientImpl(CoreFeatureSettings coreFeatureSettings, NewFeatureSettings featureSettings,
 			FeatureRepository featureRepository, FeatureCollectorRepository featureCollectorRepository, TeamRepository teamRepository,
 			JiraClient jiraClient) {
 		if (LOGGER.isDebugEnabled()) {
@@ -157,7 +157,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				LOGGER.debug("Obtaining story information starting at index " + i + "...");
 			}
 			long queryStart = System.currentTimeMillis();
-			List<Issue> issues = jiraClient.getIssues(startTime, i);
+			List<Issue> issues = jiraClient.getIssues(startTime, i,featureSettings);
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("Story information query took " + (System.currentTimeMillis() - queryStart) + " ms");
 			}
@@ -648,7 +648,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				
 				List<String> epicKeysSub = epicsToLookupL.subList(i, endIdx);
 				
-				List<Issue> epics = jiraClient.getEpics(epicKeysSub);
+				List<Issue> epics = jiraClient.getEpics(epicKeysSub,featureSettings);
 				
 				for (Issue epic : epics) {
 					String epicKey = epic.getKey();
@@ -671,7 +671,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		if (epicCache.containsKey(epicKey)) {
 			return epicCache.get(epicKey);
 		} else {
-			Issue epic = jiraClient.getEpic(epicKey);
+			Issue epic = jiraClient.getEpic(epicKey, featureSettings);
 			epicCache.put(epicKey, epic);
 			
 			return epic;
@@ -724,7 +724,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	}
 	
 	private void updateStatuses() {
-		Map<String, String> statusMap = jiraClient.getStatusMapping();
+		Map<String, String> statusMap = jiraClient.getStatusMapping(featureSettings);
 		for (String status : statusMap.keySet()) {
 			String statusCategory = statusMap.get(status);
 			if (TO_DO.equals(statusCategory)) {

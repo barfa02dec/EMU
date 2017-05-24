@@ -24,13 +24,13 @@ import com.capitalone.dashboard.model.Scope;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
 import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
-import com.capitalone.dashboard.util.FeatureSettings;
+import com.capitalone.dashboard.util.NewFeatureSettings;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProjectDataClientImplTest {
 	private final ObjectId JIRA_COLLECTORID = new ObjectId("ABCDEF0123456789ABCDEF01");
 
-	@Mock FeatureSettings featureSettings;
+	@Mock NewFeatureSettings featureSettings;
 	@Mock ScopeRepository projectRepo;
 	@Mock FeatureCollectorRepository featureCollectorRepository;
 	@Mock JiraClient jiraClient;
@@ -53,7 +53,7 @@ public class ProjectDataClientImplTest {
 				new BasicProject(URI.create("http://my.jira.com/rest/api/2/project/100"), "key1", Long.valueOf(100L), "name1"),
 				new BasicProject(URI.create("http://my.jira.com/rest/api/2/project/200"), "key2", Long.valueOf(200L), "name2"));
 
-		Mockito.when(jiraClient.getProjects()).thenReturn(jiraResponse);
+		//Mockito.when(jiraClient.getProjects()).thenReturn(jiraResponse);
 		ArgumentCaptor<Scope> captor = ArgumentCaptor.forClass(Scope.class);
 		int cnt = projectDataClient.updateProjectInformation();
 

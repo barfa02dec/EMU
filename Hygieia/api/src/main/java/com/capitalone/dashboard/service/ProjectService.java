@@ -7,5 +7,7 @@ public interface ProjectService {
 	Iterable<Project> all();
 	
 	String create(String projectName);
+	
+	void delete(String projectName);
 
 }

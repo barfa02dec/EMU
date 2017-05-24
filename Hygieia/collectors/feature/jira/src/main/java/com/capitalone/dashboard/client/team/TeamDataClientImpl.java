@@ -5,7 +5,7 @@ import com.capitalone.dashboard.model.Team;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
 import com.capitalone.dashboard.repository.TeamRepository;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
-import com.capitalone.dashboard.util.FeatureSettings;
+import com.capitalone.dashboard.util.NewFeatureSettings;
 import org.apache.commons.collections.CollectionUtils;
 import org.bson.types.ObjectId;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ import java.util.List;
 public class TeamDataClientImpl implements TeamDataClient {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TeamDataClientImpl.class);
 
-	private final FeatureSettings featureSettings;
+	private final NewFeatureSettings featureSettings;
 	private final TeamRepository teamRepo;
 	private final FeatureCollectorRepository featureCollectorRepository;
 	private final JiraClient jiraClient;
@@ -35,7 +35,7 @@ public class TeamDataClientImpl implements TeamDataClient {
 	 * 
 	 * @param teamRepository
 	 */
-	public TeamDataClientImpl(FeatureCollectorRepository featureCollectorRepository, FeatureSettings featureSettings,
+	public TeamDataClientImpl(FeatureCollectorRepository featureCollectorRepository, NewFeatureSettings featureSettings,
 			TeamRepository teamRepository, JiraClient jiraClient) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Constructing data collection for the feature widget, team-level data...");
@@ -54,7 +54,7 @@ public class TeamDataClientImpl implements TeamDataClient {
 	public int updateTeamInformation() {
 		int count = 0;
 		
-		List<Team> teams = jiraClient.getTeams();
+		List<Team> teams = jiraClient.getTeams(featureSettings);
 		
 		if (CollectionUtils.isNotEmpty(teams)) {
 			updateMongoInfo(teams);

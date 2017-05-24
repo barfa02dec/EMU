@@ -83,7 +83,7 @@ public class DefaultJiraClient implements JiraClient {
 	public DefaultJiraClient(FeatureSettings featureSettings, FeatureWidgetQueries featureWidgetQueries, JiraRestClientSupplier restSupplier) {
 		this.featureSettings = featureSettings;
 		this.featureWidgetQueries = featureWidgetQueries;
-		this.clients = restSupplier.getDetails();
+		 restSupplier.get();
 	}
 	
 	@Override

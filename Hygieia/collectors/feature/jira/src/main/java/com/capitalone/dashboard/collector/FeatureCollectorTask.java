@@ -12,6 +12,7 @@ import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.repository.TeamRepository;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
 import com.capitalone.dashboard.util.CoreFeatureSettings;
+import com.capitalone.dashboard.util.NewFeatureSettings;
 import com.capitalone.dashboard.util.FeatureSettings;
 
 import org.slf4j.Logger;
@@ -34,8 +35,8 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	private final TeamRepository teamRepository;
 	private final ScopeRepository projectRepository;
 	private final FeatureCollectorRepository featureCollectorRepository;
-	private final FeatureSettings featureSettings;
 	private final JiraClient jiraClient;
+	private final FeatureSettings hmFeatureSettings;
 
 	/**
 	 * Default constructor for the collector task. This will construct this
@@ -54,7 +55,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	public FeatureCollectorTask(CoreFeatureSettings coreFeatureSettings,
 			TaskScheduler taskScheduler, FeatureRepository featureRepository,
 			TeamRepository teamRepository, ScopeRepository projectRepository,
-			FeatureCollectorRepository featureCollectorRepository, FeatureSettings featureSettings,
+			FeatureCollectorRepository featureCollectorRepository, FeatureSettings hmFeatureSettings,
 			JiraClient jiraClient) {
 		super(taskScheduler, FeatureCollectorConstants.JIRA);
 		this.featureCollectorRepository = featureCollectorRepository;
@@ -62,7 +63,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 		this.projectRepository = projectRepository;
 		this.featureRepository = featureRepository;
 		this.coreFeatureSettings = coreFeatureSettings;
-		this.featureSettings = featureSettings;
+		this.hmFeatureSettings = hmFeatureSettings;
 		this.jiraClient = jiraClient;
 	}
 
@@ -87,7 +88,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	 */
 	@Override
 	public String getCron() {
-		return featureSettings.getCron();
+		return hmFeatureSettings.getCron();
 	}
 
 	/**
@@ -97,25 +98,47 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	 */
 	@Override
 	public void collect(FeatureCollector collector) {
+		NewFeatureSettings featureSettings;
+		for(int i=0;i<hmFeatureSettings.getJiraBaseUrl().size();i++)
+		{
+			featureSettings = new NewFeatureSettings();
+			featureSettings.setJiraBaseUrl(hmFeatureSettings.getJiraBaseUrl().get(i));
+			featureSettings.setPageSize(hmFeatureSettings.getPageSize());
+			featureSettings.setDeltaStartDate(hmFeatureSettings.getDeltaStartDate());
+			featureSettings.setMasterStartDate(hmFeatureSettings.getMasterStartDate());
+			featureSettings.setDeltaCollectorItemStartDate(hmFeatureSettings.getDeltaCollectorItemStartDate());
+			featureSettings.setCron(hmFeatureSettings.getCron());
+			featureSettings.setQueryFolder(hmFeatureSettings.getQueryFolder());
+			featureSettings.setStoryQuery(hmFeatureSettings.getStoryQuery().get(i));
+			featureSettings.setEpicQuery(hmFeatureSettings.getEpicQuery());
+			featureSettings.setJiraQueryEndpoint(hmFeatureSettings.getJiraQueryEndpoint().get(i));
+			featureSettings.setJiraCredentials(hmFeatureSettings.getJiraCredentials().get(i));
+			featureSettings.setJiraIssueTypeNames(hmFeatureSettings.getJiraIssueTypeNames().get(i));
+			featureSettings.setJiraSprintDataFieldName(hmFeatureSettings.getJiraSprintDataFieldName().get(i));
+			featureSettings.setJiraEpicIdFieldName(hmFeatureSettings.getJiraEpicIdFieldName().get(i));
+			featureSettings.setJiraStoryPointsFieldName(hmFeatureSettings.getJiraStoryPointsFieldName().get(i));
+			featureSettings.setJiraTeamFieldName(hmFeatureSettings.getJiraTeamFieldName().get(i));
+			
+			
 		logBanner(featureSettings.getJiraBaseUrl());
 		int count = 0;
 
 		try {
 			long teamDataStart = System.currentTimeMillis();
 			TeamDataClientImpl teamData = new TeamDataClientImpl(this.featureCollectorRepository,
-					this.featureSettings, this.teamRepository, jiraClient);
+					featureSettings, this.teamRepository, jiraClient);
 			count = teamData.updateTeamInformation();
 			log("Team Data", teamDataStart, count);
 	
 			long projectDataStart = System.currentTimeMillis();
-			ProjectDataClientImpl projectData = new ProjectDataClientImpl(this.featureSettings,
+			ProjectDataClientImpl projectData = new ProjectDataClientImpl(featureSettings,
 					this.projectRepository, this.featureCollectorRepository, jiraClient);
 			count = projectData.updateProjectInformation();
 			log("Project Data", projectDataStart, count);
 	
 			long storyDataStart = System.currentTimeMillis();
 			StoryDataClientImpl storyData = new StoryDataClientImpl(this.coreFeatureSettings,
-					this.featureSettings, this.featureRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
+					featureSettings, this.featureRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
 			count = storyData.updateStoryInformation();
 			
 			log("Story Data", storyDataStart, count);
@@ -125,4 +148,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			LOGGER.error("Failed to collect jira information", e);
 		}
 	}
+	}
+	
+	
 }

@@ -19,13 +19,11 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.atlassian.jira.rest.client.api.JiraRestClient;
 import com.atlassian.jira.rest.client.internal.async.AsynchronousJiraRestClientFactory;
-import com.capitalone.dashboard.util.FeatureSettings;
-import com.capitalone.dashboard.util.Supplier;
+import com.capitalone.dashboard.util.NewFeatureSettings;
 
 /**
  * Separate JiraRestClient supplier to make unit testing easier
@@ -33,16 +31,19 @@ import com.capitalone.dashboard.util.Supplier;
  * @author <a href="mailto:MarkRx@users.noreply.github.com">MarkRx</a>
  */
 @Component
-public class JiraRestClientSupplier implements Supplier<JiraRestClient> {
+public class JiraRestClientSupplier implements JiraSupplier<JiraRestClient> {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JiraRestClientSupplier.class);
 	
-	@Autowired
-	private FeatureSettings featureSettings;
+	/*@Autowired
+	private FeatureSettings featureSettings;*/
 	
 	@Override
-	public JiraRestClient get() {
+	public JiraRestClient get(NewFeatureSettings featureSettings) {
 		JiraRestClient client = null;
 		
+		LOGGER.info("featureSettings.getJiraBaseUrl()================================>"+featureSettings.getJiraBaseUrl());
+		LOGGER.info("featureSettings.getJiraCredentials()================================>"+featureSettings.getJiraCredentials());
+		LOGGER.info("fgetJiraProxyUrl)================================>"+featureSettings.getJiraProxyUrl());
 		String jiraCredentials = featureSettings.getJiraCredentials();
 		String jiraBaseUrl = featureSettings.getJiraBaseUrl();
 		String proxyUri = null;
@@ -52,8 +53,9 @@ public class JiraRestClientSupplier implements Supplier<JiraRestClient> {
 		
 		try {
 			if (featureSettings.getJiraProxyUrl() != null && !featureSettings.getJiraProxyUrl().isEmpty() && (featureSettings.getJiraProxyPort() != null)) {
-				proxyUri = this.featureSettings.getJiraProxyUrl();
-				proxyPort = this.featureSettings.getJiraProxyPort();
+				LOGGER.info("Entering into proxy success==========================================");
+				proxyUri = featureSettings.getJiraProxyUrl();
+				proxyPort =featureSettings.getJiraProxyPort();
 				
 				jiraUri = this.createJiraConnection(jiraBaseUrl,
 						proxyUri + ":" + proxyPort, 

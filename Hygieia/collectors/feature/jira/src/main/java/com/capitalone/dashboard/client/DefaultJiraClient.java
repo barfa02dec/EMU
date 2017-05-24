@@ -1,12 +1,12 @@
 package com.capitalone.dashboard.client;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.IOException;
 import java.net.Authenticator;
-import java.net.InetSocketAddress;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.json.simple.JSONArray;
@@ -43,8 +44,9 @@ import com.atlassian.jira.rest.client.api.domain.SearchResult;
 import com.atlassian.util.concurrent.Promise;
 import com.capitalone.dashboard.model.Team;
 import com.capitalone.dashboard.util.ClientUtil;
-import com.capitalone.dashboard.util.FeatureSettings;
+import com.capitalone.dashboard.util.NewFeatureSettings;
 import com.capitalone.dashboard.util.FeatureWidgetQueries;
+import com.capitalone.dashboard.util.FeatureSettings;
 import com.google.common.collect.Lists;
 
 /**
@@ -72,20 +74,22 @@ public class DefaultJiraClient implements JiraClient {
 	
 	private final FeatureSettings featureSettings;
 	private final FeatureWidgetQueries featureWidgetQueries;
+	private final JiraRestClientSupplier restSupplier;
 	
-	private JiraRestClient client;
+	//private JiraRestClient client;
 	
 	@Autowired
 	public DefaultJiraClient(FeatureSettings featureSettings, FeatureWidgetQueries featureWidgetQueries, JiraRestClientSupplier restSupplier) {
 		this.featureSettings = featureSettings;
 		this.featureWidgetQueries = featureWidgetQueries;
-		this.client = restSupplier.get();
+		this.restSupplier = restSupplier;
+		//this.client = restSupplier.get();
 	}
 	
 	@Override
-	public List<Issue> getIssues(long startTime, int pageStart) {
+	public List<Issue> getIssues(long startTime, int pageStart, NewFeatureSettings featureSettings) {
 		List<Issue> rt = new ArrayList<>();
-		
+		JiraRestClient client = restSupplier.get(featureSettings);
 		if (client != null) {
 			try {
 				// example "1900-01-01 00:00"
@@ -126,9 +130,9 @@ public class DefaultJiraClient implements JiraClient {
 	}
 
 	@Override
-	public List<BasicProject> getProjects() {
+	public List<BasicProject> getProjects(NewFeatureSettings featureSettings) {
 		List<BasicProject> rt = new ArrayList<>();
-		
+		JiraRestClient client = restSupplier.get(featureSettings);
 		if (client != null) {
 			try {
 				Promise<Iterable<BasicProject>> promisedRs = client.getProjectClient().getAllProjects();
@@ -154,7 +158,7 @@ public class DefaultJiraClient implements JiraClient {
 	
 	@Override
 	@SuppressWarnings("PMD.NPathComplexity")
-	public List<Team> getTeams() {
+	public List<Team> getTeams(NewFeatureSettings featureSettings) {
 	    List<Team> result = new ArrayList<>();
 		
 	    if (StringUtils.isEmpty(featureSettings.getJiraTeamFieldName())) {
@@ -235,9 +239,9 @@ public class DefaultJiraClient implements JiraClient {
     }
 
 	@Override
-	public Issue getEpic(String epicKey) {
+	public Issue getEpic(String epicKey, NewFeatureSettings featureSettings) {
 		List<Issue> rt = new ArrayList<>();
-		
+		JiraRestClient client = restSupplier.get(featureSettings);
 		if (client != null) {
 			try {
 				String query = this.featureWidgetQueries.getEpicQuery(epicKey, "epic");
@@ -271,9 +275,9 @@ public class DefaultJiraClient implements JiraClient {
 	 * 
 	 */
 	@Override
-	public List<Issue> getEpics(List<String> epicKeys) {
+	public List<Issue> getEpics(List<String> epicKeys, NewFeatureSettings featureSettings) {
 		List<Issue> rt = new ArrayList<>();
-		
+		JiraRestClient client = restSupplier.get(featureSettings);
 		if (client != null) {
 			try {
 				String query = this.featureWidgetQueries.getEpicQuery(epicKeys, "epics");
@@ -316,7 +320,7 @@ public class DefaultJiraClient implements JiraClient {
 	
 	@SuppressWarnings({"PMD.NPathComplexity"})
 	@Override
-	public Map<String, String> getStatusMapping() {
+	public Map<String, String> getStatusMapping(NewFeatureSettings featureSettings) {
 		Map<String, String> statusMap = new HashMap<>();
 		
 		try {			

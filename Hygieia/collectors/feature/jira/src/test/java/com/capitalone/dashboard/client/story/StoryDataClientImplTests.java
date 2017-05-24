@@ -46,7 +46,7 @@ import com.capitalone.dashboard.repository.FeatureRepository;
 import com.capitalone.dashboard.repository.TeamRepository;
 import com.capitalone.dashboard.util.CoreFeatureSettings;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
-import com.capitalone.dashboard.util.FeatureSettings;
+import com.capitalone.dashboard.util.NewFeatureSettings;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StoryDataClientImplTests {
@@ -63,7 +63,7 @@ public class StoryDataClientImplTests {
 	private static final Status STATUS_DONE = new Status(URI.create("http://my.jira.com/rest/api/2/status/23"), Long.valueOf(23), "CLOSED", "CLOSED", null);
 	
 	CoreFeatureSettings coreFeatureSettings;
-	FeatureSettings featureSettings;
+	NewFeatureSettings featureSettings;
 	@Mock FeatureRepository featureRepo;
 	@Mock TeamRepository teamRepo;
 	@Mock FeatureCollectorRepository featureCollectorRepository;
@@ -75,7 +75,7 @@ public class StoryDataClientImplTests {
 	@Before
 	public final void init() {
 		coreFeatureSettings = new CoreFeatureSettings();
-		featureSettings = new FeatureSettings();
+		featureSettings = new NewFeatureSettings();
 		
 		coreFeatureSettings.setTodoStatuses(Arrays.asList("OPEN"));
 		coreFeatureSettings.setDoingStatuses(Arrays.asList("IN PROGRESS"));
@@ -120,7 +120,7 @@ public class StoryDataClientImplTests {
 						                createField("custom_teamname", "String", "1534")))
 				);
 		
-		Mockito.when(jiraClient.getIssues(Mockito.anyLong(), Mockito.eq(0))).thenReturn(jiraClientResponse);
+		//Mockito.when(jiraClient.getIssues(Mockito.anyLong(), Mockito.eq(0))).thenReturn(jiraClientResponse);
 		
 		Team scopeOwner = new Team("", "");
 		scopeOwner.setName("warriors");
@@ -194,8 +194,8 @@ public class StoryDataClientImplTests {
 				createIssue(1003, 10000000, STATUS_DONE, createTimeTracking(5 * 60, 4 * 60, 1 * 60), Arrays.asList(createField("custom_sprint", "List", jsonA)))
 				);
 		
-		Mockito.when(jiraClient.getIssues(Mockito.anyLong(), Mockito.eq(0))).thenReturn(jiraClientResponse.subList(0, 2));
-		Mockito.when(jiraClient.getIssues(Mockito.anyLong(), Mockito.eq(2))).thenReturn(jiraClientResponse.subList(2, 3));
+		//Mockito.when(jiraClient.getIssues(Mockito.anyLong(), Mockito.eq(0))).thenReturn(jiraClientResponse.subList(0, 2));
+		//Mockito.when(jiraClient.getIssues(Mockito.anyLong(), Mockito.eq(2))).thenReturn(jiraClientResponse.subList(2, 3));
 		
 		int cnt = storyDataClient.updateStoryInformation();
 		Mockito.verify(featureRepo, Mockito.times(2)).save(captor.capture());
@@ -225,8 +225,8 @@ public class StoryDataClientImplTests {
 		
 		Issue jiraClientEpicResponse = createIssue(1002, 1467739128322L, STATUS_IN_PROGRESS, null, null);
 		
-		Mockito.when(jiraClient.getIssues(Mockito.anyLong(), Mockito.eq(0))).thenReturn(jiraClientResponse);
-		Mockito.when(jiraClient.getEpic(Mockito.eq("1002"))).thenReturn(jiraClientEpicResponse);
+		//Mockito.when(jiraClient.getIssues(Mockito.anyLong(), Mockito.eq(0))).thenReturn(jiraClientResponse);
+		//Mockito.when(jiraClient.getEpic(Mockito.eq("1002"))).thenReturn(jiraClientEpicResponse);
 		
 		int cnt = storyDataClient.updateStoryInformation();
 		Mockito.verify(featureRepo).save(captor.capture());
