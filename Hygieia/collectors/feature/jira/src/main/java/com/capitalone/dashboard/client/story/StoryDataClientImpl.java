@@ -23,9 +23,11 @@ import com.atlassian.jira.rest.client.api.domain.IssueType;
 import com.atlassian.jira.rest.client.api.domain.User;
 import com.capitalone.dashboard.client.JiraClient;
 import com.capitalone.dashboard.client.Sprint;
+import com.capitalone.dashboard.model.Defect;
 import com.capitalone.dashboard.model.Feature;
 import com.capitalone.dashboard.model.FeatureStatus;
 import com.capitalone.dashboard.model.Team;
+import com.capitalone.dashboard.repository.DefectRepository;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
 import com.capitalone.dashboard.repository.FeatureRepository;
 import com.capitalone.dashboard.repository.TeamRepository;
@@ -71,6 +73,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	private static final String TO_DO = "To Do";
 	private static final String IN_PROGRESS = "In Progress";
 	private static final String DONE = "Done";
+	private static final String BUG="Bug";
 	
 	private static final Comparator<Sprint> SPRINT_COMPARATOR = new Comparator<Sprint>() {
 		@Override
@@ -90,6 +93,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 
 	private final NewFeatureSettings featureSettings;
 	private final FeatureRepository featureRepo;
+	private final DefectRepository defectRepository;
 	private final FeatureCollectorRepository featureCollectorRepository;
 	private final TeamRepository teamRepository;
 	private final JiraClient jiraClient;
@@ -104,7 +108,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	 * Extends the constructor from the super class.
 	 */
 	public StoryDataClientImpl(CoreFeatureSettings coreFeatureSettings, NewFeatureSettings featureSettings,
-			FeatureRepository featureRepository, FeatureCollectorRepository featureCollectorRepository, TeamRepository teamRepository,
+			FeatureRepository featureRepository,DefectRepository defectRepository, FeatureCollectorRepository featureCollectorRepository, TeamRepository teamRepository,
 			JiraClient jiraClient) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Constructing data collection for the feature widget, story-level data...");
@@ -115,7 +119,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		this.featureCollectorRepository = featureCollectorRepository;
 		this.teamRepository = teamRepository;
 		this.jiraClient = jiraClient;
-		
+		this.defectRepository=defectRepository;
 		this.epicCache = new HashMap<>();
 		
 		todoCache = buildStatusCache(coreFeatureSettings.getTodoStatuses());
@@ -195,7 +199,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		
 		if (currentPagedJiraRs != null) {
 			List<Feature> featuresToSave = new ArrayList<>();
-			
+			List<Defect> defectsToSave=new ArrayList<Defect>();
 			Map<String, String> issueEpics = new HashMap<>();
 			ObjectId jiraFeatureId = featureCollectorRepository.findByName(FeatureCollectorConstants.JIRA).getId();
 			Set<String> issueTypeNames = new HashSet<>();
@@ -203,7 +207,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				issueTypeNames.add(issueTypeName.toLowerCase(Locale.getDefault()));
 			}
 			
-			
+			Defect defect= null;
 			for (Issue issue : currentPagedJiraRs) {
 				String issueId = TOOLS.sanitizeResponse(issue.getId());
 				
@@ -211,6 +215,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 				if (feature == null) {
 					 feature = new Feature();
 				}
+				
+				
 				
 				Map<String, IssueField> fields = buildFieldMap(issue.getFields());
 				IssueType issueType = issue.getIssueType();
@@ -246,8 +252,16 @@ public class StoryDataClientImpl implements StoryDataClient {
 					processSprintData(feature, sprint);
 					
 					processAssigneeData(feature, assignee);
+					if(feature.getsTypeName().equals(BUG)){
+						
+						defect=new Defect();
+						defect.setDefectId(feature.getsId());
+						defect.setDefectDescription(feature.getsName());
+						defectsToSave.add(defect);
+					}
 					
 					featuresToSave.add(feature);
+					
 				}
 			}
 			
@@ -272,6 +286,9 @@ public class StoryDataClientImpl implements StoryDataClient {
 			
 			// Saving back to MongoDB
 			featureRepo.save(featuresToSave);
+			if(null!=defectsToSave && !defectsToSave.isEmpty()){
+				defectRepository.save(defectsToSave);
+			}
 		}
 	}
 	
@@ -314,8 +331,13 @@ public class StoryDataClientImpl implements StoryDataClient {
 		// sStoryPoints
 		IssueField storyPointsField = fields.get(featureSettings.getJiraStoryPointsFieldName());
 		if (storyPointsField != null && storyPointsField.getValue() != null && !TOOLS.sanitizeResponse(storyPointsField.getValue()).isEmpty()) {
-			Double value = Double.parseDouble(TOOLS.sanitizeResponse(storyPointsField.getValue()));
-			feature.setsEstimate(String.valueOf(value.intValue()));
+			try{
+				Double value = Double.parseDouble(TOOLS.sanitizeResponse(storyPointsField.getValue()));
+				feature.setsEstimate(String.valueOf(value.intValue()));
+
+			}catch (Exception e) {
+				feature.setsEstimate("0");
+			}
 		} else {
 			feature.setsEstimate("0");
 		}

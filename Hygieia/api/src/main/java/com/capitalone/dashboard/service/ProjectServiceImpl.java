@@ -40,12 +40,17 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public void delete(String projectName) {
+	public String delete(String projectName) {
+		try {
+			Project project = projectRepository.findByProjectName(projectName);
+			if (project != null) {
+				projectRepository.delete(project);
 
-		Project project = projectRepository.findByProjectName(projectName);
-		if (project != null) {
-			projectRepository.delete(project);
+			}
+		} catch (Exception e) {
+			return "project delete is failed";
 		}
+		return "project is deleted successfully";
 
 	}
 

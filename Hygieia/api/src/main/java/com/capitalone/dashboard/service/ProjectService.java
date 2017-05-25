@@ -8,6 +8,6 @@ public interface ProjectService {
 	
 	String create(String projectName);
 	
-	void delete(String projectName);
+	String delete(String projectName);
 
 }

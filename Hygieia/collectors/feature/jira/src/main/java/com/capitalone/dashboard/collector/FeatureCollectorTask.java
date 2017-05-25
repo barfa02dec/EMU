@@ -1,25 +1,26 @@
 package com.capitalone.dashboard.collector;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.stereotype.Component;
+
 import com.capitalone.dashboard.client.JiraClient;
 import com.capitalone.dashboard.client.project.ProjectDataClientImpl;
 import com.capitalone.dashboard.client.story.StoryDataClientImpl;
 import com.capitalone.dashboard.client.team.TeamDataClientImpl;
 import com.capitalone.dashboard.model.FeatureCollector;
 import com.capitalone.dashboard.repository.BaseCollectorRepository;
+import com.capitalone.dashboard.repository.DefectRepository;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
 import com.capitalone.dashboard.repository.FeatureRepository;
 import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.repository.TeamRepository;
-import com.capitalone.dashboard.util.FeatureCollectorConstants;
 import com.capitalone.dashboard.util.CoreFeatureSettings;
-import com.capitalone.dashboard.util.NewFeatureSettings;
+import com.capitalone.dashboard.util.FeatureCollectorConstants;
 import com.capitalone.dashboard.util.FeatureSettings;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.stereotype.Component;
+import com.capitalone.dashboard.util.NewFeatureSettings;
 
 /**
  * Collects {@link FeatureCollector} data from feature content source system.
@@ -32,12 +33,13 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	
 	private final CoreFeatureSettings coreFeatureSettings;
 	private final FeatureRepository featureRepository;
+	private final DefectRepository defectRepository;
 	private final TeamRepository teamRepository;
 	private final ScopeRepository projectRepository;
 	private final FeatureCollectorRepository featureCollectorRepository;
 	private final JiraClient jiraClient;
 	private final FeatureSettings hmFeatureSettings;
-
+	
 	/**
 	 * Default constructor for the collector task. This will construct this
 	 * collector task with all repository, scheduling, and settings
@@ -55,7 +57,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	public FeatureCollectorTask(CoreFeatureSettings coreFeatureSettings,
 			TaskScheduler taskScheduler, FeatureRepository featureRepository,
 			TeamRepository teamRepository, ScopeRepository projectRepository,
-			FeatureCollectorRepository featureCollectorRepository, FeatureSettings hmFeatureSettings,
+			FeatureCollectorRepository featureCollectorRepository,DefectRepository defectRepository, FeatureSettings hmFeatureSettings,
 			JiraClient jiraClient) {
 		super(taskScheduler, FeatureCollectorConstants.JIRA);
 		this.featureCollectorRepository = featureCollectorRepository;
@@ -65,6 +67,8 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 		this.coreFeatureSettings = coreFeatureSettings;
 		this.hmFeatureSettings = hmFeatureSettings;
 		this.jiraClient = jiraClient;
+		this.defectRepository=defectRepository;
+		
 	}
 
 	/**
@@ -138,7 +142,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	
 			long storyDataStart = System.currentTimeMillis();
 			StoryDataClientImpl storyData = new StoryDataClientImpl(this.coreFeatureSettings,
-					featureSettings, this.featureRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
+					featureSettings, this.featureRepository,this.defectRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
 			count = storyData.updateStoryInformation();
 			
 			log("Story Data", storyDataStart, count);

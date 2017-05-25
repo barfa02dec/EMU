@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capitalone.dashboard.model.Project;
@@ -37,13 +36,13 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/deleteProject/{projectName}", method = DELETE)
-	public ResponseEntity<Void> deleteProject(@PathVariable String projectName) {
-		projectService.delete(projectName);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<String> deleteProject(@PathVariable String projectName) {
+		//projectService.delete(projectName);
+		return ResponseEntity.status(HttpStatus.OK).body(projectService.delete(projectName));
 	}
 
 	@RequestMapping(value = "/getProjects", method = GET, produces = APPLICATION_JSON_VALUE)
-	public Iterable<Project> getProjects(@RequestParam String username) {
+	public Iterable<Project> getProjects() {
 		Iterable<Project> projects = projectService.all();
 		return projects;
 

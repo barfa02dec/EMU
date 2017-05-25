@@ -41,6 +41,7 @@ import com.capitalone.dashboard.client.JiraClient;
 import com.capitalone.dashboard.model.Feature;
 import com.capitalone.dashboard.model.FeatureCollector;
 import com.capitalone.dashboard.model.FeatureStatus;
+import com.capitalone.dashboard.repository.DefectRepository;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
 import com.capitalone.dashboard.repository.FeatureRepository;
 import com.capitalone.dashboard.repository.TeamRepository;
@@ -68,6 +69,7 @@ public class StoryDataClientImplTests {
 	@Mock TeamRepository teamRepo;
 	@Mock FeatureCollectorRepository featureCollectorRepository;
 	@Mock JiraClient jiraClient;
+	@Mock DefectRepository drepo;
 	@Captor ArgumentCaptor<List<Feature>> captor;
 	
 	StoryDataClientImpl storyDataClient;
@@ -91,7 +93,7 @@ public class StoryDataClientImplTests {
 		featureSettings.setJiraBaseUrl("https://jira.atlassian.com/");
 		featureSettings.setJiraQueryEndpoint("rest/api/latest/");
 		
-		storyDataClient = new StoryDataClientImpl(coreFeatureSettings, featureSettings, featureRepo, featureCollectorRepository, teamRepo, jiraClient);
+		storyDataClient = new StoryDataClientImpl(coreFeatureSettings, featureSettings, featureRepo,drepo, featureCollectorRepository, teamRepo, jiraClient);
 		
 		FeatureCollector jira = new FeatureCollector();
 		jira.setId(JIRA_COLLECTORID);
