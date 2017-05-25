@@ -252,11 +252,28 @@ public class StoryDataClientImpl implements StoryDataClient {
 					processSprintData(feature, sprint);
 					
 					processAssigneeData(feature, assignee);
-					if(feature.getsTypeName().equals(BUG)){
-						
+					if(TOOLS.sanitizeResponse(issueType.getName()).equals(BUG)){
+						System.out.println("*******************************************");
+						System.out.println(issue.toString());
+						System.out.println("*******************************************");
 						defect=new Defect();
-						defect.setDefectId(feature.getsId());
+						defect.setDefectId(TOOLS.sanitizeResponse(issue.getId()));
+						defect.setDefectStatus(this.toCanonicalFeatureStatus(issue.getStatus().getName()));
 						defect.setDefectDescription(feature.getsName());
+						defect.setDefectPriority(null!=issue.getPriority()?issue.getPriority().getName():null);
+						defect.setCreationDate(issue.getCreationDate().toString());
+						defect.setCreatedBy(null!=issue.getAssignee()?issue.getAssignee().getName():null);
+						int originalEstimate = 0;
+						
+						if (issue.getTimeTracking() != null && issue.getTimeTracking().getOriginalEstimateMinutes() != null) {
+							originalEstimate = issue.getTimeTracking().getOriginalEstimateMinutes();
+						} else if (fields.get("aggregatetimeoriginalestimate") != null
+								&& fields.get("aggregatetimeoriginalestimate").getValue() != null) {
+							// this value is in seconds
+							originalEstimate = ((Integer)fields.get("aggregatetimeoriginalestimate").getValue()) / 60;
+						}
+						defect.setOriginalEstimate(originalEstimate);
+						defect.setDefectResolution(null!=issue.getResolution()?issue.getResolution().getName():null);
 						defectsToSave.add(defect);
 					}
 					
@@ -285,7 +302,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 			}
 			
 			// Saving back to MongoDB
-			featureRepo.save(featuresToSave);
+			//featureRepo.save(featuresToSave);
 			if(null!=defectsToSave && !defectsToSave.isEmpty()){
 				defectRepository.save(defectsToSave);
 			}

@@ -51,9 +51,27 @@ public class Defect extends BaseModel {
 	private String creationDate;
 	private String updatedBy;
 	private String updateDate;
+	private String environment;
+	private int originalEstimate;
 	
 	
 	
+	public int getOriginalEstimate() {
+		return originalEstimate;
+	}
+
+	public void setOriginalEstimate(int originalEstimate) {
+		this.originalEstimate = originalEstimate;
+	}
+
+	public String getEnvironment() {
+		return environment;
+	}
+
+	public void setEnvironment(String environment) {
+		this.environment = environment;
+	}
+
 	public ObjectId getCollectorId() {
 		return collectorId;
 	}
