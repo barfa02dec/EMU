@@ -77,18 +77,21 @@ public class SonarCollectorTask extends CollectorTask<SonarCollector> {
         List<SonarProject> latestProjects = new ArrayList<>();
         clean(collector, existingProjects);
 
-        for (String instanceUrl : collector.getSonarServers()) {
-            logBanner(instanceUrl);
+        //for (String instanceUrl : collector.getSonarServers()) {
+            for(int i=0;i<collector.getSonarServers().size();i++)
+            {
+            logBanner(collector.getSonarServers().get(i));
 
-            List<SonarProject> projects = sonarClient.getProjects(instanceUrl);
-            latestProjects.addAll(projects);
+            List<SonarProject> projects = sonarClient.getProjects(collector.getSonarServers().get(i));
+            List<SonarProject> updatedProjects = addProjects(projects, sonarSettings.getProject().get(i));
+            latestProjects.addAll(updatedProjects);
 
             int projSize = ((projects != null) ? projects.size() : 0);
             log("Fetched projects   " + projSize, start);
 
-            addNewProjects(projects, existingProjects, collector);
+            addNewProjects(updatedProjects, existingProjects, collector);
 
-            refreshData(enabledProjects(collector, instanceUrl));
+            refreshData(enabledProjects(collector, collector.getSonarServers().get(i)));
 
             log("Finished", start);
         }
@@ -202,5 +205,18 @@ public class SonarCollectorTask extends CollectorTask<SonarCollector> {
     private boolean isNewQualityData(SonarProject project, CodeQuality codeQuality) {
         return codeQualityRepository.findByCollectorItemIdAndTimestamp(
                 project.getId(), codeQuality.getTimestamp()) == null;
+    }
+    
+    private List<SonarProject> addProjects(List<SonarProject> sonarProjects, String project)
+    {
+    	List<SonarProject> updatedProject = new ArrayList<>();
+    	
+    	for(SonarProject sonarProject: sonarProjects)
+    	{
+    		sonarProject.setProject(project);
+    		updatedProject.add(sonarProject);
+    	}
+    	
+    	return updatedProject;
     }
 }

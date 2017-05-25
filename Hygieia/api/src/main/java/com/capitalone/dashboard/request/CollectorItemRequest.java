@@ -13,6 +13,7 @@ public class CollectorItemRequest {
 
     private String description;
     private Map<String,Object> options = new HashMap<>();
+    private String project;
 
     public ObjectId getCollectorId() {
         return collectorId;
@@ -37,10 +38,19 @@ public class CollectorItemRequest {
     public void setOptions(Map<String, Object> options) {
         this.options = options;
     }
+    
+    public String getProject() {
+		return project;
+	}
 
-    public CollectorItem toCollectorItem() {
+	public void setProject(String project) {
+		this.project = project;
+	}
+
+	public CollectorItem toCollectorItem() {
         CollectorItem item = new CollectorItem();
         item.setCollectorId(collectorId);
+        item.setProject(project);
         item.setEnabled(true);
         item.getOptions().putAll(options);
         return item;

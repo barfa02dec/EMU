@@ -23,6 +23,7 @@ public class HudsonSettings {
     private List<String> apiKeys;
     private String dockerLocalHostIP; //null if not running in docker on http://localhost
     private int pageSize;
+    private List<String> project;
     @Value("${folderDepth:10}")
     private int folderDepth;
 
@@ -106,4 +107,13 @@ public class HudsonSettings {
     public int getFolderDepth() {
         return folderDepth;
     }
+
+	public List<String> getProject() {
+		return project;
+	}
+
+	public void setProject(List<String> project) {
+		this.project = project;
+	}
+    
 }

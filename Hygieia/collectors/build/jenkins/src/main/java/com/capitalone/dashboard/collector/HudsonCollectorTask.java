@@ -84,20 +84,23 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
 
         clean(collector, existingJobs);
 
-        for (String instanceUrl : collector.getBuildServers()) {
-            logBanner(instanceUrl);
+       // for (String instanceUrl : collector.getBuildServers()) {
+        for (int i=0;i<collector.getBuildServers().size();i++) {
+            logBanner(collector.getBuildServers().get(i));
             try {
+            	
                 Map<HudsonJob, Set<Build>> buildsByJob = hudsonClient
-                        .getInstanceJobs(instanceUrl);
+                        .getInstanceJobs(collector.getBuildServers().get(i));
+                Set<HudsonJob> hudsonJob = addProject(hudsonSettings.getProject().get(i), buildsByJob.keySet());
                 log("Fetched jobs", start);
-                activeJobs.addAll(buildsByJob.keySet());
-                addNewJobs(buildsByJob.keySet(), existingJobs, collector);
-                addNewBuilds(enabledJobs(collector, instanceUrl), buildsByJob);
+                activeJobs.addAll(hudsonJob);
+                addNewJobs(hudsonJob, existingJobs, collector);
+                addNewBuilds(enabledJobs(collector, collector.getBuildServers().get(i)), buildsByJob);
                 log("Finished", start);
             } catch (RestClientException rce) {
-                activeServers.remove(instanceUrl); // since it was a rest exception, we will not delete this job  and wait for
+                activeServers.remove(collector.getBuildServers().get(i)); // since it was a rest exception, we will not delete this job  and wait for
                 // rest exceptions to clear up at a later run.
-                log("Error getting jobs for: " + instanceUrl, start);
+                log("Error getting jobs for: " + collector.getBuildServers().get(i), start);
             }
         }
         // Delete jobs that will be no longer collected because servers have moved etc.
@@ -275,5 +278,17 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
     private boolean isNewBuild(HudsonJob job, Build build) {
         return buildRepository.findByCollectorItemIdAndNumber(job.getId(),
                 build.getNumber()) == null;
+    }
+    
+    private Set<HudsonJob> addProject(String projectName, Set<HudsonJob> hudsonJobs)
+    {
+ 	   Set<HudsonJob> jobProjects = new HashSet<>();
+ 	   for(HudsonJob hudsonJob: hudsonJobs)
+ 	   {
+ 		   hudsonJob.setProject(projectName);
+ 		   jobProjects.add(hudsonJob);
+ 	   }
+ 	   
+ 	   return jobProjects;
     }
 }

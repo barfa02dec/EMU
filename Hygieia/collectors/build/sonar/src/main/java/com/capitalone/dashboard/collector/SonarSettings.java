@@ -16,6 +16,7 @@ public class SonarSettings {
     private String password;
     private String metrics;
     private List<String> servers;
+    private List<String> project;
 
     public String getCron() {
         return cron;
@@ -56,4 +57,13 @@ public class SonarSettings {
     public void setServers(List<String> servers) {
         this.servers = servers;
     }
+
+	public List<String> getProject() {
+		return project;
+	}
+
+	public void setProject(List<String> project) {
+		this.project = project;
+	}
+    
 }
