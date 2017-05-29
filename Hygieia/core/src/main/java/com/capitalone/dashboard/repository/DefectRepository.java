@@ -16,7 +16,10 @@
 
 package com.capitalone.dashboard.repository;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
@@ -27,6 +30,9 @@ import com.capitalone.dashboard.model.Defect;
  */
 public interface DefectRepository extends CrudRepository<Defect, ObjectId>,
 		QueryDslPredicateExecutor<Defect>, DefectRepositoryCustom {
+
+	@Query(value = "{'collectorId' : ?0}", fields = "{'defectId' : ?1}")
+	List<Defect> findById(ObjectId collectorId, String defectId);
 	/**
 	 * This essentially returns the max change date from the collection, based
 	 * on the last change date (or default delta change date property) available
@@ -47,4 +53,13 @@ public interface DefectRepository extends CrudRepository<Defect, ObjectId>,
 
 	@Query(value = " {'sNumber' : ?0 }")
 	List<Defect> getStoryByNumber(String sNumber);*/
+
+	@Query(value = "{'defectStatus' : ?0}")
+	List<Defect> findByStatus(String defectStatus);
+	
+	@Query(value = "{'defectSeverity' : ?0}")
+	List<Defect> findBySeverity(String defectSeverity);
+	
+	@Query(value = "{'defectAge' : ?0}")
+	List<Defect> findByAge(Integer defectAge);
 }
