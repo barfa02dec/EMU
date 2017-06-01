@@ -16,23 +16,17 @@
 
 package com.capitalone.dashboard.repository;
 
-import java.util.List;
-
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
-import com.capitalone.dashboard.model.Defect;
+import com.capitalone.dashboard.model.Sprint;
 
 /**
  * Repository for {@link FeatureCollector}.
  */
-public interface DefectRepository extends CrudRepository<Defect, ObjectId>,
-		QueryDslPredicateExecutor<Defect>, DefectRepositoryCustom {
-
-	@Query(value = "{'collectorId' : ?0}", fields = "{'defectId' : ?1}")
-	List<Defect> findById(ObjectId collectorId, String defectId);
+public interface SprintRepository extends CrudRepository<Sprint, ObjectId>,
+		QueryDslPredicateExecutor<Sprint>, SprintRepositoryCustom {
 	/**
 	 * This essentially returns the max change date from the collection, based
 	 * on the last change date (or default delta change date property) available
@@ -44,29 +38,10 @@ public interface DefectRepository extends CrudRepository<Defect, ObjectId>,
 	 * @return A single Change Date value that is the maximum value of the
 	 *         existing collection
 	 */
-	/*@Query
-	List<Defect> findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
-			ObjectId collectorId, String changeDate);
 
-	@Query(value = "{'sId' : ?0}", fields = "{'sId' : 1}")
-	List<Defect> getFeatureIdById(String sId);
 
-	@Query(value = " {'sNumber' : ?0 }")
-	List<Defect> getStoryByNumber(String sNumber);*/
+	/*@Query(value = "{'defectId' : ?0}", fields = "{'defectId' : 1}")
+	List<Defect> getDefectById(String sId);*/
 
-	@Query(value = "{'defectStatus' : ?0}")
-	List<Defect> findByStatus(String defectStatus);
-	
-	@Query(value = "{'defectSeverity' : ?0}")
-	List<Defect> findBySeverity(String defectSeverity);
-	
-	@Query(value = "{'defectAge' : ?0}")
-	List<Defect> findByAge(Integer defectAge);
-	
-	@Query(value = "{'defectId' : ?0}", fields = "{'defectId' : 1}")
-	List<Defect> getDefectById(String sId);
-	
-	@Query(value = "{'defectResolutionInDays' : ?0}")
-	List<Defect> findByResolutionInRange(Integer begin,Integer end);
 	
 }

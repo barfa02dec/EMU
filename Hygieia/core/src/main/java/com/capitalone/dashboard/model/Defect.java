@@ -18,7 +18,6 @@ package com.capitalone.dashboard.model;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -33,19 +32,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "defects")
 public class Defect extends BaseModel {
 	
-	private ObjectId collectorId;
+	private Long collectorId;
 	
 	/*
 	 * Defect specific attributes
 	 */
 	@Indexed
 	private String defectId;
+	private String projectName;
 	private String defectDescription;
 	private String defectPriority;
 	private String defectSeverity;
 	private String defectStatus;
 	private Integer defectAge;
-	private String defectResolution;
+	private String defectResolutionStatus;
+	private Integer defectResolutionInDays;
 	private Integer estimatedTime;
 	private String createdBy;
 	private String creationDate;
@@ -53,15 +54,41 @@ public class Defect extends BaseModel {
 	private String updateDate;
 	private String environment;
 	private int originalEstimate;
+	private String assignee;
+	private String reporter;
+	private String dueDate; 
+	private String projectId;
 	
-	
-	
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
 	public int getOriginalEstimate() {
 		return originalEstimate;
 	}
 
 	public void setOriginalEstimate(int originalEstimate) {
 		this.originalEstimate = originalEstimate;
+	}
+	
+	public String getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(String dueDate) {
+		this.dueDate = dueDate;
 	}
 
 	public String getEnvironment() {
@@ -72,11 +99,13 @@ public class Defect extends BaseModel {
 		this.environment = environment;
 	}
 
-	public ObjectId getCollectorId() {
+	
+
+	public Long getCollectorId() {
 		return collectorId;
 	}
 
-	public void setCollectorId(ObjectId collectorId) {
+	public void setCollectorId(Long collectorId) {
 		this.collectorId = collectorId;
 	}
 
@@ -128,12 +157,13 @@ public class Defect extends BaseModel {
 		this.defectAge = defectAge;
 	}
 
-	public String getDefectResolution() {
-		return defectResolution;
+
+	public String getDefectResolutionStatus() {
+		return defectResolutionStatus;
 	}
 
-	public void setDefectResolution(String defectResolution) {
-		this.defectResolution = defectResolution;
+	public void setDefectResolutionStatus(String defectResolutionStatus) {
+		this.defectResolutionStatus = defectResolutionStatus;
 	}
 
 	public Integer getEstimatedTime() {
@@ -172,9 +202,34 @@ public class Defect extends BaseModel {
 		return updateDate;
 	}
 
+	public String getAssignee() {
+		return assignee;
+	}
+
+	public void setAssignee(String assignee) {
+		this.assignee = assignee;
+	}
+
+	public String getReporter() {
+		return reporter;
+	}
+
+	public void setReporter(String reporter) {
+		this.reporter = reporter;
+	}
+
 	public void setUpdateDate(String updateDate) {
 		this.updateDate = updateDate;
 	}
+
+	public Integer getDefectResolutionInDays() {
+		return defectResolutionInDays;
+	}
+
+	public void setDefectResolutionInDays(Integer defectResolutionInDays) {
+		this.defectResolutionInDays = defectResolutionInDays;
+	}
+
 
 	@Override
 	public boolean equals(Object o) {
