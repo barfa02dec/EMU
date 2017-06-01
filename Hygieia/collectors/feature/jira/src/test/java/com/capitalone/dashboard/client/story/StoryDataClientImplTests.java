@@ -93,7 +93,7 @@ public class StoryDataClientImplTests {
 		featureSettings.setJiraBaseUrl("https://jira.atlassian.com/");
 		featureSettings.setJiraQueryEndpoint("rest/api/latest/");
 		
-		storyDataClient = new StoryDataClientImpl(coreFeatureSettings, featureSettings, featureRepo,drepo, featureCollectorRepository, teamRepo, jiraClient);
+		storyDataClient = null;
 		
 		FeatureCollector jira = new FeatureCollector();
 		jira.setId(JIRA_COLLECTORID);

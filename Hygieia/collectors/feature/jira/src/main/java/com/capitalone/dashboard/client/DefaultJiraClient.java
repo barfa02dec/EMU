@@ -44,9 +44,9 @@ import com.atlassian.jira.rest.client.api.domain.SearchResult;
 import com.atlassian.util.concurrent.Promise;
 import com.capitalone.dashboard.model.Team;
 import com.capitalone.dashboard.util.ClientUtil;
-import com.capitalone.dashboard.util.NewFeatureSettings;
-import com.capitalone.dashboard.util.FeatureWidgetQueries;
 import com.capitalone.dashboard.util.FeatureSettings;
+import com.capitalone.dashboard.util.FeatureWidgetQueries;
+import com.capitalone.dashboard.util.NewFeatureSettings;
 import com.google.common.collect.Lists;
 
 /**

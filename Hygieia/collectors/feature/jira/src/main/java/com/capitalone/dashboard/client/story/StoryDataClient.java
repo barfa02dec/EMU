@@ -1,5 +1,11 @@
 package com.capitalone.dashboard.client.story;
 
+import java.util.List;
+
+import com.capitalone.dashboard.model.Defect;
+import com.capitalone.dashboard.model.Scope;
+import com.capitalone.dashboard.util.NewFeatureSettings;
+
 /**
  * Interface through which a story data collector object can be implemented.
  *
@@ -13,4 +19,5 @@ public interface StoryDataClient {
 	 * @return the number of records updated
 	 */
 	int updateStoryInformation();
+	void processDefectAggregation(NewFeatureSettings featureSettings,List<Defect> defectsInDB,Scope scopeProject);
 }

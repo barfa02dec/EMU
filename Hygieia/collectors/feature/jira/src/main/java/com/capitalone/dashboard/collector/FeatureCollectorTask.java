@@ -1,5 +1,7 @@
 package com.capitalone.dashboard.collector;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +11,16 @@ import org.springframework.stereotype.Component;
 import com.capitalone.dashboard.client.JiraClient;
 import com.capitalone.dashboard.client.project.ProjectDataClientImpl;
 import com.capitalone.dashboard.client.story.StoryDataClientImpl;
-import com.capitalone.dashboard.client.team.TeamDataClientImpl;
+import com.capitalone.dashboard.model.Defect;
 import com.capitalone.dashboard.model.FeatureCollector;
+import com.capitalone.dashboard.model.Scope;
 import com.capitalone.dashboard.repository.BaseCollectorRepository;
+import com.capitalone.dashboard.repository.DefectAggregationRepository;
 import com.capitalone.dashboard.repository.DefectRepository;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
 import com.capitalone.dashboard.repository.FeatureRepository;
 import com.capitalone.dashboard.repository.ScopeRepository;
+import com.capitalone.dashboard.repository.SprintRepository;
 import com.capitalone.dashboard.repository.TeamRepository;
 import com.capitalone.dashboard.util.CoreFeatureSettings;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
@@ -34,6 +39,8 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	private final CoreFeatureSettings coreFeatureSettings;
 	private final FeatureRepository featureRepository;
 	private final DefectRepository defectRepository;
+	private final SprintRepository sprintRepository;
+	private final DefectAggregationRepository defectAggregationRepository;
 	private final TeamRepository teamRepository;
 	private final ScopeRepository projectRepository;
 	private final FeatureCollectorRepository featureCollectorRepository;
@@ -57,7 +64,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	public FeatureCollectorTask(CoreFeatureSettings coreFeatureSettings,
 			TaskScheduler taskScheduler, FeatureRepository featureRepository,
 			TeamRepository teamRepository, ScopeRepository projectRepository,
-			FeatureCollectorRepository featureCollectorRepository,DefectRepository defectRepository, FeatureSettings hmFeatureSettings,
+			FeatureCollectorRepository featureCollectorRepository,DefectRepository defectRepository,SprintRepository sprintRepository,  DefectAggregationRepository defectAggregationRepository,FeatureSettings hmFeatureSettings,
 			JiraClient jiraClient) {
 		super(taskScheduler, FeatureCollectorConstants.JIRA);
 		this.featureCollectorRepository = featureCollectorRepository;
@@ -68,6 +75,8 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 		this.hmFeatureSettings = hmFeatureSettings;
 		this.jiraClient = jiraClient;
 		this.defectRepository=defectRepository;
+		this.sprintRepository=sprintRepository;
+		this.defectAggregationRepository=defectAggregationRepository;
 		
 	}
 
@@ -122,17 +131,17 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			featureSettings.setJiraEpicIdFieldName(hmFeatureSettings.getJiraEpicIdFieldName().get(i));
 			featureSettings.setJiraStoryPointsFieldName(hmFeatureSettings.getJiraStoryPointsFieldName().get(i));
 			featureSettings.setJiraTeamFieldName(hmFeatureSettings.getJiraTeamFieldName().get(i));
-			
-			
+			featureSettings.setResolutionPeriod(hmFeatureSettings.getResolutionPeriod().get(i));
+			featureSettings.setDefectAge(hmFeatureSettings.getDefectAge().get(i));
 		logBanner(featureSettings.getJiraBaseUrl());
 		int count = 0;
 
 		try {
-			long teamDataStart = System.currentTimeMillis();
+		/*	long teamDataStart = System.currentTimeMillis();
 			TeamDataClientImpl teamData = new TeamDataClientImpl(this.featureCollectorRepository,
 					featureSettings, this.teamRepository, jiraClient);
 			count = teamData.updateTeamInformation();
-			log("Team Data", teamDataStart, count);
+			log("Team Data", teamDataStart, count);*/
 	
 			long projectDataStart = System.currentTimeMillis();
 			ProjectDataClientImpl projectData = new ProjectDataClientImpl(featureSettings,
@@ -142,11 +151,17 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	
 			long storyDataStart = System.currentTimeMillis();
 			StoryDataClientImpl storyData = new StoryDataClientImpl(this.coreFeatureSettings,
-					featureSettings, this.featureRepository,this.defectRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
+					featureSettings, this.featureRepository,this.defectRepository,this.sprintRepository,this.defectAggregationRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
 			count = storyData.updateStoryInformation();
-			
+			List<Defect> defectsInDB=(List<Defect>) defectRepository.findAll();
+			List<Scope> projects=(List<Scope>) projectRepository.findAll();
+			for(Scope scopeProject: projects){
+				
+				storyData.processDefectAggregation(featureSettings, defectsInDB,scopeProject);
+
+			}
 			log("Story Data", storyDataStart, count);
-			log("Finished", teamDataStart);
+			/*log("Finished", teamDataStart);*/
 		} catch (Exception e) {
 			// catch exception here so we don't blow up the collector completely
 			LOGGER.error("Failed to collect jira information", e);

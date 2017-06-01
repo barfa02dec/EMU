@@ -16,47 +16,49 @@
 
 package com.capitalone.dashboard.client.story;
 
-import com.atlassian.jira.rest.client.api.domain.BasicProject;
-import com.atlassian.jira.rest.client.api.domain.Issue;
-import com.atlassian.jira.rest.client.api.domain.IssueField;
-import com.atlassian.jira.rest.client.api.domain.IssueType;
-import com.atlassian.jira.rest.client.api.domain.User;
-import com.capitalone.dashboard.client.JiraClient;
-import com.capitalone.dashboard.client.Sprint;
-import com.capitalone.dashboard.model.Defect;
-import com.capitalone.dashboard.model.Feature;
-import com.capitalone.dashboard.model.FeatureStatus;
-import com.capitalone.dashboard.model.Team;
-import com.capitalone.dashboard.repository.DefectRepository;
-import com.capitalone.dashboard.repository.FeatureCollectorRepository;
-import com.capitalone.dashboard.repository.FeatureRepository;
-import com.capitalone.dashboard.repository.TeamRepository;
-import com.capitalone.dashboard.util.ClientUtil;
-import com.capitalone.dashboard.util.FeatureCollectorConstants;
-import com.capitalone.dashboard.util.CoreFeatureSettings;
-import com.capitalone.dashboard.util.DateUtil;
-import com.capitalone.dashboard.util.NewFeatureSettings;
-
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.commons.lang.ObjectUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.atlassian.jira.rest.client.api.domain.Issue;
+import com.atlassian.jira.rest.client.api.domain.IssueField;
+import com.atlassian.jira.rest.client.api.domain.IssueType;
+import com.capitalone.dashboard.client.JiraClient;
+import com.capitalone.dashboard.client.Sprint;
+import com.capitalone.dashboard.model.Defect;
+import com.capitalone.dashboard.model.DefectAggregation;
+import com.capitalone.dashboard.model.Feature;
+import com.capitalone.dashboard.model.FeatureStatus;
+import com.capitalone.dashboard.model.QDefect;
+import com.capitalone.dashboard.model.Scope;
+import com.capitalone.dashboard.repository.DefectAggregationRepository;
+import com.capitalone.dashboard.repository.DefectRepository;
+import com.capitalone.dashboard.repository.FeatureCollectorRepository;
+import com.capitalone.dashboard.repository.FeatureRepository;
+import com.capitalone.dashboard.repository.SprintRepository;
+import com.capitalone.dashboard.repository.TeamRepository;
+import com.capitalone.dashboard.util.ClientUtil;
+import com.capitalone.dashboard.util.CoreFeatureSettings;
+import com.capitalone.dashboard.util.DateUtil;
+import com.capitalone.dashboard.util.FeatureCollectorConstants;
+import com.capitalone.dashboard.util.NewFeatureSettings;
+
+
 
 /**
  * This is the primary implemented/extended data collector for the feature
@@ -74,6 +76,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	private static final String IN_PROGRESS = "In Progress";
 	private static final String DONE = "Done";
 	private static final String BUG="Bug";
+
 	
 	private static final Comparator<Sprint> SPRINT_COMPARATOR = new Comparator<Sprint>() {
 		@Override
@@ -94,8 +97,9 @@ public class StoryDataClientImpl implements StoryDataClient {
 	private final NewFeatureSettings featureSettings;
 	private final FeatureRepository featureRepo;
 	private final DefectRepository defectRepository;
+	private final SprintRepository sprintRepository;
+	private final DefectAggregationRepository defectAggregationRepository;
 	private final FeatureCollectorRepository featureCollectorRepository;
-	private final TeamRepository teamRepository;
 	private final JiraClient jiraClient;
 	
 	// epicId : list of epics
@@ -108,7 +112,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	 * Extends the constructor from the super class.
 	 */
 	public StoryDataClientImpl(CoreFeatureSettings coreFeatureSettings, NewFeatureSettings featureSettings,
-			FeatureRepository featureRepository,DefectRepository defectRepository, FeatureCollectorRepository featureCollectorRepository, TeamRepository teamRepository,
+			FeatureRepository featureRepository,DefectRepository defectRepository,SprintRepository sprintRepository,DefectAggregationRepository defectAggregationRepository, FeatureCollectorRepository featureCollectorRepository, TeamRepository teamRepository,
 			JiraClient jiraClient) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Constructing data collection for the feature widget, story-level data...");
@@ -117,9 +121,10 @@ public class StoryDataClientImpl implements StoryDataClient {
 		this.featureSettings = featureSettings;
 		this.featureRepo = featureRepository;
 		this.featureCollectorRepository = featureCollectorRepository;
-		this.teamRepository = teamRepository;
 		this.jiraClient = jiraClient;
 		this.defectRepository=defectRepository;
+		this.sprintRepository=sprintRepository;
+		this.defectAggregationRepository=defectAggregationRepository;
 		this.epicCache = new HashMap<>();
 		
 		todoCache = buildStatusCache(coreFeatureSettings.getTodoStatuses());
@@ -152,7 +157,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		}
 		
 		int pageSize = jiraClient.getPageSize();
-				
+			
 		updateStatuses();
 
 		boolean hasMore = true;
@@ -191,429 +196,92 @@ public class StoryDataClientImpl implements StoryDataClient {
 	 * @param currentPagedJiraRs
 	 *            A list response of Jira issues from the source system
 	 */
-	@SuppressWarnings({ "PMD.AvoidDeeplyNestedIfStmts", "PMD.NPathComplexity" })
+	
 	private void updateMongoInfo(List<Issue> currentPagedJiraRs) {
 		if (LOGGER.isDebugEnabled()) {
-			LOGGER.debug("Size of paged Jira response: " + (currentPagedJiraRs == null? 0 : currentPagedJiraRs.size()));
+			LOGGER.debug(
+					"Size of paged Jira response: " + (currentPagedJiraRs == null ? 0 : currentPagedJiraRs.size()));
 		}
-		
+
 		if (currentPagedJiraRs != null) {
-			List<Feature> featuresToSave = new ArrayList<>();
-			List<Defect> defectsToSave=new ArrayList<Defect>();
-			Map<String, String> issueEpics = new HashMap<>();
-			ObjectId jiraFeatureId = featureCollectorRepository.findByName(FeatureCollectorConstants.JIRA).getId();
+
 			Set<String> issueTypeNames = new HashSet<>();
 			for (String issueTypeName : featureSettings.getJiraIssueTypeNames()) {
 				issueTypeNames.add(issueTypeName.toLowerCase(Locale.getDefault()));
 			}
+
 			
-			Defect defect= null;
+			List<Defect> defectsToSave = new ArrayList<Defect>();
+			List<com.capitalone.dashboard.model.Sprint> sprintDetailsToSave = new ArrayList<com.capitalone.dashboard.model.Sprint>();
 			for (Issue issue : currentPagedJiraRs) {
-				String issueId = TOOLS.sanitizeResponse(issue.getId());
-				
-				Feature feature = findOneFeature(issueId);
-				if (feature == null) {
-					 feature = new Feature();
-				}
-				
-				
-				
 				Map<String, IssueField> fields = buildFieldMap(issue.getFields());
+				IssueField sprintData = fields.get(featureSettings.getJiraSprintDataFieldName());
+
 				IssueType issueType = issue.getIssueType();
-				User assignee = issue.getAssignee();
-				IssueField epic = fields.get(featureSettings.getJiraEpicIdFieldName());
-				IssueField sprint = fields.get(featureSettings.getJiraSprintDataFieldName());
-				
-				if (issueTypeNames.contains(TOOLS.sanitizeResponse(issueType.getName()).toLowerCase(Locale.getDefault()))) {
+
+				if (issueTypeNames
+						.contains(TOOLS.sanitizeResponse(issueType.getName()).toLowerCase(Locale.getDefault()))) {
 					if (LOGGER.isDebugEnabled()) {
-						LOGGER.debug(String.format("[%-12s] %s", 
-								TOOLS.sanitizeResponse(issue.getKey()),
+						LOGGER.debug(String.format("[%-12s] %s", TOOLS.sanitizeResponse(issue.getKey()),
 								TOOLS.sanitizeResponse(issue.getSummary())));
 					}
-					
-					// collectorId
-					feature.setCollectorId(jiraFeatureId);
-					
-					// ID
-					feature.setsId(TOOLS.sanitizeResponse(issue.getId()));
-					
-					// Type
-					feature.setsTypeId(TOOLS.sanitizeResponse(issueType.getId()));
-					feature.setsTypeName(TOOLS.sanitizeResponse(issueType.getName()));
+					if (TOOLS.sanitizeResponse(issueType.getName()).equals(BUG)) {
+						Defect defect = new Defect();
+						defectsToSave.add(processDefects(issue, defect, fields));
 
-					processFeatureData(feature, issue, fields);
-					
-					// delay processing epic data for performance
-					if (epic != null && epic.getValue() != null && !TOOLS.sanitizeResponse(epic.getValue()).isEmpty()) {
-						issueEpics.put(feature.getsId(), TOOLS.sanitizeResponse(epic.getValue()));
 					}
 
-					
-					processSprintData(feature, sprint);
-					
-					processAssigneeData(feature, assignee);
-					if(TOOLS.sanitizeResponse(issueType.getName()).equals(BUG)){
-						System.out.println("*******************************************");
-						System.out.println(issue.toString());
-						System.out.println("*******************************************");
-						defect=new Defect();
-						defect.setDefectId(TOOLS.sanitizeResponse(issue.getId()));
-						defect.setDefectStatus(this.toCanonicalFeatureStatus(issue.getStatus().getName()));
-						defect.setDefectDescription(feature.getsName());
-						defect.setDefectPriority(null!=issue.getPriority()?issue.getPriority().getName():null);
-						defect.setCreationDate(issue.getCreationDate().toString());
-						defect.setCreatedBy(null!=issue.getAssignee()?issue.getAssignee().getName():null);
-						int originalEstimate = 0;
-						
-						if (issue.getTimeTracking() != null && issue.getTimeTracking().getOriginalEstimateMinutes() != null) {
-							originalEstimate = issue.getTimeTracking().getOriginalEstimateMinutes();
-						} else if (fields.get("aggregatetimeoriginalestimate") != null
-								&& fields.get("aggregatetimeoriginalestimate").getValue() != null) {
-							// this value is in seconds
-							originalEstimate = ((Integer)fields.get("aggregatetimeoriginalestimate").getValue()) / 60;
-						}
-						defect.setOriginalEstimate(originalEstimate);
-						defect.setDefectResolution(null!=issue.getResolution()?issue.getResolution().getName():null);
-						defectsToSave.add(defect);
+					if (null != sprintData) {
+						sprintDetailsToSave.addAll(processSprintData(sprintData));
+
 					}
-					
-					featuresToSave.add(feature);
-					
+
 				}
 			}
-			
-			// Load epic data into cache
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Processing epic data");
-			}
-			
-			long epicStartTime = System.currentTimeMillis();
-			Collection<String> epicsToLoad = issueEpics.values();
-			loadEpicData(epicsToLoad);
-			
-			for (Feature feature : featuresToSave) {
-				String epicKey = issueEpics.get(feature.getsId());
-				
-				processEpicData(feature, epicKey);
-			}
-			
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Processing epic data took " + (System.currentTimeMillis() - epicStartTime) + " ms");
-			}
-			
-			// Saving back to MongoDB
-			//featureRepo.save(featuresToSave);
-			if(null!=defectsToSave && !defectsToSave.isEmpty()){
+
+			if (null != defectsToSave && !defectsToSave.isEmpty()) {
+
 				defectRepository.save(defectsToSave);
+
 			}
+			if (null != sprintDetailsToSave && !sprintDetailsToSave.isEmpty()) {
+				sprintRepository.save(sprintDetailsToSave);
+			}
+
+			defectsToSave = null;
+
 		}
 	}
 	
-	@SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NPathComplexity"})
-	private void processFeatureData(Feature feature, Issue issue, Map<String, IssueField> fields) {
-		BasicProject project = issue.getProject();
-		String status = this.toCanonicalFeatureStatus(issue.getStatus().getName());
-		String changeDate = issue.getUpdateDate().toString();
-		
-		// sNumber
-		feature.setsNumber(TOOLS.sanitizeResponse(issue.getKey()));
-
-		// sName
-		feature.setsName(TOOLS.sanitizeResponse(issue.getSummary()));
-
-		// sStatus
-		feature.setsStatus(TOOLS.sanitizeResponse(status));
-
-		// sState
-		feature.setsState(TOOLS.sanitizeResponse(status));
-		
-		// sUrl (Example: 'http://my.jira.com/browse/KEY-1001')
-        feature.setsUrl(featureSettings.getJiraBaseUrl() 
-                + (featureSettings.getJiraBaseUrl().substring(featureSettings.getJiraBaseUrl().length()-1).equals("/") ? "" : "/")
-                + "browse/" + TOOLS.sanitizeResponse(issue.getKey()));
-		
-		int originalEstimate = 0;
-		
-		// Tasks use timetracking, stories use aggregatetimeoriginalestimate and aggregatetimeestimate
-		if (issue.getTimeTracking() != null && issue.getTimeTracking().getOriginalEstimateMinutes() != null) {
-			originalEstimate = issue.getTimeTracking().getOriginalEstimateMinutes();
-		} else if (fields.get("aggregatetimeoriginalestimate") != null
-				&& fields.get("aggregatetimeoriginalestimate").getValue() != null) {
-			// this value is in seconds
-			originalEstimate = ((Integer)fields.get("aggregatetimeoriginalestimate").getValue()) / 60;
-		}
-		
-		feature.setsEstimateTime(originalEstimate);
-		
-		// sStoryPoints
-		IssueField storyPointsField = fields.get(featureSettings.getJiraStoryPointsFieldName());
-		if (storyPointsField != null && storyPointsField.getValue() != null && !TOOLS.sanitizeResponse(storyPointsField.getValue()).isEmpty()) {
-			try{
-				Double value = Double.parseDouble(TOOLS.sanitizeResponse(storyPointsField.getValue()));
-				feature.setsEstimate(String.valueOf(value.intValue()));
-
-			}catch (Exception e) {
-				feature.setsEstimate("0");
-			}
-		} else {
-			feature.setsEstimate("0");
-		}
-
-		// sChangeDate
-		feature.setChangeDate(TOOLS.toCanonicalDate(TOOLS.sanitizeResponse(changeDate)));
-
-		// IsDeleted - does not exist for Jira
-		feature.setIsDeleted("False");
-
-		// sProjectID
-		feature.setsProjectID(TOOLS.sanitizeResponse(project.getId()));
-
-		// sProjectName
-		feature.setsProjectName(TOOLS.sanitizeResponse(project.getName()));
-
-		// sProjectBeginDate - does not exist in Jira
-		feature.setsProjectBeginDate("");
-
-		// sProjectEndDate - does not exist in Jira
-		feature.setsProjectEndDate("");
-
-		// sProjectChangeDate - does not exist for this asset level in Jira
-		feature.setsProjectChangeDate("");
-
-		// sProjectState - does not exist in Jira
-		feature.setsProjectState("");
-
-		// sProjectIsDeleted - does not exist in Jira
-		feature.setsProjectIsDeleted("False");
-
-		// sProjectPath - does not exist in Jira
-		feature.setsProjectPath("");
-		
-
-		IssueField team = fields.get(featureSettings.getJiraTeamFieldName());
-		if (team != null && team.getValue() != null && !TOOLS.sanitizeResponse(team.getValue()).isEmpty()) {
-			String teamID = TOOLS.sanitizeResponse(team.getValue());
-
-			Team scopeOwner = teamRepository.findByTeamId(teamID);
-			// sTeamID
-			feature.setsTeamID(teamID);
-			if (scopeOwner != null && StringUtils.isNotEmpty(scopeOwner.getName())) {
-			    // sTeamName
-				feature.setsTeamName(TOOLS.sanitizeResponse(scopeOwner.getName()));
-			}
-		}
-		
-		// sTeamChangeDate - not able to retrieve at this asset level from Jira
-		feature.setsTeamChangeDate("");
-
-		// sTeamAssetState
-		feature.setsTeamAssetState("");
-
-		// sTeamIsDeleted
-		feature.setsTeamIsDeleted("False");
-
-		// sOwnersState - does not exist in Jira at this level
-		feature.setsOwnersState(Arrays.asList("Active"));
-
-		// sOwnersChangeDate - does not exist in Jira
-		feature.setsOwnersChangeDate(TOOLS.toCanonicalList(Collections.<String>emptyList()));
-
-		// sOwnersIsDeleted - does not exist in Jira
-		feature.setsOwnersIsDeleted(TOOLS.toCanonicalList(Collections.<String>emptyList()));
-	}
 	
-	private void processEpicData(Feature feature, String epicKey) {
-		if (epicKey != null && !epicKey.isEmpty()) {
-			Issue epicData = getEpicData(epicKey);
-			if (epicData != null) {
-				String epicId = epicData.getId().toString();
-				String epicNumber = epicData.getKey().toString();
-				String epicName = epicData.getSummary().toString();
-				String epicBeginDate = epicData.getCreationDate().toString();
-				String epicStatus = epicData.getStatus().getName();
 	
-				// sEpicID
-				feature.setsEpicID(TOOLS.sanitizeResponse(epicId));
-	
-				// sEpicNumber
-				feature.setsEpicNumber(TOOLS.sanitizeResponse(epicNumber));
-	
-				// sEpicName
-				feature.setsEpicName(TOOLS.sanitizeResponse(epicName));
-				
-				// sEpicUrl (Example: 'http://my.jira.com/browse/KEY-1001')
-		        feature.setsEpicUrl(featureSettings.getJiraBaseUrl() 
-		                + (featureSettings.getJiraBaseUrl().substring(featureSettings.getJiraBaseUrl().length()-1).equals("/") ? "" : "/")
-		                + "browse/" + TOOLS.sanitizeResponse(epicNumber));
-	
-				// sEpicBeginDate - mapped to create date
-				if ((epicBeginDate != null) && !(epicBeginDate.isEmpty())) {
-					feature.setsEpicBeginDate(TOOLS.toCanonicalDate(
-							TOOLS.sanitizeResponse(epicBeginDate)));
-				} else {
-					feature.setsEpicBeginDate("");
-				}
-	
-				// sEpicEndDate
-				if (epicData.getDueDate() != null) {
-					feature.setsEpicEndDate(TOOLS.toCanonicalDate(
-							TOOLS.sanitizeResponse(epicData.getDueDate())));
-				} else {
-					feature.setsEpicEndDate("");
-				}
-	
-				// sEpicAssetState
-				if (epicStatus != null) {
-					feature.setsEpicAssetState(TOOLS.sanitizeResponse(epicStatus));
-				} else {
-					feature.setsEpicAssetState("");
-				}
-			} else {
-				feature.setsEpicID("");
-				feature.setsEpicNumber("");
-				feature.setsEpicName("");
-				feature.setsEpicBeginDate("");
-				feature.setsEpicEndDate("");
-				feature.setsEpicType("");
-				feature.setsEpicAssetState("");
-				feature.setsEpicChangeDate("");
-			}
-		} else {
-			feature.setsEpicID("");
-			feature.setsEpicNumber("");
-			feature.setsEpicName("");
-			feature.setsEpicBeginDate("");
-			feature.setsEpicEndDate("");
-			feature.setsEpicType("");
-			feature.setsEpicAssetState("");
-			feature.setsEpicChangeDate("");
-		}
+	private List<com.capitalone.dashboard.model.Sprint> processSprintData(IssueField sprintData){
 		
-		// sEpicType - does not exist in jira
-		feature.setsEpicType("");
-
-		// sEpicChangeDate - does not exist in jira
-		feature.setsEpicChangeDate("");
-
-		// sEpicIsDeleted - does not exist in Jira
-		feature.setsEpicIsDeleted("False");
-	}
-	
-	@SuppressWarnings("PMD.NPathComplexity")
-	private void processSprintData(Feature feature, IssueField sprintField) {
-		if (sprintField != null && sprintField.getValue() != null && !"".equals(sprintField.getValue())) {
-			Object sValue = sprintField.getValue();
-			
-			try {
+		try{
+			if(null!=sprintData){
+				List<com.capitalone.dashboard.model.Sprint> sprintList = new ArrayList<com.capitalone.dashboard.model.Sprint>();
+				Object sValue = sprintData.getValue();
 				List<Sprint> sprints = TOOLS.parseSprints(sValue);
-
-				// Now sort so we can use the most recent one
-				// yyyy-MM-dd'T'HH:mm:ss format so string compare will be fine
-				Collections.sort(sprints, SPRINT_COMPARATOR);
 				
-				if (!sprints.isEmpty()) {
-					// Use the latest sprint
-					Sprint sprint = sprints.get(sprints.size() - 1);
-					
-					// sSprintID
-					if (sprint.getId() != null) {
-						feature.setsSprintID(String.valueOf(sprint.getId()));
-					} else {
-						feature.setsSprintID("");
-					}
-					
-					// sSprintName
-					if (sprint.getName() != null) {
-						feature.setsSprintName(sprint.getName());
-					} else {
-						feature.setsSprintName("");
-					}
-					
-					// sSprintUrl (Example: 'http://my.jira.com/secure/RapidBoard.jspa?rapidView=123&view=reporting&chart=sprintRetrospective&sprint=1597' where sprintID = 1597 and rapidViewID = 123)
-					if (StringUtils.isNotEmpty(feature.getsSprintID()) && sprint.getRapidViewId() != null) {
-    			        feature.setsSprintUrl(featureSettings.getJiraBaseUrl() 
-    			                + (featureSettings.getJiraBaseUrl().substring(featureSettings.getJiraBaseUrl().length()-1).equals("/") ? "" : "/")
-    			                + "secure/RapidBoard.jspa?rapidView=" + sprint.getRapidViewId()
-    			                + "&view=reporting&chart=sprintRetrospective&sprint=" + feature.getsSprintID());
-					}
-	
-					// sSprintBeginDate
-					if (sprint.getStartDateStr() != null) {
-						feature.setsSprintBeginDate(TOOLS.toCanonicalDate(sprint.getStartDateStr()));
-					} else {
-						feature.setsSprintBeginDate("");
-					}
-	
-					// sSprintEndDate
-					if (sprint.getEndDateStr() != null) {
-						feature.setsSprintEndDate(TOOLS.toCanonicalDate(sprint.getEndDateStr()));
-					} else {
-						feature.setsSprintEndDate("");
-					}
-	
-					// sSprintAssetState
-					if (sprint.getState() != null) {
-						feature.setsSprintAssetState(sprint.getState());
-					} else {
-						feature.setsSprintAssetState("");
-					}
-				} else {
-					LOGGER.error("Failed to obtain sprint data from " + sValue);
+				for (Sprint sp: sprints){
+					com.capitalone.dashboard.model.Sprint sprintModel= new com.capitalone.dashboard.model.Sprint();
+					sprintModel.setName(sp.getName());
+					sprintModel.setCompleteDateStr(sp.getCompleteDateStr());
+					sprintModel.setRapidViewId(sp.getRapidViewId());
+					sprintList.add(sprintModel);
+					sprintModel=null;
 				}
-			} catch (ParseException | RuntimeException e) {
-				LOGGER.error("Failed to obtain sprint data from " + sValue, e);
+				return sprintList;
 			}
-		} else {
-			// Issue #678 - leave sprint blank. Not having a sprint does not imply kanban
-			// as a story on a scrum board without a sprint is really on the backlog
-			feature.setsSprintID("");
-			feature.setsSprintName("");
-			feature.setsSprintBeginDate("");
-			feature.setsSprintEndDate("");
-			feature.setsSprintAssetState("");
+			
+			
+		}catch (Exception e) {
+			// TODO: handle exception
 		}
-
-		// sSprintChangeDate - does not exist in Jira
-		feature.setsSprintChangeDate("");
-
-		// sSprintIsDeleted - does not exist in Jira
-		feature.setsSprintIsDeleted("False");
+		return null;
 	}
 	
-	private void processAssigneeData(Feature feature, User assignee) {
-		if (assignee != null) {
-			// sOwnersID
-			List<String> assigneeKey = new ArrayList<String>();
-			// sOwnersShortName
-			// sOwnersUsername
-			List<String> assigneeName = new ArrayList<String>();
-			if (!assignee.getName().isEmpty() && (assignee.getName() != null)) {
-				assigneeKey.add(TOOLS.sanitizeResponse(assignee.getName()));
-				assigneeName.add(TOOLS.sanitizeResponse(assignee.getName()));
-
-			} else {
-				assigneeKey = new ArrayList<String>();
-				assigneeName = new ArrayList<String>();
-			}
-			feature.setsOwnersShortName(assigneeName);
-			feature.setsOwnersUsername(assigneeName);
-			feature.setsOwnersID(assigneeKey);
-
-			// sOwnersFullName
-			List<String> assigneeDisplayName = new ArrayList<String>();
-			if (!assignee.getDisplayName().isEmpty() && (assignee.getDisplayName() != null)) {
-				assigneeDisplayName.add(TOOLS.sanitizeResponse(assignee.getDisplayName()));
-			} else {
-				assigneeDisplayName.add("");
-			}
-			feature.setsOwnersFullName(assigneeDisplayName);
-		} else {
-			feature.setsOwnersUsername(new ArrayList<String>());
-			feature.setsOwnersShortName(new ArrayList<String>());
-			feature.setsOwnersID(new ArrayList<String>());
-			feature.setsOwnersFullName(new ArrayList<String>());
-		}
-	}
+	
 
 	/**
 	 * ETL for converting any number of custom Jira statuses to a reduced list
@@ -666,56 +334,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		return data;
 	}
 	
-	private void loadEpicData(Collection<String> epicKeys) {
-		// No need to lookup items that are already cached
-		Set<String> epicsToLookup = new HashSet<>();
-		epicsToLookup.addAll(epicKeys);
-		epicsToLookup.removeAll(epicCache.keySet());
-		
-		List<String> epicsToLookupL = new ArrayList<>(epicsToLookup);
-		
-		if (!epicsToLookupL.isEmpty()) {
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Obtaining epic information for epics: " + epicsToLookupL);
-			}
-			
-			// Do this at most 50 at a time as jira doesn't seem to always work when there are a lot of items in an in clause
-			int maxEpicsToLookup = Math.min(featureSettings.getPageSize(), 50);
-			
-			for (int i = 0; i < epicsToLookupL.size(); i += maxEpicsToLookup) {
-				int endIdx = Math.min(i + maxEpicsToLookup, epicsToLookupL.size());
-				
-				List<String> epicKeysSub = epicsToLookupL.subList(i, endIdx);
-				
-				List<Issue> epics = jiraClient.getEpics(epicKeysSub,featureSettings);
-				
-				for (Issue epic : epics) {
-					String epicKey = epic.getKey();
-					
-					epicCache.put(epicKey, epic);
-				}
-			}
-		}
-	}
-
-	/**
-	 * Retrieves the related Epic to the current issue from Jira. To make this
-	 * thread-safe, please synchronize and lock on the result of this method.
-	 * 
-	 * @param epicKey
-	 *            A given Epic Key
-	 * @return A valid Jira Epic issue object
-	 */
-	private Issue getEpicData(String epicKey) {
-		if (epicCache.containsKey(epicKey)) {
-			return epicCache.get(epicKey);
-		} else {
-			Issue epic = jiraClient.getEpic(epicKey, featureSettings);
-			epicCache.put(epicKey, epic);
-			
-			return epic;
-		}
-	}
+	
 	
 	private String getChangeDateMinutePrior(String changeDateISO) {
 		int priorMinutes = this.featureSettings.getScheduledPriorMin();
@@ -723,20 +342,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				DateUtil.fromISODateTimeFormat(changeDateISO), priorMinutes));
 	}
 	
-	private Feature findOneFeature(String featureId) {
-		List<Feature> features = featureRepo.getFeatureIdById(featureId);
-		
-		// Not sure of the state of the data
-		if (features.size() > 1) {
-			LOGGER.warn("More than one collector item found for scopeId " + featureId);
-		}
-		
-		if (!features.isEmpty()) {
-			return features.get(0);
-		}
-		
-		return null;
-	}
+
 	
 	private Map<String, IssueField> buildFieldMap(Iterable<IssueField> fields) {
 		Map<String, IssueField> rt = new HashMap<String, IssueField>();
@@ -775,4 +381,238 @@ public class StoryDataClientImpl implements StoryDataClient {
 			}
 		}
 	}
+	private Defect processDefects(Issue issue,Defect defect,Map<String, IssueField> fields){
+		
+		/*setting the collector ID as multiple of defect ID  and project ID to avoid the creation of duplicate Defects. 
+		 * There are scenarios where different projects will be same / defect ID will be same w.r.t different JIRA's  
+		 */
+		defect.setCollectorId(issue.getId() * issue.getProject().getId());
+		defect.setDefectId(TOOLS.sanitizeResponse(issue.getId()));
+		defect.setProjectId(issue.getProject().getId().toString());
+		defect.setProjectName(issue.getProject().getName());
+		defect.setDefectStatus(this.toCanonicalFeatureStatus(issue.getStatus().getName()));
+		defect.setDefectDescription(issue.getSummary());
+		defect.setDefectPriority(null!=issue.getPriority()?issue.getPriority().getName():null);
+		defect.setCreationDate(issue.getCreationDate().toString());
+		defect.setCreatedBy(null!=issue.getReporter()?issue.getReporter().getName():null);
+		int originalEstimate = 0;
+		
+		if (issue.getTimeTracking() != null && issue.getTimeTracking().getOriginalEstimateMinutes() != null) {
+			originalEstimate = issue.getTimeTracking().getOriginalEstimateMinutes();
+		} else if (fields.get("aggregatetimeoriginalestimate") != null
+				&& fields.get("aggregatetimeoriginalestimate").getValue() != null) {
+			// this value is in seconds
+			originalEstimate = ((Integer)fields.get("aggregatetimeoriginalestimate").getValue()) / 60;
+		}
+		defect.setOriginalEstimate(originalEstimate);
+		defect.setDefectResolutionStatus(null!=issue.getResolution()?issue.getResolution().getName():null);
+		defect.setReporter(null!=issue.getReporter()?issue.getReporter().toString():null);
+		defect.setUpdateDate(null!=issue.getUpdateDate()?issue.getUpdateDate().toString():null);
+		defect.setAssignee(null!=issue.getAssignee()?issue.getAssignee().getName().toString():null);
+		//defect age
+		Date createdDate=DateUtil.fromISODateTimeFormat(issue.getCreationDate().toString());
+		Date updateDate=DateUtil.fromISODateTimeFormat(issue.getUpdateDate().toString());
+		Date now= new Date();
+		if(null!=defect.getDefectResolutionStatus() && defect.getDefectResolutionStatus().equals(DONE) )
+		{
+			defect.setDefectResolutionInDays(DateUtil.differenceInDays(updateDate, createdDate));
+			defect.setDefectAge(defect.getDefectResolutionInDays());
+		}
+		if(null==defect.getDefectResolutionStatus()){
+			defect.setDefectAge(DateUtil.differenceInDays(now, createdDate));
+		}
+		return defect;
+	
+	}
+	
+	private DefectAggregation processDefectsSummary(NewFeatureSettings featureSettings,List<Defect> defects,Scope scopeProject){
+		DefectAggregation aggregation= new DefectAggregation();
+		
+		/*
+		 * Logic to bucket the defects based on environment and priority.
+		 */
+		processDefectsByPriorityAndEnvironment(defects, aggregation,scopeProject);
+		
+		/*
+		 * Logic for bucketing the defects based on resolution days and priority in each class of resolution.
+		 */
+		processDefectsByDefectResolutionPeriod(aggregation,scopeProject);
+				
+		/*
+		 * 	Logic for bucketing the defects based on age of open defects.
+		 */
+		processDefectsByDefectAge(aggregation,scopeProject);
+		
+		return aggregation;
+	}
+
+
+	@Override
+	public void processDefectAggregation(NewFeatureSettings featureSettings,List<Defect> defectsInDB,Scope scopeProject) {
+		/*
+		 * For a single project, there is always a single aggregater exists.Hence setting the collector ID as same as scope ID. 
+		 */
+		DefectAggregation summery=processDefectsSummary(featureSettings,defectsInDB,scopeProject);
+		summery.setCollectorId(scopeProject.getId());
+		summery.setProjectId(scopeProject.getpId());
+		summery.setProjectName(scopeProject.getName());
+		summery.setValuesAsOn(new Date());
+		defectAggregationRepository.save(summery);
+	}
+	
+	private void processDefectsByPriorityAndEnvironment(List<Defect> defects,DefectAggregation aggregation,Scope scopeProject){
+		Map<String,Integer> defectsByProirity= new LinkedHashMap<String,Integer>();
+		Map<String,Integer> defectsByEnvironment= new LinkedHashMap<String,Integer>();
+
+			for(Defect defect: defects){
+			if(defect.getProjectId().equals(scopeProject.getpId())){
+				if(defectsByProirity.containsKey(defect.getDefectPriority())){
+					defectsByProirity.put(defect.getDefectPriority(), defectsByProirity.get(defect.getDefectPriority())+1);
+				}else{
+					defectsByProirity.put(defect.getDefectPriority(), 1);
+				}
+				
+				if(defectsByEnvironment.containsKey(defect.getEnvironment())){
+					defectsByEnvironment.put(defect.getEnvironment(), defectsByEnvironment.get(defect.getEnvironment())+1);
+				}else if(null!=defect.getEnvironment()){
+					defectsByEnvironment.put(defect.getEnvironment(), 1);
+				}
+			}
+			
+			
+			}
+			
+			if(!defectsByProirity.isEmpty())
+			{
+				aggregation.setDefectsByProirity(defectsByProirity);
+			}
+			if(!defectsByEnvironment.isEmpty())
+			{
+				aggregation.setDefectsByEnvironment(defectsByEnvironment);
+			}
+		
+	}
+	
+	
+	private void processDefectsByDefectResolutionPeriod(DefectAggregation aggregation,Scope scopeProject){
+		List<Integer> resolutionsList= new ArrayList<Integer>();
+		for (int i=0;i<featureSettings.getResolutionPeriod().length;i++){
+			try{
+				resolutionsList.add(Integer.parseInt(featureSettings.getResolutionPeriod()[i]));
+			}catch (Exception e) {
+				LOGGER.debug(e.getMessage());
+			}
+		}
+		Collections.sort(resolutionsList);
+		Map<String, List<Map<String,String>>> defectsByResolutionDetails=new LinkedHashMap<String, List<Map<String,String>>>();
+				
+		boolean firstIndex=true;
+		int resolCount=resolutionsList.size();
+		Set<String> defectPriorities=null!=aggregation.getDefectsByProirity()?aggregation.getDefectsByProirity().keySet():null;
+		//If defect priority set is null, then there are no defects in that particular project. So no need to show the defects by resolution.
+		if(null==defectPriorities){
+			return;
+		}
+		for(int i=0;i<resolCount;i++){
+			Map<String,String> metric= new HashMap<String,String>();
+			if(firstIndex){
+				String key="lessthan"+resolutionsList.get(i)+"days";
+				firstIndex=false;
+				List<Map<String,String>> defectsByResolution= new ArrayList<Map<String,String>>();
+				for(String priorityKey: defectPriorities){
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.lt(resolutionsList.get(i)+1).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+				}
+				metric.put("Resolution Strategy", key);
+				defectsByResolution.add(metric);
+				defectsByResolutionDetails.put("Range"+(i+1), defectsByResolution);
+			}else{
+				String key="between"+(resolutionsList.get(i-1)+1)+"to"+resolutionsList.get(i)+"days";
+				List<Map<String,String>> defectsByResolution= new ArrayList<Map<String,String>>();
+				for(String priorityKey: defectPriorities){
+					
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.between(resolutionsList.get(i-1)+1 ,resolutionsList.get(i) ).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+					
+				}
+				metric.put("Resolution Strategy", key);
+				defectsByResolution.add(metric);
+				
+				defectsByResolutionDetails.put("Range"+(i+1), defectsByResolution);
+				}
+			
+			}
+			String keyAfterUpperLimit="morethan"+resolutionsList.get(resolCount-1)+"days";
+			List<Map<String,String>> defectsByResolutionMorethanUpperLimit= new ArrayList<Map<String,String>>();
+			Map<String,String> metricsAfterUpperLimit= new HashMap<String,String>();
+			for(String priorityKey: defectPriorities){
+				metricsAfterUpperLimit.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.gt(resolutionsList.get(resolCount-1)).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+			}
+			metricsAfterUpperLimit.put("Resolution Strategy", keyAfterUpperLimit);
+			defectsByResolutionMorethanUpperLimit.add(metricsAfterUpperLimit);
+			defectsByResolutionDetails.put("Range"+(resolCount+1), defectsByResolutionMorethanUpperLimit);
+			if(!defectsByResolutionDetails.isEmpty()){
+				aggregation.setDefectsByResolutionDetails(defectsByResolutionDetails);
+			}
+	}
+	private void processDefectsByDefectAge(DefectAggregation aggregation,Scope scopeProject){
+		List<Integer> defectAgeList= new ArrayList<Integer>();
+		for (int i=0;i<featureSettings.getDefectAge().length;i++){
+			try{
+				defectAgeList.add(Integer.parseInt(featureSettings.getDefectAge()[i]));
+			}catch (Exception e) {
+				LOGGER.debug(e.getMessage());
+			}
+		}
+		Collections.sort(defectAgeList);
+		Map<String, List<Map<String,String>>> defectsByAgeDetails=new LinkedHashMap<String, List<Map<String,String>>>();
+		
+		boolean firstIndex=true;
+		int resolCount=defectAgeList.size();
+		Set<String> defectPriorities=null!=aggregation.getDefectsByProirity()?aggregation.getDefectsByProirity().keySet():null;
+		//If defect priority set is null, then there are no defects in that particular project. So no need to show the defects by age. 
+		if(null==defectPriorities){
+			return;
+		}
+		for(int i=0;i<resolCount;i++){
+			Map<String,String> metric= new HashMap<String,String>();
+			if(firstIndex){
+				String key="lessthan"+defectAgeList.get(i)+"days";
+				firstIndex=false;
+				List<Map<String,String>> defectsByAge= new ArrayList<Map<String,String>>();
+				for(String priorityKey: defectPriorities){
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.lt(defectAgeList.get(i)+1).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+				}
+				metric.put("Defect Age Strategy", key);
+				defectsByAge.add(metric);
+				defectsByAgeDetails.put("Range"+(i+1), defectsByAge);
+			}else{
+				String key="between"+(defectAgeList.get(i-1)+1)+"to"+defectAgeList.get(i)+"days";
+				List<Map<String,String>> defectsByAge= new ArrayList<Map<String,String>>();
+				for(String priorityKey: defectPriorities){
+					
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.between(defectAgeList.get(i-1)+1 ,defectAgeList.get(i) ).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+					
+				}
+				metric.put("Defect Age Strategy", key);
+				defectsByAge.add(metric);
+				
+				defectsByAgeDetails.put("Range"+(i+1), defectsByAge);
+				}
+			
+			}
+			String keyAfterUpperLimit="morethan"+defectAgeList.get(resolCount-1)+"days";
+			List<Map<String,String>> defectsByAgeMorethanUpperLimit= new ArrayList<Map<String,String>>();
+			Map<String,String> metricsAfterUpperLimit= new HashMap<String,String>();
+			for(String priorityKey: defectPriorities){
+				metricsAfterUpperLimit.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.gt(defectAgeList.get(resolCount-1)).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+			}
+			metricsAfterUpperLimit.put("Defect Age Strategy", keyAfterUpperLimit);
+			defectsByAgeMorethanUpperLimit.add(metricsAfterUpperLimit);
+			defectsByAgeDetails.put("Range"+(resolCount+1), defectsByAgeMorethanUpperLimit);
+			if(!defectsByAgeDetails.isEmpty()){
+				aggregation.setDefectsByAgeDetails(defectsByAgeDetails);
+			}
+	}
+	
+	
 }
+

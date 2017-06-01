@@ -49,6 +49,27 @@ public class NewFeatureSettings {
 	private String jiraOauthExpiretime;
 	private String jiraProxyUrl;
 	private String jiraProxyPort;
+	
+	private String[] resolutionPeriod;
+	
+	private String[] defectAge;
+
+	public String[] getDefectAge() {
+		return defectAge;
+	}
+
+	public void setDefectAge(String[] defectAge) {
+		this.defectAge = defectAge;
+	}
+
+	public String[] getResolutionPeriod() {
+		return resolutionPeriod;
+	}
+
+	public void setResolutionPeriod(String[] resolutionPeriod) {
+		this.resolutionPeriod = resolutionPeriod;
+	}
+
 	/**
 	 * In Jira, general IssueType IDs are associated to various "issue"
 	 * attributes. However, there is one attribute which this collector's
