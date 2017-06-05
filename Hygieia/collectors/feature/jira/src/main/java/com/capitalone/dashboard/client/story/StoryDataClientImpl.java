@@ -456,7 +456,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		summery.setCollectorId(scopeProject.getId());
 		summery.setProjectId(scopeProject.getpId());
 		summery.setProjectName(scopeProject.getName());
-		summery.setValuesAsOn(new Date());
+		summery.setValuesAsOn(new Date().toString());
 		defectAggregationRepository.save(summery);
 	}
 	
