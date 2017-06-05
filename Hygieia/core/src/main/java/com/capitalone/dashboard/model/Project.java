@@ -2,15 +2,32 @@ package com.capitalone.dashboard.model;
 
 import java.util.List;
 
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "project")
+@CompoundIndex(name="projectIdName", def="{'projectId': 1, 'projectName': 1}")
 public class Project extends BaseModel {
-	
-	@Indexed(unique = true)
 	private String projectName;
+	private String projectId;
+	private boolean projectActiveStatus;
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+
+	public boolean isProjectActiveStatus() {
+		return projectActiveStatus;
+	}
+
+	public void setProjectActiveStatus(boolean projectActiveStatus) {
+		this.projectActiveStatus = projectActiveStatus;
+	}
+
 	@DBRef
     private List<Authentication> userIds;
 

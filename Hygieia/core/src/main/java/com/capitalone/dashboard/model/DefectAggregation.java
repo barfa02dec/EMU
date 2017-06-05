@@ -39,7 +39,7 @@ public class DefectAggregation extends BaseModel {
 	private Map<String,Integer> defectsByEnvironment;
 	Map<String, List<Map<String,String>>> defectsByResolutionDetails;
 	Map<String, List<Map<String,String>>> defectsByAgeDetails;
-	private Date valuesAsOn;
+	private String valuesAsOn;
 	private String projectName;
 	private String projectId;
 	
@@ -87,10 +87,10 @@ public class DefectAggregation extends BaseModel {
 	public void setDefectsByAgeDetails(Map<String, List<Map<String, String>>> defectsByAgeDetails) {
 		this.defectsByAgeDetails = defectsByAgeDetails;
 	}
-	public Date getValuesAsOn() {
+	public String getValuesAsOn() {
 		return valuesAsOn;
 	}
-	public void setValuesAsOn(Date valuesAsOn) {
+	public void setValuesAsOn(String valuesAsOn) {
 		this.valuesAsOn = valuesAsOn;
 	}
 	
