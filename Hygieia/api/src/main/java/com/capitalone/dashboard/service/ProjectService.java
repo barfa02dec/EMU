@@ -1,13 +1,18 @@
 package com.capitalone.dashboard.service;
 
+import org.bson.types.ObjectId;
+
 import com.capitalone.dashboard.model.Project;
+import com.capitalone.dashboard.request.ProjectRequest;
 
 public interface ProjectService {
 	
 	Iterable<Project> all();
 	
-	String create(String projectName);
+	Project create(ProjectRequest project);
 	
-	String delete(String projectName);
+	Project updateProject(ProjectRequest project);
+
+	Project deactivateProject(ObjectId id);
 
 }

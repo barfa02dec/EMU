@@ -7,6 +7,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import javax.validation.Valid;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,14 +32,53 @@ public class ProjectController {
 
 	@RequestMapping(value = "/createProject", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createProject(@Valid @RequestBody ProjectRequest request) {
-		// TODO: should return proper HTTP codes for existing users
-		return ResponseEntity.status(HttpStatus.OK).body(projectService.create(request.getProjectName()));
+		try{
+			Project project=projectService.create(request);
+			if(project!=null){
+				return ResponseEntity.status(HttpStatus.OK).body("project created successfully with ID::"+project.getId());
+			}else{
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project created failed"); 
+			}
+		}catch (org.springframework.dao.DuplicateKeyException e) {
+			return ResponseEntity.status(HttpStatus.OK).body("project already Exists with Project ID::"+request.getProjectId()+" and Project Name::"+request.getProjectName());
+		}
+		catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project created failed"); 
+
+		}
+		
 	}
 
-	@RequestMapping(value = "/deleteProject/{projectName}", method = DELETE)
-	public ResponseEntity<String> deleteProject(@PathVariable String projectName) {
-		//projectService.delete(projectName);
-		return ResponseEntity.status(HttpStatus.OK).body(projectService.delete(projectName));
+	@RequestMapping(value = "/deleteProject/{id}", method = DELETE)
+	public ResponseEntity<String> deleteProject(@PathVariable ObjectId id) {
+		try{
+			Project project=projectService.deactivateProject(id);
+			if(null!=project && !project.isProjectActiveStatus()){
+				return ResponseEntity.status(HttpStatus.OK).body("Project deactivated successfully");
+			}else{
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Project details not found");
+			}
+		}
+		catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Project deactivation Failed");
+		}
+	}
+	
+	@RequestMapping(value = "/updateProject", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateProject(@Valid @RequestBody ProjectRequest request) {
+		try{
+			Project project=projectService.updateProject(request);
+			if(project!=null){
+				return ResponseEntity.status(HttpStatus.OK).body("project updated successfully ");
+			}else{
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("project does not Exists");
+
+			}
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project created failed"); 
+
+		}
+		
 	}
 
 	@RequestMapping(value = "/getProjects", method = GET, produces = APPLICATION_JSON_VALUE)
