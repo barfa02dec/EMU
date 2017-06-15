@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,8 +25,18 @@ public class Dashboard extends BaseModel {
     private DashboardType type;
 
     private Application application;
+    
+    private ObjectId projectId;
 
-    Dashboard() {
+    public ObjectId getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(ObjectId projectId) {
+		this.projectId = projectId;
+	}
+
+	Dashboard() {
     }
 
     public Dashboard(String template, String title, Application application,String owner, DashboardType type) {
@@ -34,6 +45,14 @@ public class Dashboard extends BaseModel {
         this.application = application;
         this.owner = owner;
         this.type = type;
+    }
+    public Dashboard(String template, String title, Application application,String owner, DashboardType type, ObjectId projectId) {
+        this.template = template;
+        this.title = title;
+        this.application = application;
+        this.owner = owner;
+        this.type = type;
+        this.projectId=projectId;
     }
 
     public String getTemplate() {

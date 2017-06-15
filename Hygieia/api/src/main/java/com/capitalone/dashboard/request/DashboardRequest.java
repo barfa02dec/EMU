@@ -4,6 +4,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.bson.types.ObjectId;
+
 import com.capitalone.dashboard.model.Application;
 import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.model.Dashboard;
@@ -28,8 +30,21 @@ public class DashboardRequest {
     @NotNull
     @Size(min=1, message="Please select a type")
     private String type;
+    
+    @NotNull
+    ObjectId projectId;
+    
+    
 
-    public String getTemplate() {
+    public ObjectId getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(ObjectId projectId) {
+		this.projectId = projectId;
+	}
+
+	public String getTemplate() {
         return template;
     }
 
@@ -82,7 +97,7 @@ public class DashboardRequest {
 	public Dashboard toDashboard() {
         DashboardType type = DashboardType.fromString(this.type);
         Application application = new Application(applicationName, new Component(componentName));
-        return new Dashboard(template, dashboardRequestTitle.getTitle(), application, owner, type);
+        return new Dashboard(template, dashboardRequestTitle.getTitle(), application, owner, type,projectId);
     }
 
     public Dashboard copyTo(Dashboard dashboard) {
