@@ -8,31 +8,57 @@ public class ProjectRequest {
 	private String projectName;
 	@NotNull
 	private String projectId;
+	private boolean projectStatus;
 	@NotNull
-	private boolean projectActiveStatus;
-	public String getProjectId() {
-		return projectId;
-	}
-
-	public void setProjectId(String projectId) {
-		this.projectId = projectId;
-	}
-
-	public boolean isProjectActiveStatus() {
-		return projectActiveStatus;
-	}
-
-	public void setProjectActiveStatus(boolean projectActiveStatus) {
-		this.projectActiveStatus = projectActiveStatus;
-	}
-
+	private String businessUnit;
+	@NotNull
+	private String projectOwner;
+	private String program;
+	private String client;
 	public String getProjectName() {
 		return projectName;
 	}
-
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
+	public String getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+	public boolean isProjectStatus() {
+		return projectStatus;
+	}
+	public void setProjectStatus(boolean projectStatus) {
+		this.projectStatus = projectStatus;
+	}
+	
+	public String getProgram() {
+		return program;
+	}
+	public void setProgram(String program) {
+		this.program = program;
+	}
+	public String getClient() {
+		return client;
+	}
+	public void setClient(String client) {
+		this.client = client;
+	}
+	public String getBusinessUnit() {
+		return businessUnit;
+	}
+	public void setBusinessUnit(String businessUnit) {
+		this.businessUnit = businessUnit;
+	}
+	public String getProjectOwner() {
+		return projectOwner;
+	}
+	public void setProjectOwner(String projectOwner) {
+		this.projectOwner = projectOwner;
+	}
+	
 	
 	
 

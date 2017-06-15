@@ -28,11 +28,10 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project create(ProjectRequest projectRequest) {
 		Project project=new Project();
-		project.setProjectName(projectRequest.getProjectName());
-		project.setProjectActiveStatus(projectRequest.isProjectActiveStatus());
-		project.setProjectId(projectRequest.getProjectId());
+		if(projectRequest!=null){
+			mapProjectRequestToPojectForCreateProject(projectRequest, project);
+		}
 		return projectRepository.save(project);
-
 	}
 
 	@Override
@@ -40,7 +39,7 @@ public class ProjectServiceImpl implements ProjectService {
 			
 			Project project = projectRepository.findOne(id);
 			if (project != null) {
-				project.setProjectActiveStatus(false);
+				project.setProjectStatus(false);
 				return projectRepository.save(project);
 				
 			}else
@@ -53,27 +52,42 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project updateProject(ProjectRequest projectRequest) {
 
-			Project project=projectRepository.findByIdAndName(projectRequest.getProjectId(), projectRequest.getProjectName());
-			if(null==project){
-				project= new Project();
-				project.setProjectName(projectRequest.getProjectName());
-				project.setProjectId(projectRequest.getProjectId());
-				project.setProjectActiveStatus(projectRequest.isProjectActiveStatus());
-				return projectRepository.save(project);
-			}
-			if(null!=projectRequest.getProjectName())
+			Project project=projectRepository.findByProjectIdAndProjectName(projectRequest.getProjectName());
+			if(null!=project)
 			{
-				project.setProjectName(projectRequest.getProjectName());
+				mapProjectRequestToPojectForUpdateProject(projectRequest, project);
+				return projectRepository.save(project);
+
 			}
 			
-			if(null!=projectRequest.getProjectId()){
-				project.setProjectId(projectRequest.getProjectId());
-
-			}
-			return projectRepository.save(project);
+			return null;
 		
-
+	}
 	
+	private Project mapProjectRequestToPojectForCreateProject(ProjectRequest request, Project project ){
+		project.setProjectId(request.getProjectId());
+		project.setProjectName(request.getProjectName());
+		project.setProjectOwner(request.getProjectOwner());
+		project.setProjectStatus(request.isProjectStatus());
+		project.setClient(request.getClient());
+		project.setBusinessUnit(request.getBusinessUnit());
+		project.setProgram(request.getProgram());
+		return project;
+	}
+	private Project mapProjectRequestToPojectForUpdateProject(ProjectRequest request, Project project ){
+		project.setProjectId(request.getProjectId());
+		project.setProjectName(request.getProjectName());
+		project.setProjectOwner(request.getProjectOwner());
+		project.setClient(request.getClient());
+		project.setBusinessUnit(request.getBusinessUnit());
+		project.setProgram(request.getProgram());
+		return project;
+	}
+
+	@Override
+	public Project getProject(ObjectId id) {
+		
+		return projectRepository.findOne(id);
 	}
 
 }

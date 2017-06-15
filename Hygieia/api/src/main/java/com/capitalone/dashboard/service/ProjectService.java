@@ -14,5 +14,7 @@ public interface ProjectService {
 	Project updateProject(ProjectRequest project);
 
 	Project deactivateProject(ObjectId id);
+	
+	Project getProject(ObjectId id);
 
 }

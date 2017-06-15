@@ -35,7 +35,7 @@ public class ProjectController {
 		try{
 			Project project=projectService.create(request);
 			if(project!=null){
-				return ResponseEntity.status(HttpStatus.OK).body("project created successfully with ID::"+project.getId());
+				return ResponseEntity.status(HttpStatus.CREATED).body("project created successfully with ID::"+project.getId());
 			}else{
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project created failed"); 
 			}
@@ -50,17 +50,17 @@ public class ProjectController {
 	}
 
 	@RequestMapping(value = "/deleteProject/{id}", method = DELETE)
-	public ResponseEntity<String> deleteProject(@PathVariable ObjectId id) {
+	public ResponseEntity<String> deleteProject(@PathVariable String id) {
 		try{
-			Project project=projectService.deactivateProject(id);
-			if(null!=project && !project.isProjectActiveStatus()){
+			ObjectId projectUniqueId=new ObjectId(id);
+			Project project=projectService.deactivateProject(projectUniqueId);
+			if(null!=project && !project.isProjectStatus()){
 				return ResponseEntity.status(HttpStatus.OK).body("Project deactivated successfully");
 			}else{
 				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Project details not found");
 			}
-		}
-		catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Project deactivation Failed");
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Invalid Project ID");
 		}
 	}
 	
@@ -75,7 +75,7 @@ public class ProjectController {
 
 			}
 		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project created failed"); 
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project creation failed"); 
 
 		}
 		
@@ -85,6 +85,19 @@ public class ProjectController {
 	public Iterable<Project> getProjects() {
 		Iterable<Project> projects = projectService.all();
 		return projects;
+
+	}
+	
+	@RequestMapping(value = "/getProject/{id}", method = GET, produces = APPLICATION_JSON_VALUE)
+	public Project getProject(@PathVariable String id) {
+		try{
+			ObjectId projectUniqueId=new ObjectId(id);
+			return projectService.getProject(projectUniqueId);
+		}catch (Exception e) {
+			
+		}
+		
+		return null;
 
 	}
 

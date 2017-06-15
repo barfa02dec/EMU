@@ -8,7 +8,7 @@ import com.capitalone.dashboard.model.Project;
 
 public interface ProjectRepository extends PagingAndSortingRepository<Project, ObjectId>{
 	
-	@Query(value = "{'projectId' : ?0, projectName' : ?1}")
-	Project findByIdAndName(String projectId, String  projectName);
+	@Query(value = "{'projectName' : ?0}")
+	Project findByProjectIdAndProjectName(String projectName);
 
 }

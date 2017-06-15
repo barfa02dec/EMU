@@ -1,52 +1,60 @@
 package com.capitalone.dashboard.model;
 
-import java.util.List;
-
-import org.springframework.data.mongodb.core.index.CompoundIndex;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "project")
-@CompoundIndex(name="projectIdName", def="{'projectId': 1, 'projectName': 1}")
 public class Project extends BaseModel {
+	@Indexed(unique = true)
 	private String projectName;
 	private String projectId;
-	private boolean projectActiveStatus;
-	public String getProjectId() {
-		return projectId;
-	}
-
-	public void setProjectId(String projectId) {
-		this.projectId = projectId;
-	}
-
-	public boolean isProjectActiveStatus() {
-		return projectActiveStatus;
-	}
-
-	public void setProjectActiveStatus(boolean projectActiveStatus) {
-		this.projectActiveStatus = projectActiveStatus;
-	}
-
-	@DBRef
-    private List<Authentication> userIds;
-
+	private boolean projectStatus;
+	private String BusinessUnit;
+	private String ProjectOwner;
+	private String program;
+	private String client;
 	public String getProjectName() {
 		return projectName;
 	}
-
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
-
-	public List<Authentication> getUserIds() {
-		return userIds;
+	public String getProjectId() {
+		return projectId;
 	}
-
-	public void setUserIds(List<Authentication> userIds) {
-		this.userIds = userIds;
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
-
+	public boolean isProjectStatus() {
+		return projectStatus;
+	}
+	public void setProjectStatus(boolean projectStatus) {
+		this.projectStatus = projectStatus;
+	}
+	public String getBusinessUnit() {
+		return BusinessUnit;
+	}
+	public void setBusinessUnit(String businessUnit) {
+		BusinessUnit = businessUnit;
+	}
+	public String getProjectOwner() {
+		return ProjectOwner;
+	}
+	public void setProjectOwner(String projectOwner) {
+		ProjectOwner = projectOwner;
+	}
+	public String getProgram() {
+		return program;
+	}
+	public void setProgram(String program) {
+		this.program = program;
+	}
+	public String getClient() {
+		return client;
+	}
+	public void setClient(String client) {
+		this.client = client;
+	}
 	
 	
 	
