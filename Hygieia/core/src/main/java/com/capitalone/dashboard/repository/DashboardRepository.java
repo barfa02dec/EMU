@@ -16,6 +16,7 @@ public interface DashboardRepository extends PagingAndSortingRepository<Dashboar
 	
 	List<Dashboard> findByOwner(String owner);
 	List<Dashboard> findByTitle(String title);
+	List<Dashboard> findByProjectId(ObjectId projectId);
 
     List<Dashboard> findByApplicationComponentsIn(Collection<Component> components);
 

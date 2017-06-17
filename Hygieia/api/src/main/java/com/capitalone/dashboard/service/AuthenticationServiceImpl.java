@@ -20,8 +20,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Iterable<Authentication> all() {
-        // TODO Auto-generated method stub
-        return null;
+       
+        return authenticationRepository.findAll();
     }
 
     @Override

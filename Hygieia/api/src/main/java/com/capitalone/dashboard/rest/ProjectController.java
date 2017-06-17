@@ -5,6 +5,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.bson.types.ObjectId;
@@ -14,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capitalone.dashboard.model.Project;
@@ -88,11 +91,34 @@ public class ProjectController {
 
 	}
 	
+	@RequestMapping(value = "/getProjectsByUser", method = GET, produces = APPLICATION_JSON_VALUE)
+	public Iterable<Project> getProjectsOwnedByUser(@RequestParam String username) {
+		
+		return projectService.getProjectsOwnedByUser(username);
+
+	}
+	
+	@RequestMapping(value = "/projectUsers", method = POST, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<Set<String>> createProjectUsers(@RequestParam String projectname, @RequestParam Set<String> users) {
+		
+		Project project=projectService.createUsers(projectname, users);
+		if(project!=null)
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(project.getProjectUsersList());
+		}else{
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+
+		}
+
+	}
+	
 	@RequestMapping(value = "/getProject/{id}", method = GET, produces = APPLICATION_JSON_VALUE)
-	public Project getProject(@PathVariable String id) {
+	public ResponseEntity<Project> getProject(@PathVariable String id) {
 		try{
 			ObjectId projectUniqueId=new ObjectId(id);
-			return projectService.getProject(projectUniqueId);
+			Project project=projectService.getProject(projectUniqueId);
+			return ResponseEntity.status(HttpStatus.OK).body(project);
+
 		}catch (Exception e) {
 			
 		}

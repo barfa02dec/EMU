@@ -260,6 +260,14 @@ public class DashboardServiceImpl implements DashboardService {
 		
 		return myDashboard;
 	}
+	
+	@Override
+	public List<Dashboard> getProjectOwnedDashboards(ObjectId projectId) {
+		
+		List<Dashboard> projectDashboards=dashboardRepository.findByProjectId(projectId);
+		
+		return projectDashboards;
+	}
 
 	@Override
 	public String getDashboardOwner(String dashboardTitle) {

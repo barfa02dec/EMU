@@ -1,5 +1,7 @@
 package com.capitalone.dashboard.request;
 
+import java.util.Set;
+
 import javax.validation.constraints.NotNull;
 
 public class ProjectRequest {
@@ -15,6 +17,16 @@ public class ProjectRequest {
 	private String projectOwner;
 	private String program;
 	private String client;
+	private Set<String> projectUsersList;
+	
+	
+	
+	public Set<String> getProjectUsersList() {
+		return projectUsersList;
+	}
+	public void setProjectUsersList(Set<String> projectUsersList) {
+		this.projectUsersList = projectUsersList;
+	}
 	public String getProjectName() {
 		return projectName;
 	}

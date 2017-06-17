@@ -103,6 +103,9 @@ public interface DashboardService {
      */
     
     String getDashboardOwner(String dashboardTitle);
+
+
+	List<Dashboard> getProjectOwnedDashboards(ObjectId projectId);
 }
 
 

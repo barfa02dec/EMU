@@ -1,5 +1,8 @@
 package com.capitalone.dashboard.service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -52,7 +55,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project updateProject(ProjectRequest projectRequest) {
 
-			Project project=projectRepository.findByProjectIdAndProjectName(projectRequest.getProjectName());
+			Project project=projectRepository.findByProjectName(projectRequest.getProjectName());
 			if(null!=project)
 			{
 				mapProjectRequestToPojectForUpdateProject(projectRequest, project);
@@ -72,6 +75,7 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setClient(request.getClient());
 		project.setBusinessUnit(request.getBusinessUnit());
 		project.setProgram(request.getProgram());
+		project.setProjectUsersList(request.getProjectUsersList());
 		return project;
 	}
 	private Project mapProjectRequestToPojectForUpdateProject(ProjectRequest request, Project project ){
@@ -81,6 +85,7 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setClient(request.getClient());
 		project.setBusinessUnit(request.getBusinessUnit());
 		project.setProgram(request.getProgram());
+		project.setProjectUsersList(request.getProjectUsersList());
 		return project;
 	}
 
@@ -88,6 +93,32 @@ public class ProjectServiceImpl implements ProjectService {
 	public Project getProject(ObjectId id) {
 		
 		return projectRepository.findOne(id);
+	}
+
+	@Override
+	public Iterable<Project> getProjectsOwnedByUser(String username) {
+		Set<Project> userProjects=new HashSet<Project>();
+		for(Project project: projectRepository.findAll()){
+			if(null!=project.getProjectUsersList() && project.getProjectUsersList().contains(username)){
+				userProjects.add(project);
+			}
+		}
+	
+		return userProjects;
+	}
+
+	@Override
+	public Project createUsers(String projectName, Set<String> users) {
+		Project project=projectRepository.findByProjectName(projectName);
+		if(null!=project){
+			if(null!=project.getProjectUsersList()){
+				project.getProjectUsersList().addAll(users);
+			}else{
+				project.setProjectUsersList(users);
+			}
+			return projectRepository.save(project);
+		}
+		return null;
 	}
 
 }

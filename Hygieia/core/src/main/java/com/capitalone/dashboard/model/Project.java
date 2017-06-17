@@ -1,5 +1,7 @@
 package com.capitalone.dashboard.model;
 
+import java.util.Set;
+
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,6 +15,17 @@ public class Project extends BaseModel {
 	private String ProjectOwner;
 	private String program;
 	private String client;
+	private Set<String> projectUsersList;
+	
+	
+	
+	public Set<String> getProjectUsersList() {
+		return projectUsersList;
+	}
+	public void setProjectUsersList(Set<String> projectUsersList) {
+		this.projectUsersList = projectUsersList;
+	}
+
 	public String getProjectName() {
 		return projectName;
 	}

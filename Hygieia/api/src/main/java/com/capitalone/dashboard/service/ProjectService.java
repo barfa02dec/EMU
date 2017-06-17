@@ -1,5 +1,7 @@
 package com.capitalone.dashboard.service;
 
+import java.util.Set;
+
 import org.bson.types.ObjectId;
 
 import com.capitalone.dashboard.model.Project;
@@ -9,6 +11,8 @@ public interface ProjectService {
 	
 	Iterable<Project> all();
 	
+	Iterable<Project> getProjectsOwnedByUser(String username);
+	
 	Project create(ProjectRequest project);
 	
 	Project updateProject(ProjectRequest project);
@@ -16,5 +20,7 @@ public interface ProjectService {
 	Project deactivateProject(ObjectId id);
 	
 	Project getProject(ObjectId id);
+	
+	Project createUsers(String projectName, Set<String> users);
 
 }
