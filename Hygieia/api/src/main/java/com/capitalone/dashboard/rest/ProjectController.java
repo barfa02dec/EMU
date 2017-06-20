@@ -43,10 +43,10 @@ public class ProjectController {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project created failed"); 
 			}
 		}catch (org.springframework.dao.DuplicateKeyException e) {
-			return ResponseEntity.status(HttpStatus.OK).body("project already Exists with Project ID::"+request.getProjectId()+" and Project Name::"+request.getProjectName());
+			return ResponseEntity.status(HttpStatus.OK).body("project already Exists with Project Name::"+request.getProjectName());
 		}
 		catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project created failed"); 
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project creation failed"); 
 
 		}
 		
@@ -58,7 +58,7 @@ public class ProjectController {
 			ObjectId projectUniqueId=new ObjectId(id);
 			Project project=projectService.deactivateProject(projectUniqueId);
 			if(null!=project && !project.isProjectStatus()){
-				return ResponseEntity.status(HttpStatus.OK).body("Project deactivated successfully");
+				return ResponseEntity.status(HttpStatus.OK).body("Project With Id::"+id+" is deactivated successfully");
 			}else{
 				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Project details not found");
 			}
