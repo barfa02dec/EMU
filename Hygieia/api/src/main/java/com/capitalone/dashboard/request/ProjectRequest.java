@@ -26,8 +26,14 @@ public class ProjectRequest {
 	private String client;
 	private Set<String> projectUsersList;
 	private String id;
+	private boolean editorEnabled;
 	
-	
+	public boolean isEditorEnabled() {
+		return editorEnabled;
+	}
+	public void setEditorEnabled(boolean editorEnabled) {
+		this.editorEnabled = editorEnabled;
+	}
 	public String getId() {
 		return id;
 	}
