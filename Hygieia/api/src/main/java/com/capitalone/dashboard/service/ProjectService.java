@@ -22,5 +22,7 @@ public interface ProjectService {
 	Project getProject(ObjectId id);
 	
 	Project createUsers(String projectName, Set<String> users);
+	
+	Iterable<Project> getActiveprojects();
 
 }

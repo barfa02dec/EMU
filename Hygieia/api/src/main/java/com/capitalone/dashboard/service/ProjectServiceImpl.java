@@ -121,4 +121,9 @@ public class ProjectServiceImpl implements ProjectService {
 		return null;
 	}
 
+	@Override
+	public Iterable<Project> getActiveprojects() {
+		return projectRepository.getAllActiveProjects(true);
+	}
+
 }

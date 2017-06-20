@@ -86,7 +86,7 @@ public class ProjectController {
 
 	@RequestMapping(value = "/getProjects", method = GET, produces = APPLICATION_JSON_VALUE)
 	public Iterable<Project> getProjects() {
-		Iterable<Project> projects = projectService.all();
+		Iterable<Project> projects = projectService.getActiveprojects();
 		return projects;
 
 	}
