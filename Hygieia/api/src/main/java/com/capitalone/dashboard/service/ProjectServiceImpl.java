@@ -71,7 +71,7 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setProjectId(request.getProjectId());
 		project.setProjectName(request.getProjectName());
 		project.setProjectOwner(request.getProjectOwner());
-		project.setProjectStatus(request.isProjectStatus());
+		project.setProjectStatus(true);
 		project.setClient(request.getClient());
 		project.setBusinessUnit(request.getBusinessUnit());
 		project.setProgram(request.getProgram());
