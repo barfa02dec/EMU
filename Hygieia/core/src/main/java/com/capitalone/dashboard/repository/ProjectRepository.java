@@ -11,6 +11,7 @@ public interface ProjectRepository extends PagingAndSortingRepository<Project, O
 	@Query(value = "{'projectName' : ?0}")
 	Project findByProjectName(String projectName);
 	
-	
+	@Query(value = "{'projectStatus' : ?0}")
+	Iterable<Project> getAllActiveProjects(boolean status);
 
 }
