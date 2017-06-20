@@ -31,10 +31,13 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project create(ProjectRequest projectRequest) {
 		Project project=new Project();
-		if(projectRequest!=null){
+		if(projectRequest!=null && !projectRequest.getProjectName().trim().isEmpty() && !projectRequest.getProjectId().trim().isEmpty() && !projectRequest.getBusinessUnit().trim().isEmpty() && !projectRequest.getClient().trim().isEmpty()){
 			mapProjectRequestToPojectForCreateProject(projectRequest, project);
+			return projectRepository.save(project);
+		}else{
+			return null;
 		}
-		return projectRepository.save(project);
+		
 	}
 
 	@Override

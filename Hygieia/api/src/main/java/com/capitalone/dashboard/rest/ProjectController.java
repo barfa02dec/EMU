@@ -40,7 +40,7 @@ public class ProjectController {
 			if(project!=null){
 				return ResponseEntity.status(HttpStatus.CREATED).body("project created successfully with ID::"+project.getId());
 			}else{
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project created failed"); 
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project creation failed"); 
 			}
 		}catch (org.springframework.dao.DuplicateKeyException e) {
 			return ResponseEntity.status(HttpStatus.OK).body("project already Exists with Project Name::"+request.getProjectName());

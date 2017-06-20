@@ -8,21 +8,21 @@ import javax.validation.constraints.Size;
 public class ProjectRequest {
 	
 	@NotNull
-    @Size(min=1, message="Please provide projectName")
+    @Size(min=3,max=40, message="projectName should be min=3,max=40 characters")
 	private String projectName;
 	@NotNull
-    @Size(min=1, message="Please provide projectId")
+    @Size(min=3,max=40, message="projectId should be min=3,max=40 characters")
 	private String projectId;
 	private boolean projectStatus;
 	@NotNull
-    @Size(min=1, message="Please provide businessUnit")
+    @Size(min=3,max=40, message="businessUnit should be min=3,max=40 characters")
 	private String businessUnit;
 	@NotNull
-    @Size(min=1, message="Please provide projectOwner")
+    @Size(min=3,max=40, message="projectOwner should be min=3,max=40 characters")
 	private String projectOwner;
 	private String program;
 	@NotNull
-    @Size(min=1, message="Please provide client details")
+    @Size(min=3,max=40, message="client details should be min=3,max=40 characters")
 	private String client;
 	private Set<String> projectUsersList;
 	private String id;
