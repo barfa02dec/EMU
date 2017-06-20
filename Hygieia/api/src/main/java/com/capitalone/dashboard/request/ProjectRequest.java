@@ -25,9 +25,15 @@ public class ProjectRequest {
     @Size(min=1, message="Please provide client details")
 	private String client;
 	private Set<String> projectUsersList;
+	private String id;
 	
 	
-	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public Set<String> getProjectUsersList() {
 		return projectUsersList;
 	}
