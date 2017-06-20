@@ -55,14 +55,19 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project updateProject(ProjectRequest projectRequest) {
 
-			Project project=projectRepository.findByProjectName(projectRequest.getProjectName());
-			if(null!=project)
-			{
-				mapProjectRequestToPojectForUpdateProject(projectRequest, project);
-				return projectRepository.save(project);
+			try{
+				
+				Project project=projectRepository.findOne(new ObjectId(projectRequest.getId()));
+				if(null!=project)
+				{
+					mapProjectRequestToPojectForUpdateProject(projectRequest, project);
+					return projectRepository.save(project);
 
+				}
+				
+			}catch (Exception e) {
+				return null;
 			}
-			
 			return null;
 		
 	}
@@ -80,7 +85,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	private Project mapProjectRequestToPojectForUpdateProject(ProjectRequest request, Project project ){
 		project.setProjectId(request.getProjectId());
-		project.setProjectName(request.getProjectName());
+		// project name is non editable field
+		//project.setProjectName(request.getProjectName());
 		project.setProjectOwner(request.getProjectOwner());
 		project.setClient(request.getClient());
 		project.setBusinessUnit(request.getBusinessUnit());

@@ -74,7 +74,7 @@ public class ProjectController {
 			if(project!=null){
 				return ResponseEntity.status(HttpStatus.OK).body("project updated successfully ");
 			}else{
-				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("project does not Exists");
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("project does not Exists/Invalid Project ID");
 
 			}
 		}catch (Exception e) {
