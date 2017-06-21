@@ -5,9 +5,9 @@
         .module(HygieiaConfig.module)
         .controller('projectMapController', projectMapController);
 
-    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http','$route','$cookies','$timeout','$uibModalInstance'];
+    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http','$route','$cookies','$timeout'];
 
-    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http,$route,$cookies,$timeout,$uibModalInstance) {
+    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http,$route,$cookies,$timeout) {
         var ctrl = this;
 
 
@@ -78,7 +78,7 @@
         };
 
         ctrl.postProject = function() {
-            $uibModalInstance.dismiss();
+            
             var apiHost = 'http://localhost:3000';
             if(ctrl.createProModel.$valid == true){
             $http.post(apiHost + '/api/createProject ', (ctrl.payl)).then(function(response) { 
