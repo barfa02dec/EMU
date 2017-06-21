@@ -1,0 +1,38 @@
+
+STEPS FOR EXECUTING SERVICES IN QA INSTANCE:
+
+Go to the path : C:\HYGEIA_SETUP\builds\intedd01\QAServices\
+
+Execute the below services one by one:
+------------------------------------------------------------------------------------------------------
+Run mongo DB:
+
+S1: Go to mongo DB installed directory: C:\Program Files\MongoDB\Server\3.4\bin
+
+S2: Execute: mongod --dbpath  C:\PMD_QA\data\db
+
+------------------------------------------------------------------------------------------------------
+Run API's :
+
+
+  java -jar api.jar --spring.config.location=C:\PMD_QA\Services\dashboard.properties -Djasypt.encryptor.password=hygieiasecret
+  
+------------------------------------------------------------------------------------------------------
+Run Jenkins Collector:  
+  
+  java -jar jenkins-build-collector-2.0.5-SNAPSHOT.jar --spring.config.name=application --spring.config.location=C:\PMD_QA\Services\jenkins.properties
+  
+-------------------------------------------------------------------------------------------------------
+Run Sonar Collector:
+
+  java -jar sonar-codequality-collector-2.0.5-SNAPSHOT.jar --spring.config.name=application --spring.config.location=C:\PMD_QA\Services\sonar.properties
+  
+--------------------------------------------------------------------------------------------------------
+Run Jira Collector:
+ 
+  java -jar jira-feature-collector.jar --spring.config.name=application --spring.config.location=C:\PMD_QA\Services\jira.properties
+  
+----------------------------------------------------------------------------------------------------------
+Run bitcucket Collector:
+
+  java -jar hm-bitbucket-2.0.5-SNAPSHOT.jar --spring.config.name=application --spring.config.location=C:\PMD_QA\Services\bitbucket.properties
