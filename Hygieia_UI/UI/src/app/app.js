@@ -46,7 +46,6 @@ var localStorageSupported = (function () {
         'validation.match',
         'as.sortable',
         'ui.select',
-        'dndLists',
         'ui.bootstrap'
     ])
     .config(['$httpProvider',
