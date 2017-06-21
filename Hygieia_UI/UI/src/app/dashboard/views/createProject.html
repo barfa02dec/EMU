@@ -1,0 +1,77 @@
+<div class="create-project-container">
+    <div class="col-md-12">
+        <div class="top-nav-bar" style="background: -webkit-linear-gradient(right,#24394C, #7ABEF8 ) !important;   
+    background: -o-linear-gradient(left, #24394C, #7ABEF8 ) !important; 
+    background: -moz-linear-gradient(left, #24394C, #7ABEF8 ) !important; 
+    background: linear-gradient(to left, #24394C, #7ABEF8 ) !important;height: 40px;">
+            <div class="col-md-5"></div>
+            <div class="col-md-4" style="color:#fff;padding-top: 1.6%;">Add Project</div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+    <div class="col-md-12" >
+        <div class="content-create" style="background:#fff;height: 410px;">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" style="padding-top: 5%;">
+                <div>
+                    <form class="form-horizontal" name="pm.createProModel">
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Project ID<span style="color:red;">*</span></label>
+                            <div class="col-sm-8">          
+                                <input type="text" class="form-control" id="pwd"  name="pwd" minlength="3" maxlength="40" placeholder="Type in the new Project ID" ng-model="pm.payl.projectId" style="border-radius: 0px; " required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Project Name<span style="color:red;">*</span></label>
+                            <div class="col-sm-8">          
+                                <input type="text" class="form-control" minlength="3" maxlength="40" placeholder="Type in the new Project Name" id="pwd" ng-model="pm.payl.projectName"  name="pwd" style="border-radius: 0px;" required>
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Line of BU<span style="color:red;">*</span></label>
+                            <div class="col-sm-8">          
+                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Enter the LOB" ng-model="pm.payl.businessUnit"  name="pwd" style="border-radius: 0px;" required>
+                            </div>
+                        </div>
+                       
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Project Owner<span style="color:red;">*</span></label>
+                            <div class="col-sm-8">          
+                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Enter the Project Owner" ng-model="pm.payl.projectOwner"  name="pwd" style="border-radius: 0px;" required>
+                            </div>
+                        </div>
+                      
+                        <div class="form-group">
+                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Program</label>
+                            <div class="col-sm-8">          
+                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Type in the Program" ng-model="pm.payl.program"  name="pwd" style="border-radius: 0px;">
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Customer Name<span style="color:red;">*</span></label>
+                            <div class="col-sm-8">          
+                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" ng-model="pm.payl.client" placeholder="Type in the new Project Name"  name="pwd" style="border-radius: 0px;" required>
+                            </div>
+                        </div>
+                        <div class="form-group" style="padding-top: 3%;padding-left: 17%;">
+                            <input type="submit" name="" value="Add" style="width: 40%;background: -webkit-linear-gradient(right, #E8B867, #FF5602);
+                background: -o-linear-gradient(left, #E8B867, #FF5602);  
+                background: -moz-linear-gradient(left, #E8B867, #FF5602);
+                background: linear-gradient(to left, #E8B867, #FF5602);color: #fff;border:none;border-radius: 2px;height: 30px;" ng-click="pm.postProject(); ">
+                             <input type="button" name="" value="Cancel" style="width: 40%;background: -webkit-linear-gradient(right, #8D8D8D, #414141);
+                background: -o-linear-gradient(left, #8D8D8D, #414141);  
+                background: -moz-linear-gradient(left, #8D8D8D, #414141);
+                background: linear-gradient(to left, #8D8D8D, #414141);color: #fff;border:none;border-radius: 2px;height: 30px;margin-left: 20px" ng-click="$close()">
+                <span class="{{errmsgclass}}" style="text-align: center;
+    display: inline-block;
+    padding-top: 16px;
+    color: red;">{{errormsg}}</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+    </div>
+</div>

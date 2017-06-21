@@ -1,0 +1,147 @@
+
+      <!-- Dashboard html -->
+    <section class="content-header dashboard">
+        <div class="row">
+            <div class="col-md-5 layout-selector">
+                <label ng-show="lac.isEditLayout" style="padding-right: 4px">Choose Layout </label>
+                <label ng-show="lac.isEditLayout" ng-repeat="layout in lac.layoutOptions" style="cursor: pointer;">
+                    <img ng-src="assets/images/{{layout.name+(layout.name===lac.selectedLayout.name? '-selected': '')}}.png" />
+                    <input type="radio" ng-model="lac.selectedLayout" name="layOut" ng-value="layout" ng-click="lac.setLayout(layout)" style="display: none;" />
+                </label>
+            </div>
+            <div class="col-md-2 edit-layout">
+                <button class="btn blmenuaddBtn layout-btn" ng-click="lac.saveDashboard()">
+                    <span ng-if="!lac.isEditLayout">Edit View</span>
+                    <span ng-if="lac.isEditLayout">Save</span>
+                </button>
+                <button class="btn bldynamicBtn layout-btn" ng-click="lac.restoreDashboard()" ng-show="lac.isEditLayout">Cancel</button>
+                <button data-target="#" href="page.html" data-toggle="dropdown" class="dropdown-toggle btn blmenuaddBtn layout-btn" ng-if="!lac.isEditLayout" style="margin-right: 15px;">Issues <b style="margin-left: 5px;" class="caret"></b></button>
+                <ul class="dropdown-menu" style="margin-left: 13px;">
+                    <li ng-click="lac.showCreateissueModel()"><a><span >Create Issue</span></a></li>
+                    <li ng-click="lac.viewAllOpenIssues()"><a><span >View Open Issues</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <script type="text/ng-template" id="Completeness.html">
+        <div class="completeness-widget" ng-init="lac.fetchOrganizationSummaryCount()">
+            <div class="col-md-12 title widget-title">Model Completeness Status</div>
+            <div class="row widget-body">
+                <th-loader show-loader="lac.showSummaryLoader"></th-loader>
+                <div class="col-md-2 progress-percent">
+                    {{lac.organizationsummaryCount.completenessPercentage || '0'}}%
+                </div>
+                <div class="col-md-9 progress-section custom-col-md-9 custom-col-md-12">
+                    <div class="col-md-12"><span class="progress-title">Percentage Completed</span></div>
+                    <div class="col-md-12">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-blue" style="width: {{lac.organizationsummaryCount.completenessPercentage}}%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <div class="dashboard-layout container-fluid dashboard" ng-switch="lac.selectedLayout.name">
+        <div class="layout-first" ng-switch-when="FIRST">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['A', 'C', 'E', 'G', 'I', 'K', 'M', 'O', 'Q']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                            <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['B', 'D', 'F', 'H', 'J', 'L', 'N', 'P', 'R']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                            <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout-second" ng-switch-when="SECOND">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['A', 'D', 'G', 'J', 'M', 'P']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                            <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['B', 'E', 'H', 'K', 'N', 'Q']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                            <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['C', 'F', 'I', 'L', 'O', 'R']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                            <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout-third" ng-switch-when="THIRD">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['A', 'C', 'E', 'G', 'I', 'K', 'M', 'O', 'Q']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                            <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['B', 'D', 'F', 'H', 'J', 'L', 'N', 'P', 'R']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                            <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout-fourth" ng-switch-when="FOUR">
+            <div class="row">
+                <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                    <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                </div>
+            </div>
+        </div>
+        <div class="layout-fifth" ng-switch-when="FIFTH">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['A', 'E', 'I', 'M']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                            <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="row">
+                        <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['B', 'F', 'J', 'N']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                            <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['C', 'G', 'K', 'O', 'R']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                            <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-12 zone-{{zone}}" ng-repeat="zone in ['D', 'H', 'L', 'P', 'Q']" ng-show="models.dropzones[zone].length || lac.isEditLayout">
+                            <dnd-wrapper dnd-drop-zone="{{zone}}" dnd-model="models" ctrl-scope="lac" is-edit-mode="lac.isEditLayout" widget-list="lac.widgetList"></dnd-wrapper>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  

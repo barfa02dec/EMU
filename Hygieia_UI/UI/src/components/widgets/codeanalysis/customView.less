@@ -1,0 +1,49 @@
+@import (reference) '../../../app/css/variables.less';
+@import (reference) '../../../app/css/mixins.less';
+@import (less)  '../../../../bower_components/angular-ui-select/dist/select.css';
+
+
+@bgcolorwidgets: #fff;
+@boxShadowwidgets: 0px 0px 6px  #888888;
+@borderRadius: 3px;
+@borderTop:2px solid #0071BC;
+@fontsizewidgetheader:black;
+@fontsizeprop:12px !important;
+
+.codecoverage-widget{
+    background:@bgcolorwidgets;
+    box-shadow: @boxShadowwidgets;
+    border-radius:@borderRadius;
+    border-top:@borderTop;
+    padding:8px !important;
+}
+.codecoverage-widgetHeader{
+    color:@fontsizewidgetheader;
+    text-shadow:none;
+    
+}
+.staticanalysis-widget{
+    background:@bgcolorwidgets;
+    box-shadow: @boxShadowwidgets;
+    border-radius:@borderRadius;
+    border-top:@borderTop;
+    text-shadow:none;
+}
+.staticanalysis-widgetHeader{
+    padding-top:10px;
+    padding-left:10px;
+    color:black;
+}
+.staticanalysis-textProps{
+    font-size:12px !important;
+    color:@fontsizewidgetheader;
+
+}
+.unit-tests-widget{
+    background:@bgcolorwidgets;
+    box-shadow: @boxShadowwidgets;
+    border-radius:@borderRadius;
+    border-top:@borderTop;
+    text-shadow:none;
+    padding:12px !important;
+}

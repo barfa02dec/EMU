@@ -1,0 +1,67 @@
+<div class="dnd-wrapper dropzone" ng-init="lac=ctrlScope">
+    <ul dnd-list="dndModel.dropzones[dndDropZone]" dnd-disable-if="dndModel.dropzones[dndDropZone].length">
+        <li>
+            <img ng-if="dndModel.dropzones[dndDropZone].length && isEditMode" class="dnd-menu" src="assets/images/binIcon.png" class="img-responsive" ng-click="removeComponent()" />
+        </li>
+        <li class="empty-text" ng-if="!dndModel.dropzones[dndDropZone].length">
+            <div ng-show="isEditMode">
+                <span  class="fontWeightDashboard">Drag your widgets here or</span>
+                <a ng-click="showAddGadgetModal()"  class="fontWeightDashboard">add a new widget</a>
+            </div>
+        </li>
+        <li class="dropzone-area" ng-repeat="item in dndModel.dropzones[dndDropZone]" dnd-draggable="item" ng-class="{selected: dndModel.selected === item}" dnd-effect-allowed="move" dnd-moved="componentMoved($index)" dnd-selected="dndModel.selected = item" dnd-external-sources="false" dnd-allowed-types="[item]" dnd-disable-if="!isEditMode" ng-include="item.viewName+'.html'"></li>
+    </ul>
+</div>
+<script type="text/ng-template" id="add-gadget.html">
+    <div class="dnd-wrapper modal-header">
+        <div class="row">
+            <div class="col-md-7">
+                <h3 class="modal-title" id="modal-title">Widgets</h3>
+            </div>
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-addon"><img src="assets/images/BL_assets_icon-searchlens.png"></span>
+                    <input type="text" ng-model="searchText" class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Search" aria-invalid="false" style="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-body dnd-wrapper" id="modal-body">
+        <ul class="widget-list">
+            <li ng-repeat="widget in widgetList|filter:searchText">
+                <div class="row title">
+                    {{widget.name}}
+                </div>
+                <div class="row">
+                    <div class="col-md-9 description">
+                        {{widget.description}}
+                    </div>
+                    <div class="col-md-3">
+                        <button ng-click="addGadget(widget)" class="btn blmenuaddBtn" ng-disabled="widget.added">Add</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="widget-status" ng-if="widget.added">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" width="11.6px" height="11.6px" viewBox="0 0 11.6 11.6" style="enable-background:new 0 0 11.6 11.6;" xml:space="preserve">
+                            <style type="text/css">
+                            .st0 {
+                                fill: #aaa;
+                            }
+                            </style>
+                            <defs>
+                            </defs>
+                            <g>
+                                <path class="st0" d="M1.7,1.7C2.8,0.6,4.2,0,5.8,0c1.6,0,3,0.6,4.1,1.7c1.1,1.1,1.7,2.5,1.7,4.1c0,1.6-0.6,3-1.7,4.1
+                        c-1.1,1.1-2.5,1.7-4.1,1.7c-1.6,0-3-0.6-4.1-1.7C0.6,8.8,0,7.4,0,5.8C0,4.2,0.6,2.8,1.7,1.7z M4.6,8.8l5.3-5.3L9.1,2.7L4.6,7.1
+                        L2.6,5L1.8,5.8L4.6,8.8z" />
+                            </g>
+                        </svg>
+                        <span class="status-text">&nbsp;Already added</span></div>
+                </div>
+                <div class="row divider" ng-if="$index < widgetList.length-1">
+                    <hr>
+                </div>
+            </li>
+        </ul>
+    </div>
+</script>

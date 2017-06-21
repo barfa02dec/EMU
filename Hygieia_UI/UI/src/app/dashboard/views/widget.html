@@ -1,0 +1,62 @@
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" class="alert alert-info">{{alert.msg}}</alert>
+<div class="" >
+    <div class="widget row"
+        ng-class="{'configure' : state == widget_state.CONFIGURE, 'alert': display == display_state.ERROR}" style="padding:0px;padding-left:13px;">
+        <div class="widget-heading" ng-if="header" ng-hide=" {{(title == 'Monitor')}}" style="color:#595959;text-shadow:none;padding-top: 0px;margin-bottom:-5px;border-bottom:none;">
+            <span ng-show=" {{(title == 'Feature')}}" style="padding-left:17px;">{{title}}</span>
+            <span ng-show=" {{(title == 'Build')}}" style="padding-left:3px;">{{title}}</span>
+            <span ng-show=" {{(title == 'Code Repo')}}" style="padding-left:11px;">{{title}}</span>
+            <span ng-show=" {{(title == 'Quality')}}" style="padding-left:27px;">{{title}}</span>
+            <span class="widget-settings-icon clickable pull-right fa fa-cog"
+                type="button"
+                ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"
+                ng-click="checkPermission()" ng-show=" {{(title == 'Feature')}}" style="padding-right: 11px;"></span>
+            <span class="widget-settings-icon clickable pull-right fa fa-cog"
+                type="button"
+                ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"
+                ng-click="checkPermission()" ng-show=" {{(title == 'Build')}}" style="padding-right: 0px;"></span>
+            <span class="widget-settings-icon clickable pull-right fa fa-cog"
+                type="button"
+                ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"
+                ng-click="checkPermission()" ng-show=" {{(title == 'Code Repo')}}" style="padding-right: 32px;"></span>
+            <span class="widget-settings-icon clickable pull-right fa fa-cog"
+                type="button"
+                ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"
+                ng-click="checkPermission()" ng-show=" {{(title == 'Quality')}}" style="padding-right: 39px;"></span>
+            <span class="pull-right last-updated">
+            {{lastUpdatedDisplay}}
+            </span>
+            <span ng-show=" {{(title == 'Quality')}}">
+            <a href="#/detailedview/{{caWidget.dashBoardId}}/{{caWidget.componentId}}" target="_self" > 
+            <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;">View All <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+            </a></span>
+        </div>
+        <div class="widget-body" style="padding:4px;padding-top: 5px;">
+            <div class="widget-body-main">
+                <!-- widget content -->
+            </div>
+            <div class="widget-body-config clickable" ng-click="checkPermission()" style="background:#9AD2FF;border: 2px solid #66ccff;border-radius:3px;">
+                <div>
+                    <div class="">
+                        <svg version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
+                            x="0px" y="0px" width="30px" height="30px" viewBox="0 0 30 30" style="overflow:scroll;enable-background:new 0 0 30 30;"
+                            xml:space="preserve">
+                            <style type="text/css">
+                                .stedaddwid0{fill:#FFFFFF;}
+                            </style>
+                            <defs></defs>
+                            <g>
+                                <path class="stedaddwid0" d="M4.4,4.4C7.3,1.5,10.9,0,15,0c4.1,0,7.7,1.5,10.6,4.4C28.5,7.3,30,10.9,30,15c0,4.1-1.5,7.7-4.4,10.6
+                                    C22.6,28.5,19.1,30,15,30c-4.1,0-7.7-1.5-10.6-4.4C1.5,22.6,0,19.1,0,15C0,10.9,1.5,7.3,4.4,4.4z M6.5,23.4C8.9,25.8,11.7,27,15,27
+                                    c3.3,0,6.1-1.2,8.5-3.6c2.4-2.4,3.6-5.2,3.6-8.5c0-3.3-1.2-6.1-3.6-8.5C21.1,4.1,18.3,3,15,3c-3.3,0-6.1,1.2-8.5,3.6
+                                    C4.1,8.9,3,11.7,3,15C3,18.3,4.1,21.1,6.5,23.4z M16.5,7.5v6h6v3h-6v6h-3v-6h-6v-3h6v-6H16.5z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div style="color:#fff;">Configure<br/>widget</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
