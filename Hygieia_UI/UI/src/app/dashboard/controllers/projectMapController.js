@@ -142,7 +142,7 @@
 
 
             });
-            $location.path('/site/' + ProId);
+            $location.path('/site/');
              $cookies.put('ProId', ProId);
             /*$timeout(function(){
                 $rootScope.ProId = ProId;
