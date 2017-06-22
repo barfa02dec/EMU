@@ -47,10 +47,13 @@
          <span class="edtext-ListdashPage" style="margin-left: 0.9%;margin-top:6px;">Engineering Dashboard</span>
              <span id="demo" class="signout-ListdashPage" style="margin-bottom:8px !important;margin-top: 5px !important;margin-right: -138px !important;">
             <div class="wrapper blddmenu">
-               <div class="content blddmenu" style="position: fixed;">
+               <div class="content blddmenu" style="width: 127px;
+    padding-top: 40px;
+    padding-left: 23px;
+    margin-left: -80px;position: absolute;">
                   <ul class="blddmenu">
                      <a>
-                        <li ng-click="template.logout()" style="text-align:center;">Log out</li>
+                        <li ng-click="pm.logout()" style="text-align:center;">Log out</li>
                      </a>
                   </ul>
                </div>
@@ -209,7 +212,7 @@
                <!-- <div class="col-md-2" ng-show="proj.editorEnabled" style="padding-left: 50px;">
                   <input type="" name="" ng-model="proj.projectName" style="width: 120px;">
                </div> -->
-               <div class="col-md-2" style="padding-left: 50px;" ng-click="showDahboardPage(proj.id);" style="cursor: pointer;">{{proj.projectName}}</div>
+               <div class="col-md-2" style="padding-left: 50px;cursor: pointer;" ng-click="showDahboardPage(proj.id);">{{proj.projectName}}</div>
 
                 <div class="col-md-2" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.client" style="width: 120px;">
@@ -249,7 +252,7 @@
                   <img src="assets/images/save_icon.png " class="ed-image-props" style="width: 15px;height:15px;cursor: pointer;margin-left: 6px;" title="Save">
                </span> 
                <span class="" >
-                 <img src="assets/images/fld/delete.png " class="ed-image-props" style="width: 15px;height:15px;cursor: pointer;margin-left: 6px;" ng-click="pm.deleteProjects(proj)" title="Delete"> 
+                 <img src="assets/images/fld/delete.png " class="ed-image-props" style="width: 15px;height:15px;cursor: pointer;margin-left: 6px;" ng-click="pm.deleteProjectModel(proj)" title="Delete"> 
                </span></span>
               
                <span class="" >

@@ -5,9 +5,9 @@
         .module(HygieiaConfig.module)
         .controller('projectMapController', projectMapController);
 
-    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http','$route','$cookies','$timeout'];
+    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http','$route','$cookies','$timeout','$cookieStore'];
 
-    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http,$route,$cookies,$timeout) {
+    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http,$route,$cookies,$timeout,$cookieStore) {
         var ctrl = this;
 
 
@@ -105,25 +105,13 @@
             })
 
         }
-
-
-         ctrl.deleteProjects = function(valle, id) {
-            console.log(ctrl.getAllProjects);
-
-            /*angular.forEach(ctrl.getAllProjects,  function(value,  key) {          
-                if (value.projectId === valle) {
-                    console.log(value.id);
-                    alert("asdas");*/
-                    $http.delete(apiHost + '/api//deleteProject/' + valle.id, (ctrl.payl)).then(function(response) {
-                        alert("Project deleted Successfully");
-                         var index=ctrl.getAllProjects.indexOf(valle);
-                         ctrl.getAllProjects.splice(index,1);
-
-                    })
-                /*}
-            });*/
-
+         ctrl.logout = function () {
+            $cookieStore.remove("username");
+            $cookieStore.remove("authenticated");
+            $location.path('/');
         };
+
+         
 
         ctrl.deleteProjectModel = function(pro) {
             console.log(pro);
@@ -132,10 +120,34 @@
            
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/deleteModel.html',
-                controller: 'projectMapController',
-                controllerAs: 'pm'
+                controller: delProjetController,
+                controllerAs: 'dpc',
+                resolve: {
+                        pid: function() {
+                            return pro.id;
+                        }
+                    }
+
             });
         }
+
+        function delProjetController($uibModalInstance, pid,$route) {
+
+            var dpmObj = this;
+
+            dpmObj.deleteProjects = function(pro) {
+
+                
+                $http.delete(apiHost + '/api//deleteProject/' + pid).then(function(response) {
+                    alert("Project deleted Successfully");
+                      /*var index=ctrl.getAllProjects.indexOf(pid);
+                      ctrl.getAllProjects.splice(index,1);*/
+                     $uibModalInstance.dismiss("cancel");
+                     $route.reload();
+                })
+            };
+        }
+
         $scope.showDahboardPage = function(ProId) {
             $http.get(apiHost + '/api/dashboard/projectdashboard?projectId=' + ProId)
             .then(function(){

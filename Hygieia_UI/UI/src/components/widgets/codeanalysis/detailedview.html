@@ -151,22 +151,22 @@
                     <div class=" " ng-repeat="componentdu in componentdu.duplicationsNewArray track by $index">
                         <span ng-if="$index == 0" class="styling-values col-md-4"></span>
                         <span ng-if="$index == 1"  class="label-props col-md-2" style="padding-top: 8px;">Blocks</span>
-                        <span ng-if="$index == 1" class="col-md-4 widget-value-pro-small" style="padding-left: 32px;">{{componentdu.formattedValue}}</span>
+                        <span ng-if="$index == 1" class="col-md-4 widget-value-pro-small" style="padding-left: 32px;padding-top: 5px;">{{componentdu.formattedValue}}</span>
                     </div>
                 </div>
                 <div class="row " style="margin-left:2%;">
                     <div class="col-md-3 " ng-repeat="componentdu in componentdu.duplicationsNewArray track by $index">
                     <span ng-if="$index == 0" class="styling-values col-md-4" style="padding-left: 0px">{{componentdu.formattedValue}}</span>
                         
-                        <span ng-if="$index == 1" style="padding-left:42%;padding-top: 8px;" class="label-props col-md-2">Lines</span>
-                        <span ng-if="$index == 2" class="widget-value-pro-small col-md-5" style="padding-left:25%;">{{componentdu.formattedValue}}</span>
+                        <span ng-if="$index == 1" style="padding-left:42%;padding-top: 13px;" class="label-props col-md-2">Files</span>
+                        <span ng-if="$index == 2" class="widget-value-pro-small col-md-5" style="padding-left:25%;padding-top: 9px;">{{componentdu.formattedValue}}</span>
                     </div>
                 </div>
                 <div class="row " style="margin-left:2%;">
                     <div class="" ng-repeat="componentdu in componentdu.duplicationsNewArray track by $index" >
                         <span ng-if="$index == 0" class="label-props col-md-3" style="padding-left: 0px">Duplicated Lines</span>
-                        <span ng-if="$index == 1" style="padding-left:11%;" class="label-props col-md-3">Files</span>
-                        <span ng-if="$index == 3"  class="widget-value-pro-small col-md-3" style="padding-left:32px;margin-top:-8px;">{{componentdu.formattedValue}}</span>
+                        <span ng-if="$index == 1" style="padding-left:11%;" class="label-props col-md-3">Lines</span>
+                        <span ng-if="$index == 3"  class="widget-value-pro-small col-md-3" style="padding-left:32px;margin-top:-3px;">{{componentdu.formattedValue}}</span>
                     </div>
                 </div>
             </div>
@@ -240,7 +240,7 @@
                 <div class="row " style="margin-left:2%;">
                     <div class="" ng-repeat="componentcos in componentco.complexityNewArray track by $index">
                          <span ng-if="$index == 0" class="styling-values col-md-3 "></span>
-                        <span ng-if="$index == 1"  class="label-props col-md-3">Function</span>
+                        <span ng-if="$index == 1"  class="label-props col-md-3" style="padding-left: 30px;">Function</span>
                         <span  class="widget-value-pro-small col-md-3" ng-if="$index == 1">{{componentcos.formattedValue}}</span></span>
                     </div>
                 </div>
@@ -248,14 +248,14 @@
                     <div class="" ng-repeat="componentcos in componentco.complexityNewArray track by $index">
                     <span ng-if="$index == 0" class="styling-values col-md-3">{{componentcos.formattedValue}}</span>
                        
-                        <span ng-if="$index == 1"  class="label-props col-md-3 ">File</span>
-                        <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " >{{componentcos.formattedValue}}</span>
+                        <span ng-if="$index == 1"  class="label-props col-md-3 " style="padding-top: 11px;padding-left: 30px;">File</span>
+                        <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 9px">{{componentcos.formattedValue}}</span>
                     </div>
                 </div>
                 <div class="row " style="margin-left:2%;">
                     <div class="" ng-repeat="componentcos in componentco.complexityNewArray track by $index" >
                         <span ng-if="$index == 0" class="label-props col-md-3 ">Complexity</span>
-                        <span ng-if="$index == 1"  class="label-props col-md-3">Class</span>
+                        <span ng-if="$index == 1"  class="label-props col-md-3" style="padding-left: 30px;">Class</span>
                         <span  class="widget-value-pro-small col-md-3" ng-if="$index == 1">{{componentcos.formattedValue}}</span>
                     </div>
                 </div>
@@ -269,23 +269,23 @@
                     <div class="row " style="margin-left:2%;">
                         <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
                             <span ng-if="$index == 0" class="styling-values col-md-3 "></span>
-                            <span ng-if="$index == 1"  class="label-props col-md-3">Line Density</span>
-                            <span  class="widget-value-pro-small col-md-3" ng-if="$index == 1">{{componentdoc.formattedValue}}</span></span>
+                            <span ng-if="$index == 1"  class="label-props col-md-3" style="padding-left: 22px;">Line Density</span>
+                            <span  class="widget-value-pro-small col-md-3" ng-if="$index == 1" style="padding-left: 30px;">{{componentdoc.formattedValue}}</span></span>
                         </div>
                     </div>
                     <div class="row " style="margin-left:2%;">
                         <div class=""  ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
                            
                             <span ng-if="$index == 0" class="styling-values col-md-3">{{componentdoc.formattedValue}}</span>
-                            <span ng-if="$index == 1"  class="label-props col-md-3 ">Doc API</span>
-                            <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " >{{componentdoc.formattedValue}}</span>
+                            <span ng-if="$index == 1"  class="label-props col-md-3 " style="padding-top: 11px;padding-left: 22px;">Doc API</span>
+                            <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 8px;padding-left: 30px;">{{componentdoc.formattedValue}}</span>
                         </div>
                     </div>
                     <div class="row " style="margin-left:2%;">
                         <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index" >
                             <span ng-if="$index == 0" class="label-props col-md-3 ">Comment Lines</span>
-                            <span ng-if="$index == 1"  class="label-props col-md-3">Undoc API</span>
-                            <span  class="widget-value-pro-small col-md-3" ng-if="$index == 3">{{componentdoc.formattedValue}}</span>
+                            <span ng-if="$index == 1"  class="label-props col-md-3" style="padding-left: 22px;">Undoc API</span>
+                            <span  class="widget-value-pro-small col-md-3" ng-if="$index == 3" style="margin-top: -3px;padding-left: 30px;">{{componentdoc.formattedValue}}</span>
                         </div>
                     </div>
                 </div>
@@ -352,7 +352,7 @@
                     </div>
                 </div>
             </div></div>
-            <div class="col-md-4  layout-calcs maintainability-widget" style="height:195px;background: #fff;">
+            <!-- <div class="col-md-4  layout-calcs maintainability-widget" style="height:195px;background: #fff;">
                 <div class="widget-headers">Issues</div>
                  <div class="content-padding" style="padding-left: 18px;padding-top:30px;">
                 <div class="col-md-3">
@@ -369,8 +369,8 @@
                     <div class="row" >
                         <div class="" >
                             <span  class="styling-values col-md-4"></span>
-                            <span  class="col-md-6 label-props">Uncovered Condition</span>
-                            <span  class="label-props col-md-2">Branch</span>
+                            <span  class="col-md-6 label-props">Major Violation</span>
+                            <span  class="label-props col-md-2">Crtical Violation</span>
                         </div>
                     </div>
                     <div class="" ng-repeat="componentiss in detailess.component_list">
@@ -385,8 +385,8 @@
                     <div class="row" >
                         <div class="" >
                             <span  class="styling-values col-md-4"></span>
-                            <span  class="col-md-6 label-props">Uncovered Line</span>
-                            <span  class="label-props col-md-2">Lines</span>
+                            <span  class="col-md-6 label-props">Info Violation</span>
+                            <span  class="label-props col-md-2">Minor Violation</span>
                         </div>
                     </div>
                     <div class="" ng-repeat="componentiss in detailess.component_list">
@@ -400,8 +400,8 @@
                     </div>
                 </div>
             </div>
-        </div></div>
-        <div class="col-md-12 layout-maindiv" style="padding-top:1.4%;">
+        </div> --></div>
+        <!-- <div class="col-md-12 layout-maindiv" style="padding-top:1.4%;">
             <div class="col-md-4  layout-calcs maintainability-widget" style="height:195px;background: #fff;">
                 <div class="widget-headers">Test Coverage</div>
                 <div class="content-padding" style="padding-left: 18px;padding-top:20px;">
@@ -464,6 +464,6 @@
                     </div>
                 </div>
             </div></div>
-        </div>
+        </div> -->
     </div>
 </div>
