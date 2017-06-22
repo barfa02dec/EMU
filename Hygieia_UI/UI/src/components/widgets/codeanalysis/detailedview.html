@@ -1,5 +1,6 @@
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 <div class="colorLoginHeader" style="min-height:0px;">
-    <!--  <span class="hamburger-ListdashPage">
+      <span class="hamburger-ListdashPage" style="margin-top: 6px;">
         <svg version="1.1"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
             x="0px" y="0px" width="15px" height="9px" viewBox="0 0 15 9" style="overflow:scroll;enable-background:new 0 0 15 9;"
@@ -15,7 +16,7 @@
             </g>
         </svg>
         </span>
-        <span class="edMenu-ListDash-Page">
+        <span class="edMenu-ListDash-Page" style="margin-top: 6px;">
         <svg version="1.1"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
             x="0px" y="0px" width="23px" height="23px" viewBox="0 0 23 23" style="overflow:scroll;enable-background:new 0 0 23 23;"
@@ -36,14 +37,14 @@
             </g>
         </svg>
         </span>
-        <span class="edtext-ListdashPage">Engineering Dashboard</span>
+        <span class="edtext-ListdashPage" style="padding-top: 14px;">Engineering Dashboard</span>
         
-        <span id="demo" class="signout-ListdashPage">
+        <span id="demo" class="signout-ListdashPage" style="margin-top: 7px !important;float: none;">
         <div class="wrapper blddmenu">
             <div class="content blddmenu">
                 <ul class="blddmenu">
                     <a>
-                        <li ng-click="ctrl.logout()" style="text-align:center;">Log out</li>
+                        <li ng-click="detailess.logout()" style="text-align:center;">Log out</li>
                     </a>
                 </ul>
             </div>
@@ -68,7 +69,7 @@
             </div>
         </div>
         </span>
-        <span class="addDash-ListdashPage">
+       <!--  <span class="addDash-ListdashPage">
         <svg version="1.1"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
             x="0px" y="0px" width="18px" height="18px" viewBox="0 0 18 18" style="overflow:scroll;enable-background:new 0 0 18 18;"
@@ -84,61 +85,105 @@
                 </g>
             </g>
         </svg>
-        </span> -->
+        </span>  -->
 </div>
-<div class="detailed-view-page" style="padding-top:3%;">
-    <div class="col-md-12 layout-maindiv">
+<div class="detailed-view-page" style="padding-top:2%;">
+<div class="col-md-12">
+     <div class="col-md-4"><a href="#/site">
+    <ul class="breadcrumb" style="background: none;">
+   <li><a href="#/projectMap" style="text-decoration: underline;">Project List / </a></li>
+  <li><a href="#/site" style="text-decoration: underline;">Dasboard List / </a></li>
+ <li><a href="#" style="text-decoration: underline;">System Dasboard </a></li>
+ 
+</ul></a></div>
+</div>
+<div class="col-md-12">
+    <div class="col-md-1">Quality Gate</div>
+     <div class="col-md-1">
+         <div style="background: white;
+    box-shadow: 0px 0px 2px #888888;
+    border-radius: 0px;
+    border-left: 4px solid #96c356;">
+        <div style="margin-left: 18px;color: #009900">Passed</div>
+    </div>
+     </div>
+    
+
+
+     
+</div>
+    <div class="col-md-12 layout-maindiv" style="padding-top: 2%;">
         <div class="col-md-4  layout-calcs security-widget" style="background: #fff;">
-            <div class="widget-headers">Security</div>
+            <div class="widget-headers col-md-11" >Security</div>
+            <span ng-repeat="components in detailess.component_list ">
+                <span ng-repeat="components in components.securityNewArray track by $index">
+                    <span ng-if="$index == 1"  ng-show=" {{(components.formattedValue == 'C')}}" class="circle-props-yellow col-md-2">{{components.formattedValue}}</span>
+                        <span ng-if="$index == 1"  ng-show=" {{(components.formattedValue == 'A')}}" class="circle-props-green col-md-2">{{components.formattedValue}}</span>
+                        <span ng-if="$index == 1"  ng-show=" {{(components.formattedValue == 'E')}}" class="circle-props col-md-2">{{components.formattedValue}}</span>
+                </span>
+            </span>
             <div class="" ng-repeat="components in detailess.component_list ">
                 <div class="row widget-inner-spacing" style="margin-left:2%;">
-                    <div class="col-md-4" ng-repeat="components in components.securityNewArray track by $index">
-                        <span ng-if="$index == 0" class="styling-values">{{components.formattedValue}}</span>
-                        <span ng-if="$index == 1" class="circle-props">{{components.formattedValue}}</span>
-                        <span ng-if="$index == 2" class="widget-value-pro">{{components.formattedValue}}</span>
+                    <div class="" ng-repeat="components in components.securityNewArray track by $index">
+                        <span ng-if="$index == 0" class="styling-values col-md-4">{{components.formattedValue}}</span>
+                        <span ng-if="$index == 2" class="widget-value-pro col-md-4">{{components.formattedValue}}</span>
                     </div>
                 </div>
             </div>
             <div class="col-md-12 label-props widget-inner-spacing" style="margin-top: -22px;">
                 <div class="col-md-4">Vulnerability</div>
-                <div class="col-md-4" style="padding-left: 17px;">Rating</div>
+                <!-- <div class="col-md-4" style="padding-left: 17px;">Rating</div> -->
                 <div class="col-md-4 ">Redemption Effort</div>
             </div>
         </div>
         <div class="col-md-4  layout-calcs security-widget"  style="background: #fff;">
-            <div class="widget-headers">Reliability</div>
+            <div class="widget-headers col-md-11">Reliability</div>
+            <span ng-repeat="component in detailess.component_list ">
+                
+                <span ng-repeat="component in component.newArr track by $index">
+                     <span ng-if="$index == 1"  ng-show=" {{(component.formattedValue == 'C')}}" class="circle-props-yellow col-md-2">{{component.formattedValue}}</span>
+                        <span ng-if="$index == 1"  ng-show=" {{(component.formattedValue == 'A')}}" class="circle-props-green col-md-2">{{component.formattedValue}}</span>
+                        <span ng-if="$index == 1"  ng-show=" {{(component.formattedValue == 'E')}}" class="circle-props col-md-2">{{component.formattedValue}}</span>
+                </span>
+            </span>
             <div class="" ng-repeat="component in detailess.component_list ">
                 <div class="row widget-inner-spacing" style="margin-left:2%;">
-                    <div class="col-md-4" ng-repeat="component in component.newArr track by $index">
-                        <span  class="styling-values" ng-if="$index == 0">{{component.formattedValue}}</span>
-                        <span  class="circle-props" ng-if="$index == 1">{{component.formattedValue}}</span>
-                        <span  class="widget-value-pro" ng-if="$index == 2">{{component.formattedValue}}</span>
+                    <div class="" ng-repeat="component in component.newArr track by $index">
+                        <span  class="styling-values col-md-4" ng-if="$index == 0">{{component.formattedValue}}</span>
+                        
+                        <span  class="widget-value-pro col-md-4" ng-if="$index == 2">{{component.formattedValue}}</span>
                     </div>
                 </div>
             </div>
             <div class="col-md-12 label-props widget-inner-spacing" style="margin-top: -22px;">
                 <div class="col-md-4">Bugs</div>
-                <div class="col-md-4" style="padding-left: 17px;">Rating</div>
+               <!--  <div class="col-md-4" style="padding-left: 17px;">Rating</div> -->
                 <div class="col-md-4">Redemption Effort</div>
             </div>
         </div>
         <div class="col-md-4  layout-calcs security-widget"  style="background: #fff;">
-            <div class="widget-headers">Maintainability</div>
+            <div class="widget-headers col-md-11">Maintainability</div>
+            <span ng-repeat="componentm in detailess.component_list ">
+                <span ng-repeat="componentm in componentm.maintainabilityNewArray track by $index">
+                    <span ng-if="$index == 1"  ng-show=" {{(componentm.formattedValue == 'C')}}" class="circle-props-yellow col-md-2">{{componentm.formattedValue}}</span>
+                        <span ng-if="$index == 1"  ng-show=" {{(componentm.formattedValue == 'A')}}" class="circle-props-green col-md-2">{{componentm.formattedValue}}</span>
+                        <span ng-if="$index == 1"  ng-show=" {{(componentm.formattedValue == 'E')}}" class="circle-props col-md-2">{{componentm.formattedValue}}</span>
+                </span>
+            </span>
             <div class="" ng-repeat="componentm in detailess.component_list ">
                 <div class="row widget-inner-spacing" style="margin-left:2%;">
-                    <div class="col-md-4" ng-repeat="componentm in componentm.maintainabilityNewArray track by $index">
-                        <span ng-if="$index == 0" class="styling-values">{{componentm.formattedValue}}</span>
-                        <span ng-if="$index == 1"  ng-show=" {{(componentm.formattedValue == 'C')}}" class="circle-props-yellow">{{componentm.formattedValue}}</span>
-                        <span ng-if="$index == 1"  ng-show=" {{(componentm.formattedValue == 'A')}}" class="circle-props-green">{{componentm.formattedValue}}</span>
-                        <span ng-if="$index == 1"  ng-show=" {{(componentm.formattedValue == 'E')}}" class="circle-props">{{componentm.formattedValue}}</span>
-                        <span ng-if="$index == 2" class="widget-value-pro">{{componentm.formattedValue}}</span>
+                    <div class="" ng-repeat="componentm in componentm.maintainabilityNewArray track by $index">
+                        <span ng-if="$index == 0" class="styling-values col-md-4">{{componentm.formattedValue}}</span>
+                        
+                        <span ng-if="$index == 2" class="widget-value-pro col-md-4">{{componentm.formattedValue}}</span>
                     </div>
                 </div>
             </div>
             <div class="col-md-12 label-props widget-inner-spacing" style="margin-top: -22px;">
-                <div class="col-md-4">Rating</div>
+                <!-- <div class="col-md-4">Rating</div> -->
+                 <div class="col-md-4">Code Smells</div>
                 <div class="col-md-4" style="padding-left: 0px;">Redemption Effort</div>
-                <div class="col-md-4">Code Smells</div>
+               
             </div>
         </div>
     </div>

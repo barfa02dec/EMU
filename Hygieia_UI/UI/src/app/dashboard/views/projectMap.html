@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 <div class="main-container" style="background: -webkit-linear-gradient(right, #FBFDFE, #A0C4E3) !important;
     background: -o-linear-gradient(left, #FBFDFE, #A0C4E3) !important;
     background: -moz-linear-gradient(left, #FBFDFE, #A0C4E3) !important;
@@ -194,7 +195,9 @@
        <div class="col-md-1" style="color: #0071BC">Project Health</div> -->
 
     </div>
-    <div class="col-md-12" ng-repeat="proj in pm.getAllProjects | filter:pm.searchText">
+    <form name="pm.projectDetailBar">
+
+        <div class="col-md-12" ng-repeat="proj in pm.getAllProjects | filter:pm.searchText">
         <div class="col-md-1"></div>
         <div class="col-md-10 projectBar" style="background: white;
             margin-top: 8px;
@@ -262,7 +265,7 @@
 
             </div>
         
-    </div>
+    </div></form>
     <!-- <div class="col-md-12">
         <div class="col-md-1"></div>
         <div class="col-md-10" style="background: white;
