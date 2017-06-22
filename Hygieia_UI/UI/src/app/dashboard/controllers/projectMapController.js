@@ -5,9 +5,9 @@
         .module(HygieiaConfig.module)
         .controller('projectMapController', projectMapController);
 
-    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http','$route','$cookies','$timeout','$cookieStore'];
+    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http', '$route', '$cookies', '$timeout', '$cookieStore'];
 
-    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http,$route,$cookies,$timeout,$cookieStore) {
+    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore) {
         var ctrl = this;
 
 
@@ -42,8 +42,8 @@
 
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/createProject.html',
-                controller: 'projectMapController',
-                controllerAs: 'pm'
+                controller: postProjetController,
+                controllerAs: 'cpr'
             });
         }
         ctrl.shareProjectPopUp = function() {
@@ -77,85 +77,103 @@
 
         };
 
-        ctrl.postProject = function() {
-            
-            var apiHost = 'http://localhost:3000';
-            if(ctrl.createProModel.$valid == true){
-            $http.post(apiHost + '/api/createProject ', (ctrl.payl)).then(function(response) { 
-                alert("Project Created Successfully");
-                $route.reload();
-        })
-    }
-        else{
-            $scope.errormsg = "Please fill the required fields";
-            $timeout(function() {
-                        $scope.errormsg = "";
-                    }, 3000);
-        }
 
-        };
         ctrl.editproject = function(info) {
             info.editorEnabled = false;
             console.log(info);
-            var apiHost = ' http://localhost:3000'; 
-            var qahost = 'http://10.20.1.183:3000'; 
+            var apiHost = ' http://localhost:3000';
+            var qahost = 'http://10.20.1.183:3000';
             $http.post(apiHost + '/api/updateProject', (info)).then(function(response) {
                 alert("Project updated Successfully");
 
             })
 
         }
-         ctrl.logout = function () {
+        ctrl.logout = function() {
             $cookieStore.remove("username");
             $cookieStore.remove("authenticated");
             $location.path('/');
         };
 
-         
+
 
         ctrl.deleteProjectModel = function(pro) {
             console.log(pro);
             ctrl.proData = pro;
-           
-           
+
+
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/deleteModel.html',
                 controller: delProjetController,
                 controllerAs: 'dpc',
                 resolve: {
-                        pid: function() {
-                            return pro.id;
-                        }
+                    pid: function() {
+                        return pro.id;
                     }
+                }
 
             });
         }
 
-        function delProjetController($uibModalInstance, pid,$route) {
+        function delProjetController($uibModalInstance, pid, $route) {
 
             var dpmObj = this;
 
             dpmObj.deleteProjects = function(pro) {
 
-                
+
                 $http.delete(apiHost + '/api//deleteProject/' + pid).then(function(response) {
                     alert("Project deleted Successfully");
-                      /*var index=ctrl.getAllProjects.indexOf(pid);
-                      ctrl.getAllProjects.splice(index,1);*/
-                     $uibModalInstance.dismiss("cancel");
-                     $route.reload();
+                    /*var index=ctrl.getAllProjects.indexOf(pid);
+                    ctrl.getAllProjects.splice(index,1);*/
+                    $uibModalInstance.dismiss("cancel");
+                    $route.reload();
                 })
+            };
+        }
+
+
+        function postProjetController($uibModalInstance, $http, $route, $timeout, $scope) {
+
+            var dpmObjpos = this;
+            dpmObjpos.payl = {
+                "projectId": ctrl.projectId,
+                "projectName": ctrl.projectName,
+
+                "projectOwner": ctrl.projectOwner,
+                "client": ctrl.client,
+                "businessUnit": ctrl.businessUnit,
+                "program": ctrl.program
+            }
+            dpmObjpos.postProject = function() {
+
+                var apiHost = 'http://localhost:3000';
+                if (dpmObjpos.createProModel.$valid == true) {
+                    $http.post(apiHost + '/api/createProject ', (dpmObjpos.payl)).then(function(response) {
+                        alert("Project Created Successfully");
+                        $route.reload();
+                        $uibModalInstance.dismiss("cancel");
+
+
+                    })
+                } else {
+                    $scope.errormsg = "Please fill the required fields";
+                    $timeout(function() {
+                        $scope.errormsg = "";
+                    }, 3000);
+                }
+
             };
         }
 
         $scope.showDahboardPage = function(ProId) {
             $http.get(apiHost + '/api/dashboard/projectdashboard?projectId=' + ProId)
-            .then(function(){
+                .then(function() {
 
 
-            });
+                });
             $location.path('/site/');
-             $cookies.put('ProId', ProId);
+            $cookies.put('ProId', ProId);
             /*$timeout(function(){
                 $rootScope.ProId = ProId;
             $rootScope.$broadcast("ProId", ProId);

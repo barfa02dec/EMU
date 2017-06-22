@@ -14,23 +14,23 @@
             <div class="col-md-2"></div>
             <div class="col-md-8" style="padding-top: 5%;">
                 <div>
-                    <form class="form-horizontal" name="pm.createProModel">
+                    <form class="form-horizontal" name="cpr.createProModel">
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Project ID<span style="color:red;">*</span></label>
                             <div class="col-sm-8">          
-                                <input type="text" class="form-control" id="pwd"  name="pwd" minlength="3" maxlength="40" placeholder="Type in the new Project ID" ng-model="pm.payl.projectId" style="border-radius: 0px; " required>
+                                <input type="text" class="form-control" id="pwd"  name="pwd" minlength="3" maxlength="40" placeholder="Type in the new Project ID" ng-model="cpr.payl.projectId" style="border-radius: 0px; " required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Project Name<span style="color:red;">*</span></label>
                             <div class="col-sm-8">          
-                                <input type="text" class="form-control" minlength="3" maxlength="40" placeholder="Type in the new Project Name" id="pwd" ng-model="pm.payl.projectName"  name="pwd" style="border-radius: 0px;" required>
+                                <input type="text" class="form-control" minlength="3" maxlength="40" placeholder="Type in the new Project Name" id="pwd" ng-model="cpr.payl.projectName"  name="pwd" style="border-radius: 0px;" required>
                             </div>
                         </div>
                          <div class="form-group">
                             <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Line of BU<span style="color:red;">*</span></label>
                             <div class="col-sm-8">          
-                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Enter the LOB" ng-model="pm.payl.businessUnit"  name="pwd" style="border-radius: 0px;" required>
+                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Enter the LOB" ng-model="cpr.payl.businessUnit"  name="pwd" style="border-radius: 0px;" required>
                             </div>
                         </div>
                        
@@ -38,27 +38,27 @@
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Project Owner<span style="color:red;">*</span></label>
                             <div class="col-sm-8">          
-                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Enter the Project Owner" ng-model="pm.payl.projectOwner"  name="pwd" style="border-radius: 0px;" required>
+                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Enter the Project Owner" ng-model="cpr.payl.projectOwner"  name="pwd" style="border-radius: 0px;" required>
                             </div>
                         </div>
                       
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Program</label>
                             <div class="col-sm-8">          
-                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Type in the Program" ng-model="pm.payl.program"  name="pwd" style="border-radius: 0px;">
+                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Type in the Program" ng-model="cpr.payl.program"  name="pwd" style="border-radius: 0px;">
                             </div>
                         </div>
                          <div class="form-group">
                             <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Customer Name<span style="color:red;">*</span></label>
                             <div class="col-sm-8">          
-                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" ng-model="pm.payl.client" placeholder="Type in the Customer Name"  name="pwd" style="border-radius: 0px;" required>
+                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" ng-model="cpr.payl.client" placeholder="Type in the Customer Name"  name="pwd" style="border-radius: 0px;" required>
                             </div>
                         </div>
                         <div class="form-group" style="padding-top: 3%;padding-left: 17%;">
                             <input type="submit" name="" value="Add" style="width: 40%;background: -webkit-linear-gradient(right, #E8B867, #FF5602);
                 background: -o-linear-gradient(left, #E8B867, #FF5602);  
                 background: -moz-linear-gradient(left, #E8B867, #FF5602);
-                background: linear-gradient(to left, #E8B867, #FF5602);color: #fff;border:none;border-radius: 2px;height: 30px;" ng-click="pm.postProject();$close() ">
+                background: linear-gradient(to left, #E8B867, #FF5602);color: #fff;border:none;border-radius: 2px;height: 30px;" ng-click="cpr.postProject();">
                              <input type="button" name="" value="Cancel" style="width: 40%;background: -webkit-linear-gradient(right, #8D8D8D, #414141);
                 background: -o-linear-gradient(left, #8D8D8D, #414141);  
                 background: -moz-linear-gradient(left, #8D8D8D, #414141);
