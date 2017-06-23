@@ -87,17 +87,19 @@
         </svg>
         </span>  -->
 </div>
-<div class="detailed-view-page" style="padding-top:2%;">
-<div class="col-md-12">
+<div class="detailed-view-page">
+<div class="col-md-12" style="background: #000;
+    height: 33px;
+    font-size: 13px;">
      <div class="col-md-4"><a href="#/site">
     <ul class="breadcrumb" style="background: none;">
-   <li><a href="#/projectMap" style="text-decoration: underline;">Project List / </a></li>
-  <li><a href="#/site" style="text-decoration: underline;">Dasboard List / </a></li>
- <li><a href="#" style="text-decoration: underline;">System Dasboard </a></li>
+   <li><a href="#/projectMap" style="text-decoration: underline;color: #fff;">Project List</a></li>
+  <li><a href="#/site" style="text-decoration: underline;color: #fff;">Dasboard List</a></li>
+ <li><a href="#" style="text-decoration: underline;color: #fff;">System Dasboard</a></li>
  
 </ul></a></div>
 </div>
-<div class="col-md-12">
+<div class="col-md-12" style="padding-top: 1%;">
     <div class="col-md-1">Quality Gate</div>
      <div class="col-md-1">
          <div style="background: white;
@@ -113,8 +115,9 @@
      
 </div>
     <div class="col-md-12 layout-maindiv" style="padding-top: 2%;">
-        <div class="col-md-4  layout-calcs security-widget" style="background: #fff;">
+        <div class="col-md-4  layout-calcs security-widget" style="background: #fff;height: 175px;">
             <div class="widget-headers col-md-11" >Security</div>
+         
             <span ng-repeat="components in detailess.component_list ">
                 <span ng-repeat="components in components.securityNewArray track by $index">
                     <span ng-if="$index == 1"  ng-show=" {{(components.formattedValue == 'C')}}" class="circle-props-yellow col-md-2">{{components.formattedValue}}</span>
@@ -136,7 +139,7 @@
                 <div class="col-md-4 ">Redemption Effort</div>
             </div>
         </div>
-        <div class="col-md-4  layout-calcs security-widget"  style="background: #fff;">
+        <div class="col-md-4  layout-calcs security-widget"  style="background: #fff;height: 175px;">
             <div class="widget-headers col-md-11">Reliability</div>
             <span ng-repeat="component in detailess.component_list ">
                 
@@ -161,7 +164,7 @@
                 <div class="col-md-4">Redemption Effort</div>
             </div>
         </div>
-        <div class="col-md-4  layout-calcs security-widget"  style="background: #fff;">
+        <div class="col-md-4  layout-calcs security-widget"  style="background: #fff;height: 175px;">
             <div class="widget-headers col-md-11">Maintainability</div>
             <span ng-repeat="componentm in detailess.component_list ">
                 <span ng-repeat="componentm in componentm.maintainabilityNewArray track by $index">
@@ -188,7 +191,7 @@
         </div>
     </div>
     <div class="col-md-12 layout-maindiv" style="padding-top:1.4%;">
-        <div class="col-md-4  layout-calcs duplication-widget" style="height: 195px;background: #fff;" >
+        <div class="col-md-4  layout-calcs duplication-widget" style="height: 175px;background: #fff;" >
             <div class="widget-headers" >Duplications</div>
             <div class="content-padding" style="padding-left: 18px;padding-top:20px;">
             <div class="" ng-repeat="componentdu in detailess.component_list ">
@@ -216,7 +219,7 @@
                 </div>
             </div>
         </div></div>
-        <div class="col-md-4  layout-calcs maintainability-widget" style="height:195px;background: #fff;">
+        <div class="col-md-4  layout-calcs maintainability-widget" style="height:175px;background: #fff;">
             <div class="widget-headers">Coverage</div>
             <div class="content-padding" style="padding-left: 18px;padding-top:20px;">
             <div class="col-md-3">
@@ -278,7 +281,7 @@
                 </div>
             </div>
         </div></div>
-        <div class="col-md-4  layout-calcs maintainability-widget" style="height:195px;background: #fff;">
+        <div class="col-md-4  layout-calcs maintainability-widget" style="height:175px;background: #fff;">
             <div class="widget-headers">Complexity</div>
             <div class="content-padding" style="padding-left: 18px;padding-top:20px;">
             <div class="" ng-repeat="componentco in detailess.component_list ">
@@ -307,7 +310,7 @@
             </div>
         </div></div>
         <div class="col-md-12 layout-maindiv " style="padding-top:1.4%;">
-            <div class="col-md-4  layout-calcs maintainability-widget" style="height: 195px;background: #fff;">
+            <div class="col-md-4  layout-calcs maintainability-widget" style="height: 175px;background: #fff;">
                 <div class="widget-headers">Documentation</div>
                 <div class="content-padding" style="padding-left: 18px;padding-top:20px;">
                 <div class="" ng-repeat="componentdoc in detailess.component_list ">
@@ -335,7 +338,7 @@
                     </div>
                 </div>
             </div></div>
-            <div class="col-md-4  layout-calcs maintainability-widget" style="height:195px;background: #fff;">
+            <div class="col-md-4  layout-calcs maintainability-widget" style="height:175px;background: #fff;">
                 <div class="widget-headers">Size</div>
                 <div class="content-padding" style="padding-left: 18px;padding-top:20px;">
                 <div class="col-md-3">
