@@ -5,14 +5,18 @@
         .module(HygieiaConfig.module)
         .controller('detailesviewController', detailesviewController);
 
-    detailesviewController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http'];
+    detailesviewController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http','$cookieStore'];
 
-    function detailesviewController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http) {
+    function detailesviewController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http,$cookieStore) {
         var ctrl = this;
         ctrl.componentId = $routeParams.componentId;
         var apiHost = 'http://localhost:3000';
-        var qahost = 'http://10.20.1.183:3000'
-
+        var qahost = 'http://10.20.1.183:3001'
+        ctrl.logout = function() {
+            $cookieStore.remove("username");
+            $cookieStore.remove("authenticated");
+            $location.path('/');
+        };
         // $http.get(apiHost+"/api/quality/static-analysis?componentId=58f8a165cc5b9d19142f9018&max=1")
         $http.get(apiHost + "/api/quality/static-analysis?componentId=" + ctrl.componentId + "&max=1")
             .then(processCaResponse);

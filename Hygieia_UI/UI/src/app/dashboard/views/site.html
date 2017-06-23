@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 <div id="site" class="main-content" style=" background: -webkit-linear-gradient(right, #FBFDFE, #A0C4E3) !important;
     background: -o-linear-gradient(left, #FBFDFE, #A0C4E3) !important;
     background: -moz-linear-gradient(left, #FBFDFE, #A0C4E3) !important;
@@ -28,7 +29,7 @@
                     </div>
                 </div> -->
                 <div class="gap">
-                    <input type="search" id="filter" class="form-control text-center" ng-model="ctrl.search" placeholder="Type to find dashboard" style="border-radius:0px;height:40px;" />
+                    <input type="search" id="filter" class="form-control text-center" ng-model="ctrl.search" placeholder="Search Dashboard" style="border-radius:0px;height:40px;" />
                 </div>
                 <div class="row gap">
                     <div class="col-sm-4 col-sm-push-8 text-center">
@@ -46,7 +47,7 @@
                             <div class="text-2x">My Dashboards <span class="label label-default"></span></div>
                             <div class="text-center" ng-hide="ctrl.mydash">Loading Your Dashboards...</div>
                             <div class="text-center" ng-show="ctrl.mydash && !mydashboards.length">
-                                No results
+                                No Dashboards for this Project
                             </div>
                             <ul class="list-animate list-group text-left">
                                 <li class="list-group-item" ng-repeat="myitem in mydashboards = (ctrl.mydash | filter:ctrl.filterDashboards | orderBy: 'name')" style="background: white;
