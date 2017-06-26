@@ -227,7 +227,7 @@
                     <div class="row" >
                         <div class="" ng-repeat="componentcvr in componentcvr.coverageNewArray track by $index">
                             <span ng-if="$index == 0" class="styling-values col-md-5">{{componentcvr.formattedValue}}
-                            <span ng-if="$index == 0" class="col-md-3 label-props" >Lines of code</span></span>
+                            <span ng-if="$index == 0" class="col-md-3 label-props" >Coverage</span></span>
                         </div>
                     </div>
                 </div>
@@ -252,8 +252,8 @@
                 <div class="row" >
                     <div class="" >
                         <span  class="styling-values col-md-2"></span>
-                        <span  class="col-md-8 label-props">Uncovered Line</span>
-                        <span  class="label-props col-md-2">Lines</span>
+                        <span  class="col-md-8 label-props">Line Coverage</span>
+                        <span  class="label-props col-md-2">Uncovered Line</span>
                     </div>
                 </div>
                 <div class="" ng-repeat="componentcvr in detailess.component_list ">
@@ -268,7 +268,7 @@
                 <div class="row" >
                     <div class="" >
                         <span  class="styling-values col-md-2"></span>
-                        <span  class="col-md-6 label-props">Lines</span>
+                        <span  class="col-md-6 label-props">Line to cover</span>
                     </div>
                 </div>
                 <div class="" ng-repeat="componentcvr in detailess.component_list ">
@@ -325,14 +325,14 @@
                         <div class=""  ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
                            
                             <span ng-if="$index == 0" class="styling-values col-md-3">{{componentdoc.formattedValue}}</span>
-                            <span ng-if="$index == 1"  class="label-props col-md-3 " style="padding-top: 11px;padding-left: 22px;">Doc API</span>
+                            <span ng-if="$index == 1"  class="label-props col-md-3 " style="padding-top: 11px;padding-left: 22px;">Undoc API</span>
                             <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 8px;padding-left: 30px;">{{componentdoc.formattedValue}}</span>
                         </div>
                     </div>
                     <div class="row " style="margin-left:2%;">
                         <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index" >
                             <span ng-if="$index == 0" class="label-props col-md-3 ">Comment Lines</span>
-                            <span ng-if="$index == 1"  class="label-props col-md-3" style="padding-left: 22px;">Undoc API</span>
+                            <span ng-if="$index == 1"  class="label-props col-md-3" style="padding-left: 22px;">Doc API</span>
                             <span  class="widget-value-pro-small col-md-3" ng-if="$index == 3" style="margin-top: -3px;padding-left: 30px;">{{componentdoc.formattedValue}}</span>
                         </div>
                     </div>
@@ -355,8 +355,8 @@
                     <div class="row" >
                         <div class="" >
                             <span  class="styling-values col-md-2"></span>
-                            <span  class="col-md-8 label-props">Uncovered Condition</span>
-                            <span  class="label-props col-md-2">Branch</span>
+                            <span  class="col-md-8 label-props">File</span>
+                            <span  class="label-props col-md-2">Class</span>
                         </div>
                     </div>
                     <div class="" ng-repeat="componentsize in detailess.component_list ">
@@ -371,8 +371,8 @@
                     <div class="row" >
                         <div class="" >
                             <span  class="styling-values col-md-2"></span>
-                            <span  class="col-md-8 label-props">Uncovered Line</span>
-                            <span  class="label-props col-md-2">Lines</span>
+                            <span  class="col-md-8 label-props">Statement</span>
+                            <span  class="label-props col-md-2">Loc</span>
                         </div>
                     </div>
                     <div class="" ng-repeat="componentsize in detailess.component_list ">
@@ -387,7 +387,7 @@
                     <div class="row" >
                         <div class="" >
                             <span  class="styling-values col-md-2"></span>
-                            <span  class="col-md-6 label-props">Lines</span>
+                            <span  class="col-md-6 label-props">Directories</span>
                         </div>
                     </div>
                     <div class="" ng-repeat="componentsize in detailess.component_list ">

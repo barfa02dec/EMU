@@ -83,11 +83,15 @@
             console.log(info);
             var apiHost = ' http://localhost:3000';
             var qahost = 'http://10.20.1.183:3000';
-            $http.post(apiHost + '/api/updateProject', (info)).then(function(response) {
-                alert("Project updated Successfully");
+            if ((info.businessUnit) && (info.projectId) && (info.client) && (info.projectOwner)) {
+                $http.post(apiHost + '/api/updateProject', (info)).then(function(response) {
+                    alert("Project updated Successfully");
 
-            })
-
+                })
+            } else {
+                alert("Fields cannot be empty");
+                info.editorEnabled = true;
+            }
         }
         ctrl.logout = function() {
             $cookieStore.remove("username");

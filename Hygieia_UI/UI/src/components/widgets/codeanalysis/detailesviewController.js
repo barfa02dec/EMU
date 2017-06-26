@@ -5,20 +5,22 @@
         .module(HygieiaConfig.module)
         .controller('detailesviewController', detailesviewController);
 
-    detailesviewController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http','$cookieStore'];
+    detailesviewController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http','$cookieStore','$cookies'];
 
-    function detailesviewController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http,$cookieStore) {
+    function detailesviewController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http,$cookieStore,$cookies) {
         var ctrl = this;
         ctrl.componentId = $routeParams.componentId;
         var apiHost = 'http://localhost:3000';
-        var qahost = 'http://10.20.1.183:3001'
+        var qahost = 'http://10.20.1.183:3001';
+        ctrl.ppiids = $cookies.get('cmpId');
         ctrl.logout = function() {
             $cookieStore.remove("username");
             $cookieStore.remove("authenticated");
+            
             $location.path('/');
         };
         // $http.get(apiHost+"/api/quality/static-analysis?componentId=58f8a165cc5b9d19142f9018&max=1")
-        $http.get(apiHost + "/api/quality/static-analysis?componentId=" + ctrl.componentId + "&max=1")
+        $http.get(apiHost + "/api/quality/static-analysis?componentId=" + ctrl.ppiids + "&max=1")
             .then(processCaResponse);
 
         /*return $q.all([*/
@@ -166,10 +168,12 @@
                     ctrl.duplicationsprop2 = ctrl.component4.datadup[1];
                     ctrl.duplicationsprop3 = ctrl.component4.datadup[2];
                     ctrl.duplicationsprop4 = ctrl.component4.datadup[3];
-                    ctrl.duplicationsNewObj.duplicationsNewArray.push(ctrl.duplicationsprop3);
+                    ctrl.duplicationsNewObj.duplicationsNewArray.push(ctrl.duplicationsprop1);
+                    
                     ctrl.duplicationsNewObj.duplicationsNewArray.push(ctrl.duplicationsprop4);
                     ctrl.duplicationsNewObj.duplicationsNewArray.push(ctrl.duplicationsprop2);
-                    ctrl.duplicationsNewObj.duplicationsNewArray.push(ctrl.duplicationsprop1);
+                    ctrl.duplicationsNewObj.duplicationsNewArray.push(ctrl.duplicationsprop3);
+                    
 
 
                     ctrl.complexityNewObj = {

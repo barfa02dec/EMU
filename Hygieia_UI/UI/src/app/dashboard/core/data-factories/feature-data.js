@@ -40,6 +40,7 @@
 
 		return {
 			sprintMetrics : aggregateSprintEstimates,
+			jiraData:jiraDataGer,
 			featureWip : featureWip,
 			sprint : sprint,
 			teams : teams,
@@ -52,6 +53,14 @@
 			return $http.get(HygieiaConfig.local ? testAggregateSprintEstimates : buildAggregateSprintEstimates + filterTeamId + param + componentId + projectParam + filterProjectId
 					+ (estimateMetricType != null? estimateMetricTypeParam + estimateMetricType : "")
 					+ (agileType != null? agileTypeParam + agileType : ""))
+					.then(function(response) {
+						return response.data;
+					});
+		}
+
+		function jiraDataGer(filterProjectId) {
+			 
+			return $http.get('http://localhost:3000/api/getDefectSummery/' +filterProjectId)
 					.then(function(response) {
 						return response.data;
 					});

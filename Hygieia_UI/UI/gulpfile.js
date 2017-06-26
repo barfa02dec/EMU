@@ -100,7 +100,7 @@ function server(ghostMode) {
       /*
        * Location of your backend server
        */
-      var proxyTarget = config.api || 'http://localhost:8080';
+      var proxyTarget = config.api || 'http://localhost:3001';
 
       var proxy = httpProxy.createProxyServer({
           target: proxyTarget

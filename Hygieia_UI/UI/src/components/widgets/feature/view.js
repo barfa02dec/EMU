@@ -4,9 +4,9 @@
   angular.module(HygieiaConfig.module).controller('featureViewController',
     featureViewController);
 
-  featureViewController.$inject = ['$scope', '$q', '$interval', 'featureData'];
+  featureViewController.$inject = ['$scope', '$q', '$interval', 'featureData','c3Factory'];
 
-  function featureViewController($scope, $q, $interval, featureData) {
+  function featureViewController($scope, $q, $interval, featureData,c3Factory) {
     /* jshint validthis:true */
     var ctrl = this;
     var today = new Date(_.now());
@@ -30,7 +30,7 @@
     ctrl.doneStoryPointsKanban = null;
     ctrl.epicStoryPointsKanban = null;
     ctrl.issueStoryPointsKanban = [];
-
+    
     // Public Evaluators
     ctrl.setFeatureLimit = setFeatureLimit;
     ctrl.showStatus = $scope.widgetConfig.options.showStatus;
@@ -44,6 +44,14 @@
     ctrl.pauseAgileView = pauseAgileView;
     ctrl.pausePlaySymbol = "||";
 
+ /*   var chart = c3.generate({
+    data: {
+        columns: [
+            ['data1', 100, 200, 150, 300, 200],
+            ['data2', 400, 500, 250, 700, 300],
+        ]
+    }
+});*/
     /**
      * Every controller must have a load method. It will be called every 60
      * seconds and should be where any calls to the data factory are made.
@@ -51,16 +59,83 @@
      * return a promise and then resolve it passing the lastUpdated
      * timestamp.
      */
+
+    /*  $scope.config = {
+     data: {
+        columns: [
+            ['data1', 30, 200, 100, 400, 150, 250],
+            ['data2', 130, 100, 140, 200, 150, 50]
+        ],
+        type: 'bar'
+    },
+    bar: {
+        width: {
+            ratio: 0.5 
+        }
+       
+    }
+  };*/
+ /*        $scope.config = {
+    data: {
+        columns: [
+            ['data1', 30, 200, 100, 400, 150, 250],
+            ['data2', 130, 100, 140, 200, 150, 50]
+        ],
+       type: 'area-spline',
+       labels: true,
+                    names: {
+                        data1: 'Committed Story Points',
+                        data2: 'Completed Story Points'
+                    },
+                    colors: {
+                        data1: '#0099cc',
+                        data2: '#669900'
+                    },
+                    selection: {
+                        enabled: true
+                    }
+    },
+
+     size: {
+                    height: 350
+                },
+                
+                   axis: {
+                    x: {
+                        type: 'category',
+                        tick: {
+                            rotate: -50,
+                            multiline: false
+                        },
+                        height: 130,
+                        label: 'Sprint Name'
+                    }
+                }
+   
+   
+  };*/
+
+   /*c3Factory.get('chart').then(function(chart) {
+    chart.load({
+        columns: [
+            ['data1', 30, 200, 100, 400, 150, 250, 50, 100, 250]
+            ['data2', 50, 25, 133, 46, 693, 345, 34, 14, 55]
+        ]
+    });
+  });*/
+
     ctrl.load = function() {
       var deferred = $q.all([
         // Scrum
-        featureData.sprintMetrics($scope.widgetConfig.componentId, filterTeamId, filterProjectId, ctrl.estimateMetricType, "scrum").then(processSprintEstimateResponse),
+        //featureData.sprintMetrics($scope.widgetConfig.componentId, filterTeamId, filterProjectId, ctrl.estimateMetricType, "scrum").then(processSprintEstimateResponse),
+        featureData.jiraData(filterProjectId).then(jiraDataFetch),
         featureData.featureWip($scope.widgetConfig.componentId, filterTeamId, filterProjectId, ctrl.estimateMetricType, "scrum").then(processFeatureWipResponse),
         featureData.sprint($scope.widgetConfig.componentId, filterTeamId, filterProjectId, "scrum")
           .then(function(data) { processSprintResponse(data, false) }),
 
         // Kanban
-        featureData.sprintMetrics($scope.widgetConfig.componentId, filterTeamId, filterProjectId, ctrl.estimateMetricType, "kanban").then(processSprintEstimateKanbanResponse),
+        //featureData.sprintMetrics($scope.widgetConfig.componentId, filterTeamId, filterProjectId, ctrl.estimateMetricType, "kanban").then(processSprintEstimateKanbanResponse),
+        featureData.jiraData(filterProjectId).then(jiraDataFetch),
         featureData.featureWip($scope.widgetConfig.componentId, filterTeamId, filterProjectId, ctrl.estimateMetricType, "kanban").then(processFeatureWipKanbanResponse),
         featureData.sprint($scope.widgetConfig.componentId, filterTeamId, filterProjectId, "kanban")
           .then(function(data) { processSprintResponse(data, true) })
@@ -78,13 +153,20 @@
       return deferred.promise;
     }
 
-    function processSprintEstimateResponse(data) {
+    /*function processSprintEstimateResponse(data) {
         ctrl.totalStoryPoints = data.result.totalEstimate;
         ctrl.openStoryPoints = data.result.openEstimate;
         ctrl.wipStoryPoints = data.result.inProgressEstimate;
         ctrl.doneStoryPoints = data.result.completeEstimate;
       return getLastUpdated(data);
+    }*/
+    function jiraDataFetch(data) {
+        ctrl.mediumIssue = data.defectsByProirity.Medium;
+        ctrl.lowIssue = data.defectsByProirity.Low;
+        ctrl.majorIssue = data.defectsByProirity.High;
     }
+
+    
     
     function processSprintEstimateKanbanResponse(data) {
         ctrl.totalStoryPointsKanban = data.result.totalEstimate;

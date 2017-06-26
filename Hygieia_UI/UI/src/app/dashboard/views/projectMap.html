@@ -199,7 +199,7 @@
 
         <div class="col-md-12" ng-repeat="proj in pm.getAllProjects | filter:pm.searchText">
         <div class="col-md-1"></div>
-        <div class="col-md-10 projectBar" style="background: white;
+        <div class="col-md-10 projectBar"  style="background: white;
             margin-top: 8px;
             margin-left: 0px;
             margin-right: 0px;
@@ -209,41 +209,65 @@
                <div class="col-md-1" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.projectId" style="width: 120px;">
                </div>
-               <div class="col-md-1" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" style="cursor: pointer;">{{proj.projectId}}</div>
+               <div class="col-md-1" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectId}}" style="cursor: pointer;max-width: 220px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;">{{proj.projectId}}</div>
 
 
                <!-- <div class="col-md-2" ng-show="proj.editorEnabled" style="padding-left: 50px;">
                   <input type="" name="" ng-model="proj.projectName" style="width: 120px;">
                </div> -->
-               <div class="col-md-2" style="padding-left: 50px;cursor: pointer;" ng-click="showDahboardPage(proj.id);">{{proj.projectName}}</div>
+               <div class="col-md-2" style="padding-left: 50px;cursor: pointer;max-width: 220px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectName}}">{{proj.projectName}}</div>
 
                 <div class="col-md-2" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.client" style="width: 120px;">
                </div>
-               <div class="col-md-2" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" style="cursor: pointer;">{{proj.client}}</div>
+               <div class="col-md-2" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.client}}" style="cursor: pointer;max-width: 220px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;">{{proj.client}}</div>
 
 
                 <div class="col-md-2" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.projectOwner" style="width: 120px;">
                </div>
-               <div class="col-md-2" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" style="cursor: pointer;">{{proj.projectOwner}}</div>
+               <div class="col-md-2" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectOwner}}" style="cursor: pointer;max-width: 220px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;">{{proj.projectOwner}}</div>
 
                 <div class="col-md-2" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.businessUnit" style="width: 120px;">
                </div>
-               <div class="col-md-2" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" style="cursor: pointer;">{{proj.businessUnit}}</div>
+               <div class="col-md-2" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.businessUnit}}" style="cursor: pointer;max-width: 220px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;">{{proj.businessUnit}}</div>
               
                 <div class="col-md-1" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.program" style="width: 120px;">
                </div>
-               <div class="col-md-1" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" style="cursor: pointer;">{{proj.program}}</div>
+               <div class="col-md-1" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.program}}" style="cursor: pointer;max-width: 220px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;">{{proj.program}}</div>
                </div>
               
               <!--  <div class="col-md-1" >
                <span ng-if="proj.program">{{proj.program}}</span>
                 <span ng-if="!proj.program">NO pgms</span>
                  </div> -->
-               <span class="col-md-2" style="padding-left: 57px;">
+               <span class="col-md-2" style="padding-left: 43px;">
                  <span style="padding-left: 14px">
                   <img src="assets/images/fld/share(1).png " class="ed-image-props" style="width: 22px;height:15px;cursor: pointer;" ng-click="pm.shareProjectPopUp()" title="Share">
                </span>

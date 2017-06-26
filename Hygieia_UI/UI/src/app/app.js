@@ -46,7 +46,8 @@ var localStorageSupported = (function () {
         'validation.match',
         'as.sortable',
         'ui.select',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'angular-c3'
     ])
     .config(['$httpProvider',
         // intercepting the http provider allows us to use relative routes
@@ -108,7 +109,7 @@ var localStorageSupported = (function () {
                   controller: 'SignupController',
                   controllerAs: 'signup'
                 })
-                .when('/detailedview/:id/:componentId',{
+                .when('/detailedview/:id',{
                   templateUrl:'components/widgets/codeanalysis/detailedview.html',
                     controller: 'detailesviewController',
                   controllerAs: 'detailess'
@@ -122,6 +123,11 @@ var localStorageSupported = (function () {
                   templateUrl:'app/dashboard/views/projectMap.html',
                   controller: 'projectMapController',
                   controllerAs: 'pm'
+                })
+                 .when('/jiraDetailedView',{
+                  templateUrl:'components/widgets/feature/jiraDetailedView.html',
+                  controller: 'jiraDetailedViewController',
+                  controllerAs: 'jdv'
                 })
                 .otherwise({
                     redirectTo: '/'
