@@ -153,10 +153,11 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			StoryDataClientImpl storyData = new StoryDataClientImpl(this.coreFeatureSettings,
 					featureSettings, this.featureRepository,this.defectRepository,this.sprintRepository,this.defectAggregationRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
 			count = storyData.updateStoryInformation();
-			List<Defect> defectsInDB=(List<Defect>) defectRepository.findAll();
+
 			List<Scope> projects=(List<Scope>) projectRepository.findAll();
 			for(Scope scopeProject: projects){
-				
+				List<Defect> defectsInDB=(List<Defect>) defectRepository.findByProjectId(scopeProject.getpId());
+				LOGGER.info("*********************ISSUES COUNT::"+defectsInDB.size());
 				storyData.processDefectAggregation(featureSettings, defectsInDB,scopeProject);
 
 			}

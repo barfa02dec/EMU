@@ -226,7 +226,10 @@ public class StoryDataClientImpl implements StoryDataClient {
 								TOOLS.sanitizeResponse(issue.getSummary())));
 					}
 					if (TOOLS.sanitizeResponse(issueType.getName()).equals(BUG)) {
-						Defect defect = new Defect();
+						Defect defect=defectRepository.findByDefectId(TOOLS.sanitizeResponse(issue.getId()));
+						if(null==defect){
+							defect=new Defect();
+						}
 						defectsToSave.add(processDefects(issue, defect, fields));
 
 					}
@@ -425,25 +428,24 @@ public class StoryDataClientImpl implements StoryDataClient {
 	
 	}
 	
-	private DefectAggregation processDefectsSummary(NewFeatureSettings featureSettings,List<Defect> defects,Scope scopeProject){
-		DefectAggregation aggregation= new DefectAggregation();
+	private DefectAggregation processDefectsSummary(NewFeatureSettings featureSettings,List<Defect> defects,Scope scopeProject,DefectAggregation summery){
 		
 		/*
 		 * Logic to bucket the defects based on environment and priority.
 		 */
-		processDefectsByPriorityAndEnvironment(defects, aggregation,scopeProject);
+		processDefectsByPriorityAndEnvironment(defects, summery,scopeProject);
 		
 		/*
 		 * Logic for bucketing the defects based on resolution days and priority in each class of resolution.
 		 */
-		processDefectsByDefectResolutionPeriod(aggregation,scopeProject);
+		processDefectsByDefectResolutionPeriod(summery,scopeProject);
 				
 		/*
 		 * 	Logic for bucketing the defects based on age of open defects.
 		 */
-		processDefectsByDefectAge(aggregation,scopeProject);
+		processDefectsByDefectAge(summery,scopeProject);
 		
-		return aggregation;
+		return summery;
 	}
 
 
@@ -452,8 +454,11 @@ public class StoryDataClientImpl implements StoryDataClient {
 		/*
 		 * For a single project, there is always a single aggregater exists.Hence setting the collector ID as same as scope ID. 
 		 */
-		DefectAggregation summery=processDefectsSummary(featureSettings,defectsInDB,scopeProject);
-		summery.setCollectorId(scopeProject.getId());
+		DefectAggregation summery=defectAggregationRepository.findByProjectId(scopeProject.getpId());
+		if(null==summery){
+			summery=new DefectAggregation();
+		}
+		summery=processDefectsSummary(featureSettings,defectsInDB,scopeProject,summery);
 		summery.setProjectId(scopeProject.getpId());
 		summery.setProjectName(scopeProject.getName());
 		summery.setValuesAsOn(new Date().toString());
