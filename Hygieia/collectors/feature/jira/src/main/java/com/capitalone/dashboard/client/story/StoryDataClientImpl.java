@@ -468,8 +468,9 @@ public class StoryDataClientImpl implements StoryDataClient {
 	private void processDefectsByPriorityAndEnvironment(List<Defect> defects,DefectAggregation aggregation,Scope scopeProject){
 		Map<String,Integer> defectsByProirity= new LinkedHashMap<String,Integer>();
 		Map<String,Integer> defectsByEnvironment= new LinkedHashMap<String,Integer>();
-
+		
 			for(Defect defect: defects){
+			
 			if(defect.getProjectId().equals(scopeProject.getpId())){
 				if(defectsByProirity.containsKey(defect.getDefectPriority())){
 					defectsByProirity.put(defect.getDefectPriority(), defectsByProirity.get(defect.getDefectPriority())+1);
@@ -486,7 +487,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 			
 			
 			}
-			
+		
 			if(!defectsByProirity.isEmpty())
 			{
 				aggregation.setDefectsByProirity(defectsByProirity);
@@ -509,7 +510,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 			}
 		}
 		Collections.sort(resolutionsList);
-		Map<String, List<Map<String,String>>> defectsByResolutionDetails=new LinkedHashMap<String, List<Map<String,String>>>();
+		Map<String, List<Map<String,String>>> fixedDefectsByResolution=new LinkedHashMap<String, List<Map<String,String>>>();
 				
 		boolean firstIndex=true;
 		int resolCount=resolutionsList.size();
@@ -525,23 +526,23 @@ public class StoryDataClientImpl implements StoryDataClient {
 				firstIndex=false;
 				List<Map<String,String>> defectsByResolution= new ArrayList<Map<String,String>>();
 				for(String priorityKey: defectPriorities){
-					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.lt(resolutionsList.get(i)+1).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.lt(resolutionsList.get(i)+1).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(DONE)))))));
 				}
 				metric.put("Resolution Strategy", key);
 				defectsByResolution.add(metric);
-				defectsByResolutionDetails.put("Range"+(i+1), defectsByResolution);
+				fixedDefectsByResolution.put("Range"+(i+1), defectsByResolution);
 			}else{
 				String key="between"+(resolutionsList.get(i-1)+1)+"to"+resolutionsList.get(i)+"days";
 				List<Map<String,String>> defectsByResolution= new ArrayList<Map<String,String>>();
 				for(String priorityKey: defectPriorities){
 					
-					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.between(resolutionsList.get(i-1)+1 ,resolutionsList.get(i) ).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.between(resolutionsList.get(i-1)+1 ,resolutionsList.get(i) ).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(DONE)))))));
 					
 				}
 				metric.put("Resolution Strategy", key);
 				defectsByResolution.add(metric);
 				
-				defectsByResolutionDetails.put("Range"+(i+1), defectsByResolution);
+				fixedDefectsByResolution.put("Range"+(i+1), defectsByResolution);
 				}
 			
 			}
@@ -549,13 +550,13 @@ public class StoryDataClientImpl implements StoryDataClient {
 			List<Map<String,String>> defectsByResolutionMorethanUpperLimit= new ArrayList<Map<String,String>>();
 			Map<String,String> metricsAfterUpperLimit= new HashMap<String,String>();
 			for(String priorityKey: defectPriorities){
-				metricsAfterUpperLimit.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.gt(resolutionsList.get(resolCount-1)).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+				metricsAfterUpperLimit.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.gt(resolutionsList.get(resolCount-1)).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(DONE)))))));
 			}
 			metricsAfterUpperLimit.put("Resolution Strategy", keyAfterUpperLimit);
 			defectsByResolutionMorethanUpperLimit.add(metricsAfterUpperLimit);
-			defectsByResolutionDetails.put("Range"+(resolCount+1), defectsByResolutionMorethanUpperLimit);
-			if(!defectsByResolutionDetails.isEmpty()){
-				aggregation.setDefectsByResolutionDetails(defectsByResolutionDetails);
+			fixedDefectsByResolution.put("Range"+(resolCount+1), defectsByResolutionMorethanUpperLimit);
+			if(!fixedDefectsByResolution.isEmpty()){
+				aggregation.setDefectsByResolutionDetails(fixedDefectsByResolution);
 			}
 	}
 	private void processDefectsByDefectAge(DefectAggregation aggregation,Scope scopeProject){
@@ -568,7 +569,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 			}
 		}
 		Collections.sort(defectAgeList);
-		Map<String, List<Map<String,String>>> defectsByAgeDetails=new LinkedHashMap<String, List<Map<String,String>>>();
+		Map<String, List<Map<String,String>>> openDefectsByAge=new LinkedHashMap<String, List<Map<String,String>>>();
 		
 		boolean firstIndex=true;
 		int resolCount=defectAgeList.size();
@@ -584,23 +585,23 @@ public class StoryDataClientImpl implements StoryDataClient {
 				firstIndex=false;
 				List<Map<String,String>> defectsByAge= new ArrayList<Map<String,String>>();
 				for(String priorityKey: defectPriorities){
-					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.lt(defectAgeList.get(i)+1).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.lt(defectAgeList.get(i)+1).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(IN_PROGRESS)))))));
 				}
 				metric.put("Defect Age Strategy", key);
 				defectsByAge.add(metric);
-				defectsByAgeDetails.put("Range"+(i+1), defectsByAge);
+				openDefectsByAge.put("Range"+(i+1), defectsByAge);
 			}else{
 				String key="between"+(defectAgeList.get(i-1)+1)+"to"+defectAgeList.get(i)+"days";
 				List<Map<String,String>> defectsByAge= new ArrayList<Map<String,String>>();
 				for(String priorityKey: defectPriorities){
 					
-					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.between(defectAgeList.get(i-1)+1 ,defectAgeList.get(i) ).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.between(defectAgeList.get(i-1)+1 ,defectAgeList.get(i) ).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(IN_PROGRESS)))))));
 					
 				}
 				metric.put("Defect Age Strategy", key);
 				defectsByAge.add(metric);
 				
-				defectsByAgeDetails.put("Range"+(i+1), defectsByAge);
+				openDefectsByAge.put("Range"+(i+1), defectsByAge);
 				}
 			
 			}
@@ -608,13 +609,13 @@ public class StoryDataClientImpl implements StoryDataClient {
 			List<Map<String,String>> defectsByAgeMorethanUpperLimit= new ArrayList<Map<String,String>>();
 			Map<String,String> metricsAfterUpperLimit= new HashMap<String,String>();
 			for(String priorityKey: defectPriorities){
-				metricsAfterUpperLimit.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.gt(defectAgeList.get(resolCount-1)).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+				metricsAfterUpperLimit.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.gt(defectAgeList.get(resolCount-1)).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(IN_PROGRESS)))))));
 			}
 			metricsAfterUpperLimit.put("Defect Age Strategy", keyAfterUpperLimit);
 			defectsByAgeMorethanUpperLimit.add(metricsAfterUpperLimit);
-			defectsByAgeDetails.put("Range"+(resolCount+1), defectsByAgeMorethanUpperLimit);
-			if(!defectsByAgeDetails.isEmpty()){
-				aggregation.setDefectsByAgeDetails(defectsByAgeDetails);
+			openDefectsByAge.put("Range"+(resolCount+1), defectsByAgeMorethanUpperLimit);
+			if(!openDefectsByAge.isEmpty()){
+				aggregation.setDefectsByAgeDetails(openDefectsByAge);
 			}
 	}
 	

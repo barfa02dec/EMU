@@ -35,8 +35,8 @@ public class DefectAggregation extends BaseModel{
 	
 	private Map<String,Integer> defectsByProirity;
 	private Map<String,Integer> defectsByEnvironment;
-	Map<String, List<Map<String,String>>> defectsByResolutionDetails;
-	Map<String, List<Map<String,String>>> defectsByAgeDetails;
+	Map<String, List<Map<String,String>>> fixeddefectsByResolutions;
+	Map<String, List<Map<String,String>>> openDefectsByAge;
 	private String valuesAsOn;
 	@Indexed(unique=true)
 	private String projectName;
@@ -70,16 +70,16 @@ public class DefectAggregation extends BaseModel{
 		this.defectsByEnvironment = defectsByEnvironment;
 	}
 	public Map<String, List<Map<String, String>>> getDefectsByResolutionDetails() {
-		return defectsByResolutionDetails;
+		return fixeddefectsByResolutions;
 	}
 	public void setDefectsByResolutionDetails(Map<String, List<Map<String, String>>> defectsByResolutionDetails) {
-		this.defectsByResolutionDetails = defectsByResolutionDetails;
+		this.fixeddefectsByResolutions = defectsByResolutionDetails;
 	}
 	public Map<String, List<Map<String, String>>> getDefectsByAgeDetails() {
-		return defectsByAgeDetails;
+		return openDefectsByAge;
 	}
 	public void setDefectsByAgeDetails(Map<String, List<Map<String, String>>> defectsByAgeDetails) {
-		this.defectsByAgeDetails = defectsByAgeDetails;
+		this.openDefectsByAge = defectsByAgeDetails;
 	}
 	public String getValuesAsOn() {
 		return valuesAsOn;
