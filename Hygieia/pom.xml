@@ -170,8 +170,10 @@
         <module>collectors/build/jenkins</module>
 		<!-- <module>collectors/build/jenkins-hm</module>
         <module>collectors/build/jenkins-cucumber</module>
-        <module>collectors/build/sonar</module> -->
-		<module>collectors/build/sonar-hm</module>
+        <module>collectors/build/sonar-hm</module>
+         -->
+		
+		<module>collectors/build/sonar</module>
        <!--  <module>collectors/cloud/aws</module>
         <module>collectors/deploy/udeploy</module>
         <module>collectors/deploy/xldeploy</module> -->
@@ -179,8 +181,9 @@
        <!--  <module>collectors/feature/versionone</module>
         <module>collectors/feature/gitlab</module>
         <module>collectors/misc/chat-ops</module> -->
-        <module>collectors/scm/bitbucket</module>
-		<!-- <module>collectors/scm/bitbucket-hm</module>
+        <module>collectors/scm/bitbucket-hm</module>
+		<!--   <module>collectors/scm/bitbucket</module>
+		
         <module>collectors/scm/github</module>
         <module>collectors/scm/subversion</module>
         <module>collectors/scm/gitlab</module>
