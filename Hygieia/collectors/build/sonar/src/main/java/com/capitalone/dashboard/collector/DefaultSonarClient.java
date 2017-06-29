@@ -51,6 +51,8 @@ public class DefaultSonarClient implements SonarClient {
     private static final String STATUS_WARN = "WARN";
     private static final String STATUS_ALERT = "ALERT";
     private static final String DATE = "date";
+    private static final String DATA="data";
+    private static final String QUALITY_GATE_LEVEL="level";
 
     private final RestOperations rest;
     private final HttpEntity<String> httpHeaders;
@@ -117,6 +119,11 @@ public class DefaultSonarClient implements SonarClient {
                     metric.setFormattedValue(str(metricJson, FORMATTED_VALUE));
                     metric.setStatus(metricStatus(str(metricJson, ALERT)));
                     metric.setStatusMessage(str(metricJson, ALERT_TEXT));
+                    if(metric.getName().equals("quality_gate_details")){
+                         JSONObject qualityGate= (JSONObject) new JSONParser().parse(str(metricJson, DATA).replaceAll("'\'",""));
+                         metric.setStatus(metricStatus(STATUS_ALERT));
+                         metric.setFormattedValue(qualityGate.get(QUALITY_GATE_LEVEL).toString());
+                    }
                     codeQuality.getMetrics().add(metric);
                 }
 
