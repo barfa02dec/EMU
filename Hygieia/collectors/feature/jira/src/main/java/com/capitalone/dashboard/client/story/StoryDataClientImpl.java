@@ -504,7 +504,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 		List<Integer> resolutionsList= new ArrayList<Integer>();
 		for (int i=0;i<featureSettings.getResolutionPeriod().length;i++){
 			try{
-				resolutionsList.add(Integer.parseInt(featureSettings.getResolutionPeriod()[i]));
+				if(!resolutionsList.contains(featureSettings.getResolutionPeriod()[i]))
+					resolutionsList.add(Integer.parseInt(featureSettings.getResolutionPeriod()[i]));
 			}catch (Exception e) {
 				LOGGER.debug(e.getMessage());
 			}
@@ -563,7 +564,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 		List<Integer> defectAgeList= new ArrayList<Integer>();
 		for (int i=0;i<featureSettings.getDefectAge().length;i++){
 			try{
-				defectAgeList.add(Integer.parseInt(featureSettings.getDefectAge()[i]));
+				if(!defectAgeList.contains(featureSettings.getDefectAge()[i]))
+					defectAgeList.add(Integer.parseInt(featureSettings.getDefectAge()[i]));
 			}catch (Exception e) {
 				LOGGER.debug(e.getMessage());
 			}
