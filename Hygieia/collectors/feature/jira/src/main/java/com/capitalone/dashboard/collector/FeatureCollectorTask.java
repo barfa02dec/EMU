@@ -133,6 +133,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			featureSettings.setJiraTeamFieldName(hmFeatureSettings.getJiraTeamFieldName().get(i));
 			featureSettings.setResolutionPeriod(hmFeatureSettings.getResolutionPeriod().get(i));
 			featureSettings.setDefectAge(hmFeatureSettings.getDefectAge().get(i));
+			featureSettings.setRapidView(hmFeatureSettings.getRapidView().get(i));
 		logBanner(featureSettings.getJiraBaseUrl());
 		int count = 0;
 
@@ -157,9 +158,13 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			List<Scope> projects=(List<Scope>) projectRepository.findAll();
 			for(Scope scopeProject: projects){
 				List<Defect> defectsInDB=(List<Defect>) defectRepository.findByProjectId(scopeProject.getpId());
-				LOGGER.info("*********************ISSUES COUNT::"+defectsInDB.size());
+				LOGGER.info("*************PROJECT ID::"+scopeProject.getpId()+"********DEFECTS COUNT::"+defectsInDB.size());
 				storyData.processDefectAggregation(featureSettings, defectsInDB,scopeProject);
-
+				
+				//logic to handle sprint and releases
+				
+					storyData.saveDetailedSprintData(scopeProject.getpId());
+				
 			}
 			log("Story Data", storyDataStart, count);
 			/*log("Finished", teamDataStart);*/

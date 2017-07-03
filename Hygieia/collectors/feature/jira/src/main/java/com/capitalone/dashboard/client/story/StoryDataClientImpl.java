@@ -21,7 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,21 +30,31 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.ObjectUtils;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpMethod;
 import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.atlassian.jira.rest.client.api.domain.IssueField;
 import com.atlassian.jira.rest.client.api.domain.IssueType;
 import com.capitalone.dashboard.client.JiraClient;
-import com.capitalone.dashboard.client.Sprint;
 import com.capitalone.dashboard.model.Defect;
 import com.capitalone.dashboard.model.DefectAggregation;
 import com.capitalone.dashboard.model.Feature;
 import com.capitalone.dashboard.model.FeatureStatus;
+import com.capitalone.dashboard.model.JiraIssue;
+import com.capitalone.dashboard.model.JiraSprint;
 import com.capitalone.dashboard.model.QDefect;
+import com.capitalone.dashboard.model.QSprint;
 import com.capitalone.dashboard.model.Scope;
+import com.capitalone.dashboard.model.Sprint;
+import com.capitalone.dashboard.model.SprintData;
 import com.capitalone.dashboard.repository.DefectAggregationRepository;
 import com.capitalone.dashboard.repository.DefectRepository;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
@@ -55,8 +64,13 @@ import com.capitalone.dashboard.repository.TeamRepository;
 import com.capitalone.dashboard.util.ClientUtil;
 import com.capitalone.dashboard.util.CoreFeatureSettings;
 import com.capitalone.dashboard.util.DateUtil;
+import com.capitalone.dashboard.util.DefectUtil;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
 import com.capitalone.dashboard.util.NewFeatureSettings;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 
 
@@ -76,21 +90,12 @@ public class StoryDataClientImpl implements StoryDataClient {
 	private static final String IN_PROGRESS = "In Progress";
 	private static final String DONE = "Done";
 	private static final String BUG="Bug";
+	private static final String GET_PROJECT_SPRINTS = "/rest/greenhopper/1.0/integration/teamcalendars/sprint/list?jql=project=%1s";
+	private static final String GET_PROJECT_SPRINT_DETAILS = "/rest/greenhopper/1.0/rapid/charts/sprintreport?rapidViewId=%1s&sprintId=%2$d";
+	private static final String GET_DEFECTS_CREATED =  "/rest/api/2/search?jql=project=%1s and type in (Bug) and createdDate >\"%2s\" and createdDate <\"%3s\" &maxResults=1000";
+	private static final String GET_DEFECTS_RESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) AND resolutiondate>\"%2s\" and resolutiondate  < \"%3s\" &maxResults=1000";
+	private static final String GET_DEFECTS_UNRESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) and createddate<\"%2s\" and (resolutiondate > \"%2s\" or resolution in (unresolved)) &maxResults=1000";
 
-	
-	private static final Comparator<Sprint> SPRINT_COMPARATOR = new Comparator<Sprint>() {
-		@Override
-		public int compare(Sprint o1, Sprint o2) {
-			int cmp1 = ObjectUtils.compare(o1.getStartDateStr(), o2.getStartDateStr());
-			
-			if (cmp1 != 0) {
-				return cmp1;
-			}
-			
-			return ObjectUtils.compare(o1.getEndDateStr(), o2.getEndDateStr());
-		}
-	};
-	
 	// works with ms too (just ignores them)
 	private final DateFormat SETTINGS_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
@@ -138,9 +143,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	 */
 	public int updateStoryInformation() {
 		int count = 0;
-		epicCache.clear(); // just in case class is made static w/ spring in future
-		
-		//long startDate = featureCollectorRepository.findByName(FeatureCollectorConstants.JIRA).getLastExecuted();
+		epicCache.clear(); 
 		
 		String startDateStr = featureSettings.getDeltaStartDate();
 		String maxChangeDate = getMaxChangeDate();
@@ -212,10 +215,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 
 			
 			List<Defect> defectsToSave = new ArrayList<Defect>();
-			List<com.capitalone.dashboard.model.Sprint> sprintDetailsToSave = new ArrayList<com.capitalone.dashboard.model.Sprint>();
 			for (Issue issue : currentPagedJiraRs) {
 				Map<String, IssueField> fields = buildFieldMap(issue.getFields());
-				IssueField sprintData = fields.get(featureSettings.getJiraSprintDataFieldName());
 
 				IssueType issueType = issue.getIssueType();
 
@@ -233,12 +234,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 						defectsToSave.add(processDefects(issue, defect, fields));
 
 					}
-
-					if (null != sprintData) {
-						sprintDetailsToSave.addAll(processSprintData(sprintData));
-
-					}
-
+					
 				}
 			}
 
@@ -247,43 +243,116 @@ public class StoryDataClientImpl implements StoryDataClient {
 				defectRepository.save(defectsToSave);
 
 			}
-			if (null != sprintDetailsToSave && !sprintDetailsToSave.isEmpty()) {
-				sprintRepository.save(sprintDetailsToSave);
-			}
-
+			
 			defectsToSave = null;
 
 		}
-	}
+	}	
 	
 	
-	
-	private List<com.capitalone.dashboard.model.Sprint> processSprintData(IssueField sprintData){
+	public void saveDetailedSprintData(String projectId){
+		featureSettings.getRapidView();
+		String query =featureSettings.getJiraBaseUrl()+String.format(GET_PROJECT_SPRINTS, projectId);
 		
-		try{
-			if(null!=sprintData){
-				List<com.capitalone.dashboard.model.Sprint> sprintList = new ArrayList<com.capitalone.dashboard.model.Sprint>();
-				Object sValue = sprintData.getValue();
-				List<Sprint> sprints = TOOLS.parseSprints(sValue);
-				
-				for (Sprint sp: sprints){
-					com.capitalone.dashboard.model.Sprint sprintModel= new com.capitalone.dashboard.model.Sprint();
-					sprintModel.setName(sp.getName());
-					sprintModel.setCompleteDateStr(sp.getCompleteDateStr());
-					sprintModel.setRapidViewId(sp.getRapidViewId());
-					sprintList.add(sprintModel);
-					sprintModel=null;
-				}
-				return sprintList;
+		HttpEntity<String> entity = new HttpEntity<String>(getHeader());
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> result = restTemplate.exchange(query
+				, HttpMethod.GET, entity, String.class);
+		String sprints=result.getBody();
+		JsonArray sprintArray = new GsonBuilder().create().fromJson(sprints, JsonObject.class).getAsJsonArray("sprints");
+		List<JiraSprint> sprintsJira = new ArrayList<JiraSprint>();
+		if (sprintArray != null && sprintArray.size() > 0) {
+			for (int count = 0; count < sprintArray.size(); count++) {
+				JiraSprint jsprint=new Gson().fromJson(sprintArray.get(count),JiraSprint.class);
+				sprintsJira.add(jsprint);
 			}
-			
-			
-		}catch (Exception e) {
-			// TODO: handle exception
 		}
-		return null;
+		Collections.sort(sprintsJira);
+		// get the details of the sprint for recent sprint and for remaining, don't fetch the data.
+		//As the sprints grownup, we will get recent all sprints in 4-5 iterations. 
+		boolean sprintDataCaptured=false;
+		if(!sprintDataCaptured && null!=sprintsJira.get(0))
+		{
+			sprintsJira.get(0).setSprintData(ClientUtil.parseToSprintData(fectSprintMetrcis(projectId,sprintsJira.get(0).getId())));
+			sprintsJira.get(0).getSprintData().setStartDate(DateUtil.convertStringToDate(sprintsJira.get(0).getStart(), "ddMMyyyyHHmmss"));
+			sprintsJira.get(0).getSprintData().setEndDate(DateUtil.convertStringToDate(sprintsJira.get(0).getEnd(), "ddMMyyyyHHmmss"));
+			
+			List<JiraIssue> issues = new ArrayList<JiraIssue>();
+			System.out.println(sprintsJira.get(0).getSprintData());
+			// Get created defects
+			String json = getSprintDefectsFound(projectId,
+					DateUtil.format(sprintsJira.get(0).getSprintData().getStartDate(),
+							"yyyy/MM/dd HH:mm"), DateUtil.format(
+									sprintsJira.get(0).getSprintData().getEndDate(),
+							"yyyy/MM/dd HH:mm"));
+			issues = DefectUtil.parseDefectsJson(json);	
+			sprintsJira.get(0).getSprintData().setDefectsFound(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
+			
+			// Get resolved defects
+			json = getSprintDefectResolved(projectId,
+					DateUtil.format(sprintsJira.get(0).getSprintData().getStartDate(),
+							"yyyy/MM/dd HH:mm"), DateUtil.format(
+									sprintsJira.get(0).getSprintData().getEndDate(),
+							"yyyy/MM/dd HH:mm"));
+			issues = DefectUtil.parseDefectsJson(json);		
+			sprintsJira.get(0).getSprintData().setDefectsResolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
+			
+			// Get unresolved defects
+			json = getSprintDefectUnresolved(projectId,
+					DateUtil.format(sprintsJira.get(0).getSprintData().getStartDate(),
+							"yyyy/MM/dd HH:mm"));
+			issues = DefectUtil.parseDefectsJson(json);		
+			sprintsJira.get(0).getSprintData().setDefectsUnresolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
+			//setting the sprintDataCaptured flag to true to ensure we get the detailed sprint data only for recent sprint.
+			sprintDataCaptured=true;
+
+			
+		}
+		
+		mapJiraSprintToHygieiaModel(sprintsJira,projectId);
+		
+		
 	}
 	
+	private void mapJiraSprintToHygieiaModel(List<JiraSprint> sprintsJira, String projectId){
+		List<Sprint> list= new ArrayList<Sprint>();
+		for(JiraSprint js:sprintsJira){
+			Sprint sprint=sprintRepository.findOne(QSprint.sprint.sid.eq(js.getId()));
+			if(null==sprint){
+				sprint= new Sprint();
+				sprint.setSid(js.getId());
+			}
+			sprint.setEditable(js.getEditable());
+			sprint.setStart(js.getStart());
+			sprint.setEnd(js.getEnd());
+			sprint.setName(js.getName());
+			sprint.setViewBoardsUrl(js.getViewBoardsUrl());
+			sprint.setSprintData(js.getSprintData());
+			sprint.setProjectId(projectId);
+			list.add(sprint);
+		}
+		sprintRepository.save(list);
+		
+	}
+	
+	private String fectSprintMetrcis(String projectId, Long sprintId){
+		String query = String.format(GET_PROJECT_SPRINT_DETAILS, StringUtils.trimWhitespace(featureSettings.getRapidView()), sprintId);
+		query=featureSettings.getJiraBaseUrl()+query;
+		HttpEntity<String> entity = new HttpEntity<String>(getHeader());
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> result = restTemplate.exchange(query
+				, HttpMethod.GET, entity, String.class);
+		return result.getBody();
+		
+	}
+	
+	private HttpHeaders getHeader() {
+		final HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "Basic " + featureSettings.getJiraCredentials());
+
+		return headers;
+	}
 	
 
 	/**
@@ -619,6 +688,35 @@ public class StoryDataClientImpl implements StoryDataClient {
 			if(!openDefectsByAge.isEmpty()){
 				aggregation.setDefectsByAgeDetails(openDefectsByAge);
 			}
+	}
+	public String getSprintDefectsFound(String projectId, String startdate, String enddate) {
+		String query = String.format(GET_DEFECTS_CREATED, projectId, startdate,enddate);
+		query=featureSettings.getJiraBaseUrl()+query;
+		HttpEntity<String> entity = new HttpEntity<String>(getHeader());
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> result = restTemplate.exchange(query
+				, HttpMethod.GET, entity, String.class);
+		return result.getBody();
+	}
+
+	public String getSprintDefectResolved(String projectId, String startdate,String enddate) {
+		String query = String.format(GET_DEFECTS_RESOLVED, projectId, startdate, enddate);
+		query=featureSettings.getJiraBaseUrl()+query;
+		HttpEntity<String> entity = new HttpEntity<String>(getHeader());
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> result = restTemplate.exchange(query
+				, HttpMethod.GET, entity, String.class);
+		return result.getBody();
+	}
+
+	public String getSprintDefectUnresolved(String projectId, String enddate) {
+		String query = String.format(GET_DEFECTS_UNRESOLVED, projectId, enddate, enddate);
+		query=featureSettings.getJiraBaseUrl()+query;
+		HttpEntity<String> entity = new HttpEntity<String>(getHeader());
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> result = restTemplate.exchange(query
+				, HttpMethod.GET, entity, String.class);
+		return result.getBody();
 	}
 	
 	
