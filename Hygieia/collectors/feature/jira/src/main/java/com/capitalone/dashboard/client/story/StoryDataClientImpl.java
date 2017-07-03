@@ -278,7 +278,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 			sprintsJira.get(0).getSprintData().setEndDate(DateUtil.convertStringToDate(sprintsJira.get(0).getEnd(), "ddMMyyyyHHmmss"));
 			
 			List<JiraIssue> issues = new ArrayList<JiraIssue>();
-			System.out.println(sprintsJira.get(0).getSprintData());
 			// Get created defects
 			String json = getSprintDefectsFound(projectId,
 					DateUtil.format(sprintsJira.get(0).getSprintData().getStartDate(),
@@ -539,7 +538,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		
 			for(Defect defect: defects){
 			
-			if(defect.getProjectId().equals(scopeProject.getpId())){
+			if(!defect.getDefectStatus().equals(DONE) && defect.getProjectId().equals(scopeProject.getpId())){
 				if(defectsByProirity.containsKey(defect.getDefectPriority())){
 					defectsByProirity.put(defect.getDefectPriority(), defectsByProirity.get(defect.getDefectPriority())+1);
 				}else{
