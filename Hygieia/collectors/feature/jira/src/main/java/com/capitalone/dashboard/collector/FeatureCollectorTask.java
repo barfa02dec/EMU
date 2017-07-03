@@ -133,8 +133,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			featureSettings.setJiraTeamFieldName(hmFeatureSettings.getJiraTeamFieldName().get(i));
 			featureSettings.setResolutionPeriod(hmFeatureSettings.getResolutionPeriod().get(i));
 			featureSettings.setDefectAge(hmFeatureSettings.getDefectAge().get(i));
-			featureSettings.setRapidView(hmFeatureSettings.getRapidView().get(i));
-		logBanner(featureSettings.getJiraBaseUrl());
+			logBanner(featureSettings.getJiraBaseUrl());
 		int count = 0;
 
 		try {

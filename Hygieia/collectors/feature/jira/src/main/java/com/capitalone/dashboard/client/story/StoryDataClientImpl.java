@@ -251,7 +251,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 	
 	
 	public void saveDetailedSprintData(String projectId){
-		featureSettings.getRapidView();
 		String query =featureSettings.getJiraBaseUrl()+String.format(GET_PROJECT_SPRINTS, projectId);
 		
 		HttpEntity<String> entity = new HttpEntity<String>(getHeader());
