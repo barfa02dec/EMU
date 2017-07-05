@@ -19,6 +19,7 @@ import com.capitalone.dashboard.repository.DefectAggregationRepository;
 import com.capitalone.dashboard.repository.DefectRepository;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
 import com.capitalone.dashboard.repository.FeatureRepository;
+import com.capitalone.dashboard.repository.ReleaseRepository;
 import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.repository.SprintRepository;
 import com.capitalone.dashboard.repository.TeamRepository;
@@ -46,7 +47,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	private final FeatureCollectorRepository featureCollectorRepository;
 	private final JiraClient jiraClient;
 	private final FeatureSettings hmFeatureSettings;
-	
+	private final ReleaseRepository releaseRepository;
 	/**
 	 * Default constructor for the collector task. This will construct this
 	 * collector task with all repository, scheduling, and settings
@@ -65,7 +66,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			TaskScheduler taskScheduler, FeatureRepository featureRepository,
 			TeamRepository teamRepository, ScopeRepository projectRepository,
 			FeatureCollectorRepository featureCollectorRepository,DefectRepository defectRepository,SprintRepository sprintRepository,  DefectAggregationRepository defectAggregationRepository,FeatureSettings hmFeatureSettings,
-			JiraClient jiraClient) {
+			JiraClient jiraClient,ReleaseRepository releaseRepository) {
 		super(taskScheduler, FeatureCollectorConstants.JIRA);
 		this.featureCollectorRepository = featureCollectorRepository;
 		this.teamRepository = teamRepository;
@@ -77,7 +78,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 		this.defectRepository=defectRepository;
 		this.sprintRepository=sprintRepository;
 		this.defectAggregationRepository=defectAggregationRepository;
-		
+		this.releaseRepository=releaseRepository;
 	}
 
 	/**
@@ -135,7 +136,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			featureSettings.setDefectAge(hmFeatureSettings.getDefectAge().get(i));
 			featureSettings.setRapidView(hmFeatureSettings.getRapidView().get(i));
 			logBanner(featureSettings.getJiraBaseUrl());
-		int count = 0;
+		    int count = 0;
 
 		try {
 		/*	long teamDataStart = System.currentTimeMillis();
@@ -152,7 +153,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 	
 			long storyDataStart = System.currentTimeMillis();
 			StoryDataClientImpl storyData = new StoryDataClientImpl(this.coreFeatureSettings,
-					featureSettings, this.featureRepository,this.defectRepository,this.sprintRepository,this.defectAggregationRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
+					featureSettings, this.featureRepository,this.defectRepository,this.sprintRepository,this.defectAggregationRepository,this.releaseRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
 			count = storyData.updateStoryInformation();
 
 			List<Scope> projects=(List<Scope>) projectRepository.findAll();
@@ -163,8 +164,8 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 				
 				//logic to handle sprint and releases
 				
-					storyData.saveDetailedSprintData(scopeProject.getpId());
-				
+				storyData.saveDetailedSprintData(scopeProject.getpId());
+				storyData.saveDetailedReleaseData(scopeProject.getpId());
 			}
 			log("Story Data", storyDataStart, count);
 			/*log("Finished", teamDataStart);*/
