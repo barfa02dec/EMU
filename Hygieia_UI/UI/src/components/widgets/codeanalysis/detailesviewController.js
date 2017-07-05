@@ -13,6 +13,8 @@
         var apiHost = 'http://localhost:3000';
         var qahost = 'http://10.20.1.183:3001';
         ctrl.ppiids = $cookies.get('cmpId');
+        ctrl.dashId = $cookies.get('dashboardidpa');
+        ctrl.openback = openback;
         ctrl.logout = function() {
             $cookieStore.remove("username");
             $cookieStore.remove("authenticated");
@@ -80,6 +82,10 @@
                 name: "componenet3",
                 datatc: []
             }
+            ctrl.component11 = {
+                name: "componenet3",
+                dataqgate: []
+            }
 
 
             angular.forEach(data, function(item) {
@@ -115,6 +121,9 @@
                 }
                 if (item.name == "tests" || item.name == "test_execution_time" || item.name == "test_success_density" || item.name == "skipped_tests" || item.name == "test_errors" || item.name == "test_failures") {
                     ctrl.component10.datatc.push(item);
+                }
+                if (item.name == "quality_gate_details")  {
+                    ctrl.component11.dataqgate.push(item);
                 }
 
 
@@ -185,6 +194,7 @@
                     ctrl.complexityprop2 = ctrl.component6.datacom[1];
                     ctrl.complexityprop3 = ctrl.component6.datacom[2];
                     ctrl.complexityprop4 = ctrl.component6.datacom[3];
+                    console.log(ctrl.complexityprop4);
                     ctrl.complexityNewObj.complexityNewArray.push(ctrl.complexityprop1);
                     ctrl.complexityNewObj.complexityNewArray.push(ctrl.complexityprop2);
                     ctrl.complexityNewObj.complexityNewArray.push(ctrl.complexityprop4);
@@ -270,14 +280,23 @@
                     ctrl.sizecoverageprop5 = ctrl.component5.datasize[4];
                     ctrl.sizecoverageprop6 = ctrl.component5.datasize[5];
                     ctrl.sizecoverageprop7 = ctrl.component5.datasize[6];
-                    ctrl.sizeNewObj.sizeNewArray.push(ctrl.sizecoverageprop1);
+                    
+                      ctrl.sizeNewObj.sizeNewArray.push(ctrl.sizecoverageprop5);
                     ctrl.sizeNewObj.sizeNewArray.push(ctrl.sizecoverageprop2);
                     ctrl.sizeNewObj.sizeNewArray.push(ctrl.sizecoverageprop3);
                     ctrl.sizeNewObj.sizeNewArray.push(ctrl.sizecoverageprop4);
-                    ctrl.sizeNewObj.sizeNewArray.push(ctrl.sizecoverageprop5);
+                    ctrl.sizeNewObj.sizeNewArray.push(ctrl.sizecoverageprop1);
+                  
                     ctrl.sizeNewObj.sizeNewArray.push(ctrl.sizecoverageprop6);
                     ctrl.sizeNewObj.sizeNewArray.push(ctrl.sizecoverageprop7);
 
+                    ctrl.qgateobj = {
+                        name: "qualitygate",
+                        qgateArr: []
+                    };
+
+                    ctrl.qaulityGatea = ctrl.component11.dataqgate[0];
+                    ctrl.qgateobj.qgateArr.push(ctrl.qaulityGatea);
 
 
                 });
@@ -292,6 +311,7 @@
             ctrl.component_list.push(ctrl.coverageNewObj);
             ctrl.component_list.push(ctrl.issueNewObj);
             ctrl.component_list.push(ctrl.testcoverageNewObj);
+            ctrl.component_list.push(ctrl.qgateobj);
             console.log(ctrl.component_list);
             console.log(ctrl.component3.datasec);
             console.log(ctrl.newObj);
@@ -300,8 +320,11 @@
 
 
         }
-
-
+        function openback() {
+            ctrl.dashId = $cookies.get('dashboardidpa');
+            $location.path('/dashboard/' + ctrl.dashId);
+        }
+        
 
     }
 })();

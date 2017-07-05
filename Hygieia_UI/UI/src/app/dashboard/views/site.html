@@ -29,7 +29,8 @@
                     </div>
                 </div> -->
                 <div class="gap">
-                    <input type="search" id="filter" class="form-control text-center" ng-model="ctrl.search" placeholder="Search Dashboard" style="border-radius:0px;height:40px;" />
+                    <input type="search" id="filter" class="form-control text-center" ng-model="ctrl.search" placeholder="Search Dashboard" style="border-radius:0px;height:40px;"
+                    />
                 </div>
                 <div class="row gap">
                     <div class="col-sm-4 col-sm-push-8 text-center">
@@ -44,34 +45,38 @@
                     </div>
                     <div class="col-sm-8 col-sm-pull-4">
                         <div>
-                            <div class="text-2x">My Dashboards <span class="label label-default"></span></div>
+                            <div class="text-2x" style="font-size:15px;">My Dashboards <span class="label label-default"></span></div>
                             <div class="text-center" ng-hide="ctrl.mydash">Loading Your Dashboards...</div>
-                            <div class="text-center" ng-show="ctrl.mydash && !mydashboards.length">
+                            <div class="text-center" ng-show="ctrl.mydash && !mydashboards.length" style="padding-left: 37%;
+    padding-top: 7.5%;">
                                 No Dashboards for this Project
                             </div>
                             <ul class="list-animate list-group text-left">
-                                <li class="list-group-item" ng-repeat="myitem in mydashboards = (ctrl.mydash | filter:ctrl.filterDashboards | orderBy: 'name')" style="background: white;
+                                <li class="list-group-item" ng-repeat="myitem in mydashboards = (ctrl.mydash | filter:ctrl.filterDashboards | orderBy: 'name')"
+                                    style="background: white;
     margin-top: 8px;
     margin-left: 0px;
     margin-right: 0px;
-    box-shadow: 0px 0px 2px #888888;border-radius: 0px;border-left:4px solid #96c356;">
+    box-shadow: 0px 0px 2px #888888;border-radius: 0px;border-left:4px solid #96c356;font-size:13px;">
                                     <span class="pull-right">
 
 
-                                       <a href ng-click="ctrl.renameDashboard(myitem)">
-                                           <span class="fa fa-lg fa-pencil-square-o text-success"></span>
+                                       <a href ng-click="ctrl.renameDashboard(myitem)" style="outline:none;">
+                                        <img src="assets/images/fld/edit.png " class="ed-image-props" style="width: 15px;height: 15px;cursor: pointer;"  title="Edit">
+                                          <!--  <span class="fa fa-lg fa-pencil-square-o text-success"></span>                                    -->
                                     </a>
                                     <a href ng-click="ctrl.deleteDashboard(myitem)">
-                                        <span class="fa fa-lg fa-trash text-danger"></span>
+                                     <img src="assets/images/fld/delete.png " class="ed-image-props" style="width: 15px;height:15px;cursor: pointer;"  title="Delete">
+                                       <!--  <span class="fa fa-lg fa-trash text-danger"></span> -->
                                     </a>
                                     </span>
-                                    <a class="btn-block clickable" ng-click="ctrl.open(myitem.id)">
+                                    <a class="btn-block clickable" ng-click="ctrl.open(myitem.id)" style="color:#737373;">
                                         <span class="fa fa-lg left-icon" ng-class="{'fa-cubes' : myitem.isProduct}"></span> {{ myitem.name }}
                                     </a>
                                 </li>
                             </ul>
                         </div>
-                       <!--  <div class="gap" style="">
+                        <!--  <div class="gap" style="">
                             <div class="text-2x">All Dashboards</span>
                             </div>
                             <div class="text-center" ng-hide="ctrl.dashboards">Loading Dashboards...</div>

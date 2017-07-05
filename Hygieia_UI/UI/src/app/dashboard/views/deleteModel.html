@@ -1,4 +1,4 @@
-<div class="create-project-container">
+<!--<div class="create-project-container">
     <div class="col-md-12">
         <div class="top-nav-bar" style="background: -webkit-linear-gradient(right,#24394C, #7ABEF8 ) !important;   
     background: -o-linear-gradient(left, #24394C, #7ABEF8 ) !important; 
@@ -40,5 +40,30 @@
             </div>
             <div class="col-md-3"></div>
         </div>
+    </div>
+</div>-->
+<div class="col-md-8" style="background:#fff;left:18%;border: 1px solid #c1c1c1;">
+    <div class="col-md-11"></div>
+    <div class="col-md-1">
+        <i class="fa fa-times" aria-hidden="true" ng-click="$close()" style="cursor:pointer;"></i>
+    </div>
+    <div class="col-md-12" style="padding-top:2%;">
+        <div class="col-md-4"></div>
+         <div class="col-md-6" style="font-weight:600;">Delete Project</div>
+    </div>
+    <div class="col-md-12" style="padding-top:6%;">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">Do you really want to Delete this Project?</div> 
+    </div>
+    <div class="col-md-12" style="padding-top:1.5%;">
+        <div class="col-md-3"></div>
+         <div class="col-md-2" style="padding-top: 6%;">
+        <input type="button" name="namess" class="btn btn-default cancel-btn-popups" value="Cancel" ng-click="$close()" style="">
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-2" style="padding-top: 6%;padding-bottom:5%;">
+        <input type="button" name="namess" class="btn btn-raised btn-success" value="Confirm" ng-click="dpc.deleteProjects();" style="border-radius:0px;">
+    </div>
+        
     </div>
 </div>

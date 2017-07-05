@@ -4,9 +4,9 @@
   angular.module(HygieiaConfig.module).controller('featureViewController',
     featureViewController);
 
-  featureViewController.$inject = ['$scope', '$q', '$interval', 'featureData','c3Factory'];
+  featureViewController.$inject = ['$scope', '$q', '$interval', 'featureData','c3Factory','$cookies'];
 
-  function featureViewController($scope, $q, $interval, featureData,c3Factory) {
+  function featureViewController($scope, $q, $interval, featureData,c3Factory,$cookies) {
     /* jshint validthis:true */
     var ctrl = this;
     var today = new Date(_.now());
@@ -43,7 +43,7 @@
     ctrl.changeDetect = null;
     ctrl.pauseAgileView = pauseAgileView;
     ctrl.pausePlaySymbol = "||";
-
+    $cookies.put('projectIdd', filterProjectId);
  /*   var chart = c3.generate({
     data: {
         columns: [
@@ -125,6 +125,7 @@
   });*/
 
     ctrl.load = function() {
+      $cookies.put('projectIdd', filterProjectId);
       var deferred = $q.all([
         // Scrum
         //featureData.sprintMetrics($scope.widgetConfig.componentId, filterTeamId, filterProjectId, ctrl.estimateMetricType, "scrum").then(processSprintEstimateResponse),
@@ -162,8 +163,10 @@
     }*/
     function jiraDataFetch(data) {
         ctrl.mediumIssue = data.defectsByProirity.Medium;
+        ctrl.critcissue = data.defectsByProirity.Highest;
         ctrl.lowIssue = data.defectsByProirity.Low;
         ctrl.majorIssue = data.defectsByProirity.High;
+         ctrl.medlowcnt = parseInt(ctrl.lowIssue) + (ctrl.mediumIssue);
     }
 
     

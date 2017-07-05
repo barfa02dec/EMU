@@ -119,12 +119,12 @@ var localStorageSupported = (function () {
                   controller: 'customdashboardController',
                   controllerAs: 'lac'
                 })
-                 .when('/projectMap',{
+                 .when('/projects',{
                   templateUrl:'app/dashboard/views/projectMap.html',
                   controller: 'projectMapController',
                   controllerAs: 'pm'
                 })
-                 .when('/jiraDetailedView',{
+                 .when('/jiraDashboard',{
                   templateUrl:'components/widgets/feature/jiraDetailedView.html',
                   controller: 'jiraDetailedViewController',
                   controllerAs: 'jdv'

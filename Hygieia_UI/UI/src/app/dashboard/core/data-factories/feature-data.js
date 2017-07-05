@@ -46,7 +46,8 @@
 			teams : teams,
 			teamsByCollectorId : teamsByCollectorId,
 			projects : projects,
-			projectsByCollectorId : projectsByCollectorId
+			projectsByCollectorId : projectsByCollectorId,
+			sprintDta:sprintDataFetch
 		};
 		
 		function aggregateSprintEstimates(componentId, filterTeamId, filterProjectId, estimateMetricType, agileType) {
@@ -58,10 +59,17 @@
 					});
 		}
 
-		function jiraDataGer(filterProjectId) {
+		function jiraDataGer(filterProjectId) { 
 			 
 			return $http.get('http://localhost:3000/api/getDefectSummery/' +filterProjectId)
 					.then(function(response) {
+						return response.data;
+					});
+		}
+		function sprintDataFetch(filterProjectId) {  
+			 
+			return $http.get('http://localhost:3000/api/listAllSprints?projectId=' +filterProjectId)
+					.then(function(response) { 
 						return response.data;
 					});
 		}

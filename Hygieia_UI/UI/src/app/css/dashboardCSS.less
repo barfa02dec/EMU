@@ -10,6 +10,14 @@
     background: linear-gradient(to left, #24394C, #7ABEF8 ) !important;
     height:35px;
 }
+.black-border{
+	background: -webkit-linear-gradient(right,#8c8c8c, #0d0d0d ) !important;   
+    background: -o-linear-gradient(left, #8c8c8c, #0d0d0d ) !important; 
+    background: -moz-linear-gradient(left, #8c8c8c, #0d0d0d ) !important; 
+    background: linear-gradient(to left, #8c8c8c, #0d0d0d ) !important;
+    height:35px;
+}
+
 .hamburgerMenu{
 	float:left;
 	margin-left:1%;
@@ -94,13 +102,20 @@
 	margin-top:-58px;
 }
 .customHeader .widget-modal-heading{
-	background: -webkit-linear-gradient(right,white, #E5682B) !important;
-    background: -o-linear-gradient(left, #005C98, #1C9AD6) !important; 
-    background: -moz-linear-gradient(left, #005C98, #1C9AD6) !important; 
-    background: linear-gradient(to left, #005C98, #1C9AD6) !important;
+	
     border-bottom:none !important;
-    color:#fff !important;
+    color:#000 !important;
     font-weight:200;
+    height:40px;
+    font-size:15px !important;
+}
+.widget-modal .widget-modal-heading{
+	
+    border-bottom:none !important;
+    color:#000 !important;
+    font-weight:200;
+    height:40px;
+    font-size:15px !important;
 }
 .tab-list{
 	color:#fff;
@@ -109,5 +124,35 @@
 }
 #dashboard{
 	background-image:none !important;
-	background:linear-gradient(to left, #FBFDFE, #A0C4E3) !important;
+	background:#efefef !important;
+}
+.latest-build-props{
+	height:183px;
+	margin-bottom:9.8px !important;
+}
+.c3-tooltip td {
+font-size:13px;
+padding: 3px 6px;
+background-color:#7ABEF8;
+border-left:1px dotted #999;
+color: #000;
+}
+.c3-tooltip tr {
+font-size:13px;
+padding: 3px 6px;
+background-color:#7ABEF8;
+border-left:1px dotted #999;
+color: #000;
+}
+@media only screen and (min-width: 720px) and (max-width: 1000px) {
+.large-devic-res{
+	height:228px;
+}
+}
+.cancel-btn-popups{
+	background:#fff !important;
+	color:#000 !important;
+	border: 1px solid #cccccc !important;
+    box-shadow: none !important;
+	border-radius:0px;
 }

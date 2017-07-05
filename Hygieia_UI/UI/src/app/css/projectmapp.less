@@ -1,6 +1,104 @@
 @import (reference) 'variables';
 @import (reference) 'mixins';
 
-.whole-container{
-	background:#EBF9FF !important;
+.project-map-container{
+	background: -webkit-linear-gradient(right, #FBFDFE, #A0C4E3) !important;
+    background: -o-linear-gradient(left, #FBFDFE, #A0C4E3) !important;
+    background: -moz-linear-gradient(left, #FBFDFE, #A0C4E3) !important;
+    background: linear-gradient(to left, #FBFDFE, #A0C4E3) !important;
+    overflow: scroll;
+    height: 700px;
+}
+.project-map-blue-bar{
+    height: 30px;
+    width:100%;
+    background: -webkit-linear-gradient(right,#24394C, #7ABEF8 ) !important;   
+    background: -o-linear-gradient(left, #24394C, #7ABEF8 ) !important; 
+    background: -moz-linear-gradient(left, #24394C, #7ABEF8 ) !important; 
+    background: linear-gradient(to left, #24394C, #7ABEF8 ) !important;
+}
+.project-map-hamburger{
+    margin-top:5px !important;
+}
+.project-map-ed{
+    margin-top:3px;
+}
+.project-map-edText{
+    margin-left: 0.9%;
+    margin-top:6px;
+}
+.project-map-signout-mainParent{
+    margin-bottom:8px !important;
+    margin-top: 5px !important;
+    margin-right: -138px !important;
+}
+.project-map-firstChild{
+    width: 127px;
+    padding-top: 40px;
+    padding-left: 23px;
+    margin-left: -80px;
+    position: absolute;
+}
+.project-map-black-header{
+    height: 30px;
+    width:100%;
+    background:#000;
+}
+.project-map-firstChild{
+    height: 100%;
+    width:100%;
+}
+.project-map-secondChild{
+    padding-left: 17%;
+    padding-top: 2.6%;
+}
+.project-map-search-bar{
+    border-radius: 0px;
+    height: 45px;
+    box-shadow: 1px 2px 5px #888888;
+}
+.project-map-add-btn{
+    margin-top:9.7%;
+    background: #1386C2 !important;
+    border:1px solid #1386C2 !important;
+    border-radius: 2px !important;
+}
+.project-map-list-header{
+    color: #1a1a1a;
+    font-size: 15px;
+}
+.project-map-bar-prop{
+    background: white;
+    margin-top: 8px;
+    margin-left: 0px;
+    margin-right: 0px;
+    box-shadow: rgb(136, 136, 136) 1px 2px 1px;
+    border-left: 6px solid #96c356;
+    padding: 14px;
+    color: #737373;
+    font-size: 13px;
+}
+.project-map-list-data{
+    cursor: pointer;
+    max-width: 220px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    white-space: nowrap;
+}
+.project-map-crud-icons{
+    width: 15px;
+    height:15px;
+    cursor: pointer;
+}
+.project-map-padding-icons{
+    margin-left: 6px;
+}
+@media (min-width: 1200px) {
+  .seven-cols .col-md-1,
+  .seven-cols .col-sm-1,
+  .seven-cols .col-lg-1 {
+    width: 14.285714285714285714285714285714%;
+    *width: 14.285714285714285714285714285714%;
+  }
 }
