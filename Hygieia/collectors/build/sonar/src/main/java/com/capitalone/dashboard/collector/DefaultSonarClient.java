@@ -52,8 +52,10 @@ public class DefaultSonarClient implements SonarClient {
     private static final String STATUS_ALERT = "ALERT";
     private static final String DATE = "date";
     private static final String DATA="data";
+    private static final String ERROR="ERROR";
+    private static final String FAILED="FAILED";
     private static final String QUALITY_GATE_LEVEL="level";
-
+    
     private final RestOperations rest;
     private final HttpEntity<String> httpHeaders;
     private final SonarSettings sonarSettings;
@@ -123,7 +125,12 @@ public class DefaultSonarClient implements SonarClient {
                          JSONObject qualityGate= (JSONObject) new JSONParser().parse(str(metricJson, DATA).replaceAll("'\'",""));
                          metric.setStatus(metricStatus(STATUS_ALERT));
                          metric.setFormattedValue(qualityGate.get(QUALITY_GATE_LEVEL).toString());
+                         //ERROR is setting as FAILED to show the Quality gate status as FAILED in UI, instead of error.
+                         if(metric.getFormattedValue().equals(ERROR)){
+                        	 metric.setFormattedValue(FAILED);
+                         }
                     }
+                    
                     codeQuality.getMetrics().add(metric);
                 }
 
