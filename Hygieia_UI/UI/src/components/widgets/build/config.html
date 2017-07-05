@@ -1,4 +1,4 @@
-<widget-modal widget-modal-title="Configure Build Widget" class="build-config">
+<widget-modal widget-modal-title="Configure Build Widget" class="build-config" style="background: #fff;">
     <form name="buildConfigForm" role="form"
           ng-submit="buildConfig.submit(buildConfigForm.$valid,buildConfig.collectorItemId)" novalidate="novalidate">
         <form-group class="text-center" input="collectorItemId" errors="{required: 'Please select a collector'}">
@@ -51,7 +51,7 @@
         </form-group>
 
         <div class="button-row row text-center">
-            <button type="submit" class="btn btn-primary btn-wide">Save</button>
+            <button type="submit" class="btn btn-raised btn-success" style="width: 30%;color: #fff;border:none;border-radius: 2px;height: 32px;padding-top: 5px;font-weight: normal;font-size: 16px">Save</button>
         </div>
     </form>
 </widget-modal>

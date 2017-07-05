@@ -5,11 +5,12 @@
         .module(HygieiaConfig.module)
         .controller('CodeAnalysisViewController', CodeAnalysisViewController);
 
-    CodeAnalysisViewController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal','$location','$routeParams'];
-    function CodeAnalysisViewController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams) {
+    CodeAnalysisViewController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal','$location','$routeParams','$cookies'];
+    function CodeAnalysisViewController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams,$cookies) {
         var ctrl = this;
         ctrl.dashBoardId = $routeParams.id;
         ctrl.componentId = $scope.widgetConfig.componentId;
+        $cookies.put('cmpId', ctrl.componentId);
         ctrl.pieOptions = {
             donut: true,
             donutWidth: 20,

@@ -1,14 +1,8 @@
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-<div class="main-container" style="background: -webkit-linear-gradient(right, #FBFDFE, #A0C4E3) !important;
-    background: -o-linear-gradient(left, #FBFDFE, #A0C4E3) !important;
-    background: -moz-linear-gradient(left, #FBFDFE, #A0C4E3) !important;
-    background: linear-gradient(to left, #FBFDFE, #A0C4E3) !important;overflow: scroll;height: 700px;">
-<div class="blue-header" style="height: 30px;width:100%;background: -webkit-linear-gradient(right,#24394C, #7ABEF8 ) !important;   
-    background: -o-linear-gradient(left, #24394C, #7ABEF8 ) !important; 
-    background: -moz-linear-gradient(left, #24394C, #7ABEF8 ) !important; 
-    background: linear-gradient(to left, #24394C, #7ABEF8 ) !important;">
+<div class="main-container project-map-container">
+<div class="blue-header project-map-blue-bar">
       
- <span class="hamburger-ListdashPage" style="margin-top:5px;">
+ <span class="hamburger-ListdashPage project-map-hamburger">
             <svg version="1.1"
                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
                x="0px" y="0px" width="15px" height="9px" viewBox="0 0 15 9" style="overflow:scroll;enable-background:new 0 0 15 9;"
@@ -24,7 +18,7 @@
                </g>
             </svg>
          </span>
-  <span class="edMenu-ListDash-Page" style="margin-top:3px;">
+  <span class="edMenu-ListDash-Page project-map-ed">
             <svg version="1.1"
                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
                x="0px" y="0px" width="23px" height="23px" viewBox="0 0 23 23" style="overflow:scroll;enable-background:new 0 0 23 23;"
@@ -45,13 +39,10 @@
                </g>
             </svg>
          </span>
-         <span class="edtext-ListdashPage" style="margin-left: 0.9%;margin-top:6px;">Engineering Dashboard</span>
-             <span id="demo" class="signout-ListdashPage" style="margin-bottom:8px !important;margin-top: 5px !important;margin-right: -138px !important;">
+         <span class="edtext-ListdashPage project-map-edText">Engineering Dashboard</span>
+             <span id="demo" class="signout-ListdashPage project-map-signout-mainParent">
             <div class="wrapper blddmenu">
-               <div class="content blddmenu" style="width: 127px;
-    padding-top: 40px;
-    padding-left: 23px;
-    margin-left: -80px;position: absolute;">
+               <div class="content blddmenu project-map-firstChild">
                   <ul class="blddmenu">
                      <a>
                         <li ng-click="pm.logout()" style="text-align:center;">Log out</li>
@@ -156,12 +147,12 @@
             <form>
             <div class="form-group">
                 <label for="input-md"></label>
-                <input class="form-control input-md" id="inputmd" type="text" placeholder="Search Project or Business Units or Managers or Clients" ng-model="pm.searchText" style="border-radius: 0px;height: 45px;box-shadow: 1px 2px 5px #888888">
+                <input class="form-control input-md project-map-search-bar" id="inputmd" type="text" placeholder="Search Project or Business Units or Managers or Clients" ng-model="pm.searchText">
             </div>
             <form>
         </div>
         <div class="col-md-3" style="padding-left: 4%;">
-            <input type="submit" class="btn btn-info" value="Add Project" style="margin-top:9.7%;background: #1386C2;border:1px solid #1386C2;border-radius: 2px;" ng-click = "pm.createDashboard()">
+            <input type="submit" class="btn btn-info project-map-add-btn" value="Add Project"  ng-click = "pm.createDashboard()">
         </div>
     </div>
     <div class="col-md-12">
@@ -180,12 +171,12 @@
     <div class="col-md-12" style="padding-top: 30px">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-       <div class="col-md-1" style="color: #1a1a1a;font-size: 15px;">Project ID</div>
-       <div class="col-md-2" style="color: #1a1a1a;font-size: 15px;padding-left: 50px;">Project Name</div>
-       <div class="col-md-2" style="color: #1a1a1a;font-size: 15px;">Customer Name</div>
-       <div class="col-md-2" style="color: #1a1a1a;font-size: 15px;">Project Owner</div>
-        <div class="col-md-2" style="color: #1a1a1a;font-size: 15px;">Line of BU</div>
-         <div class="col-md-2" style="color: #1a1a1a;font-size: 15px;">Program</div>
+       <div class="col-md-1 project-map-list-header">Project ID</div>
+       <div class="col-md-2 project-map-list-header" style="padding-left: 50px;">Project Name</div>
+       <div class="col-md-2 project-map-list-header">Customer Name</div>
+       <div class="col-md-2 project-map-list-header">Project Owner</div>
+        <div class="col-md-2 project-map-list-header">Line of BU</div>
+         <div class="col-md-2 project-map-list-header">Program</div>
        </div>
       
        <!-- <div class="col-md-1" style="color: #0071BC">Team Size</div>
@@ -197,65 +188,62 @@
     </div>
     <form name="pm.projectDetailBar">
 
-        <div class="col-md-12" ng-repeat="proj in pm.getAllProjects | filter:pm.searchText">
+        <div class="col-md-12 " ng-repeat="proj in pm.getAllProjects | filter:pm.searchText">
         <div class="col-md-1"></div>
-        <div class="col-md-10 projectBar" style="background: white;
-            margin-top: 8px;
-            margin-left: 0px;
-            margin-right: 0px;
-            box-shadow: rgb(136, 136, 136) 1px 2px 1px;border-left: 4px solid #96c356;padding: 14px;color: #737373;font-size: 13px;" >
+        <div class="col-md-10 projectBar project-map-bar-prop">
               <!--  <a href="#/site" target="_self" >asdasd</a> -->
              <div >
                <div class="col-md-1" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.projectId" style="width: 120px;">
                </div>
-               <div class="col-md-1" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" style="cursor: pointer;">{{proj.projectId}}</div>
+               <div class="col-md-1 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectId}}" style="">{{proj.projectId}}</div>
 
 
-               <!-- <div class="col-md-2" ng-show="proj.editorEnabled" style="padding-left: 50px;">
-                  <input type="" name="" ng-model="proj.projectName" style="width: 120px;">
-               </div> -->
-               <div class="col-md-2" style="padding-left: 50px;cursor: pointer;" ng-click="showDahboardPage(proj.id);">{{proj.projectName}}</div>
+            <div class="col-md-2" ng-show="proj.editorEnabled" style="padding-left: 50px;">
+                    <div style="pointer-events:none;">{{proj.projectName}}</div>
+                 
+               </div> 
+               <div class="col-md-2 project-map-list-data" ng-show="!proj.editorEnabled" style="padding-left: 50px;" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectName}}">{{proj.projectName}}</div>
 
                 <div class="col-md-2" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.client" style="width: 120px;">
                </div>
-               <div class="col-md-2" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" style="cursor: pointer;">{{proj.client}}</div>
+               <div class="col-md-2 project-map-list-data"  ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.client}}" style="">{{proj.client}}</div>
 
 
                 <div class="col-md-2" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.projectOwner" style="width: 120px;">
                </div>
-               <div class="col-md-2" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" style="cursor: pointer;">{{proj.projectOwner}}</div>
+               <div class="col-md-2 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectOwner}}" style="">{{proj.projectOwner}}</div>
 
                 <div class="col-md-2" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.businessUnit" style="width: 120px;">
                </div>
-               <div class="col-md-2" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" style="cursor: pointer;">{{proj.businessUnit}}</div>
+               <div class="col-md-2 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.businessUnit}}" style="">{{proj.businessUnit}}</div>
               
                 <div class="col-md-1" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.program" style="width: 120px;">
                </div>
-               <div class="col-md-1" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" style="cursor: pointer;">{{proj.program}}</div>
+               <div class="col-md-1 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.program}}" style="">{{proj.program}}</div>
                </div>
               
               <!--  <div class="col-md-1" >
                <span ng-if="proj.program">{{proj.program}}</span>
                 <span ng-if="!proj.program">NO pgms</span>
                  </div> -->
-               <span class="col-md-2" style="padding-left: 57px;">
+               <span class="col-md-2" style="padding-left: 43px;">
                  <span style="padding-left: 14px">
-                  <img src="assets/images/fld/share(1).png " class="ed-image-props" style="width: 22px;height:15px;cursor: pointer;" ng-click="pm.shareProjectPopUp()" title="Share">
+                  <img src="assets/images/fld/share(1).png " class="ed-image-props project-map-crud-icons" style="width:22px;" ng-click="pm.shareProjectPopUp()" title="Share">
                </span>
                <span class="" ng-show="!proj.editorEnabled">
-                 <img src="assets/images/fld/edit.png " class="ed-image-props" style="width: 15px;height:15px;cursor: pointer;margin-left: 6px;" ng-click="pm.enableEditor(proj.projectId)" title="Edit">
+                 <img src="assets/images/fld/edit.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
                </span>
                
                <span ng-click="pm.editproject(proj)" ng-show="proj.editorEnabled">
-                  <img src="assets/images/save_icon.png " class="ed-image-props" style="width: 15px;height:15px;cursor: pointer;margin-left: 6px;" title="Save">
+                  <img src="assets/images/save_icon.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  title="Save">
                </span> 
                <span class="" >
-                 <img src="assets/images/fld/delete.png " class="ed-image-props" style="width: 15px;height:15px;cursor: pointer;margin-left: 6px;" ng-click="pm.deleteProjectModel(proj)" title="Delete"> 
+                 <img src="assets/images/fld/delete.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="pm.deleteProjectModel(proj)" title="Delete"> 
                </span></span>
               
                <span class="" >

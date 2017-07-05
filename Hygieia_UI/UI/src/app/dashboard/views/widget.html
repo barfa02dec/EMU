@@ -26,8 +26,12 @@
             <span class="pull-right last-updated">
             {{lastUpdatedDisplay}}
             </span>
-            <span ng-show=" {{(title == 'Quality')}}">
-            <a href="#/detailedview/{{caWidget.dashBoardId}}/{{caWidget.componentId}}" target="_self" > 
+            <span ng-show=" {{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
+            <a href="#/detailedview/{{caWidget.dashBoardId}}" target="_self" > 
+            <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;">View All <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+            </a></span>
+             <span ng-show=" {{(title == 'Feature')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
+            <a href="#/jiraDashboard" target="_self" > 
             <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;">View All <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
             </a></span>
         </div>
@@ -35,7 +39,7 @@
             <div class="widget-body-main">
                 <!-- widget content -->
             </div>
-            <div class="widget-body-config clickable" ng-click="checkPermission()" style="background:#9AD2FF;border: 2px solid #66ccff;border-radius:3px;">
+            <div class="widget-body-config clickable" ng-click="checkPermission()" style="background:#9AD2FF;border: 2px solid #66ccff;border-radius:3px;margin-left: 1%;width: 97%;">
                 <div>
                     <div class="">
                         <svg version="1.1"

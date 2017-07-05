@@ -33,7 +33,7 @@
                             $cookies.put('authenticated', true);
                             $cookies.put('username', login.username);
                             //$location.path('/site');
-                            $location.path('/projectMap');
+                            $location.path('/projects');
                         }
                     });
             }

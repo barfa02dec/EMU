@@ -1,11 +1,8 @@
 <div class="create-project-container">
     <div class="col-md-12">
-        <div class="top-nav-bar" style="background: -webkit-linear-gradient(right,#24394C, #7ABEF8 ) !important;   
-    background: -o-linear-gradient(left, #24394C, #7ABEF8 ) !important; 
-    background: -moz-linear-gradient(left, #24394C, #7ABEF8 ) !important; 
-    background: linear-gradient(to left, #24394C, #7ABEF8 ) !important;height: 40px;">
+        <div class="top-nav-bar" style="height: 40px;background:#fff;">
             <div class="col-md-5"></div>
-            <div class="col-md-4" style="color:#fff;padding-top: 1.6%;">Add Project</div>
+            <div class="col-md-4" style="color:#000;;padding-top: 1.6%;">Add Project</div>
             <div class="col-md-3"></div>
         </div>
     </div>
@@ -55,14 +52,9 @@
                             </div>
                         </div>
                         <div class="form-group" style="padding-top: 3%;padding-left: 17%;">
-                            <input type="submit" name="" value="Add" style="width: 40%;background: -webkit-linear-gradient(right, #E8B867, #FF5602);
-                background: -o-linear-gradient(left, #E8B867, #FF5602);  
-                background: -moz-linear-gradient(left, #E8B867, #FF5602);
-                background: linear-gradient(to left, #E8B867, #FF5602);color: #fff;border:none;border-radius: 2px;height: 30px;" ng-click="cpr.postProject();">
-                             <input type="button" name="" value="Cancel" style="width: 40%;background: -webkit-linear-gradient(right, #8D8D8D, #414141);
-                background: -o-linear-gradient(left, #8D8D8D, #414141);  
-                background: -moz-linear-gradient(left, #8D8D8D, #414141);
-                background: linear-gradient(to left, #8D8D8D, #414141);color: #fff;border:none;border-radius: 2px;height: 30px;margin-left: 20px" ng-click="$close()">
+                           
+                             <input type="button" name="" class="btn btn-default" value="Cancel" style="width: 40%;color: #000;border:none;border-radius: 2px;height: 30px;background:#fff;box-shadow:none;border:1px solid #cccccc;" ng-click="$close()">
+                              <input type="submit" class="btn btn-raised btn-success" name="" value="Add" style="width: 40%;color: #fff;border:none;border-radius: 2px;height: 30px;margin-left: 20px;" ng-click="cpr.postProject();">
                 <span class="{{errmsgclass}}" style="text-align: center;
     display: inline-block;
     padding-top: 16px;

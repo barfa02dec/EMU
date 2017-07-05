@@ -30,7 +30,7 @@
         ctrl.filterNotOwnedList = filterNotOwnedList;
         ctrl.filterDashboards = filterDashboards;
         ctrl.renameDashboard = renameDashboard;
-
+        
          if (ctrl.username === 'admin') {
             ctrl.myadmin = true;
         }
@@ -122,6 +122,7 @@
 
         function open(dashboardId) {
             $location.path('/dashboard/' + dashboardId);
+            $cookies.put('dashboardidpa', dashboardId);
         }
 
         function processDashboardResponse(data) {
@@ -170,7 +171,7 @@
             ctrl.mydash = [];
         }
 
-
+        
 
 
         function deleteDashboard(item) {

@@ -40,12 +40,14 @@
 
 		return {
 			sprintMetrics : aggregateSprintEstimates,
+			jiraData:jiraDataGer,
 			featureWip : featureWip,
 			sprint : sprint,
 			teams : teams,
 			teamsByCollectorId : teamsByCollectorId,
 			projects : projects,
-			projectsByCollectorId : projectsByCollectorId
+			projectsByCollectorId : projectsByCollectorId,
+			sprintDta:sprintDataFetch
 		};
 		
 		function aggregateSprintEstimates(componentId, filterTeamId, filterProjectId, estimateMetricType, agileType) {
@@ -53,6 +55,21 @@
 					+ (estimateMetricType != null? estimateMetricTypeParam + estimateMetricType : "")
 					+ (agileType != null? agileTypeParam + agileType : ""))
 					.then(function(response) {
+						return response.data;
+					});
+		}
+
+		function jiraDataGer(filterProjectId) { 
+			 
+			return $http.get('http://localhost:3000/api/getDefectSummery/' +filterProjectId)
+					.then(function(response) {
+						return response.data;
+					});
+		}
+		function sprintDataFetch(filterProjectId) {  
+			 
+			return $http.get('http://localhost:3000/api/listAllSprints?projectId=' +filterProjectId)
+					.then(function(response) { 
 						return response.data;
 					});
 		}

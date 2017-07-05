@@ -27,6 +27,7 @@
 
     widgetDirective.$inject = ['$controller', '$http', '$templateCache', '$compile', 'widgetManager', '$uibModal', 'WidgetState', 'DisplayState', '$interval', 'dashboardData','$cookies'];
     function widgetDirective($controller, $http, $templateCache, $compile, widgetManager, $uibModal, WidgetState, DisplayState, $interval, dashboardData,$cookies) {
+      
         return {
             templateUrl: 'app/dashboard/views/widget.html',
             require: '^widgetContainer',
@@ -42,7 +43,7 @@
         function link(scope, element, attrs, containerController) {
             // make it so name is not case sensitive
             attrs.name = attrs.name.toLowerCase();
-
+                
             scope.$widgetEl = element;
             scope.container = containerController;
             scope.widgetDefinition = widgetManager.getWidget(attrs.name);
@@ -112,7 +113,7 @@
             $scope.checkPermission=checkPermission;
 
             function checkPermission(){
-
+                $scope.displayViewAll = true;
                 dashboardData.myowner($scope.dashboard.title).then(processmyownerresponse);
 
 
