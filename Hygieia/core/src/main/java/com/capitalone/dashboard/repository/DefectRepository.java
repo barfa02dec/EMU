@@ -57,6 +57,12 @@ public interface DefectRepository extends CrudRepository<Defect, ObjectId>,
 	@Query(value = "{'defectStatus' : ?0}")
 	List<Defect> findByStatus(String defectStatus);
 	
+	@Query(value = "{'defectId' : ?0}")
+	Defect findByDefectId(String defectId);
+	
+	@Query(value = "{'projectId' : ?0}")
+	List<Defect> findByProjectId(String projectId);
+	
 	@Query(value = "{'defectSeverity' : ?0}")
 	List<Defect> findBySeverity(String defectSeverity);
 	

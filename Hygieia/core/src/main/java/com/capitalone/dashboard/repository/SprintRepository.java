@@ -17,6 +17,7 @@
 package com.capitalone.dashboard.repository;
 
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
@@ -27,21 +28,10 @@ import com.capitalone.dashboard.model.Sprint;
  */
 public interface SprintRepository extends CrudRepository<Sprint, ObjectId>,
 		QueryDslPredicateExecutor<Sprint>, SprintRepositoryCustom {
-	/**
-	 * This essentially returns the max change date from the collection, based
-	 * on the last change date (or default delta change date property) available
-	 * 
-	 * @param collectorId
-	 *            Collector ID of source system collector
-	 * @param changeDate
-	 *            Last available change date or delta begin date property
-	 * @return A single Change Date value that is the maximum value of the
-	 *         existing collection
-	 */
 
-
-	/*@Query(value = "{'defectId' : ?0}", fields = "{'defectId' : 1}")
-	List<Defect> getDefectById(String sId);*/
-
+	 	@Query(value = "{ 'sid' : ?0 }")
+	    Sprint findBySprintId(Long id);
+	 	@Query(value = "{ 'projectId' : ?0 }")
+	    Iterable<Sprint> findByProjectId(String projectId);
 	
 }

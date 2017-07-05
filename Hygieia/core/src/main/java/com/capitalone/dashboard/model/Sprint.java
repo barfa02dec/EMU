@@ -16,9 +16,7 @@
 
 package com.capitalone.dashboard.model;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -28,111 +26,75 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "sprint")
 public class Sprint extends BaseModel {
+		@Indexed(unique=true)
+	    private Long sid;
+		private String projectId;
+	    private String start;
+	    private String end;
+	    private String name;
+	    private Boolean closed;
+	    private Boolean editable;
+	    private String viewBoardsUrl;
+	    private SprintData sprintData;
+	    
+	    
+	    
+		public String getProjectId() {
+			return projectId;
+		}
+		public void setProjectId(String projectId) {
+			this.projectId = projectId;
+		}
+		
+		public Long getSid() {
+			return sid;
+		}
+		public void setSid(Long sid) {
+			this.sid = sid;
+		}
+		public String getStart() {
+			return start;
+		}
+		public void setStart(String start) {
+			this.start = start;
+		}
+		public String getEnd() {
+			return end;
+		}
+		public void setEnd(String end) {
+			this.end = end;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public Boolean getClosed() {
+			return closed;
+		}
+		public void setClosed(Boolean closed) {
+			this.closed = closed;
+		}
+		public Boolean getEditable() {
+			return editable;
+		}
+		public void setEditable(Boolean editable) {
+			this.editable = editable;
+		}
+		public String getViewBoardsUrl() {
+			return viewBoardsUrl;
+		}
+		public void setViewBoardsUrl(String viewBoardsUrl) {
+			this.viewBoardsUrl = viewBoardsUrl;
+		}
+		public SprintData getSprintData() {
+			return sprintData;
+		}
+		public void setSprintData(SprintData sprintData) {
+			this.sprintData = sprintData;
+		}
+
+	    
 	
-	private ObjectId collectorId;
-	
-	/*
-	 * Sprint specific attributes
-	 */
-	
-	private Long sprintId;
-	private Long rapidViewId;
-	private String state;
-	private String name;
-	private String startDateStr;
-	private String endDateStr;
-	private String completeDateStr;
-	private int sequence;
-	
-	
-
-	public ObjectId getCollectorId() {
-		return collectorId;
-	}
-
-	public void setCollectorId(ObjectId collectorId) {
-		this.collectorId = collectorId;
-	}
-
-	public Long getSprintId() {
-		return sprintId;
-	}
-
-	public void setSprintId(Long sprintId) {
-		this.sprintId = sprintId;
-	}
-
-	public Long getRapidViewId() {
-		return rapidViewId;
-	}
-
-	public void setRapidViewId(Long rapidViewId) {
-		this.rapidViewId = rapidViewId;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getStartDateStr() {
-		return startDateStr;
-	}
-
-	public void setStartDateStr(String startDateStr) {
-		this.startDateStr = startDateStr;
-	}
-
-	public String getEndDateStr() {
-		return endDateStr;
-	}
-
-	public void setEndDateStr(String endDateStr) {
-		this.endDateStr = endDateStr;
-	}
-
-	public String getCompleteDateStr() {
-		return completeDateStr;
-	}
-
-	public void setCompleteDateStr(String completeDateStr) {
-		this.completeDateStr = completeDateStr;
-	}
-
-	public int getSequence() {
-		return sequence;
-	}
-
-	public void setSequence(int sequence) {
-		this.sequence = sequence;
-	}
-
-	
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-
-		Sprint that = (Sprint) o;
-		EqualsBuilder builder = new EqualsBuilder();
-		return builder.append(collectorId, that.collectorId).append(sprintId, that.sprintId).build();
-	}
-	
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder(17, 37).append(collectorId).append(sprintId).toHashCode();
-	}
 }

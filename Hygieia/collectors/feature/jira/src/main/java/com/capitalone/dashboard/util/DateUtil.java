@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public final class DateUtil {
 	private static final Logger LOGGER = LoggerFactory.getLogger(DateUtil.class);
@@ -150,4 +151,17 @@ public final class DateUtil {
 		return daysAgo;
 	}
 
+	public static String format(Date date, String pattern) {
+	    DateFormat formatter = new SimpleDateFormat(pattern, Locale.US);
+	    return formatter.format(date);
+	  }
+	
+	 public static Date convertStringToDate(String datestr, String format) {
+		    try {
+		      return (new SimpleDateFormat(format)).parse(datestr);
+		    } catch (ParseException e) {
+		      e.printStackTrace();
+		    }
+		    return null;
+	 }
 }

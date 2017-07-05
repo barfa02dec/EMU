@@ -41,9 +41,6 @@ public class JiraRestClientSupplier implements JiraSupplier<JiraRestClient> {
 	public JiraRestClient get(NewFeatureSettings featureSettings) {
 		JiraRestClient client = null;
 		
-		LOGGER.info("featureSettings.getJiraBaseUrl()================================>"+featureSettings.getJiraBaseUrl());
-		LOGGER.info("featureSettings.getJiraCredentials()================================>"+featureSettings.getJiraCredentials());
-		LOGGER.info("fgetJiraProxyUrl)================================>"+featureSettings.getJiraProxyUrl());
 		String jiraCredentials = featureSettings.getJiraCredentials();
 		String jiraBaseUrl = featureSettings.getJiraBaseUrl();
 		String proxyUri = null;
@@ -53,7 +50,6 @@ public class JiraRestClientSupplier implements JiraSupplier<JiraRestClient> {
 		
 		try {
 			if (featureSettings.getJiraProxyUrl() != null && !featureSettings.getJiraProxyUrl().isEmpty() && (featureSettings.getJiraProxyPort() != null)) {
-				LOGGER.info("Entering into proxy success==========================================");
 				proxyUri = featureSettings.getJiraProxyUrl();
 				proxyPort =featureSettings.getJiraProxyPort();
 				

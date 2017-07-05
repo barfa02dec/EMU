@@ -37,7 +37,7 @@ public class Defect extends BaseModel {
 	/*
 	 * Defect specific attributes
 	 */
-	@Indexed
+	@Indexed(unique=true)
 	private String defectId;
 	private String projectName;
 	private String defectDescription;
@@ -57,6 +57,7 @@ public class Defect extends BaseModel {
 	private String assignee;
 	private String reporter;
 	private String dueDate; 
+	@Indexed
 	private String projectId;
 	
 	public String getProjectId() {

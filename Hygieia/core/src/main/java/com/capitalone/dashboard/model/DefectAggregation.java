@@ -16,11 +16,10 @@
 
 package com.capitalone.dashboard.model;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -28,19 +27,20 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * 
  * Possible collectors: VersionOne PivotalTracker Rally Trello Jira
  * 
- * @author kfk884
+ * @author munisekhar
  * 
  */
 @Document(collection = "defects_summary")
-public class DefectAggregation extends BaseModel {
+public class DefectAggregation extends BaseModel{
 	
-	private ObjectId collectorId;
 	private Map<String,Integer> defectsByProirity;
 	private Map<String,Integer> defectsByEnvironment;
-	Map<String, List<Map<String,String>>> defectsByResolutionDetails;
-	Map<String, List<Map<String,String>>> defectsByAgeDetails;
+	Map<String, List<Map<String,String>>> fixeddefectsByResolutions;
+	Map<String, List<Map<String,String>>> openDefectsByAge;
 	private String valuesAsOn;
+	@Indexed(unique=true)
 	private String projectName;
+	@Indexed(unique=true)
 	private String projectId;
 	
 	
@@ -57,12 +57,6 @@ public class DefectAggregation extends BaseModel {
 		this.projectName = projectName;
 	}
 	
-	public ObjectId getCollectorId() {
-		return collectorId;
-	}
-	public void setCollectorId(ObjectId collectorId) {
-		this.collectorId = collectorId;
-	}
 	public Map<String, Integer> getDefectsByProirity() {
 		return defectsByProirity;
 	}
@@ -76,16 +70,16 @@ public class DefectAggregation extends BaseModel {
 		this.defectsByEnvironment = defectsByEnvironment;
 	}
 	public Map<String, List<Map<String, String>>> getDefectsByResolutionDetails() {
-		return defectsByResolutionDetails;
+		return fixeddefectsByResolutions;
 	}
 	public void setDefectsByResolutionDetails(Map<String, List<Map<String, String>>> defectsByResolutionDetails) {
-		this.defectsByResolutionDetails = defectsByResolutionDetails;
+		this.fixeddefectsByResolutions = defectsByResolutionDetails;
 	}
 	public Map<String, List<Map<String, String>>> getDefectsByAgeDetails() {
-		return defectsByAgeDetails;
+		return openDefectsByAge;
 	}
 	public void setDefectsByAgeDetails(Map<String, List<Map<String, String>>> defectsByAgeDetails) {
-		this.defectsByAgeDetails = defectsByAgeDetails;
+		this.openDefectsByAge = defectsByAgeDetails;
 	}
 	public String getValuesAsOn() {
 		return valuesAsOn;

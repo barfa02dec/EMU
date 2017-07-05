@@ -57,6 +57,18 @@ public class FeatureSettings {
 	private List<String> jiraProxyPort;
 	private List<String[]> resolutionPeriod;
 	private List<String[]> defectAge;
+	private List<String> rapidView;
+	
+	
+	
+	public List<String> getRapidView() {
+		return rapidView;
+	}
+
+	public void setRapidView(List<String> rapidView) {
+		this.rapidView = rapidView;
+	}
+
 	public List<String[]> getResolutionPeriod() {
 		return resolutionPeriod;
 	}

@@ -49,7 +49,15 @@ public class NewFeatureSettings {
 	private String jiraOauthExpiretime;
 	private String jiraProxyUrl;
 	private String jiraProxyPort;
-	
+	private String rapidView;
+	public String getRapidView() {
+		return rapidView;
+	}
+
+	public void setRapidView(String rapidView) {
+		this.rapidView = rapidView;
+	}
+
 	private String[] resolutionPeriod;
 	
 	private String[] defectAge;

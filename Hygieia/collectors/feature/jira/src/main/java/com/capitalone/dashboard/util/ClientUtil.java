@@ -16,16 +16,6 @@
 
 package com.capitalone.dashboard.util;
 
-import org.codehaus.jettison.json.JSONException;
-import org.joda.time.DateTime;
-import org.joda.time.format.ISODateTimeFormat;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.capitalone.dashboard.client.Sprint;
-
 import java.nio.ByteBuffer;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
@@ -37,6 +27,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.codehaus.jettison.json.JSONException;
+import org.joda.time.DateTime;
+import org.joda.time.format.ISODateTimeFormat;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.capitalone.dashboard.client.Sprint;
+import com.capitalone.dashboard.model.Burndown;
+import com.capitalone.dashboard.model.SprintData;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 /**
  * This class houses any globally-used utility methods re-used by aspects of
@@ -392,4 +397,78 @@ public final class ClientUtil {
 	public static ClientUtil getInstance() {
 		return INSTANCE;
 	}
+public static SprintData parseToSprintData(String sprintDetailJson){
+    	
+		SprintData sprintdata = new SprintData();
+		
+    	Gson gson = new GsonBuilder().create();
+    	sprintdata.setSprintId(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("id").getAsLong());
+    	sprintdata.setSprintName(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("name").toString());
+    	sprintdata.setState(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("state").toString());
+    	sprintdata.setDaysRemaining(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("daysRemaining").getAsInt());
+    	
+    	
+    	sprintdata.setCompletedIssueCount(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("completedIssues") == null ? 
+				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("completedIssues").size());
+
+    	int incompletedissuesount = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("issuesNotCompletedInCurrentSprint") == null? 
+				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("issuesNotCompletedInCurrentSprint").size();
+		
+		int puntedissuescount = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("puntedIssues") ==null ? 
+						0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("puntedIssues").size();
+
+		int issueKeysaddedduringsprint = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issueKeysAddedDuringSprint").entrySet() == null? 
+				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issueKeysAddedDuringSprint").entrySet().size();
+
+		Burndown burndown = new Burndown();
+		
+		Burndown.IssueCount issuecount = burndown.new IssueCount();
+		issuecount.setCount(issueKeysaddedduringsprint);
+		issuecount.setStoryPoints(0.0f);
+		burndown.setIssuesAdded(issuecount);
+		
+		issuecount = burndown.new IssueCount();
+		issuecount.setCount(puntedissuescount);
+		issuecount.setStoryPoints(0.0f);
+		burndown.setIssuesRemoved(issuecount);
+		
+		sprintdata.setCommittedIssueCount(sprintdata.getCompletedIssueCount() + puntedissuescount + incompletedissuesount - issueKeysaddedduringsprint);
+		issuecount = burndown.new IssueCount();
+		issuecount.setCount(sprintdata.getCommittedIssueCount());	
+		issuecount.setStoryPoints(0.0f);
+		burndown.setInitialIssueCount(issuecount);
+
+		sprintdata.setBurndown(burndown);
+		
+		float completedIssuesInitialEstimateSum = 0;
+		float incompletedissuesestimateSum = 0;
+		float puntedIssuesestimatesum = 0;
+		
+
+		if(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesInitialEstimateSum") != null)
+			completedIssuesInitialEstimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesInitialEstimateSum").get("value") == null ?
+				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesInitialEstimateSum").get("value").getAsFloat();
+		else if(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum") != null)
+			completedIssuesInitialEstimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value") == null ?
+					0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value").getAsFloat();
+		
+
+		if(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issuesNotCompletedEstimateSum") != null)
+			incompletedissuesestimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issuesNotCompletedEstimateSum").get("value") == null ?
+				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issuesNotCompletedEstimateSum").get("value").getAsFloat();
+		else if (gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("incompletedIssuesEstimateSum") != null)
+			incompletedissuesestimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("incompletedIssuesEstimateSum").get("value") == null ?
+					0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("incompletedIssuesEstimateSum").get("value").getAsFloat();
+		
+		if(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("puntedIssuesEstimateSum") != null)		
+			puntedIssuesestimatesum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("puntedIssuesEstimateSum").get("value") == null ?
+				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("puntedIssuesEstimateSum").get("value").getAsFloat();	
+		
+		sprintdata.setCommittedStoryPoints(completedIssuesInitialEstimateSum + puntedIssuesestimatesum + incompletedissuesestimateSum);
+		
+		sprintdata.setCompletedStoryPoints(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value") == null ?
+				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value").getAsFloat());
+		
+		return sprintdata;
+    }
 }

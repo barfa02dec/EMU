@@ -4,7 +4,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ *	
  *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
@@ -21,7 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,7 +30,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,23 +37,30 @@ import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.atlassian.jira.rest.client.api.domain.IssueField;
 import com.atlassian.jira.rest.client.api.domain.IssueType;
 import com.capitalone.dashboard.client.JiraClient;
-import com.capitalone.dashboard.client.Sprint;
 import com.capitalone.dashboard.model.Defect;
 import com.capitalone.dashboard.model.DefectAggregation;
 import com.capitalone.dashboard.model.Feature;
 import com.capitalone.dashboard.model.FeatureStatus;
+import com.capitalone.dashboard.model.JiraSprint;
+import com.capitalone.dashboard.model.JiraVersion;
 import com.capitalone.dashboard.model.QDefect;
+import com.capitalone.dashboard.model.QRelease;
+import com.capitalone.dashboard.model.QSprint;
+import com.capitalone.dashboard.model.Release;
 import com.capitalone.dashboard.model.Scope;
+import com.capitalone.dashboard.model.Sprint;
 import com.capitalone.dashboard.repository.DefectAggregationRepository;
 import com.capitalone.dashboard.repository.DefectRepository;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
 import com.capitalone.dashboard.repository.FeatureRepository;
+import com.capitalone.dashboard.repository.ReleaseRepository;
 import com.capitalone.dashboard.repository.SprintRepository;
 import com.capitalone.dashboard.repository.TeamRepository;
 import com.capitalone.dashboard.util.ClientUtil;
 import com.capitalone.dashboard.util.CoreFeatureSettings;
 import com.capitalone.dashboard.util.DateUtil;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
+import com.capitalone.dashboard.util.JiraCollectorUtil;
 import com.capitalone.dashboard.util.NewFeatureSettings;
 
 
@@ -77,20 +82,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 	private static final String DONE = "Done";
 	private static final String BUG="Bug";
 
-	
-	private static final Comparator<Sprint> SPRINT_COMPARATOR = new Comparator<Sprint>() {
-		@Override
-		public int compare(Sprint o1, Sprint o2) {
-			int cmp1 = ObjectUtils.compare(o1.getStartDateStr(), o2.getStartDateStr());
-			
-			if (cmp1 != 0) {
-				return cmp1;
-			}
-			
-			return ObjectUtils.compare(o1.getEndDateStr(), o2.getEndDateStr());
-		}
-	};
-	
 	// works with ms too (just ignores them)
 	private final DateFormat SETTINGS_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
@@ -101,6 +92,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	private final DefectAggregationRepository defectAggregationRepository;
 	private final FeatureCollectorRepository featureCollectorRepository;
 	private final JiraClient jiraClient;
+	private final ReleaseRepository releaseRepository;
 	
 	// epicId : list of epics
 	private Map<String, Issue> epicCache;
@@ -112,7 +104,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	 * Extends the constructor from the super class.
 	 */
 	public StoryDataClientImpl(CoreFeatureSettings coreFeatureSettings, NewFeatureSettings featureSettings,
-			FeatureRepository featureRepository,DefectRepository defectRepository,SprintRepository sprintRepository,DefectAggregationRepository defectAggregationRepository, FeatureCollectorRepository featureCollectorRepository, TeamRepository teamRepository,
+			FeatureRepository featureRepository,DefectRepository defectRepository,SprintRepository sprintRepository,DefectAggregationRepository defectAggregationRepository,ReleaseRepository releaseRepository, FeatureCollectorRepository featureCollectorRepository, TeamRepository teamRepository,
 			JiraClient jiraClient) {
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("Constructing data collection for the feature widget, story-level data...");
@@ -126,7 +118,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		this.sprintRepository=sprintRepository;
 		this.defectAggregationRepository=defectAggregationRepository;
 		this.epicCache = new HashMap<>();
-		
+		this.releaseRepository=releaseRepository;
 		todoCache = buildStatusCache(coreFeatureSettings.getTodoStatuses());
 		inProgressCache = buildStatusCache(coreFeatureSettings.getDoingStatuses());
 		doneCache = buildStatusCache(coreFeatureSettings.getDoneStatuses());
@@ -138,9 +130,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	 */
 	public int updateStoryInformation() {
 		int count = 0;
-		epicCache.clear(); // just in case class is made static w/ spring in future
-		
-		//long startDate = featureCollectorRepository.findByName(FeatureCollectorConstants.JIRA).getLastExecuted();
+		epicCache.clear(); 
 		
 		String startDateStr = featureSettings.getDeltaStartDate();
 		String maxChangeDate = getMaxChangeDate();
@@ -212,10 +202,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 
 			
 			List<Defect> defectsToSave = new ArrayList<Defect>();
-			List<com.capitalone.dashboard.model.Sprint> sprintDetailsToSave = new ArrayList<com.capitalone.dashboard.model.Sprint>();
 			for (Issue issue : currentPagedJiraRs) {
 				Map<String, IssueField> fields = buildFieldMap(issue.getFields());
-				IssueField sprintData = fields.get(featureSettings.getJiraSprintDataFieldName());
 
 				IssueType issueType = issue.getIssueType();
 
@@ -226,16 +214,14 @@ public class StoryDataClientImpl implements StoryDataClient {
 								TOOLS.sanitizeResponse(issue.getSummary())));
 					}
 					if (TOOLS.sanitizeResponse(issueType.getName()).equals(BUG)) {
-						Defect defect = new Defect();
+						Defect defect=defectRepository.findByDefectId(TOOLS.sanitizeResponse(issue.getId()));
+						if(null==defect){
+							defect=new Defect();
+						}
 						defectsToSave.add(processDefects(issue, defect, fields));
 
 					}
-
-					if (null != sprintData) {
-						sprintDetailsToSave.addAll(processSprintData(sprintData));
-
-					}
-
+					
 				}
 			}
 
@@ -244,45 +230,84 @@ public class StoryDataClientImpl implements StoryDataClient {
 				defectRepository.save(defectsToSave);
 
 			}
-			if (null != sprintDetailsToSave && !sprintDetailsToSave.isEmpty()) {
-				sprintRepository.save(sprintDetailsToSave);
-			}
-
+			
 			defectsToSave = null;
 
 		}
-	}
+	}	
 	
 	
-	
-	private List<com.capitalone.dashboard.model.Sprint> processSprintData(IssueField sprintData){
+	public void saveDetailedSprintData(String projectId){
+		List<JiraSprint> sprintsJira= JiraCollectorUtil.getSprintList(projectId, featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials());
 		
-		try{
-			if(null!=sprintData){
-				List<com.capitalone.dashboard.model.Sprint> sprintList = new ArrayList<com.capitalone.dashboard.model.Sprint>();
-				Object sValue = sprintData.getValue();
-				List<Sprint> sprints = TOOLS.parseSprints(sValue);
-				
-				for (Sprint sp: sprints){
-					com.capitalone.dashboard.model.Sprint sprintModel= new com.capitalone.dashboard.model.Sprint();
-					sprintModel.setName(sp.getName());
-					sprintModel.setCompleteDateStr(sp.getCompleteDateStr());
-					sprintModel.setRapidViewId(sp.getRapidViewId());
-					sprintList.add(sprintModel);
-					sprintModel=null;
-				}
-				return sprintList;
-			}
-			
-			
-		}catch (Exception e) {
-			// TODO: handle exception
+		// get the details of the sprint for recent sprint and for remaining, don't fetch the data.
+		//As the sprints grownup, we will get recent all sprints in 4-5 iterations. 
+		if(!sprintsJira.isEmpty() && null!=sprintsJira.get(0))
+		{
+			JiraCollectorUtil.getRecentSprintMetrics(sprintsJira.get(0), projectId, featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(), featureSettings.getRapidView());
 		}
-		return null;
+		
+		mapJiraSprintToHygieiaModel(sprintsJira,projectId);
+		
+		
 	}
 	
+	public void saveDetailedReleaseData(String projectId){
+		
+		List<JiraVersion>  jiraVersions=JiraCollectorUtil.getVersionsFromJira(projectId, featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(),featureSettings.getRapidView());
+		List<Release> releaseList=new ArrayList<Release>();
+		for(JiraVersion jv: jiraVersions ){
+			Release release=releaseRepository.findOne(QRelease.release.releaseId.eq(jv.getId()));
+			if(release==null){
+				release=new Release();
+				release.setReleaseId(jv.getId());
+				release.setProjectId(projectId);
+				release.setName(jv.getName());
+				release.setStartDate(jv.getStartDate());
+
+			}
+			release.setVersionData(jv.getVersionData());
+			release.setReleased(jv.getReleased());
+			release.setOverdue(jv.getOverdue());
+			release.setReleaseDate(jv.getReleaseDate());
+			releaseList.add(release);
+		}
+		if(!jiraVersions.isEmpty()){
+			releaseRepository.save(releaseList);
+		}
+		
+		
+		
+	}
 	
 
+	private void mapJiraSprintToHygieiaModel(List<JiraSprint> sprintsJira, String projectId){
+		List<Sprint> list= new ArrayList<Sprint>();
+		for(JiraSprint js:sprintsJira){
+			Sprint sprint=sprintRepository.findOne(QSprint.sprint.sid.eq(js.getId()));
+			if(null==sprint){
+				sprint= new Sprint();
+				sprint.setSid(js.getId());
+				sprint.setName(js.getName());
+				sprint.setViewBoardsUrl(js.getViewBoardsUrl());
+				sprint.setProjectId(projectId);
+				sprint.setStart(js.getStart());
+
+			}
+			sprint.setEditable(js.getEditable());
+			sprint.setEnd(js.getEnd());
+			sprint.setSprintData(js.getSprintData());
+		
+			list.add(sprint);
+		}
+		if(!list.isEmpty())
+		{
+			sprintRepository.save(list);
+		}
+		
+	}
+	
+	
 	/**
 	 * ETL for converting any number of custom Jira statuses to a reduced list
 	 * of generally logical statuses used by Hygieia
@@ -425,25 +450,24 @@ public class StoryDataClientImpl implements StoryDataClient {
 	
 	}
 	
-	private DefectAggregation processDefectsSummary(NewFeatureSettings featureSettings,List<Defect> defects,Scope scopeProject){
-		DefectAggregation aggregation= new DefectAggregation();
+	private DefectAggregation processDefectsSummary(NewFeatureSettings featureSettings,List<Defect> defects,Scope scopeProject,DefectAggregation summery){
 		
 		/*
 		 * Logic to bucket the defects based on environment and priority.
 		 */
-		processDefectsByPriorityAndEnvironment(defects, aggregation,scopeProject);
+		JiraCollectorUtil.processDefectsByPriorityAndEnvironment(defects, summery,scopeProject);
 		
 		/*
 		 * Logic for bucketing the defects based on resolution days and priority in each class of resolution.
 		 */
-		processDefectsByDefectResolutionPeriod(aggregation,scopeProject);
+		processDefectsByDefectResolutionPeriod(summery,scopeProject);
 				
 		/*
 		 * 	Logic for bucketing the defects based on age of open defects.
 		 */
-		processDefectsByDefectAge(aggregation,scopeProject);
+		processDefectsByDefectAge(summery,scopeProject);
 		
-		return aggregation;
+		return summery;
 	}
 
 
@@ -452,59 +476,29 @@ public class StoryDataClientImpl implements StoryDataClient {
 		/*
 		 * For a single project, there is always a single aggregater exists.Hence setting the collector ID as same as scope ID. 
 		 */
-		DefectAggregation summery=processDefectsSummary(featureSettings,defectsInDB,scopeProject);
-		summery.setCollectorId(scopeProject.getId());
+		DefectAggregation summery=defectAggregationRepository.findByProjectId(scopeProject.getpId());
+		if(null==summery){
+			summery=new DefectAggregation();
+		}
+		summery=processDefectsSummary(featureSettings,defectsInDB,scopeProject,summery);
 		summery.setProjectId(scopeProject.getpId());
 		summery.setProjectName(scopeProject.getName());
 		summery.setValuesAsOn(new Date().toString());
 		defectAggregationRepository.save(summery);
 	}
 	
-	private void processDefectsByPriorityAndEnvironment(List<Defect> defects,DefectAggregation aggregation,Scope scopeProject){
-		Map<String,Integer> defectsByProirity= new LinkedHashMap<String,Integer>();
-		Map<String,Integer> defectsByEnvironment= new LinkedHashMap<String,Integer>();
-
-			for(Defect defect: defects){
-			if(defect.getProjectId().equals(scopeProject.getpId())){
-				if(defectsByProirity.containsKey(defect.getDefectPriority())){
-					defectsByProirity.put(defect.getDefectPriority(), defectsByProirity.get(defect.getDefectPriority())+1);
-				}else{
-					defectsByProirity.put(defect.getDefectPriority(), 1);
-				}
-				
-				if(defectsByEnvironment.containsKey(defect.getEnvironment())){
-					defectsByEnvironment.put(defect.getEnvironment(), defectsByEnvironment.get(defect.getEnvironment())+1);
-				}else if(null!=defect.getEnvironment()){
-					defectsByEnvironment.put(defect.getEnvironment(), 1);
-				}
-			}
-			
-			
-			}
-			
-			if(!defectsByProirity.isEmpty())
-			{
-				aggregation.setDefectsByProirity(defectsByProirity);
-			}
-			if(!defectsByEnvironment.isEmpty())
-			{
-				aggregation.setDefectsByEnvironment(defectsByEnvironment);
-			}
-		
-	}
-	
-	
 	private void processDefectsByDefectResolutionPeriod(DefectAggregation aggregation,Scope scopeProject){
 		List<Integer> resolutionsList= new ArrayList<Integer>();
 		for (int i=0;i<featureSettings.getResolutionPeriod().length;i++){
 			try{
-				resolutionsList.add(Integer.parseInt(featureSettings.getResolutionPeriod()[i]));
+				if(!resolutionsList.contains(featureSettings.getResolutionPeriod()[i]))
+					resolutionsList.add(Integer.parseInt(featureSettings.getResolutionPeriod()[i]));
 			}catch (Exception e) {
 				LOGGER.debug(e.getMessage());
 			}
 		}
 		Collections.sort(resolutionsList);
-		Map<String, List<Map<String,String>>> defectsByResolutionDetails=new LinkedHashMap<String, List<Map<String,String>>>();
+		Map<String, List<Map<String,String>>> fixedDefectsByResolution=new LinkedHashMap<String, List<Map<String,String>>>();
 				
 		boolean firstIndex=true;
 		int resolCount=resolutionsList.size();
@@ -520,23 +514,23 @@ public class StoryDataClientImpl implements StoryDataClient {
 				firstIndex=false;
 				List<Map<String,String>> defectsByResolution= new ArrayList<Map<String,String>>();
 				for(String priorityKey: defectPriorities){
-					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.lt(resolutionsList.get(i)+1).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.lt(resolutionsList.get(i)+1).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(DONE)))))));
 				}
 				metric.put("Resolution Strategy", key);
 				defectsByResolution.add(metric);
-				defectsByResolutionDetails.put("Range"+(i+1), defectsByResolution);
+				fixedDefectsByResolution.put("Range"+(i+1), defectsByResolution);
 			}else{
 				String key="between"+(resolutionsList.get(i-1)+1)+"to"+resolutionsList.get(i)+"days";
 				List<Map<String,String>> defectsByResolution= new ArrayList<Map<String,String>>();
 				for(String priorityKey: defectPriorities){
 					
-					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.between(resolutionsList.get(i-1)+1 ,resolutionsList.get(i) ).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.between(resolutionsList.get(i-1)+1 ,resolutionsList.get(i) ).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(DONE)))))));
 					
 				}
 				metric.put("Resolution Strategy", key);
 				defectsByResolution.add(metric);
 				
-				defectsByResolutionDetails.put("Range"+(i+1), defectsByResolution);
+				fixedDefectsByResolution.put("Range"+(i+1), defectsByResolution);
 				}
 			
 			}
@@ -544,26 +538,27 @@ public class StoryDataClientImpl implements StoryDataClient {
 			List<Map<String,String>> defectsByResolutionMorethanUpperLimit= new ArrayList<Map<String,String>>();
 			Map<String,String> metricsAfterUpperLimit= new HashMap<String,String>();
 			for(String priorityKey: defectPriorities){
-				metricsAfterUpperLimit.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.gt(resolutionsList.get(resolCount-1)).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+				metricsAfterUpperLimit.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays.gt(resolutionsList.get(resolCount-1)).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(DONE)))))));
 			}
 			metricsAfterUpperLimit.put("Resolution Strategy", keyAfterUpperLimit);
 			defectsByResolutionMorethanUpperLimit.add(metricsAfterUpperLimit);
-			defectsByResolutionDetails.put("Range"+(resolCount+1), defectsByResolutionMorethanUpperLimit);
-			if(!defectsByResolutionDetails.isEmpty()){
-				aggregation.setDefectsByResolutionDetails(defectsByResolutionDetails);
+			fixedDefectsByResolution.put("Range"+(resolCount+1), defectsByResolutionMorethanUpperLimit);
+			if(!fixedDefectsByResolution.isEmpty()){
+				aggregation.setDefectsByResolutionDetails(fixedDefectsByResolution);
 			}
 	}
 	private void processDefectsByDefectAge(DefectAggregation aggregation,Scope scopeProject){
 		List<Integer> defectAgeList= new ArrayList<Integer>();
 		for (int i=0;i<featureSettings.getDefectAge().length;i++){
 			try{
-				defectAgeList.add(Integer.parseInt(featureSettings.getDefectAge()[i]));
+				if(!defectAgeList.contains(featureSettings.getDefectAge()[i]))
+					defectAgeList.add(Integer.parseInt(featureSettings.getDefectAge()[i]));
 			}catch (Exception e) {
 				LOGGER.debug(e.getMessage());
 			}
 		}
 		Collections.sort(defectAgeList);
-		Map<String, List<Map<String,String>>> defectsByAgeDetails=new LinkedHashMap<String, List<Map<String,String>>>();
+		Map<String, List<Map<String,String>>> openDefectsByAge=new LinkedHashMap<String, List<Map<String,String>>>();
 		
 		boolean firstIndex=true;
 		int resolCount=defectAgeList.size();
@@ -579,23 +574,23 @@ public class StoryDataClientImpl implements StoryDataClient {
 				firstIndex=false;
 				List<Map<String,String>> defectsByAge= new ArrayList<Map<String,String>>();
 				for(String priorityKey: defectPriorities){
-					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.lt(defectAgeList.get(i)+1).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.lt(defectAgeList.get(i)+1).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(IN_PROGRESS)))))));
 				}
 				metric.put("Defect Age Strategy", key);
 				defectsByAge.add(metric);
-				defectsByAgeDetails.put("Range"+(i+1), defectsByAge);
+				openDefectsByAge.put("Range"+(i+1), defectsByAge);
 			}else{
 				String key="between"+(defectAgeList.get(i-1)+1)+"to"+defectAgeList.get(i)+"days";
 				List<Map<String,String>> defectsByAge= new ArrayList<Map<String,String>>();
 				for(String priorityKey: defectPriorities){
 					
-					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.between(defectAgeList.get(i-1)+1 ,defectAgeList.get(i) ).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+					metric.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.between(defectAgeList.get(i-1)+1 ,defectAgeList.get(i) ).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(IN_PROGRESS)))))));
 					
 				}
 				metric.put("Defect Age Strategy", key);
 				defectsByAge.add(metric);
 				
-				defectsByAgeDetails.put("Range"+(i+1), defectsByAge);
+				openDefectsByAge.put("Range"+(i+1), defectsByAge);
 				}
 			
 			}
@@ -603,15 +598,16 @@ public class StoryDataClientImpl implements StoryDataClient {
 			List<Map<String,String>> defectsByAgeMorethanUpperLimit= new ArrayList<Map<String,String>>();
 			Map<String,String> metricsAfterUpperLimit= new HashMap<String,String>();
 			for(String priorityKey: defectPriorities){
-				metricsAfterUpperLimit.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.gt(defectAgeList.get(resolCount-1)).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
+				metricsAfterUpperLimit.put(priorityKey, (String.valueOf(defectRepository.count(QDefect.defect.defectAge.gt(defectAgeList.get(resolCount-1)).and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()).and(QDefect.defect.defectStatus.equalsIgnoreCase(IN_PROGRESS)))))));
 			}
 			metricsAfterUpperLimit.put("Defect Age Strategy", keyAfterUpperLimit);
 			defectsByAgeMorethanUpperLimit.add(metricsAfterUpperLimit);
-			defectsByAgeDetails.put("Range"+(resolCount+1), defectsByAgeMorethanUpperLimit);
-			if(!defectsByAgeDetails.isEmpty()){
-				aggregation.setDefectsByAgeDetails(defectsByAgeDetails);
+			openDefectsByAge.put("Range"+(resolCount+1), defectsByAgeMorethanUpperLimit);
+			if(!openDefectsByAge.isEmpty()){
+				aggregation.setDefectsByAgeDetails(openDefectsByAge);
 			}
 	}
+
 	
 	
 }
