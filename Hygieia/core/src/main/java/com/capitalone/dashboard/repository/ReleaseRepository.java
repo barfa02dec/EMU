@@ -21,17 +21,17 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.repository.CrudRepository;
 
-import com.capitalone.dashboard.model.Sprint;
+import com.capitalone.dashboard.model.Release;
 
 /**
  * Repository for {@link FeatureCollector}.
  */
-public interface SprintRepository extends CrudRepository<Sprint, ObjectId>,
-		QueryDslPredicateExecutor<Sprint>, SprintRepositoryCustom {
+public interface ReleaseRepository extends CrudRepository<Release, ObjectId>,
+		QueryDslPredicateExecutor<Release>, ReleaseRepositoryCustom {
 
-	 	@Query(value = "{ 'sid' : ?0 }")
-	    Sprint findBySprintId(Long id);
+	 	@Query(value = "{ 'releaseId' : ?0 }")
+	 	Release findByReleaseId(Long id);
 	 	@Query(value = "{ 'projectId' : ?0 }")
-	    Iterable<Sprint> findByProjectId(String projectId);
+	 	Iterable<Release> findByProjectId(String projectId);
 	
 }
