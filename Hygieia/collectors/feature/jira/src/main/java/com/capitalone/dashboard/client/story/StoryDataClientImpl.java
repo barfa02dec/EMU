@@ -242,7 +242,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		
 		// get the details of the sprint for recent sprint and for remaining, don't fetch the data.
 		//As the sprints grownup, we will get recent all sprints in 4-5 iterations. 
-		if(sprintsJira.isEmpty() && null!=sprintsJira.get(0))
+		if(!sprintsJira.isEmpty() && null!=sprintsJira.get(0))
 		{
 			JiraCollectorUtil.getRecentSprintMetrics(sprintsJira.get(0), projectId, featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(), featureSettings.getRapidView());
 		}
