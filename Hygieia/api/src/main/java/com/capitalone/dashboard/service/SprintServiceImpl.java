@@ -2,7 +2,6 @@ package com.capitalone.dashboard.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.capitalone.dashboard.model.Sprint;
 import com.capitalone.dashboard.repository.SprintRepository;
 @Service
@@ -17,7 +16,7 @@ public class SprintServiceImpl implements SprintService {
 
 	@Override
 	public Iterable<Sprint> getAllSprints(String projectId) {
-		return repository.findAll();
+		return repository.findByProjectId(projectId);
 	}
 
 	@Override
