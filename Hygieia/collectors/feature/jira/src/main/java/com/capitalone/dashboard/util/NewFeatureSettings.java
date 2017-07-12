@@ -50,6 +50,16 @@ public class NewFeatureSettings {
 	private String jiraProxyUrl;
 	private String jiraProxyPort;
 	private String rapidView;
+	private int noOfSprintsToShow;
+	
+	public int getNoOfSprintsToShow() {
+		return noOfSprintsToShow;
+	}
+
+	public void setNoOfSprintsToShow(int noOfSprintsToShow) {
+		this.noOfSprintsToShow = noOfSprintsToShow;
+	}
+
 	public String getRapidView() {
 		return rapidView;
 	}

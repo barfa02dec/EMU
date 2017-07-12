@@ -239,13 +239,17 @@ public class StoryDataClientImpl implements StoryDataClient {
 	
 	public void saveDetailedSprintData(String projectId){
 		List<JiraSprint> sprintsJira= JiraCollectorUtil.getSprintList(projectId, featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials());
-		
-		// get the details of the sprint for recent sprint and for remaining, don't fetch the data.
-		//As the sprints grownup, we will get recent all sprints in 4-5 iterations. 
-		if(!sprintsJira.isEmpty() && null!=sprintsJira.get(0))
-		{
-			JiraCollectorUtil.getRecentSprintMetrics(sprintsJira.get(0), projectId, featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(), featureSettings.getRapidView());
+		int sprintsCount=featureSettings.getNoOfSprintsToShow();
+		int index=0;
+		int sprintIndexesAvaialble=sprintsJira.size()-1;
+		if(!sprintsJira.isEmpty()){
+			while(sprintsCount>0 && index<=sprintIndexesAvaialble){
+				JiraCollectorUtil.getRecentSprintMetrics(sprintsJira.get(index), projectId, featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(), featureSettings.getRapidView());
+				index++;
+				sprintsCount--;
+			}
 		}
+		
 		
 		mapJiraSprintToHygieiaModel(sprintsJira,projectId);
 		
@@ -255,6 +259,19 @@ public class StoryDataClientImpl implements StoryDataClient {
 	public void saveDetailedReleaseData(String projectId){
 		
 		List<JiraVersion>  jiraVersions=JiraCollectorUtil.getVersionsFromJira(projectId, featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(),featureSettings.getRapidView());
+		//using same parameter to limit the no of sprints as well as releases.
+		int releasesCount=featureSettings.getNoOfSprintsToShow();
+		int index=0;
+		int releaseIndexesAvailable=jiraVersions.size()-1;
+		if(!jiraVersions.isEmpty()){
+			while(releasesCount>0 && index<=releaseIndexesAvailable){
+				String detailedVersionMetrics=JiraCollectorUtil.getVersionDetailsFromJira(featureSettings.getRapidView(),jiraVersions.get(index).getId(), featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials());
+				jiraVersions.get(index).setVersionData(JiraCollectorUtil.getReleaseData(detailedVersionMetrics, projectId, featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(), featureSettings.getRapidView()));
+				releasesCount--;
+				index++;
+			}
+		}
+	
 		List<Release> releaseList=new ArrayList<Release>();
 		for(JiraVersion jv: jiraVersions ){
 			Release release=releaseRepository.findOne(QRelease.release.releaseId.eq(jv.getId()));
