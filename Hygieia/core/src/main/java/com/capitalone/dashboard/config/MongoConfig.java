@@ -1,9 +1,9 @@
 package com.capitalone.dashboard.config;
 
-import com.capitalone.dashboard.repository.RepositoryPackage;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoCredential;
-import com.mongodb.ServerAddress;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,16 +15,18 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.capitalone.dashboard.repository.RepositoryPackage;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 
 @Component
 @EnableMongoRepositories(basePackageClasses = RepositoryPackage.class)
 public class MongoConfig extends AbstractMongoConfiguration {
     private static final Logger LOGGER = LoggerFactory.getLogger(MongoConfig.class);
 
-    @Value("${dbname:dashboard}")
+    @Value("${database}")
     private String databaseName;
     @Value("${dbhost:localhost}")
     private String host;
@@ -76,17 +78,23 @@ public class MongoConfig extends AbstractMongoConfiguration {
         } else {
             ServerAddress serverAddr = new ServerAddress(host, port);
             LOGGER.info("Initializing Mongo Client server at: {}", serverAddr);
-            if (StringUtils.isEmpty(userName)) {
-                client = new MongoClient(serverAddr);
-            } else {
-                MongoCredential mongoCredential = MongoCredential.createScramSha1Credential(
+            MongoClientOptions.Builder options = new MongoClientOptions.Builder();
+            options.socketTimeout(1500);
+            options.socketKeepAlive(true);
+            options.maxWaitTime(1500);
+            options.maxConnectionIdleTime(1000);
+            MongoClientOptions mongoDBOptions = options.build();
+            if (!StringUtils.isEmpty(userName) && !StringUtils.isEmpty(password)) {
+            	
+            	MongoCredential mongoCredential = MongoCredential.createScramSha1Credential(
                         userName, databaseName, password.toCharArray());
-                client = new MongoClient(serverAddr, Collections.singletonList(mongoCredential));
-            }
+                client = new MongoClient(serverAddr, Collections.singletonList(mongoCredential),mongoDBOptions);
+                LOGGER.info("Connecting to Mongo: {}", client);
+                return client;
+              } 
 
         }
-        LOGGER.info("Connecting to Mongo: {}", client);
-        return client;
+        return null;
     }
 
     @Override
