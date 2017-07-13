@@ -40,68 +40,86 @@ public class JiraCollectorUtil {
 	
 	
 	public static String getDefectsFound(String projectId, String startdate, String enddate,String baseUrl,String base64Credentials) {
-		String query = String.format(GET_DEFECTS_CREATED, projectId, startdate,enddate);
-		query=baseUrl+query;
-		HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> result = restTemplate.exchange(query
-				, HttpMethod.GET, entity, String.class);
-		return result.getBody();
+		try{
+			String query = String.format(GET_DEFECTS_CREATED, projectId, startdate,enddate);
+			query=baseUrl+query;
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+					, HttpMethod.GET, entity, String.class);
+			return result.getBody();
+		}catch (Exception e) {
+			return null;
+		}
 	}
 
 	public static String getDefectResolved(String projectId, String startdate,String enddate,String baseUrl,String base64Credentials) {
-		String query = String.format(GET_DEFECTS_RESOLVED, projectId, startdate, enddate);
-		query=baseUrl+query;
-		HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> result = restTemplate.exchange(query
-				, HttpMethod.GET, entity, String.class);
-		return result.getBody();
+		try{
+			String query = String.format(GET_DEFECTS_RESOLVED, projectId, startdate, enddate);
+			query=baseUrl+query;
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+					, HttpMethod.GET, entity, String.class);
+			return result.getBody();
+		}catch (Exception e) {
+			return null;
+		}
 	}
 
 	public static String getDefectUnresolved(String projectId, String startdate,String enddate,String baseUrl,String base64Credentials) {
-		String query = String.format(GET_DEFECTS_UNRESOLVED, projectId, startdate, enddate);
-		query=baseUrl+query;
-		HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> result = restTemplate.exchange(query
-				, HttpMethod.GET, entity, String.class);
-		return result.getBody();
+		try{
+			String query = String.format(GET_DEFECTS_UNRESOLVED, projectId, startdate, enddate);
+			query=baseUrl+query;
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+					, HttpMethod.GET, entity, String.class);
+			return result.getBody();
+		}catch (Exception e) {
+			return null;
+		}
 	}
 	
 	public static List<JiraVersion>  getVersionsFromJira(String projectId,String baseUrl,String base64Credentials,String rapidViewId) {
-		String query = String.format(GET_PROJECT_VERSIONS, projectId);
-		query=baseUrl+query;
-		HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> result = restTemplate.exchange(query
-				, HttpMethod.GET, entity, String.class);
-		String versionJosn= result.getBody();
-		JsonArray sprintArray = new GsonBuilder().create().fromJson(versionJosn, JsonArray.class);
-		
-		List<JiraVersion> versions = new ArrayList<JiraVersion>();
-		if(sprintArray != null && sprintArray.size() > 0){
-			for(int count = 0; count <  sprintArray.size() ; count++){
-				versions.add(new Gson().fromJson(sprintArray.get(count), JiraVersion.class));
+		try{
+			String query = String.format(GET_PROJECT_VERSIONS, projectId);
+			query=baseUrl+query;
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+					, HttpMethod.GET, entity, String.class);
+			String versionJosn= result.getBody();
+			JsonArray sprintArray = new GsonBuilder().create().fromJson(versionJosn, JsonArray.class);
+			
+			List<JiraVersion> versions = new ArrayList<JiraVersion>();
+			if(sprintArray != null && sprintArray.size() > 0){
+				for(int count = 0; count <  sprintArray.size() ; count++){
+					versions.add(new Gson().fromJson(sprintArray.get(count), JiraVersion.class));
+				}
 			}
+			Collections.sort(versions);
+			return versions;
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<JiraVersion>();
 		}
-		Collections.sort(versions);
-		if(!versions.isEmpty() && null!=versions.get(0)){
-				String detailedVersionMetrics=getVersionDetailsFromJira(rapidViewId,versions.get(0).getId(), baseUrl, base64Credentials);
-				versions.get(0).setVersionData(getReleaseData(detailedVersionMetrics, projectId, baseUrl, base64Credentials, rapidViewId));
-		}
-		return versions;
 	}
 	
 	public static  String getVersionDetailsFromJira(String boardId, Long versionId,String baseUrl,String base64Credentials){
-		String query = String.format(GET_PROJECT_VERSION, boardId, versionId);
-		query=baseUrl+query;
-		HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> result = restTemplate.exchange(query
-				, HttpMethod.GET, entity, String.class);
-		String versionJosn= result.getBody();
-		return versionJosn;
+		try{
+			String query = String.format(GET_PROJECT_VERSION, boardId, versionId);
+			query=baseUrl+query;
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+					, HttpMethod.GET, entity, String.class);
+			String versionJosn= result.getBody();
+			return versionJosn;
+		}catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
 	}
 	
 	private static HttpHeaders getHeader(String base64Credentials) {
@@ -112,25 +130,30 @@ public class JiraCollectorUtil {
 	}
 	
 	public static List<JiraSprint> getSprintList(String projectId,String baseUrl,String base64Credentials){
-		String query =baseUrl+String.format(GET_PROJECT_SPRINTS, projectId);
-		
-		HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+		try{
+			String query =baseUrl+String.format(GET_PROJECT_SPRINTS, projectId);
+			
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
 
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> result = restTemplate.exchange(query
-		, HttpMethod.GET, entity, String.class);
-		String sprints=result.getBody();
-		JsonArray sprintArray = new GsonBuilder().create().fromJson(sprints, JsonObject.class).getAsJsonArray("sprints");
-		List<JiraSprint> sprintsJira = new ArrayList<JiraSprint>();
-		if (sprintArray != null && sprintArray.size() > 0) {
-			for (int count = 0; count < sprintArray.size(); count++) {
-				JiraSprint jsprint=new Gson().fromJson(sprintArray.get(count),JiraSprint.class);
-				sprintsJira.add(jsprint);
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+			, HttpMethod.GET, entity, String.class);
+			String sprints=result.getBody();
+			JsonArray sprintArray = new GsonBuilder().create().fromJson(sprints, JsonObject.class).getAsJsonArray("sprints");
+			List<JiraSprint> sprintsJira = new ArrayList<JiraSprint>();
+			if (sprintArray != null && sprintArray.size() > 0) {
+				for (int count = 0; count < sprintArray.size(); count++) {
+					JiraSprint jsprint=new Gson().fromJson(sprintArray.get(count),JiraSprint.class);
+					sprintsJira.add(jsprint);
+				}
 			}
+			Collections.sort(sprintsJira);
+			
+			return sprintsJira;
+		}catch (Exception e) {
+			// TODO: handle exception
+			return new ArrayList<JiraSprint>();
 		}
-		Collections.sort(sprintsJira);
-		
-		return sprintsJira;
 	}
 	
 	public static void getRecentSprintMetrics(JiraSprint jiraSprint, String projectId,String baseUrl,String base64Credentials,String rapidViewId){
@@ -143,6 +166,7 @@ public class JiraCollectorUtil {
 		String endDate=DateUtil.format(	jiraSprint.getSprintData().getEndDate(),"yyyy/MM/dd HH:mm");
 		// Get created defects
 		String json = JiraCollectorUtil.getDefectsFound(projectId,startDate,endDate,baseUrl,base64Credentials);
+		if(null==json) return;
 		issues = DefectUtil.parseDefectsJson(json);	
 		jiraSprint.getSprintData().setDefectsFound(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 		
@@ -157,7 +181,7 @@ public class JiraCollectorUtil {
 		jiraSprint.getSprintData().setDefectsUnresolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 		
 	}
-	private static VersionData getReleaseData(String versionJson, String projectId ,String baseUrl,String base64Credentials,String rapidViewId){
+	public static VersionData getReleaseData(String versionJson, String projectId ,String baseUrl,String base64Credentials,String rapidViewId){
 		
 		VersionData versionData = parseToVersionData(versionJson);
 		
@@ -169,6 +193,7 @@ public class JiraCollectorUtil {
 			String endDate=DateUtil.format(versionData.getReleaseDate(), "yyyy/MM/dd HH:mm");
 			//Get created defects 
 			String json = getDefectsFound(projectId, startDate,endDate,baseUrl,base64Credentials);
+			if(null==json) return versionData;
 			issues = DefectUtil.parseDefectsJson(json);
 			versionData.setDefectsFound(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 			
@@ -187,13 +212,18 @@ public class JiraCollectorUtil {
 	}
 	
 	private static String fectSprintMetrcis(String projectId, Long sprintId,String baseUrl,String base64Credentials, String rapidViewId){
-		String query = String.format(GET_PROJECT_SPRINT_DETAILS, StringUtils.trimWhitespace(rapidViewId), sprintId);
-		query=baseUrl+query;
-		HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> result = restTemplate.exchange(query
-				, HttpMethod.GET, entity, String.class);
-		return result.getBody();
+		try{
+			String query = String.format(GET_PROJECT_SPRINT_DETAILS, StringUtils.trimWhitespace(rapidViewId), sprintId);
+			query=baseUrl+query;
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+					, HttpMethod.GET, entity, String.class);
+			return result.getBody();
+		}catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
 		
 	}
 	

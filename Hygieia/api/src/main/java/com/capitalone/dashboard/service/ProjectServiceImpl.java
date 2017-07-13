@@ -108,7 +108,7 @@ public class ProjectServiceImpl implements ProjectService {
 	public Iterable<Project> getProjectsOwnedByUser(String username) {
 		Set<Project> userProjects=new HashSet<Project>();
 		for(Project project: projectRepository.findAll()){
-			if(null!=project.getProjectUsersList() && project.getProjectUsersList().contains(username)){
+			if(null!=project.getProjectUsersList() && project.getProjectUsersList().contains(username) && project.isProjectStatus()){
 				userProjects.add(project);
 			}
 		}

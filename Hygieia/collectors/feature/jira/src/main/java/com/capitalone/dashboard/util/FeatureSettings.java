@@ -58,9 +58,17 @@ public class FeatureSettings {
 	private List<String[]> resolutionPeriod;
 	private List<String[]> defectAge;
 	private List<String> rapidView;
+	private int noOfSprintsToShow;
 	
-	
-	
+		
+	public int getNoOfSprintsToShow() {
+		return noOfSprintsToShow;
+	}
+
+	public void setNoOfSprintsToShow(int noOfSprintsToShow) {
+		this.noOfSprintsToShow = noOfSprintsToShow;
+	}
+
 	public List<String> getRapidView() {
 		return rapidView;
 	}
