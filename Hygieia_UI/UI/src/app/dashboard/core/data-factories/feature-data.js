@@ -47,7 +47,8 @@
 			teamsByCollectorId : teamsByCollectorId,
 			projects : projects,
 			projectsByCollectorId : projectsByCollectorId,
-			sprintDta:sprintDataFetch
+			sprintDta:sprintDataFetch,
+			ReleaseData:ReleaseDataFetch
 		};
 		
 		function aggregateSprintEstimates(componentId, filterTeamId, filterProjectId, estimateMetricType, agileType) {
@@ -69,6 +70,14 @@
 		function sprintDataFetch(filterProjectId) {  
 			 
 			return $http.get('http://localhost:3000/api/listAllSprints?projectId=' +filterProjectId)
+					.then(function(response) { 
+						return response.data;
+					});
+		}
+
+		function ReleaseDataFetch(filterProjectId) {  
+			 
+			return $http.get('http://localhost:3000/api/projectReleaseList?projectId=' +filterProjectId)
 					.then(function(response) { 
 						return response.data;
 					});

@@ -10,7 +10,6 @@
     function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore) {
         var ctrl = this;
         ctrl.usernamepro = $cookies.get('username');
-        
         ctrl.showAddPopUpBox = false;
         ctrl.editorEnabled = false;
         ctrl.title = "THB";
@@ -36,12 +35,10 @@
         function processCaResponse(response) {
             ctrl.getAllProjects = response.data;
             //response.data.projectName;
-}
+        }
 
-
+        //open create Project Modal
         ctrl.createDashboard = function () {
-
-
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/createProject.html',
                 controller: postProjetController,
@@ -49,9 +46,9 @@
                 backdrop: 'static'
             });
         }
+
+        //open create Project Modal
         ctrl.shareProjectPopUp = function () {
-
-
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/shareProject.html',
                 controller: 'projectMapController',
@@ -59,26 +56,22 @@
             });
         }
 
+        //Enable Edit
         ctrl.enableEditor = function (vall) {
-            console.log(ctrl.getAllProjects);
-
             angular.forEach(ctrl.getAllProjects, function (value, key) {
                 if (value.id === vall) {
                     value.editorEnabled = true;
-                    //value.editableTitle = value.projectName;
-
                 }
             });
 
         };
 
+        //Disable Edit
         ctrl.disableEditor = function () {
             ctrl.editorEnabled = false;
         };
-
         
-
-
+        //Edit Project 
         ctrl.editproject = function (info) {
             info.editorEnabled = false;
             console.log(info);
@@ -96,15 +89,25 @@
                     })
                 }
                 else {
-                    alert("Fields should have more than 2 characters");
+                   $uibModal.open({
+                            templateUrl: 'app/dashboard/views/validationminlength.html',
+                            controller: 'projectMapController',
+                            controllerAs: 'pm'
+                        });
                     info.editorEnabled = true;
 
                 }
             } else {
-                alert("Fields cannot be empty");
+                $uibModal.open({
+                            templateUrl: 'app/dashboard/views/validationrequiredmessage.html',
+                            controller: 'projectMapController',
+                            controllerAs: 'pm'
+                        });
                 info.editorEnabled = true;
             }
         }
+
+        //logout functionality
         ctrl.logout = function () {
             $cookieStore.remove("username");
             $cookieStore.remove("authenticated");
@@ -112,12 +115,10 @@
         };
 
 
-
+        //Open Delete Project Modal
         ctrl.deleteProjectModel = function (pro) {
             console.log(pro);
             ctrl.proData = pro;
-
-
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/deleteModel.html',
                 controller: delProjetController,
@@ -127,17 +128,13 @@
                         return pro.id;
                     }
                 }
-
-            });
+             });
         }
 
+        //Delete Project Functionality
         function delProjetController($uibModalInstance, pid, $route) {
-
-            var dpmObj = this;
-
-            dpmObj.deleteProjects = function (pro) {
-
-
+                var dpmObj = this;
+                dpmObj.deleteProjects = function (pro) {
                 $http.delete(apiHost + '/api//deleteProject/' + pid).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
@@ -150,16 +147,13 @@
             };
         }
 
-
+        //Create Project Functionality
         function postProjetController($uibModalInstance, $http, $route, $timeout, $scope,$cookies) {
-           
-       
-            var dpmObjpos = this;
-             dpmObjpos.usernamepro = $cookies.get('username');
-            dpmObjpos.payl = {
+                var dpmObjpos = this;
+                dpmObjpos.usernamepro = $cookies.get('username');
+                dpmObjpos.payl = {
                 "projectId": ctrl.projectId,
                 "projectName": ctrl.projectName,
-
                 "projectOwner": ctrl.projectOwner,
                 "client": ctrl.client,
                 "businessUnit": ctrl.businessUnit,
@@ -167,11 +161,9 @@
                 "projectUsersList":[dpmObjpos.usernamepro]
             }
             dpmObjpos.postProject = function () {
-
                 var apiHost = 'http://localhost:3000';
                 if (dpmObjpos.createProModel.$valid == true) {
                     $http.post(apiHost + '/api/createProject ', (dpmObjpos.payl)).then(function (response) {
-
                         $route.reload();
                         $uibModalInstance.dismiss("cancel");
                         $uibModal.open({
@@ -179,45 +171,20 @@
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
-
-
                     })
                 } else {
-                    $scope.errormsg = "Please fill the required fields";
-                    $timeout(function () {
-                        $scope.errormsg = "";
-                    }, 3000);
-                }
+                    }
 
             };
         }
 
+        //Show List of Dashboards Page for that particular project
         $scope.showDahboardPage = function (ProId) {
             $http.get(apiHost + '/api/dashboard/projectdashboard?projectId=' + ProId)
                 .then(function () {
-
-
-                });
+            });
             $location.path('/site/');
             $cookies.put('ProId', ProId);
-            /*$timeout(function(){
-                $rootScope.ProId = ProId;
-            $rootScope.$broadcast("ProId", ProId);
-            })*/
         }
-
-        /*var apiHost = 'http://localhost:3000';
-        var qahost = 'http://10.20.1.183:3000';
-       
-        $http.get(apiHost + "/api//dashboard/projectdashboard?projectId=5941ed365785b2317c927fb4")
-            .then(showDahboardPage);
-
-        
-        function showDahboardPage(response) {
-            ctrl.getAlldashboard = response.data;
-            
-
-        }*/
-
     }
 })();

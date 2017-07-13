@@ -115,5 +115,7 @@
         function isTeamDashboardSelected() {
             return ctrl.dashboardType && ctrl.dashboardType.id == DashboardType.TEAM;
         }
+
+        
     }
 })();

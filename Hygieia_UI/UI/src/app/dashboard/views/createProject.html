@@ -1,69 +1,101 @@
-<div class="create-project-container">
-    <div class="col-md-12">
-        <div class="top-nav-bar" style="height: 40px;background:#fff;">
-            <div class="col-md-5"></div>
-            <div class="col-md-4" style="color:#000;;padding-top: 1.6%;">Add Project</div>
-            <div class="col-md-3"></div>
-        </div>
-    </div>
-    <div class="col-md-12" >
-        <div class="content-create" style="background:#fff;height: 410px;">
-            <div class="col-md-2"></div>
-            <div class="col-md-8" style="padding-top: 5%;">
-                <div>
-                    <form class="form-horizontal" name="cpr.createProModel">
-                        <div class="form-group">
-                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Project ID<span style="color:red;">*</span></label>
-                            <div class="col-sm-8">          
-                                <input type="text" class="form-control" id="pwd"  name="pwd" minlength="3" maxlength="40" placeholder="Type in the new Project ID" ng-model="cpr.payl.projectId" style="border-radius: 0px; " required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Project Name<span style="color:red;">*</span></label>
-                            <div class="col-sm-8">          
-                                <input type="text" class="form-control" minlength="3" maxlength="40" placeholder="Type in the new Project Name" id="pwd" ng-model="cpr.payl.projectName"  name="pwd" style="border-radius: 0px;" required>
-                            </div>
-                        </div>
-                         <div class="form-group">
-                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Line of BU<span style="color:red;">*</span></label>
-                            <div class="col-sm-8">          
-                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Enter the LOB" ng-model="cpr.payl.businessUnit"  name="pwd" style="border-radius: 0px;" required>
-                            </div>
-                        </div>
+<widget-modal widget-modal-title="Create New Project" style="background:#fff;" >
+<form class="form-horizontal" name="cpr.createProModel" ng-submit="cpr.postProject();" name="formname" novalidate >
+                    <label class="control-label col-sm-4 createproj-label-props" for="pwd">Project ID</label>
+                         <form-group input="projid" errors="{required: 'Project ID is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                          
+            <input
+                type="text"
+                name="projid"
+                class="form-control create-project-inputboxes"
+                placeholder="Type in the Project ID"
+                ng-model="cpr.payl.projectId"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group>
+                       
+                          <label class="control-label col-sm-4 createproj-label-props" for="pwd">Project Name</label>
+                              <form-group input="projname" errors="{required: 'Project Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                         
+            <input
+                type="text"
+                name="projname"
+                class="form-control create-project-inputboxes"
+                placeholder="Type in the new Project Name"
+                ng-model="cpr.payl.projectName"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group>
+                       
+                          <label class="control-label col-sm-4 createproj-label-props" for="pwd">BU</label>
+                                  <form-group input="projBU" errors="{required: 'BU is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                         
+            <input
+                type="text"
+                name="projBU"
+                class="form-control create-project-inputboxes"
+                placeholder="Enter the LOB"
+                ng-model="cpr.payl.businessUnit"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group>
                        
 
-                        <div class="form-group">
-                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Project Owner<span style="color:red;">*</span></label>
-                            <div class="col-sm-8">          
-                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Enter the Project Owner" ng-model="cpr.payl.projectOwner"  name="pwd" style="border-radius: 0px;" required>
-                            </div>
-                        </div>
                       
-                        <div class="form-group">
-                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Program</label>
-                            <div class="col-sm-8">          
-                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" placeholder="Type in the Program" ng-model="cpr.payl.program"  name="pwd" style="border-radius: 0px;">
-                            </div>
-                        </div>
-                         <div class="form-group">
-                            <label class="control-label col-sm-4" for="pwd" style="font-weight: 400;font-size: 13px;">Customer Name<span style="color:red;">*</span></label>
-                            <div class="col-sm-8">          
-                                <input type="text" class="form-control" minlength="3" maxlength="40" id="pwd" ng-model="cpr.payl.client" placeholder="Type in the Customer Name"  name="pwd" style="border-radius: 0px;" required>
-                            </div>
-                        </div>
+                           <label class="control-label col-sm-4 createproj-label-props" for="pwd">Owner</label>
+                         <form-group input="projowner" errors="{required: 'Owner is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                        
+            <input
+                type="text"
+                name="projowner"
+                class="form-control create-project-inputboxes"
+                placeholder="Enter the Project Owner"
+                ng-model="cpr.payl.projectOwner"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group>
+                     
+                         <label class="control-label col-sm-4 createproj-label-props" for="pwd">Program</label>
+                           <form-group input="projprogname">
+                          
+            <input
+                type="text"
+                name="projprogname"
+                class="form-control create-project-inputboxes"
+                placeholder="Type in the Program"
+                ng-model="cpr.payl.program"
+                
+                autocomplete="off"
+                
+                 />
+        </form-group>
+                       
+                            <label class="control-label col-sm-4 createproj-label-props" for="pwd">Customer Name</label>
+                         <form-group input="projcusname" errors="{required: 'Customer Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                       
+            <input
+                type="text"
+                name="projcusname"
+                class="form-control create-project-inputboxes"
+                placeholder="Type in the Customer Name"
+                ng-model="cpr.payl.client"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group>
                         <div class="form-group" style="padding-top: 3%;padding-left: 17%;">
                            
-                             <input type="button" name="" class="btn btn-default" value="Cancel" style="width: 40%;color: #000;border:none;border-radius: 2px;height: 30px;background:#fff;box-shadow:none;border:1px solid #cccccc;" ng-click="$close()">
-                              <input type="submit" class="btn btn-raised btn-success" name="" value="Add" style="width: 40%;color: #fff;border:none;border-radius: 2px;height: 30px;margin-left: 20px;" ng-click="cpr.postProject();">
-                <span class="{{errmsgclass}}" style="text-align: center;
-    display: inline-block;
-    padding-top: 16px;
-    color: red;">{{errormsg}}</span>
+                             <input type="button" name="" class="btn btn-default white-cancel-btn" value="Cancel"  ng-click="$close()">
+                              <button type="submit" class="btn btn-raised btn-success green-btn-props" name=""  style="margin-left: 20px;" >Add</button>
+              
                         </div>
                     </form>
-                </div>
-            </div>
-            <div class="col-md-3"></div>
-        </div>
-    </div>
-</div>
+</widget-modal>

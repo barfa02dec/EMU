@@ -205,6 +205,75 @@
             console.log("size after reduction  is:" + uniqueArray.length);
             ctrl.dashboards = uniqueArray;
         }
+
+         ctrl.deleteDashboardModel = function (myitem) {
+           
+            ctrl.dashdataData = myitem;
+
+
+            $uibModal.open({
+                templateUrl: 'app/dashboard/views/deleteDahboardPopup.html',
+                controller: deleteDahboardPopupController,
+                controllerAs: 'dppc',
+                resolve: {
+                    dashid: function () {
+                        return myitem.id;
+                    }
+                }
+
+            });
+        }
+
+
+        /* function deleteDahboardPopupController($uibModalInstance, dashid, $route,dashboardData) {
+
+             var dpmObjs = this;
+            var id = dashid;
+             dashboardData.search().then(processDashboardResponse, processDashboardError);
+
+              function processDashboardResponse(data) {
+            // add dashboards to list
+            var id = data.id;
+            dpmObjs.dashboards = [];
+            var dashboards = [];
+            for (var x = 0; x < data.length; x++) {
+                var board = {
+                    id: data[x].id,
+                    name: data[x].title,
+                    isProduct: data[x].type && data[x].type.toLowerCase() === DashboardType.PRODUCT.toLowerCase()
+                };
+
+                if(board.isProduct) {
+                    //console.log(board);
+                }
+                dashboards.push(board);
+            }
+
+            dpmObjs.dashboards = dashboards;
+        }
+
+         function processDashboardError(data,id) {
+            dpmObjs.dashboards = [];
+        }
+
+           dpmObjs.deletesubmit = function (id) {
+            dashboardData.delete(id).then(function () {
+                _.remove(dpmObjs.dashboards, {id: id});
+                _.remove(dpmObjs.mydash, {id: id});
+            }, function(response) {
+                var msg = 'An error occurred while deleting the dashboard';
+
+                if(response.status > 204 && response.status < 500) {
+                    msg = 'The Team Dashboard is currently being used by a Product Dashboard/s. You cannot delete at this time.';
+                }
+
+                swal(msg);
+            });
+        }
+
+           
+
+        }*/
     }
 
 

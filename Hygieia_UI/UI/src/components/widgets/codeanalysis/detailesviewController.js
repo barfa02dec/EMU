@@ -194,7 +194,10 @@
                     ctrl.complexityprop2 = ctrl.component6.datacom[1];
                     ctrl.complexityprop3 = ctrl.component6.datacom[2];
                     ctrl.complexityprop4 = ctrl.component6.datacom[3];
-                    console.log(ctrl.complexityprop4);
+                    //console.log(ctrl.complexityprop1);
+                    //console.log(ctrl.complexityprop2);
+                    console.log(ctrl.complexityprop3);
+                    //console.log(ctrl.complexityprop4);
                     ctrl.complexityNewObj.complexityNewArray.push(ctrl.complexityprop1);
                     ctrl.complexityNewObj.complexityNewArray.push(ctrl.complexityprop2);
                     ctrl.complexityNewObj.complexityNewArray.push(ctrl.complexityprop4);
@@ -312,14 +315,9 @@
             ctrl.component_list.push(ctrl.issueNewObj);
             ctrl.component_list.push(ctrl.testcoverageNewObj);
             ctrl.component_list.push(ctrl.qgateobj);
-            console.log(ctrl.component_list);
-            console.log(ctrl.component3.datasec);
-            console.log(ctrl.newObj);
+    }
 
-
-
-
-        }
+        //Navigate to Main Dashboard Page on click of breadcrumbs
         function openback() {
             ctrl.dashId = $cookies.get('dashboardidpa');
             $location.path('/dashboard/' + ctrl.dashId);

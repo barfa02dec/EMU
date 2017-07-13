@@ -469,6 +469,112 @@
         ctrl.stopTimeout();
       }
     };
+    ctrl.ppiidss = $cookies.get('projectIdd');
+    featureData.sprintDta(ctrl.ppiidss).then(sprintdataProcessMain);
+
+    function sprintdataProcessMain(data){
+      console.log(data);
+        console.log(data[0]);
+        console.log(data[1]);
+        var progress = ['Defect Closure'];
+        var comittedStoryPoints = ['committed Story Points'];
+        var completedStoryPoint = ['completed Story Points'];
+        var axisSprintName = [];
+        var axisSprintNameclos = [];
+        ctrl.defectsfound = data[0].sprintData.defectsFound.total;
+        ctrl.defectsResolved = data[0].sprintData.defectsResolved.total;
+       ctrl.defectsUnresolved = data[0].sprintData.defectsUnresolved.total;
+
+       ctrl.defectsfoundprev = data[1].sprintData.defectsFound.total;
+        ctrl.defectsResolvedprev = data[1].sprintData.defectsResolved.total;
+       ctrl.defectsUnresolvedprev = data[1].sprintData.defectsUnresolved.total;
+
+       ctrl.spname = data[0].name;
+       ctrl.sidd = data[0].sid;
+       ctrl.stat = data[0].sprintData.state;
+       ctrl.spname = data[0].sprintData.sprintName;
+
+       ctrl.spnameprev = data[1].name;
+       ctrl.siddprev = data[1].sid;
+       ctrl.statprev = data[1].sprintData.state;
+       ctrl.spnameprev = data[1].sprintData.sprintName; 
+
+       //ctrl.defectsfoundPrvSprint = data[1].sprintData.defectsFound.total;
+       //ctrl.defectsResolvedPrvSprint =data[1].sprintData.defectsResolved.total;
+       //ctrl.defectsUnresolvedPrvSprint =data[1].sprintData.defectsUnresolved.total;
+
+       //story count
+
+       ctrl.completedIssueCount = data[0].sprintData.completedIssueCount;
+       ctrl.committedIssueCount = data[0].sprintData.committedIssueCount;
+       ctrl.committedStoryPoints = data[0].sprintData.burndown.issuesAdded.count;
+       ctrl.completedStoryPoints = data[0].sprintData.burndown.issuesRemoved.count;
+
+       ctrl.completedIssueCountprev = data[1].sprintData.completedIssueCount;
+       ctrl.committedIssueCountprev = data[1].sprintData.committedIssueCount;
+       ctrl.committedStoryPointsprev = data[1].sprintData.burndown.issuesAdded.count;
+       ctrl.completedStoryPointsprev = data[1].sprintData.burndown.issuesRemoved.count;
+
+       for(var i=0;i<data.length;i++){
+          if(data[i].sprintData != undefined){
+              comittedStoryPoints.push(data[i].sprintData.committedStoryPoints)
+          }
+          
+       }
+       
+        for(var i=0;i<data.length;i++){
+           if(data[i].sprintData != undefined){
+               var percentScore =  Math.round((data[i].sprintData.completedStoryPoints/data[i].sprintData.committedStoryPoints)*100);
+               progress.push(percentScore);
+                axisSprintNameclos.push(data[i].name)
+
+           }
+        }
+
+         console.log(progress);
+       for(var i=0;i<data.length;i++){
+         
+              axisSprintName.push(data[i].name)
+          
+          
+       }
+       for(var i=0;i<data.length;i++){
+          if(data[i].sprintData != undefined){
+           
+              completedStoryPoint.push(data[i].sprintData.completedStoryPoints)
+          }
+          
+       }
+
+
+
+       $scope.sprintdatasFeature = c3.generate({
+                bindto: '#sprintdatasFeature', 
+                             
+                data: {
+                  columns: [
+                    comittedStoryPoints,completedStoryPoint
+                  ],
+                  type: 'area-spline'
+                },
+                legend: {
+        show: false
+    },
+
+                axis: {
+                    x:{
+                        type: 'category',
+                        categories: axisSprintName
+                    }
+                },
+                color: {
+                pattern: ['#CCEBF5', '#B7DBC4']
+            }
+  
+            });
+    }
+
+
   }
 })();
 

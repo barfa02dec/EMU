@@ -29,6 +29,7 @@
                 dashboardData
                     .rename(dashboardId, document.cdf.dashboardTitle.value)
                     .success(function (data) {
+                        
                         $uibModalInstance.close();
                         window.location.reload(false);
                 })

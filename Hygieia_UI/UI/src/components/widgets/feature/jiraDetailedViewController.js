@@ -11,126 +11,11 @@
         var ctrl = this;        
         ctrl.componentId = $routeParams.componentId;
         ctrl.openback = openback;
-        ctrl.logout = function () {
-            $cookieStore.remove("username");
-            $cookieStore.remove("authenticated");
-        $location.path('/');
-        };
-         function openback() {
-            ctrl.dashId = $cookies.get('dashboardidpa');
-            $location.path('/dashboard/' + ctrl.dashId);
-        }
-
-        $scope.configs = {
-            bindto: "#bloodpressure",
-            data: {
-                columns: [
-                    ['data1', 30, 200, 100, 400, 150, 250]
-
-                ],
-                type: 'spline'
-            }
-
-            /*size: {
-                           height: 350
-                       },
-                       legend: {
-                           position: 'inset'
-                       },
-                          axis: {
-                           x: {
-                               type: 'category',
-                               tick: {
-                                   rotate: -50,
-                                   multiline: false
-                               },
-                               height: 130,
-                               label: 'Sprint Name'
-                           }
-                       }*/
-
-
-        };
-
-        $scope.configBar = {
-            data: {
-                columns: [
-                    ['data1', 30, 200, 100, 400, 150, 250],
-                    ['data2', 130, 100, 140, 200, 150, 50],
-                    ['data3', 130, -150, 200, 300, -200, 100]
-
-                ],
-                type: 'bar'
-            }
-
-        };
-
-        $scope.configBars = {
-            bindto: "#storyVol",
-            data: {
-
-                columns: [
-                    ['data1', 30, 200, 100, 400, 150, 250],
-                    ['data2', 130, 100, 140, 200, 150, 50],
-                    ['data3', 130, -150, 200, 300, -200, 100],
-                    ['data4', 130, -150, 200, 300, -200, 100]
-
-                ],
-                type: 'bar'
-            }
-
-        };
-
-        $scope.configArea = {
-            bindto: "#veloChart",
-            data: {
-                columns: [
-                    ['data1', 30, 200, 100, 400, 150, 250],
-                    ['data2', 130, 100, 140, 200, 150, 50],
-                    ['data3', 130, -150, 200, 300, -200, 100]
-
-                ],
-                type: 'area-spline',
-                colors: {
-                    data1: '#0099cc',
-                    data2: '#669900'
-                },
-            }
-
-        };
-        var somethingWeLoadedFromTheServer = [
-            { a: 23, b: 45, c: 12 },
-            { a: 34, b: 19, c: 38 }
-            
-        ];
-
-    
-
-        $scope.configdefClosure = {
-            bindto: "#defectClosure",
-            data: {
-                columns: [
-                    ['data1', 30, 200, 100, 400, 150, 250]
-
-                ],
-                type: 'spline',
-                colors: {
-                    data1: '#ff4444'
-                },
-            }
-        };        
         var apiHost = 'http://localhost:3000';
         var qahost = 'http://10.20.1.183:3001';
         ctrl.ppiidss = $cookies.get('projectIdd');
-        /*$http.get(apiHost + "/api/getDefectSummery/" + ctrl.ppiidss)
-                    .then(jiraDataFetch); 
-        
-                     function jiraDataFetch(data) {
-                        alert("asd");
-                ctrl.mediumIssue = data;
-             
-            }*/
-        featureData.jiraData(ctrl.ppiidss).then(jiraDataFetch);
+
+        //Empty array created for Jira Defect Graphs
         var high = ['Major'];
         var medium = ['Medium'];
         var opndefhighest = ['Critical'];
@@ -138,83 +23,147 @@
         var opndeflow = ['Minor'];
         var highest = ['Critical'];
         var lowval = ['Minor'];
-
         var jiraLebels = [];
         var openDefJiraLabel = [];
-        //var highest = ['Highest'];
+
+        //Logout Functionality
+        ctrl.logout = function () {
+            $cookieStore.remove("username");
+            $cookieStore.remove("authenticated");
+            $location.path('/');
+        };
+
+        //Retrieving the Dashboard Id and passing it in the Url
+         function openback() {
+            ctrl.dashId = $cookies.get('dashboardidpa');
+            $location.path('/dashboard/' + ctrl.dashId);
+        }
+
+        
+        //Retrieving Jira-Defect Response and Processing 
+        featureData.jiraData(ctrl.ppiidss).then(jiraDataFetch);
+
+        
+        //Processing Jira-Defect Response
         function jiraDataFetch(data) {
-            
             ctrl.criIssue = data.defectsByProirity.Highest;
             ctrl.majorIssue = data.defectsByProirity.High;
             ctrl.mediumIssue = data.defectsByProirity.Medium;
             ctrl.lowIssue = data.defectsByProirity.Low;
             ctrl.graphData = data.defectsByResolutionDetails;
             ctrl.ageOfOpenDefects = data.defectsByAgeDetails;
-             ctrl.medlow = parseInt(ctrl.lowIssue) + (ctrl.mediumIssue);
-          
-            //console.log(ctrl.graphData);
-            //angular.forEach(ctrl.graphData, function (value,key) {
+            ctrl.medlow = parseInt(ctrl.lowIssue) + (ctrl.mediumIssue);
             var highArr = [];
-            if (ctrl.graphData.hasOwnProperty("High")) {
-                alert("asas");
-            }
             for (var key in ctrl.graphData) {
                 if (ctrl.graphData.hasOwnProperty(key)) {
                     highArr.push(ctrl.graphData[key]);
                 }
             }
-          
-            for (var i = 0; i < highArr.length; i++) {
-                if (highArr[i][0].hasOwnProperty("Highest")) {
-                
-                highest.push(highArr[i][0].Highest); 
+             
+                //Adding Highest values into Array
+                for (var i = 0; i < highArr.length; i++) {
+                        if (highArr[i][0].hasOwnProperty("Highest")) {
+                        highest.push(highArr[i][0].Highest); 
+                    }
+                    else{
+                        highest.push(0);
+                       }
+                     }
+
+               //Adding Low and Medium values into Array
+              for (var i = 0; i < highArr.length; i++) {
+                if (highArr[i][0].hasOwnProperty("Low") && highArr[i][0].hasOwnProperty("Medium")) {
+                  var convertt = Number(highArr[i][0].Low);
+                  var converttMed = Number(highArr[i][0].Medium);
+                  var valpars =convertt + converttMed;
+                  lowval.push(valpars); 
+              }
+              else{
+                lowval.push(0);
+              }
             }
-            else{
-                highest.push(0);
-               
-            }
-                lowval.push(highArr[i][0].Low); 
+
+              //Adding High values into Array            
+               for (var i = 0; i < highArr.length; i++) {
+                if (highArr[i][0].hasOwnProperty("High")) {
                 high.push(highArr[i][0].High);
-                medium.push(highArr[i][0].Medium);
-                jiraLebels.push(highArr[i][0]['Resolution Strategy']);
+              }
+               else{
+                high.push(0);
+              }
             }
-            console.log(high);  
+             
+               //Adding X axis label values into Array
+               for (var i = 0; i < highArr.length; i++) {
+                if (highArr[i][0].hasOwnProperty("Resolution Strategy")) {
+                jiraLebels.push(highArr[i][0]['Resolution Strategy']);
+              }
+              else{
+                jiraLebels.push(0);
+              }
+            }
+           
+           
             
             //open defects graph
 
             var openDef = [];
-            if (ctrl.ageOfOpenDefects.hasOwnProperty("High")) {
-                alert("asas");
-            }
-
-             for (var key in ctrl.ageOfOpenDefects) {
+           for (var key in ctrl.ageOfOpenDefects) {
                 if (ctrl.ageOfOpenDefects.hasOwnProperty(key)) {
                     openDef.push(ctrl.ageOfOpenDefects[key]);
                 }
             }
 
+            //Adding Highest values into Array
             for (var i = 0; i < openDef.length; i++) {
                 if (openDef[i][0].hasOwnProperty("Highest")) {
-                
-                 opndefhighest.push(openDef[i][0].Highest);
+                opndefhighest.push(openDef[i][0].Highest);
              }
              else{
-               
-                 opndefhighest.push(0);
+               opndefhighest.push(0);
              }
+           }
+            
+           //Adding High values into Array
+            for (var i = 0; i < openDef.length; i++) {
+                if (openDef[i][0].hasOwnProperty("High")) {
                 opndefhigh.push(openDef[i][0].High);
-               
-                opndeflow.push(openDef[i][0].Low);
-                
-                openDefJiraLabel.push(openDef[i][0]['Defect Age Strategy']);
-                
-                //jiraLebels.push(openDef[i][0]['Resolution Strategy']);
+              }
+               else{
+               opndefhigh.push(0);
+             }
             }
 
-            $scope.openDef = c3.generate({
+            //Adding Low and Medium values into Array
+             for (var i = 0; i < openDef.length; i++) {
+                if (openDef[i][0].hasOwnProperty("Low") && openDef[i][0].hasOwnProperty("Medium")) {
+                  var convertLowval = Number(openDef[i][0].Low);
+                  var convertMedVal = Number(openDef[i][0].Medium);
+                  var parsinh = convertLowval + convertMedVal;
+                  opndeflow.push(parsinh);
+               }
+              else{
+               opndeflow.push(0);
+             }
+            }
+
+            //Adding x axis label values into Array
+              for (var i = 0; i < openDef.length; i++) {
+                if (openDef[i][0].hasOwnProperty("Defect Age Strategy")) {
+                openDefJiraLabel.push(openDef[i][0]['Defect Age Strategy']);
+              }
+               else{
+               openDefJiraLabel.push(0);
+             }
+            }
+                
+
+            //c3.js graphs
+
+            //Resolution Time Graph Generation
+             $scope.openDef = c3.generate({
                 bindto: '#openDef', 
-                             
-                data: {
+                  data: {
                   columns: [
                     highest,high,lowval
                   ],
@@ -232,6 +181,7 @@
   
             });        
 
+            //Age of Open Defects Graph Generation
             $scope.restime = c3.generate({
             bindto: "#restime",
             
@@ -256,31 +206,99 @@
         });                
     }        
 
-    featureData.sprintDta(ctrl.ppiidss).then(sprintdataProcess);
-    function sprintdataProcess(data){
-        console.log(data[0]);
-        console.log(data[1]);
+
+    //Fetching Jira-Sprint Data
+
+      featureData.sprintDta(ctrl.ppiidss).then(sprintdataProcess);
+
+      //Processing Jira-Sprint Data
+      function sprintdataProcess(data){
+        var progress = ['Defect Closure'];
         var comittedStoryPoints = ['committed Story Points'];
         var completedStoryPoint = ['completed Story Points'];
         var axisSprintName = [];
+        var axisSprintNameclos = [];
+
+        //Data procesing and fetching two sprints Data
         ctrl.defectsfound = data[0].sprintData.defectsFound.total;
         ctrl.defectsResolved = data[0].sprintData.defectsResolved.total;
-       ctrl.defectsUnresolved = data[0].sprintData.defectsUnresolved.total;
+        ctrl.defectsUnresolved = data[0].sprintData.defectsUnresolved.total;
+       if(data[1].sprintData.defectsFound.total != undefined){
+           ctrl.defectsfoundprev = data[1].sprintData.defectsFound.total;
+       }
+      else{
+          ctrl.defectsfoundprev = 0;
+      }
+
+      if(data[1].sprintData.defectsResolved.total != undefined){
+        ctrl.defectsResolvedprev = data[1].sprintData.defectsResolved.total;
+      }
+      else{
+        ctrl.defectsResolvedprev = 0;
+      }
+       if(data[1].sprintData.defectsUnresolved.total != undefined){
+         ctrl.defectsUnresolvedprev = data[1].sprintData.defectsUnresolved.total;
+       }
+      else{
+        ctrl.defectsUnresolvedprev = 0;
+      }
+
+       //Processing data for sprint list table
+       ctrl.spAllDetails = data;
        ctrl.spname = data[0].name;
        ctrl.sidd = data[0].sid;
        ctrl.stat = data[0].sprintData.state;
        ctrl.spname = data[0].sprintData.sprintName;
 
-       //ctrl.defectsfoundPrvSprint = data[1].sprintData.defectsFound.total;
-       //ctrl.defectsResolvedPrvSprint =data[1].sprintData.defectsResolved.total;
-       //ctrl.defectsUnresolvedPrvSprint =data[1].sprintData.defectsUnresolved.total;
+       ctrl.spnameprev = data[1].name;
+       ctrl.siddprev = data[1].sid;
+       ctrl.statprev = data[1].sprintData.state;
+       ctrl.spnameprev = data[1].sprintData.sprintName;
 
-       //story count
+       
 
-       ctrl.completedIssueCount = data[0].sprintData.completedIssueCount;
+      
+
+       //Data procesing and fetching two sprints Data
+       if(data[0].sprintData.completedIssueCount != undefined){
+          ctrl.completedIssueCount = data[0].sprintData.completedIssueCount;
+       }
+       else{
+           ctrl.completedIssueCount = 0;
+       }  
        ctrl.committedIssueCount = data[0].sprintData.committedIssueCount;
        ctrl.committedStoryPoints = data[0].sprintData.burndown.issuesAdded.count;
        ctrl.completedStoryPoints = data[0].sprintData.burndown.issuesRemoved.count;
+      if(data[1].sprintData.completedIssueCount != undefined){
+        ctrl.completedIssueCountprev = data[1].sprintData.completedIssueCount;
+       }
+       else{
+          ctrl.completedIssueCountprev = 0;
+       }
+       
+       if(data[1].sprintData.committedIssueCount != undefined){
+         ctrl.committedIssueCountprev = data[1].sprintData.committedIssueCount;
+       }
+       else{
+        ctrl.committedIssueCountprev = 0;
+       }
+      
+      if(data[1].sprintData.burndown.issuesAdded.count != undefined){
+         ctrl.committedStoryPointsprev = data[1].sprintData.burndown.issuesAdded.count;
+      }
+      else{
+        ctrl.committedStoryPointsprev = 0;
+      }
+      
+      if(data[1].sprintData.burndown.issuesRemoved.count != undefined){
+        ctrl.completedStoryPointsprev = data[1].sprintData.burndown.issuesRemoved.count;
+      }
+       else{
+        ctrl.completedStoryPointsprev = 0;
+       }
+
+
+       //Data Process for Velocity Chart Graphs
        for(var i=0;i<data.length;i++){
           if(data[i].sprintData != undefined){
               comittedStoryPoints.push(data[i].sprintData.committedStoryPoints)
@@ -289,22 +307,30 @@
        }
 
        for(var i=0;i<data.length;i++){
-         
-              axisSprintName.push(data[i].name)
-          
-          
-       }
-       for(var i=0;i<data.length;i++){
           if(data[i].sprintData != undefined){
-           
-              completedStoryPoint.push(data[i].sprintData.completedStoryPoints)
+           completedStoryPoint.push(data[i].sprintData.completedStoryPoints)
           }
           
        }
+       
+       //Data Process for Defect Closure Graph for taking the percentage Value
+        for(var i=0;i<data.length;i++){
+           if(data[i].sprintData != undefined){
+               var percentScore =  Math.round((data[i].sprintData.completedStoryPoints/data[i].sprintData.committedStoryPoints)*100);
+               progress.push(percentScore);
+                axisSprintNameclos.push(data[i].name)
 
+           }
+        }
+
+       //Adding x axis label for both graphs
+       for(var i=0;i<data.length;i++){
+         axisSprintName.push(data[i].name)
+        }
+
+       //C3.js Sprint Graph Generation
        $scope.sprintdatas = c3.generate({
                 bindto: '#sprintdatas', 
-                             
                 data: {
                   columns: [
                     comittedStoryPoints,completedStoryPoint
@@ -323,10 +349,114 @@
   
             });
 
+        $scope.defectClosure = c3.generate({
+                bindto: '#defectClosure', 
+                             
+                data: {
+                  columns: [
+                    progress
+                  ],
+                  type: 'spline'
+                },
+                axis: {
+                    x:{
+                        type: 'category',
+                        categories: axisSprintNameclos
+                    }
+                },
+                color: {
+                pattern: ['#ff4d4d']
+            }
+  
+            });
+
+
+
         }
 
 
-      
-        
+        //Fetching Release  Data
+       featureData.ReleaseData(ctrl.ppiidss).then(ReleaseDataProcessing);
+
+      //Processing Release Data
+        function ReleaseDataProcessing(data){
+          ctrl.releasegraph = data.versionData;
+          var noOfStoryCompleted = ["No of Story Completed"];
+          var noOfStoryPoints = ["No of Story Points"];
+          var totaldefectsFound = ["Total Defects Found"];
+          var releaseName = [];
+          var totalDefectsResolved = ["Total Defects Resolved"];
+
+          //Adding No of Story Points Completed to the Array
+          for(var i=0;i<data.length;i++){
+          if(data[i].versionData != undefined){
+              noOfStoryCompleted.push(data[i].versionData.noofStoryCompleted)
+          }
+          
+       }
+
+       //Adding No of Story Points to the Array
+       for(var i=0;i<data.length;i++){
+          if(data[i].versionData != undefined){
+              noOfStoryPoints.push(data[i].versionData.noofStoryPoints)
+          }
+      }
+
+       //Adding Version data as x axis label  to the Array
+       for(var i=0;i<data.length;i++){
+          if(data[i].versionData != undefined){
+              releaseName.push(data[i].versionData.releaseName)
+          }
+      }
+
+      //Adding  Total Defects Found to the Array
+      for(var i=0;i<data.length;i++){
+        if(data[i].versionData != undefined){
+          if(data[i].versionData.defectsFound !=undefined){
+          totaldefectsFound.push(data[i].versionData.defectsFound.total)
+       }
+       else{
+           totaldefectsFound.push(0);
+         }
+     }
+    }
+
+        //Adding  Total Defects Resolved to the Array
+        for(var i=0;i<data.length;i++){
+        if(data[i].versionData != undefined){
+          if(data[i].versionData.defectsResolved !=undefined){
+         totalDefectsResolved.push(data[i].versionData.defectsResolved.total)
+       }
+       else{
+           totalDefectsResolved.push(0);
+       }
+     }
+   }
+
+
+       //Release Graph Generation
+       $scope.releaseGraph = c3.generate({
+                bindto: '#releaseGraph', 
+                             
+                data: {
+                  columns: [
+                    noOfStoryCompleted,noOfStoryPoints,totaldefectsFound,totalDefectsResolved
+                  ],
+                  type: 'spline'
+                },
+                axis: {
+                    x:{
+                        type: 'category',
+                        categories: releaseName
+                    }
+                },
+                color: {
+                pattern: ['#00cc00','#3399ff','#000','#cc6699']
+            }
+  
+            });
+
+          
+        }
     }
 })();
