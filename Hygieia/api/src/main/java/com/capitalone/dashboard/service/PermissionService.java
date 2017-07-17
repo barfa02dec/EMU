@@ -1,14 +1,15 @@
 package com.capitalone.dashboard.service;
 
-import java.util.List;
-
 import com.capitalone.dashboard.model.Permission;
+import com.capitalone.dashboard.request.PermissionRequest;
 
 public interface PermissionService {
-
-	List<Permission> createPermissions(List<Permission> permisssions);
-	void removePermissionsList(List<Permission> permisssions);
-	void removePermissionWithCollector(String collector);
-	
-	
+	public Permission createPermission(PermissionRequest permisssions);
+	public Iterable<Permission> createPermissions(Iterable<PermissionRequest> permisssions);
+	public Permission deactivatePermission(String name);
+	public Permission reactivatePermission(String name);
+	public Iterable<Permission> getAllActivePermissions();
+	public Iterable<Permission> getAllInactivePermissions();
+	public Permission getPermissionWithName(String name);
+	public Permission updatePermission(PermissionRequest permisssions);
 }
