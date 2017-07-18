@@ -9,6 +9,7 @@ public interface AuthenticationRepository extends PagingAndSortingRepository<Aut
 	
 	
 	 Authentication findByUsername(String username);
+	 
 
 
 }
