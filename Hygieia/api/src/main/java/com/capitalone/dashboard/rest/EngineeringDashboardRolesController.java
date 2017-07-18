@@ -70,7 +70,7 @@ public class EngineeringDashboardRolesController {
 		}
 	}
 	
-	@RequestMapping(method=RequestMethod.POST,value="/deactivateEngineeringDashboardUserRoles")
+	@RequestMapping(method=RequestMethod.POST,value="/reactivateEngineeringDashboardUserRoles")
 	public ResponseEntity<UserRole> reactivateEngineeringDashboardPermission(@RequestParam(name="key") String key){
 		UserRole response=  userRoleService.reactivateRole(key);
 		if(response!=null)
