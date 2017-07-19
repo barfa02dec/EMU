@@ -79,10 +79,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
             ServerAddress serverAddr = new ServerAddress(host, port);
             LOGGER.info("Initializing Mongo Client server at: {}", serverAddr);
             MongoClientOptions.Builder options = new MongoClientOptions.Builder();
-            options.socketTimeout(1500);
-            options.socketKeepAlive(true);
-            options.maxWaitTime(1500);
-            options.maxConnectionIdleTime(1000);
+            options.maxConnectionIdleTime(300000);
             MongoClientOptions mongoDBOptions = options.build();
             if (!StringUtils.isEmpty(userName) && !StringUtils.isEmpty(password)) {
             	
