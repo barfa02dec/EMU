@@ -15,7 +15,7 @@ QueryDslPredicateExecutor<UserRole>, UserRoleRepositoryCustom {
 	@Query(value = "{'roleKey' : ?0}")
 	UserRole findByRoleKey(String key);
 	
-	@Query(value = "{'status' : ?0}")
+	@Query(value = "{'enabled' : ?0}")
 	List<UserRole> findByStatus(boolean status);
 	
 	
