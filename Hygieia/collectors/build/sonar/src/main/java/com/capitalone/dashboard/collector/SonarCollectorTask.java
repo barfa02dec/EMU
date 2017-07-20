@@ -130,7 +130,7 @@ public class SonarCollectorTask extends CollectorTask<SonarCollector> {
             // collect the jobs that need to change state : enabled vs disabled.
             if ((job.isEnabled() && !uniqueIDs.contains(job.getId())) ||  // if it was enabled but not on a dashboard
                     (!job.isEnabled() && uniqueIDs.contains(job.getId()))) { // OR it was disabled and now on a dashboard
-                job.setEnabled(uniqueIDs.contains(job.getId()));
+               // job.setEnabled(uniqueIDs.contains(job.getId()));// In order to show multiple job details in the dash-board, we are setting this filed enable always. As a result, the moment you change the job name is UI, the metrics gets reflected immediately.
                 stateChangeJobList.add(job);
             }
         }
@@ -183,7 +183,7 @@ public class SonarCollectorTask extends CollectorTask<SonarCollector> {
         for (SonarProject project : projects) {
             if (!existingProjects.contains(project)) {
                 project.setCollectorId(collector.getId());
-                project.setEnabled(false);
+                project.setEnabled(true);// In order to show multiple job details in the dash-board, we are setting this filed enable always. As a result, the moment you change the job name is UI, the metrics gets reflected immediately.
                 project.setDescription(project.getProjectName());
                 newProjects.add(project);
                 count++;
