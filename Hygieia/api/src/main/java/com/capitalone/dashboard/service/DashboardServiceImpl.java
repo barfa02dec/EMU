@@ -171,7 +171,7 @@ public class DashboardServiceImpl implements DashboardService {
                 List<CollectorItem> cItems = component.getCollectorItems(collector.getCollectorType());
                 if (!CollectionUtils.isEmpty(cItems)) {
                     for (CollectorItem ci : cItems) {
-                        ci.setEnabled(false);
+                        //ci.setEnabled(false);// In order to show multiple job details in the dash-board, we are setting this filed enable always. As a result, the moment you change the job name is UI, the metrics gets reflected immediately.
                         toSaveCollectorItemList.add(ci);
                     }
                 }

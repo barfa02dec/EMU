@@ -135,7 +135,7 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
         for (HudsonJob job : existingJobs) {
             if ((job.isEnabled() && !uniqueIDs.contains(job.getId())) ||  // if it was enabled but not on a dashboard
                     (!job.isEnabled() && uniqueIDs.contains(job.getId()))) { // OR it was disabled and now on a dashboard
-                job.setEnabled(uniqueIDs.contains(job.getId()));
+                //job.setEnabled(uniqueIDs.contains(job.getId()));// In order to show multiple job details in the dash-board, we are setting this filed enable always. As a result, the moment you change the job name is UI, the metrics gets reflected immediately.
                 stateChangeJobList.add(job);
             }
         }
@@ -231,7 +231,7 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
             String niceName = getNiceName(job, collector);
             if (existing == null) {
                 job.setCollectorId(collector.getId());
-                job.setEnabled(false); // Do not enable for collection. Will be enabled when added to dashboard
+                job.setEnabled(true); // In order to show multiple job details in the dash-board, we are setting this filed enable always. As a result, the moment you change the job name is UI, the metrics gets reflected immediately.
                 job.setDescription(job.getJobName());
                 if (StringUtils.isNotEmpty(niceName)) {
                     job.setNiceName(niceName);
