@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -7,6 +8,7 @@ import javax.annotation.PostConstruct;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -50,12 +52,43 @@ public class CollectorServiceImpl implements CollectorService {
         List<ObjectId> collectorIds = Lists.newArrayList(Iterables.transform(collectors, new ToCollectorId()));
 
         Page<CollectorItem> collectorItems = collectorItemRepository.findByCollectorIdInAndDescriptionContainingIgnoreCase(collectorIds, descriptionFilter, pageable);
-
+        
+    
         for (CollectorItem options : collectorItems) {
             options.setCollector(collectorById(options.getCollectorId(), collectors));
         }
 
         return collectorItems;
+	}
+	/*
+	 * (non-Javadoc)
+	 * @see com.capitalone.dashboard.service.CollectorService#collectorItemsByTypeWithFilter(com.capitalone.dashboard.model.CollectorType, java.lang.String, org.springframework.data.domain.Pageable, java.lang.String)
+	 * this filter will return the list by filtering with project.
+	 */
+	@Override
+	public Page<CollectorItem> collectorItemsByTypeWithFilter(CollectorType collectorType, String descriptionFilter, Pageable pageable, String project) {
+		List<Collector> collectors = collectorRepository.findByCollectorType(collectorType);
+
+        List<ObjectId> collectorIds = Lists.newArrayList(Iterables.transform(collectors, new ToCollectorId()));
+
+        Page<CollectorItem> collectorItems = collectorItemRepository.findByCollectorIdInAndDescriptionContainingIgnoreCase(collectorIds, descriptionFilter, pageable);
+        
+        List<CollectorItem> filterListByProject= new ArrayList<CollectorItem>();
+        
+    	for(CollectorItem ci: collectorItems){
+    		if(ci.getProject().equals(project)){
+    			filterListByProject.add(ci);
+    		}
+    	}
+    	
+       
+    	Page<CollectorItem> collectorItemsFiletered= new PageImpl<CollectorItem>(filterListByProject,pageable,filterListByProject.size());
+    	
+        for (CollectorItem options : collectorItemsFiletered) {
+            options.setCollector(collectorById(options.getCollectorId(), collectors));
+        }
+
+        return collectorItemsFiletered;
 	}
 	
     /**

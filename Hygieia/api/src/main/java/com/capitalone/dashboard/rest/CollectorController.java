@@ -86,5 +86,15 @@ public class CollectorController {
 				.headers(paginationHeaderUtility.buildPaginationHeaders(pageOfCollectorItems))
 				.body(pageOfCollectorItems.getContent());
     }
+    
+    @RequestMapping(value = "/collector/item/type/{collectorType}/{project}", method = GET,
+            produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CollectorItem>> collectorItemsByTypeAndProjectName(@PathVariable CollectorType collectorType,@PathVariable String project, @RequestParam(value="search", required=false, defaultValue="") String descriptionFilter, @PageableDefault(size=Integer.MAX_VALUE) Pageable pageable) {
+    	Page<CollectorItem> pageOfCollectorItems = collectorService.collectorItemsByTypeWithFilter(collectorType, descriptionFilter, pageable,project);
+		return ResponseEntity
+				.ok()
+				.headers(paginationHeaderUtility.buildPaginationHeaders(pageOfCollectorItems))
+				.body(pageOfCollectorItems.getContent());
+    }
 
 }
