@@ -155,7 +155,7 @@ public class DashboardServiceImpl implements DashboardService {
             return null;
         }
 
-        com.capitalone.dashboard.model.Component component = componentRepository.findOne(componentId); //NOPMD - using fully qualified name for clarity
+       com.capitalone.dashboard.model.Component component = componentRepository.findOne(componentId); //NOPMD - using fully qualified name for clarity
         //we can not assume what collector item is added, what is removed etc so, we will
         //refresh the association. First disable all collector items, then remove all and re-add
 
@@ -168,13 +168,6 @@ public class DashboardServiceImpl implements DashboardService {
             Collector collector = collectorRepository.findOne(collectorItem.getCollectorId());
             if (!incomingTypes.contains(collector.getCollectorType())) {
                 incomingTypes.add(collector.getCollectorType());
-                List<CollectorItem> cItems = component.getCollectorItems(collector.getCollectorType());
-                if (!CollectionUtils.isEmpty(cItems)) {
-                    for (CollectorItem ci : cItems) {
-                        //ci.setEnabled(false);// In order to show multiple job details in the dash-board, we are setting this filed enable always. As a result, the moment you change the job name is UI, the metrics gets reflected immediately.
-                        toSaveCollectorItemList.add(ci);
-                    }
-                }
                 component.getCollectorItems().remove(collector.getCollectorType());
             }
         }
@@ -185,9 +178,8 @@ public class DashboardServiceImpl implements DashboardService {
             Collector collector = collectorRepository.findOne(collectorItem.getCollectorId());
             component.addCollectorItem(collector.getCollectorType(), collectorItem);
 
-            if (!collectorItem.isEnabled()) {
-                toSaveCollectorItemList.remove(collectorItem);
-                collectorItem.setEnabled(true);
+            if (collectorItem.isEnabled()) {
+                collectorItem.setToShowIndashboard(true);
                 toSaveCollectorItemList.add(collectorItem);
             }
 

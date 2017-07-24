@@ -31,7 +31,7 @@ public class CollectorItem extends BaseModel {
     private long lastUpdated;
     private Map<String,Object> options = new HashMap<>();
     private String project;
-    
+    private boolean toShowIndashboard;
 
     @Transient
     private Collector collector;
@@ -104,6 +104,15 @@ public class CollectorItem extends BaseModel {
 		this.project = project;
 	}
 
+	public boolean isToShowIndashboard() {
+		return toShowIndashboard;
+	}
+
+	public void setToShowIndashboard(boolean toShowIndashboard) {
+		this.toShowIndashboard = toShowIndashboard;
+	}
+
+	
 	
     
 }
