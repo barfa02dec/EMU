@@ -24,7 +24,7 @@ public interface CollectorItemRepository extends BaseCollectorItemRepository<Col
     @Query(value="{'options.projectId' : ?2, 'niceName' : ?1, 'collectorId' : ?0}")
     CollectorItem findByCollectorIdNiceNameAndProjectId(ObjectId collectorId, String niceName, String projectId);
     
-    @Query(value="{'collectorId' : ?0}")
-    List<CollectorItem> findBycollectorId(ObjectId collectorId);
+    @Query(value="{'toShowIndashboard' : ?1,'collectorId' : ?0}")
+    List<CollectorItem> findBycollectorId(ObjectId collectorId, boolean flag);
 
 }

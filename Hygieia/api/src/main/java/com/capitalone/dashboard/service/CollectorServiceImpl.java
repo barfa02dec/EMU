@@ -193,6 +193,7 @@ public class CollectorServiceImpl implements CollectorService {
 
 	@Override
 	public List<CollectorItem> collectorsByCollectorId(ObjectId collectorId) {
-		return collectorItemRepository.findBycollectorId(collectorId);
+		//sending attribute true to get list with flag "toShowIndashboard" : true
+		return collectorItemRepository.findBycollectorId(collectorId,true);
 	}
 }
