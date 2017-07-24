@@ -88,4 +88,9 @@ public interface CollectorService {
      * @return created Collector
      */
     Collector createCollector(Collector collector);
+    /*
+     * 
+     */
+    
+    List<CollectorItem>  collectorsByCollectorId(ObjectId collectorId);
 }

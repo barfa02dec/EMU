@@ -190,4 +190,9 @@ public class CollectorServiceImpl implements CollectorService {
             return input.getId();
         }
     }
+
+	@Override
+	public List<CollectorItem> collectorsByCollectorId(ObjectId collectorId) {
+		return collectorItemRepository.findBycollectorId(collectorId);
+	}
 }

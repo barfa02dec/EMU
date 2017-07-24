@@ -87,6 +87,16 @@ public class CollectorController {
 				.body(pageOfCollectorItems.getContent());
     }
     
+    
+    @RequestMapping(value = "/collector/items/{collectorId}", method = GET,
+            produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CollectorItem>> collectorItemsByCollectorId(@PathVariable ObjectId collectorId) {
+    	List<CollectorItem> collectorItemsList=collectorService.collectorsByCollectorId(collectorId);
+    	return ResponseEntity
+				.ok()
+				.body(collectorItemsList);
+    }
+    
     @RequestMapping(value = "/collector/item/type/{collectorType}/{project}", method = GET,
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CollectorItem>> collectorItemsByTypeAndProjectName(@PathVariable CollectorType collectorType,@PathVariable String project, @RequestParam(value="search", required=false, defaultValue="") String descriptionFilter, @PageableDefault(size=Integer.MAX_VALUE) Pageable pageable) {
