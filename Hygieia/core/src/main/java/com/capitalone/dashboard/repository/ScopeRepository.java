@@ -40,4 +40,7 @@ public interface ScopeRepository extends CrudRepository<Scope, ObjectId>,
 
 	@Query(value = "{ 'collectorId' : ?0 }")
 	List<Scope> findByCollectorId(ObjectId collectorId);
+	
+	@Query(value = "{ 'projectId' : ?1, 'collectorId' : ?0 }")
+	List<Scope> findByCollectorIdAndProjectId(ObjectId collectorId, String projectId);
 }

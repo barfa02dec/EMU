@@ -59,7 +59,7 @@ public class FeatureSettings {
 	private List<String[]> defectAge;
 	private List<String> rapidView;
 	private int noOfSprintsToShow;
-	
+	private List<String> projectId;
 		
 	public int getNoOfSprintsToShow() {
 		return noOfSprintsToShow;
@@ -381,6 +381,14 @@ public class FeatureSettings {
 
 	public void setJiraProxyPort(List<String> jiraProxyPort) {
 		this.jiraProxyPort = jiraProxyPort;
+	}
+
+	public List<String> getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(List<String> projectId) {
+		this.projectId = projectId;
 	}
 	
 	

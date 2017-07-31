@@ -49,7 +49,7 @@ public class ScopeController {
 
 	/**
 	 *
-	 * @param collectorId
+	 * @param collectorId, projectId
 	 *
 	 * @return projects
 	 */
@@ -57,6 +57,13 @@ public class ScopeController {
 	public List<Scope> teamsByCollector(
 			@PathVariable String collectorId) {
 		return this.scopeService.getScopesByCollector(new ObjectId(collectorId));
+	}
+	
+
+	@RequestMapping(value = "/scopecollector/{collectorId}/{projectId}", method = GET, produces = APPLICATION_JSON_VALUE)
+	public List<Scope> teamsByCollectorAndProjectId(
+			@PathVariable String collectorId,@PathVariable String projectId) {
+		return this.scopeService.getScopesByCollectorAmdProjectId(new ObjectId(collectorId),projectId);
 	}
 
 	/**

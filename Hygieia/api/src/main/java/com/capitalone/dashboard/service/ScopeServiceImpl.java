@@ -109,4 +109,17 @@ public class ScopeServiceImpl implements ScopeService {
 
 		return scopes;
 	}
+
+	@Override
+	public List<Scope> getScopesByCollectorAmdProjectId(ObjectId collectorId, String projectId) {
+		List<Scope> scopes = scopeRepository.findByCollectorIdAndProjectId(collectorId,projectId);
+
+		//clean up needed for < > characters
+		for (Scope scope : scopes) {
+			scope.setName(  scope.getName().replaceAll("[<>]", "")  );
+			scope.setProjectPath(  scope.getProjectPath().replaceAll("[<>]", "")  );
+		}
+
+		return scopes;
+	}
 }

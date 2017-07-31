@@ -35,4 +35,6 @@ public interface ScopeService {
 	 * @return scopes
 	 */
 	List<Scope> getScopesByCollector(ObjectId collectorId);
+	
+	List<Scope> getScopesByCollectorAmdProjectId(ObjectId collectorId, String projectId);
 }

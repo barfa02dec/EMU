@@ -87,9 +87,10 @@ public class ProjectServiceImpl implements ProjectService {
 		return project;
 	}
 	private Project mapProjectRequestToPojectForUpdateProject(ProjectRequest request, Project project ){
-		project.setProjectId(request.getProjectId());
 		// project name is non editable field
-		//project.setProjectName(request.getProjectName());
+		//project.setProjectId(request.getProjectId());
+		
+		project.setProjectName(request.getProjectName());
 		project.setProjectOwner(request.getProjectOwner());
 		project.setClient(request.getClient());
 		project.setBusinessUnit(request.getBusinessUnit());

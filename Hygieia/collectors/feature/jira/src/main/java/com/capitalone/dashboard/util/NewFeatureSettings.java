@@ -16,6 +16,8 @@
 
 package com.capitalone.dashboard.util;
 
+import java.util.List;
+
 /**
  * Bean to hold settings specific to the Feature collector.
  * 
@@ -51,7 +53,7 @@ public class NewFeatureSettings {
 	private String jiraProxyPort;
 	private String rapidView;
 	private int noOfSprintsToShow;
-	
+	private String projectId;
 	public int getNoOfSprintsToShow() {
 		return noOfSprintsToShow;
 	}
@@ -365,4 +367,13 @@ public class NewFeatureSettings {
 	public void setJiraTeamFieldName(String jiraTeamFieldName) {
 		this.jiraTeamFieldName = jiraTeamFieldName;
 	}
+
+	public String getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+	
 }

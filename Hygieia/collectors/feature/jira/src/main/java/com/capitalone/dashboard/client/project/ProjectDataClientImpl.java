@@ -99,6 +99,9 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 
 				// ID;
 				scope.setpId(TOOLS.sanitizeResponse(scopeId));
+				//project ID
+				
+				scope.setProjectId(featureSettings.getProjectId());
 
 				// name;
 				scope.setName(TOOLS.sanitizeResponse(jiraScope.getName()));
