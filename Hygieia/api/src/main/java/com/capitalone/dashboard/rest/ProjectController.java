@@ -99,9 +99,9 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "/projectUsers", method = POST, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<Set<String>> createProjectUsers(@RequestParam String projectname, @RequestParam Set<String> users) {
+	public ResponseEntity<Set<String>> createProjectUsers(@RequestParam String projectId, @RequestParam Set<String> users) {
 		
-		Project project=projectService.createUsers(projectname, users);
+		Project project=projectService.createUsers(projectId, users);
 		if(project!=null)
 		{
 			return ResponseEntity.status(HttpStatus.OK).body(project.getProjectUsersList());

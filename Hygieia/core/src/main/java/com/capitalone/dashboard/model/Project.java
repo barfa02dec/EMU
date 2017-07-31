@@ -7,8 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "project")
 public class Project extends BaseModel {
-	@Indexed(unique = true)
 	private String projectName;
+	@Indexed(unique = true)
 	private String projectId;
 	private boolean projectStatus;
 	private String BusinessUnit;

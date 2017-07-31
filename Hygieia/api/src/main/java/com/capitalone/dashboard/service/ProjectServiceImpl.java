@@ -117,8 +117,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Project createUsers(String projectName, Set<String> users) {
-		Project project=projectRepository.findByProjectName(projectName);
+	public Project createUsers(String projectId, Set<String> users) {
+		Project project=projectRepository.findByProjectName(projectId);
 		if(null!=project){
 			if(null!=project.getProjectUsersList()){
 				project.getProjectUsersList().addAll(users);
