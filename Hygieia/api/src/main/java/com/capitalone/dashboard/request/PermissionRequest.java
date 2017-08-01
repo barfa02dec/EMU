@@ -10,6 +10,7 @@ public class PermissionRequest {
 	private String lastUpdatedOn;
 	private String createdBy;
 	private String updatedBy;
+	private String id;
 	@NotNull
 	private boolean status;
 	
@@ -55,5 +56,13 @@ public class PermissionRequest {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	
 
 }
