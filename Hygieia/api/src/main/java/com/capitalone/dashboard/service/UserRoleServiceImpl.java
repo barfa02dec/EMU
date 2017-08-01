@@ -1,12 +1,15 @@
 package com.capitalone.dashboard.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capitalone.dashboard.model.Permission;
 import com.capitalone.dashboard.model.UserRole;
 import com.capitalone.dashboard.repository.UserRoleRepository;
 import com.capitalone.dashboard.request.UserRoleRequest;
@@ -32,7 +35,13 @@ public class UserRoleServiceImpl implements UserRoleService {
 		userRole.setCreatedBy(role.getCreatedBy());
 		userRole.setCreatedOn(new Date().toString());
 		userRole.setEnabled(role.isEnabled());
-		userRole.setPermissions(role.getPermissions());
+		
+		Map<String , Boolean> permissions= new HashMap<String , Boolean>();
+
+		for(String permit:role.getPermissions()){
+			permissions.put(permit, Boolean.TRUE);
+		}
+		userRole.setPermissions(permissions);
 		return userRole;
 	}
 	private Iterable<UserRole> mapMultipleUserRoleRequestToUserRoleModel(Iterable<UserRoleRequest> roles){
@@ -44,7 +53,12 @@ public class UserRoleServiceImpl implements UserRoleService {
 			userRole.setCreatedBy(role.getCreatedBy());
 			userRole.setCreatedOn(new Date().toString());
 			userRole.setEnabled(role.isEnabled());
-			userRole.setPermissions(role.getPermissions());
+			Map<String , Boolean> permissions= new HashMap<String , Boolean>();
+
+			for(String permit:role.getPermissions()){
+				permissions.put(permit, Boolean.TRUE);
+			}
+			userRole.setPermissions(permissions);
 			roleset.add(userRole);
 		}
 		return roleset;

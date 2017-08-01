@@ -1,7 +1,9 @@
 package com.capitalone.dashboard.request;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.capitalone.dashboard.model.Permission;
 
 public class UserRoleRequest {
 	private String roleKey;
@@ -11,7 +13,14 @@ public class UserRoleRequest {
 	private String createdBy;
 	private String updatedBy;
 	private boolean enabled;
-	private Map<String , Boolean> permissions= new HashMap<String , Boolean>();
+	private Set<String> permissions=new HashSet<String>();
+	
+	public Set<String> getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(Set<String> permissions) {
+		this.permissions = permissions;
+	}
 	public String getRoleKey() {
 		return roleKey;
 	}
@@ -54,11 +63,6 @@ public class UserRoleRequest {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	public Map<String, Boolean> getPermissions() {
-		return permissions;
-	}
-	public void setPermissions(Map<String, Boolean> permissions) {
-		this.permissions = permissions;
-	}
+	
 	
 }

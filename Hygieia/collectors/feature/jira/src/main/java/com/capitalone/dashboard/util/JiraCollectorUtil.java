@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -80,8 +81,11 @@ public class JiraCollectorUtil {
 			return null;
 		}
 	}
+	/*
+	 * This will give the list of recent n-sprints[n is the limit i.e noOfSprintsToShow value]
+	 */
 	
-	public static List<JiraVersion>  getVersionsFromJira(String projectId,String baseUrl,String base64Credentials,String rapidViewId) {
+	public static List<JiraVersion>  getVersionsFromJira(String projectId,String baseUrl,String base64Credentials,String rapidViewId, int limit) {
 		try{
 			String query = String.format(GET_PROJECT_VERSIONS, projectId);
 			query=baseUrl+query;
@@ -99,7 +103,7 @@ public class JiraCollectorUtil {
 				}
 			}
 			Collections.sort(versions);
-			return versions;
+			return versions.stream().limit(limit).collect(Collectors.toList());
 		}catch (Exception e) {
 			e.printStackTrace();
 			return new ArrayList<JiraVersion>();
@@ -129,7 +133,7 @@ public class JiraCollectorUtil {
 		return headers;
 	}
 	
-	public static List<JiraSprint> getSprintList(String projectId,String baseUrl,String base64Credentials){
+	public static List<JiraSprint> getSprintList(String projectId,String baseUrl,String base64Credentials, int limit){
 		try{
 			String query =baseUrl+String.format(GET_PROJECT_SPRINTS, projectId);
 			
@@ -149,7 +153,7 @@ public class JiraCollectorUtil {
 			}
 			Collections.sort(sprintsJira);
 			
-			return sprintsJira;
+			return sprintsJira.stream().limit(limit).collect(Collectors.toList());
 		}catch (Exception e) {
 			// TODO: handle exception
 			return new ArrayList<JiraSprint>();
