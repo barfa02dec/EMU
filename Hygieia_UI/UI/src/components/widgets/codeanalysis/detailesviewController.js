@@ -22,7 +22,7 @@
             $location.path('/');
         };
         // $http.get(apiHost+"/api/quality/static-analysis?componentId=58f8a165cc5b9d19142f9018&max=1")
-        $http.get(apiHost + "/api/quality/static-analysis?componentId=" + ctrl.ppiids + "&max=1")
+        $http.get("/api/quality/static-analysis?componentId=" + ctrl.ppiids + "&max=1")
             .then(processCaResponse);
 
         /*return $q.all([*/

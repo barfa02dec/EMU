@@ -8,8 +8,8 @@
         .module(HygieiaConfig.module)
         .controller('BuildWidgetViewController', BuildWidgetViewController);
 
-    BuildWidgetViewController.$inject = ['$scope', 'buildData', 'DisplayState', '$q', '$uibModal'];
-    function BuildWidgetViewController($scope, buildData, DisplayState, $q, $uibModal) {
+    BuildWidgetViewController.$inject = ['$scope', 'buildData', 'DisplayState', '$q', '$uibModal','dashboardData','$cookies'];
+    function BuildWidgetViewController($scope, buildData, DisplayState, $q, $uibModal,dashboardData,$cookies) {
         var ctrl = this;
         var builds = [];
 
@@ -72,6 +72,26 @@
         //endregion
 
         ctrl.load = function() {
+            $scope.clid = $cookies.get('mycollector');
+             dashboardData.getCollectorItem($scope.clid).then(function(data) {
+                $scope.collectorDetails = data;
+                $scope.colll = $cookies.get('colId');
+                });
+
+            var deferred = $q.defer();
+            var params = {
+                componentId: $scope.widgetConfig.componentId,
+                numberOfDays: 15
+            };
+            buildData.details(params).then(function(data) {
+                builds = data.result;
+                processResponse(builds);
+                deferred.resolve(data.lastUpdated);
+            });
+            return deferred.promise;
+        };
+
+         ctrl.loadJenkins = function() {
             var deferred = $q.defer();
             var params = {
                 componentId: $scope.widgetConfig.componentId,

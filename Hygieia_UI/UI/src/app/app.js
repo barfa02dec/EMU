@@ -129,6 +129,11 @@ var localStorageSupported = (function () {
                   controller: 'jiraDetailedViewController',
                   controllerAs: 'jdv'
                 })
+                  .when('/userManagement',{
+                  templateUrl:'app/dashboard/views/userManagement.html',
+                  controller: 'userManagementController',
+                  controllerAs: 'umc'
+                })
                 .otherwise({
                     redirectTo: '/'
                 });

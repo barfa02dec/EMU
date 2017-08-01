@@ -1,0 +1,117 @@
+<widget-modal widget-modal-title="Create Permission" style="background:#fff;" >
+<form class="form-horizontal" name="ppc.createPermissionModel" ng-submit="ppc.postPermission();" name="formname" novalidate >
+        <!--             <label class="control-label col-sm-4 createproj-label-props" for="pwd">Created By</label>
+                         <form-group input="createdBy" errors="{required: 'Project ID is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                          
+            <input
+                type="text"
+                name="createdBy"
+                class="form-control create-project-inputboxes"
+                placeholder="Type in the Project ID"
+                ng-model="ppc.permission.createdBy"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group>
+                       
+                          <label class="control-label col-sm-4 createproj-label-props" for="pwd">Created On</label>
+                              <form-group input="createdOn" errors="{required: 'Project Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                         
+            <input
+                type="text"
+                name="createdOn"
+                class="form-control create-project-inputboxes"
+                placeholder="Type in the new Project Name"
+                ng-model="ppc.permission.createdOn"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group> -->
+                   <label class="control-label col-sm-4 createproj-label-props" for="pwd">Name</label>
+                           <form-group input="name" errors="{required: 'Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                          
+            <input
+                type="text"
+                name="name"
+                class="form-control create-project-inputboxes"
+                placeholder="Permission Name"
+                ng-model="ppc.permission.name"
+                autocomplete="off"
+                minlength="3"
+                required
+            />
+        </form-group>
+                       
+                          <label class="control-label col-sm-4 createproj-label-props" for="pwd">Description</label>
+                                  <form-group input="description" errors="{required: 'Description is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                         
+            <input
+                type="text"
+                name="description"
+                class="form-control create-project-inputboxes"
+                placeholder="Desciption"
+                ng-model="ppc.permission.description"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group>
+                       
+
+                      
+                 <!--           <label class="control-label col-sm-4 createproj-label-props" for="pwd">Last Updated On</label>
+                         <form-group input="lastUpdatedOn" errors="{required: 'Owner is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                        
+            <input
+                type="text"
+                name="lastUpdatedOn"
+                class="form-control create-project-inputboxes"
+                placeholder="Enter the Project Owner"
+                ng-model="ppc.permission.lastUpdatedOn"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group> -->
+                     
+              
+                       
+                    <!--         <label class="control-label col-sm-4 createproj-label-props" for="pwd">Status</label>
+                         <form-group input="status" errors="{required: 'Customer Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                       
+            <input
+                type="text"
+                name="status"
+                class="form-control create-project-inputboxes"
+                placeholder="Type in the Customer Name"
+                ng-model="ppc.permission.status"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group> -->
+
+               <!--   <label class="control-label col-sm-4 createproj-label-props" for="pwd">Updated By</label>
+                         <form-group input="updatedBy" errors="{required: 'Customer Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                       
+            <input
+                type="text"
+                name="updatedBy"
+                class="form-control create-project-inputboxes"
+                placeholder="Type in the Customer Name"
+                ng-model="ppc.permission.updatedBy"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group> -->
+                        <div class="form-group" style="padding-top: 3%;padding-left: 17%;">
+                           
+                             <input type="button" name="" class="btn btn-default white-cancel-btn" value="Cancel"  ng-click="$close()">
+                              <button type="submit" class="btn btn-raised btn-success green-btn-props" name=""  style="margin-left: 20px;" >Create</button>
+              
+                        </div>
+                    </form>
+</widget-modal>

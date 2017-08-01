@@ -5,10 +5,11 @@
         .module(HygieiaConfig.module)
         .controller('CodeAnalysisViewController', CodeAnalysisViewController);
 
-    CodeAnalysisViewController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal','$location','$routeParams','$cookies'];
-    function CodeAnalysisViewController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams,$cookies) {
+    CodeAnalysisViewController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal','$location','$routeParams','$cookies','dashboardData'];
+    function CodeAnalysisViewController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams,$cookies,dashboardData) {
         var ctrl = this;
         ctrl.dashBoardId = $routeParams.id;
+        $cookies.put('dashIdToJenkins', ctrl.dashBoardId);
         ctrl.componentId = $scope.widgetConfig.componentId;
         $cookies.put('cmpId', ctrl.componentId);
         ctrl.pieOptions = {
@@ -25,6 +26,34 @@
         coveragePieChart({});
 
         ctrl.load = function() {
+
+
+            $scope.clIdSnr = $cookies.get('sonarCollectrid');
+            dashboardData.getCollectorItemSonar($scope.clIdSnr).then(function(data) {
+                $scope.collectorDetailsSonar = data;
+            });
+
+            var caRequest = {
+                componentId: $scope.widgetConfig.componentId,
+                max: 1
+            };
+            var testRequest = {
+                componentId: $scope.widgetConfig.componentId,
+                types: ['Functional'],
+                max: 1
+            };
+            var saRequest = {
+                componentId: $scope.widgetConfig.componentId,
+                max: 1
+            };
+            return $q.all([
+                codeAnalysisData.staticDetails(caRequest).then(processCaResponse),
+                codeAnalysisData.securityDetails(saRequest).then(processSaResponse),
+                testSuiteData.details(testRequest).then(processTestResponse)
+            ]);
+        };
+
+         ctrl.loadSonar = function() {
             var caRequest = {
                 componentId: $scope.widgetConfig.componentId,
                 max: 1

@@ -62,14 +62,14 @@
 
 		function jiraDataGer(filterProjectId) { 
 			 
-			return $http.get('http://localhost:3000/api/getDefectSummery/' +filterProjectId)
+			return $http.get('/api/getDefectSummery/' +filterProjectId)
 					.then(function(response) {
 						return response.data;
 					});
 		}
 		function sprintDataFetch(filterProjectId) {  
 			 
-			return $http.get('http://localhost:3000/api/listAllSprints?projectId=' +filterProjectId)
+			return $http.get('/api/listAllSprints?projectId=' +filterProjectId)
 					.then(function(response) { 
 						return response.data;
 					});
@@ -77,7 +77,7 @@
 
 		function ReleaseDataFetch(filterProjectId) {  
 			 
-			return $http.get('http://localhost:3000/api/projectReleaseList?projectId=' +filterProjectId)
+			return $http.get('/api/projectReleaseList?projectId=' +filterProjectId)
 					.then(function(response) { 
 						return response.data;
 					});
