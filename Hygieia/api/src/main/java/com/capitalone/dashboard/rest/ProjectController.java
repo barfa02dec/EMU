@@ -43,7 +43,7 @@ public class ProjectController {
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project creation failed"); 
 			}
 		}catch (org.springframework.dao.DuplicateKeyException e) {
-			return ResponseEntity.status(HttpStatus.OK).body("project already Exists with Project Name::"+request.getProjectName());
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("project already Exists with Project ID::"+request.getProjectId());
 		}
 		catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project creation failed"); 
