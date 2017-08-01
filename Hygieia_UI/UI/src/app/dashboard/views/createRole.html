@@ -1,0 +1,86 @@
+
+
+<widget-modal widget-modal-title="Create Roles" style="background:#fff;" >
+<form class="form-horizontal" name="prc.createRoleModel" ng-submit="prc.postRole();" name="formname" novalidate >
+                    <label class="control-label col-sm-4 createproj-label-props" for="pwd">Created By</label>
+                         <form-group input="createdBy" errors="{required: 'Project ID is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                          
+            <input
+                type="text"
+                name="createdBy"
+                class="form-control create-project-inputboxes"
+                placeholder="Type in the Project ID"
+                ng-model="prc.role.createdBy"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required disabled/>
+        </form-group>
+                       
+                 <label class="control-label col-sm-4 createproj-label-props" for="pwd">Description</label>
+                              <form-group input="description" errors="{required: 'Project Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                         
+            <input
+                type="text"
+                name="description"
+                class="form-control create-project-inputboxes"
+                placeholder="Type in the new Project Name"
+                ng-model="prc.role.description"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required />
+        </form-group> 
+                       
+                       <label class="control-label col-sm-4 createproj-label-props" for="pwd">Role Key</label>
+                                  <form-group input="rolekey" errors="{required: 'BU is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                         
+            <input
+                type="text"
+                name="rolekey"
+                class="form-control create-project-inputboxes"
+                placeholder="Enter the LOB"
+                ng-model="prc.role.roleKey"
+                maxlength="40"
+                autocomplete="off"
+                minlength="3"
+                required/>
+        </form-group>  
+
+        <div class="dualmultiselect">
+           <!--  <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h4>{{spc.demoOptions.title}}<small>&nbsp;{{spc.demoOptions.helpMessage}}</small> </h4>
+                    <input class="form-control" placeholder="{{spc.demoOptions.filterPlaceHolder}}" ng-model="spc.searchTerm"> 
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <label>All Permissions</label>
+                  <!--   <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.items, spc.demoOptions.selectedItems, -1)"> Select All </button>  -->
+                    <div class="pool">
+                        <ul>
+                            <li ng-repeat="item in prc.getAllPermissions | filter: prc.searchTerm | orderBy: prc.getAllPermissions.orderProperty"> <a href="" ng-click="prc.transfer(prc.getAllPermissions, prc.getAllPermissions.selectedItems, prc.getAllPermissions.indexOf(item))">{{item}}&nbsp;&rArr; </a> </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <label>Selected Permissions</label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
+                    <div class="pool">
+                        <ul>
+                            <li ng-repeat="item in prc.getAllPermissions.selectedItems | orderBy: prc.getAllPermissions.orderProperty">
+                                <a href="" ng-click="prc.transfer(prc.getAllPermissions.selectedItems, prc.getAllPermissions, prc.getAllPermissions.selectedItems.indexOf(item))" > &lArr;&nbsp;{{item}}</a> 
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="form-group" style="padding-top: 3%;padding-left: 17%;">
+                           
+                             <input type="button" name="" class="btn btn-default white-cancel-btn" value="Cancel"  ng-click="$close()">
+                              <button type="submit" class="btn btn-raised btn-success green-btn-props" name=""  style="margin-left: 20px;" >Add</button>
+              
+                        </div>
+                    </form>
+</widget-modal>

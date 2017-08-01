@@ -2,7 +2,7 @@
  * Widget directives should be used in layout fines to define the
  * specific type of widget to be used in that space
  */
-(function () {
+(function() {
     'use strict';
 
     angular
@@ -25,9 +25,10 @@
         })
         .directive('widget', widgetDirective);
 
-    widgetDirective.$inject = ['$controller', '$http', '$templateCache', '$compile', 'widgetManager', '$uibModal', 'WidgetState', 'DisplayState', '$interval', 'dashboardData','$cookies'];
-    function widgetDirective($controller, $http, $templateCache, $compile, widgetManager, $uibModal, WidgetState, DisplayState, $interval, dashboardData,$cookies) {
-      
+    widgetDirective.$inject = ['$controller', '$http', '$templateCache', '$compile', 'widgetManager', '$uibModal', 'WidgetState', 'DisplayState', '$interval', 'dashboardData', '$cookies'];
+
+    function widgetDirective($controller, $http, $templateCache, $compile, widgetManager, $uibModal, WidgetState, DisplayState, $interval, dashboardData, $cookies) {
+
         return {
             templateUrl: 'app/dashboard/views/widget.html',
             require: '^widgetContainer',
@@ -43,7 +44,7 @@
         function link(scope, element, attrs, containerController) {
             // make it so name is not case sensitive
             attrs.name = attrs.name.toLowerCase();
-                
+
             scope.$widgetEl = element;
             scope.container = containerController;
             scope.widgetDefinition = widgetManager.getWidget(attrs.name);
@@ -69,8 +70,7 @@
                 // instead of the default logic to determine whether the widget should be loaded
                 if (scope.widgetDefinition.getState) {
                     scope.state = scope.widgetDefinition.getState(widgetConfig);
-                }
-                else if (!configFromApi) {
+                } else if (!configFromApi) {
                     if (scope.widgetDefinition.config) {
                         scope.state = WidgetState.CONFIGURE;
                     }
@@ -80,7 +80,7 @@
             }
         }
 
-        function controller($scope, $element) {
+        function controller($scope, $element, $routeParams,$cookies) {
             $scope.widget_state = WidgetState;
             $scope.display_state = DisplayState;
 
@@ -110,27 +110,99 @@
             $scope.configModal = configModal;
             $scope.setState = setState;
             $scope.init = init;
-            $scope.checkPermission=checkPermission;
+            $scope.checkPermission = checkPermission;
+            $scope.wid = $cookies.get('widId');
 
-            function checkPermission(){
+            function checkPermission() {
                 $scope.displayViewAll = true;
                 dashboardData.myowner($scope.dashboard.title).then(processmyownerresponse);
 
 
             }
 
-            function processmyownerresponse(data)
-            {
+            $scope.clid = $cookies.get('mycollector');
+            dashboardData.getCollectorItem($scope.clid).then(function(data) {
+                $scope.collectorDetails = data;
+                $scope.colll = $cookies.get('colId');
+            });
 
-                $scope.owner=data;
-                if ($scope.owner == $cookies.get('username') || $cookies.get('username') == 'admin')
-                {
-                    configModal();
+            $scope.clIdSnr = $cookies.get('sonarCollectrid');
+            dashboardData.getCollectorItemSonar($scope.clIdSnr).then(function(data) {
+                $scope.collectorDetailsSonar = data;
+                //$scope.colll = $cookies.get('colId');
+            });
+
+            $scope.check = function(selectedName) {
+                $scope.dashBoardIds = $routeParams.id;
+                $scope.ccc = selectedName;
+                console.log("asas" + $scope.selectedName);
+                $scope.colll = $cookies.get('colId');
+                $scope.dashIds = $cookies.get('dashIdToJenkins');
+                $scope.wid = $cookies.get('widId');
+
+
+
+                $scope.postpaly = {
+                    name: 'build',
+                    options: {
+                        id: 'build0',
+                        buildDurationThreshold: 4,
+                        consecutiveFailureThreshold: 2
+                    },
+                    componentId: $scope.colll,
+                    collectorItemIds: [selectedName.id]
                 }
-                else
-                {
-                    if($scope.alerts.length==0){
-                        $scope.alerts.push({type: 'info', msg: 'You are not authorized'});
+                //asd43343434-dashboard name
+                //1234asd1234asd-projectname
+                //username-was1234
+
+                $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widget/" + $scope.wid, ($scope.postpaly)).then(function(response) {
+
+                    refreshJenkins();
+                })
+
+
+            }
+
+            $scope.checkSonar = function(selectedNameSonar) {
+                $scope.dashBoardIds = $routeParams.id;
+                $scope.wid = $cookies.get('widId');
+                $scope.idComp = $cookies.get('compIdSonar');
+
+
+
+                $scope.postObjsonar = {
+                    name: 'codeanalysis',
+                    options: {
+                        id: 'codeanalysis0',
+                        testJobNames: []
+                    },
+                    componentId: $scope.idComp,
+                    collectorItemIds: [selectedNameSonar.id]
+                };
+                //asd43343434-dashboard name
+                //1234asd1234asd-projectname
+                //username-was1234
+
+                $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widget/" + $scope.wid, ($scope.postObjsonar)).then(function(response) {
+
+                    refreshSonar();
+                })
+
+
+            }
+
+            function processmyownerresponse(data) {
+
+                $scope.owner = data;
+                if ($scope.owner == $cookies.get('username') || $cookies.get('username') == 'admin') {
+                    configModal();
+                } else {
+                    if ($scope.alerts.length == 0) {
+                        $scope.alerts.push({
+                            type: 'info',
+                            msg: 'You are not authorized'
+                        });
                     }
                 }
             }
@@ -140,9 +212,9 @@
                 // load up a modal in the context of the settings defined in
                 // the config property when the widget was registered
                 var modalConfig = angular.extend({
-                	controllerAs: 'ctrl',
+                    controllerAs: 'ctrl',
                     resolve: {
-                        modalData: function () {
+                        modalData: function() {
                             return {
                                 dashboard: $scope.dashboard,
                                 widgetConfig: $scope.widgetConfig
@@ -160,7 +232,7 @@
                 if (newWidgetConfig) {
                     // use existing values if they're not defined
                     angular.extend($scope.widgetConfig, newWidgetConfig);
-
+                    $cookies.put('widId', $scope.widgetConfig.id);
                     // support single value or array values for collectorItemId
                     if ($scope.widgetConfig.collectorItemId) {
                         $scope.widgetConfig.collectorItemIds = [$scope.widgetConfig.collectorItemId];
@@ -170,7 +242,8 @@
                     console.log('New Widget Config', $scope.widgetConfig);
                     dashboardData
                         .upsertWidget($scope.dashboard.id, $scope.widgetConfig)
-                        .then(function (response) {
+                        .then(function(response) {
+
                             // response comes back with two properties, a widget and a component
                             // we need to update the component on the dashboard so that when the
                             // widget loads it will be able to get to the collector data. we
@@ -178,7 +251,7 @@
 
                             // add or update the widget from the response.
                             // required when a new widget id is created
-                            if(response.widget !== null && typeof response.widget == 'object') {
+                            if (response.widget !== null && typeof response.widget == 'object') {
                                 angular.extend($scope.widgetConfig, response.widget);
                             }
 
@@ -214,13 +287,15 @@
                     $scope: $scope
                 });
 
-                if(!$scope.widgetViewController.load) {
+                if (!$scope.widgetViewController.load) {
                     throw new Error(controllerName + ' must define a load method');
                 }
 
                 // load the widget with content from the given template url
-                $http.get(templateUrl, {cache: $templateCache})
-                    .then(function (response) {
+                $http.get(templateUrl, {
+                        cache: $templateCache
+                    })
+                    .then(function(response) {
                         //TODO: widget implementation should actually start this up after all the data is loaded
                         startInterval();
 
@@ -246,7 +321,7 @@
                 stopInterval();
 
                 // TODO: make timeout a setting in the widget configuration
-                if($scope.widgetViewController && $scope.widgetViewController.load) {
+                if ($scope.widgetViewController && $scope.widgetViewController.load) {
                     refreshInterval = $interval(refresh, HygieiaConfig.refresh * 1000);
                 }
             }
@@ -265,6 +340,26 @@
                 }
             }
 
+            function refreshJenkins() {
+                var load = $scope.widgetViewController.loadJenkins();
+                if (load && load.then) {
+                    load.then(function(result) {
+                        var lastUpdated = angular.isArray(result) ? _.max(result) : result;
+                        $scope.lastUpdatedDisplay = moment(lastUpdated).dash('ago');
+                    });
+                }
+            }
+
+            function refreshSonar() {
+                var load = $scope.widgetViewController.loadSonar();
+                if (load && load.then) {
+                    load.then(function(result) {
+                        var lastUpdated = angular.isArray(result) ? _.max(result) : result;
+                        $scope.lastUpdatedDisplay = moment(lastUpdated).dash('ago');
+                    });
+                }
+            }
+            
             // prevent intervals from continuing to be called when changing pages
             $scope.$on('$routeChangeStart', stopInterval);
         }

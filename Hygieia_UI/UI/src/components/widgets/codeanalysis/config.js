@@ -8,8 +8,8 @@
         .module(HygieiaConfig.module)
         .controller('CodeAnalysisConfigController', CodeAnalysisConfigController);
 
-    CodeAnalysisConfigController.$inject = ['modalData', '$scope', 'collectorData', '$uibModalInstance'];
-    function CodeAnalysisConfigController(modalData, $scope, collectorData, $uibModalInstance) {
+    CodeAnalysisConfigController.$inject = ['modalData', '$scope', 'collectorData', '$uibModalInstance','$cookies'];
+    function CodeAnalysisConfigController(modalData, $scope, collectorData, $uibModalInstance,$cookies) {
         var ctrl = this,
         widgetConfig = modalData.widgetConfig,
         component = modalData.dashboard.application.components[0];
@@ -90,6 +90,8 @@
         }
 
         function submitForm(caCollectorItem, saCollectorItem, testConfigs) {
+            $scope.sonarCollectr = caCollectorItem.collectorId;
+            $cookies.put('sonarCollectrid', $scope.sonarCollectr);
             var collectorItems = [];
             var testJobNames = [];
             if (caCollectorItem) collectorItems.push(caCollectorItem.id);
@@ -111,6 +113,7 @@
                 componentId: component.id,
                 collectorItemIds: collectorItems
             };
+            $cookies.put('compIdSonar', component.id);
             // pass this new config to the modal closing so it's saved
             $uibModalInstance.close(postObj);
         }

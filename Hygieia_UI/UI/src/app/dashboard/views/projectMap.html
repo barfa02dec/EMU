@@ -1,5 +1,10 @@
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+
+
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-<div class="main-container project-map-container">
+<div class="main-container project-map-container" style="background: #EFEFEF !important;">
 <div class="blue-header project-map-blue-bar">
       
  <span class="hamburger-ListdashPage project-map-hamburger">
@@ -43,7 +48,13 @@
              <span id="demo" class="signout-ListdashPage project-map-signout-mainParent">
             <div class="wrapper blddmenu">
                <div class="content blddmenu project-map-firstChild">
-                  <ul class="blddmenu">
+                 <ul class="blddmenu">
+                     <a>
+                        <li ng-click="pm.UserManagement()" style="font-size: 12px;">
+                        <a href="#/userManagement">UserManagement</a></li>
+                     </a>
+                  </ul>
+                   <ul class="blddmenu">
                      <a>
                         <li ng-click="pm.logout()" style="text-align:center;">Log out</li>
                      </a>
@@ -196,7 +207,7 @@
                <div class="col-md-1" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.projectId" class="set-width-input">
                </div>
-               <div class="col-md-1 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectId}}" style="">{{proj.projectId}}</div>
+               <div class="col-md-1 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id,proj.projectName);" ng-attr-title="{{proj.projectId}}" style="">{{proj.projectId}}</div>
 
 
             <div class="col-md-2" ng-show="proj.editorEnabled" style="padding-left: 50px;">
@@ -232,22 +243,20 @@
                 <span ng-if="!proj.program">NO pgms</span>
                  </div> -->
                <span class="col-md-2" style="padding-left: 43px;">
-               <!--   <span style="padding-left: 14px">
-                  <img src="assets/images/fld/share(1).png " class="ed-image-props project-map-crud-icons" style="width:22px;" ng-click="pm.shareProjectPopUp()" title="Share">
-               </span> -->
+             <span style="padding-left: 14px">
+                  <img src="assets/images/shareNew.png " class="ed-image-props project-map-crud-icons" style="width:22px;" ng-click="pm.shareProjectPopUp(proj)" title="Add User">
+               </span> 
                <span class="" ng-show="!proj.editorEnabled">
-                 <img src="assets/images/fld/edit.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
+                 <img src="assets/images/editNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
                </span>
                
                <span ng-click="pm.editproject(proj)" ng-show="proj.editorEnabled">
-                  <img src="assets/images/save_icon.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  title="Save">
+                  <img src="assets/images/savNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  title="Save">
                </span> 
                <span class="" >
-                 <img src="assets/images/fld/delete.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="pm.deleteProjectModel(proj)" title="Delete"> 
+                 <img src="assets/images/deleteNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="pm.deleteProjectModel(proj)" title="Delete"> 
                </span></span>
-              
-               <span class="" >
-              </span>
+            
 
 
 

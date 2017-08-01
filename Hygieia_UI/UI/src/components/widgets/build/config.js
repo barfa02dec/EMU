@@ -6,8 +6,8 @@
     angular
         .module(HygieiaConfig.module)
         .controller('BuildWidgetConfigController', BuildWidgetConfigController);
-    BuildWidgetConfigController.$inject = ['modalData', '$scope', 'collectorData', '$uibModalInstance'];
-    function BuildWidgetConfigController(modalData, $scope, collectorData, $uibModalInstance) {
+    BuildWidgetConfigController.$inject = ['modalData', '$scope', 'collectorData', '$uibModalInstance','$cookies'];
+    function BuildWidgetConfigController(modalData, $scope, collectorData, $uibModalInstance,$cookies) {
         var ctrl = this,
         widgetConfig = modalData.widgetConfig;
         
@@ -16,7 +16,7 @@
         ctrl.buildConsecutiveFailureThreshold = 5;
         
         $scope.getJobs = function (filter) {
-        	return collectorData.itemsByType('build', {"search": filter, "size": 20}).then(function (response){
+        	return collectorData.itemsByType('build', {"search": filter}).then(function (response){
         		return response;
         	});
         }
@@ -48,6 +48,9 @@
         }
 
         function submitForm(valid, collector) {
+            $scope.collId = collector.collectorId;
+            $cookies.put('mycollector', $scope.collId);
+
             console.log("Collector" + JSON.stringify(collector));
             if (valid) {
                 var form = document.buildConfigForm;
@@ -61,6 +64,7 @@
                     componentId: modalData.dashboard.application.components[0].id,
                     collectorItemId: collector.id,
                 };
+                $cookies.put('colId', modalData.dashboard.application.components[0].id);
                 // pass this new config to the modal closing so it's saved
                 $uibModalInstance.close(postObj);
             }

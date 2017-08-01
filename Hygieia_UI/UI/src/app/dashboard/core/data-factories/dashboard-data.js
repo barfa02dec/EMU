@@ -31,7 +31,9 @@
             delete: deleteDashboard,
             rename: renameDashboard,
             upsertWidget: upsertWidget,
-            types: types
+            types: types,
+            getCollectorItem:getCollectorItem,
+            getCollectorItemSonar:getCollectorItemSonar
         };
 
         // reusable helper
@@ -44,6 +46,20 @@
         // gets list of dashboards
         function search() {
             return getPromise(HygieiaConfig.local ? testSearchRoute : dashboardRoute);
+        }
+
+        function getCollectorItem(collectorsids){
+            return $http.get('/api/collector/items/' +collectorsids)
+                    .then(function(response) {
+                        return response.data;
+                    });
+        }
+
+        function getCollectorItemSonar(collectorsidsSnr){
+            return $http.get('/api/collector/items/' +collectorsidsSnr)
+                    .then(function(response) {
+                        return response.data;
+                    });
         }
 
         //gets list of owned dashboard

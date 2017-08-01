@@ -36,6 +36,18 @@
             <a href="#/jiraDashboard" target="_self" > 
             <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;color: #fff;">View All <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
             </a></span>
+
+              <span ng-show=" {{(title == 'Build')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
+                <select ng-model="selectedName" ng-options="selectedName.description for selectedName in collectorDetails" ng-change="check(selectedName)" style="color: #000;">
+                </select>
+ 
+           </span>
+
+           <span ng-show=" {{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
+                <select ng-model="selectedNameSonar" ng-options="selectedNameSonar.description for selectedNameSonar in collectorDetailsSonar" ng-change="checkSonar(selectedNameSonar)" style="color: #000;">
+                </select>
+ 
+           </span>
         </div>
 
 
