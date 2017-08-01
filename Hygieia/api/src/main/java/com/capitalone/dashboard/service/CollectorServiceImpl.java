@@ -66,7 +66,7 @@ public class CollectorServiceImpl implements CollectorService {
 	 * this filter will return the list by filtering with project.
 	 */
 	@Override
-	public Page<CollectorItem> collectorItemsByTypeWithFilter(CollectorType collectorType, String descriptionFilter, Pageable pageable, String project) {
+	public Page<CollectorItem> collectorItemsByTypeWithFilter(CollectorType collectorType, String descriptionFilter, Pageable pageable, String projectId) {
 		List<Collector> collectors = collectorRepository.findByCollectorType(collectorType);
 
         List<ObjectId> collectorIds = Lists.newArrayList(Iterables.transform(collectors, new ToCollectorId()));
@@ -76,7 +76,7 @@ public class CollectorServiceImpl implements CollectorService {
         List<CollectorItem> filterListByProject= new ArrayList<CollectorItem>();
         
     	for(CollectorItem ci: collectorItems){
-    		if(ci.getProject().equals(project)){
+    		if(ci.getProject().equals(projectId)){
     			filterListByProject.add(ci);
     		}
     	}

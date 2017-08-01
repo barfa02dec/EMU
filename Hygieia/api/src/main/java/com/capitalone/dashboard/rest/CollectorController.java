@@ -97,10 +97,10 @@ public class CollectorController {
 				.body(collectorItemsList);
     }
     
-    @RequestMapping(value = "/collector/item/type/{collectorType}/{project}", method = GET,
+    @RequestMapping(value = "/collector/item/type/{collectorType}/{projectId}", method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<CollectorItem>> collectorItemsByTypeAndProjectName(@PathVariable CollectorType collectorType,@PathVariable String project, @RequestParam(value="search", required=false, defaultValue="") String descriptionFilter, @PageableDefault(size=Integer.MAX_VALUE) Pageable pageable) {
-    	Page<CollectorItem> pageOfCollectorItems = collectorService.collectorItemsByTypeWithFilter(collectorType, descriptionFilter, pageable,project);
+    public ResponseEntity<List<CollectorItem>> collectorItemsByTypeAndProjectName(@PathVariable CollectorType collectorType,@PathVariable String projectId, @RequestParam(value="search", required=false, defaultValue="") String descriptionFilter, @PageableDefault(size=Integer.MAX_VALUE) Pageable pageable) {
+    	Page<CollectorItem> pageOfCollectorItems = collectorService.collectorItemsByTypeWithFilter(collectorType, descriptionFilter, pageable,projectId);
 		return ResponseEntity
 				.ok()
 				.headers(paginationHeaderUtility.buildPaginationHeaders(pageOfCollectorItems))

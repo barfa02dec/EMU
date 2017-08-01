@@ -41,7 +41,7 @@ public interface CollectorService {
 	 * @param string project for which we are getting the jobs
      * @return CollectorItems matching the specified type
      */
-    Page<CollectorItem> collectorItemsByTypeWithFilter(CollectorType collectorType, String descriptionFilter, Pageable pageable, String project);
+    Page<CollectorItem> collectorItemsByTypeWithFilter(CollectorType collectorType, String descriptionFilter, Pageable pageable, String projectId);
     
     /**
      * Find a CollectorItem by it's id.
