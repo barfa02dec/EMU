@@ -13,7 +13,7 @@ public class PermissionRequest {
 	private String id;
 	@NotNull
 	private boolean status;
-	
+	private boolean editorEnabled;
 	public String getName() {
 		return name;
 	}
@@ -61,6 +61,12 @@ public class PermissionRequest {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public boolean isEditorEnabled() {
+		return editorEnabled;
+	}
+	public void setEditorEnabled(boolean editorEnabled) {
+		this.editorEnabled = editorEnabled;
 	}
 	
 	
