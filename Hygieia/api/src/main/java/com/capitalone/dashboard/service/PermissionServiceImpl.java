@@ -83,7 +83,7 @@ public class PermissionServiceImpl implements PermissionService {
 		if(null!=permisssionReq.getName()){
 			Permission permissionInDB=permissionsRepository.findByName(permisssionReq.getName());
 			if(null!=permissionInDB){
-				permissionsRepository.save(mapPermissionRequestToPermissionModelForUpdatePermission(permisssionReq, permissionInDB));
+				return permissionsRepository.save(mapPermissionRequestToPermissionModelForUpdatePermission(permisssionReq, permissionInDB));
 			}
 			
 		}
