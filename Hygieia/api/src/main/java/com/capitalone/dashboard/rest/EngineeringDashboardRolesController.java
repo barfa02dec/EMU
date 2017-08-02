@@ -25,11 +25,20 @@ public class EngineeringDashboardRolesController {
 
 	@RequestMapping(method=RequestMethod.POST,value="/engineeringDashboardUserRole")
 	public ResponseEntity<UserRole> createEngineeringDashboardRole(@RequestBody UserRoleRequest roleRequest){
-		UserRole response=userRoleService.createUserRole(roleRequest);
-		if(response!=null)
-		{
-			return ResponseEntity.status(HttpStatus.OK).body(response);
-		}else{
+	
+		try{
+			UserRole response=userRoleService.createUserRole(roleRequest);
+			if(response!=null)
+			{
+				return ResponseEntity.status(HttpStatus.OK).body(response);
+			}else{
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+
+			}
+		}catch (org.springframework.dao.DuplicateKeyException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+
+		}catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 
 		}

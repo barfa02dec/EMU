@@ -1,5 +1,7 @@
 package com.capitalone.dashboard.rest;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,19 +24,26 @@ public class EngineeringDashboardPermissionsController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/engineeringDashboardPermission")
-	public ResponseEntity<Permission> createEngineeringDashboardPermission(@RequestBody PermissionRequest permissionRequest){
-		Permission response=permissionService.createPermission(permissionRequest);
-		if(response!=null)
-		{
-			return ResponseEntity.status(HttpStatus.OK).body(response);
-		}else{
+	public ResponseEntity<Permission> createEngineeringDashboardPermission(@Valid @RequestBody PermissionRequest permissionRequest){
+		try{
+			Permission response=permissionService.createPermission(permissionRequest);
+			if(response!=null)
+			{
+				return ResponseEntity.status(HttpStatus.OK).body(response);
+			}else{
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+
+			}
+		}catch (org.springframework.dao.DuplicateKeyException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+		}catch(Exception e1){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 
 		}
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/engineeringDashboardPermissionMultiple")
-	public ResponseEntity<Iterable<Permission>> createMultipleEngineeringDashboardPermission(@RequestBody Iterable<PermissionRequest> permissionRequest){
+	public ResponseEntity<Iterable<Permission>> createMultipleEngineeringDashboardPermission(@Valid @RequestBody Iterable<PermissionRequest> permissionRequest){
 		Iterable<Permission> response=permissionService.createPermissions(permissionRequest);
 		if(response!=null)
 		{
@@ -62,7 +71,7 @@ public class EngineeringDashboardPermissionsController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/engineeringDashboardPermissionUpdate")
-	public ResponseEntity<Permission> updateEngineeringDashboardPermission(@RequestBody PermissionRequest permissionRequest){
+	public ResponseEntity<Permission> updateEngineeringDashboardPermission(@Valid @RequestBody PermissionRequest permissionRequest){
 		Permission response= permissionService.updatePermission(permissionRequest);
 		if(response!=null)
 		{
