@@ -101,11 +101,11 @@ public class UserRoleServiceImpl implements UserRoleService {
 	public UserRole editUserRole(UserRoleRequest role) {
 		UserRole roleInDb=roleRepository.findByRoleKey(role.getRoleKey());
 		if(null!=roleInDb){
-			
-			if(null!=role.getPermissions())
-			 {
-				roleInDb.getPermissions().keySet().retainAll(role.getPermissions());
-			 }
+			Map<String , Boolean> permissions= new HashMap<String , Boolean>();
+			for(String permit:role.getPermissions()){
+				permissions.put(permit, Boolean.TRUE);
+			}
+			roleInDb.setPermissions(permissions);
 			roleInDb.setDescription(role.getDescription());
 			roleInDb.setUpdatedBy(role.getUpdatedBy());
 			roleInDb.setLastUpdatedOn(new Date().toString());
