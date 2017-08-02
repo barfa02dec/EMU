@@ -82,8 +82,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 		UserRole roleInDb=roleRepository.findByRoleKey(key);
 		if(null!=roleInDb){
 			roleInDb.setEnabled(false);
-			roleRepository.save(roleInDb);
-			return roleInDb;
+			return roleRepository.save(roleInDb);
 			}
 		return null;
 	}
@@ -93,10 +92,26 @@ public class UserRoleServiceImpl implements UserRoleService {
 		UserRole roleInDb=roleRepository.findByRoleKey(key);
 		if(null!=roleInDb){
 			roleInDb.setEnabled(true);
-			roleRepository.save(roleInDb);
-			return roleInDb;
+			return roleRepository.save(roleInDb);
 		}
 		return null;
+	}
+
+	@Override
+	public UserRole editUserRole(UserRoleRequest role) {
+		UserRole roleInDb=roleRepository.findByRoleKey(role.getRoleKey());
+		if(null!=roleInDb){
+			
+			if(null!=role.getPermissions())
+			 {
+				roleInDb.getPermissions().keySet().retainAll(role.getPermissions());
+			 }
+			roleInDb.setDescription(role.getDescription());
+			roleInDb.setUpdatedBy(role.getUpdatedBy());
+			roleInDb.setLastUpdatedOn(new Date().toString());
+		}
+		
+		return roleRepository.save(roleInDb);
 	}
 
 }

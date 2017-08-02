@@ -24,7 +24,7 @@ public class EngineeringDashboardRolesController {
 	}
 
 	@RequestMapping(method=RequestMethod.POST,value="/engineeringDashboardUserRole")
-	public ResponseEntity<UserRole> createEngineeringDashboardPermission(@RequestBody UserRoleRequest roleRequest){
+	public ResponseEntity<UserRole> createEngineeringDashboardRole(@RequestBody UserRoleRequest roleRequest){
 		UserRole response=userRoleService.createUserRole(roleRequest);
 		if(response!=null)
 		{
@@ -35,8 +35,20 @@ public class EngineeringDashboardRolesController {
 		}
 	}
 	
+	@RequestMapping(method=RequestMethod.POST,value="/engineeringDashboardUserRoleEdit")
+	public ResponseEntity<UserRole> editEngineeringDashboardRole(@RequestBody UserRoleRequest roleRequest){
+		UserRole response=userRoleService.editUserRole(roleRequest);
+		if(response!=null)
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(response);
+		}else{
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+
+		}
+	}
+	
 	@RequestMapping(method=RequestMethod.POST,value="/engineeringDashboardBulkUserRole")
-	public ResponseEntity<Iterable<UserRole>> createMultipleEngineeringDashboardPermission(@RequestBody Iterable<UserRoleRequest> roleRequest){
+	public ResponseEntity<Iterable<UserRole>> createMultipleEngineeringDashboardRoles(@RequestBody Iterable<UserRoleRequest> roleRequest){
 		Iterable<UserRole> response=userRoleService.createBulkUserRole(roleRequest);
 		if(response!=null)
 		{
@@ -48,18 +60,18 @@ public class EngineeringDashboardRolesController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/allActiveEngineeringDashboardUserRolesRoles")
-	public Iterable<UserRole> getAllActiveEngineeringDashboardPermission(){
+	public Iterable<UserRole> getAllActiveEngineeringDashboardRole(){
 		return userRoleService.getAllActiveUserRoles();
 	}
 	
 
 	@RequestMapping(method=RequestMethod.GET,value="/allInActiveEngineeringDashboardUserRolesRoles")
-	public Iterable<UserRole> getAllInActiveEngineeringDashboardPermission(){
+	public Iterable<UserRole> getAllInActiveEngineeringDashboardRole(){
 		return userRoleService.getAllInactiveUserRoles();
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/deactivateEngineeringDashboardUserRoles")
-	public ResponseEntity<UserRole> deactivateEngineeringDashboardPermission(@RequestParam(name="key") String key){
+	public ResponseEntity<UserRole> deactivateEngineeringDashboardRole(@RequestParam(name="key") String key){
 		UserRole response=  userRoleService.deactivateRole(key);
 		if(response!=null)
 		{
@@ -71,7 +83,7 @@ public class EngineeringDashboardRolesController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST,value="/reactivateEngineeringDashboardUserRoles")
-	public ResponseEntity<UserRole> reactivateEngineeringDashboardPermission(@RequestParam(name="key") String key){
+	public ResponseEntity<UserRole> reactivateEngineeringDashboardRole(@RequestParam(name="key") String key){
 		UserRole response=  userRoleService.reactivateRole(key);
 		if(response!=null)
 		{

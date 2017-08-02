@@ -10,5 +10,5 @@ public interface UserRoleService {
 	public Iterable<UserRole> createBulkUserRole(Iterable<UserRoleRequest> roles);
 	public UserRole deactivateRole(String key);
 	public UserRole reactivateRole(String key);
-	
+	public UserRole editUserRole(UserRoleRequest role);
 }

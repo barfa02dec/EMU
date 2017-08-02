@@ -21,7 +21,6 @@ public class Authentication extends BaseModel {
 
     private String password;
     
-   // private List<Project> projectIds;
 
 
     public Authentication(String username, String password) {
@@ -44,15 +43,7 @@ public class Authentication extends BaseModel {
     public void setPassword(String password) {
         this.password = hash(password);
     }
-    
-   /*public List<Project> getProjectIds() {
-		return projectIds;
-	}*/
-
-	/*public void setProjectIds(List<Project> projectIds) {
-		this.projectIds = projectIds;
-	}*/
-
+  
 	static String hash(String password) {
         if (!password.startsWith(HASH_PREFIX)) {
             return HASH_PREFIX + Hashing.sha512().hashString(password, StandardCharsets.UTF_8).toString();

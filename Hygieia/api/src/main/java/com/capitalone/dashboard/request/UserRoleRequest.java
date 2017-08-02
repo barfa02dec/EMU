@@ -3,8 +3,6 @@ package com.capitalone.dashboard.request;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.capitalone.dashboard.model.Permission;
-
 public class UserRoleRequest {
 	private String roleKey;
 	private String description;
