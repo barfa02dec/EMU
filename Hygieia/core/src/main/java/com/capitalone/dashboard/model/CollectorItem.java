@@ -32,6 +32,7 @@ public class CollectorItem extends BaseModel {
     private Map<String,Object> options = new HashMap<>();
     private String project;
     private boolean toShowIndashboard;
+    private boolean taggedInComponents;
 
     @Transient
     private Collector collector;
@@ -112,7 +113,13 @@ public class CollectorItem extends BaseModel {
 		this.toShowIndashboard = toShowIndashboard;
 	}
 
+	public boolean isTaggedInComponents() {
+		return taggedInComponents;
+	}
+
+	public void setTaggedInComponents(boolean taggedInComponents) {
+		this.taggedInComponents = taggedInComponents;
+	}
+
 	
-	
-    
 }

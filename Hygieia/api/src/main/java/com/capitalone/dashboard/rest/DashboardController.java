@@ -7,6 +7,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -56,7 +57,7 @@ public class DashboardController {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(dashboardService.create(request.toDashboard()));
-        } catch (HygieiaException he) {
+        } catch (Exception he) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(null);
@@ -152,10 +153,38 @@ public class DashboardController {
                 request.getComponentId(), request.getCollectorItemIds());
 
         Dashboard dashboard = dashboardService.get(id);
-        Widget widget = request.updateWidget(dashboardService.getWidget(dashboard, widgetId));
+        // get the respective widget from dashboard.
+        Widget widget =dashboard.getWidgets().stream().filter( p -> p.getName().equals(request.getName())).collect(Collectors.toList()).get(0);
+        if(!request.getOptions().isEmpty())
+        	{
+        		widget.getOptions().putAll(request.getOptions());
+        	}
+        widget = dashboardService.updateWidget(dashboard, widget);
+        return ResponseEntity.ok().body(new WidgetResponse(component, widget));
+    }
+    /*
+     * This API will update the widjet with type: build,codeanalysis
+     */
+    @RequestMapping(value = "/dashboard/{id}/widgetType/{widgetType}", method = PUT,
+            consumes = APPLICATION_JSON_VALUE)
+    public ResponseEntity<WidgetResponse> updateWidgetWithWidjetType(@PathVariable ObjectId id,
+    																 @PathVariable String widgetType,
+                                                                     @RequestBody WidgetRequest request) {
+    	Dashboard dashboard = dashboardService.get(id);
+        // get the respective widget from dashboard.
+         Widget widget =dashboard.getWidgets().stream().filter( p -> p.getName().equals(widgetType)).collect(Collectors.toList()).get(0);
+      
+        Component component = dashboardService.associateCollectorToComponent(
+        		widget.getComponentId(), request.getCollectorItemIds());
+                 
+        if(!request.getOptions().isEmpty())
+        	{
+        		widget.getOptions().putAll(request.getOptions());
+        	}
         widget = dashboardService.updateWidget(dashboard, widget);
 
         return ResponseEntity.ok().body(new WidgetResponse(component, widget));
+       
     }
 
     @RequestMapping(value = "/dashboard/mydashboard", method = GET,

@@ -93,4 +93,7 @@ public interface CollectorService {
      */
     
     List<CollectorItem>  collectorsByCollectorId(ObjectId collectorId);
+    
+    ObjectId getCollectorIdByCollectorType(CollectorType collectorType);
+    
 }

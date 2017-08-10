@@ -87,6 +87,16 @@ public class CollectorController {
 				.body(pageOfCollectorItems.getContent());
     }
     
+    @RequestMapping(value = "/collector/item/typeId/{collectorType}", method = GET,
+            produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<ObjectId> collectorIdByType(@PathVariable CollectorType collectorType) {
+    	ObjectId collectorId = collectorService.getCollectorIdByCollectorType(collectorType);
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(collectorId);
+    	
+    }
+    
     
     @RequestMapping(value = "/collector/items/{collectorId}", method = GET,
             produces = APPLICATION_JSON_VALUE)

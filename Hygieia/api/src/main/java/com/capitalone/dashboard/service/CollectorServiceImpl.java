@@ -196,4 +196,14 @@ public class CollectorServiceImpl implements CollectorService {
 		//sending attribute true to get list with flag "toShowIndashboard" : true
 		return collectorItemRepository.findBycollectorId(collectorId,true);
 	}
+
+	@Override
+	public ObjectId getCollectorIdByCollectorType(CollectorType collectorType) {
+		List<Collector> collectorsById=collectorRepository.findByCollectorType(collectorType);
+		if(!collectorsById.isEmpty()){
+			return collectorsById.get(0).getId();
+		}else{
+			return null;
+		}
+	}
 }
