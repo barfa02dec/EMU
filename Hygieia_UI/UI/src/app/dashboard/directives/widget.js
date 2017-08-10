@@ -133,38 +133,42 @@
             });
 
             $scope.check = function(selectedName) {
+                selectedName= JSON.parse(selectedName);
                 $scope.dashBoardIds = $routeParams.id;
-                $scope.ccc = selectedName;
-                console.log("asas" + $scope.selectedName);
                 $scope.colll = $cookies.get('colId');
                 $scope.dashIds = $cookies.get('dashIdToJenkins');
                 $scope.wid = $cookies.get('widId');
 
 
 
-                $scope.postpaly = {
+                $scope.postPayload = {
                     name: 'build',
                     options: {
-                        id: 'build0',
-                        buildDurationThreshold: 4,
-                        consecutiveFailureThreshold: 2
-                    },
+                             },
                     componentId: $scope.colll,
                     collectorItemIds: [selectedName.id]
                 }
                 //asd43343434-dashboard name
                 //1234asd1234asd-projectname
                 //username-was1234
-
-                $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widget/" + $scope.wid, ($scope.postpaly)).then(function(response) {
+                if($scope.wid){
+                    $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widget/" + $scope.wid, ($scope.postPayload)).then(function(response) {
 
                     refreshJenkins();
                 })
+                }else{
+                    $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/build" , ($scope.postPayload)).then(function(response) {
+
+                    refreshJenkins();
+                })
+                }
+                
 
 
             }
 
             $scope.checkSonar = function(selectedNameSonar) {
+                selectedNameSonar=JSON.parse(selectedNameSonar);
                 $scope.dashBoardIds = $routeParams.id;
                 $scope.wid = $cookies.get('widId');
                 $scope.idComp = $cookies.get('compIdSonar');
@@ -183,11 +187,19 @@
                 //asd43343434-dashboard name
                 //1234asd1234asd-projectname
                 //username-was1234
-
-                $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widget/" + $scope.wid, ($scope.postObjsonar)).then(function(response) {
+                if($scope.wid){
+                     $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widget/" + $scope.wid, ($scope.postObjsonar)).then(function(response) {
 
                     refreshSonar();
                 })
+
+                }else{
+                     $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/codeanalysis", ($scope.postObjsonar)).then(function(response) {
+
+                    refreshSonar();
+                })
+                }
+               
 
 
             }

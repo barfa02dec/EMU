@@ -48,17 +48,19 @@
              <span id="demo" class="signout-ListdashPage project-map-signout-mainParent">
             <div class="wrapper blddmenu">
                <div class="content blddmenu project-map-firstChild">
-                 <ul class="blddmenu">
-                     <a>
-                        <li ng-click="pm.UserManagement()" style="font-size: 12px;">
-                        <a href="#/userManagement">UserManagement</a></li>
-                     </a>
-                  </ul>
-                   <ul class="blddmenu">
+               
+               <ul class="blddmenu">
                      <a>
                         <li ng-click="pm.logout()" style="text-align:center;">Log out</li>
                      </a>
                   </ul>
+                   <!-- 
+                  <ul class="blddmenu">
+                     <a>
+                        <li ng-click="pm.UserManagement()" style="font-size: 12px;">
+                        <a href="#/userManagement">UserManagement</a></li>
+                     </a>
+                  </ul>-->
                </div>
                <div class="parent">
                   <svg version="1.1"
@@ -243,9 +245,9 @@
                 <span ng-if="!proj.program">NO pgms</span>
                  </div> -->
                <span class="col-md-2" style="padding-left: 43px;">
-             <span style="padding-left: 14px">
+                <!--<span style="padding-left: 14px">
                   <img src="assets/images/shareNew.png " class="ed-image-props project-map-crud-icons" style="width:22px;" ng-click="pm.shareProjectPopUp(proj)" title="Add User">
-               </span> 
+               </span> -->
                <span class="" ng-show="!proj.editorEnabled">
                  <img src="assets/images/editNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
                </span>

@@ -49,17 +49,31 @@
         }
 
         function getCollectorItem(collectorsids){
-            return $http.get('/api/collector/items/' +collectorsids)
-                    .then(function(response) {
-                        return response.data;
+
+           return  $http.get('/api/collector/item/typeId/Build')
+                    .then(function(data) {
+                        collectorsids=data.data;
+                             return $http.get('/api/collector/items/' +collectorsids)
+                            .then(function(response) {
+                                return response.data;
+                            });
                     });
+
+            
         }
 
         function getCollectorItemSonar(collectorsidsSnr){
-            return $http.get('/api/collector/items/' +collectorsidsSnr)
-                    .then(function(response) {
-                        return response.data;
+
+            return   $http.get('/api/collector/item/typeId/CodeQuality')
+                    .then(function(data) {
+                        collectorsidsSnr=data.data;
+                            return $http.get('/api/collector/items/' +collectorsidsSnr)
+                            .then(function(response) {
+                                return response.data;
+                            });
                     });
+
+            
         }
 
         //gets list of owned dashboard

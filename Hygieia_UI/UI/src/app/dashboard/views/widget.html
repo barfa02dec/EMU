@@ -6,7 +6,7 @@
             <span ng-show=" {{(title == 'Feature')}}" style="padding-left:17px;">{{title}}</span>
             <span ng-show=" {{(title == 'Build')}}" style="padding-left:3px;">{{title}}</span>
             <span ng-show=" {{(title == 'Code Repo')}}" style="padding-left:11px;">{{title}}</span>
-            <span ng-show=" {{(title == 'Quality')}}" style="padding-left:27px;">{{title}}</span>
+            <span ng-show=" {{(title == 'Quality')}}" style="padding-left:27px;">Code {{title}}</span>
             <span class="widget-settings-icon clickable pull-right fa fa-cog"
                 type="button"
                 ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"
@@ -36,18 +36,29 @@
             <a href="#/jiraDashboard" target="_self" > 
             <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;color: #fff;">View All <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
             </a></span>
-
+            
               <span ng-show=" {{(title == 'Build')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
-                <select ng-model="selectedName" ng-options="selectedName.description for selectedName in collectorDetails" ng-change="check(selectedName)" style="color: #000;">
-                </select>
+                  <!--   <select ng-model="selectedName" ng-options="selectedName.description for selectedName in collectorDetails" ng-change="check(selectedName)" style="color: #000;">
+
+                    </select> -->
+                     <select ng-model="selectedName" ng-change="check(selectedName)" style="color: #000;">
+                         <option ng-repeat="selectedName in collectorDetails" value="{{selectedName}}" 
+                          ng-selected="selectedName.taggedInComponents == true">{{selectedName.description}}</option>
+                        </select>
  
            </span>
 
            <span ng-show=" {{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
-                <select ng-model="selectedNameSonar" ng-options="selectedNameSonar.description for selectedNameSonar in collectorDetailsSonar" ng-change="checkSonar(selectedNameSonar)" style="color: #000;">
-                </select>
+                <!-- <select ng-model="selectedNameSonar" ng-options="selectedNameSonar.description for selectedNameSonar in collectorDetailsSonar" ng-change="checkSonar(selectedNameSonar)" style="color: #000;">
+                </select> -->
+
+                <select ng-model="selectedNameSonar" ng-change="checkSonar(selectedNameSonar)" style="color: #000;">
+                         <option ng-repeat="selectedNameSonar in collectorDetailsSonar" value="{{selectedNameSonar}}"
+                         ng-selected="selectedNameSonar.taggedInComponents == true">{{selectedNameSonar.description}}</option>
+                        </select>
  
            </span>
+          
         </div>
 
 
