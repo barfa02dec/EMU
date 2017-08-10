@@ -168,12 +168,12 @@ public class DashboardServiceImpl implements DashboardService {
             Collector collector = collectorRepository.findOne(collectorItem.getCollectorId());
             if (!incomingTypes.contains(collector.getCollectorType())) {
             	incomingTypes.add(collector.getCollectorType());
-            	if(!component.getCollectorItems().isEmpty() && null!=component.getCollectorItems().get(collector.getCollectorType()) && !component.getCollectorItems().get(collector.getCollectorType()).isEmpty()){
+            	/*if(!component.getCollectorItems().isEmpty() && null!=component.getCollectorItems().get(collector.getCollectorType()) && !component.getCollectorItems().get(collector.getCollectorType()).isEmpty()){
                     CollectorItem itemToUnTagFromDashboard=component.getCollectorItems().get(collector.getCollectorType()).get(0);
                     itemToUnTagFromDashboard.setTaggedInComponents(false);
                     toSaveCollectorItemList.add(itemToUnTagFromDashboard);
 
-            	}
+            	}*/
                 component.getCollectorItems().remove(collector.getCollectorType());
                 
             }
@@ -187,7 +187,7 @@ public class DashboardServiceImpl implements DashboardService {
 
             if (collectorItem.isEnabled()) {
                 collectorItem.setToShowIndashboard(true);
-                collectorItem.setTaggedInComponents(true);
+                //collectorItem.setTaggedInComponents(true);
                 toSaveCollectorItemList.add(collectorItem);
             }
 
