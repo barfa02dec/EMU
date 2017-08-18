@@ -81,6 +81,12 @@
         }
 
         function controller($scope, $element, $routeParams,$cookies) {
+            $scope.selectedDashboard = $routeParams.id;
+            $scope.selectedName = $cookies.get('selectedName');
+             $scope.selectedNameSonar = $cookies.get('selectedNameSonar');
+          
+            
+            //debugger;
             $scope.widget_state = WidgetState;
             $scope.display_state = DisplayState;
 
@@ -131,48 +137,44 @@
                 $scope.collectorDetailsSonar = data;
                 //$scope.colll = $cookies.get('colId');
             });
+            if(!$cookies.setCookieSelectedName || $cookies.setCookieSelectedName.length == 0)
+                $cookies.setCookieSelectedName = [];
 
             $scope.check = function(selectedName) {
-                selectedName= JSON.parse(selectedName);
+                //selectedName= JSON.parse(selectedName);
                 $scope.dashBoardIds = $routeParams.id;
                 $scope.colll = $cookies.get('colId');
                 $scope.dashIds = $cookies.get('dashIdToJenkins');
                 $scope.wid = $cookies.get('widId');
-
-
-
+                $scope.present = 0;
+                //$cookies.putObject('cookieSelectedName',[]);
+                $cookies.put('selectedName', selectedName);
+               
                 $scope.postPayload = {
                     name: 'build',
                     options: {
                              },
                     componentId: $scope.colll,
-                    collectorItemIds: [selectedName.id]
+                    collectorItemIds: [selectedName]
                 }
                 //asd43343434-dashboard name
                 //1234asd1234asd-projectname
                 //username-was1234
-                if($scope.wid){
-                    $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widget/" + $scope.wid, ($scope.postPayload)).then(function(response) {
+                $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/build" , ($scope.postPayload)).then(function(response) {
 
                     refreshJenkins();
-                })
-                }else{
-                    $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/build" , ($scope.postPayload)).then(function(response) {
-
-                    refreshJenkins();
-                })
-                }
+                 }) 
                 
 
 
             }
 
             $scope.checkSonar = function(selectedNameSonar) {
-                selectedNameSonar=JSON.parse(selectedNameSonar);
+                //selectedNameSonar=JSON.parse(selectedNameSonar);
                 $scope.dashBoardIds = $routeParams.id;
                 $scope.wid = $cookies.get('widId');
                 $scope.idComp = $cookies.get('compIdSonar');
-
+                $cookies.put('selectedNameSonar', selectedNameSonar);
 
 
                 $scope.postObjsonar = {
@@ -182,23 +184,15 @@
                         testJobNames: []
                     },
                     componentId: $scope.idComp,
-                    collectorItemIds: [selectedNameSonar.id]
+                    collectorItemIds: [selectedNameSonar]
                 };
                 //asd43343434-dashboard name
                 //1234asd1234asd-projectname
                 //username-was1234
-                if($scope.wid){
-                     $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widget/" + $scope.wid, ($scope.postObjsonar)).then(function(response) {
+               $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/codeanalysis", ($scope.postObjsonar)).then(function(response) {
 
                     refreshSonar();
-                })
-
-                }else{
-                     $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/codeanalysis", ($scope.postObjsonar)).then(function(response) {
-
-                    refreshSonar();
-                })
-                }
+				 }) 
                
 
 
@@ -353,6 +347,7 @@
             }
 
             function refreshJenkins() {
+                $cookies.get("selectedName");
                 var load = $scope.widgetViewController.loadJenkins();
                 if (load && load.then) {
                     load.then(function(result) {

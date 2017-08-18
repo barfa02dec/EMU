@@ -121,6 +121,9 @@
 
 
         function open(dashboardId) {
+            $cookies.get("selectedName");
+            $cookies.get("selectedNameSonar");
+            
             $location.path('/dashboard/' + dashboardId);
             $cookies.put('dashboardidpa', dashboardId);
         }

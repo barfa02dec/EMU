@@ -42,7 +42,7 @@
 
                     </select> -->
                      <select ng-model="selectedName" ng-change="check(selectedName)" style="color: #000;">
-                         <option ng-repeat="selectedName in collectorDetails" value="{{selectedName}}">{{selectedName.description}}</option>
+                         <option ng-repeat="eachSelectedName in collectorDetails" value="{{eachSelectedName.id}}">{{eachSelectedName.description}}</option>
                         </select>
  
            </span>
@@ -52,7 +52,7 @@
                 </select> -->
 
                 <select ng-model="selectedNameSonar" ng-change="checkSonar(selectedNameSonar)" style="color: #000;">
-                         <option ng-repeat="selectedNameSonar in collectorDetailsSonar" value="{{selectedNameSonar}}">{{selectedNameSonar.description}}</option>
+                         <option ng-repeat="eachselectedNameSonar in collectorDetailsSonar" value="{{eachselectedNameSonar.id}}">{{eachselectedNameSonar.description}}</option>
                         </select>
  
            </span>
