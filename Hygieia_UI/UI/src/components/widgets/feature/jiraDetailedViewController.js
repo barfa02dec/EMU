@@ -381,8 +381,8 @@
       //Processing Release Data
         function ReleaseDataProcessing(data){
           ctrl.releasegraph = data.versionData;
-          var noOfStoryCompleted = ["No of Story Completed"];
-          var noOfStoryPoints = ["No of Story Points"];
+          var noOfStoryCompleted = ["No of Story points completed"];
+          var noOfStoryPoints = ["No of Stories Completed"];
           var totaldefectsFound = ["Total Defects Found"];
           var releaseName = [];
           var totalDefectsResolved = ["Total Defects Resolved"];
