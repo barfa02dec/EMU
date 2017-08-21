@@ -81,7 +81,7 @@
             var deferred = $q.defer();
             var params = {
                 componentId: $scope.widgetConfig.componentId,
-                numberOfDays: 15
+                numberOfDays: 30
             };
             buildData.details(params).then(function(data) {
                 builds = data.result;
