@@ -1,7 +1,5 @@
 package com.capitalone.dashboard.request;
 
-import java.util.Set;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -24,10 +22,9 @@ public class ProjectRequest {
 	@NotNull
     @Size(min=3,max=40, message="client details should be min=3,max=40 characters")
 	private String client;
-	private Set<String> projectUsersList;
 	private String id;
 	private boolean editorEnabled;
-	
+	private String user;
 	public boolean isEditorEnabled() {
 		return editorEnabled;
 	}
@@ -40,12 +37,7 @@ public class ProjectRequest {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public Set<String> getProjectUsersList() {
-		return projectUsersList;
-	}
-	public void setProjectUsersList(Set<String> projectUsersList) {
-		this.projectUsersList = projectUsersList;
-	}
+	
 	public String getProjectName() {
 		return projectName;
 	}
@@ -89,8 +81,11 @@ public class ProjectRequest {
 	public void setProjectOwner(String projectOwner) {
 		this.projectOwner = projectOwner;
 	}
+	public String getUser() {
+		return user;
+	}
+	public void setUser(String user) {
+		this.user = user;
+	}
 	
-	
-	
-
 }

@@ -1,6 +1,7 @@
 package com.capitalone.dashboard.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
@@ -18,6 +19,7 @@ QueryDslPredicateExecutor<UserRole>, UserRoleRepositoryCustom {
 	@Query(value = "{'enabled' : ?0}")
 	List<UserRole> findByStatus(boolean status);
 	
-	
+	@Query(value = "{'permissions' : ?0}")
+	List<UserRole> findByPermissionKey(Map<String,Boolean> permissionKey);
 
 }

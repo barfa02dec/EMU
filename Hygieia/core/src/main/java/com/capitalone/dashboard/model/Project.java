@@ -15,17 +15,12 @@ public class Project extends BaseModel {
 	private String ProjectOwner;
 	private String program;
 	private String client;
-	private Set<String> projectUsersList;
+	private Set<UserGroup> usersGroup;
+	private String createdBy;
+	private String updatedBy;
+	private String createdOn;
+	private String updatedOn;
 	
-	
-	
-	public Set<String> getProjectUsersList() {
-		return projectUsersList;
-	}
-	public void setProjectUsersList(Set<String> projectUsersList) {
-		this.projectUsersList = projectUsersList;
-	}
-
 	public String getProjectName() {
 		return projectName;
 	}
@@ -68,10 +63,37 @@ public class Project extends BaseModel {
 	public void setClient(String client) {
 		this.client = client;
 	}
+	public Set<UserGroup> getUsersGroup() {
+		return usersGroup;
+	}
+	public void setUsersGroup(Set<UserGroup> usersGroup) {
+		this.usersGroup = usersGroup;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	public String getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+	public String getUpdatedOn() {
+		return updatedOn;
+	}
+	public void setUpdatedOn(String updatedOn) {
+		this.updatedOn = updatedOn;
+	}
 	
 	
 	
-	
-	
-
 }

@@ -44,13 +44,18 @@ public class EngineeringDashboardPermissionsController {
 	
 	@RequestMapping(method=RequestMethod.POST,value="/engineeringDashboardPermissionMultiple")
 	public ResponseEntity<Iterable<Permission>> createMultipleEngineeringDashboardPermission(@Valid @RequestBody Iterable<PermissionRequest> permissionRequest){
-		Iterable<Permission> response=permissionService.createPermissions(permissionRequest);
-		if(response!=null)
-		{
-			return ResponseEntity.status(HttpStatus.OK).body(response);
-		}else{
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		
+		try{
+			Iterable<Permission> response=permissionService.createPermissions(permissionRequest);
+			if(response!=null)
+			{
+				return ResponseEntity.status(HttpStatus.OK).body(response);
+			}else{
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 
+			}
+		}catch (org.springframework.dao.DuplicateKeyException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
 		}
 	}
 	

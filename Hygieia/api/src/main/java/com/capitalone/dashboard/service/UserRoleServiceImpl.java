@@ -1,25 +1,36 @@
 package com.capitalone.dashboard.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capitalone.dashboard.model.Permission;
+import com.capitalone.dashboard.model.Project;
+import com.capitalone.dashboard.model.ProjectRoles;
+import com.capitalone.dashboard.model.UserGroup;
 import com.capitalone.dashboard.model.UserRole;
+import com.capitalone.dashboard.repository.PermissionsRepository;
+import com.capitalone.dashboard.repository.ProjectRepository;
 import com.capitalone.dashboard.repository.UserRoleRepository;
 import com.capitalone.dashboard.request.UserRoleRequest;
 @Service
 public class UserRoleServiceImpl implements UserRoleService {
 	
 	private final UserRoleRepository roleRepository;
-	
+	private final PermissionsRepository permissionsRepository;
+	private final ProjectRepository projectRepository;
 	@Autowired
-	public UserRoleServiceImpl(UserRoleRepository roleRepository) {
+	public UserRoleServiceImpl(UserRoleRepository roleRepository,PermissionsRepository permissionsRepository,ProjectRepository projectRepository) {
 		this.roleRepository = roleRepository;
+		this.permissionsRepository=permissionsRepository;
+		this.projectRepository=projectRepository;
 	}
 	
 	@Override
@@ -36,9 +47,12 @@ public class UserRoleServiceImpl implements UserRoleService {
 		userRole.setEnabled(role.isEnabled());
 		userRole.setDescription(role.getDescription());
 		Map<String , Boolean> permissions= new HashMap<String , Boolean>();
-
+		List<String> permissionKeysInDB=getpermissionKeysInDB();
 		for(String permit:role.getPermissions()){
-			permissions.put(permit, Boolean.TRUE);
+			if(permissionKeysInDB.contains(permit))
+				{
+					permissions.put(permit, Boolean.TRUE);
+				}
 		}
 		userRole.setPermissions(permissions);
 		return userRole;
@@ -53,9 +67,13 @@ public class UserRoleServiceImpl implements UserRoleService {
 			userRole.setCreatedOn(new Date().toString());
 			userRole.setEnabled(role.isEnabled());
 			Map<String , Boolean> permissions= new HashMap<String , Boolean>();
+			List<String> permissionKeysInDB=getpermissionKeysInDB();
 
 			for(String permit:role.getPermissions()){
-				permissions.put(permit, Boolean.TRUE);
+				if(permissionKeysInDB.contains(permit))
+				{
+					permissions.put(permit, Boolean.TRUE);
+				}
 			}
 			userRole.setPermissions(permissions);
 			roleset.add(userRole);
@@ -82,7 +100,21 @@ public class UserRoleServiceImpl implements UserRoleService {
 		UserRole roleInDb=roleRepository.findByRoleKey(key);
 		if(null!=roleInDb){
 			roleInDb.setEnabled(false);
+			
+			List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true);
+			//remove the role from all associated project roles
+			for(Project proj: dbActiveProjects){
+				
+					for(UserGroup group:proj.getUsersGroup()){
+						group.getUserRoles().remove(mapUserRoleToProjectRole(roleInDb));
+					}
+				
+			}
+			
+			projectRepository.save(dbActiveProjects);
+		
 			return roleRepository.save(roleInDb);
+			
 			}
 		return null;
 	}
@@ -109,9 +141,37 @@ public class UserRoleServiceImpl implements UserRoleService {
 			roleInDb.setDescription(role.getDescription());
 			roleInDb.setUpdatedBy(role.getUpdatedBy());
 			roleInDb.setLastUpdatedOn(new Date().toString());
+			
+			List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true);
+			//update the roles for all associated project roles
+			for(Project proj: dbActiveProjects){
+				
+					for(UserGroup group:proj.getUsersGroup()){
+						for(ProjectRoles projRole:group.getUserRoles()){
+								if(projRole.getRole().equals(roleInDb.getRoleKey())){
+									projRole.setPermissions(roleInDb.getPermissions().keySet());;
+								}
+							}
+					}
+				
+			}
+			projectRepository.save(dbActiveProjects);
 		}
 		
 		return roleRepository.save(roleInDb);
 	}
-
+	
+	private List<String> getpermissionKeysInDB(){
+		List<Permission> activePermissionsInDB=permissionsRepository.findByStatus(true);
+		List<String> permissionKeysInDB= new ArrayList<String>();
+		activePermissionsInDB.forEach(key->permissionKeysInDB.add(key.getName()));
+		return permissionKeysInDB;
+	}
+	
+	private ProjectRoles mapUserRoleToProjectRole(UserRole roleInDb){
+		ProjectRoles projectRoles= new ProjectRoles();
+		projectRoles.setRole(roleInDb.getRoleKey());
+		projectRoles.setPermissions(roleInDb.getPermissions().keySet());
+		return projectRoles;
+	}
 }

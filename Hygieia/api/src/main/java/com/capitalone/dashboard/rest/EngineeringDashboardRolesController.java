@@ -58,23 +58,32 @@ public class EngineeringDashboardRolesController {
 	
 	@RequestMapping(method=RequestMethod.POST,value="/engineeringDashboardBulkUserRole")
 	public ResponseEntity<Iterable<UserRole>> createMultipleEngineeringDashboardRoles(@RequestBody Iterable<UserRoleRequest> roleRequest){
-		Iterable<UserRole> response=userRoleService.createBulkUserRole(roleRequest);
-		if(response!=null)
-		{
-			return ResponseEntity.status(HttpStatus.OK).body(response);
-		}else{
+		try{
+			Iterable<UserRole> response=userRoleService.createBulkUserRole(roleRequest);
+			if(response!=null)
+			{
+				return ResponseEntity.status(HttpStatus.OK).body(response);
+			}else{
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+
+			}
+		}catch (org.springframework.dao.DuplicateKeyException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+
+		}catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 
 		}
+		
 	}
 	
-	@RequestMapping(method=RequestMethod.GET,value="/allActiveEngineeringDashboardUserRolesRoles")
+	@RequestMapping(method=RequestMethod.GET,value="/allActiveEngineeringDashboardUserRoles")
 	public Iterable<UserRole> getAllActiveEngineeringDashboardRole(){
 		return userRoleService.getAllActiveUserRoles();
 	}
 	
 
-	@RequestMapping(method=RequestMethod.GET,value="/allInActiveEngineeringDashboardUserRolesRoles")
+	@RequestMapping(method=RequestMethod.GET,value="/allInActiveEngineeringDashboardUserRoles")
 	public Iterable<UserRole> getAllInActiveEngineeringDashboardRole(){
 		return userRoleService.getAllInactiveUserRoles();
 	}

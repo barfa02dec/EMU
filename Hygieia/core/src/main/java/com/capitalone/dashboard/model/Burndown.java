@@ -63,9 +63,8 @@ public class Burndown {
     }
     
     public class IssueCount{
-    	
     	Integer count;
-    	Float storyPoints;
+    	Double storyPoints;
     	
     	public Integer getCount() {
     		return count;
@@ -73,10 +72,11 @@ public class Burndown {
     	public void setCount(Integer count) {
     		this.count = count;
     	}
-    	public Float getStoryPoints() {
+    	
+    	public Double getStoryPoints() {
     		return storyPoints;
     	}
-    	public void setStoryPoints(Float storyPoints) {
+    	public void setStoryPoints(Double storyPoints) {
     		this.storyPoints = storyPoints;
     	}	
     }
