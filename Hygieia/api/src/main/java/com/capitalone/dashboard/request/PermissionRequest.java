@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 
 public class PermissionRequest {
 	@NotNull
-    @Size(min=3,max=20, message="Please enter permission name in 3-20 charecters.")
+    @Size(min=3,max=20, message="Please enter permission name in 3-20 characters.")
 	private String name;
 	private String description;
 	private String createdOn;
