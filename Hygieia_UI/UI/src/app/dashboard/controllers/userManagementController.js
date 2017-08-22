@@ -213,11 +213,17 @@
             //Fetch All Active Permissions to display in dual list
             $http.get("/api/allActiveEngineeringDashboardPermissions")
                 .then(function(response) {
-
                     response.data.selectedItems = [];
-                    
-                   ctrl.getAllPermissions = response.data;
-                    
+                    ctrl.getAllPermissions = response.data;
+
+                    /*ctrl.getAllPermissions = response.data;
+                    ctrl.newArr = [];
+                    for (var i = 0; i < ctrl.getAllPermissions.length; i++) {
+                        if (ctrl.getAllPermissions[i].name != undefined) {
+                            ctrl.newArr.push(ctrl.getAllPermissions[i].name);
+                        }
+                    }
+*/                    
                 });
 
             //Adding Permissions to User Dual List Functionality
@@ -249,7 +255,7 @@
                     "timestamp": 0
             },*/
                 /*"lastUpdatedOn": "string",*/
-                "permissions":["Edits","Undos","REMOVE_USER"],
+                "permissions":ctrl.getAllPermissions,
                 "roleKey": ctrl.roleKey,
                 "updatedBy": ctrl.usernamepro
             }
@@ -280,9 +286,11 @@
         };
 
           ctrl.editpermission = function(info) {
+            info.editorEnabled = false;
             $http.post('/api/engineeringDashboardPermissionUpdate', (info)).then(function(response) {
-                       alert("success");
+                   alert("Edited Successfully");    
 
+                //info.editorEnabled = true;
                     })
            
         }
@@ -299,8 +307,9 @@
                     
           
      }
-    }
-    console.log(ctrl.getOnlyPerArray);
+    } 
+            ctrl.getOnlyPermission = response.data;
+
             });
 
 

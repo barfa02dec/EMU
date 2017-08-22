@@ -156,8 +156,7 @@
         
                             <div class="col-md-3" ng-attr-title="{{per.createdOn}}" style="">{{per.description}}</div>
 
-                             <div class="col-md-3"  style="" ng-repeat="pers in umc.getOnlyPerArray">
-                             {{pers}}</div>
+                             <div class="col-md-4" ng-attr-title="{{per.permissions}}" style="" >{{per.permissions | json}}</div>
 
                               <span class="" >
                  <img src="assets/images/deleteNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.deleteRoleModel(per)" title="Delete"> 
@@ -205,8 +204,8 @@
                         <!--   <div class="col-md-2 project-map-list-data" ng-attr-title="{{per.createdBy}}" style="">{{per.createdBy}}</div>
         
                             <div class="col-md-2 project-map-list-data" ng-attr-title="{{per.createdOn}}" style="">{{per.createdOn}}</div> -->
-                            <div class="col-md-4" ng-show="per.editorEnabled" >
-                                <input type="" name="" ng-model="per.name" class="set-width-input">
+                            <div class="col-md-4" ng-show="per.editorEnabled" ng-attr-title="{{per.name}}" style="">
+                                {{per.name}}
                             </div>
                              <div class="col-md-4" ng-attr-title="{{per.name}}" style="" ng-show="!per.editorEnabled">{{per.name}}</div>
         
