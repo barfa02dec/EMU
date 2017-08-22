@@ -213,23 +213,11 @@
             //Fetch All Active Permissions to display in dual list
             $http.get("/api/allActiveEngineeringDashboardPermissions")
                 .then(function(response) {
+
                     response.data.selectedItems = [];
-                    ctrl.selectedItems = response.data.selectedItems;
-                   //ctrl.selectedItem = [];
-                     for (var i = 0; i < response.data.length; i++) {
-                        //if (ctrl.selItem[i].name != undefined) {
-                           ctrl.selectedItems.push(response.data[i].name);
-                        //}
-                    }
-                    //response.data.selectedItemsctrl.selectedItem
-                    //ctrl.selItem = response.data;
-                    // ctrl.newArr = [];
-                    // for (var i = 0; i < ctrl.selItem.length; i++) {
-                    //     //if (ctrl.selItem[i].name != undefined) {
-                    //         ctrl.newArr.push(ctrl.selItem[i].name);
-                    //     //}
-                    // }
-                    ctrl.getAllPermissions = ctrl.selectedItems;
+                    
+                   ctrl.getAllPermissions = response.data;
+                    
                 });
 
             //Adding Permissions to User Dual List Functionality
@@ -261,12 +249,13 @@
                     "timestamp": 0
             },*/
                 /*"lastUpdatedOn": "string",*/
-                "permissions":ctrl.selectedItems,
+                "permissions":["Edits","Undos","REMOVE_USER"],
                 "roleKey": ctrl.roleKey,
                 "updatedBy": ctrl.usernamepro
             }
 
             //Create role post API call
+            console.log(ctrl.role);
             ctrl.postRole = function() {
                 $http.post('/api/engineeringDashboardUserRole ', (ctrl.role)).then(function(response) {
                     $route.reload();
@@ -299,9 +288,19 @@
         }
 
         //Fetch all Roles
-        $http.get("/api/allActiveEngineeringDashboardUserRolesRoles")
+        $http.get("/api/allActiveEngineeringDashboardUserRoles")
             .then(function(response) {
                 ctrl.getRoles = response.data;
+                 ctrl.getOnlyPerArray = [];
+                for(var i=0;i<response.data.length;i++){
+                    if(response.data[i].permissions != undefined){
+                    
+                 ctrl.getOnlyPerArray.push(response.data[i].permissions)
+                    
+          
+     }
+    }
+    console.log(ctrl.getOnlyPerArray);
             });
 
 
@@ -335,6 +334,13 @@
                 })
             };
         }
+
+        //Fetch all Projects and its respective Users.
+        $http.get("/api/getProjects")
+            .then(function(response) {
+                ctrl.getprojectsUsers = response.data;
+                console.log(ctrl.getprojectsUsers);
+            });
 
     }
 })();

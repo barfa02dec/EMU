@@ -21,8 +21,7 @@
             "projectOwner": ctrl.projectOwner,
             "client": ctrl.client,
             "businessUnit": ctrl.businessUnit,
-            "program": ctrl.program,
-            "projectUsersList": []
+            "program": ctrl.program
         }
 
         var apiHost = 'http://localhost:3000';
@@ -63,18 +62,18 @@
                 controller: shareProjectController,
                 controllerAs: 'spc',
                 resolve: {
-                    pname: function() {
-                        return prob.projectName;
+                    proid: function() {
+                        return prob.projectId;
                     }
                 }
             });
         }
 
         //Add User functionality
-        function shareProjectController($uibModalInstance, pname, $route, $scope) {
+        function shareProjectController($uibModalInstance, proid, $route, $scope) {
             var sp = this;
             sp.selected = '';
-
+              sp.projectId = proid;
             //Fetch all users
             $http.get("/api/getApplicationUsers")
                 .then(function(response) {
@@ -82,28 +81,37 @@
                 });
 
             //Fetch all roles that is displayed in dual list
-            $http.get("/api/allActiveEngineeringDashboardUserRolesRoles")
+            $http.get("/api/allActiveEngineeringDashboardUserRoles")
                 .then(function(response) {
                     response.data.selectedItems = [];
-                    sp.selItem = response.data.selectedItems;
+                    /*sp.selItem = response.data.selectedItems;
                     sp.newArr = [];
                     for (var i = 0; i < sp.selItem.length; i++) {
                         if (sp.selItem[i].name != undefined) {
                             sp.newArr.push(sp.selItem[i].name);
                         }
-                    }
+                    }*/
                     sp.getRolesKey = response.data;
                 });
                 
             sp.shareProjects = function(prob) {
                 var aa = sp.selected;
-                $http.post("/api/projectUsers?projectname=" + pname + '&users=' + sp.selected).then(function(response) {
-                    alert('Project Added Successfully');
-                    $uibModal.open({
+                sp.projectId = proid;
+
+                 sp.projectUserPayl = {
+                "user": sp.selected,
+                "projectId": sp.projectId,
+                "userRoles":sp.getRolesKey.selectedItems
+               }
+                console.log(sp.projectUserPayl);
+                $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
+                    alert('Project Mapped Successfully');
+                    console.log(sp.projectUserPayl);
+                   /* $uibModal.open({
                         templateUrl: 'app/dashboard/views/userPermissionMap.html',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
-                    });
+                    });*/
                 })
             };
 
@@ -222,7 +230,8 @@
                 "client": ctrl.client,
                 "businessUnit": ctrl.businessUnit,
                 "program": ctrl.program,
-                "projectUsersList": [dpmObjpos.usernamepro]
+                "user": dpmObjpos.usernamepro
+                
             }
             dpmObjpos.postProject = function() {
                 var apiHost = 'http://localhost:3000';

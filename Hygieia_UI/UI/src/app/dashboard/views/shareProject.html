@@ -67,7 +67,7 @@
                     <div class="pool">
                         <ul>
                             <li ng-repeat="item in spc.getRolesKey.selectedItems | orderBy: spc.getRolesKey.orderProperty">
-                                <a href="" ng-click="spc.transfer(spc.getRolesKey.selectedItems, spc.getRolesKey, spc.getRolesKey.selectedItems.indexOf(item))" ng-model="spc.role.permissions.permission.name"> &lArr;&nbsp;{{item.roleKey}}</a> 
+                                <a href="" ng-click="spc.transfer(spc.getRolesKey.selectedItems, spc.getRolesKey, spc.getRolesKey.selectedItems.indexOf(item))"> &lArr;&nbsp;{{item.roleKey}}</a> 
                             </li>
                         </ul>
                     </div>

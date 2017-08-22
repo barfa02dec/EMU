@@ -60,7 +60,7 @@
                   <!--   <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.items, spc.demoOptions.selectedItems, -1)"> Select All </button>  -->
                     <div class="pool">
                         <ul>
-                            <li ng-repeat="item in prc.getAllPermissions | filter: prc.searchTerm | orderBy: prc.getAllPermissions.orderProperty"> <a href="" ng-click="prc.transfer(prc.getAllPermissions, prc.getAllPermissions.selectedItems, prc.getAllPermissions.indexOf(item))">{{item}}&nbsp;&rArr; </a> </li>
+                            <li ng-repeat="item in prc.getAllPermissions | filter: prc.searchTerm | orderBy: prc.getAllPermissions.orderProperty"> <a href="" ng-click="prc.transfer(prc.getAllPermissions, prc.getAllPermissions.selectedItems, prc.getAllPermissions.indexOf(item))">{{item.name}}&nbsp;&rArr; </a> </li>
                         </ul>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                     <div class="pool">
                         <ul>
                             <li ng-repeat="item in prc.getAllPermissions.selectedItems | orderBy: prc.getAllPermissions.orderProperty">
-                                <a href="" ng-click="prc.transfer(prc.getAllPermissions.selectedItems, prc.getAllPermissions, prc.getAllPermissions.selectedItems.indexOf(item))" > &lArr;&nbsp;{{item}}</a> 
+                                <a href="" ng-click="prc.transfer(prc.getAllPermissions.selectedItems, prc.getAllPermissions, prc.getAllPermissions.selectedItems.indexOf(item))" > &lArr;&nbsp;{{item.name}}</a> 
                             </li>
                         </ul>
                     </div>
