@@ -14,15 +14,16 @@ public class SprintData {
     private String state;
     private Integer daysRemaining;
     
-    private DefectCount defectsFound;
-    private DefectCount defectsResolved;
-    private DefectCount defectsUnresolved;
+    private DefectCount defectsFound;   //total defects found in the sprint 
+    private DefectCount sprintDefectsResolved; //total defects resolved found in the same sprint 
+    private DefectCount defectsResolved; // total defects resolved in the sprint
+    private DefectCount defectsUnresolved; // total unresolved defects at the end of the sprint
     
     private Integer completedIssueCount;
     private Integer committedIssueCount;
 
-    private float committedStoryPoints;
-    private float completedStoryPoints;
+    private double committedStoryPoints;
+    private double completedStoryPoints;
     
     private Integer effortInPD;
     
@@ -100,19 +101,19 @@ public class SprintData {
 		this.committedIssueCount = committedIssueCount;
 	}
 
-	public float getCompletedStoryPoints() {
+	public double getCompletedStoryPoints() {
 		return completedStoryPoints;
 	}
 
-	public void setCompletedStoryPoints(float completedStoryPoints) {
+	public void setCompletedStoryPoints(double completedStoryPoints) {
 		this.completedStoryPoints = completedStoryPoints;
 	}
 
-	public float getCommittedStoryPoints() {
+	public double getCommittedStoryPoints() {
 		return committedStoryPoints;
 	}
 
-	public void setCommittedStoryPoints(float committedStoryPoints) {
+	public void setCommittedStoryPoints(double committedStoryPoints) {
 		this.committedStoryPoints = committedStoryPoints;
 	}
 
@@ -138,6 +139,14 @@ public class SprintData {
 
 	public void setDefectsFound(DefectCount defectsFound) {
 		this.defectsFound = defectsFound;
+	}
+
+	public DefectCount getSprintDefectsResolved() {
+		return sprintDefectsResolved;
+	}
+
+	public void setSprintDefectsResolved(DefectCount sprintDefectsResolved) {
+		this.sprintDefectsResolved = sprintDefectsResolved;
 	}
 
 	public DefectCount getDefectsResolved() {

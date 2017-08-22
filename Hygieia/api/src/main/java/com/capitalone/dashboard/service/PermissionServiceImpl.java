@@ -2,18 +2,45 @@ package com.capitalone.dashboard.service;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.capitalone.dashboard.model.Permission;
+import com.capitalone.dashboard.model.Project;
+import com.capitalone.dashboard.model.ProjectRoles;
+import com.capitalone.dashboard.model.UserGroup;
+import com.capitalone.dashboard.model.UserRole;
 import com.capitalone.dashboard.repository.PermissionsRepository;
+import com.capitalone.dashboard.repository.ProjectRepository;
+import com.capitalone.dashboard.repository.UserRoleRepository;
 import com.capitalone.dashboard.request.PermissionRequest;
 @Component
 public class PermissionServiceImpl implements PermissionService {
 	@Autowired
 	PermissionsRepository permissionsRepository;
+	@Autowired
+	UserRoleRepository rolesRepository;
+	@Autowired
+	ProjectRepository projectRepository;
+	
+	public ProjectRepository getProjectRepository() {
+		return projectRepository;
+	}
+
+	public void setProjectRepository(ProjectRepository projectRepository) {
+		this.projectRepository = projectRepository;
+	}
+
+	public UserRoleRepository getRolesRepository() {
+		return rolesRepository;
+	}
+
+	public void setRolesRepository(UserRoleRepository rolesRepository) {
+		this.rolesRepository = rolesRepository;
+	}
 
 	public PermissionsRepository getPermissionsRepository() {
 		return permissionsRepository;
@@ -38,8 +65,30 @@ public class PermissionServiceImpl implements PermissionService {
 	public Permission deactivatePermission(String name) {
 		if(null!=name){
 			Permission permissionInDB=permissionsRepository.findByName(name);
-			if(null!=permissionInDB){
+			if(null!=permissionInDB && permissionInDB.isStatus()){
 				permissionInDB.setStatus(false);
+		    	//we need to remove the respective permission in the user role as well.
+				List<UserRole> dbUserRoles=(List<UserRole>) rolesRepository.findAll();
+				for(UserRole urole: dbUserRoles){
+					if(null!=urole.getPermissions() && urole.getPermissions().containsKey(name)){
+						urole.getPermissions().put(name, Boolean.FALSE);
+					}
+				}
+				List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true);
+				//remove the permission from all associated project roles
+				for(Project proj: dbActiveProjects){
+					
+						for(UserGroup group:proj.getUsersGroup()){
+							
+								for(ProjectRoles roles:group.getUserRoles()){
+									Set<String> permissions=roles.getPermissions();
+									permissions.remove(name);
+								}
+						}
+					
+				}
+				projectRepository.save(dbActiveProjects);
+				rolesRepository.save(dbUserRoles);
 				return permissionsRepository.save(permissionInDB);
 			}
 			

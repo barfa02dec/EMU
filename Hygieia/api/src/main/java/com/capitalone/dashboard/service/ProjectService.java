@@ -6,23 +6,33 @@ import org.bson.types.ObjectId;
 
 import com.capitalone.dashboard.model.Project;
 import com.capitalone.dashboard.request.ProjectRequest;
+import com.capitalone.dashboard.request.ProjectUserRoleRequest;
 
 public interface ProjectService {
 	
-	Iterable<Project> all();
+	Project create(ProjectRequest project);
+
+	Project updateProject(ProjectRequest project);
 	
 	Iterable<Project> getProjectsOwnedByUser(String username);
-	
-	Project create(ProjectRequest project);
-	
-	Project updateProject(ProjectRequest project);
 
+	Project createProjectUserRoleMapping(ProjectUserRoleRequest projectUserRoleRequest);
+	
 	Project deactivateProject(ObjectId id);
+
+	Iterable<Project> getActiveprojects();
 	
 	Project getProject(ObjectId id);
 	
-	Project createUsers(String projectName, Set<String> users);
+	/*Iterable<Project> all();
 	
-	Iterable<Project> getActiveprojects();
+	
+	
+
+	
+	
+	
+	
+	*/
 
 }

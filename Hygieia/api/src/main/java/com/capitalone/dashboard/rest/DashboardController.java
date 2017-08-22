@@ -163,7 +163,7 @@ public class DashboardController {
         return ResponseEntity.ok().body(new WidgetResponse(component, widget));
     }
     /*
-     * This API will update the widjet with type: build,codeanalysis
+     * This API will update the widget with type: build,codeanalysis
      */
     @RequestMapping(value = "/dashboard/{id}/widgetType/{widgetType}", method = PUT,
             consumes = APPLICATION_JSON_VALUE)

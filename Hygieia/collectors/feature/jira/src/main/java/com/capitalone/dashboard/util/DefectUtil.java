@@ -62,6 +62,6 @@ public static List<NameValuePair> defectCountBySeverity(List<JiraIssue> issues){
 			}
 		}
 		return defectcount;
-    }
+	}
 
 }

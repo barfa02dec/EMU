@@ -21,6 +21,7 @@ import com.capitalone.dashboard.model.JiraIssue;
 import com.capitalone.dashboard.model.JiraSprint;
 import com.capitalone.dashboard.model.JiraVersion;
 import com.capitalone.dashboard.model.Scope;
+import com.capitalone.dashboard.model.SprintData;
 import com.capitalone.dashboard.model.VersionData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,12 +34,14 @@ public class JiraCollectorUtil {
 	private static final String GET_PROJECT_SPRINTS = "/rest/greenhopper/1.0/integration/teamcalendars/sprint/list?jql=project=%1s";
 	private static final String GET_PROJECT_SPRINT_DETAILS = "/rest/greenhopper/1.0/rapid/charts/sprintreport?rapidViewId=%1s&sprintId=%2$d";
 	private static final String GET_DEFECTS_CREATED =  "/rest/api/2/search?jql=project=%1s and type in (Bug) and createdDate >\"%2s\" and createdDate <\"%3s\" &maxResults=1000";
-	private static final String GET_DEFECTS_RESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) AND resolutiondate>\"%2s\" and resolutiondate  < \"%3s\" &maxResults=1000";
+	private static final String GET_DEFECTS_RESOLVED = "rest/api/2/search?jql=project=%1s and type in (Bug) AND createddate>\"%2s\" and status = Done and Sprint = %3s &maxResults=1000";
 	private static final String GET_DEFECTS_UNRESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) and createddate<\"%2s\" and (resolutiondate > \"%2s\" or resolution in (unresolved)) &maxResults=1000";
 	private static final String DONE = "Done";
 	public static final String GET_PROJECT_VERSIONS = "/rest/api/2/project/%1s/versions";
 	public static final String GET_PROJECT_VERSION = "/rest/greenhopper/1.0/rapid/charts/versionreport?rapidViewId=%1s&versionId=%2s";
-	
+	public static final String GET_ISSUE = "rest/api/2/issue/%1s?fields=%2s";
+	public static final String GET_SPRINT_VELOCITY_REPORT = "rest/greenhopper/1.0/rapid/charts/velocity?rapidViewId=%1s";
+	public static final String GET_ALL_DEFECTS_RESOLVED = "rest/api/2/search?jql=project=%1s and type in (Bug) and status = Done and Sprint = %2s &maxResults=1000";
 	
 	public static String getDefectsFound(String projectId, String startdate, String enddate,String baseUrl,String base64Credentials) {
 		try{
@@ -161,15 +164,35 @@ public class JiraCollectorUtil {
 	}
 	
 	public static void getRecentSprintMetrics(JiraSprint jiraSprint, String projectId,String baseUrl,String base64Credentials,String rapidViewId){
-		jiraSprint.setSprintData(ClientUtil.parseToSprintData(fectSprintMetrcis(projectId,jiraSprint.getId(),baseUrl,base64Credentials,rapidViewId)));
-		jiraSprint.getSprintData().setStartDate(DateUtil.convertStringToDate(jiraSprint.getStart(), "ddMMyyyyHHmmss"));
-		jiraSprint.getSprintData().setEndDate(DateUtil.convertStringToDate(jiraSprint.getEnd(), "ddMMyyyyHHmmss"));
-		
+		String originalSprintData=fectSprintMetrcis(projectId,jiraSprint.getId(),baseUrl,base64Credentials,rapidViewId);
+		SprintData sprintdata =ClientUtil.parseToSprintData(jiraSprint,originalSprintData);
+		jiraSprint.setSprintData(sprintdata);
+		// code changes incorporated from PMD-- BEGINS
+		String json = null;
+		List<String> issuesAdded = ClientUtil.getIssuesAddedDuringSprint(originalSprintData);
+		if(issuesAdded != null && issuesAdded.size() > 0){
+		   Double addedstorypoints = 0.0;
+		   for( String issueAdded : issuesAdded){
+			   json = getIssue(issueAdded,base64Credentials,baseUrl);
+			   addedstorypoints += getEstimate(json, "");
+		   }   
+		   sprintdata.getBurndown().getIssuesAdded().setStoryPoints(addedstorypoints);
+		   sprintdata.getBurndown().getInitialIssueCount().setStoryPoints(sprintdata.getBurndown().getInitialIssueCount().getStoryPoints() - addedstorypoints);
+		   sprintdata.setCommittedStoryPoints(sprintdata.getCommittedStoryPoints() - addedstorypoints);
+		}
+				
+		json = getVelocityChart(rapidViewId,base64Credentials,baseUrl);
+		Double estimate = ClientUtil.getSprintVelocity(json, jiraSprint.getId(), "estimated");
+		if(estimate != null){
+			sprintdata.getBurndown().getInitialIssueCount().setStoryPoints(estimate.doubleValue());
+			sprintdata.setCommittedStoryPoints(estimate.doubleValue());
+		}
+		// code changes incorporated from PMD-- ENDS
 		List<JiraIssue> issues = new ArrayList<JiraIssue>();
-		String startDate=DateUtil.format(jiraSprint.getSprintData().getStartDate(),	"yyyy/MM/dd HH:mm");
-		String endDate=DateUtil.format(	jiraSprint.getSprintData().getEndDate(),"yyyy/MM/dd HH:mm");
+		String startDate=DateUtil.format(jiraSprint.getSprintData().getStartDate(),	ClientUtil.DATE_FORMAT_5);
+		String endDate=DateUtil.format(	jiraSprint.getSprintData().getCompleteDate(),ClientUtil.DATE_FORMAT_5);
 		// Get created defects
-		String json = JiraCollectorUtil.getDefectsFound(projectId,startDate,endDate,baseUrl,base64Credentials);
+		json = JiraCollectorUtil.getDefectsFound(projectId,startDate,endDate,baseUrl,base64Credentials);
 		if(null==json) return;
 		issues = DefectUtil.parseDefectsJson(json);	
 		jiraSprint.getSprintData().setDefectsFound(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
@@ -178,7 +201,12 @@ public class JiraCollectorUtil {
 		json = JiraCollectorUtil.getDefectResolved(projectId,startDate,endDate,baseUrl,base64Credentials);
 		issues = DefectUtil.parseDefectsJson(json);		
 		jiraSprint.getSprintData().setDefectsResolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
+		// get all defects resolved
+		json = getSprintAllDefectResolved(projectId, sprintdata.getSprintId(),base64Credentials,baseUrl);
 		
+	//	issues = DefectUtil.parseDefectsJson(projectjirasetting, json);		
+		sprintdata.setDefectsResolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
+
 		// Get unresolved defects
 		json = JiraCollectorUtil.getDefectUnresolved(projectId,startDate,endDate,baseUrl,base64Credentials);
 		issues = DefectUtil.parseDefectsJson(json);		
@@ -265,7 +293,7 @@ public class JiraCollectorUtil {
 		
 	}
 	
-public static VersionData parseToVersionData(String json){
+	public static VersionData parseToVersionData(String json){
     	
 		VersionData releasedata = new VersionData();
 		
@@ -295,6 +323,67 @@ public static VersionData parseToVersionData(String json){
 		return gsonelement == null ? null : gsonelement.toString();
 	}
 	
+	public static String getIssue(String issueId, String base64Credentials,String baseUrl) {
+		// OPEN: jiraStoryPoints		
+		try{
+			String query = String.format(GET_ISSUE, issueId, "");
+			query=baseUrl+query;
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+					, HttpMethod.GET, entity, String.class);
+			String issueJson= result.getBody();
+			return issueJson;
+		}catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+	}
 	
+	public static Integer getEstimate(String json, String field){
+		try{
+			Gson gson = new GsonBuilder().create();
+	    	return (gson.fromJson(json, JsonObject.class).has("fields") && gson.fromJson(json, JsonObject.class).getAsJsonObject("fields") != null && 
+	    			gson.fromJson(json, JsonObject.class).getAsJsonObject("fields").get(field) != null) &&
+	    			!gson.fromJson(json, JsonObject.class).getAsJsonObject("fields").get(field).isJsonNull() ? gson.fromJson(json, JsonObject.class).getAsJsonObject("fields").get(field).getAsInt() : 0;
+		}catch(Exception ex){
+			ex.printStackTrace();
+			}
+		return 0;
+	}
+	
+	public static String getVelocityChart(String boardId, String base64Credentials,String baseUrl) {
+		try{
+			String query = String.format(GET_SPRINT_VELOCITY_REPORT, boardId);
+			query=baseUrl+query;
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+					, HttpMethod.GET, entity, String.class);
+			String velocityJson= result.getBody();
+			return velocityJson;
+		}catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+
+	}
+	
+	public static String getSprintAllDefectResolved(String projectId, Long sprintId, String base64Credentials,String baseUrl) {
+		try{
+			String query = String.format(GET_ALL_DEFECTS_RESOLVED, projectId, sprintId);
+			query=baseUrl+query;
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+					, HttpMethod.GET, entity, String.class);
+			String sprintAllDefectResolvedJson= result.getBody();
+			return sprintAllDefectResolvedJson;
+		}catch (Exception e) {
+			// TODO: handle exception
+			return null;
+		}
+
+	}	
 
 }

@@ -5,8 +5,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.Set;
-
 import javax.validation.Valid;
 
 import org.bson.types.ObjectId;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capitalone.dashboard.model.Project;
 import com.capitalone.dashboard.request.ProjectRequest;
+import com.capitalone.dashboard.request.ProjectUserRoleRequest;
 import com.capitalone.dashboard.service.ProjectService;
 
 @RestController
@@ -91,6 +90,7 @@ public class ProjectController {
 
 	}
 	
+	
 	@RequestMapping(value = "/getProjectsByUser", method = GET, produces = APPLICATION_JSON_VALUE)
 	public Iterable<Project> getProjectsOwnedByUser(@RequestParam String username) {
 		
@@ -98,18 +98,20 @@ public class ProjectController {
 
 	}
 	
-	@RequestMapping(value = "/projectUsers", method = POST, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<Set<String>> createProjectUsers(@RequestParam String projectId, @RequestParam Set<String> users) {
-		
-		Project project=projectService.createUsers(projectId, users);
-		if(project!=null)
-		{
-			return ResponseEntity.status(HttpStatus.OK).body(project.getProjectUsersList());
-		}else{
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+	@RequestMapping(value = "/projectUsersMapping", method = POST, consumes = APPLICATION_JSON_VALUE,produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<Project> createProjectUserMappingWithRoles(@Valid @RequestBody ProjectUserRoleRequest projectUserRoleRequest) {
+		try{
+			Project response=projectService.createProjectUserRoleMapping(projectUserRoleRequest);
+			if(null!=response){
+				return ResponseEntity.status(HttpStatus.OK).body(response);
+			}else{
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+			}
+			
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); 
 
 		}
-
 	}
 	
 	@RequestMapping(value = "/getProject/{id}", method = GET, produces = APPLICATION_JSON_VALUE)
