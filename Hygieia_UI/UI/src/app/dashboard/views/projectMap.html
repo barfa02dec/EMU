@@ -208,17 +208,35 @@
              <div>
              
 
-            <div class="col-md-1" ng-show="proj.editorEnabled">
-                    <div style="pointer-events:none;">{{proj.projectId}}</div>
-                 
-               </div> 
+           
+               
 
-                 <div class="col-md-1" ng-show="proj.editorEnabled" >
+
+
+
+                <div class="col-md-1" ng-show="proj.editorEnabled" >
+                  {{proj.projectId}}
+               </div>
+                <div class="col-md-1 project-map-list-data"  ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectId}}" style="">{{proj.projectId}}</div>
+
+
+
+
+                 <div class="col-md-2" ng-show="proj.editorEnabled" style="padding-left: 4%">
                   <input type="" name="" ng-model="proj.projectName" class="set-width-input">
                </div>
-               <div class="col-md-1 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id,proj.projectName);" ng-attr-title="{{proj.projectName}}" style="">{{proj.projectName}}</div>
+                <div class="col-md-2 project-map-list-data" style="padding-left: 4%"  ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectName}}" style="">{{proj.projectName}}</div>
 
-               <div class="col-md-2 project-map-list-data" ng-show="!proj.editorEnabled" style="padding-left: 50px;" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectName}}">{{proj.projectName}}</div>
+
+
+
+
+
+
+
+
+
+
 
                 <div class="col-md-2" ng-show="proj.editorEnabled" >
                   <input type="" name="" ng-model="proj.client" class="set-width-input">
