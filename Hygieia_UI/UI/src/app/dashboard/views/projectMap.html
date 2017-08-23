@@ -1,94 +1,89 @@
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
-
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 <div class="main-container project-map-container" style="background: #EFEFEF !important;">
 <div class="blue-header project-map-blue-bar">
-      
- <span class="hamburger-ListdashPage project-map-hamburger">
-            <svg version="1.1"
-               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-               x="0px" y="0px" width="15px" height="9px" viewBox="0 0 15 9" style="overflow:scroll;enable-background:new 0 0 15 9;"
-               xml:space="preserve">
-               <style type="text/css">
-                  .stham0{fill:#FFFFFF;}
-               </style>
-               <defs></defs>
-               <g>
-                  <g>
-                     <path class="stham0" d="M0,0h15v1.5H0V0z M0,3.8h15v1.5H0V3.8z M0,7.5h15V9H0V7.5z"/>
-                  </g>
-               </g>
-            </svg>
-         </span>
-  <span class="edMenu-ListDash-Page project-map-ed">
-            <svg version="1.1"
-               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
-               x="0px" y="0px" width="23px" height="23px" viewBox="0 0 23 23" style="overflow:scroll;enable-background:new 0 0 23 23;"
-               xml:space="preserve">
-               <style type="text/css">
-                  .stedlogo0{fill:#000;}
-                  .stedlogo1{fill: #fff;}
-               </style>
-               <defs></defs>
-               <g>
-                  <path class="stedlogo0" d="M11.5,0c0.8,0,1.6,0.1,2.3,0.2c1.9,0.4,3.6,1.2,5,2.4V0H11.5z M11.5,23h7.3v-2.6c-1.4,1.2-3.1,2-5,2.4
-                     C13.1,22.9,12.3,23,11.5,23z M4.6,23v-0.2l0-5.7l0-3.3L0,9.2V23H4.6z M0,9.2h4.6l0-1.9l0-7.1V0H0V9.2z"/>
-                  <g class="stedlogo1">
-                     <path d="M18.8,2.6c-1.4-1.2-3.1-2-5-2.4C13.1,0.1,12.3,0,11.5,0H4.6v7.3h0l0,1.9H0l4.6,4.6l0,3.3h0V23h6.9c0.8,0,1.6-0.1,2.3-0.2
+    <span class="hamburger-ListdashPage project-map-hamburger">
+        <svg version="1.1"
+            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+            x="0px" y="0px" width="15px" height="9px" viewBox="0 0 15 9" style="overflow:scroll;enable-background:new 0 0 15 9;"
+            xml:space="preserve">
+            <style type="text/css">
+                .stham0{fill:#FFFFFF;}
+            </style>
+            <defs></defs>
+            <g>
+                <g>
+                    <path class="stham0" d="M0,0h15v1.5H0V0z M0,3.8h15v1.5H0V3.8z M0,7.5h15V9H0V7.5z"/>
+                </g>
+            </g>
+        </svg>
+    </span>
+    <span class="edMenu-ListDash-Page project-map-ed">
+        <svg version="1.1"
+            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
+            x="0px" y="0px" width="23px" height="23px" viewBox="0 0 23 23" style="overflow:scroll;enable-background:new 0 0 23 23;"
+            xml:space="preserve">
+            <style type="text/css">
+                .stedlogo0{fill:#000;}
+                .stedlogo1{fill: #fff;}
+            </style>
+            <defs></defs>
+            <g>
+                <path class="stedlogo0" d="M11.5,0c0.8,0,1.6,0.1,2.3,0.2c1.9,0.4,3.6,1.2,5,2.4V0H11.5z M11.5,23h7.3v-2.6c-1.4,1.2-3.1,2-5,2.4
+                    C13.1,22.9,12.3,23,11.5,23z M4.6,23v-0.2l0-5.7l0-3.3L0,9.2V23H4.6z M0,9.2h4.6l0-1.9l0-7.1V0H0V9.2z"/>
+                <g class="stedlogo1">
+                    <path d="M18.8,2.6c-1.4-1.2-3.1-2-5-2.4C13.1,0.1,12.3,0,11.5,0H4.6v7.3h0l0,1.9H0l4.6,4.6l0,3.3h0V23h6.9c0.8,0,1.6-0.1,2.3-0.2
                         c1.9-0.4,3.6-1.2,5-2.4c2.6-2.1,4.2-5.3,4.2-8.9S21.4,4.7,18.8,2.6z M18,13.8c-0.7,2-2.2,3.5-4.2,4.2c-0.7,0.3-1.5,0.4-2.3,0.4
                         H9.2v-4.6h4.6L9.2,9.2V4.6h2.3c0.8,0,1.6,0.1,2.3,0.4c2,0.7,3.5,2.2,4.2,4.2c0.3,0.7,0.4,1.5,0.4,2.3S18.3,13.1,18,13.8z"/>
-                  </g>
-               </g>
-            </svg>
-         </span>
-         <span class="edtext-ListdashPage project-map-edText">Engineering Dashboard</span>
-             <span id="demo" class="signout-ListdashPage project-map-signout-mainParent">
-            <div class="wrapper blddmenu">
-               <div class="content blddmenu project-map-firstChild">
-               
-               <ul class="blddmenu">
-                     <a>
+                </g>
+            </g>
+        </svg>
+    </span>
+    <span class="edtext-ListdashPage project-map-edText">Engineering Dashboard</span>
+    <span id="demo" class="signout-ListdashPage project-map-signout-mainParent">
+        <div class="wrapper blddmenu">
+            <div class="content blddmenu project-map-firstChild">
+                <ul class="blddmenu">
+                    <a>
                         <li ng-click="pm.logout()" style="text-align:center;">Log out</li>
-                     </a>
-                  </ul>
-                
-                  <ul class="blddmenu">
-                     <a>
+                    </a>
+                </ul>
+                <ul class="blddmenu">
+                    <a>
                         <li ng-click="pm.UserManagement()" style="font-size: 12px;">
-                        <a href="#/userManagement">UserManagement</a></li>
-                     </a>
-                  </ul>
-               </div>
-               <div class="parent">
-                  <svg version="1.1"
-                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
-                     x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20" style="overflow:scroll;enable-background:new 0 0 20 20;"
-                     xml:space="preserve">
-                     <style type="text/css">
-                        .stedprofile0{fill:#FFFFFF;}
-                     </style>
-                     <defs></defs>
-                     <g>
-                        <g>
-                           <path class="stedprofile0" d="M2.9,2.9C4.9,1,7.2,0,10,0s5.1,1,7.1,2.9S20,7.2,20,10S19,15.1,17,17S12.7,20,10,20S4.9,19,2.9,17
-                              S0,12.7,0,10S1,4.9,2.9,2.9z M10,17.2c2.5,0,4.5-1.1,6-3.2c0-0.9-0.7-1.6-2.1-2.2s-2.7-0.9-3.9-0.9s-2.5,0.3-3.9,0.9S4,13.1,4,14
-                              C5.5,16.1,7.5,17.2,10,17.2z M12.1,3.9C11.5,3.3,10.8,3,10,3S8.5,3.3,7.9,3.9S7,5.2,7,6s0.3,1.5,0.9,2.1S9.2,9,10,9
-                              s1.5-0.3,2.1-0.9S13,6.8,13,6S12.7,4.5,12.1,3.9z"/>
-                        </g>
-                     </g>
-                  </svg>
-               </div>
+                    <a href="#/userManagement">UserManagement</a></li>
+                    </a>
+                </ul>
             </div>
-         </span>
-    </div>
+            <div class="parent">
+                <svg version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
+                    x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20" style="overflow:scroll;enable-background:new 0 0 20 20;"
+                    xml:space="preserve">
+                    <style type="text/css">
+                        .stedprofile0{fill:#FFFFFF;}
+                    </style>
+                    <defs></defs>
+                    <g>
+                        <g>
+                            <path class="stedprofile0" d="M2.9,2.9C4.9,1,7.2,0,10,0s5.1,1,7.1,2.9S20,7.2,20,10S19,15.1,17,17S12.7,20,10,20S4.9,19,2.9,17
+                                S0,12.7,0,10S1,4.9,2.9,2.9z M10,17.2c2.5,0,4.5-1.1,6-3.2c0-0.9-0.7-1.6-2.1-2.2s-2.7-0.9-3.9-0.9s-2.5,0.3-3.9,0.9S4,13.1,4,14
+                                C5.5,16.1,7.5,17.2,10,17.2z M12.1,3.9C11.5,3.3,10.8,3,10,3S8.5,3.3,7.9,3.9S7,5.2,7,6s0.3,1.5,0.9,2.1S9.2,9,10,9
+                                s1.5-0.3,2.1-0.9S13,6.8,13,6S12.7,4.5,12.1,3.9z"/>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </span>
+</div>
 <div class="black-header" style="height: 30px;width:100%;background:#000;"></div>
 <div class="content-goes" style="height: 100%;width:100%;">
     <div class="col-md-12" style="padding-top: 2%;">
-         <div class="col-md-3" style="padding-left: 17%;padding-top: 2.6%;">
-           <!--  <span class="col-md-1">
+        <div class="col-md-3" style="padding-left: 17%;padding-top: 2.6%;">
+            <!--  <span class="col-md-1">
                 <a  class="">
                     <svg version="1.1"
                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
@@ -109,29 +104,29 @@
                         </g>
                     </svg>
                 </a>
-            </span> -->
+                </span> -->
             <!-- <span class="col-md-1"></span>
-            <span class="col-md-1">
-                <a class="">
-                    <svg version="1.1"
-                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
-                        x="0px" y="0px" width="16px" height="14px" viewBox="0 0 16 14" style="overflow:scroll;enable-background:new 0 0 16 14;"
-                        xml:space="preserve">
-                        <style type="text/css">
-                            .stlist20{fill:#0066ff;}
-                        </style>
-                        <defs></defs>
-                        <g>
+                <span class="col-md-1">
+                    <a class="">
+                        <svg version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+                            x="0px" y="0px" width="16px" height="14px" viewBox="0 0 16 14" style="overflow:scroll;enable-background:new 0 0 16 14;"
+                            xml:space="preserve">
+                            <style type="text/css">
+                                .stlist20{fill:#0066ff;}
+                            </style>
+                            <defs></defs>
                             <g>
-                                <path class="stlist20" d="M0,0h16v2H0V0z M0,6V4h16v2H0z M0,10V8h16v2H0z M0,14v-2h16v2H0z"/>
+                                <g>
+                                    <path class="stlist20" d="M0,0h16v2H0V0z M0,6V4h16v2H0z M0,10V8h16v2H0z M0,14v-2h16v2H0z"/>
+                                </g>
                             </g>
-                        </g>
-                    </svg>
-                </a>
-            </span> -->
+                        </svg>
+                    </a>
+                </span> -->
             <span class="col-md-1"></span>
-           <!--  <span class="col-md-1"> | </span>
-            <span class="col-md-1"></span> -->
+            <!--  <span class="col-md-1"> | </span>
+                <span class="col-md-1"></span> -->
             <!-- <span class="col-md-1">
                 <a ng-href="#/" class="">
                     <svg version="1.1"
@@ -153,138 +148,100 @@
                         </g>
                     </svg>
                 </a>
-            </span> -->
-           <!--  <span class="col-md-1">FILTER</span> -->
+                </span> -->
+            <!--  <span class="col-md-1">FILTER</span> -->
         </div>
         <div class="col-md-6">
             <form>
-            <div class="form-group">
-                <label for="input-md"></label>
-                <input class="form-control input-md project-map-search-bar" id="inputmd" type="text" placeholder="Search Project or Business Units or Managers or Clients" ng-model="pm.searchText">
-            </div>
+                <div class="form-group">
+                    <label for="input-md"></label>
+                    <input class="form-control input-md project-map-search-bar" id="inputmd" type="text" placeholder="Search Project or Business Units or Managers or Clients" ng-model="pm.searchText">
+                </div>
             <form>
         </div>
         <div class="col-md-3" style="padding-left: 4%;">
-            <input type="submit" class="btn btn-info project-map-add-btn" value="Add Project"  ng-click = "pm.createDashboard()">
+        <input type="submit" class="btn btn-info project-map-add-btn" value="Add Project"  ng-click = "pm.createDashboard()">
         </div>
     </div>
     <div class="col-md-12">
-        <div class="col-md-1"></div>
-       
-         <div class="col-md-1"></div>
-         <!-- <div class="col-md-2" >
-            <span class="col-md-11" style="border: 1px solid #61869B;background: #61869B;color:#fff;border-radius: 20px;padding: 3px;padding-left: 10px">sasas</span>
-         </div>
-         <div class="col-md-2" >
-            <span class="col-md-11" style="border: 1px solid #61869B;background: #61869B;color:#fff;border-radius: 20px;padding: 3px;padding-left: 10px">assa</span>
-         </div> -->
-        <!--  <div class="col-md-2">Clear filters</div> -->
-         <!-- <div class="col-md-1" ng-click="pm.shareProjectPopUp()">Share Project</div> -->
+    <div class="col-md-1"></div>
+    <div class="col-md-1"></div>
+    <!-- <div class="col-md-2" >
+        <span class="col-md-11" style="border: 1px solid #61869B;background: #61869B;color:#fff;border-radius: 20px;padding: 3px;padding-left: 10px">sasas</span>
+        </div>
+        <div class="col-md-2" >
+        <span class="col-md-11" style="border: 1px solid #61869B;background: #61869B;color:#fff;border-radius: 20px;padding: 3px;padding-left: 10px">assa</span>
+        </div> -->
+    <!--  <div class="col-md-2">Clear filters</div> -->
+    <!-- <div class="col-md-1" ng-click="pm.shareProjectPopUp()">Share Project</div> -->
     </div>
     <div class="col-md-12" style="padding-top: 30px">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-       <div class="col-md-1 project-map-list-header">Project ID</div>
-       <div class="col-md-2 project-map-list-header" style="padding-left: 50px;">Project Name</div>
-       <div class="col-md-2 project-map-list-header">Customer Name</div>
-       <div class="col-md-2 project-map-list-header">Project Owner</div>
-        <div class="col-md-2 project-map-list-header">Line of BU</div>
-         <div class="col-md-2 project-map-list-header">Program</div>
-       </div>
-      
-       <!-- <div class="col-md-1" style="color: #0071BC">Team Size</div>
-       <div class="col-md-1" style="color: #0071BC">Project Type</div>
-       <div class="col-md-1" style="color: #0071BC">Project Effectiveness</div>
-       <div class="col-md-1" style="color: #0071BC">Project Duration</div>
-       <div class="col-md-1" style="color: #0071BC">Project Health</div> -->
-
+    <div class="col-md-1 project-map-list-header">Project ID</div>
+    <div class="col-md-2 project-map-list-header" style="padding-left: 50px;">Project Name</div>
+    <div class="col-md-2 project-map-list-header">Customer Name</div>
+    <div class="col-md-2 project-map-list-header">Project Owner</div>
+    <div class="col-md-2 project-map-list-header">Line of BU</div>
+    <div class="col-md-2 project-map-list-header">Program</div>
+    </div>
+    <!-- <div class="col-md-1" style="color: #0071BC">Team Size</div>
+        <div class="col-md-1" style="color: #0071BC">Project Type</div>
+        <div class="col-md-1" style="color: #0071BC">Project Effectiveness</div>
+        <div class="col-md-1" style="color: #0071BC">Project Duration</div>
+        <div class="col-md-1" style="color: #0071BC">Project Health</div> -->
     </div>
     <form name="pm.projectDetailBar">
-
         <div class="col-md-12 " ng-repeat="proj in pm.getAllProjects | filter:pm.searchText">
-        <div class="col-md-1"></div>
-        <div class="col-md-10 projectBar project-map-bar-prop">
-              <!--  <a href="#/site" target="_self" >asdasd</a> -->
-             <div>
-             
-
-           
-               
-
-
-
-
-                <div class="col-md-1" ng-show="proj.editorEnabled" >
-                  {{proj.projectId}}
-               </div>
-                <div class="col-md-1 project-map-list-data"  ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectId}}" style="">{{proj.projectId}}</div>
-
-
-
-
-                 <div class="col-md-2" ng-show="proj.editorEnabled" style="padding-left: 4%">
-                  <input type="" name="" ng-model="proj.projectName" class="set-width-input">
-               </div>
-                <div class="col-md-2 project-map-list-data" style="padding-left: 4%"  ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectName}}" style="">{{proj.projectName}}</div>
-
-
-
-
-
-
-
-
-
-
-
-
-                <div class="col-md-2" ng-show="proj.editorEnabled" >
-                  <input type="" name="" ng-model="proj.client" class="set-width-input">
-               </div>
-               <div class="col-md-2 project-map-list-data"  ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.client}}" style="">{{proj.client}}</div>
-
-
-                <div class="col-md-2" ng-show="proj.editorEnabled" >
-                  <input type="" name="" ng-model="proj.projectOwner" class="set-width-input">
-               </div>
-               <div class="col-md-2 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectOwner}}" style="">{{proj.projectOwner}}</div>
-
-                <div class="col-md-2" ng-show="proj.editorEnabled" >
-                  <input type="" name="" ng-model="proj.businessUnit" class="set-width-input">
-               </div>
-               <div class="col-md-2 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.businessUnit}}" style="">{{proj.businessUnit}}</div>
-              
-                <div class="col-md-1" ng-show="proj.editorEnabled" >
-                  <input type="" name="" ng-model="proj.program" class="set-width-input">
-               </div>
-               <div class="col-md-1 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.program}}" style="">{{proj.program}}</div>
-               </div>
-              
-              <!--  <div class="col-md-1" >
-               <span ng-if="proj.program">{{proj.program}}</span>
-                <span ng-if="!proj.program">NO pgms</span>
-                 </div> -->
-               <span class="col-md-2" style="padding-left: 43px;">
-         <span style="padding-left: 14px">
-                  <img src="assets/images/shareNew.png " class="ed-image-props project-map-crud-icons" style="width:22px;" ng-click="pm.shareProjectPopUp(proj)" title="Add User">
-               </span>
-               <span class="" ng-show="!proj.editorEnabled">
-                 <img src="assets/images/editNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
-               </span>
-               
-               <span ng-click="pm.editproject(proj)" ng-show="proj.editorEnabled">
-                  <img src="assets/images/savNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  title="Save">
-               </span> 
-               <span class="" >
-                 <img src="assets/images/deleteNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="pm.deleteProjectModel(proj)" title="Delete"> 
-               </span></span>
-            
-
-
-
+            <div class="col-md-1"></div>
+            <div class="col-md-10 projectBar project-map-bar-prop">
+                <!--  <a href="#/site" target="_self" >asdasd</a> -->
+                <div>
+                    <div class="col-md-1" ng-show="proj.editorEnabled" >
+                        {{proj.projectId}}
+                    </div>
+                    <div class="col-md-1 project-map-list-data"  ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectId}}" style="">{{proj.projectId}}</div>
+                    <div class="col-md-2" ng-show="proj.editorEnabled" style="padding-left: 4%">
+                        <input type="" name="" ng-model="proj.projectName" class="set-width-input">
+                    </div>
+                    <div class="col-md-2 project-map-list-data" style="padding-left: 4%"  ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectName}}" style="">{{proj.projectName}}</div>
+                    <div class="col-md-2" ng-show="proj.editorEnabled" >
+                        <input type="" name="" ng-model="proj.client" class="set-width-input">
+                    </div>
+                    <div class="col-md-2 project-map-list-data"  ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.client}}" style="">{{proj.client}}</div>
+                    <div class="col-md-2" ng-show="proj.editorEnabled" >
+                        <input type="" name="" ng-model="proj.projectOwner" class="set-width-input">
+                    </div>
+                    <div class="col-md-2 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.projectOwner}}" style="">{{proj.projectOwner}}</div>
+                    <div class="col-md-2" ng-show="proj.editorEnabled" >
+                        <input type="" name="" ng-model="proj.businessUnit" class="set-width-input">
+                    </div>
+                    <div class="col-md-2 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.businessUnit}}" style="">{{proj.businessUnit}}</div>
+                    <div class="col-md-1" ng-show="proj.editorEnabled" >
+                        <input type="" name="" ng-model="proj.program" class="set-width-input">
+                    </div>
+                    <div class="col-md-1 project-map-list-data" ng-show="!proj.editorEnabled" ng-click="showDahboardPage(proj.id);" ng-attr-title="{{proj.program}}" style="">{{proj.program}}</div>
+                </div>
+                <!--  <div class="col-md-1" >
+                    <span ng-if="proj.program">{{proj.program}}</span>
+                     <span ng-if="!proj.program">NO pgms</span>
+                      </div> -->
+                <span class="col-md-2" style="padding-left: 43px;">
+                <span style="padding-left: 14px">
+                <img src="assets/images/shareNew.png " class="ed-image-props project-map-crud-icons" style="width:22px;" ng-click="pm.shareProjectPopUp(proj)" title="Add User">
+                </span>
+                <span class="" ng-show="!proj.editorEnabled">
+                <img src="assets/images/editNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
+                </span>
+                <span ng-click="pm.editproject(proj)" ng-show="proj.editorEnabled">
+                <img src="assets/images/savNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  title="Save">
+                </span> 
+                <span class="" >
+                <img src="assets/images/deleteNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="pm.deleteProjectModel(proj)" title="Delete"> 
+                </span></span>
             </div>
-        
-    </div></form>
+        </div>
+    </form>
     <!-- <div class="col-md-12">
         <div class="col-md-1"></div>
         <div class="col-md-10" style="background: white;
@@ -297,11 +254,11 @@
                <div class="col-md-2">Trust Hub</div>
                <div class="col-md-2">Rajesh</div>
                <div class="col-md-2">Good</div>
-
-
+        
+        
             </div>
         
-    </div> -->
+        </div> -->
     <!-- <div class="col-md-12">
         <div class="col-md-1"></div>
         <div class="col-md-10" style="background: white;
@@ -314,11 +271,11 @@
                <div class="col-md-2">Trust Hub</div>
                <div class="col-md-2">Rajesh</div>
                <div class="col-md-2">Good</div>
-
-
+        
+        
             </div>
         
-    </div> -->
+        </div> -->
     <!-- <div class="col-md-12">
         <div class="col-md-1"></div>
         <div class="col-md-10" style="background: white;
@@ -331,12 +288,12 @@
                <div class="col-md-2">Trust Hub</div>
                <div class="col-md-2">Rajesh</div>
                <div class="col-md-2">Good</div>
-
-
+        
+        
             </div>
         
-    </div> -->
-   <!--  <div class="col-md-12">
+        </div> -->
+    <!--  <div class="col-md-12">
         <div class="col-md-1"></div>
         <div class="col-md-10" style="background: white;
             margin-top: 5px;
@@ -348,12 +305,12 @@
                <div class="col-md-2">Trust Hub</div>
                <div class="col-md-2">Rajesh</div>
                <div class="col-md-2">Good</div>
-
-
+        
+        
             </div>
         
-    </div> -->
-   <!--  <div class="col-md-12">
+        </div> -->
+    <!--  <div class="col-md-12">
         <div class="col-md-1"></div>
         <div class="col-md-10" style="background: white;
             margin-top: 5px;
@@ -365,12 +322,12 @@
                <div class="col-md-2">Trust Hub</div>
                <div class="col-md-2">Rajesh</div>
                <div class="col-md-2">Good</div>
-
-
+        
+        
             </div>
         
-    </div> -->
-   <!--  <div class="col-md-12">
+        </div> -->
+    <!--  <div class="col-md-12">
         <div class="col-md-1"></div>
         <div class="col-md-10" style="background: white;
             margin-top: 5px;
@@ -382,10 +339,9 @@
                <div class="col-md-2">Trust Hub</div>
                <div class="col-md-2">Rajesh</div>
                <div class="col-md-2">Good</div>
-
-
+        
+        
             </div>
         
-    </div> -->
+        </div> -->
 </div>
-
