@@ -133,20 +133,19 @@ public class ProjectController {
 			return ResponseEntity.status(HttpStatus.OK).body(project);
 
 		}catch (Exception e) {
-			
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); 
 		}
-		
-		return null;
+	
 
 	}
 	@RequestMapping(value = "/getProjectRoles/{projectId}/{user}", method = GET, produces = APPLICATION_JSON_VALUE)
 	public Iterable<UserRole> getAllActiveProjectRolesOfUser(@PathVariable String projectId , @PathVariable String user){
 		try{
-			projectService.getActiveprojectRolesOfUser(projectId, user);
+			return projectService.getActiveprojectRolesOfUser(projectId, user);
 		}catch (Exception e) {
-			
+			return null;
 		}
-		return null;
+		
 	}
 
 }

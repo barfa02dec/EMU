@@ -182,9 +182,15 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		Set <String> userRoleKeys= new HashSet<String>();
 		Set<UserRole> existingRoles= new HashSet<UserRole>();
-		for(UserGroup usergrp :projectRepository.getAllActiveProjectRolesOfUser(projectId,user).getUsersGroup()){
-			for(ProjectRoles role:usergrp.getUserRoles()){
-				userRoleKeys.add(role.getRole());
+		Project dbProject=projectRepository.getProject(projectId,user);
+		if(null==dbProject){
+			return null;
+		}
+		for(UserGroup usergrp :dbProject.getUsersGroup()){
+			if(usergrp.getUser().equals(user)){
+				for(ProjectRoles role:usergrp.getUserRoles()){
+					userRoleKeys.add(role.getRole());
+				}
 			}
 		}
 		for(String key: userRoleKeys){
