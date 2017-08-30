@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capitalone.dashboard.model.Project;
+import com.capitalone.dashboard.model.UserRole;
 import com.capitalone.dashboard.request.ProjectRequest;
 import com.capitalone.dashboard.request.ProjectUserRoleRequest;
 import com.capitalone.dashboard.service.ProjectService;
@@ -63,6 +64,16 @@ public class ProjectController {
 			}
 		}catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Invalid Project ID");
+		}
+	}
+	
+	@RequestMapping(value = "/disassociatedUserFromProject/{user}/{projectId}", method = DELETE)
+	public ResponseEntity<String> disassociatedUserFromProject(@PathVariable String user, @PathVariable String projectId) {
+		try{
+			
+			return ResponseEntity.status(HttpStatus.OK).body(projectService.disassociatedUserFromProject(user, projectId));
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Request for disassociating user from project is failed");
 		}
 	}
 	
@@ -122,11 +133,19 @@ public class ProjectController {
 			return ResponseEntity.status(HttpStatus.OK).body(project);
 
 		}catch (Exception e) {
-			
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); 
+		}
+	
+
+	}
+	@RequestMapping(value = "/getProjectRoles/{projectId}/{user}", method = GET, produces = APPLICATION_JSON_VALUE)
+	public Iterable<UserRole> getAllActiveProjectRolesOfUser(@PathVariable String projectId , @PathVariable String user){
+		try{
+			return projectService.getActiveprojectRolesOfUser(projectId, user);
+		}catch (Exception e) {
+			return null;
 		}
 		
-		return null;
-
 	}
 
 }

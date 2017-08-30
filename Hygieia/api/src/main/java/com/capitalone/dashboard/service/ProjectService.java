@@ -1,10 +1,9 @@
 package com.capitalone.dashboard.service;
 
-import java.util.Set;
-
 import org.bson.types.ObjectId;
 
 import com.capitalone.dashboard.model.Project;
+import com.capitalone.dashboard.model.UserRole;
 import com.capitalone.dashboard.request.ProjectRequest;
 import com.capitalone.dashboard.request.ProjectUserRoleRequest;
 
@@ -24,15 +23,8 @@ public interface ProjectService {
 	
 	Project getProject(ObjectId id);
 	
-	/*Iterable<Project> all();
+	Iterable<UserRole> getActiveprojectRolesOfUser( String projectId ,String user);
 	
-	
-	
-
-	
-	
-	
-	
-	*/
+	String disassociatedUserFromProject(String user, String projectId);
 
 }

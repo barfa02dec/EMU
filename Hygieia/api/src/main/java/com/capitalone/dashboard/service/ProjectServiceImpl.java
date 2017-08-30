@@ -2,7 +2,9 @@ package com.capitalone.dashboard.service;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	private final ProjectRepository projectRepository;
 	private final UserRoleRepository userRoleRepository;
+	
 	@Autowired
 	public ProjectServiceImpl(ProjectRepository projectRepository,UserRoleRepository userRoleRepository) {
 		this.projectRepository = projectRepository;
@@ -124,7 +127,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Iterable<Project> getProjectsOwnedByUser(String username) {
-		return projectRepository.findByProjectUser(username);
+		return projectRepository.findByProjectUser(username,true);
 	}
 
 	@Override
@@ -137,7 +140,9 @@ public class ProjectServiceImpl implements ProjectService {
 			for(UserRole role: projectUserRoleRequest.getUserRoles()){
 				ProjectRoles projRole= new ProjectRoles();
 				projRole.setRole(role.getRoleKey());
-				projRole.setPermissions(role.getPermissions().keySet());
+				//projRole.setPermissions(role.getPermissions().keySet());
+				//defect fix: ignoring the inactive permissions while adding the roles.
+				projRole.setPermissions(role.getPermissions().entrySet().stream().filter(e -> e.getValue().booleanValue()==true).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)).keySet());
 				projRoles.add(projRole);
 			}
 			//check if user already exists in group, then reset the roles, else create new user in the group with roles.
@@ -170,6 +175,42 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Iterable<Project> getActiveprojects() {
 		return projectRepository.getAllActiveProjects(true);
+	}
+
+	@Override
+	public Iterable<UserRole> getActiveprojectRolesOfUser( String projectId ,String user) {
+		
+		Set <String> userRoleKeys= new HashSet<String>();
+		Set<UserRole> existingRoles= new HashSet<UserRole>();
+		Project dbProject=projectRepository.getProject(projectId,user);
+		if(null==dbProject){
+			return null;
+		}
+		for(UserGroup usergrp :dbProject.getUsersGroup()){
+			if(usergrp.getUser().equals(user)){
+				for(ProjectRoles role:usergrp.getUserRoles()){
+					userRoleKeys.add(role.getRole());
+				}
+			}
+		}
+		for(String key: userRoleKeys){
+			existingRoles.add(userRoleRepository.findByRoleKey(key));
+		}
+		
+		return existingRoles;
+	}
+
+	@Override
+	public String disassociatedUserFromProject(String user, String projectId) {
+		Project existingDBProject=projectRepository.getProject(user, projectId);
+		for(UserGroup userGroup: existingDBProject.getUsersGroup()){
+			if(userGroup.getUser().equals(user)){
+				existingDBProject.getUsersGroup().remove(userGroup);
+				projectRepository.save(existingDBProject);
+				return "User has been disassociated successfully from the project";
+			}
+		}
+		return "";
 	}
 
 }

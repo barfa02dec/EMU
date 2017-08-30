@@ -14,6 +14,11 @@ public interface ProjectRepository extends PagingAndSortingRepository<Project, O
 	@Query(value = "{'projectStatus' : ?0}")
 	Iterable<Project> getAllActiveProjects(boolean status);
 
-	@Query(value = "{'usersGroup.user' : ?0}")
-	Iterable<Project> findByProjectUser(String user);
+	@Query(value = "{ 'usersGroup.user' : ?0, 'projectStatus' : ?1 }")
+	Iterable<Project> findByProjectUser(String user, boolean projectStatus);
+		
+	@Query(value = "{ 'projectId' : ?0, 'usersGroup.user' : ?1 }")
+	Project getProject(String projectId, String user);
+	
+	
 }

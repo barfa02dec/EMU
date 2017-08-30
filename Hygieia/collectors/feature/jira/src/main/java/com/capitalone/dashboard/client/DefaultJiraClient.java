@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
@@ -97,10 +98,9 @@ public class DefaultJiraClient implements JiraClient {
 				
 				String query = featureWidgetQueries.getStoryQuery(startDateStr,
 						featureSettings.getJiraIssueTypeNames(), featureSettings.getStoryQuery());
-				
+				//client.getSearchClient().searchJql(query);
 				Promise<SearchResult> promisedRs = client.getSearchClient().searchJql(
 						query, featureSettings.getPageSize(), pageStart, DEFAULT_FIELDS);
-				
 				SearchResult sr = promisedRs.claim();
 
 				Iterable<Issue> jiraRawRs = sr.getIssues();
@@ -387,7 +387,8 @@ public class DefaultJiraClient implements JiraClient {
                     }
                 }
             } catch (ParseException pe) {
-                LOGGER.error("Parser exception when parsing statuses", pe);
+            	LOGGER.error("Parser exception when parsing statuses", pe);
+            	return statusMap;
             } 
         } catch (org.springframework.web.client.RestClientException rce) {
             LOGGER.error("Client exception when loading statuses", rce);

@@ -158,6 +158,7 @@ public class PermissionServiceImpl implements PermissionService {
 			permission.setCreatedBy(request.getCreatedBy());
 			permission.setDescription(request.getDescription());
 			permission.setStatus(request.isStatus());
+			permission.setCreatedOn(new Date().toString());
 			permissionSet.add(permission);
 		}
 		return permissionSet;
