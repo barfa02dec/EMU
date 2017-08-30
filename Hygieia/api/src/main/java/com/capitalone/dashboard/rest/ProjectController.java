@@ -139,7 +139,7 @@ public class ProjectController {
 		return null;
 
 	}
-	@RequestMapping(value = "/getProject/{projectId}/{user}", method = GET, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getProjectRoles/{projectId}/{user}", method = GET, produces = APPLICATION_JSON_VALUE)
 	public Iterable<UserRole> getAllActiveProjectRolesOfUser(@PathVariable String projectId , @PathVariable String user){
 		try{
 			projectService.getActiveprojectRolesOfUser(projectId, user);
