@@ -5,9 +5,9 @@
         .module(HygieiaConfig.module)
         .controller('projectMapController', projectMapController);
 
-    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http', '$route', '$cookies', '$timeout', '$cookieStore'];
+    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http', '$route', '$cookies', '$timeout', '$cookieStore','$rootScope'];
 
-    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore) {
+    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore,$rootScope) {
         var ctrl = this;
         ctrl.usernamepro = $cookies.get('username');
         ctrl.showAddPopUpBox = false;
@@ -31,13 +31,27 @@
         //   .then(processCaResponse);
 
         //Get All Projects
+        $scope.curPage = 0;
+        ctrl.pageSize = 5;
         $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
-            .then(processCaResponse);
+            .then(function(response) {
+                ctrl.getAllProjects = response.data;
+                $rootScope.getprojects = response.data;
 
-        function processCaResponse(response) {
-            ctrl.getAllProjects = response.data;
-        }
+            });
 
+            
+
+        ctrl.numberOfPages = function() {
+            return Math.ceil(ctrl.getAllProjects.length / ctrl.pageSize);
+        };
+
+        angular.module(HygieiaConfig.module).filter('pagination', function() {
+            return function(input, start) {
+                start = +start;
+                return input.slice(start);
+            };
+        });
         //Add User AutoComplete API Fetch
         $http.get("/api/getApplicationUsers")
             .then(function(response) {
@@ -53,6 +67,8 @@
                 backdrop: 'static'
             });
         }
+
+
 
         //open add user Modal
         ctrl.shareProjectPopUp = function(prob) {
@@ -73,7 +89,7 @@
         function shareProjectController($uibModalInstance, proid, $route, $scope) {
             var sp = this;
             sp.selected = '';
-              sp.projectId = proid;
+            sp.projectId = proid;
             //Fetch all users
             $http.get("/api/getApplicationUsers")
                 .then(function(response) {
@@ -93,25 +109,25 @@
                     }*/
                     sp.getRolesKey = response.data;
                 });
-                
+
             sp.shareProjects = function(prob) {
                 var aa = sp.selected;
                 sp.projectId = proid;
 
-                 sp.projectUserPayl = {
-                "user": sp.selected,
-                "projectId": sp.projectId,
-                "userRoles":sp.getRolesKey.selectedItems
-               }
+                sp.projectUserPayl = {
+                    "user": sp.selected,
+                    "projectId": sp.projectId,
+                    "userRoles": sp.getRolesKey.selectedItems
+                }
                 console.log(sp.projectUserPayl);
                 $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
                     alert('Project Mapped Successfully');
                     console.log(sp.projectUserPayl);
-                   /* $uibModal.open({
-                        templateUrl: 'app/dashboard/views/userPermissionMap.html',
-                        controller: 'projectMapController',
-                        controllerAs: 'pm'
-                    });*/
+                    /* $uibModal.open({
+                         templateUrl: 'app/dashboard/views/userPermissionMap.html',
+                         controller: 'projectMapController',
+                         controllerAs: 'pm'
+                     });*/
                 })
             };
 
@@ -146,18 +162,45 @@
 
         //Edit Project 
         ctrl.editproject = function(info) {
+            console.log(info);
+             ctrl.usernamepro = $cookies.get('username');
+                
+
+            ctrl.editPayload = {
+                 "projectId":info.projectId,
+                 "projectName":info.projectName,
+                 "projectOwner":info.projectOwner,
+                  "client":info.client,
+                 "businessUnit": info.businessUnit,
+                "program":info.program,
+                "user": ctrl.usernamepro,
+                "editorEnabled":info.editorEnabled,
+                "id":info.id
+                
+                 
+            }
             info.editorEnabled = false;
             console.log(info);
             var apiHost = ' http://localhost:3000';
             var qahost = 'http://10.20.1.183:3000';
             if ((info.businessUnit) && (info.projectId) && (info.client) && (info.projectOwner)) {
                 if ((info.businessUnit.length >= 3) && (info.projectId.length >= 3) && (info.client.length >= 3) && (info.projectOwner.length >= 3) && (info.program.length >= 3)) {
-                    $http.post('/api/updateProject', (info)).then(function(response) {
+                    $http.post('/api/updateProject', (ctrl.editPayload)).then(function(response) {
                         $uibModal.open({
                             templateUrl: 'app/dashboard/views/editConfirm.html',
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
+
+                    }, function(response) {
+
+
+                        if (response.status > 204 && response.status <= 500) {
+                            info.editorEnabled = true;
+                            alert("Server Error");
+
+                        }
+
 
                     })
                 } else {
@@ -231,7 +274,7 @@
                 "businessUnit": ctrl.businessUnit,
                 "program": ctrl.program,
                 "user": dpmObjpos.usernamepro
-                
+
             }
             dpmObjpos.postProject = function() {
                 var apiHost = 'http://localhost:3000';
@@ -244,6 +287,18 @@
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
+                    }, function(response) {
+
+
+                        if (response.status == 409) {
+                            $uibModal.open({
+                                templateUrl: 'app/dashboard/views/createErrorModal.html',
+                                controller: 'projectMapController',
+                                controllerAs: 'pm'
+                            });
+                        }
+
+
                     })
                 } else {}
 

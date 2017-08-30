@@ -112,8 +112,8 @@
        <div class="expandcollapse-item">
         <div class="" style="cursor: pointer;" ng-click="active = !active" ng-class="{'expandcollapse-heading-collapsed': active, 'expandcollapse-heading-expanded': !active}">{{fetchPro.projectName}}</div>
          <div class="slideDown" ng-hide="!active">
-          <div class="expand-collapse-content" ng-repeat="fetchuser in umc.getprojectsUsers">
-            {{fetchuser.program}}
+          <div class="expand-collapse-content" ng-repeat="fetchuser in umc.newArr">
+            {{fetchuser[0].user}}
           </div>
         </div>
        </div>

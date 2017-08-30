@@ -5,7 +5,7 @@
         config = {
         view: {
             defaults: {
-                title: 'feature' // widget title
+                title: 'Feature' // widget title
             },
             controller: 'featureViewController',
             //controllerAs: 'feature',
