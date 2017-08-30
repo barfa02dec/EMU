@@ -258,7 +258,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 			// get the detailed metrics for sprint with status[closed] but detailed metrics/SprintData is null
 						
 			if(((sprint.getClosed() && null==sprint.getSprintData())||!sprint.getClosed())){
-				System.out.println("Sprint Id::"+sprint.getName());
 				JiraCollectorUtil.getRecentSprintMetrics(js, projectId,
 						featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(),
 						featureSettings.getRapidView());
@@ -296,7 +295,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 			// get the detailed metrics for release with status[released] but detailed metrics/versionData is null
 			
 			if ((release.getReleased() && null == release.getVersionData())|| !release.getReleased()) {
-				System.out.println("Release ::"+release.getName());
 				String detailedVersionMetrics = JiraCollectorUtil.getVersionDetailsFromJira(
 						featureSettings.getRapidView(), jv.getId(), featureSettings.getJiraBaseUrl(),
 						featureSettings.getJiraCredentials());
@@ -486,6 +484,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		 * For a single project, there is always a single aggregater
 		 * exists.Hence setting the collector ID as same as scope ID.
 		 */
+		LOGGER.info("processing Defects aggregation");
 		DefectAggregation summery = defectAggregationRepository.findByProjectId(scopeProject.getpId());
 		if (null == summery) {
 			summery = new DefectAggregation();
@@ -495,6 +494,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		summery.setProjectName(scopeProject.getName());
 		summery.setValuesAsOn(new Date().toString());
 		defectAggregationRepository.save(summery);
+		LOGGER.info("Defects aggregation ends.");
 	}
 
 	private void processDefectsByDefectResolutionPeriod(DefectAggregation aggregation, Scope scopeProject) {
@@ -537,7 +537,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				defectsByResolution.add(metric);
 				fixedDefectsByResolution.put("Range" + (i + 1), defectsByResolution);
 			} else {
-				String key = ">" + (resolutionsList.get(i - 1) + 1) + "&& <" + resolutionsList.get(i);
+				String key = ">" + (resolutionsList.get(i - 1) + 1) + " && <" + resolutionsList.get(i);
 				List<Map<String, String>> defectsByResolution = new ArrayList<Map<String, String>>();
 				for (String priorityKey : defectPriorities) {
 
@@ -614,7 +614,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				defectsByAge.add(metric);
 				openDefectsByAge.put("Range" + (i + 1), defectsByAge);
 			} else {
-				String key = ">" + (defectAgeList.get(i - 1) + 1) + "&& <" + defectAgeList.get(i) ;
+				String key = ">" + (defectAgeList.get(i - 1) + 1) + " && <" + defectAgeList.get(i) ;
 				List<Map<String, String>> defectsByAge = new ArrayList<Map<String, String>>();
 				for (String priorityKey : defectPriorities) {
 
