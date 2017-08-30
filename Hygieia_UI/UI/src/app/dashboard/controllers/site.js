@@ -8,8 +8,8 @@
         .module(HygieiaConfig.module)
         .controller('SiteController', SiteController);
 
-    SiteController.$inject = ['$scope', '$q', '$uibModal', 'dashboardData', '$location', '$cookies', '$cookieStore', 'DashboardType'];
-    function SiteController($scope, $q, $uibModal, dashboardData, $location, $cookies, $cookieStore, DashboardType) {
+    SiteController.$inject = ['$scope', '$q', '$uibModal', 'dashboardData', '$location', '$cookies', '$cookieStore', 'DashboardType','$http'];
+    function SiteController($scope, $q, $uibModal, dashboardData, $location, $cookies, $cookieStore, DashboardType,$http) {
         var ctrl = this;
 
         // public variables
@@ -30,6 +30,8 @@
         ctrl.filterNotOwnedList = filterNotOwnedList;
         ctrl.filterDashboards = filterDashboards;
         ctrl.renameDashboard = renameDashboard;
+        ctrl.usernamepro = $cookies.get('username');
+        ctrl.projectName = $cookies.get('ProName');
         
          if (ctrl.username === 'admin') {
             ctrl.myadmin = true;
@@ -216,8 +218,8 @@
 
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/deleteDahboardPopup.html',
-                controller: deleteDahboardPopupController,
-                controllerAs: 'dppc',
+                controller: deleteDashboardController,
+                controllerAs: 'ddc',
                 resolve: {
                     dashid: function () {
                         return myitem.id;
@@ -227,6 +229,17 @@
             });
         }
 
+          function deleteDashboardController($uibModalInstance, dashid, $route,$http) {
+            var ddc = this;
+            ddc.deleteDashboardfn= function(pro) {
+                $http.delete('/api/dashboard/' + dashid).then(function (response) {
+                   $uibModalInstance.dismiss("cancel");
+                    $route.reload();
+                    alert("deleted");
+            });
+                
+            };
+        }
 
         /* function deleteDahboardPopupController($uibModalInstance, dashid, $route,dashboardData) {
 

@@ -1,81 +1,79 @@
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-<div id="auth" class="login-page" style="padding-top: 10px;">
-    <!--  <ng-include src="login.templateUrl"></ng-include> -->
-    <div class="col-md-12 ">
-        <img src="assets/images/406915.jpg " class="" style="margin-left: 90%;width:110px;height:50px;">
-    </div>
-    <div class="col-md-12 "></div>
-     <div class="col-md-12 "></div>
-    <div class="col-md-4 "></div>
-    <div class="col-md-4 " style="padding-top: 5%;">
-       <!--  <img src="assets/images/EDlogo.png " class="ed-image-props"> -->
-        <span class="" style="padding-left: 43%;">
-            <svg version="1.1"
-               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
-               x="0px" y="0px" width="70px" height="70px" viewBox="0 0 23 23" style="overflow:scroll;enable-background:new 0 0 23 23;"
-               xml:space="preserve">
-               <style type="text/css">
-                  .stedlogo0{fill:#000;}
-                  .stedlogo1{fill: #fff;}
-               </style>
-               <defs></defs>
-               <g>
-                  <path class="stedlogo0" d="M11.5,0c0.8,0,1.6,0.1,2.3,0.2c1.9,0.4,3.6,1.2,5,2.4V0H11.5z M11.5,23h7.3v-2.6c-1.4,1.2-3.1,2-5,2.4
-                     C13.1,22.9,12.3,23,11.5,23z M4.6,23v-0.2l0-5.7l0-3.3L0,9.2V23H4.6z M0,9.2h4.6l0-1.9l0-7.1V0H0V9.2z"/>
-                  <g class="stedlogo1">
-                     <path d="M18.8,2.6c-1.4-1.2-3.1-2-5-2.4C13.1,0.1,12.3,0,11.5,0H4.6v7.3h0l0,1.9H0l4.6,4.6l0,3.3h0V23h6.9c0.8,0,1.6-0.1,2.3-0.2
-                        c1.9-0.4,3.6-1.2,5-2.4c2.6-2.1,4.2-5.3,4.2-8.9S21.4,4.7,18.8,2.6z M18,13.8c-0.7,2-2.2,3.5-4.2,4.2c-0.7,0.3-1.5,0.4-2.3,0.4
-                        H9.2v-4.6h4.6L9.2,9.2V4.6h2.3c0.8,0,1.6,0.1,2.3,0.4c2,0.7,3.5,2.2,4.2,4.2c0.3,0.7,0.4,1.5,0.4,2.3S18.3,13.1,18,13.8z"/>
-                  </g>
-               </g>
-            </svg>
-         </span>
-        <div class="auth-modal-heading login-page-header">Engineering Dashboard</div>
-        <div class="auth-modal-body">
-            <form class="col-xs-10 col-xs-push-1 col-sm-8 col-sm-push-2" id="lg" name="lg" class="form" ng-submit="login.doLogin(lg.$valid)" role="form" novalidate>
-                <form-group input="username" errors="{required: 'Username is required', invalidUsernamePassword: 'Incorrect username and password'}">
-                    <input type="text" name="username" class="form-control text-center" ng-model="login.username" required minlength="4" autocomplete="off" placeholder="Username or Email ID" style="border-radius:1px;" />
-                </form-group>
-                <form-group input="password" errors="{required:'Password is required'}">
-                    <input type="password" name="password" class="form-control text-center" ng-model="login.password" required placeholder="Password" style="border-radius:1px;" />
-                </form-group>
-                <div class="sign-in-div">
-                    <button type="submit" class="btn btn-default btn-wide sign-in-btn">
-                    Sign in
-                    </button>
-                </div>
-                <div class="gap text-center">
-                    <p style="color:#000;padding-top: 3%;">Don't have an account? <span ng-click="login.doSignup()" class="create-new-link">Create New</span></p>
-                    <!-- <div class="btn btn-link btn-wide" ng-click="login.doSignup()">
-                        <span class="fa fa-lg fa-key"></span> Sign up
-                        </div> -->
-                </div>
-            </form>
+<!DOCTYPE html>
+<html lang="en">
+    <head> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+
+    <!-- Website CSS style -->
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+
+    <!-- Website Font style -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    
+    <!-- Google Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Passion+One' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
+
+    <title>Admin</title>
+  </head>
+  <body>
+  <div id="auth" class="" style="background-image: url('assets/images/bg_login2.jpg');padding-top: 10px;">
+    <div class="container">
+      <div class="row main">
+        <div class="panel-heading">
+                 <div class="panel-title text-center">
+                    <img src="assets/images/happiest_mind_logo.png" class="" style="width:144px;height:50px;">
+                  </div>
+              </div> 
+        <div class="main-login main-center">
+        <div class="" style="font-size: 35px;color: #E5E5E5">
+          <img src="assets/images/emu-4a.png" style="height: 70px;
+    width: 70px;">
         </div>
-        <div class="clearfix"></div>
-        <!--  <div class="auth-modal-footer">
-            <div class="col-md-8 col-md-push-2 top-buffer">
-                <div class="col-md-4  col-md-push-1">
-                    <div class="animate-hide">
-                        <span class="text-center">API Connectivity</span>
-                    </div>
-                </div>
-                <div class="col-md-2 col-md-push-1">
-                    <div class="animate-hide">
-                        <i class="fa fa-2x fa-check-circle text-success"
-                            ng-if="login.apiup"></i>
-                        <i class="fa fa-2x fa-times-circle text-danger"
-                            ng-if="!login.apiup"></i>
-                    </div>
-                </div>
+         <div class="" style="font-size: 15px;color: #848484">Engineering Metrics Unified</div>
+          <form class="form-horizontal" id="lg" name="lg" ng-submit="login.doLogin(lg.$valid)" role="form" novalidate>
             
-                <div class="col-md-4 col-md-push-1">
-                    <div class="animate-hide">
-                    <span class="text-center">{{login.appVersion}}</span>
-                        </div>
+            <form-group input="username" style="padding-top: 50px;" errors="{required: 'Username is required', invalidUsernamePassword: 'Incorrect username and password'}">
+              <label for="name" class="cols-sm-2 control-label" style="font-weight: normal;color: #999999">Username or email ID</label>
+              <div class="cols-sm-10">
+                <div class="input-group" style="width: 100%">
+                  <!-- <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span> -->
+                  <input type="text" name="username" class="form-control" ng-model="login.username" required minlength="4" autocomplete="off" placeholder="Username or Email ID" style="border-radius:1px;" />
+
+                  
                 </div>
-            
+              </div>
+           </form-group>
+
+           <form-group input="password" errors="{required:'Password is required'}">
+              <label for="email" class="cols-sm-2 control-label" style="font-weight: normal;color: #999999">Password</label>
+              <div class="cols-sm-10">
+                <div class="input-group" style="width: 100%">
+                  <!-- <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span> -->
+                  <input type="password" name="password" class="form-control" ng-model="login.password" required placeholder="Password" style="border-radius:1px;" />
+                  
+                </div>
+              </div>
+            </form-group>
+
+          
+
+           
+
+
+            <div class="form-group ">
+              <button type="submit" class="btn btn-primary" style="background: #1766A4;border: #1766A4;box-shadow: none;font-size: 12px;border-radius: 3px;font-weight: normal;">Sign In</button>
             </div>
-            </div> -->
+            <div class="">
+             <p style="color:#000;">Don't have an account? <span ng-click="login.doSignup()" style="color: #3B7EB2;cursor: pointer;">Create New</span></p>
+                   <!--  <a href="index.php">Dont have an Account?</a> -->
+                 </div>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
+    </div>
+
+    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+  </body>
+</html>

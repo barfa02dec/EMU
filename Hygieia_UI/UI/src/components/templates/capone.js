@@ -12,7 +12,7 @@
     CapOneTemplateController.$inject = ['$location', '$cookies','$cookieStore'];
     function CapOneTemplateController($location, $cookies,$cookieStore) {
         var ctrl = this;
-
+        ctrl.usernamepro = $cookies.get('username');
         ctrl.tabs = [
             { name: "Widget"},
             { name: "Pipeline"},

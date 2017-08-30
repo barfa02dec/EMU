@@ -10,7 +10,7 @@
     function userManagementController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore) {
         var ctrl = this;
         ctrl.usernamepro = $cookies.get('username');
-
+        
         //Fetch All Application Users
         $http.get("/api/getApplicationUsers")
             .then(function(response) {
@@ -302,12 +302,9 @@
                  ctrl.getOnlyPerArray = [];
                 for(var i=0;i<response.data.length;i++){
                     if(response.data[i].permissions != undefined){
-                    
-                 ctrl.getOnlyPerArray.push(response.data[i].permissions)
-                    
-          
-     }
-    } 
+                        ctrl.getOnlyPerArray.push(response.data[i].permissions)
+                 }
+            } 
             ctrl.getOnlyPermission = response.data;
 
             });
@@ -349,6 +346,22 @@
             .then(function(response) {
                 ctrl.getprojectsUsers = response.data;
                 console.log(ctrl.getprojectsUsers);
+
+                //ctrl.getAllPermissions = response.data;
+                    ctrl.newArr = [];
+                    for (var i = 0; i < ctrl.getprojectsUsers.length; i++) {
+                        if (ctrl.getprojectsUsers != undefined) {
+                            ctrl.newArr.push(ctrl.getprojectsUsers[i].usersGroup);
+                        }
+                    }
+                    console.log(ctrl.newArr);
+                    ctrl.newArrusergrop = [];
+                    for (var i = 0; i < ctrl.newArr.length; i++) {
+                        if (ctrl.newArr != undefined) {
+                            ctrl.newArrusergrop.push(ctrl.newArr[i].user);
+                        }
+                    }
+                    //console.log(ctrl.newArrusergrop);
             });
 
     }

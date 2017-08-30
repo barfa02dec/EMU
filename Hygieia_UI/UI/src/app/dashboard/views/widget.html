@@ -1,43 +1,34 @@
 <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" class="alert alert-info">{{alert.msg}}</alert>
-<div class="" >
-    <div class="widget row"
-        ng-class="{'configure' : state == widget_state.CONFIGURE, 'alert': display == display_state.ERROR}" style="padding:0px;padding-left:8px;padding-top: 1%;">
+<div class="">
+    <div class="widget row" ng-class="{'configure' : state == widget_state.CONFIGURE, 'alert': display == display_state.ERROR}" style="padding:0px;padding-left:8px;padding-top: 1%;">
         <div class="kanban-widget-heading" ng-if="header" ng-hide=" {{(title == 'Monitor')}}" style="">
             <span ng-show=" {{(title == 'Feature')}}" style="padding-left:17px;">{{title}}</span>
             <span ng-show=" {{(title == 'Build')}}" style="padding-left:3px;">{{title}}</span>
             <span ng-show=" {{(title == 'Code Repo')}}" style="padding-left:11px;">{{title}}</span>
             <span ng-show=" {{(title == 'Quality')}}" style="padding-left:27px;">Code {{title}}</span>
-            <span class="widget-settings-icon clickable pull-right fa fa-cog"
-                type="button"
-                ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"
-                ng-click="checkPermission()" ng-show=" {{(title == 'Feature')}}" style="padding-right: 11px;padding-top: 4px;"></span>
-            <span class="widget-settings-icon clickable pull-right fa fa-cog"
-                type="button"
-                ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"
-                ng-click="checkPermission()" ng-show=" {{(title == 'Build')}}" style="padding-right: 9px;
+
+            <span class="widget-settings-icon clickable pull-right fa fa-cog" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()" ng-show=" {{(title == 'Feature')}}" style="padding-right: 11px;padding-top: 4px;"></span>
+            <span class="widget-settings-icon clickable pull-right fa fa-cog" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()" ng-show=" {{(title == 'Build')}}" style="padding-right: 9px;
     padding-top: 5px;"></span>
-            <span class="widget-settings-icon clickable pull-right fa fa-cog"
-                type="button"
-                ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"
-                ng-click="checkPermission()" ng-show=" {{(title == 'Code Repo')}}" style="padding-right: 32px;"></span>
-            <span class="widget-settings-icon clickable pull-right fa fa-cog"
-                type="button"
-                ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"
-                ng-click="checkPermission()" ng-show=" {{(title == 'Quality')}}" style="padding-right: 14px;
+            <span class="widget-settings-icon clickable pull-right fa fa-cog" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()" ng-show=" {{(title == 'Code Repo')}}" style="padding-right: 32px;"></span>
+            <span class="widget-settings-icon clickable pull-right fa fa-cog" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()" ng-show=" {{(title == 'Quality')}}" style="padding-right: 14px;
     padding-top: 7px;"></span>
+    
             <span class="pull-right last-updated" style="font-size: 11px;">
             {{lastUpdatedDisplay}}
             </span>
             <span ng-show=" {{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
             <a href="#/detailedview/{{caWidget.dashBoardId}}" target="_self" > 
             <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:11px;padding-right:2%;color: #fff;">View All <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
-            </a></span>
-             <span ng-show=" {{(title == 'Feature')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
+            </a>
+            </span>
+            <span ng-show="{{(title == 'Feature')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
             <a href="#/jiraDashboard" target="_self" > 
             <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;color: #fff;">View All <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
-            </a></span>
-            
-              <span ng-show=" {{(title == 'Build')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
+            </a>
+            </span>
+
+            <span ng-show=" {{(title == 'Build')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
                   <!--   <select ng-model="selectedName" ng-options="selectedName.description for selectedName in collectorDetails" ng-change="check(selectedName)" style="color: #000;">
 
                     </select> -->
@@ -47,7 +38,7 @@
  
            </span>
 
-           <span ng-show=" {{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
+            <span ng-show=" {{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
                 <!-- <select ng-model="selectedNameSonar" ng-options="selectedNameSonar.description for selectedNameSonar in collectorDetailsSonar" ng-change="checkSonar(selectedNameSonar)" style="color: #000;">
                 </select> -->
 
@@ -56,21 +47,18 @@
                         </select>
  
            </span>
-          
+
         </div>
 
 
-        <div class="widget-body" >
+        <div class="widget-body">
             <div class="widget-body-main">
                 <!-- widget content -->
             </div>
             <div class="widget-body-config clickable" ng-click="checkPermission()" style="background:#9AD2FF;border: 2px solid #66ccff;border-radius:3px;">
                 <div>
                     <div class="">
-                        <svg version="1.1"
-                            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
-                            x="0px" y="0px" width="30px" height="30px" viewBox="0 0 30 30" style="overflow:scroll;enable-background:new 0 0 30 30;"
-                            xml:space="preserve">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="30px" height="30px" viewBox="0 0 30 30" style="overflow:scroll;enable-background:new 0 0 30 30;" xml:space="preserve">
                             <style type="text/css">
                                 .stedaddwid0{fill:#FFFFFF;}
                             </style>

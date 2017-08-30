@@ -68,7 +68,7 @@
 }
 .hamburger-ListdashPage{
 	float:left;
-	margin-left:1%;
+	margin-left:1.6%;
 	margin-top:-10px;
 }
 .edMenu-ListDash-Page{
@@ -227,6 +227,10 @@ color: #000;
 	margin-top:0px !important;
 	margin-bottom:0px !important;
 	margin-left:34%;
+	color:#e50800;
+}
+.has-error .form-control{
+	border-color:#e50800;
 }
 .green-btn-props{
 	width: 30%;
@@ -413,3 +417,104 @@ li.style-forli {
     background-color: #5A8DB9;
     color: #fff;
 }
+
+
+
+/*
+/* Created by Filipe Pina
+ * Specific styles of signin, register, component
+ */
+/*
+ * General styles
+ */
+
+
+
+.main{
+ 	margin-top: 5px;
+}
+
+
+
+
+
+
+
+
+
+.main-login{
+ 	background-color: #fff;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+}
+
+.main-center{
+ 	margin-top: 30px;
+ 	margin: 0 auto;
+ 	max-width: 330px;
+    padding: 40px 40px;
+
+}
+
+.login-button{
+	margin-top: 5px;
+}
+
+.login-register{
+	font-size: 11px;
+	text-align: center;
+}
+
+
+
+
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ddd;
+}
+
+button.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+button.accordion.active:after {
+    content: "\2212";
+}
+
+div.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+ .table-bordered td {
+ 	border-top: 1px solid #ddd!important;
+ 	border-bottom:1px solid #ddd!important;
+ }
+ .table-bordered th,{
+ 	border-top: 1px solid #ddd!important;
+ 	border-bottom:3px solid #ddd!important;
+ }
