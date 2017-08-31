@@ -293,14 +293,14 @@ body {
            <span class="" ng-repeat="innerItem in proj.usersGroup">
                  <span class="" ng-repeat="childItem in innerItem.userRoles">
                  <span class="" ng-show="!proj.editorEnabled && childItem.permissions.indexOf('ADD_USER') !== -1 && innerItem.user.includes(pm.usernamepro)">
-                     <img src="assets/images/shareNew.png " class="ed-image-props project-map-crud-icons" style="width:22px;" ng-click="pm.shareProjectPopUp(proj)" title="Add User">
+                     <img src="assets/images/icon_add_user.png " class="ed-image-props project-map-crud-icons" style="width:22px;" ng-click="pm.shareProjectPopUp(proj)" title="Add User">
                  </span>
                  </span></span>
 
              <span class="" ng-repeat="innerItem in proj.usersGroup">
                  <span class="" ng-repeat="childItem in innerItem.userRoles">
              <span class="" ng-show="!proj.editorEnabled && childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)">
-                <img src="assets/images/editNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
+                <img src="assets/images/icon_edit.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
                 </span></span></span>
 
                 <span ng-click="pm.editproject(proj)" ng-show="proj.editorEnabled">
@@ -314,7 +314,7 @@ body {
                
                {{innerItem.user}}   -->
                <span ng-show="childItem.permissions.indexOf('DELETE_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)">
-                <img src="assets/images/deleteNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="pm.deleteProjectModel(proj)" title="Delete" > 
+                <img src="assets/images/icon_delete.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="pm.deleteProjectModel(proj)" title="Delete" > 
                 </span>
                 </span>  </span> 
           </td>
