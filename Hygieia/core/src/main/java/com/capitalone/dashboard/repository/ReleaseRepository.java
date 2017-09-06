@@ -29,8 +29,8 @@ import com.capitalone.dashboard.model.Release;
 public interface ReleaseRepository extends CrudRepository<Release, ObjectId>,
 		QueryDslPredicateExecutor<Release>, ReleaseRepositoryCustom {
 
-	 	@Query(value = "{ 'releaseId' : ?0 }")
-	 	Release findByReleaseId(Long id);
+	 	@Query(value = "{ 'releaseId' : ?0, 'projectId' : ?1 }")
+	 	Release findByReleaseId(Long id,String projectId);
 	 	@Query(value = "{ 'projectId' : ?0 }")
 	 	Iterable<Release> findByProjectId(String projectId);
 	

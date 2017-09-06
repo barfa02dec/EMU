@@ -522,7 +522,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		for (int i = 0; i < resolCount; i++) {
 			Map<String, String> metric = new HashMap<String, String>();
 			if (firstIndex) {
-				String key = "<" + resolutionsList.get(i);
+				String key = "days <" + resolutionsList.get(i);
 				firstIndex = false;
 				List<Map<String, String>> defectsByResolution = new ArrayList<Map<String, String>>();
 				for (String priorityKey : defectPriorities) {
@@ -537,7 +537,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				defectsByResolution.add(metric);
 				fixedDefectsByResolution.put("Range" + (i + 1), defectsByResolution);
 			} else {
-				String key = ">" + (resolutionsList.get(i - 1) + 1) + " && <" + resolutionsList.get(i);
+				String key = (resolutionsList.get(i - 1)) + "< days <" + resolutionsList.get(i);
 				List<Map<String, String>> defectsByResolution = new ArrayList<Map<String, String>>();
 				for (String priorityKey : defectPriorities) {
 
@@ -556,7 +556,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 			}
 
 		}
-		String keyAfterUpperLimit = ">" + resolutionsList.get(resolCount - 1);
+		String keyAfterUpperLimit = "days >" + resolutionsList.get(resolCount - 1);
 		List<Map<String, String>> defectsByResolutionMorethanUpperLimit = new ArrayList<Map<String, String>>();
 		Map<String, String> metricsAfterUpperLimit = new HashMap<String, String>();
 		for (String priorityKey : defectPriorities) {
@@ -600,7 +600,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		for (int i = 0; i < resolCount; i++) {
 			Map<String, String> metric = new HashMap<String, String>();
 			if (firstIndex) {
-				String key = "<" + defectAgeList.get(i);
+				String key = "days <" + defectAgeList.get(i);
 				firstIndex = false;
 				List<Map<String, String>> defectsByAge = new ArrayList<Map<String, String>>();
 				for (String priorityKey : defectPriorities) {
@@ -614,7 +614,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				defectsByAge.add(metric);
 				openDefectsByAge.put("Range" + (i + 1), defectsByAge);
 			} else {
-				String key = ">" + (defectAgeList.get(i - 1) + 1) + " && <" + defectAgeList.get(i) ;
+				String key =  (defectAgeList.get(i - 1)) + "< days <" + defectAgeList.get(i) ;
 				List<Map<String, String>> defectsByAge = new ArrayList<Map<String, String>>();
 				for (String priorityKey : defectPriorities) {
 
@@ -632,7 +632,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 			}
 
 		}
-		String keyAfterUpperLimit = ">" + defectAgeList.get(resolCount - 1);
+		String keyAfterUpperLimit = "days >" + defectAgeList.get(resolCount - 1);
 		List<Map<String, String>> defectsByAgeMorethanUpperLimit = new ArrayList<Map<String, String>>();
 		Map<String, String> metricsAfterUpperLimit = new HashMap<String, String>();
 		for (String priorityKey : defectPriorities) {

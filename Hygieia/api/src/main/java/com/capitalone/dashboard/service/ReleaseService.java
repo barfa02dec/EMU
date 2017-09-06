@@ -6,6 +6,6 @@ public interface ReleaseService {
 
 	Iterable<Release> getAllReleases(String projectId);
 
-	Release getDetailedReleaseDetails(Long releaseId);
+	Release getDetailedReleaseDetails(Long releaseId,String projectId);
 
 }

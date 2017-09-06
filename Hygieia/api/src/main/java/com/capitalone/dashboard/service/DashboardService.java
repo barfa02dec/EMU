@@ -93,7 +93,7 @@ public interface DashboardService {
      * @return List of dashboards
      */
     
-    List<Dashboard> getOwnedDashboards(String username);
+    List<Dashboard> getOwnedDashboards(String username, ObjectId projectId);
     
     /**
      * Get owner of dashboard on supplying dashboard Title

@@ -21,9 +21,9 @@ public class ReleaseController {
 		return releaseService.getAllReleases(projectId);
 	}
 	@RequestMapping(method=RequestMethod.GET,value="/releaseDetails")
-	public Release getReleaseDetailsWithID(@RequestParam(name="releaseId") Long releaseId)
+	public Release getReleaseDetailsWithID(@RequestParam(name="releaseId") Long releaseId,@RequestParam(name="projectId") String projectId)
 	{
-		return releaseService.getDetailedReleaseDetails(releaseId);
+		return releaseService.getDetailedReleaseDetails(releaseId,projectId);
 	}
 	
 	

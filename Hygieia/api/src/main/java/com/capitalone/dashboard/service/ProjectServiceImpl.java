@@ -2,6 +2,7 @@ package com.capitalone.dashboard.service;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -10,10 +11,12 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capitalone.dashboard.model.Dashboard;
 import com.capitalone.dashboard.model.Project;
 import com.capitalone.dashboard.model.ProjectRoles;
 import com.capitalone.dashboard.model.UserGroup;
 import com.capitalone.dashboard.model.UserRole;
+import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.ProjectRepository;
 import com.capitalone.dashboard.repository.UserRoleRepository;
 import com.capitalone.dashboard.request.ProjectRequest;
@@ -24,11 +27,13 @@ public class ProjectServiceImpl implements ProjectService {
 
 	private final ProjectRepository projectRepository;
 	private final UserRoleRepository userRoleRepository;
+	private final DashboardRepository  dashboardRepository;
 	
 	@Autowired
-	public ProjectServiceImpl(ProjectRepository projectRepository,UserRoleRepository userRoleRepository) {
+	public ProjectServiceImpl(ProjectRepository projectRepository,UserRoleRepository userRoleRepository,DashboardRepository  dashboardRepository) {
 		this.projectRepository = projectRepository;
 		this.userRoleRepository=userRoleRepository;
+		this.dashboardRepository=dashboardRepository;
 	}
 
 	/*@Override
@@ -100,11 +105,11 @@ public class ProjectServiceImpl implements ProjectService {
 			Set<ProjectRoles> projRoles = new HashSet<ProjectRoles>();
 			projRoles.add(projRole);
 			defaultProjectAdmin.setUserRoles(projRoles);
-			Set<UserGroup> userGroupSet= new HashSet<UserGroup>();
-			userGroupSet.add(defaultProjectAdmin);
-			project.setUsersGroup(userGroupSet);
 		}
-		
+		Set<UserGroup> userGroupSet= new HashSet<UserGroup>();
+		userGroupSet.add(defaultProjectAdmin);
+		project.setUsersGroup(userGroupSet);
+
 		return project;
 	}
 	
@@ -166,7 +171,11 @@ public class ProjectServiceImpl implements ProjectService {
 				project.setUsersGroup(userGroupSet);
 			}
 			
-		
+			Set<Dashboard> dashboardsList=projectUserRoleRequest.getDashboardsToAssign();
+			for(Dashboard dbDashboard: dashboardsList){
+				dbDashboard.getUsersList().add(projectUserRoleRequest.getUser());
+			}
+			dashboardRepository.save(dashboardsList);
 			return projectRepository.save(project);
 		}
 		return null;

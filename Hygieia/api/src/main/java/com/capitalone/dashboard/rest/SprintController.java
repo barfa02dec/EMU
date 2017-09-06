@@ -28,8 +28,8 @@ public class SprintController {
 	}
 	
 	@RequestMapping(value = "/sprintDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Sprint getAllDefects(@RequestParam(value = "sid", required = true) Long sid) {
-		return sprintService.getDetailedSprintDetails(sid);
+	public Sprint getAllDefects(@RequestParam(value = "sid", required = true) Long sid,@RequestParam(value = "projectId", required = true) String projectId) {
+		return sprintService.getDetailedSprintDetails(sid,projectId);
 	}
 
 }
