@@ -134,8 +134,12 @@ public class UserRoleServiceImpl implements UserRoleService {
 		UserRole roleInDb=roleRepository.findByRoleKey(role.getRoleKey());
 		if(null!=roleInDb){
 			Map<String , Boolean> permissions= new HashMap<String , Boolean>();
+			List<String> permissionKeysInDB=getpermissionKeysInDB();
+			
 			for(String permit:role.getPermissions()){
-				permissions.put(permit, Boolean.TRUE);
+				if(permissionKeysInDB.contains(permit)){
+					permissions.put(permit, Boolean.TRUE);
+				}
 			}
 			roleInDb.setPermissions(permissions);
 			roleInDb.setDescription(role.getDescription());
