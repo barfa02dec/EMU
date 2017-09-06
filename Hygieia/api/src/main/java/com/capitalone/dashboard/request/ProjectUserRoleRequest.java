@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
+import com.capitalone.dashboard.model.Dashboard;
 import com.capitalone.dashboard.model.UserRole;
 
 public class ProjectUserRoleRequest {
@@ -13,6 +14,8 @@ public class ProjectUserRoleRequest {
 	private String projectId;
 	@NotNull
 	private Set<UserRole> userRoles;
+	private Set<Dashboard> dashboardsToAssign;
+	
 	
 	public String getUser() {
 		return user;
@@ -32,8 +35,12 @@ public class ProjectUserRoleRequest {
 	public void setUserRoles(Set<UserRole> userRoles) {
 		this.userRoles = userRoles;
 	}
-	
-	
+	public Set<Dashboard> getDashboardsToAssign() {
+		return dashboardsToAssign;
+	}
+	public void setDashboardsToAssign(Set<Dashboard> dashboardsToAssign) {
+		this.dashboardsToAssign = dashboardsToAssign;
+	}
 	
 	
 

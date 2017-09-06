@@ -22,8 +22,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 	}
 
 	@Override
-	public Release getDetailedReleaseDetails(Long releaseId) {
-		return releaseRepository.findByReleaseId(releaseId);
+	public Release getDetailedReleaseDetails(Long releaseId,String projectId) {
+		return releaseRepository.findByReleaseId(releaseId,projectId);
 	}
 
 }

@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A collection of widgets, collectors and application components that represent a software
@@ -22,6 +23,7 @@ public class Dashboard extends BaseModel {
 
     private List<Widget> widgets = new ArrayList<>();
     private String owner;
+    private Set<String> usersList;
     private DashboardType type;
 
     private Application application;
@@ -94,5 +96,15 @@ public class Dashboard extends BaseModel {
     public DashboardType getType(){ return this.type; }
 
     public void setType(DashboardType type) { this.type = type; }
+
+	public Set<String> getUsersList() {
+		return usersList;
+	}
+
+	public void setUsersList(Set<String> usersList) {
+		this.usersList = usersList;
+	}
+    
+    
 
 }

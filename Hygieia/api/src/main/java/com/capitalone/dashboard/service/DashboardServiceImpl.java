@@ -1,5 +1,16 @@
 package com.capitalone.dashboard.service;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
 import com.capitalone.dashboard.misc.HygieiaException;
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
@@ -17,16 +28,6 @@ import com.capitalone.dashboard.repository.ServiceRepository;
 import com.capitalone.dashboard.util.UnsafeDeleteException;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @Service
 public class DashboardServiceImpl implements DashboardService {
@@ -254,10 +255,9 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
 	@Override
-	public List<Dashboard> getOwnedDashboards(String owner) {
+	public List<Dashboard> getOwnedDashboards(String user,ObjectId projectId) {
 		
-		List<Dashboard> myDashboard=dashboardRepository.findByOwner(owner);
-		
+		List<Dashboard> myDashboard=dashboardRepository.findByProjectId(projectId).stream().filter(record->record.getUsersList().contains(user)).collect(Collectors.toList());;
 		return myDashboard;
 	}
 	

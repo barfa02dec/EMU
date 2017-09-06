@@ -6,7 +6,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -53,10 +55,14 @@ public class DashboardController {
     @RequestMapping(value = "/dashboard", method = POST,
             consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Dashboard> createDashboard(@Valid @RequestBody DashboardRequest request) {
+    	Dashboard dashboardToCreate=request.toDashboard();
+    	Set<String> defaultDashboardUsers= new HashSet<String>();
+    	defaultDashboardUsers.add(request.getOwner());
+    	dashboardToCreate.setUsersList(defaultDashboardUsers);
         try {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(dashboardService.create(request.toDashboard()));
+                    .body(dashboardService.create(dashboardToCreate));
         } catch (Exception he) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
@@ -189,8 +195,9 @@ public class DashboardController {
 
     @RequestMapping(value = "/dashboard/mydashboard", method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public List<Dashboard> getOwnedDashboards(@RequestParam String username) {
-        List<Dashboard> myDashboard = dashboardService.getOwnedDashboards(username);
+    public List<Dashboard> getOwnedDashboards(@RequestParam String username,@RequestParam ObjectId projectId) {
+    	
+        List<Dashboard> myDashboard = dashboardService.getOwnedDashboards(username,projectId);
         return myDashboard;
 
     }

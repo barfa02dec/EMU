@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="release")
 public class Release extends BaseModel {
-		@Indexed(unique=true)
+		@Indexed
 		private Long releaseId;
 	    private String description;
 	    private String name;

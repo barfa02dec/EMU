@@ -20,8 +20,8 @@ public class SprintServiceImpl implements SprintService {
 	}
 
 	@Override
-	public Sprint getDetailedSprintDetails(Long sprintId) {
-		return repository.findBySprintId(sprintId);
+	public Sprint getDetailedSprintDetails(Long sprintId,String projectId) {
+		return repository.findBySprintId(sprintId,projectId);
 	}
 	
 }

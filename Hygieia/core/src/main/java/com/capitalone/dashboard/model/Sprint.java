@@ -26,7 +26,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "sprint")
 public class Sprint extends BaseModel {
-		@Indexed(unique=true)
+		@Indexed
 	    private Long sid;
 		private String projectId;
 	    private String start;
@@ -36,10 +36,8 @@ public class Sprint extends BaseModel {
 	    private Boolean editable;
 	    private String viewBoardsUrl;
 	    private SprintData sprintData;
-	    
-	    
-	    
-		public String getProjectId() {
+	
+	    public String getProjectId() {
 			return projectId;
 		}
 		public void setProjectId(String projectId) {
