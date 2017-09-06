@@ -2,7 +2,7 @@
 <div class="">
     <div class="widget row" ng-class="{'configure' : state == widget_state.CONFIGURE, 'alert': display == display_state.ERROR}" style="padding:0px;">
         <div class="kanban-widget-heading" ng-if="header" ng-hide=" {{(title == 'Monitor')}}" style="">
-        <span style="font-size:20px;">
+        <span style="font-size:20px;font-weight: 300;">
             <span ng-show=" {{(title == 'Feature')}}">{{title}}</span>
             <span ng-show=" {{(title == 'Build')}}">{{title}}</span>
             <span ng-show=" {{(title == 'Code Repo')}}">{{title}}</span>
@@ -11,7 +11,7 @@
 
 
 
-
+            <span style="color: #d6d6d6" ng-show="{{(title == 'Build')}}"> | </span>
             <span ng-show=" {{(title == 'Build')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
                   <!--   <select ng-model="selectedName" ng-options="selectedName.description for selectedName in collectorDetails" ng-change="check(selectedName)" style="color: #000;">
 
@@ -95,13 +95,13 @@
             <div class="col-md-4">
                 <span ng-show="{{(title == 'Feature')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
             <a href="#/jiraDashboard" target="_self" > 
-            <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;color: rgb(68, 130, 178)">MORE DETAILS <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+            <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;color: rgb(68, 130, 178)">MORE DETAILS <img src="assets/images/arrow_right.png"></span>
                 </a>
                 </span>
 
                 <span ng-show=" {{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
             <a href="#/detailedview/{{caWidget.dashBoardId}}" target="_self" > 
-            <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;color: rgb(68, 130, 178);">MORE DETAILS <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+            <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;color: rgb(68, 130, 178);">MORE DETAILS <img src="assets/images/arrow_right.png"></span>
                 </a>
                 </span>
             </div>
