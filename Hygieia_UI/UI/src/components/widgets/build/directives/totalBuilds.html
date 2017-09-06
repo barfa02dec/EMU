@@ -1,26 +1,38 @@
-<div class="widget" style="height:180px;border-right: 1px solid #d6d6d6">
+<div class="widget" style="border-top: 1px solid #d6d6d6">
     <div class="widget-sub-head" style="color:black;padding:10px;text-shadow:none;text-shadow:none;">
-        Total Builds
+        TOTAL BUILDS
     </div>
     <div class="widget-body" fit-text=".build-summary-count > span" fit-text-max="40" style="color:black;padding:10px;text-shadow:none;">
         <div class="row">
             <div class="col-xs-4">
                 <div class="build-summary-count">
-                    <span>{{buildView.totalBuildsYesterday}}</span>
+                    <div style="width: 40px;
+    height: 40px;
+    border: 1px solid #bfbfbf;
+    border-radius: 48px;padding-top: 5%;background: #f2f2f2;
+    font-weight: 600;text-align: center;font-size:14px !important;">{{buildView.totalBuildsYesterday}}</div>
                 </div>
-                <div class="build-summary-type">Today</div>
+                <div class="build-summary-type" style="text-align: inherit;">Today</div>
             </div>
             <div class="col-xs-4">
                 <div class="build-summary-count">
-                    <span>{{buildView.totalBuildsLastWeek}}</span>
+                    <div style="width: 40px;
+    height: 40px;
+    border: 1px solid #bfbfbf;
+    border-radius: 48px;padding-top: 5%;background: #f2f2f2;
+    font-weight: 600;text-align: center;font-size:14px !important;"">{{buildView.totalBuildsLastWeek}}</div>
                 </div>
-                <div class="build-summary-type">Last<br/>7 Days</div>
+                <div class="build-summary-type" style="text-align: inherit;">Last 7 Days</div>
             </div>
             <div class="col-xs-4">
                 <div class="build-summary-count">
-                    <span>{{buildView.totalBuildsLastMonth}}</span>
+                    <div style="width: 40px;
+    height: 40px;
+    border: 1px solid #bfbfbf;
+    border-radius: 48px;padding-top: 5%;background: #f2f2f2;
+    font-weight: 600;text-align: center;font-size:14px !important;">{{buildView.totalBuildsLastMonth}}</div>
                 </div>
-                <div class="build-summary-type">Last<br/>14 Days</div>
+                <div class="build-summary-type" style="text-align: inherit;">Last 14 Days</div>
             </div>
         </div>
     </div>

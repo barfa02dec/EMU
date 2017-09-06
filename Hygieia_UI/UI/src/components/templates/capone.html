@@ -1,4 +1,9 @@
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+<link href='https://fonts.googleapis.com/css?family=Sintony' rel='stylesheet'>
+<style>
+body {
+    font-family: "Segoe UI";
+}
+</style>
 <div ng-controller="CapOneTemplateController as template">
 <div class="blue-header" style="height: 50px;
     width:100%;background: #1766A4">
@@ -134,28 +139,7 @@
     </div>
 </div>
    <div class="dashboard-widgets container-fluid " widget-container dashboard="ctrl.dashboard" ng-if="template.widgetView == 'Widget'" style="background:#eeeeee;padding-top:1%;padding-right: 22px;">
-      <div class="row">
-         <div class="col-md-5">
-            <div class="row">
-               <div class="col-xs-12">
-                  <widget name="feature"></widget>
-               </div>
-            </div>
-            <!--</div>-->
-         </div>
-         <div class="col-md-7" style="padding-right:7px;">
-            <widget name="build"></widget>
-            
-         </div>
-          <div class="row">
-         <div class="col-md-5" style="padding-left: 22px;">
-            <widget name="repo"></widget>
-         </div>
-        
-            <div class="col-md-7">
-               <widget name="codeanalysis"></widget>
-            </div></div>
-         </div>
+      
          <!-- <div class="col-md-3">
             <div class="row">
                <div class="col-sm-6 col-md-12">
@@ -166,7 +150,27 @@
                </div>
             </div>
             </div> -->
+     
+
+      <div class="col-md-12" style="padding-left: 1.4%;">
+        <div class="col-md-4">
+          <widget name="feature"></widget>
+        </div>
+        <div class="col-md-8" style="padding-left: 40px;">
+          <widget name="build"></widget>
+        </div>
       </div>
+
+       <div class="col-md-12" style="padding:2% 0px 2% 1.4%">
+        <div class="col-md-4">
+          <widget name="repo"></widget>
+        </div>
+        <div class="col-md-8" style="padding-left: 40px;">
+          <widget name="codeanalysis"></widget>
+        </div>
+      </div> </div>
+
+
    </div>
    <div class="container-fluid" widget-container dashboard="ctrl.dashboard" ng-if="template.widgetView == 'Pipeline'">
       <div class="row">

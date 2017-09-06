@@ -5,9 +5,9 @@
         .module(HygieiaConfig.module)
         .controller('projectMapController', projectMapController);
 
-    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http', '$route', '$cookies', '$timeout', '$cookieStore','$rootScope'];
+    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http', '$route', '$cookies', '$timeout', '$cookieStore', '$rootScope'];
 
-    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore,$rootScope) {
+    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore, $rootScope) {
         var ctrl = this;
         ctrl.usernamepro = $cookies.get('username');
         ctrl.showAddPopUpBox = false;
@@ -24,23 +24,17 @@
             "program": ctrl.program
         }
 
+  
+        //$scope.example1model = []; $scope.example1data = [ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"} ]
         var apiHost = 'http://localhost:3000';
         var qahost = 'http://10.20.1.183:3000';
-
-        // $http.get(apiHost + "/api/getProjects/")
-        //   .then(processCaResponse);
-
         //Get All Projects
         $scope.curPage = 0;
         ctrl.pageSize = 5;
         $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
             .then(function(response) {
                 ctrl.getAllProjects = response.data;
-                $rootScope.getprojects = response.data;
-
             });
-
-            
 
         ctrl.numberOfPages = function() {
             return Math.ceil(ctrl.getAllProjects.length / ctrl.pageSize);
@@ -52,6 +46,7 @@
                 return input.slice(start);
             };
         });
+
         //Add User AutoComplete API Fetch
         $http.get("/api/getApplicationUsers")
             .then(function(response) {
@@ -68,8 +63,6 @@
             });
         }
 
-
-
         //open add user Modal
         ctrl.shareProjectPopUp = function(prob) {
             ctrl.ProObjData = prob;
@@ -80,44 +73,50 @@
                 resolve: {
                     proid: function() {
                         return prob.projectId;
+                    },
+                    id: function() {
+                        return prob.id;
                     }
+
                 }
             });
         }
 
         //Add User functionality
-        function shareProjectController($uibModalInstance, proid, $route, $scope) {
+        function shareProjectController($uibModalInstance, proid, $route, $scope,id) {
             var sp = this;
             sp.selected = '';
             sp.projectId = proid;
+            sp.id = id;
+
             //Fetch all users
             $http.get("/api/getApplicationUsers")
                 .then(function(response) {
                     sp.getUserMaps = response.data;
                 });
 
+            //Fetch all dashboards
+            $http.get("/api/dashboard/projectdashboard?projectId=" + sp.id)
+                .then(function(response) {
+                    response.data.selectedItemsDashboard = [];
+                    sp.getdashboards = response.data;
+                });
+
             //Fetch all roles that is displayed in dual list
             $http.get("/api/allActiveEngineeringDashboardUserRoles")
                 .then(function(response) {
                     response.data.selectedItems = [];
-                    /*sp.selItem = response.data.selectedItems;
-                    sp.newArr = [];
-                    for (var i = 0; i < sp.selItem.length; i++) {
-                        if (sp.selItem[i].name != undefined) {
-                            sp.newArr.push(sp.selItem[i].name);
-                        }
-                    }*/
                     sp.getRolesKey = response.data;
                 });
 
             sp.shareProjects = function(prob) {
                 var aa = sp.selected;
                 sp.projectId = proid;
-
                 sp.projectUserPayl = {
                     "user": sp.selected,
                     "projectId": sp.projectId,
-                    "userRoles": sp.getRolesKey.selectedItems
+                    "userRoles": sp.getRolesKey.selectedItems,
+                    "dashboardsToAssign": sp.getdashboards.selectedItemsDashboard
                 }
                 console.log(sp.projectUserPayl);
                 $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
@@ -163,21 +162,17 @@
         //Edit Project 
         ctrl.editproject = function(info) {
             console.log(info);
-             ctrl.usernamepro = $cookies.get('username');
-                
-
+            ctrl.usernamepro = $cookies.get('username');
             ctrl.editPayload = {
-                 "projectId":info.projectId,
-                 "projectName":info.projectName,
-                 "projectOwner":info.projectOwner,
-                  "client":info.client,
-                 "businessUnit": info.businessUnit,
-                "program":info.program,
+                "projectId": info.projectId,
+                "projectName": info.projectName,
+                "projectOwner": info.projectOwner,
+                "client": info.client,
+                "businessUnit": info.businessUnit,
+                "program": info.program,
                 "user": ctrl.usernamepro,
-                "editorEnabled":info.editorEnabled,
-                "id":info.id
-                
-                 
+                "editorEnabled": info.editorEnabled,
+                "id": info.id
             }
             info.editorEnabled = false;
             console.log(info);
@@ -191,17 +186,11 @@
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
-
                     }, function(response) {
-
-
                         if (response.status > 204 && response.status <= 500) {
                             info.editorEnabled = true;
                             alert("Server Error");
-
                         }
-
-
                     })
                 } else {
                     $uibModal.open({
@@ -210,7 +199,6 @@
                         controllerAs: 'pm'
                     });
                     info.editorEnabled = true;
-
                 }
             } else {
                 $uibModal.open({
@@ -274,7 +262,6 @@
                 "businessUnit": ctrl.businessUnit,
                 "program": ctrl.program,
                 "user": dpmObjpos.usernamepro
-
             }
             dpmObjpos.postProject = function() {
                 var apiHost = 'http://localhost:3000';
@@ -288,8 +275,6 @@
                             controllerAs: 'pm'
                         });
                     }, function(response) {
-
-
                         if (response.status == 409) {
                             $uibModal.open({
                                 templateUrl: 'app/dashboard/views/createErrorModal.html',
@@ -297,13 +282,9 @@
                                 controllerAs: 'pm'
                             });
                         }
-
-
                     })
                 } else {}
-
             };
-
         }
 
         //Show List of Dashboards Page for that particular project
@@ -323,15 +304,5 @@
                 controllerAs: 'pm'
             });
         }
-
-
-        /*ctrl.mapUserToProject = function(pname){
-            ctrl.getProName = $cookies.get('ProName');
-            ctrl.paylmapping = {
-                "userName": ctrl.userNames
-               }
-            $http.post('/api/projectUsers?projectname=' + ctrl.getProName).then(function (response) {
-            })
-        }*/
     }
 })();

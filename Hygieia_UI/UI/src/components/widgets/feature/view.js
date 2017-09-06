@@ -166,6 +166,7 @@
         ctrl.critcissue = data.defectsByProirity.Highest;
         ctrl.lowIssue = data.defectsByProirity.Low;
         ctrl.majorIssue = data.defectsByProirity.High;
+        ctrl.lowestissue = data.defectsByProirity.Lowest;
          ctrl.medlowcnt = parseInt(ctrl.lowIssue) + (ctrl.mediumIssue);
     }
 
@@ -473,9 +474,7 @@
     featureData.sprintDta(ctrl.ppiidss).then(sprintdataProcessMain);
 
     function sprintdataProcessMain(data){
-      console.log(data);
-        console.log(data[0]);
-        console.log(data[1]);
+     
         var progress = ['Defect Closure'];
         var comittedStoryPoints = ['committed Story Points'];
         var completedStoryPoint = ['completed Story Points'];
@@ -531,7 +530,7 @@
            }
         }
 
-         console.log(progress);
+         
        for(var i=0;i<data.length;i++){
          
               axisSprintName.push(data[i].name)
@@ -564,7 +563,11 @@
                 axis: {
                     x:{
                         type: 'category',
-                        categories: axisSprintName
+                        categories: axisSprintName,
+                        label:{
+                          position: 'outer-center'
+                        }
+
                     }
                 },
                 color: {

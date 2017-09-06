@@ -73,6 +73,13 @@
             return matchesSearch;
         }
 
+        $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
+            .then(function(response) {
+                ctrl.getAllProjects = response.data;
+               
+
+            });
+            
         function checkPassThrough(){
             if(angular.isUndefined(ctrl.username) || angular.isUndefined(ctrl.showAuthentication) || ctrl.showAuthentication == false){
                 console.log('Authentication failed, redirecting to login page');
