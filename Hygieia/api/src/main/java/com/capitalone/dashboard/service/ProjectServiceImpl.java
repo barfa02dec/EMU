@@ -105,11 +105,11 @@ public class ProjectServiceImpl implements ProjectService {
 			Set<ProjectRoles> projRoles = new HashSet<ProjectRoles>();
 			projRoles.add(projRole);
 			defaultProjectAdmin.setUserRoles(projRoles);
-			Set<UserGroup> userGroupSet= new HashSet<UserGroup>();
-			userGroupSet.add(defaultProjectAdmin);
-			project.setUsersGroup(userGroupSet);
 		}
-		
+		Set<UserGroup> userGroupSet= new HashSet<UserGroup>();
+		userGroupSet.add(defaultProjectAdmin);
+		project.setUsersGroup(userGroupSet);
+
 		return project;
 	}
 	
