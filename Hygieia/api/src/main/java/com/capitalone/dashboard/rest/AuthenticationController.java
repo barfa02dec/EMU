@@ -18,13 +18,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
-
+    
 
     @Autowired
     public AuthenticationController(AuthenticationService authenticationService) {
@@ -52,13 +53,5 @@ public class AuthenticationController {
         // TODO: should validate revalidate current password before allowing changes?
         return ResponseEntity.status(HttpStatus.OK).body(authenticationService.update(request.getUsername(), request.getPassword()));
     }
-	@RequestMapping(value = "/getApplicationUsers", method = GET, produces = APPLICATION_JSON_VALUE)
-    public List<String> getAllUsers(){
-    	List<String> appUsers= new ArrayList<String>();
-    	for(Authentication auth:authenticationService.all()){
-    		appUsers.add(auth.getUsername());
-    	}
-    	
-    	return appUsers;
-    }
+	
 }

@@ -5,6 +5,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.validation.Valid;
 
 import org.bson.types.ObjectId;
@@ -17,20 +21,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capitalone.dashboard.model.Authentication;
 import com.capitalone.dashboard.model.Project;
+import com.capitalone.dashboard.model.UserGroup;
 import com.capitalone.dashboard.model.UserRole;
 import com.capitalone.dashboard.request.ProjectRequest;
 import com.capitalone.dashboard.request.ProjectUserRoleRequest;
+import com.capitalone.dashboard.service.AuthenticationService;
 import com.capitalone.dashboard.service.ProjectService;
 
 @RestController
 public class ProjectController {
 
 	private final ProjectService projectService;
-
+	private final AuthenticationService authService;
 	@Autowired
-	public ProjectController(ProjectService projectService) {
+	public ProjectController(ProjectService projectService,AuthenticationService authService) {
 		this.projectService = projectService;
+		this.authService=authService;
 	}
 
 	@RequestMapping(value = "/createProject", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
@@ -100,6 +108,14 @@ public class ProjectController {
 		return projects;
 
 	}
+	
+	@RequestMapping(value = "/getApplicationUsers/{id}", method = GET, produces = APPLICATION_JSON_VALUE)
+    public List<String> getAllUsers(@PathVariable String id){
+		List<String> dbAppUsers=projectService.getProject(new ObjectId(id)).getUsersGroup().stream().map(UserGroup::getUser).collect(Collectors.toList());
+		List<Authentication> authUsers=(List<Authentication>) authService.all();
+		List<String> appUsers=authUsers.stream().filter(auth->!dbAppUsers.contains(auth.getUsername())).map(Authentication::getUsername).collect(Collectors.toList());
+		return appUsers;
+    }
 	
 	
 	@RequestMapping(value = "/getProjectsByUser", method = GET, produces = APPLICATION_JSON_VALUE)
