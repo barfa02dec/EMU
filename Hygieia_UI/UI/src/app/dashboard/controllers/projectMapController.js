@@ -83,19 +83,26 @@
             sp.selected = '';
             sp.projectId = proid;
             sp.id = id;
-
+            sp.usernameproject = $cookies.get('username');
             //Fetch all users
-            $http.get("/api/getApplicationUsers?projectId=" + sp.id)
+            $http.get("/api/getApplicationUsers/" + sp.id)
                 .then(function(response) {
                     sp.getUserMaps = response.data;
                 });
 
             //Fetch all dashboards
-            $http.get("/api/dashboard/projectdashboard?projectId=" + sp.id)
+             var mydashboardRouteProMap = "/api/dashboard/mydashboard"; 
+             $http.get(mydashboardRouteProMap + "?username=" + sp.usernameproject + "&projectId=" + sp.id)
                 .then(function(response) {
                     response.data.selectedItemsDashboard = [];
                     sp.getdashboards = response.data;
                 });
+
+           /* $http.get("/api/dashboard/projectdashboard?projectId=" + sp.id)
+                .then(function(response) {
+                    response.data.selectedItemsDashboard = [];
+                    sp.getdashboards = response.data;
+                });*/
 
             //Fetch all roles that is displayed in dual list
             $http.get("/api/allActiveEngineeringDashboardUserRoles")
