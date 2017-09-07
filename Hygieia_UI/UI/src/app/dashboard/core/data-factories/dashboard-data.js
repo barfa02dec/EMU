@@ -19,7 +19,7 @@
 
         var dashboardRoute = '/api/dashboard';
         //var mydashboardRoute = "/api/dashboard/mydashboard";
-        var mydashboardRouteProMap = "/api/dashboard/mydashboard "; 
+        var mydashboardRouteProMap = "/api/dashboard/mydashboard"; 
         var myownerRoute = "/api/dashboard/myowner";
 
         return {
@@ -78,7 +78,7 @@
 
         //gets list of owned dashboard
         function mydashboard(pid,user){
-          return getPromise(HygieiaConfig.local ? testOwnedRoute : mydashboardRouteProMap+"?username="+user+"&projectId="+pid );
+          return getPromise(HygieiaConfig.local ? testOwnedRoute : mydashboardRouteProMap + "?username=" + user + "&projectId=" + pid );
         }
 
         //gets dashboard owner from dashboard title
