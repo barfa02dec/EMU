@@ -1,7 +1,11 @@
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+<style>
+body {
+   font-family: "Segoe UI";
+}
+</style>
 <div class="blue-header" style="height: 50px;
     width:100%;background: #1766A4;min-height: 0px;">
-    <span class="hamburger-ListdashPage project-map-hamburger">
+    <span class="hamburger-ListdashPage project-map-hamburger" style="margin-left: 2.6%;">
         <svg version="1.1"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
             x="0px" y="0px" width="15px" height="9px" viewBox="0 0 15 9" style="overflow:scroll;enable-background:new 0 0 15 9;"
@@ -113,7 +117,7 @@
  <div class="black-header" style="height: 80px;border-bottom:1px solid #b3b3b3;background-image: url('assets/images/bg_page_header.png');">
     <div class="row">
         <div class="col-md-12">
-        <div class="col-md-4" style="padding-left: 1.6%;">
+        <div class="col-md-4" style="padding-left: 2.6%;">
         <div class="" style="margin-top: 3.1%;font-size: 22px;">
             Sonar Dashboard</div>
             <div class="" style="font-size: 14px;">
@@ -127,7 +131,7 @@
     </div>
 </div>
     <div class="col-md-12" style="padding-top: 1%;">
-        <div class="col-md-1">
+        <div class="col-md-1" style="margin-left: 1.1%;">
             Quality Gate</div>
         <div class="col-md-1">
             <span ng-repeat="qgcomponents in detailess.component_list ">
@@ -152,11 +156,16 @@
         </div>
 
     </div>
-    <div class="col-md-12 layout-maindiv" style="padding-top: 2%;padding-right: 0px;
+    <div class="col-md-12 header-terms" style="padding-top: 2%;">
+        <div class="col-md-4 first-col">Security</div>
+        <div class="col-md-4 second-col">Reliability</div>
+        <div class="col-md-4 third-col">Maintainability</div>
+    </div>
+    <div class="col-md-12 layout-maindiv" style="padding-right: 0px;
     margin-left: 10px;">
         <div class="col-md-4  layout-calcs security-widget all-box-props">
             <div class="widget-headers col-md-12 box-header-style" style="">
-                <div>Security</div>
+                
             </div>
 
             <span ng-repeat="components in detailess.component_list ">
@@ -169,8 +178,16 @@
             <div class="" ng-repeat="components in detailess.component_list ">
                 <div class="row widget-inner-spacing" style="margin-left:2%;">
                     <div class="" ng-repeat="components in components.securityNewArray track by $index">
-                        <span ng-if="$index == 0" class="styling-values col-md-4">{{components.formattedValue}}</span>
-                        <span ng-if="$index == 2" class="widget-value-pro col-md-6">{{components.formattedValue}}</span>
+                        <span ng-if="$index == 0" class="styling-values col-md-4" style="border: 1px solid #d6d6d6;
+    font-size: 18px;
+    border-radius: 80px;
+    width: 69px;
+    height: 69px;
+    text-align: center;
+    padding-top: 23px;
+    background: #f2f2f2;
+    font-weight: 600;">{{components.formattedValue}}</span>
+                        <span ng-if="$index == 2" class="widget-value-pro col-md-6" style="padding-left: 12%">{{components.formattedValue}}</span>
                     </div>
                 </div>
             </div>
@@ -181,10 +198,10 @@
             </div>
         </div>
         <div class="col-md-4  layout-calcs security-widget all-box-props">
-            <div class="widget-headers col-md-12 box-header-style">
+            <!-- <div class="widget-headers col-md-12 box-header-style">
                 <div class="">
                     Reliability</div>
-            </div>
+            </div> -->
             <span ng-repeat="component in detailess.component_list ">
 
                 <span ng-repeat="component in component.newArr track by $index">
@@ -196,7 +213,15 @@
             <div class="" ng-repeat="component in detailess.component_list ">
                 <div class="row widget-inner-spacing" style="margin-left:2%;">
                     <div class="" ng-repeat="component in component.newArr track by $index">
-                        <span class="styling-values col-md-4" ng-if="$index == 0" style="margin-top: 7%">{{component.formattedValue}}</span>
+                        <span class="styling-values col-md-4" ng-if="$index == 0" style="margin-top: 7%;border: 1px solid #d6d6d6;
+    font-size: 18px;
+    border-radius: 80px;
+    width: 69px;
+    height: 69px;
+    text-align: center;
+    padding-top: 23px;
+    background: #f2f2f2;
+    font-weight: 600;">{{component.formattedValue}}</span>
 
                         <span class="widget-value-pro col-md-6" ng-if="$index == 2" style="margin-top: 7%">{{component.formattedValue}}</span>
                     </div>
@@ -209,10 +234,7 @@
             </div>
         </div>
         <div class="col-md-4  layout-calcs security-widget all-box-props">
-            <div class="widget-headers col-md-12 box-header-style">
-                <div class="">
-                    Maintainability</div>
-            </div>
+            
             <span ng-repeat="componentm in detailess.component_list ">
                 <span ng-repeat="componentm in componentm.maintainabilityNewArray track by $index">
                     <span ng-if="$index == 1"  ng-show=" {{(componentm.formattedValue == 'C')}}" class="circle-props-yellow col-md-2" style="float: right;margin-right:2%">{{componentm.formattedValue}}</span>
@@ -223,7 +245,15 @@
             <div class="" ng-repeat="componentm in detailess.component_list ">
                 <div class="row widget-inner-spacing" style="margin-left:2%;">
                     <div class="" ng-repeat="componentm in componentm.maintainabilityNewArray track by $index">
-                        <span ng-if="$index == 0" class="styling-values col-md-4">{{componentm.formattedValue}}</span>
+                        <span ng-if="$index == 0" class="styling-values col-md-4" style="border: 1px solid #d6d6d6;
+    font-size: 18px;
+    border-radius: 80px;
+    width: 69px;
+    height: 69px;
+    text-align: center;
+    padding-top: 23px;
+    background: #f2f2f2;
+    font-weight: 600;">{{componentm.formattedValue}}</span>
 
                         <span ng-if="$index == 2" class="widget-value-pro col-md-6">{{componentm.formattedValue}}</span>
                     </div>
@@ -237,33 +267,43 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 layout-maindiv" style="padding-top: 8px;padding-right: 0px;
+    <div class="col-md-12 header-terms" style="padding-top: 2%;">
+        <div class="col-md-4 first-col">Duplications</div>
+         <div class="col-md-4 second-col">Coverage</div>
+          <div class="col-md-4 third-col">Complexity</div>
+    </div>
+    <div class="col-md-12 layout-maindiv" style="padding-right: 0px;
     margin-left: 10px;">
         <div class="col-md-4  layout-calcs duplication-widget 
 all-box-props">
-            <div class="widget-headers box-header-style">
-                <div>Duplications</div>
-            </div>
+           
             <div class="content-padding" style="padding-top:20px;">
                 <div class="" ng-repeat="componentdu in detailess.component_list ">
-                    <div class="row " style="margin-left:2%;">
+                    <div class="row " style="margin-left:0%;">
                         <div class=" " ng-repeat="componentdu in componentdu.duplicationsNewArray track by $index">
                             <span ng-if="$index == 0" class="styling-values col-md-4"></span>
                             <span ng-if="$index == 1" class="label-props col-md-2" style="padding-top: 8px;">Blocks</span>
                             <span ng-if="$index == 1" class="col-md-4 widget-value-pro-small" style="padding-left: 32px;padding-top: 5px;">{{componentdu.formattedValue}}</span>
                         </div>
                     </div>
-                    <div class="row " style="margin-left:2%;">
+                    <div class="row " style="margin-left:0%;">
                         <div class="col-md-3 " ng-repeat="componentdu in componentdu.duplicationsNewArray track by $index">
-                            <span ng-if="$index == 0" class="styling-values col-md-4" style="padding-left: 0px">{{componentdu.formattedValue}}</span>
+                            <span ng-if="$index == 0" class="styling-values col-md-4" style="border: 1px solid #d6d6d6;
+    font-size: 18px;
+    border-radius: 80px;
+    width: 69px;
+    height: 69px;
+    text-align: center;
+    padding-top: 23px;
+    background: #f2f2f2;font-weight: 600;">{{componentdu.formattedValue}}</span>
 
-                            <span ng-if="$index == 1" style="padding-left:42%;padding-top: 13px;" class="label-props col-md-2">Files</span>
-                            <span ng-if="$index == 2" class="widget-value-pro-small col-md-5" style="padding-left:25%;padding-top: 9px;">{{componentdu.formattedValue}}</span>
+                            <span ng-if="$index == 1" style="padding-left:42%;padding-top: 31%;" class="label-props col-md-2">Files</span>
+                            <span ng-if="$index == 2" class="widget-value-pro-small col-md-5" style="padding-left:25%;padding-top: 29%;">{{componentdu.formattedValue}}</span>
                         </div>
                     </div>
-                    <div class="row " style="margin-left:2%;">
+                    <div class="row " style="margin-left:0%;">
                         <div class="" ng-repeat="componentdu in componentdu.duplicationsNewArray track by $index">
-                            <span ng-if="$index == 0" class="label-props col-md-3" style="padding-left: 0px">Duplicated Lines(%)</span>
+                            <span ng-if="$index == 0" class="label-props col-md-3" style="padding-left: 4%;">Duplicated Lines(%)</span>
                             <span ng-if="$index == 1" style="padding-left:11%;" class="label-props col-md-3">Lines</span>
                             <span ng-if="$index == 3" class="widget-value-pro-small col-md-3" style="padding-left:32px;margin-top:-3px;">{{componentdu.formattedValue}}</span>
                         </div>
@@ -273,16 +313,22 @@ all-box-props">
         </div>
         <div class="col-md-4  layout-calcs maintainability-widget 
 all-box-props">
-            <div class="widget-headers box-header-style">
-                <div>Coverage</div>
-            </div>
+            
             <div class="content-padding" style="padding-top:20px;">
                 <div class="col-md-3">
                     <div class="" ng-repeat="componentcvr in detailess.component_list ">
                         <div class="row">
                             <div class="" ng-repeat="componentcvr in componentcvr.coverageNewArray track by $index">
-                                <span ng-if="$index == 0" class="styling-values col-md-5" ng-show="componentcvr.formattedValue" style="margin-top: 25%;">{{componentcvr.formattedValue}}
-                            <span ng-if="$index == 0" class="col-md-3 label-props" >Coverage</span></span>
+                                <span ng-if="$index == 0" class="styling-values col-md-5" ng-show="componentcvr.formattedValue" style="margin-top: 25%;border: 1px solid #d6d6d6;
+    font-size: 18px;
+    border-radius: 80px;
+    width: 69px;
+    height: 69px;
+    text-align: center;
+    padding-top: 23px;
+    background: #f2f2f2;
+    margin-left: 11%;font-weight: 600;">{{componentcvr.formattedValue}}
+                            <span ng-if="$index == 0" class="col-md-3 label-props" style="padding-top: 56%;">Coverage</span></span>
 
                                 <span ng-if="$index == 0" class="styling-values col-md-5" ng-show="!componentcvr.formattedValue">0
                             <span ng-if="$index == 0" class="col-md-3 label-props" >Coverage</span></span>
@@ -292,13 +338,7 @@ all-box-props">
                     </div>
                 </div>
                 <div class="col-md-7">
-                    <div class="row">
-                        <div class="">
-                            <span class="styling-values col-md-2"></span>
-                            <span class="col-md-8 label-props">Uncovered Condition</span>
-                            <span class="label-props col-md-2">Condition Coverage</span>
-                        </div>
-                    </div>
+                  
                     <div class="" ng-repeat="componentcvr in detailess.component_list ">
                         <div class="row">
                             <div class="" ng-repeat="componentcvr in componentcvr.coverageNewArray track by $index">
@@ -312,13 +352,15 @@ all-box-props">
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+
+                      <div class="row">
                         <div class="">
                             <span class="styling-values col-md-2"></span>
-                            <span class="col-md-8 label-props">Line Coverage</span>
-                            <span class="label-props col-md-2">Uncovered</span>
+                            <span class="col-md-8 label-props">Uncovered Condition</span>
+                            <span class="label-props col-md-2">Condition Coverage</span>
                         </div>
                     </div>
+                   
                     <div class="" ng-repeat="componentcvr in detailess.component_list ">
                         <div class="row">
                             <div class="" ng-repeat="componentcvr in componentcvr.coverageNewArray track by $index">
@@ -331,12 +373,15 @@ all-box-props">
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+
+                     <div class="row">
                         <div class="">
                             <span class="styling-values col-md-2"></span>
-                            <span class="col-md-6 label-props">Line to cover</span>
+                            <span class="col-md-8 label-props">Line Coverage</span>
+                            <span class="label-props col-md-2">Uncovered</span>
                         </div>
                     </div>
+                   
                     <div class="" ng-repeat="componentcvr in detailess.component_list ">
                         <div class="row">
                             <div class="" ng-repeat="componentcvr in componentcvr.coverageNewArray track by $index">
@@ -346,15 +391,18 @@ all-box-props">
                             </div>
                         </div>
                     </div>
+
+                     <div class="row">
+                        <div class="">
+                            <span class="styling-values col-md-2"></span>
+                            <span class="col-md-6 label-props">Line to cover</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-4  layout-calcs maintainability-widget all-box-props">
-            <div class="widget-headers 
-box-header-style">
-                <div>
-                    Complexity</div>
-            </div>
+           
             <div class="content-padding" style="padding-top:20px;">
                 <div class="" ng-repeat="componentco in detailess.component_list ">
                     <div class="row " style="margin-left:2%;">
@@ -368,12 +416,19 @@ box-header-style">
                     </div>
                     <div class="row " style="margin-left:2%;">
                         <div class="" ng-repeat="componentcos in componentco.complexityNewArray track by $index">
-                            <span ng-if="$index == 0" class="styling-values col-md-3" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
+                            <span ng-if="$index == 0" class="styling-values col-md-3" ng-show="componentcos.formattedValue" style="border: 1px solid #d6d6d6;
+    font-size: 18px;
+    border-radius: 80px;
+    width: 69px;
+    height: 69px;
+    text-align: center;
+    padding-top: 23px;
+    background: #f2f2f2;font-weight: 600;">{{componentcos.formattedValue}}</span>
 
                             <span ng-if="$index == 0" class="styling-values col-md-3" ng-show="!componentcos.formattedValue">0</span>
 
-                            <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-top: 11px;padding-left: 30px;">File</span>
-                            <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 9px" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
+                            <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-top: 11px;padding-left: 68px;">File</span>
+                            <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 9px;padding-left: 49px !important" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
 
                             <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 9px" ng-show="!componentcos.formattedValue">0</span>
                         </div>
@@ -381,8 +436,9 @@ box-header-style">
                     <div class="row " style="margin-left:2%;">
                         <div class="" ng-repeat="componentcos in componentco.complexityNewArray track by $index">
                             <span ng-if="$index == 0" class="label-props col-md-3 ">Complexity</span>
-                            <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 30px;">Class</span>
-                            <span class="widget-value-pro-small col-md-3" ng-if="$index == 2" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
+                            <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 30px;margin-top: -30px">Class</span>
+                            <span class="widget-value-pro-small col-md-3" ng-if="$index == 2" ng-show="componentcos.formattedValue" style="margin-left: 101px;
+    margin-top: -31px;">{{componentcos.formattedValue}}</span>
 
                             <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" ng-show="!componentcos.formattedValue">0</span>
                         </div>
@@ -390,18 +446,20 @@ box-header-style">
                 </div>
             </div>
         </div>
-        <div class="col-md-12 layout-maindiv " style="padding-top: 8px;padding-right: 0px;
+        <div class="col-md-12 header-terms" style="padding-top: 2%;">
+            <div class="col-md-4 first-col">Documentation</div>
+             <div class="col-md-4 second-col">Size</div>
+              <div class="col-md-4 third-col">Issues</div>
+        </div>
+        <div class="col-md-12 layout-maindiv " style="padding-right: 0px;
     margin-left: 0px;">
             <div class="col-md-4  layout-calcs maintainability-widget all-box-props all-box-props">
-                <div class="widget-headers box-header-style">
-                    <div>
-                        Documentation</div>
-                </div>
+                
                 <div class="content-padding" style="padding-top:20px;">
                     <div class="" ng-repeat="componentdoc in detailess.component_list ">
                         <div class="row " style="margin-left:2%;">
                             <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
-                                <span ng-if="$index == 0" class="styling-values col-md-4 "></span>
+                                <span ng-if="$index == 0" class="styling-values col-md-4 " style=""></span>
                                 <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 12px;">Comments (%)</span>
                                 <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" style="padding-left: 30px;" ng-show="componentdoc.formattedValue">{{componentdoc.formattedValue}}</span>
                                 <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" style="padding-left: 30px;" ng-show="!componentdoc.formattedValue">0</span>
@@ -410,12 +468,19 @@ box-header-style">
                         <div class="row " style="margin-left:2%;">
                             <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
 
-                                <span ng-if="$index == 0" class="styling-values col-md-4" ng-show="componentdoc.formattedValue">{{componentdoc.formattedValue}}</span>
+                                <span ng-if="$index == 0" class="styling-values col-md-4" ng-show="componentdoc.formattedValue" style="border: 1px solid #d6d6d6;
+    font-size: 18px;
+    border-radius: 80px;
+    width: 69px;
+    height: 69px;
+    text-align: center;
+    padding-top: 23px;
+    background: #f2f2f2;padding-left: 2px;font-weight: 600;">{{componentdoc.formattedValue}}</span>
 
                                 <span ng-if="$index == 0" class="styling-values col-md-4" ng-show="!componentdoc.formattedValue">0</span>
 
-                                <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-top: 11px;padding-left: 12px;">Undoc API</span>
-                                <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 8px;padding-left: 30px;" ng-show="componentdoc.formattedValue">{{componentdoc.formattedValue}}</span>
+                                <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-top: 11px;padding-left: 21%;">Undoc API</span>
+                                <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 8px;padding-left: 25%;" ng-show="componentdoc.formattedValue">{{componentdoc.formattedValue}}</span>
 
                                 <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 8px;padding-left: 30px;" ng-show="!componentdoc.formattedValue">0</span>
                             </div>
@@ -434,16 +499,22 @@ box-header-style">
                 </div>
             </div>
             <div class="col-md-4  layout-calcs maintainability-widget all-box-props">
-                <div class="widget-headers box-header-style">
-                    <div>Size</div>
-                </div>
+               
                 <div class="content-padding" style="padding-top:20px;">
                     <div class="col-md-3">
                         <div class="" ng-repeat="componentsize in detailess.component_list ">
                             <div class="row">
                                 <div class="" ng-repeat="componentsize in componentsize.sizeNewArray track by $index">
-                                    <span ng-if="$index == 0" class="styling-values col-md-5" ng-show="componentsize.formattedValue">{{componentsize.formattedValue}}
-                                <span ng-if="$index == 0" class="col-md-3 label-props" >Lines of code</span></span>
+                                    <span ng-if="$index == 0" class="styling-values col-md-5" ng-show="componentsize.formattedValue" style="border: 1px solid #d6d6d6;
+    font-size: 18px;
+    border-radius: 80px;
+    width: 69px;
+    height: 69px;
+    text-align: center;
+    padding-top: 23px;
+    background: #f2f2f2;
+    margin-left: 11%;font-weight: 600;">{{componentsize.formattedValue}}
+                              </span>  <div ng-if="$index == 0" class="col-md-3 label-props" style="padding-left: 34%;">Lines of code</div>
 
                                     <span ng-if="$index == 0" class="styling-values col-md-5" ng-show="!componentsize.formattedValue">0
                                 <span ng-if="$index == 0" class="col-md-3 label-props" >Lines of code</span></span>
@@ -453,13 +524,7 @@ box-header-style">
                         </div>
                     </div>
                     <div class="col-md-7">
-                        <div class="row">
-                            <div class="">
-                                <span class="styling-values col-md-2"></span>
-                                <span class="col-md-8 label-props">Files</span>
-                                <span class="label-props col-md-2">Classes</span>
-                            </div>
-                        </div>
+                       
                         <div class="" ng-repeat="componentsize in detailess.component_list ">
                             <div class="row">
                                 <div class="" ng-repeat="componentsize in componentsize.sizeNewArray track by $index">
@@ -474,13 +539,16 @@ box-header-style">
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+
+                         <div class="row">
                             <div class="">
                                 <span class="styling-values col-md-2"></span>
-                                <span class="col-md-8 label-props">Statements</span>
-                                <span class="label-props col-md-2">Methods</span>
+                                <span class="col-md-8 label-props">Files</span>
+                                <span class="label-props col-md-2">Classes</span>
                             </div>
                         </div>
+
+                       
                         <div class="" ng-repeat="componentsize in detailess.component_list ">
                             <div class="row">
                                 <div class="" ng-repeat="componentsize in componentsize.sizeNewArray track by $index">
@@ -495,12 +563,16 @@ box-header-style">
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+
+                         <div class="row">
                             <div class="">
                                 <span class="styling-values col-md-2"></span>
-                                <span class="col-md-6 label-props">Directories</span>
+                                <span class="col-md-8 label-props">Statements</span>
+                                <span class="label-props col-md-2">Methods</span>
                             </div>
                         </div>
+
+                       
                         <div class="" ng-repeat="componentsize in detailess.component_list ">
                             <div class="row">
                                 <div class="" ng-repeat="componentsize in componentsize.sizeNewArray track by $index">
@@ -511,33 +583,39 @@ box-header-style">
                                 </div>
                             </div>
                         </div>
+
+                         <div class="row">
+                            <div class="">
+                                <span class="styling-values col-md-2"></span>
+                                <span class="col-md-6 label-props">Directories</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4  layout-calcs maintainability-widget all-box-props">
-                <div class="widget-headers box-header-style">
-                    <div>Issues</div>
-                </div>
+                
                 <div class="content-padding" style="padding-top:20px;">
                     <div class="col-md-3">
                         <div class="" ng-repeat="componentiss in detailess.component_list ">
                             <div class="row">
                                 <div class="" ng-repeat="componentiss in componentiss.issueNewArray track by $index">
-                                    <span ng-if="$index == 0" class="styling-values col-md-5">{{componentiss.formattedValue}}
-                                <span ng-if="$index == 0" class="col-md-3 label-props" >Blocker</span></span>
+                                    <span ng-if="$index == 0" class="styling-values col-md-5" style="border: 1px solid #d6d6d6;
+    font-size: 18px;
+    border-radius: 80px;
+    width: 69px;
+    height: 69px;
+    text-align: center;
+    padding-top: 23px;
+    background: #f2f2f2;
+    margin-left: 11%;font-weight: 600;">{{componentiss.formattedValue}}
+                                </span><div ng-if="$index == 0" class="label-props" style="padding-left: 27%;">Blocker</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-7">
-                        <div class="row">
-                            <div class="">
-                                <span class="styling-values col-md-2"></span>
-                                <span class="col-md-8 label-props">Major</span>
-                                <span class="label-props col-md-2">Critical</span>
-                            </div>
-                        </div>
-                        <div class="" ng-repeat="componentiss in detailess.component_list ">
+                     <div class="" ng-repeat="componentiss in detailess.component_list ">
                             <div class="row">
                                 <div class="" ng-repeat="componentiss in componentiss.issueNewArray track by $index">
                                     <span ng-if="$index == 0" class="styling-values col-md-2"></span>
@@ -549,8 +627,8 @@ box-header-style">
                         <div class="row">
                             <div class="">
                                 <span class="styling-values col-md-2"></span>
-                                <span class="col-md-8 label-props">Info</span>
-                                <span class="label-props col-md-2">Minor</span>
+                                <span class="col-md-8 label-props">Major</span>
+                                <span class="label-props col-md-2">Critical</span>
                             </div>
                         </div>
                         <div class="" ng-repeat="componentiss in detailess.component_list ">
@@ -562,6 +640,15 @@ box-header-style">
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="">
+                                <span class="styling-values col-md-2"></span>
+                                <span class="col-md-8 label-props">Info</span>
+                                <span class="label-props col-md-2">Minor</span>
+                            </div>
+                        </div>
+                       
 
                     </div>
                 </div>
