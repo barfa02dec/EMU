@@ -259,8 +259,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 						
 			if(((sprint.getClosed() && null==sprint.getSprintData())||!sprint.getClosed())){
 				JiraCollectorUtil.getRecentSprintMetrics(js, projectId,
-						featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(),
-						featureSettings.getRapidView());
+						featureSettings);
 				sprint.setSprintData(js.getSprintData());
 			}
 			sprint.setEditable(js.getEditable());

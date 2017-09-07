@@ -211,9 +211,9 @@ public class JiraCollectorUtil {
 		}
 	}
 	
-	public static void getRecentSprintMetrics(JiraSprint jiraSprint, String projectId,String baseUrl,String base64Credentials,String rapidViewId){
+	public static void getRecentSprintMetrics(JiraSprint jiraSprint, String projectId,NewFeatureSettings featureSettings){
 		LOGGER.info("Processing Sprint"+jiraSprint.getName());
-		String originalSprintData=fectSprintMetrcis(projectId,jiraSprint.getId(),baseUrl,base64Credentials,rapidViewId);
+		String originalSprintData=fectSprintMetrcis(projectId,jiraSprint.getId(),featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials(),featureSettings.getRapidView());
 		SprintData sprintdata =ClientUtil.parseToSprintData(jiraSprint,originalSprintData);
 		jiraSprint.setSprintData(sprintdata);
 		// code changes incorporated from PMD-- BEGINS
@@ -222,15 +222,15 @@ public class JiraCollectorUtil {
 		if(issuesAdded != null && issuesAdded.size() > 0){
 		   Double addedstorypoints = 0.0;
 		   for( String issueAdded : issuesAdded){
-			   json = getIssue(issueAdded,base64Credentials,baseUrl);
-			   addedstorypoints += getEstimate(json, "");
+			   json = getIssue(issueAdded,featureSettings.getJiraCredentials(),featureSettings.getJiraBaseUrl(),featureSettings.getJiraSprintDataFieldName());
+			   addedstorypoints += getEstimate(json, featureSettings.getJiraSprintDataFieldName());
 		   }   
 		   sprintdata.getBurndown().getIssuesAdded().setStoryPoints(addedstorypoints);
 		   sprintdata.getBurndown().getInitialIssueCount().setStoryPoints(sprintdata.getBurndown().getInitialIssueCount().getStoryPoints() - addedstorypoints);
 		   sprintdata.setCommittedStoryPoints(sprintdata.getCommittedStoryPoints() - addedstorypoints);
 		}
 				
-		json = getVelocityChart(rapidViewId,base64Credentials,baseUrl);
+		json = getVelocityChart(featureSettings.getRapidView(),featureSettings.getJiraCredentials(),featureSettings.getJiraBaseUrl());
 		Double estimate = ClientUtil.getSprintVelocity(json, jiraSprint.getId(), "estimated");
 		if(estimate != null){
 			sprintdata.getBurndown().getInitialIssueCount().setStoryPoints(estimate.doubleValue());
@@ -241,23 +241,23 @@ public class JiraCollectorUtil {
 		String startDate=DateUtil.format(jiraSprint.getSprintData().getStartDate(),	ClientUtil.DATE_FORMAT_5);
 		String endDate=DateUtil.format(	jiraSprint.getSprintData().getCompleteDate(),ClientUtil.DATE_FORMAT_5);
 		// Get created defects
-		json = JiraCollectorUtil.getDefectsFound(projectId,startDate,endDate,baseUrl,base64Credentials);
+		json = JiraCollectorUtil.getDefectsFound(projectId,startDate,endDate,featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials());
 		if(null==json) return;
 		issues = DefectUtil.parseDefectsJson(json);	
 		jiraSprint.getSprintData().setDefectsFound(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 		
 		// Get resolved defects
-		json = JiraCollectorUtil.getDefectResolvedInSprint(projectId, startDate, jiraSprint.getId(), baseUrl, base64Credentials);
+		json = JiraCollectorUtil.getDefectResolvedInSprint(projectId, startDate, jiraSprint.getId(), featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials());
 		issues = DefectUtil.parseDefectsJson(json);		
 		jiraSprint.getSprintData().setDefectsResolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 		// get all defects resolved
-		json = getSprintAllDefectResolved(projectId, sprintdata.getSprintId(),base64Credentials,baseUrl);
+		json = getSprintAllDefectResolved(projectId, sprintdata.getSprintId(),featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials());
 		
 	//	issues = DefectUtil.parseDefectsJson(projectjirasetting, json);		
 		sprintdata.setDefectsResolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 
 		// Get unresolved defects
-		json = JiraCollectorUtil.getDefectUnresolved(projectId,startDate,endDate,baseUrl,base64Credentials);
+		json = JiraCollectorUtil.getDefectUnresolved(projectId,startDate,endDate,featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials());
 		issues = DefectUtil.parseDefectsJson(json);		
 		jiraSprint.getSprintData().setDefectsUnresolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 		
@@ -373,10 +373,10 @@ public class JiraCollectorUtil {
 		return gsonelement == null ? null : gsonelement.toString();
 	}
 	
-	public static String getIssue(String issueId, String base64Credentials,String baseUrl) {
+	public static String getIssue(String issueId, String base64Credentials,String baseUrl, String storyPointsCustomField) {
 		// OPEN: jiraStoryPoints		
 		try{
-			String query = String.format(GET_ISSUE, issueId, "");
+			String query = String.format(GET_ISSUE, issueId, storyPointsCustomField);
 			query=baseUrl+query;
 			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
 			RestTemplate restTemplate = new RestTemplate();
