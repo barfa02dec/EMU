@@ -1,5 +1,5 @@
-<div class="row ca-view kanban-widget-styles" style="margin-left: 1px;
-    margin-right: 7px;">
+<div class="row ca-view kanban-widget-styles" style="margin-left: 0px;
+    margin-right: 0px;">
    
         <!-- <a href="#/detailedview/{{caWidget.dashBoardId}}" target="_blank" ng-click="getCompId(componentId)"> 
         <span class="report-link pull-right" style="color:#000;text-shadow:none;">View All <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
@@ -21,12 +21,11 @@
                              <td class="ca-value staticanalysis-textProps circle-props-rating"  ng-if="gate.formattedValue == 'A'">
                             <img src="assets/images/status_a.png"></td>
 
-                          
-
-                              <td class="ca-value staticanalysis-textProps" ng-if="gate.formattedValue == 'C'"><img src="assets/images/status_c.png"></td>
-
-    <td class="ca-value staticanalysis-textProps" ng-if="gate.formattedValue == 'OK'">&nbsp;&nbsp;&nbsp;&nbsp;Passed</td>
-    <td class="ca-value staticanalysis-textProps"  ng-if="gate.formattedValue == 'FAILED'"><img src="assets/images/status_failed.png"></td>
+                             <td class="ca-value staticanalysis-textProps" ng-if="gate.formattedValue == 'C'"><img src="assets/images/status_c.png"></td>
+                             
+                             <td class="ca-value staticanalysis-textProps" ng-if="gate.formattedValue == 'OK'">&nbsp;&nbsp;&nbsp;&nbsp;Passed</td>
+    
+                            <td class="ca-value staticanalysis-textProps"  ng-if="gate.formattedValue == 'FAILED'"><img src="assets/images/status_failed.png"></td>
 
                              <!--   <td class="ca-value staticanalysis-textProps" >&nbsp;&nbsp;&nbsp;&nbsp;{{gate.formattedValue}}</td> -->
                         </tr>
@@ -93,8 +92,20 @@
                             </div>
                             <div class="dash-row">
                             
-                             <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-hide="issue.name == 'Total Issues'">{{issue.name}}</div>
-                              <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-if="issue.name == 'Total Issues'">Total</div>
+                          <!--    <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-hide="issue.name == 'Total Issues'">{{issue.name}}</div> -->
+                              
+                              <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-if="issue.name == 'Blocker'" style="padding-left: 0px">BLOCKER</div>
+
+                              <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-if="issue.name == 'Critical'" style="padding-left: 3px">CRITICAL</div>
+
+                              <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-if="issue.name == 'Major'">MAJOR</div>
+
+                              <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-if="issue.name == 'Minor'" style="padding-left: 14px">MINOR</div>
+
+                              <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-if="issue.name == 'Info'" style="padding-left: 22px">INFO</div>
+
+                              <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-if="issue.name == 'Total Issues'" style="padding-left: 26px">TOTAL</div>
+
                         </div>
                     </table>
                 </div>
@@ -118,7 +129,15 @@
     font-weight: 600;text-align: center;">{{test.formattedValue}}</div></div>
 </div>
 <div class="dash-row">
-                            <div class="ca-name staticanalysis-textProps col-md-3" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;">{{test.name}}</div></div>
+                            <div class="ca-name staticanalysis-textProps col-md-3" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 2px;" ng-if="test.name == 'Success'">SUCCESS</div>
+
+                            <div class="ca-name staticanalysis-textProps col-md-3" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 5px;" ng-if="test.name == 'Failures'">FAILURES</div>
+
+                            <div class="ca-name staticanalysis-textProps col-md-3" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 13px;" ng-if="test.name == 'Errors'">ERRORS</div>
+
+                            <div class="ca-name staticanalysis-textProps col-md-3" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 21px;" ng-if="test.name == 'Tests'">TESTS</div>
+
+                            </div>
                             
                         
                     </table>

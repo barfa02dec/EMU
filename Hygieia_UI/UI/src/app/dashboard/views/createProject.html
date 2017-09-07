@@ -1,6 +1,6 @@
 <widget-modal widget-modal-title="Create New Project" style="background:#fff;" >
 <form class="form-horizontal" name="cpr.createProModel" ng-submit="cpr.postProject();" name="formname" novalidate >
-                    <label class="control-label col-sm-4 createproj-label-props" for="pwd">Project ID</label>
+                    <label class="control-label col-sm-3 createproj-label-props" for="pwd">Project ID</label>
                          <form-group input="projid" errors="{required: 'Project ID is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
                           
             <input
@@ -15,7 +15,7 @@
                 required />
         </form-group>
                        
-                          <label class="control-label col-sm-4 createproj-label-props" for="pwd">Project Name</label>
+                          <label class="control-label col-sm-3 createproj-label-props" for="pwd">Project Name</label>
                               <form-group input="projname" errors="{required: 'Project Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
                          
             <input
@@ -30,7 +30,7 @@
                 required />
         </form-group>
                        
-                          <label class="control-label col-sm-4 createproj-label-props" for="pwd">BU</label>
+                          <label class="control-label col-sm-3 createproj-label-props" for="pwd">BU</label>
                                   <form-group input="projBU" errors="{required: 'BU is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
                          
             <input
@@ -47,7 +47,7 @@
                        
 
                       
-                           <label class="control-label col-sm-4 createproj-label-props" for="pwd">Owner</label>
+                           <label class="control-label col-sm-3 createproj-label-props" for="pwd">Owner</label>
                          <form-group input="projowner" errors="{required: 'Owner is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
                         
             <input
@@ -62,7 +62,7 @@
                 required />
         </form-group>
                      
-                         <label class="control-label col-sm-4 createproj-label-props" for="pwd">Program</label>
+                         <label class="control-label col-sm-3 createproj-label-props" for="pwd">Program</label>
                            <form-group input="projprogname">
                           
             <input
@@ -77,7 +77,7 @@
                  />
         </form-group>
                        
-                            <label class="control-label col-sm-4 createproj-label-props" for="pwd">Customer Name</label>
+                            <label class="control-label col-sm-3 createproj-label-props" for="pwd">Customer Name</label>
                          <form-group input="projcusname" errors="{required: 'Customer Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
                        
             <input
@@ -91,10 +91,10 @@
                 minlength="3"
                 required />
         </form-group>
-                        <div class="form-group" style="padding-top: 3%;padding-left: 17%;">
-                           
-                             <input type="button" name="" class="btn btn-default white-cancel-btn" value="Cancel"  ng-click="$close()">
-                              <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" name=""  style="margin-left: 20px;margin-top: 0px;" >Add</button>
+                        <div class="form-group" style="padding-top: 3%;padding-left: 3%;">
+                            <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" name=""  style="margin-top: 0px;" >Add</button>
+                             <input type="button" name="" class="btn btn-default white-cancel-btn" value="Cancel"  ng-click="$close()" style="margin-left: 20px;">
+                             
               
                         </div>
                     </form>
