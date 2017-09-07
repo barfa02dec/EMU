@@ -1,7 +1,7 @@
 <widget-modal widget-modal-title="Create New Project" style="background:#fff;" >
-<form class="form-horizontal" name="cpr.createProModel" ng-submit="cpr.postProject();" name="formname" novalidate >
+<form class="form-horizontal validation-message-align" name="cpr.createProModel" ng-submit="cpr.postProject();" name="formname" novalidate >
                     <label class="control-label col-sm-3 createproj-label-props" for="pwd">Project ID</label>
-                         <form-group input="projid" errors="{required: 'Project ID is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                         <form-group input="projid" errors="{required: 'Project ID is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}" class="okok">
                           
             <input
                 type="text"
