@@ -353,8 +353,8 @@
                <div class="row " style="margin-left:2%;">
                   <div class="" ng-repeat="componentcos in componentco.complexityNewArray track by $index">
                      <span ng-if="$index == 0" class="styling-values col-md-3 "></span>
-                     <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 30px;">Function</span>
-                     <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
+                     <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 30px;padding-top: 8px">Function</span>
+                     <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" ng-show="componentcos.formattedValue" style="padding-top: 5px">{{componentcos.formattedValue}}</span>
                      <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" ng-show="!componentcos.formattedValue">0</span>
                   </div>
                </div>
@@ -362,17 +362,18 @@
                   <div class="" ng-repeat="componentcos in componentco.complexityNewArray track by $index">
                      <span ng-if="$index == 0" class="styling-values col-md-3 round-props" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
                      <span ng-if="$index == 0" class="styling-values col-md-3" ng-show="!componentcos.formattedValue">0</span>
-                     <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-top: 11px;padding-left: 68px;">File</span>
-                     <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 9px;padding-left: 49px !important" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
+                     <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-left: 15% !important;
+    padding-top: 6.8%;">File</span>
+                     <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 6%;
+    padding-left: 10% !important;" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
                      <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 9px" ng-show="!componentcos.formattedValue">0</span>
                   </div>
                </div>
                <div class="row " style="margin-left:2%;">
                   <div class="" ng-repeat="componentcos in componentco.complexityNewArray track by $index">
                      <span ng-if="$index == 0" class="label-props col-md-3 ">Complexity</span>
-                     <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 30px;margin-top: -30px">Class</span>
-                     <span class="widget-value-pro-small col-md-3" ng-if="$index == 2" ng-show="componentcos.formattedValue" style="margin-left: 101px;
-                        margin-top: -31px;">{{componentcos.formattedValue}}</span>
+                     <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 30px;">Class</span>
+                     <span class="widget-value-pro-small col-md-3" ng-if="$index == 2" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
                      <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" ng-show="!componentcos.formattedValue">0</span>
                   </div>
                </div>
