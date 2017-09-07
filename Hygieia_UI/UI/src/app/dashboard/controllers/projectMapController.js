@@ -28,9 +28,10 @@
         //$scope.example1model = []; $scope.example1data = [ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"} ]
         var apiHost = 'http://localhost:3000';
         var qahost = 'http://10.20.1.183:3000';
-        //Get All Projects
         $scope.curPage = 0;
         ctrl.pageSize = 5;
+
+        //Get All Projects
         $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
             .then(function(response) {
                 ctrl.getAllProjects = response.data;
@@ -47,13 +48,7 @@
             };
         });
 
-        //Add User AutoComplete API Fetch
-        $http.get("/api/getApplicationUsers")
-            .then(function(response) {
-                ctrl.getUserMaps = response.data;
-            });
-
-        //open create Project Modal
+      //open create Project Modal
         ctrl.createDashboard = function() {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/createProject.html',
@@ -90,7 +85,7 @@
             sp.id = id;
 
             //Fetch all users
-            $http.get("/api/getApplicationUsers")
+            $http.get("/api/getApplicationUsers?projectId=" + sp.id)
                 .then(function(response) {
                     sp.getUserMaps = response.data;
                 });

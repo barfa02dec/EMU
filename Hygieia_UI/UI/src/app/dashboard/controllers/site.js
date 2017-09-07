@@ -53,7 +53,7 @@
             dashboardData.search().then(processDashboardResponse, processDashboardError);
 
             // request my dashboards
-            dashboardData.mydashboard(ctrl.ppiid).then(processMyDashboardResponse, processMyDashboardError);
+            dashboardData.mydashboard(ctrl.ppiid,ctrl.usernamepro).then(processMyDashboardResponse, processMyDashboardError);
         })();
 
         function setType(type) {
