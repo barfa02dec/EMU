@@ -1,86 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head> 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
-
-    <!-- Website CSS style -->
-    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
-
-    
-
-    <title>Admin</title>
-    <style>
-        body {
-            font-family: "Segoe UI";
-          }
-    </style>
-  </head>
-  <body>
-  <div id="auth" class="" style="background-image: url('assets/images/bg_login2.jpg');padding-top: 10px;">
-    <div class="container">
-      <div class="row main">
-        <div class="panel-heading">
-                 <!-- <div class="panel-title text-center">
-                    <img src="assets/images/happiest_mind_logo.png" class="" style="width:144px;height:50px;">
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+      <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+      <title>Admin</title>
+   </head>
+   <body>
+      <div id="auth" class="" style="background-image: url('assets/images/bg_login2.jpg');padding-top: 10px;">
+      <div class="container">
+         <div class="row main">
+            <div class="panel-heading">
+               <!-- <div class="panel-title text-center">
+                  <img src="assets/images/happiest_mind_logo.png" class="" style="width:144px;height:50px;">
                   </div> -->
-              </div> 
-        <div class="main-login main-center">
-        <div class="" style="font-size: 35px;color: #E5E5E5">
-          <img src="assets/images/emu-4a.png" style="height: 70px;
-    width: 70px;">
-        </div>
-         <div class="" style="font-size: 15px;color: #848484;font-weight: 600">Engineering Metrics Unified</div>
-          <form class="form-horizontal" id="lg" name="lg" ng-submit="login.doLogin(lg.$valid)" role="form" novalidate>
-            
-            <form-group input="username" style="padding-top: 50px;" errors="{required: 'Username is required', invalidUsernamePassword: 'Incorrect username and password'}">
-              <label for="name" class="cols-sm-2 control-label" style="font-weight: normal;color: #999999">Username or email ID</label>
-              <div class="cols-sm-10">
-                <div class="input-group" style="width: 100%">
-                  <!-- <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span> -->
-                  <input type="text" name="username" class="form-control" ng-model="login.username" required minlength="4" autocomplete="off" placeholder="Username or Email ID" style="border-radius:1px;" />
-
-                  
-                </div>
-              </div>
-           </form-group>
-
-           <form-group input="password" errors="{required:'Password is required'}">
-              <label for="email" class="cols-sm-2 control-label" style="font-weight: normal;color: #999999">Password</label>
-              <div class="cols-sm-10">
-                <div class="input-group" style="width: 100%">
-                  <!-- <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span> -->
-                  <input type="password" name="password" class="form-control" ng-model="login.password" required placeholder="Password" style="border-radius:1px;" />
-                  
-                </div>
-              </div>
-            </form-group>
-
-          
-
-           
-
-
-            <div class="form-group ">
-              <button type="submit" class="btn btn-primary" style="background: #1766A4;border: #1766A4;box-shadow: none;font-size: 12px;border-radius: 3px;font-weight: normal;">Sign In</button>
             </div>
-            <div class="">
-             <p style="color:#000;">Don't have an account? <span ng-click="login.doSignup()" style="color: #3B7EB2;cursor: pointer;">Create New</span></p>
-                   <!--  <a href="index.php">Dont have an Account?</a> -->
-                 </div>
-          </form>
-        </div>
+            <div class="main-login main-center">
+               <div>
+                  <img src="assets/images/emu-4a.png" class="emu-logo-props">
+               </div>
+               <div class="emu-header-props">Engineering Metrics Unified</div>
+               <form class="form-horizontal" id="lg" name="lg" ng-submit="login.doLogin(lg.$valid)" role="form" novalidate>
+                  <form-group input="username" style="padding-top: 50px;" errors="{required: 'Username is required', invalidUsernamePassword: 'Incorrect username and password'}">
+                     <label for="name" class="cols-sm-2 control-label upper-label-props">Username or email ID</label>
+                     <div class="cols-sm-10">
+                        <div class="input-group inputgroup-props">
+                           <!-- <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span> -->
+                           <input type="text" name="username" class="form-control inputbox-props" ng-model="login.username" required minlength="4" autocomplete="off" placeholder="Username or Email ID"/>
+                        </div>
+                     </div>
+                  </form-group>
+                  <form-group input="password" errors="{required:'Password is required'}">
+                     <label for="email" class="cols-sm-2 control-label upper-label-props">Password</label>
+                     <div class="cols-sm-10">
+                        <div class="input-group inputgroup-props">
+                           <!-- <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span> -->
+                           <input type="password" name="password" class="form-control inputbox-props" ng-model="login.password" required placeholder="Password"/>
+                        </div>
+                     </div>
+                  </form-group>
+                  <div class="form-group ">
+                     <button type="submit" class="btn btn-primary signIn-signup-btn-props" style="">Sign In</button>
+                  </div>
+                  <div class="">
+                     <p style="color:#000;">Don't have an account? <span ng-click="login.doSignup()" class="creatnew-login-label-props">Create New</span></p>
+                     <!--  <a href="index.php">Dont have an Account?</a> -->
+                  </div>
+               </form>
+            </div>
+         </div>
       </div>
-
-    </div>
-  <div class="col-md-12">
-  <div class="col-md-4"></div>
-  
-  <div class="col-md-4" style="padding-left: 8%;padding-top: 4%;">
-  <span style="color: #000;">Powered By</span> &nbsp&nbsp&nbsp&nbsp&nbsp<img src="assets/images/happiest_mind_logo.png" class="" style="width: 130px;">
-  </div>
-    </div>
-
-    <script type="text/javascript" src="assets/js/bootstrap.js"></script>
-  </body>
+      <div class="col-md-12">
+         <div class="col-md-4"></div>
+         <div class="col-md-4 footer-padding-props">
+            <span class="poweredBy-label-specs">Powered By</span> &nbsp&nbsp&nbsp&nbsp&nbsp<img src="assets/images/happiest_mind_logo.png" class="" style="width: 130px;">
+         </div>
+      </div>
+      <script type="text/javascript" src="assets/js/bootstrap.js"></script>
+   </body>
 </html>
