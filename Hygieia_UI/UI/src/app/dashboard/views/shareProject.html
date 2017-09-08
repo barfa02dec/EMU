@@ -1,111 +1,71 @@
 <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
-    rel = "stylesheet">
+   rel = "stylesheet">
 <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
 <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="assets/images/dualmultiselect.css">
 <script src="assets/images/dualmultiselect.js"></script>
-<widget-modal widget-modal-title="ADD USER" style="background:#fcfcfc;border-bottom: #d6d6d6" >
-    <form class="form-horizontal validation-message-align-adduser" name="cpr.createProModel" ng-submit="spc.shareProjects()" name="adduser" novalidate >
-        <label class="control-label createproj-label-props shareproject-labels-props" for="pwd" style="padding-left: 8px;padding-bottom: 10px;">Select User Name</label>
-        <form-group input="usernames" errors="{required: 'Add User is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
-            <input ng-model="spc.selected"  uib-typeahead="country for country in spc.getUserMaps | filter:$viewValue"
-                type="text"
-                name="usernames"
-                class="form-control create-project-inputboxes"
-                placeholder="Add user"
-                maxlength="40"
-                autocomplete="off"
-                minlength="3"
-                required />
-        </form-group>
-       
-       
-        <!--  <label class="control-label col-sm-4 createproj-label-props" for="pwd">Project Name</label>
-            <form-group input="projname" errors="{required: 'Project Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
-            
-            <input
+<widget-modal widget-modal-title="ADD USER" class="modal-title-props">
+   <form class="form-horizontal validation-message-align-adduser" name="cpr.createProModel" ng-submit="spc.shareProjects()" name="adduser" novalidate >
+      <label class="control-label createproj-label-props shareproject-labels-props adduser-autocomplete-props" for="pwd">Select User Name</label>
+      <form-group input="usernames" errors="{required: 'Add User is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+         <input ng-model="spc.selected"  uib-typeahead="country for country in spc.getUserMaps | filter:$viewValue"
             type="text"
-            name="projname"
+            name="usernames"
             class="form-control create-project-inputboxes"
-            placeholder="Type in the new Project Name"
-            ng-model="cpr.payl.projectName"
+            placeholder="Add user"
             maxlength="40"
             autocomplete="off"
             minlength="3"
             required />
-            </form-group> -->
-        <!--  <input type="text" ng-model="selected" uib-typeahead="country for country in pm.getUserMaps | filter:$viewValue" class="form-control">  -->
-        <!-- <input type="text" ng-model="selected" uib-typeahead="country as country.name for country in countries | filter:{name:$viewValue}" class="form-control" typeahead-show-hint="true" typeahead-min-length="0"> -->
-        <!--    <widget-modal widget-modal-title="User Permission Mapping" style="background:#fff;" >
-            <div class="col-md-6">
-              <div class="role-Header"><b>Roles</b></div>
-               <div class="role-Header">Role1</div>
-                <div class="role-Header">Role2</div>
-                 <div class="role-Header">Role3</div>
+      </form-group>
+      <div class="dualmultiselect">
+         <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+               <label class="shareproject-labels-props">All Roles</label>
+               <!--   <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.items, spc.demoOptions.selectedItems, -1)"> Select All </button>  -->
+               <div class="pool">
+                  <ul>
+                     <li ng-repeat="item in spc.getRolesKey | filter: spc.searchTerm | orderBy: spc.getRolesKey.orderProperty"> <a href="" ng-click="spc.transfer(spc.getRolesKey, spc.getRolesKey.selectedItems, spc.getRolesKey.indexOf(item))">{{item.roleKey}}&nbsp;&rArr; </a> </li>
+                  </ul>
+               </div>
             </div>
-            <div class="col-md-6">
-              <div class="users-Header"><b>Users</b></div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+               <label class="shareproject-labels-props">Selected Roles</label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
+               <div class="pool">
+                  <ul>
+                     <li ng-repeat="item in spc.getRolesKey.selectedItems | orderBy: spc.getRolesKey.orderProperty">
+                        <a href="" ng-click="spc.transfer(spc.getRolesKey.selectedItems, spc.getRolesKey, spc.getRolesKey.selectedItems.indexOf(item))"> &lArr;&nbsp;{{item.roleKey}}</a> 
+                     </li>
+                  </ul>
+               </div>
             </div>
-            </widget-modal> -->
-        <div class="dualmultiselect">
-           <!--  <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <h4>{{spc.demoOptions.title}}<small>&nbsp;{{spc.demoOptions.helpMessage}}</small> </h4>
-                    <input class="form-control" placeholder="{{spc.demoOptions.filterPlaceHolder}}" ng-model="spc.searchTerm"> 
-                </div>
-            </div> -->
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <label class="shareproject-labels-props">All Roles</label>
-                  <!--   <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.items, spc.demoOptions.selectedItems, -1)"> Select All </button>  -->
-                    <div class="pool">
-                        <ul>
-                            <li ng-repeat="item in spc.getRolesKey | filter: spc.searchTerm | orderBy: spc.getRolesKey.orderProperty"> <a href="" ng-click="spc.transfer(spc.getRolesKey, spc.getRolesKey.selectedItems, spc.getRolesKey.indexOf(item))">{{item.roleKey}}&nbsp;&rArr; </a> </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <label class="shareproject-labels-props">Selected Roles</label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
-                    <div class="pool">
-                        <ul>
-                            <li ng-repeat="item in spc.getRolesKey.selectedItems | orderBy: spc.getRolesKey.orderProperty">
-                                <a href="" ng-click="spc.transfer(spc.getRolesKey.selectedItems, spc.getRolesKey, spc.getRolesKey.selectedItems.indexOf(item))"> &lArr;&nbsp;{{item.roleKey}}</a> 
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+         </div>
+      </div>
+      <div class="dualmultiselect">
+         <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+               <label class="shareproject-labels-props">All Dashboards</label>
+               <div class="pool">
+                  <ul>
+                     <li ng-repeat="itemdashboard in spc.getdashboards | filter: spc.searchTerm | orderBy: spc.getdashboards.orderProperty"> <a href="" ng-click="spc.transfer(spc.getdashboards, spc.getdashboards.selectedItemsDashboard, spc.getdashboards.indexOf(itemdashboard))">{{itemdashboard.title}}&nbsp;&rArr; </a> </li>
+                  </ul>
+               </div>
             </div>
-        </div>
-
-          <div class="dualmultiselect">
-          
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <label class="shareproject-labels-props">All Dashboards</label>
-                
-                    <div class="pool">
-                        <ul>
-                            <li ng-repeat="itemdashboard in spc.getdashboards | filter: spc.searchTerm | orderBy: spc.getdashboards.orderProperty"> <a href="" ng-click="spc.transfer(spc.getdashboards, spc.getdashboards.selectedItemsDashboard, spc.getdashboards.indexOf(itemdashboard))">{{itemdashboard.title}}&nbsp;&rArr; </a> </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <label class="shareproject-labels-props">Selected Dashboards</label>
-                    <div class="pool">
-                        <ul>
-                            <li ng-repeat="itemdashboard in spc.getdashboards.selectedItemsDashboard | orderBy: spc.getdashboards.orderProperty">
-                                <a href="" ng-click="spc.transfer(spc.getdashboards.selectedItemsDashboard, spc.getdashboards, spc.getdashboards.selectedItemsDashboard.indexOf(itemdashboard))"> &lArr;&nbsp;{{itemdashboard.title}}</a> 
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+               <label class="shareproject-labels-props">Selected Dashboards</label>
+               <div class="pool">
+                  <ul>
+                     <li ng-repeat="itemdashboard in spc.getdashboards.selectedItemsDashboard | orderBy: spc.getdashboards.orderProperty">
+                        <a href="" ng-click="spc.transfer(spc.getdashboards.selectedItemsDashboard, spc.getdashboards, spc.getdashboards.selectedItemsDashboard.indexOf(itemdashboard))"> &lArr;&nbsp;{{itemdashboard.title}}</a> 
+                     </li>
+                  </ul>
+               </div>
             </div>
-        </div>
-        <div class="form-group" style="padding-top: 5%;">
-        <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" name=""  style="margin-left: 14px;margin-top: 0px;" >Add</button>
-            <input type="button" name="" class="btn btn-default white-cancel-btn" value="Cancel"  ng-click="$close()" style="margin-left: 20px;">
-            
-        </div>
-    </form>
+         </div>
+      </div>
+      <div class="form-group" style="padding-top: 5%;">
+         <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" name=""  style="margin-left: 14px;margin-top: 0px;" >Add</button>
+         <input type="button" name="" class="btn btn-default white-cancel-btn" value="Cancel"  ng-click="$close()" style="margin-left: 20px;">
+      </div>
+   </form>
 </widget-modal>
-
