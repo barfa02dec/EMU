@@ -242,7 +242,12 @@
                 $http.delete('/api/dashboard/' + dashid).then(function (response) {
                    $uibModalInstance.dismiss("cancel");
                     $route.reload();
-                    alert("deleted");
+                    $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/deletedashboardsuccess.html',
+                        controller: 'SiteController',
+                        controllerAs: 'ctrl'
+                    });
+                    
             });
                 
             };

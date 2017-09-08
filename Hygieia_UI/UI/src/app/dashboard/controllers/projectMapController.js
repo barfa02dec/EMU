@@ -122,18 +122,21 @@
                 }
                 if((sp.getdashboards.selectedItemsDashboard.length !=0) && (sp.getRolesKey.selectedItems !=0)){
                 $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
-                    alert('Project Mapped Successfully');
                     $uibModalInstance.dismiss("cancel");
-                    console.log(sp.projectUserPayl);
-                    /* $uibModal.open({
-                         templateUrl: 'app/dashboard/views/userPermissionMap.html',
-                         controller: 'projectMapController',
-                         controllerAs: 'pm'
-                     });*/
+                    $route.reload();
+                    $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/adduserConfirm.html',
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
                 })
             }
             else{
-                alert("Dashboard Field and Role Field is manditory");
+                $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/adduserrequired.html',
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
             }
             };
 
@@ -189,7 +192,7 @@
                 if ((info.businessUnit.length >= 3) && (info.projectId.length >= 3) && (info.client.length >= 3) && (info.projectOwner.length >= 3) && (info.program.length >= 3)) {
                     $http.post('/api/updateProject', (ctrl.editPayload)).then(function(response) {
                         $uibModal.open({
-                            templateUrl: 'app/dashboard/views/editConfirm.html',
+                            templateUrl: 'app/dashboard/views/ConfirmationModals/editConfirm.html',
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
@@ -201,7 +204,7 @@
                     })
                 } else {
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/validationminlength.html',
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/validationminlength.html',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -209,7 +212,7 @@
                 }
             } else {
                 $uibModal.open({
-                    templateUrl: 'app/dashboard/views/validationrequiredmessage.html',
+                    templateUrl: 'app/dashboard/views/ConfirmationModals/validationrequiredmessage.html',
                     controller: 'projectMapController',
                     controllerAs: 'pm'
                 });
@@ -249,7 +252,7 @@
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/deleteconfirm.html',
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/deleteconfirm.html',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -277,14 +280,14 @@
                         $route.reload();
                         $uibModalInstance.dismiss("cancel");
                         $uibModal.open({
-                            templateUrl: 'app/dashboard/views/postconfirm.html',
+                            templateUrl: 'app/dashboard/views/ConfirmationModals/postconfirm.html',
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
                     }, function(response) {
                         if (response.status == 409) {
                             $uibModal.open({
-                                templateUrl: 'app/dashboard/views/createErrorModal.html',
+                                templateUrl: 'app/dashboard/views/ConfirmationModals/createErrorModal.html',
                                 controller: 'projectMapController',
                                 controllerAs: 'pm'
                             });
