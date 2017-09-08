@@ -5,9 +5,9 @@
 <link rel="stylesheet" href="assets/images/dualmultiselect.css">
 <script src="assets/images/dualmultiselect.js"></script>
 <widget-modal widget-modal-title="ADD USER" style="background:#fcfcfc;border-bottom: #d6d6d6" >
-    <form class="form-horizontal" name="cpr.createProModel" ng-submit="spc.shareProjects()" name="adduser" novalidate >
+    <form class="form-horizontal validation-message-align-adduser" name="cpr.createProModel" ng-submit="spc.shareProjects()" name="adduser" novalidate >
         <label class="control-label createproj-label-props shareproject-labels-props" for="pwd" style="padding-left: 8px;padding-bottom: 10px;">Select User Name</label>
-        <form-group input="usernames" errors="{required: 'Project ID is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+        <form-group input="usernames" errors="{required: 'Add User is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
             <input ng-model="spc.selected"  uib-typeahead="country for country in spc.getUserMaps | filter:$viewValue"
                 type="text"
                 name="usernames"
@@ -102,7 +102,7 @@
             </div>
         </div>
         <div class="form-group" style="padding-top: 5%;">
-        <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" ng-click="$close()" name=""  style="margin-left: 14px;margin-top: 0px;" >Add</button>
+        <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" name=""  style="margin-left: 14px;margin-top: 0px;" >Add</button>
             <input type="button" name="" class="btn btn-default white-cancel-btn" value="Cancel"  ng-click="$close()" style="margin-left: 20px;">
             
         </div>

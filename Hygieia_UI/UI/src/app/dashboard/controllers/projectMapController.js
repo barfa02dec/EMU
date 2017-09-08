@@ -120,9 +120,10 @@
                     "userRoles": sp.getRolesKey.selectedItems,
                     "dashboardsToAssign": sp.getdashboards.selectedItemsDashboard
                 }
-                console.log(sp.projectUserPayl);
+                if((sp.getdashboards.selectedItemsDashboard.length !=0) && (sp.getRolesKey.selectedItems !=0)){
                 $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
                     alert('Project Mapped Successfully');
+                    $uibModalInstance.dismiss("cancel");
                     console.log(sp.projectUserPayl);
                     /* $uibModal.open({
                          templateUrl: 'app/dashboard/views/userPermissionMap.html',
@@ -130,6 +131,10 @@
                          controllerAs: 'pm'
                      });*/
                 })
+            }
+            else{
+                alert("Dashboard Field and Role Field is manditory");
+            }
             };
 
             //Adding Role to User Dual List Functionality
