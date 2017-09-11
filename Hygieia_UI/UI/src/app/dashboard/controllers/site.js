@@ -1,15 +1,16 @@
 /**
  * Controller for choosing or creating a new dashboard
  */
-(function () {
+(function() {
     'use strict';
 
     angular
         .module(HygieiaConfig.module)
         .controller('SiteController', SiteController);
 
-    SiteController.$inject = ['$scope', '$q', '$uibModal', 'dashboardData', '$location', '$cookies', '$cookieStore', 'DashboardType','$http'];
-    function SiteController($scope, $q, $uibModal, dashboardData, $location, $cookies, $cookieStore, DashboardType,$http) {
+    SiteController.$inject = ['$scope', '$q', '$uibModal', 'dashboardData', '$location', '$cookies', '$cookieStore', 'DashboardType', '$http'];
+
+    function SiteController($scope, $q, $uibModal, dashboardData, $location, $cookies, $cookieStore, DashboardType, $http) {
         var ctrl = this;
 
         // public variables
@@ -32,8 +33,8 @@
         ctrl.renameDashboard = renameDashboard;
         ctrl.usernamepro = $cookies.get('username');
         ctrl.projectName = $cookies.get('ProName');
-        
-         if (ctrl.username === 'admin') {
+
+        if (ctrl.username === 'admin') {
             ctrl.myadmin = true;
         }
         checkPassThrough();
@@ -41,8 +42,8 @@
         (function() {
             // set up the different types of dashboards with a custom icon
             var types = dashboardData.types();
-            _(types).forEach(function (item) {
-                if(item.id == DashboardType.PRODUCT) {
+            _(types).forEach(function(item) {
+                if (item.id == DashboardType.PRODUCT) {
                     item.icon = 'fa-cubes';
                 }
             });
@@ -53,7 +54,7 @@
             dashboardData.search().then(processDashboardResponse, processDashboardError);
 
             // request my dashboards
-            dashboardData.mydashboard(ctrl.ppiid,ctrl.usernamepro).then(processMyDashboardResponse, processMyDashboardError);
+            dashboardData.mydashboard(ctrl.ppiid, ctrl.usernamepro).then(processMyDashboardResponse, processMyDashboardError);
         })();
 
         function setType(type) {
@@ -76,12 +77,71 @@
         $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
             .then(function(response) {
                 ctrl.getAllProjects = response.data;
-               
+
+                for (var i = 0; i < ctrl.getAllProjects.length; i++) {
+                    for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
+                        for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
+                            ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
+                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("EDIT_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
+                                ctrl.editDashboard = true;
+                            }
+
+                            /*if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("DELETE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                               ctrl.deleteDashboard = true;
+                            }
+                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                               ctrl.createDashboard = true;
+                            }*/
+                        }
+                    }
+                }
+
+                for (var i = 0; i < ctrl.getAllProjects.length; i++) {
+                    for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
+                        for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
+                            ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
+                            /*if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("EDIT_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                               ctrl.editDashboard = true;
+                            }*/
+
+                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("DELETE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
+                                ctrl.deleteDashboards = true;
+
+                            }
+
+                            /*if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                               ctrl.createDashboard = true;
+                            }*/
+                        }
+                    }
+                }
+
+
+                for (var i = 0; i < ctrl.getAllProjects.length; i++) {
+                    for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
+                        for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
+                            ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
+                            /*if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("EDIT_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                               ctrl.editDashboard = true;
+                            }*/
+
+                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
+                                ctrl.createDashboards = true;
+
+                            }
+
+                            /*if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                               ctrl.createDashboard = true;
+                            }*/
+                        }
+                    }
+                }
+
 
             });
-            
-        function checkPassThrough(){
-            if(angular.isUndefined(ctrl.username) || angular.isUndefined(ctrl.showAuthentication) || ctrl.showAuthentication == false){
+
+        function checkPassThrough() {
+            if (angular.isUndefined(ctrl.username) || angular.isUndefined(ctrl.showAuthentication) || ctrl.showAuthentication == false) {
                 console.log('Authentication failed, redirecting to login page');
                 $location.path('/login');
             }
@@ -93,8 +153,7 @@
             $location.path('/admin');
         }
 
-        function logout()
-        {
+        function logout() {
             $cookieStore.remove("username");
             $cookieStore.remove("authenticated");
             $location.path('/');
@@ -110,8 +169,7 @@
             });
         }
 
-        function renameDashboard(item)
-        {
+        function renameDashboard(item) {
             // open modal for renaming dashboard
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/renameDashboard.html',
@@ -132,7 +190,7 @@
         function open(dashboardId) {
             $cookies.get("selectedName");
             $cookies.get("selectedNameSonar");
-            
+
             $location.path('/dashboard/' + dashboardId);
             $cookies.put('dashboardidpa', dashboardId);
         }
@@ -148,7 +206,7 @@
                     isProduct: data[x].type && data[x].type.toLowerCase() === DashboardType.PRODUCT.toLowerCase()
                 };
 
-                if(board.isProduct) {
+                if (board.isProduct) {
                     //console.log(board);
                 }
                 dashboards.push(board);
@@ -183,18 +241,22 @@
             ctrl.mydash = [];
         }
 
-        
+
 
 
         function deleteDashboard(item) {
             var id = item.id;
-            dashboardData.delete(id).then(function () {
-                _.remove(ctrl.dashboards, {id: id});
-                _.remove(ctrl.mydash, {id: id});
+            dashboardData.delete(id).then(function() {
+                _.remove(ctrl.dashboards, {
+                    id: id
+                });
+                _.remove(ctrl.mydash, {
+                    id: id
+                });
             }, function(response) {
                 var msg = 'An error occurred while deleting the dashboard';
 
-                if(response.status > 204 && response.status < 500) {
+                if (response.status > 204 && response.status < 500) {
                     msg = 'The Team Dashboard is currently being used by a Product Dashboard/s. You cannot delete at this time.';
                 }
 
@@ -210,7 +272,7 @@
 
             console.log("size after is:" + jointArray.length);
 
-            var uniqueArray = jointArray.filter(function (elem, pos) {
+            var uniqueArray = jointArray.filter(function(elem, pos) {
                 return jointArray.indexOf(elem) == pos;
             });
 
@@ -218,8 +280,8 @@
             ctrl.dashboards = uniqueArray;
         }
 
-         ctrl.deleteDashboardModel = function (myitem) {
-           
+        ctrl.deleteDashboardModel = function(myitem) {
+
             ctrl.dashdataData = myitem;
 
 
@@ -228,7 +290,7 @@
                 controller: deleteDashboardController,
                 controllerAs: 'ddc',
                 resolve: {
-                    dashid: function () {
+                    dashid: function() {
                         return myitem.id;
                     }
                 }
@@ -236,20 +298,20 @@
             });
         }
 
-          function deleteDashboardController($uibModalInstance, dashid, $route,$http) {
+        function deleteDashboardController($uibModalInstance, dashid, $route, $http) {
             var ddc = this;
-            ddc.deleteDashboardfn= function(pro) {
-                $http.delete('/api/dashboard/' + dashid).then(function (response) {
-                   $uibModalInstance.dismiss("cancel");
+            ddc.deleteDashboardfn = function(pro) {
+                $http.delete('/api/dashboard/' + dashid).then(function(response) {
+                    $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
                         templateUrl: 'app/dashboard/views/ConfirmationModals/deletedashboardsuccess.html',
                         controller: 'SiteController',
                         controllerAs: 'ctrl'
                     });
-                    
-            });
-                
+
+                });
+
             };
         }
 

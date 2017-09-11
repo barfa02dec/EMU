@@ -1,255 +1,134 @@
-
-<style>
-body {
-   font-family: "Segoe UI";
-}
-
-</style>
 <div id="site" class="main-content blue-gradient-bg" style="background: #ffffff !important;">
-    <!--  <ng-include src="ctrl.templateUrl"></ng-include> -->
-  <div class="blue-header" style="height: 50px;
-    width:100%;background: #1766A4">
-    <span class="hamburger-ListdashPage project-map-hamburger" style="margin-left: 2.2%;">
-        <svg version="1.1"
+   <!--  <ng-include src="ctrl.templateUrl"></ng-include> -->
+   <div class="blue-header" style="height: 50px;
+      width:100%;background: #1766A4">
+      <span class="hamburger-ListdashPage project-map-hamburger" style="margin-left: 2.2%;">
+         <svg version="1.1"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
             x="0px" y="0px" width="15px" height="9px" viewBox="0 0 15 9" style="overflow:scroll;enable-background:new 0 0 15 9;"
             xml:space="preserve">
             <style type="text/css">
-                .stham0{fill:#FFFFFF;}
+               .stham0{fill:#FFFFFF;}
             </style>
             <defs></defs>
             <g>
-                <g>
-                    <path class="stham0" d="M0,0h15v1.5H0V0z M0,3.8h15v1.5H0V3.8z M0,7.5h15V9H0V7.5z"/>
-                </g>
+               <g>
+                  <path class="stham0" d="M0,0h15v1.5H0V0z M0,3.8h15v1.5H0V3.8z M0,7.5h15V9H0V7.5z"/>
+               </g>
             </g>
-        </svg>
-    </span>
-    <span class="edMenu-ListDash-Page project-map-ed">
-      <!--   <svg version="1.1"
-            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
-            x="0px" y="0px" width="23px" height="23px" viewBox="0 0 23 23" style="overflow:scroll;enable-background:new 0 0 23 23;"
-            xml:space="preserve">
-            <style type="text/css">
-                .stedlogo0{fill:#000;}
-                .stedlogo1{fill: #fff;}
-            </style>
-            <defs></defs>
-            <g>
-                <path class="stedlogo0" d="M11.5,0c0.8,0,1.6,0.1,2.3,0.2c1.9,0.4,3.6,1.2,5,2.4V0H11.5z M11.5,23h7.3v-2.6c-1.4,1.2-3.1,2-5,2.4
-                    C13.1,22.9,12.3,23,11.5,23z M4.6,23v-0.2l0-5.7l0-3.3L0,9.2V23H4.6z M0,9.2h4.6l0-1.9l0-7.1V0H0V9.2z"/>
-                <g class="stedlogo1">
-                    <path d="M18.8,2.6c-1.4-1.2-3.1-2-5-2.4C13.1,0.1,12.3,0,11.5,0H4.6v7.3h0l0,1.9H0l4.6,4.6l0,3.3h0V23h6.9c0.8,0,1.6-0.1,2.3-0.2
-                        c1.9-0.4,3.6-1.2,5-2.4c2.6-2.1,4.2-5.3,4.2-8.9S21.4,4.7,18.8,2.6z M18,13.8c-0.7,2-2.2,3.5-4.2,4.2c-0.7,0.3-1.5,0.4-2.3,0.4
-                        H9.2v-4.6h4.6L9.2,9.2V4.6h2.3c0.8,0,1.6,0.1,2.3,0.4c2,0.7,3.5,2.2,4.2,4.2c0.3,0.7,0.4,1.5,0.4,2.3S18.3,13.1,18,13.8z"/>
-                </g>
-            </g>
-        </svg> -->
-        <img src="assets/images/emu-5w.png" style="height: 30px;
-    width: 30px;">
-    </span>
-    <span class="edtext-ListdashPage project-map-edText">Engineering Metrics Unified</span>
-    <span class="edtext-ListdashPage" style="margin-top: 15px;margin-left: 68%;">{{ctrl.usernamepro}}</span>
-    <div class="dropdown-logout" style="float: right;
-    right: 3%;
-    top: 23%;">
-  <div class="abc">
-       <svg version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
-                    x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20" style="overflow:scroll;enable-background:new 0 0 20 20;"
-                    xml:space="preserve">
-                    <style type="text/css">
-                        .stedprofile0{fill:#FFFFFF;}
-                    </style>
-                    <defs></defs>
-                    <g>
-                        <g>
-                            <path class="stedprofile0" d="M2.9,2.9C4.9,1,7.2,0,10,0s5.1,1,7.1,2.9S20,7.2,20,10S19,15.1,17,17S12.7,20,10,20S4.9,19,2.9,17
-                                S0,12.7,0,10S1,4.9,2.9,2.9z M10,17.2c2.5,0,4.5-1.1,6-3.2c0-0.9-0.7-1.6-2.1-2.2s-2.7-0.9-3.9-0.9s-2.5,0.3-3.9,0.9S4,13.1,4,14
-                                C5.5,16.1,7.5,17.2,10,17.2z M12.1,3.9C11.5,3.3,10.8,3,10,3S8.5,3.3,7.9,3.9S7,5.2,7,6s0.3,1.5,0.9,2.1S9.2,9,10,9
-                                s1.5-0.3,2.1-0.9S13,6.8,13,6S12.7,4.5,12.1,3.9z"/>
-                        </g>
-                    </g>
-                </svg>
-  </div>
-  <div class="dropdown-contents" style="right: -36px;">
-   <!-- <a href="#/userManagement"  ng-click="ctrl.UserManagement()" style="cursor: pointer;">User Management</a> -->
-    <a ng-click="ctrl.logout()" style="cursor: pointer;">Log Out</a>
-   
-    
-  </div>
-</div>
-</div>
-<div class="black-header" style="height: 80px;border-bottom:1px solid #b3b3b3;background-image: url('assets/images/bg_page_header.png');">
-    <div class="row">
-        <div class="col-md-12">
-        <div class="col-md-4" style="padding-left: 2.2%;">
-        <div class="" style="margin-top: 3.1%;font-size: 22px;">
-            {{ctrl.projectName}} / Dashboards</div>
-            <div class="" style="font-size: 14px;"><a href="#/projects" style="color: #4482B2">All Projects</a></div>
-        </div>
-        <div class="col-md-6"></div>
-         <div class="col-md-2">
-            <input type="submit" class="btn btn-info project-map-add-btn" value="Add Dashboard"  ng-click="ctrl.createDashboard()"> 
-        </div></div>
-    </div>
-</div>
-    <!-- <div class="col-md-12">
-        <div class="col-md-6">
-            <form>
+         </svg>
+      </span>
+      <span class="edMenu-ListDash-Page project-map-ed">
+      <img src="assets/images/emu-5w.png" style="height: 30px;
+         width: 30px;">
+      </span>
+      <span class="edtext-ListdashPage project-map-edText">Engineering Metrics Unified</span>
+      <span class="edtext-ListdashPage" style="margin-top: 15px;margin-left: 68%;">{{ctrl.usernamepro}}</span>
+      <div class="dropdown-logout" style="float: right;
+         right: 3%;
+         top: 23%;">
+         <div class="abc">
+            <svg version="1.1"
+               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
+               x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20" style="overflow:scroll;enable-background:new 0 0 20 20;"
+               xml:space="preserve">
+               <style type="text/css">
+                  .stedprofile0{fill:#FFFFFF;}
+               </style>
+               <defs></defs>
+               <g>
+                  <g>
+                     <path class="stedprofile0" d="M2.9,2.9C4.9,1,7.2,0,10,0s5.1,1,7.1,2.9S20,7.2,20,10S19,15.1,17,17S12.7,20,10,20S4.9,19,2.9,17
+                        S0,12.7,0,10S1,4.9,2.9,2.9z M10,17.2c2.5,0,4.5-1.1,6-3.2c0-0.9-0.7-1.6-2.1-2.2s-2.7-0.9-3.9-0.9s-2.5,0.3-3.9,0.9S4,13.1,4,14
+                        C5.5,16.1,7.5,17.2,10,17.2z M12.1,3.9C11.5,3.3,10.8,3,10,3S8.5,3.3,7.9,3.9S7,5.2,7,6s0.3,1.5,0.9,2.1S9.2,9,10,9
+                        s1.5-0.3,2.1-0.9S13,6.8,13,6S12.7,4.5,12.1,3.9z"/>
+                  </g>
+               </g>
+            </svg>
+         </div>
+         <div class="dropdown-contents" style="right: -36px;">
+            <!-- <a href="#/userManagement"  ng-click="ctrl.UserManagement()" style="cursor: pointer;">User Management</a> -->
+            <a ng-click="ctrl.logout()" style="cursor: pointer;">Log Out</a>
+         </div>
+      </div>
+   </div>
+   <div class="black-header" style="height: 80px;border-bottom:1px solid #b3b3b3;background-image: url('assets/images/bg_page_header.png');">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="col-md-4" style="padding-left: 2.2%;">
+               <div class="" style="margin-top: 3.1%;font-size: 22px;">
+                  {{ctrl.projectName}} / Dashboards
+               </div>
+               <div class="" style="font-size: 14px;"><a href="#/projects" style="color: #4482B2">All Projects</a></div>
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-2" ng-if="ctrl.createDashboards">
+               <input type="submit" class="btn btn-info project-map-add-btn" value="Add Dashboard"  ng-click="ctrl.createDashboard()"> 
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-md-12">
+      <div class="col-md-2" style="padding-top: 2.2%;padding-left: 1.3%">
+         <div class="" style="font-size:15px;padding-left: 0.5%;" ng-show="mydashboards.length">Choose a Dashboard<span class="label label-default"></span></div>
+      </div>
+      <div class="col-md-5"></div>
+      <div class="col-md-2" style="margin-top: 1.5%;padding-right: 0px;">
+         <select class="form-control" id="sel1" style="border-bottom-right-radius:0px;border-top-right-radius:0px;">
+            <option>Search By</option>
+            <option>Project ID</option>
+            <option>Project Name</option>
+            <option>BU</option>
+         </select>
+      </div>
+      <div class="col-md-3" style="padding-left: 0px;">
+         <form>
             <div class="form-group">
-                <label for="input-md"></label>
-                <input class="form-control input-md project-map-search-bar" id="filter" type="text" placeholder="Search Dashboard" ng-model="ctrl.search">
+               <label for="input-md"></label>
+               <input class="form-control input-md project-map-search-bar" id="filter" type="text" placeholder="Search Dashboard" ng-model="ctrl.search">
             </div>
-            <form>
-        </div>
-        <div class="col-md-3"></div>
-        <div class="col-md-1" style="margin-top: 1.5%;">Filter By:</div>
-        <div class="col-md-2" style="margin-top: 1%;">
-            <select class="form-control" id="sel1">
-                <option>All Projects</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-            </select>
-        </div>
-    </div> -->
-    <div class="col-md-12">
-       
-        <div class="col-md-2" style="padding-top: 2.2%;padding-left: 1.3%">
-             <div class="" style="font-size:15px;padding-left: 0.5%;" ng-show="mydashboards.length">Choose a Dashboard<span class="label label-default"></span></div> 
-        </div>
-        <div class="col-md-5"></div>
-        
-        <div class="col-md-2" style="margin-top: 1.5%;padding-right: 0px;">
-             <select class="form-control" id="sel1" style="border-bottom-right-radius:0px;border-top-right-radius:0px;">
-        <option>Search By</option>
-        <option>Project ID</option>
-        <option>Project Name</option>
-        <option>BU</option>
-      </select>
-        </div>
-        <div class="col-md-3" style="padding-left: 0px;">
-            <form>
-                <div class="form-group">
-                    <label for="input-md"></label>
-                    <input class="form-control input-md project-map-search-bar" id="filter" type="text" placeholder="Search Dashboard" ng-model="ctrl.search">
-                </div>
-            </form>
-        </div>
-
-       
-    </div>
-    <div class="widget-modal" style="padding: 15px;">
-        <!-- <div class="widget-modal-heading">
-            Select Your Dashboard
-            </div> -->
-        <div class="widget-modal-body">
-            <!-- <div class="text-center">
-                <div class="btn-group dashboard-type-list" role="group" aria-label="Basic example">
-                    <button type="button"
-                            class="btn btn-secondary"
-                            ng-class="{'btn-info': ctrl.dashboardType == undefined}"
-                            ng-click="ctrl.setType()">All dashboards</button>
-                
-                    <button type="button"
-                            class="btn btn-secondary"
-                            ng-repeat="item in ctrl.dashboardTypes"
-                            ng-class="{'btn-info': ctrl.dashboardType == item.id}"
-                            ng-click="ctrl.setType(item.id)">
-                        <span class="fa {{item.icon}}" ng-if="item.icon"></span>
-                
-                        {{item.name}} dashboards
-                    </button>
-                </div>
-                </div> -->
-            <!--  <div class="gap">
-                <input type="search" id="filter" class="form-control text-center" ng-model="ctrl.search" placeholder="Search Dashboard" style="border-radius:0px;height:40px;"
-                />
-                </div> -->
-            <div class="row gap">
-                <!-- <div class="col-sm-4 col-sm-push-8 text-center">
-                    <div class="create-dashboard-button btn btn-default btn-wide-2x" ng-click="ctrl.createDashboard()" style="background:#1B97D3">
-                        <span class="fa fa-stack fa-lg">
-                            <span class="fa-circle-thin fa-stack-2x"></span>
-                        <span class="fa-plus fa-stack-1x"></span>
-                        </span>
-                        <br/> Create a new
-                        <br/>dashboard
-                    </div>
-                    </div> -->
-                <div class="">
-                   
-                    <div class="col-md-12">
-                    
-                        <div class="text-center" ng-hide="ctrl.mydash">Loading Your Dashboards...</div>
-                        <div class="text-center" ng-show="ctrl.mydash && !mydashboards.length">
-                            No Dashboards available for this Project
+         </form>
+      </div>
+   </div>
+   <div class="widget-modal" style="padding: 15px;">
+      <div class="widget-modal-body">
+         <div class="row gap">
+            <div class="">
+               <div class="col-md-12">
+                  <div class="text-center" ng-hide="ctrl.mydash">Loading Your Dashboards...</div>
+                  <div class="text-center" ng-show="ctrl.mydash && !mydashboards.length">
+                     No Dashboards available for this Project
+                  </div>
+                  <div class="col-md-3" ng-repeat="myitem in mydashboards = (ctrl.mydash | filter:ctrl.filterDashboards | orderBy: 'name')" style="padding-top: 2%;">
+                     <div class="col-md-12" style="background: #F9F9F9;border-top:2px solid #1766A4;box-shadow: 0px 0px 3px #888888" >
+                        <div class="col-md-12" style="padding: 15px;">
+                           <a class="btn-block clickable" ng-click="ctrl.open(myitem.id)" style="color: #568FBC;
+                              font-size: 20px;">
+                           <span class="fa fa-lg left-icon" ng-class="{'fa-cubes' : myitem.isProduct}"></span> {{ myitem.name }}
+                           </a>
                         </div>
-                        <div class="col-md-3" ng-repeat="myitem in mydashboards = (ctrl.mydash | filter:ctrl.filterDashboards | orderBy: 'name')" style="padding-top: 2%;">
-                            <!--  <span class="">
-                                <a href ng-click="ctrl.renameDashboard(myitem)" style="outline:none;">
-                                
-                                 <img src="assets/images/editNew.png " class="ed-image-props edit-delete-btn"   title="Edit">
-                                  
-                                </a>
-                                <a href ng-click="ctrl.deleteDashboard(myitem)">
-                                <img src="assets/images/deleteNew.png " class="ed-image-props edit-delete-btn"   title="Delete">
-                                
-                                </a>
-                                </span>
-                                <a class="btn-block clickable" ng-click="ctrl.open(myitem.id)" style="color:#737373;">
-                                 <span class="fa fa-lg left-icon" ng-class="{'fa-cubes' : myitem.isProduct}"></span> {{ myitem.name }}
-                                </a> -->
-                            <div class="col-md-12" style="background: #F9F9F9;border-top:2px solid #1766A4;box-shadow: 0px 0px 3px #888888" >
-                                <div class="col-md-12" style="padding: 15px;">
-                                    <a class="btn-block clickable" ng-click="ctrl.open(myitem.id)" style="color: #568FBC;
-                                        font-size: 20px;">
-                                    <span class="fa fa-lg left-icon" ng-class="{'fa-cubes' : myitem.isProduct}"></span> {{ myitem.name }}
-                                    </a>
-                                </div>
-                                <div class="col-md-12" style="padding-left: 20px;">Description to go here</div>
-                                <div class="col-md-12" style="padding-left: 15px;padding-top: 15px;">
-                                    <div class="col-md-6" style="padding-left: 5px">Created On:</div>
-                                    <div class="col-md-6">Created By:</div>
-                                </div>
-                                <div class="col-md-12" style="padding-left: 15px;font-weight: 600;">
-                                    <div class="col-md-6" style="padding-left: 5px">12-2-2017</div>
-                                    <div class="col-md-6">xyz</div>
-                                </div>
-                                <div class="col-md-12" style="padding-top: 15px;padding-left: 17px;padding-bottom: 15px;">
-                                 <a href ng-click="ctrl.renameDashboard(myitem)" style="outline:none;">
-                                    <img src="assets/images/icon_edit.png " class="ed-image-props edit-delete-btn"   title="Edit">
-                                    </a>
-                                    <a href ng-click="ctrl.deleteDashboardModel(myitem)">
-                                    <img src="assets/images/icon_delete.png " class="ed-image-props edit-delete-btn"   title="Delete">
-                                    </a> 
-                                </div>
-                            </div>
+                        <div class="col-md-12" style="padding-left: 20px;">Description to go here</div>
+                        <div class="col-md-12" style="padding-left: 15px;padding-top: 15px;">
+                           <div class="col-md-6" style="padding-left: 5px">Created On:</div>
+                           <div class="col-md-6">Created By:</div>
                         </div>
-                    </div>
-                    <!--  <div class="gap" style="">
-                        <div class="text-2x">All Dashboards</span>
+                        <div class="col-md-12" style="padding-left: 15px;font-weight: 600;">
+                           <div class="col-md-6" style="padding-left: 5px">12-2-2017</div>
+                           <div class="col-md-6">xyz</div>
                         </div>
-                        <div class="text-center" ng-hide="ctrl.dashboards">Loading Dashboards...</div>
-                        <ul class="list-animate list-group text-left">
-                            <li class="list-group-item clickable" ng-click="ctrl.open(item.id)" ng-repeat="item in filteredDashboards = (ctrl.dashboards | filter: ctrl.filterDashboards | orderBy:'name')" style="background: white;
-                        margin-top: 8px;
-                        margin-left: 0px;
-                        margin-right: 0px;
-                        box-shadow: 0px 0px 2px #888888;border-radius: 0px;border-left:3px solid #0F7DB9;">
-                                <span class="fa fa-lg left-icon" ng-class="{'fa-cubes' : item.isProduct}"></span>
-                                <span class="fa fa-angle-right list-group-item-right"></span>
-                                </span>
-                                {{item.name}}
-                            </li>
-                        </ul>
-                        <div class="text-center" ng-show="ctrl.dashboards && !filteredDashboards.length">
-                            No results
+                        <div class="col-md-12" style="padding-top: 15px;padding-left: 17px;padding-bottom: 15px;">
+                           <a href ng-click="ctrl.renameDashboard(myitem)" style="outline:none;" ng-if="ctrl.editDashboard">
+                           <img src="assets/images/icon_edit.png " class="ed-image-props edit-delete-btn"   title="Edit">
+                           </a>
+                           <a href ng-click="ctrl.deleteDashboardModel(myitem)" style="outline:none;" ng-if="ctrl.deleteDashboards">
+                           <img src="assets/images/icon_delete.png " class="ed-image-props edit-delete-btn"   title="Delete">
+                           </a> 
                         </div>
-                        </div> -->
-                </div>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
-    </div>
+         </div>
+      </div>
+   </div>
 </div>

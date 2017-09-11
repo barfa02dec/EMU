@@ -62,8 +62,8 @@
             <!--  <div class="" style="font-size: 14px;">Choose a Project</div> -->
          </div>
          <div class="col-md-8"></div>
-         <div class="col-md-2" ng-init="my = {Variable: 'ADD_PROJECT'};inner = {innerVariable: 'ADD_PROJECT'}" >
-            <div ng-show="my.Variable.indexOf('DELETE_PROJECT') !== -1 && inner.innerVariable.includes(pm.usernamepro)">
+         <div class="col-md-2" >
+            <div ng-if="pm.createProjectsflag">
                <input type="submit"  class="btn btn-info project-map-add-btn" value="Add Project"  ng-click = "pm.createDashboard()" >
             </div>
          </div>
@@ -137,26 +137,23 @@
             <!--  <td><img src="assets/images/status_amber.png" style="height: 20px;
                width: 20px;">Near Critical</td> -->
             <td>
-               <span class="" ng-repeat="innerItem in proj.usersGroup">
-               <span class="" ng-repeat="childItem in innerItem.userRoles">
-               <span class="" ng-show="!proj.editorEnabled && childItem.permissions.indexOf('ADD_USER') !== -1 && innerItem.user.includes(pm.usernamepro)">
+              
+               <span class="" ng-if="pm.addusers">
                <img src="assets/images/icon_add_user.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.shareProjectPopUp(proj)" title="Add User">
                </span>
-               </span></span>
-               <span class="" ng-repeat="innerItem in proj.usersGroup">
-               <span class="" ng-repeat="childItem in innerItem.userRoles">
-               <span class="" ng-show="!proj.editorEnabled && childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)">
+               
+              
+               <span class="" ng-if="pm.editProjectflag">
                <img src="assets/images/icon_edit.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
-               </span></span></span>
+               </span>
                <span ng-click="pm.editproject(proj)" ng-show="proj.editorEnabled">
                <img src="assets/images/savNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  title="Save">
                </span> 
-               <span class="" ng-repeat="innerItem in proj.usersGroup" ng-init="inner.innerVariable=innerItem.user">
-               <span class="" ng-repeat="childItem in innerItem.userRoles" ng-init="my.Variable=childItem.permissions">
-               <span ng-show="childItem.permissions.indexOf('DELETE_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)">
+              
+               <span ng-if="pm.deleteProjectflag">
                <img src="assets/images/icon_delete.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="pm.deleteProjectModel(proj)" title="Delete" > 
                </span>
-               </span>  </span> 
+              
             </td>
          </tr>
       </tbody>

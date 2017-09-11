@@ -5,9 +5,9 @@
         .module(HygieiaConfig.module)
         .controller('projectMapController', projectMapController);
 
-    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http', '$route', '$cookies', '$timeout', '$cookieStore', '$rootScope','dashboardData'];
+    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http', '$route', '$cookies', '$timeout', '$cookieStore', '$rootScope', 'dashboardData'];
 
-    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore, $rootScope,dashboardData) {
+    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore, $rootScope, dashboardData) {
         var ctrl = this;
         ctrl.usernamepro = $cookies.get('username');
         ctrl.showAddPopUpBox = false;
@@ -24,7 +24,7 @@
             "program": ctrl.program
         }
 
-  
+
         //$scope.example1model = []; $scope.example1data = [ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"} ]
         var apiHost = 'http://localhost:3000';
         var qahost = 'http://10.20.1.183:3000';
@@ -35,6 +35,27 @@
         $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
             .then(function(response) {
                 ctrl.getAllProjects = response.data;
+
+                for (var i = 0; i < ctrl.getAllProjects.length; i++) {
+                    for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
+                        for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
+                            ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
+                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("EDIT_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
+                                ctrl.editProjectflag = true;
+                            }
+
+                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("DELETE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
+                                ctrl.deleteProjectflag = true;
+                            }
+                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
+                                ctrl.createProjectsflag = true;
+                            }
+                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("ADD_USER") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
+                                ctrl.addusers = true;
+                            }
+                        }
+                    }
+                }
             });
 
         ctrl.numberOfPages = function() {
@@ -48,7 +69,7 @@
             };
         });
 
-      //open create Project Modal
+        //open create Project Modal
         ctrl.createDashboard = function() {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/createProject.html',
@@ -78,7 +99,7 @@
         }
 
         //Add User functionality
-        function shareProjectController($uibModalInstance, proid, $route, $scope,id) {
+        function shareProjectController($uibModalInstance, proid, $route, $scope, id) {
             var sp = this;
             sp.selected = '';
             sp.projectId = proid;
@@ -91,18 +112,18 @@
                 });
 
             //Fetch all dashboards
-             var mydashboardRouteProMap = "/api/dashboard/mydashboard"; 
-             $http.get(mydashboardRouteProMap + "?username=" + sp.usernameproject + "&projectId=" + sp.id)
+            var mydashboardRouteProMap = "/api/dashboard/mydashboard";
+            $http.get(mydashboardRouteProMap + "?username=" + sp.usernameproject + "&projectId=" + sp.id)
                 .then(function(response) {
                     response.data.selectedItemsDashboard = [];
                     sp.getdashboards = response.data;
                 });
 
-           /* $http.get("/api/dashboard/projectdashboard?projectId=" + sp.id)
-                .then(function(response) {
-                    response.data.selectedItemsDashboard = [];
-                    sp.getdashboards = response.data;
-                });*/
+            /* $http.get("/api/dashboard/projectdashboard?projectId=" + sp.id)
+                 .then(function(response) {
+                     response.data.selectedItemsDashboard = [];
+                     sp.getdashboards = response.data;
+                 });*/
 
             //Fetch all roles that is displayed in dual list
             $http.get("/api/allActiveEngineeringDashboardUserRoles")
@@ -120,24 +141,23 @@
                     "userRoles": sp.getRolesKey.selectedItems,
                     "dashboardsToAssign": sp.getdashboards.selectedItemsDashboard
                 }
-                if((sp.getdashboards.selectedItemsDashboard.length !=0) && (sp.getRolesKey.selectedItems !=0)){
-                $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
-                    $uibModalInstance.dismiss("cancel");
-                    $route.reload();
+                if ((sp.getdashboards.selectedItemsDashboard.length != 0) && (sp.getRolesKey.selectedItems != 0)) {
+                    $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
+                        $uibModalInstance.dismiss("cancel");
+                        $route.reload();
+                        $uibModal.open({
+                            templateUrl: 'app/dashboard/views/ConfirmationModals/adduserConfirm.html',
+                            controller: 'projectMapController',
+                            controllerAs: 'pm'
+                        });
+                    })
+                } else {
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/adduserConfirm.html',
-                        controller: 'projectMapController',
-                        controllerAs: 'pm'
-                    });
-                })
-            }
-            else{
-                $uibModal.open({
                         templateUrl: 'app/dashboard/views/ConfirmationModals/adduserrequired.html',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
-            }
+                }
             };
 
             //Adding Role to User Dual List Functionality
@@ -299,11 +319,11 @@
 
         //Show List of Dashboards Page for that particular project
         $scope.showDahboardPage = function(ProId, ProName) {
-            dashboardData.mydashboard(ProId,ctrl.usernamepro).then(function(){
+            dashboardData.mydashboard(ProId, ctrl.usernamepro).then(function() {
 
             });
 
-          
+
             $location.path('/site/');
             $cookies.put('ProId', ProId);
             $cookies.put('ProName', ProName);
