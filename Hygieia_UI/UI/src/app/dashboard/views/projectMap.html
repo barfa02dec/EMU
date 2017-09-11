@@ -143,7 +143,7 @@
                </span>
                
               
-               <span class="" ng-if="pm.editProjectflag">
+               <span class="" ng-if="pm.editProjectflag" ng-show="!proj.editorEnabled">
                <img src="assets/images/icon_edit.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
                </span>
                <span ng-click="pm.editproject(proj)" ng-show="proj.editorEnabled">

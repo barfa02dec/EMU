@@ -139,8 +139,6 @@
                             if (($scope.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CONFIGURE_WIDGET") > -1) && ($scope.vvv == $scope.usernamepro)) {
                                 $scope.editProjectflag = true;
                             }
-
-                            
                         }
                     }
                 }
