@@ -4,19 +4,14 @@
         <div class="kanban-widget-heading" ng-if="header" ng-hide=" {{(title == 'Monitor')}}" style="">
         <span style="font-size:20px;font-weight: 300;">
             <span ng-show=" {{(title == 'Feature')}}">{{title}}</span>
-            <span ng-show=" {{(title == 'Build')}}">{{title}}</span>
+            <span ng-show=" {{(title == 'Build')}}">{{title}} <span style="color:#d6d6d6">|</span></span>
             <span ng-show=" {{(title == 'Code Repo')}}">{{title}}</span>
-            <span ng-show=" {{(title == 'Quality')}}">Code {{title}}</span></span>
-
-
-
-
-            <span style="color: #d6d6d6" ng-show="{{(title == 'Build')}}"> | </span>
-            <span ng-show=" {{(title == 'Build')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
+            <span ng-show=" {{(title == 'Quality')}}">Code {{title}} <span style="color:#d6d6d6">|</span></span></span>
+        <span ng-show=" {{(title == 'Build')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
                   <!--   <select ng-model="selectedName" ng-options="selectedName.description for selectedName in collectorDetails" ng-change="check(selectedName)" style="color: #000;">
 
                     </select> -->
-                     <select ng-model="selectedName" ng-change="check(selectedName)" style="color: #000;background: #efefef;
+    <select ng-model="selectedName" ng-change="check(selectedName)" style="color: #000;background: #efefef;
     border: none;color: #4482B2">
                          <option ng-repeat="eachSelectedName in collectorDetails" value="{{eachSelectedName.id}}">{{eachSelectedName.description}}</option>
                         </select>
