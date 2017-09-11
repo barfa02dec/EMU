@@ -118,6 +118,7 @@
             $scope.init = init;
             $scope.checkPermission = checkPermission;
             $scope.wid = $cookies.get('widId');
+            $scope.usernamepro = $cookies.get('username');
 
             function checkPermission() {
                 $scope.displayViewAll = true;
@@ -125,6 +126,25 @@
 
 
             }
+
+            //Get All Projects
+        $http.get("/api/getProjectsByUser/?username=" + $scope.usernamepro)
+            .then(function(response) {
+                $scope.getAllProjects = response.data;
+
+                for (var i = 0; i < $scope.getAllProjects.length; i++) {
+                    for (var j = 0; j < $scope.getAllProjects[i].usersGroup.length; j++) {
+                        for (var k = 0; k < $scope.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
+                            $scope.vvv = $scope.getAllProjects[i].usersGroup[j].user;
+                            if (($scope.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CONFIGURE_WIDGET") > -1) && ($scope.vvv == $scope.usernamepro)) {
+                                $scope.editProjectflag = true;
+                            }
+
+                            
+                        }
+                    }
+                }
+            });
 
             $scope.clid = $cookies.get('mycollector');
             dashboardData.getCollectorItem($scope.clid).then(function(data) {

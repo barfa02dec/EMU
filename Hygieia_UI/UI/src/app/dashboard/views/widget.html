@@ -72,7 +72,7 @@
             </span>
             </div>
             <div class="col-md-4"></div>
-            <div class="col-md-2" style="color: #000;text-shadow: none;">
+            <div class="col-md-2" style="color: #000;text-shadow: none;" ng-if="editProjectflag">
                 <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()" ng-show=" {{(title == 'Feature')}}">
                      <img src="assets/images/icon_settings.png">
                 </span>
