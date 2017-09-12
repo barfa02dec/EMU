@@ -86,56 +86,16 @@
                                 ctrl.editDashboard = true;
                             }
 
-                            /*if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("DELETE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
-                               ctrl.deleteDashboard = true;
+                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("DELETE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                               ctrl.deleteDashboards = true;
                             }
                             if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
-                               ctrl.createDashboard = true;
-                            }*/
-                        }
-                    }
-                }
-
-                for (var i = 0; i < ctrl.getAllProjects.length; i++) {
-                    for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
-                        for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
-                            ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
-                            /*if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("EDIT_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
-                               ctrl.editDashboard = true;
-                            }*/
-
-                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("DELETE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
-                                ctrl.deleteDashboards = true;
-
+                               ctrl.createDashboards = true;
                             }
-
-                            /*if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
-                               ctrl.createDashboard = true;
-                            }*/
                         }
                     }
                 }
 
-
-                for (var i = 0; i < ctrl.getAllProjects.length; i++) {
-                    for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
-                        for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
-                            ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
-                            /*if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("EDIT_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
-                               ctrl.editDashboard = true;
-                            }*/
-
-                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
-                                ctrl.createDashboards = true;
-
-                            }
-
-                            /*if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
-                               ctrl.createDashboard = true;
-                            }*/
-                        }
-                    }
-                }
 
 
             });

@@ -40,6 +40,7 @@
                     for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
                         for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
                             ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
+
                             if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("EDIT_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
                                 ctrl.editProjectflag = true;
                             }
@@ -141,7 +142,7 @@
                     "userRoles": sp.getRolesKey.selectedItems,
                     "dashboardsToAssign": sp.getdashboards.selectedItemsDashboard
                 }
-                if ((sp.getdashboards.selectedItemsDashboard.length != 0) && (sp.getRolesKey.selectedItems != 0)) {
+                if (sp.getRolesKey.selectedItems != 0) {
                     $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
                         $uibModalInstance.dismiss("cancel");
                         $route.reload();
