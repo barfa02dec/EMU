@@ -121,7 +121,7 @@
                     "userRoles": sp.getRolesKey.selectedItems,
                     "dashboardsToAssign": sp.getdashboards.selectedItemsDashboard
                 }
-                if((sp.getdashboards.selectedItemsDashboard.length !=0) && (sp.getRolesKey.selectedItems !=0)){
+                if(sp.getRolesKey.selectedItems !=0){
                 $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
