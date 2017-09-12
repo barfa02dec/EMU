@@ -107,13 +107,13 @@
 
         <div class="widget" style="
     color: black;text-shadow:none;margin-bottom: 10px;">
-            <div class="widget-body" style="min-height: 260px;">
+            <div class="widget-body" style="min-height: 214px;">
 
 
                 <div class="col-md-12" style="margin-bottom: 2.6%;font-size: 14px;
     font-weight: 600;">VELOCITY CHART</div>
                 <div class="col-md-12">
-                <c3-chart id="sprintdatasFeature" config="sprintdatasFeature" style="height: 225px;font-size: 11px;background: #f2f2f2;"></c3-chart>
+                <c3-chart id="sprintdatasFeature" config="sprintdatasFeature" class="graph-bg-gradient" style="height: 180px;font-size: 11px;"></c3-chart>
                 </div>
             </div>
 
@@ -144,7 +144,7 @@
     color: black;text-shadow:none;border-top:1px solid #d6d6d6;margin-bottom: 5px;">
             <div class="widget-body">
                 <div class="col-xs-9.5 text-standard-sm dash-overflow" style="color: #000;font-size: 14px;
-    font-weight: 600;padding-top: 10px;">
+    font-weight: 600;padding-top: 20px;">
                   OPEN DEFECTS BY PRIORITY
                 </div>
                 <!--<div class="col-xs-9.5 text-standard-sm dash-overflow" style="color: #8c8c8c">
@@ -164,38 +164,39 @@
                 </div>
             </div> -->
 
-            <div class="widget-body" fit-text=".build-summary-count > span" fit-text-max="40">
+            <div class="widget-body" fit-text=".build-summary-count > span" fit-text-max="40" style="padding-top: 10%;
+    padding-bottom: 9%;">
                 <div class="row">
                     <div class="col-xs-2 custom-width-col" style="padding-top: 3px;text-align: -webkit-center;">
-                        <div class="opendefects-oval-box" style="border-bottom: 10px solid #b30000">
+                        <div class="opendefects-oval-box" style="border-bottom: 10px solid rgb(172,8,4)">
                             <span ng-if="ctrl.critcissue" style="">{{ctrl.critcissue}}</span>
                             <span ng-if="!ctrl.critcissue" style="">0</span>
                         </div>
                         <div class="story-summary-type" style="">Highest</div>
                     </div>
                     <div class="col-xs-2 custom-width-col" style="text-align: -webkit-center;">
-                        <div class="opendefects-oval-box" style="border-bottom: 10px solid #ff3333">
+                        <div class="opendefects-oval-box" style="border-bottom: 10px solid rgb(222,29,24)">
                             <span ng-if="ctrl.majorIssue">{{ctrl.majorIssue}}</span>
                             <span ng-if="!ctrl.majorIssue">0</span>
                         </div>
                         <div class="story-summary-type">High</div>
                     </div>
                     <div class="col-xs-2 custom-width-col" style="text-align: -webkit-center;">
-                        <div class="opendefects-oval-box" style="border-bottom: 10px solid #737373">
+                        <div class="opendefects-oval-box" style="border-bottom: 10px solid rgb(123,123,123)">
                             <span ng-if="ctrl.mediumIssue">{{ctrl.mediumIssue}}</span>
                             <span ng-if="!ctrl.mediumIssue">0</span>
                         </div>
                         <div class="story-summary-type">Medium</div>
                     </div>
                     <div class="col-xs-2 custom-width-col" style="text-align: -webkit-center;">
-                        <div class="opendefects-oval-box" style="border-bottom: 10px solid #00e68a">
+                        <div class="opendefects-oval-box" style="border-bottom: 10px solid rgb(105,203,143)">
                             <span ng-if="ctrl.lowIssue">{{ctrl.lowIssue}}</span>
                             <span ng-if="!ctrl.lowIssue">0</span>
                         </div>
                         <div class="story-summary-type">Low</div>
                     </div>
                     <div class="col-xs-2 custom-width-col" style="text-align: -webkit-center;">
-                        <div class="opendefects-oval-box" style="border-bottom: 10px solid #006600">
+                        <div class="opendefects-oval-box" style="border-bottom: 10px solid rgb(5,169,68)">
                             <span ng-if="ctrl.lowestissue">{{ctrl.lowestissue}}</span>
                             <span ng-if="!ctrl.lowestissue">0</span>
                         </div>

@@ -53,7 +53,7 @@
                 <div class="widget-heading">
                     <span class="codecoverage-widgetHeader" style="font-size: 13px;">Code coverage</span>
                 </div>
-                <div class="widget-body" style="background: #f2f2f2;">
+                <div class="widget-body graph-bg-gradient">
                     <div guage-container>
                         <div class="ct-wrapper clearfix" ng-class="{'clickable': !!caWidget.lineCoverage.statusMessage}" popover-html-unsafe="{{caWidget.lineCoverage.statusMessage}}" popover-trigger="focus" popover-placement="right" tabindex="0">
                             <chartist class="ct-chart ct-square db-chart-primary ct-chart-{{ caWidget.lineCoverage.status || 'Ok'}}" chartist-data="caWidget.unitTestCoverageData" chartist-chart-options="caWidget.pieOptions" chartist-chart-type="Pie"></chartist>
