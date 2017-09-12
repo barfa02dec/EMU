@@ -258,6 +258,7 @@
                      <span ng-if="$index == 0" class="styling-values col-md-4"></span>
                      <span ng-if="$index == 1" class="label-props col-md-2" style="padding-top: 8px;">Blocks</span>
                      <span ng-if="$index == 1" class="col-md-4 widget-value-pro-small" style="padding-left: 32px;padding-top: 5px;">{{componentdu.formattedValue}}</span>
+                     <span ng-if="$index == 1" class="col-md-4 widget-value-pro-small"  ng-show="!componentdu.formattedValue" style="padding-left: 32px;padding-top: 5px;">0</span>
                   </div>
                </div>
                <div class="row " style="margin-left:0%;">
@@ -286,8 +287,10 @@
                      <div class="" ng-repeat="componentcvr in componentcvr.coverageNewArray track by $index">
                         <span ng-if="$index == 0" class="styling-values col-md-5 round-props" ng-show="componentcvr.formattedValue" style="margin-top: 25%;">{{componentcvr.formattedValue}}
                         <span ng-if="$index == 0" class="col-md-3 label-props" style="padding-top: 56%;">Coverage</span></span>
-                        <span ng-if="$index == 0" class="styling-values col-md-5" ng-show="!componentcvr.formattedValue">0
-                        <span ng-if="$index == 0" class="col-md-3 label-props" >Coverage</span></span>
+
+
+                        <span ng-if="$index == 0" class="styling-values col-md-5 round-props" ng-show="!componentcvr.formattedValue" style="margin-top: 25%;">0
+                        <span ng-if="$index == 0" class="col-md-3 label-props" style="padding-top: 108%;">Coverage</span></span>
                      </div>
                   </div>
                </div>
@@ -355,18 +358,19 @@
                      <span ng-if="$index == 0" class="styling-values col-md-3 "></span>
                      <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 30px;padding-top: 8px">Function</span>
                      <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" ng-show="componentcos.formattedValue" style="padding-top: 5px">{{componentcos.formattedValue}}</span>
-                     <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" ng-show="!componentcos.formattedValue">0</span>
+                     <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" ng-show="!componentcos.formattedValue" style="padding-top: 5px">0</span>
                   </div>
                </div>
                <div class="row " style="margin-left:2%;">
                   <div class="" ng-repeat="componentcos in componentco.complexityNewArray track by $index">
                      <span ng-if="$index == 0" class="styling-values col-md-3 round-props" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
-                     <span ng-if="$index == 0" class="styling-values col-md-3" ng-show="!componentcos.formattedValue">0</span>
+                     <span ng-if="$index == 0" class="styling-values col-md-3 round-props" ng-show="!componentcos.formattedValue">0</span>
                      <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-left: 15% !important;
     padding-top: 6.8%;">File</span>
                      <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 6%;
     padding-left: 10% !important;" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
-                     <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 9px" ng-show="!componentcos.formattedValue">0</span>
+                     <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 6%;
+    padding-left: 10% !important;" ng-show="!componentcos.formattedValue">0</span>
                   </div>
                </div>
                <div class="row " style="margin-left:2%;">
@@ -401,10 +405,10 @@
                   <div class="row " style="margin-left:2%;">
                      <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
                         <span ng-if="$index == 0" class="styling-values col-md-4 round-props" ng-show="componentdoc.formattedValue" style="padding-left: 2px;">{{componentdoc.formattedValue}}</span>
-                        <span ng-if="$index == 0" class="styling-values col-md-4" ng-show="!componentdoc.formattedValue">0</span>
-                        <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-top: 11px;padding-left: 21%;">Undoc API</span>
+                        <span ng-if="$index == 0" class="styling-values col-md-4 round-props" ng-show="!componentdoc.formattedValue" style="padding-left: 2px;">0</span>
+                        <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-top: 11px;padding-left: 19%;">Undoc API</span>
                         <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 8px;padding-left: 25%;" ng-show="componentdoc.formattedValue">{{componentdoc.formattedValue}}</span>
-                        <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 8px;padding-left: 30px;" ng-show="!componentdoc.formattedValue">0</span>
+                        <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 8px;padding-left: 24%;" ng-show="!componentdoc.formattedValue">0</span>
                      </div>
                   </div>
                   <div class="row " style="margin-left:2%;">
@@ -426,9 +430,12 @@
                         <div class="" ng-repeat="componentsize in componentsize.sizeNewArray track by $index">
                            <span ng-if="$index == 0" class="styling-values col-md-5 round-props" ng-show="componentsize.formattedValue" style="
                               margin-left: 11%;">{{componentsize.formattedValue}}
-                           </span>  
-                           <div ng-if="$index == 0" class="col-md-3 label-props" style="padding-left: 34%;">Lines of code</div>
-                           <span ng-if="$index == 0" class="styling-values col-md-5" ng-show="!componentsize.formattedValue">0
+                           
+                           <span ng-if="$index == 0" class="col-md-3 label-props" style="padding-left: 26%;
+    padding-top: 53%;
+    font-weight: normal;">Lines of code</span></span>  
+                           <span ng-if="$index == 0" class="styling-values col-md-5 round-props" ng-show="!componentsize.formattedValue" style="
+                              margin-left: 11%;">0
                            <span ng-if="$index == 0" class="col-md-3 label-props" >Lines of code</span></span>
                         </div>
                      </div>
