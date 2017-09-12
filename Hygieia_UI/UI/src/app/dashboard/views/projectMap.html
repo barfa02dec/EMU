@@ -52,23 +52,24 @@
       </div>
    </div>
 </div>
-<div class="page-header-gradient" style="background-image: url('assets/images/bg_page_header.png');">
-   <div class="row">
-      <div class="col-md-12">
+<div class="page-header-gradient col-md-12" style="background-image: url('assets/images/bg_page_header.png');">
+  
+      <div class="">
          <div class="col-md-2 project-header-label">
             <div class="">
                Projects
             </div>
             <!--  <div class="" style="font-size: 14px;">Choose a Project</div> -->
          </div>
-         <div class="col-md-8"></div>
-         <div class="col-md-2" ng-init="my = {Variable: 'ADD_PROJECT'};inner = {innerVariable: 'ADD_PROJECT'}" >
+         <div class="col-md-9"></div>
+         <div class="col-md-1" ng-init="my = {Variable: 'ADD_PROJECT'};inner = {innerVariable: 'ADD_PROJECT'}" style="padding-left: 3px;
+    padding-top: 1%;">
             <div ng-show="my.Variable.indexOf('DELETE_PROJECT') !== -1 && inner.innerVariable.includes(pm.usernamepro)">
                <input type="submit"  class="btn btn-info project-map-add-btn" value="Add Project"  ng-click = "pm.createDashboard()" >
             </div>
          </div>
       </div>
-   </div>
+ 
 </div>
 <div class="content-goes">
    <div class="col-md-12">
