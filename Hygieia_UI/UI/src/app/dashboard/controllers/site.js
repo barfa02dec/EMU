@@ -73,7 +73,8 @@
 
             return matchesSearch;
         }
-
+        ctrl.projID = $cookies.get('ProId');
+        
         $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
             .then(function(response) {
                 ctrl.getAllProjects = response.data;
@@ -82,14 +83,15 @@
                     for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
                         for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
                             ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
-                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("EDIT_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
+                            ctrl.projectIDS = ctrl.getAllProjects[i].id;
+                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("EDIT_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro) && (ctrl.projectIDS == ctrl.projID)) {
                                 ctrl.editDashboard = true;
                             }
 
-                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("DELETE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("DELETE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro) && (ctrl.projectIDS == ctrl.projID)){
                                ctrl.deleteDashboards = true;
                             }
-                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro) && (ctrl.projectIDS == ctrl.projID)){
                                ctrl.createDashboards = true;
                             }
                         }

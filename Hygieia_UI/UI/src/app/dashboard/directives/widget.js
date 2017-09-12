@@ -128,6 +128,7 @@
             }
 
             //Get All Projects
+            $scope.projID = $cookies.get('ProId');
         $http.get("/api/getProjectsByUser/?username=" + $scope.usernamepro)
             .then(function(response) {
                 $scope.getAllProjects = response.data;
@@ -136,7 +137,8 @@
                     for (var j = 0; j < $scope.getAllProjects[i].usersGroup.length; j++) {
                         for (var k = 0; k < $scope.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
                             $scope.vvv = $scope.getAllProjects[i].usersGroup[j].user;
-                            if (($scope.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CONFIGURE_WIDGET") > -1) && ($scope.vvv == $scope.usernamepro)) {
+                            $scope.projectIDS = $scope.getAllProjects[i].id;
+                            if (($scope.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CONFIGURE_WIDGET") > -1) && ($scope.vvv == $scope.usernamepro) && ($scope.projectIDS == $scope.projID)) {
                                 $scope.editProjectflag = true;
                             }
                         }
