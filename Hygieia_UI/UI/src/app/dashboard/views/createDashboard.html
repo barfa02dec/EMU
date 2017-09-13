@@ -1,4 +1,4 @@
-<widget-modal widget-modal-title="Create a New Dashboard" style="background:#fff;" >
+<widget-modal widget-modal-title="Create a New Dashboard" class="border-prop-modals">
     <form name="cdf" class="form" ng-submit="ctrl.submit(cdf)" novalidate>
         <form-group input="dashboardType">
             <select name="dashboardType"
@@ -62,8 +62,9 @@
 
         <div class="button-row row text-center">
             
-                <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;" ng-click="$close()">Cancel</button>
-                <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-left: 20px;margin-top: 0px;">Create</button>
+              
+                <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Create</button>
+                  <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
         </div>
 
     </form>

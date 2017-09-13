@@ -213,6 +213,7 @@
 
       //Processing Jira-Sprint Data
       function sprintdataProcess(data){
+        ctrl.jirametricsdata  = data;
         var progress = ['Defect Closure'];
         var comittedStoryPoints = ['committed Story Points'];
         var completedStoryPoint = ['completed Story Points'];
@@ -345,7 +346,19 @@
                 },
                 color: {
                 pattern: ['#CCEBF5', '#B7DBC4']
-            }
+            },
+                    legend: {
+    position: 'inset',
+    inset: {
+        anchor: 'top-left',
+        x: 20,
+        y: -40,
+        step: 1
+    }
+},
+padding: {
+    top: 40
+}
   
             });
 
@@ -366,7 +379,19 @@
                 },
                 color: {
                 pattern: ['#ff4d4d']
-            }
+            },
+           legend: {
+    position: 'inset',
+    inset: {
+        anchor: 'top-left',
+        x: 20,
+        y: -40,
+        step: 1
+    }
+},
+padding: {
+    top: 40
+}
   
             });
 

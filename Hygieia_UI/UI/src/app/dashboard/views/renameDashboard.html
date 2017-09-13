@@ -1,4 +1,4 @@
-<widget-modal widget-modal-title="Rename Your Dashboard" style="background: #fff;">
+<widget-modal widget-modal-title="Rename Your Dashboard" class="border-prop-modals">
     <form name="cdf" class="form" ng-submit="ctrl.submit(cdf)" novalidate>
         <form-group input="dashboardTitle" errors="{required: 'New Dashboard name is required', minlength: 'Min length of 6 characters', maxlength: 'Max length of 50 characters', renameError: 'Error renaming dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
         	<input

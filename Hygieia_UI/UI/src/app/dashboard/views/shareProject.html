@@ -6,8 +6,8 @@
 <script src="assets/images/dualmultiselect.js"></script>
 <widget-modal widget-modal-title="ADD USER" class="modal-title-props">
    <form class="form-horizontal validation-message-align-adduser" name="cpr.createProModel" ng-submit="spc.shareProjects()" name="adduser" novalidate >
-      <label class="control-label createproj-label-props shareproject-labels-props adduser-autocomplete-props" for="pwd">Select User Name</label>
-      <form-group input="usernames" errors="{required: 'Add User is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+      <label class="control-label createproj-label-props shareproject-labels-props adduser-autocomplete-props" for="pwd">Select User Name<span style="color: red">*</span></label>
+      <form-group input="usernames">
          <input ng-model="spc.selected"  uib-typeahead="country for country in spc.getUserMaps | filter:$viewValue"
             type="text"
             name="usernames"
@@ -16,12 +16,12 @@
             maxlength="40"
             autocomplete="off"
             minlength="3"
-            required />
+             />
       </form-group>
       <div class="dualmultiselect">
          <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
-               <label class="shareproject-labels-props">All Roles</label>
+               <label class="shareproject-labels-props">Roles</label>
                <!--   <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.items, spc.demoOptions.selectedItems, -1)"> Select All </button>  -->
                <div class="pool">
                   <ul>
@@ -30,7 +30,7 @@
                </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
-               <label class="shareproject-labels-props">Selected Roles</label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
+               <label class="shareproject-labels-props">Selected Roles<span style="color: red">*</span></label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
                <div class="pool">
                   <ul>
                      <li ng-repeat="item in spc.getRolesKey.selectedItems | orderBy: spc.getRolesKey.orderProperty">
@@ -44,7 +44,7 @@
       <div class="dualmultiselect">
          <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
-               <label class="shareproject-labels-props">All Dashboards</label>
+               <label class="shareproject-labels-props">Dashboards</label>
                <div class="pool">
                   <ul>
                      <li ng-repeat="itemdashboard in spc.getdashboards | filter: spc.searchTerm | orderBy: spc.getdashboards.orderProperty"> <a href="" ng-click="spc.transfer(spc.getdashboards, spc.getdashboards.selectedItemsDashboard, spc.getdashboards.indexOf(itemdashboard))">{{itemdashboard.title}}&nbsp;&rArr; </a> </li>
@@ -52,7 +52,7 @@
                </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
-               <label class="shareproject-labels-props">Selected Dashboards</label>
+               <label class="shareproject-labels-props">Selected Dashboards<span style="color: red">*</span></label>
                <div class="pool">
                   <ul>
                      <li ng-repeat="itemdashboard in spc.getdashboards.selectedItemsDashboard | orderBy: spc.getdashboards.orderProperty">

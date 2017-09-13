@@ -10,6 +10,10 @@ svg[Attributes Style] {
     width: 310.719;
     height: 125;
 }
+.c3-legend-background{
+fill-opacity:0;
+}
+
 /*#storyVol{
   width: 80%;
   height: 200px;
@@ -144,15 +148,20 @@ svg[Attributes Style] {
          </div>
     </div>
 </div>
-<div class="col-md-12" >
+<div class="col-md-12" style="padding-top: 30px;font-size: 20px;padding-left: 20px;">Sprint</div>
+<div class="col-md-12" style="padding-left: 20px;padding-right: 20px">
 
 <div class="col-md-12 bg-color-opacity">
-<div class="col-md-12 header-properties sprint-head-bluebar">
+<div class="col-md-12 header-properties">
 
-<div>Sprint</div>
+<div class="sprint-box-val-head">
+<div class="col-md-6">ISSUES/DEFECTS</div>
+
+<div class="col-md-6">SPRINT LIST</div>
 </div>
-<div class="col-md-4 ">
-  <!-- <c3-chart id="storyVol" config="configBars" style="height: 200px;"></c3-chart>  -->
+</div>
+<!-- <div class="col-md-4 ">
+ 
   
    <div class="col-md-12" style="padding-top: 30px;">
       <div class="col-md-6">
@@ -180,9 +189,9 @@ svg[Attributes Style] {
          <div class="col-md-4 sprint-box-widget-response-val sprint-box-val-color-violet">{{jdv.completedStoryPointsprev}}</div>
        </div>
    </div>
-</div>
+</div> -->
 
-<div class="col-md-4 ">
+<!-- <div class="col-md-4 ">
 
    <div class="col-md-12" style="padding-top: 30px;">
       <div class="col-md-6">
@@ -213,20 +222,104 @@ svg[Attributes Style] {
          
        </div>
    </div>
-  <!-- <c3-chart id="chart" config="configBar" style="height: 200px;"></c3-chart> -->
-</div>
-<div class="col-md-4 " style="padding-top: 25px;">
+ 
+</div> -->
+<!-- <div class="col-md-4 " style="padding-top: 25px;">
  <span class="sprint-box-val-head">Defect Closure</span>
   <c3-chart id="defectClosure" config="defectClosure" class="sprint-graphs-prop"></c3-chart>
-</div>
+</div> -->
+<div class="col-md-6" style="padding-top: 10px;padding-left: 20px;">
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr style="font-weight:400;font-size:11px">
+    <td></td>
+      <td ng-repeat="sprintName in jdv.jirametricsdata" style="cursor: pointer;
+    max-width: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;">{{sprintName.name}}</td>
+     
+    </tr>
+  </thead>
+  <tbody style="font-weight:400;font-size:11px">
+    <tr>
+    <td>Completed Issue Count</td>
+      <td ng-repeat="sprintNames in jdv.jirametricsdata">{{sprintNames.sprintData.completedIssueCount}}</td>
 
-<div class="col-md-12 row-padding-widgets">
-  <div class="col-md-6 sprint-border-topprop" style="padding-top: 10px;">
-   <span class="sprint-box-val-head">Velocity Chart</span>
-  <c3-chart id="sprintdatas" config="sprintdatas"  class="sprint-graphs-prop"></c3-chart>
+    </tr>
+    <tr>
+    <td>Committed Issue Count</td>
+      <td ng-repeat="sprintNames in jdv.jirametricsdata">{{sprintNames.sprintData.committedIssueCount}}</td>
+    
+    </tr>
+
+    <tr>
+    <td>Issues Added</td>
+      <td ng-repeat="sprintNames in jdv.jirametricsdata">{{sprintNames.sprintData.burndown.issuesAdded.count}}</td>
+    
+    </tr>
+
+    <tr>
+    <td>Issues Removed</td>
+      <td ng-repeat="sprintNames in jdv.jirametricsdata">{{sprintNames.sprintData.burndown.issuesRemoved.count}}</td>
+    
+    </tr>
+     <tr>
+    <td>Defects Found</td>
+      <td ng-repeat="sprintNames in jdv.jirametricsdata">{{sprintNames.sprintData.defectsFound.total}}</td>
+    
+    </tr>
+     <tr>
+    <td>Defects Resolved</td>
+      <td ng-repeat="sprintNames in jdv.jirametricsdata">{{sprintNames.sprintData.defectsResolved.total}}</td>
+    
+    </tr>
+     <tr>
+    <td>Defects Unresolved</td>
+      <td ng-repeat="sprintNames in jdv.jirametricsdata">{{sprintNames.sprintData.defectsUnresolved.total}}</td>
+    
+    </tr>
+  </tbody>
+</table>
 </div>
-<div class="col-md-1"></div>
-<div class="col-md-5 sprint-list-parent"> 
+<div class="col-md-6 sprint-list-parent" style="padding-top: 10px;padding-left: 20px;padding-right: 20px;"> 
+ 
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr style="font-weight:400;font-size:11px">
+            <th>Sprint Id</th>
+             <th>Sprint Name</th>
+             <th>Sprint Status</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr style="font-size: 11px;" ng-repeat="sprintdata in jdv.spAllDetails">
+                 <td>{{sprintdata.sprintData.sprintId}}</td>
+               <td>{{sprintdata.sprintData.sprintName}}</td>
+                 <td>{{sprintdata.sprintData.state}}</td> 
+               
+               
+ </tr>
+
+  
+
+        </tbody>
+
+    </table>
+</div> 
+<div class="col-md-12 row-padding-widgets">
+<div class="col-md-12">
+  <div class="col-md-6 sprint-box-val-head">VELOCITY CHART</div>
+  <div class="col-md-6 sprint-box-val-head">DEFECT CLOSURE</div>
+</div>
+  <div class="col-md-6 sprint-border-topprop" style="padding-top: 10px;padding-bottom: 10px">
+   
+  <c3-chart id="sprintdatas" config="sprintdatas"  class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+</div>
+<div class="col-md-6" style="padding-top: 10px;padding-bottom: 10px">
+ 
+  <c3-chart id="defectClosure" config="defectClosure" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+</div>
+<!--  <div class="col-md-3 sprint-list-parent"> 
   <div class="col-md-12 sprint-box-val-head">Sprint List</div>
     <table class="table">
         <thead>
@@ -250,9 +343,9 @@ svg[Attributes Style] {
         </tbody>
 
     </table>
-</div>
-</div></div></div>
-<div class="col-md-12">
+</div> -->
+</div></div>
+<div class="col-md-12" style="padding-top: 2%;">
 <div class="col-md-12 row-padding-widgets bg-color-opacity">
 
 <div class="col-md-12 header-properties sprint-head-bluebar">
