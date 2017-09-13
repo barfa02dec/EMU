@@ -76,20 +76,20 @@
       <div class="col-md-2 layout-sepeartion-firstdiv">
          <div class="chooseproject-label">Choose a Project<span class="label label-default"></span></div>
       </div>
-      <div class="col-md-5"></div>
-      <div class="col-md-2 layout-sepeartion-seconddiv" >
+      <div class="col-md-7"></div>
+     <!--  <div class="col-md-2 layout-sepeartion-seconddiv" >
          <select class="form-control selectbox-props" id="sel1">
             <option>Search By</option>
             <option>Project ID</option>
             <option>Project Name</option>
             <option>BU</option>
          </select>
-      </div>
+      </div> -->
       <div class="col-md-3 layout-sepeartion-thirddiv">
          <form>
             <div class="form-group">
                <label for="input-md"></label>
-               <input class="form-control input-md project-map-search-bar" id="inputmd" type="text" placeholder="Enter Keywords" ng-model="pm.searchText" style="width: 100%">
+               <input class="form-control input-md project-map-search-bar" id="inputmd" type="text" placeholder="Search for Project" ng-model="pm.searchText" style="width: 100%;border-radius: 4px;">
             </div>
          </form>
       </div>
@@ -116,23 +116,23 @@
             pagination: curPage * pm.pageSize | limitTo: pm.pageSize">
             <td ng-click="showDahboardPage(proj.id,proj.projectName);" style="cursor: pointer;max-width: 96px;" class="project-map-list-data" ng-attr-title="{{proj.projectId}}">{{proj.projectId}}</td>
             <td ng-show="proj.editorEnabled">
-               <input type="" name="" ng-model="proj.projectName" class="set-width-input">
+               <input type="" name="" ng-model="proj.projectName" class="set-width-input edit-inputbox-props middle">
             </td>
             <td ng-show="!proj.editorEnabled" style="" class="project-map-list-data" ng-click="showDahboardPage(proj.id,proj.projectName);" ng-attr-title="{{proj.projectName}}">{{proj.projectName}}</td>
             <td ng-show="proj.editorEnabled">
-               <input type="" name="" ng-model="proj.client" class="set-width-input">
+               <input type="" name="" ng-model="proj.client" class="set-width-input edit-inputbox-props middle">
             </td>
             <td ng-show="!proj.editorEnabled" style="" class="project-map-list-data" ng-click="showDahboardPage(proj.id,proj.projectName);" ng-attr-title="{{proj.client}}">{{proj.client}}</td>
             <td ng-show="proj.editorEnabled">
-               <input type="" name="" ng-model="proj.projectOwner" class="set-width-input">
+               <input type="" name="" ng-model="proj.projectOwner" class="set-width-input edit-inputbox-props middle">
             </td>
             <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName);" ng-attr-title="{{proj.projectOwner}}">{{proj.projectOwner}}</td>
             <td ng-show="proj.editorEnabled">
-               <input type="" name="" ng-model="proj.businessUnit" class="set-width-input">
+               <input type="" name="" ng-model="proj.businessUnit" class="set-width-input edit-inputbox-props middle">
             </td>
             <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName);" ng-attr-title="{{proj.businessUnit}}">{{proj.businessUnit}}</td>
             <td ng-show="proj.editorEnabled">
-               <input type="" name="" ng-model="proj.program" class="set-width-input">
+               <input type="" name="" ng-model="proj.program" class="set-width-input edit-inputbox-props middle">
             </td>
             <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName);" ng-attr-title="{{proj.program}}">{{proj.program}}</td>
             <!--  <td><img src="assets/images/status_amber.png" style="height: 20px;
