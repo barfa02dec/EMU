@@ -571,7 +571,7 @@
                     }
                 },
                 color: {
-                pattern: ['#CCEBF5', '#B7DBC4']
+                pattern: ['#CCEBF5', '#79C793']
             }
   
             });

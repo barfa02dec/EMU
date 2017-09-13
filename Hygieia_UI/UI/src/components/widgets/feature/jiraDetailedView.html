@@ -345,13 +345,13 @@ fill-opacity:0;
     </table>
 </div> -->
 </div></div>
-<div class="col-md-12" style="padding-top: 2%;">
+<div class="col-md-12" style="padding-top: 30px;font-size: 20px;padding-left: 0px;">Defect</div>
+<div class="col-md-12" style="padding-left: 0px;
+    padding-right: 0px;">
 <div class="col-md-12 row-padding-widgets bg-color-opacity">
 
-<div class="col-md-12 header-properties sprint-head-bluebar">
-  <div>Defect</div>
-</div>
-     <div class="col-md-4">
+
+   <!--   <div class="col-md-4">
       <div class="col-md-12">
          <div class="col-md-10 sprint-box-val-head sprint-priority-env-head-padding">Open Defects by Priority</div>
          <div class="col-md-2"></div>
@@ -378,46 +378,116 @@ fill-opacity:0;
       <div class="col-md-4">Major</div>
       <div class="col-md-4">Minor</div>
    </div>
-   </div>
-    <div class="col-md-7">
-         <span class="sprint-box-val-head">Resolution Time Report</span>
-  <c3-chart id="openDef" config="configopenDef" class="sprint-graphs-prop"></c3-chart>
+   </div> -->
+    <div class="col-md-6">
+        <span class="sprint-box-val-head">AGE OF OPEN DEFECTS</span>
+   <c3-chart id="restime" config="configresTime"  class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+   </div> 
+    <div class="col-md-6">
+         <span class="sprint-box-val-head">RESOLUTION TIME REPORT</span>
+  <c3-chart id="openDef" config="configopenDef" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
   </div>
 
 
 <div class="col-md-12 row-padding-widgets">
 
-  <div class="col-md-4">
+  <div class="col-md-6" style="padding-bottom: 2%">
       <div class="col-md-12">
-         <div class="col-md-10 sprint-box-val-head sprint-priority-env-head-padding">Open Defects by Enviornment</div>
+         <div class="col-md-10 sprint-box-val-head sprint-priority-env-head-padding">OPEN DEFECTS BY ENVIORNMENT</div>
          <div class="col-md-2"></div>
         
       </div>
-      <div class="col-md-12" style="padding-top: 12%;
-    padding-left: 9%;">
-   <div class="col-md-4">
-   <div class="sprint-def-priorty-response">0</div>
+      <div class="col-md-12" style="padding-top: 4%;
+    ">
+   <div class="col-md-2" >
+  
+    <div class="ovalshape-data-props" style="border-bottom: 10px solid rgb(172,8,4);">
+                          
+                            <span >0</span>
+                        </div>
    </div>
-   <div class="col-md-4">
-   <div class="sprint-def-priorty-response-secnd">0</div>
+    <div class="col-md-2" >
+   
+    <div class="ovalshape-data-props" style="border-bottom: 10px solid rgb(222,29,24);">
+                          
+                            <span >0</span>
+                        </div>
    </div>
-   <div class="col-md-4">
-   <div class="sprint-def-priorty-response-thrd">0</div>
+    <div class="col-md-2" >
+   
+    <div class="ovalshape-data-props" style="border-bottom: 10px solid rgb(123,123,123);">
+                          
+                            <span >0</span>
+                        </div>
+   </div>
+    <div class="col-md-2" >
+  
+    <div class="ovalshape-data-props" style="border-bottom: 10px solid rgb(105,203,143);">
+                          
+                            <span >0</span>
+                        </div>
+   </div>
+    <div class="col-md-2" >
+  
+    <div class="ovalshape-data-props" style="border-bottom: 10px solid rgb(5,169,68);">
+                          
+                            <span >0</span>
+                        </div>
    </div>
    </div>
-   <div class="col-md-12" style="padding-left: 9%;">
-      <div class="col-md-4">Critical</div>
-      <div class="col-md-4">Major</div>
-      <div class="col-md-4">Minor</div>
+   <div class="col-md-12" style="font-size: 12px;">
+      <div class="col-md-2">HIGHEST</div>
+      <div class="col-md-2">HIGH</div>
+      <div class="col-md-2">MEDIUM</div>
+      <div class="col-md-2">LOW</div>
+      <div class="col-md-2">LOWEST</div>
    </div>
    </div> 
-    
+    <div class="col-md-6" style="padding-bottom: 2%">
+      <div class="col-md-12">
+         <div class="col-md-10 sprint-box-val-head sprint-priority-env-head-padding">OPEN DEFECTS BY PRIORITY</div>
+         <div class="col-md-2"></div>
+        
+      </div>
+      <div class="col-md-12" style="padding-top: 4%;
+    ">
+   <div class="col-md-2 sprint-def-priorty-response">
+   <div class="ovalshape-data-props" ng-if="jdv.criIssue" style="border-bottom: 10px solid rgb(172,8,4);">{{jdv.criIssue}}</div>
+   <div class="ovalshape-data-props" ng-if="!jdv.criIssue" style="border-bottom: 10px solid rgb(172,8,4);">0</div>
+   </div>
+
+   <div class="col-md-2 sprint-def-priorty-response-secnd">
+   <div class="ovalshape-data-props" ng-if="jdv.majorIssue" style="border-bottom: 10px solid rgb(222,29,24);">{{jdv.majorIssue}}</div>
+   <div class="ovalshape-data-props" ng-if="!jdv.majorIssue" style="border-bottom: 10px solid rgb(222,29,24);">0</div>
+  </div>
+
+   <div class="col-md-2 sprint-def-priorty-response-thrd">
+   <div class="ovalshape-data-props" ng-if="jdv.mediumIssue" style="border-bottom: 10px solid rgb(123,123,123);">{{jdv.mediumIssue}}</div>
+   <div class="ovalshape-data-props" ng-if="!jdv.mediumIssue" style="border-bottom: 10px solid rgb(123,123,123);">0</div>
+   </div>
+
+    <div class="col-md-2 sprint-def-priorty-response-thrd">
+   <div class="ovalshape-data-props" ng-if="jdv.lowIssue" style="border-bottom: 10px solid rgb(105,203,143);">{{jdv.lowIssue}}</div>
+   <div class="ovalshape-data-props" ng-if="!jdv.lowIssue" style="border-bottom: 10px solid rgb(105,203,143);">0</div>
+   </div>
+
+    <div class="col-md-2 sprint-def-priorty-response-thrd">
+   <div class="ovalshape-data-props" ng-if="jdv.lowestIssue" style="border-bottom: 10px solid rgb(5,169,68);">{{jdv.lowestIssue}}</div>
+   <div class="ovalshape-data-props" ng-if="!jdv.lowestIssue" style="border-bottom: 10px solid rgb(5,169,68);">0</div>
+   </div>
+
+   </div>
+   <div class="col-md-12" >
+      <div class="col-md-2">HIGHEST</div>
+      <div class="col-md-2">HIGH</div>
+      <div class="col-md-2">MEDIUM</div>
+      <div class="col-md-2">LOW</div>
+      <div class="col-md-2">LOWEST</div>
+   </div>
+   </div>
   
 
-  <div class="col-md-7">
-        <span class="sprint-box-val-head">Age of Open Defects</span>
-   <c3-chart id="restime" config="configresTime"  class="sprint-graphs-prop"></c3-chart>
-   </div> 
+ 
   
   <!--  <div class="col-md-4 jira-widget-props-specific">
       <div class="col-md-12">
@@ -437,13 +507,12 @@ fill-opacity:0;
    </div>
    </div>  -->
 </div></div></div>
-<div class="col-md-12">
+<div class="col-md-12" style="padding-top: 30px;font-size: 20px;padding-left: 0px;">Release</div>
+<div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
  <div class="col-md-12 row-padding-widgets bg-color-opacity">
-    <div class="col-md-12 sprint-head-bluebar">
-    <div>
-    Release</div></div>
-    <div class="col-md-8">
-       <c3-chart id="releaseGraph" config="releaseGraph" class="sprint-graphs-prop" ></c3-chart>
+   
+    <div class="col-md-11">
+       <c3-chart id="releaseGraph" config="releaseGraph" class="sprint-graphs-prop graph-bg-gradient" ></c3-chart>
 
     </div>
 </div></div>

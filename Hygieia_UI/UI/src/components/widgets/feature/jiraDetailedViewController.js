@@ -16,15 +16,24 @@
         ctrl.ppiidss = $cookies.get('projectIdd');
 
         //Empty array created for Jira Defect Graphs
-        var high = ['Major'];
+        
         var medium = ['Medium'];
-        var opndefhighest = ['Critical'];
-        var opndefhigh = ['Major'];
+        var opndefhighest = ['Highest'];
+        var opndefhigh = ['High'];
         var opndeflow = ['Minor'];
-        var highest = ['Critical'];
+       
         var lowval = ['Minor'];
         var jiraLebels = [];
         var openDefJiraLabel = [];
+         var highest = ['Highest'];
+         var high = ['High'];
+         var Mediumvalue = ['Medium'];
+        var Lowvalue = ['Low'];
+        
+        var Lowestvalue = ['Lowest'];
+        var OpendefectMedium = ['Medium'];
+        var OpendefectLow = ["Low"];
+        var OpendefectLowest = ["Lowest"];
 
         //Logout Functionality
         ctrl.logout = function () {
@@ -50,6 +59,8 @@
             ctrl.majorIssue = data.defectsByProirity.High;
             ctrl.mediumIssue = data.defectsByProirity.Medium;
             ctrl.lowIssue = data.defectsByProirity.Low;
+            ctrl.lowestIssue = data.defectsByProirity.Lowest;
+
             ctrl.graphData = data.defectsByResolutionDetails;
             ctrl.ageOfOpenDefects = data.defectsByAgeDetails;
             ctrl.medlow = parseInt(ctrl.lowIssue) + (ctrl.mediumIssue);
@@ -70,8 +81,28 @@
                        }
                      }
 
+                  //Adding Low values into Array
+                for (var i = 0; i < highArr.length; i++) {
+                        if (highArr[i][0].hasOwnProperty("Low")) {
+                        Lowvalue.push(highArr[i][0].Low); 
+                    }
+                    else{
+                        Lowvalue.push(0);
+                       }
+                     }
+
+                  //Adding Medium values into Array
+                  for (var i = 0; i < highArr.length; i++) {
+                        if (highArr[i][0].hasOwnProperty("Medium")) {
+                        Mediumvalue.push(highArr[i][0].Medium); 
+                    }
+                    else{
+                        Mediumvalue.push(0);
+                       }
+                     }
+
                //Adding Low and Medium values into Array
-              for (var i = 0; i < highArr.length; i++) {
+              /*for (var i = 0; i < highArr.length; i++) {
                 if (highArr[i][0].hasOwnProperty("Low") && highArr[i][0].hasOwnProperty("Medium")) {
                   var convertt = Number(highArr[i][0].Low);
                   var converttMed = Number(highArr[i][0].Medium);
@@ -81,7 +112,7 @@
               else{
                 lowval.push(0);
               }
-            }
+            }*/
 
               //Adding High values into Array            
                for (var i = 0; i < highArr.length; i++) {
@@ -93,6 +124,16 @@
               }
             }
              
+             //Adding High values into Array            
+               for (var i = 0; i < highArr.length; i++) {
+                if (highArr[i][0].hasOwnProperty("Lowest")) {
+                Lowestvalue.push(highArr[i][0].Lowest);
+              }
+               else{
+                Lowestvalue.push(0);
+              }
+            }
+
                //Adding X axis label values into Array
                for (var i = 0; i < highArr.length; i++) {
                 if (highArr[i][0].hasOwnProperty("Resolution Strategy")) {
@@ -135,7 +176,7 @@
             }
 
             //Adding Low and Medium values into Array
-             for (var i = 0; i < openDef.length; i++) {
+             /*for (var i = 0; i < openDef.length; i++) {
                 if (openDef[i][0].hasOwnProperty("Low") && openDef[i][0].hasOwnProperty("Medium")) {
                   var convertLowval = Number(openDef[i][0].Low);
                   var convertMedVal = Number(openDef[i][0].Medium);
@@ -144,6 +185,35 @@
                }
               else{
                opndeflow.push(0);
+             }
+            }*/
+
+            //Adding Medium values into Array
+            for (var i = 0; i < openDef.length; i++) {
+                if (openDef[i][0].hasOwnProperty("Medium")) {
+                OpendefectMedium.push(openDef[i][0].Medium);
+              }
+               else{
+               OpendefectMedium.push(0);
+             }
+            }
+
+             //Adding Low values into Array
+            for (var i = 0; i < openDef.length; i++) {
+                if (openDef[i][0].hasOwnProperty("Low")) {
+                OpendefectLow.push(openDef[i][0].Low);
+              }
+               else{
+               OpendefectLow.push(0);
+             }
+            }
+
+            for (var i = 0; i < openDef.length; i++) {
+                if (openDef[i][0].hasOwnProperty("Lowest")) {
+                OpendefectLowest.push(openDef[i][0].Lowest);
+              }
+               else{
+               OpendefectLowest.push(0);
              }
             }
 
@@ -165,7 +235,7 @@
                 bindto: '#openDef', 
                   data: {
                   columns: [
-                    highest,high,lowval
+                    highest,high,Mediumvalue,Lowvalue,Lowestvalue
                   ],
                   type: 'bar'
                 },
@@ -176,7 +246,7 @@
                     }
                 },
                 color: {
-                pattern: ['#ff4d4d', '#ffa31a','#1ac6ff']
+                pattern: ['rgb(172,8,4)', 'rgb(222,29,24)','rgb(123,123,123)','rgb(105,203,143)','rgb(5,169,68)']
             }
   
             });        
@@ -187,7 +257,7 @@
             
             data: {
                 columns: [
-                   opndefhighest,opndefhigh,opndeflow
+                   opndefhighest,opndefhigh,OpendefectMedium,OpendefectLow,OpendefectLowest
 
                 ],
                 type: 'bar'
@@ -201,7 +271,7 @@
                     
                 },
                 color: {
-                pattern: ['#ff4d4d', '#ffa31a','#1ac6ff']
+                pattern: ['rgb(172,8,4)', 'rgb(222,29,24)','rgb(123,123,123)','rgb(105,203,143)','rgb(5,169,68)']
             }
         });                
     }        
@@ -345,7 +415,7 @@
                     }
                 },
                 color: {
-                pattern: ['#CCEBF5', '#B7DBC4']
+                pattern: ['#CCEBF5', '#79C793']
             },
                     legend: {
     position: 'inset',
