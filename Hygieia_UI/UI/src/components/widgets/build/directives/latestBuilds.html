@@ -1,5 +1,5 @@
 <div class="widget large-devic-res" style="border-top: 1px solid #d6d6d6">
-    <div class="widget-sub-head" style="color:black;text-shadow:none;padding: 20px 0px 20px 0px;">
+    <div class="widget-sub-head" style="color:black;text-shadow:none;padding: 20px 0px 0px 0px;">
         LATEST BUILDS
     </div>
     <div class="widget-body latest-builds" style="color: black;
@@ -26,7 +26,7 @@
 
 </table> -->
 <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
-    <div class="col-md-6" ng-repeat="build in buildView.recentBuilds"
+    <div class="col-md-6 dash-row clickable" ng-repeat="build in buildView.recentBuilds"
              ng-click="buildView.detail(build)" style="padding-left: 0px;padding-right: 0px;padding-top: 10px;">
              <span ng-if="build.status=='success'" dash-status='ok'></span>
             <span ng-if="build.status!='success' && build.status != 'inprogress'" dash-status='alert'></span>
