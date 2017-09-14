@@ -14,7 +14,7 @@
         var apiHost = 'http://localhost:3000';
         var qahost = 'http://10.20.1.183:3001';
         ctrl.ppiidss = $cookies.get('projectIdd');
-
+        ctrl.usernamepro = $cookies.get('username');
         //Empty array created for Jira Defect Graphs
         
         var medium = ['Medium'];

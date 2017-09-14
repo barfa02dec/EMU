@@ -15,6 +15,7 @@
         ctrl.ppiids = $cookies.get('cmpId');
         ctrl.dashId = $cookies.get('dashboardidpa');
         ctrl.openback = openback;
+        ctrl.usernamepro = $cookies.get('username');
         ctrl.logout = function() {
             $cookieStore.remove("username");
             $cookieStore.remove("authenticated");

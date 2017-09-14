@@ -12,7 +12,7 @@
                 </div>
                 <div class="widget-body" style="padding-right: 34%;">
                     <table class="table table-bordered table-striped" style="width:65%;">
-                        <tr class="dash-row" ng-repeat="gate in caWidget.qualityGates" ng-class="{'clickable': !!gate.statusMessage}" popover-html-unsafe="{{gate.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0">
+                        <tr class="dash-row" ng-repeat="gate in caWidget.qualityGates" ng-class="{'clickable': !!gate.statusMessage}" popover-html-unsafe="{{gate.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="border: 1px solid #d6d6d6 !important;">
                             <td class="ca-name staticanalysis-textProps" style="line-height: 3.25em;">{{gate.name}}</td>
 
                             <td class="ca-value staticanalysis-textProps" ng-if="gate.formattedValue == 'E'" >

@@ -70,7 +70,9 @@
             <div class="col-md-2" style="color: #000;text-shadow: none;padding-left: 14%;" ng-if="editProjectflag" ng-show=" {{(title == 'Feature')}}">
 
                 <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()" >
-                     <img src="assets/images/icon_settings.png">
+                     <img src="assets/images/icon_settings.png" style="width: 18px;
+    height: 18px;
+    vertical-align: baseline;">
                 </span>
                 </div>
 
@@ -78,24 +80,30 @@
                  <div class="col-md-1" style="color: #000;text-shadow: none;float: right;" ng-if="editProjectflag" ng-show=" {{(title == 'Build')}}">
                 <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()"  style="
                float: right;">
-                   <img src="assets/images/icon_settings.png">
+                   <img src="assets/images/icon_settings.png" style="width: 18px;
+    height: 18px;
+    vertical-align: baseline;">
                </span></div>
 
                 <div class="col-md-1" style="color: #000;text-shadow: none;float: right;" ng-if="editProjectflag" ng-show=" {{(title == 'Code Repo')}}">
                 <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()">
-                     <img src="assets/images/icon_settings.png">
+                     <img src="assets/images/icon_settings.png" style="width: 18px;
+    height: 18px;
+    vertical-align: baseline;">
                 </span>
                 </div>
                  <div class="col-md-2" style="color: #000;text-shadow: none;padding-left: 31%;" ng-if="editProjectflag" ng-show=" {{(title == 'Quality')}}">
                 <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()" >
-                      <img src="assets/images/icon_settings.png">
+                      <img src="assets/images/icon_settings.png" style="width: 18px;
+    height: 18px;
+    vertical-align: baseline;">
                  </span>
             </div>
 
             <div class="col-md-4" ng-show="{{(title == 'Feature')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" >
                 <span >
             <a href="#/jiraDashboard" target="_self" > 
-            <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;color: rgb(68, 130, 178)">MORE DETAILS <img src="assets/images/arrow_right.png"></span>
+            <span class="report-link pull-right" style="color:#000;text-shadow:none;font-weight:600;font-size:12px;padding-right:2%;color: rgb(68, 130, 178)">MORE DETAILS <img src="assets/images/arrow_right.png"></span>
                 </a>
                 </span>
  </div>
@@ -103,7 +111,7 @@
                 <div class="col-md-2" ng-show="{{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"  style="float: right;">
                 <span >
             <a href="#/detailedview/{{caWidget.dashBoardId}}" target="_self" > 
-            <span class="report-link pull-right" style="color:#000;text-shadow:none;font-size:12px;padding-right:2%;color: rgb(68, 130, 178);">MORE DETAILS <img src="assets/images/arrow_right.png"></span>
+            <span class="report-link pull-right" style="color:#000;text-shadow:none;font-weight:600;font-size:12px;padding-right:2%;color: rgb(68, 130, 178);">MORE DETAILS <img src="assets/images/arrow_right.png"></span>
                 </a>
                 </span></div>
            
