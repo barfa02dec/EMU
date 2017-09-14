@@ -101,6 +101,7 @@
             </div>
 
             <div class="col-md-4" ng-show="{{(title == 'Feature')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" >
+            <span style="color: #d6d6d6;text-shadow: none;padding-left: 5px;"> | </span>
                 <span >
             <a href="#/jiraDashboard" target="_self" > 
             <span class="report-link pull-right" style="color:#000;text-shadow:none;font-weight:600;font-size:12px;padding-right:2%;color: rgb(68, 130, 178)">MORE DETAILS <img src="assets/images/arrow_right.png"></span>
@@ -109,6 +110,7 @@
  </div>
 
                 <div class="col-md-2" ng-show="{{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"  style="float: right;">
+                <span style="color: #d6d6d6;text-shadow: none;padding-left: 0px;"> | </span>
                 <span >
             <a href="#/detailedview/{{caWidget.dashBoardId}}" target="_self" > 
             <span class="report-link pull-right" style="color:#000;text-shadow:none;font-weight:600;font-size:12px;padding-right:2%;color: rgb(68, 130, 178);">MORE DETAILS <img src="assets/images/arrow_right.png"></span>
