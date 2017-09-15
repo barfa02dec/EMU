@@ -231,16 +231,16 @@ fill-opacity:0;
 <div class="col-md-6" style="padding-top: 10px;padding-left: 20px;">
 <table class="table table-bordered table-striped">
   <thead>
-    <tr style="font-weight:400;font-size:11px">
+    <tr class="font-props">
     <td></td>
       <td ng-repeat="sprintName in jdv.jirametricsdata" style="cursor: pointer;
-    max-width: 100px;
+    max-width: 120px;
     text-overflow: ellipsis;
     overflow: hidden;">{{sprintName.name}}</td>
      
     </tr>
   </thead>
-  <tbody style="font-weight:400;font-size:11px">
+  <tbody class="font-props">
     <tr>
     <td class="custom-td-width-defect">Completed Issue Count</td>
       <td ng-repeat="sprintNames in jdv.jirametricsdata">{{sprintNames.sprintData.completedIssueCount}}</td>
@@ -292,7 +292,7 @@ fill-opacity:0;
         </tr>
         </thead>
         <tbody>
-            <tr style="font-size: 11px;" ng-repeat="sprintdata in jdv.spAllDetails">
+            <tr class="font-props" ng-repeat="sprintdata in jdv.spAllDetails">
                  <td>{{sprintdata.sprintData.sprintId}}</td>
                <td>{{sprintdata.sprintData.sprintName}}</td>
                  <td>{{sprintdata.sprintData.state}}</td> 
@@ -439,7 +439,7 @@ fill-opacity:0;
                         </div>
    </div>
    </div>
-   <div class="col-md-12" style="font-size: 11px;">
+   <div class="col-md-12 font-props">
       <div class="col-md-2">HIGHEST</div>
       <div class="col-md-2">HIGH</div>
       <div class="col-md-2">MEDIUM</div>
@@ -481,7 +481,7 @@ fill-opacity:0;
    </div>
 
    </div>
-   <div class="col-md-12" style="font-size: 11px;">
+   <div class="col-md-12 font-props">
       <div class="col-md-2">HIGHEST</div>
       <div class="col-md-2">HIGH</div>
       <div class="col-md-2">MEDIUM</div>
