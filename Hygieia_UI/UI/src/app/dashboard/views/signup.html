@@ -25,10 +25,10 @@
                         User created successfully
                      </div>
                      <form-group input="id" style="padding-top: 10px;" errors="{exists:'User already exists', required:'Username is required',minlength: 'Username should be of minimum 4 characters'}">
-                        <label for="name" class="cols-sm-2 control-label upper-label-props">Username</label>
+                        <label for="name" class="cols-sm-2 control-label upper-label-props">Username or Email ID</label>
                         <div class="cols-sm-10">
                            <div class="input-group inputgroup-props">
-                              <input type="text"  class="form-control inputbox-props" ng-model="signup.id" minlength="4" name="id" placeholder="Enter your username" autocomplete="off" required />
+                              <input type="text"  class="form-control inputbox-props" ng-model="signup.id" minlength="4" name="id" placeholder="Username or Email ID" autocomplete="off" required />
                            </div>
                         </div>
                      </form-group>
@@ -36,7 +36,7 @@
                         <label for="email" class="cols-sm-2 control-label upper-label-props">Password</label>
                         <div class="cols-sm-10">
                            <div class="input-group inputgroup-props">
-                              <input type="password" name="password" class="form-control inputbox-props" ng-model="signup.password" minLength=6  placeholder="Enter your password" required/>
+                              <input type="password" name="password" class="form-control inputbox-props" ng-model="signup.password" minLength=6  placeholder="Password" required/>
                            </div>
                         </div>
                      </form-group>
@@ -44,7 +44,7 @@
                         <label for="email" class="cols-sm-2 control-label upper-label-props">Confirm Password</label>
                         <div class="cols-sm-10">
                            <div class="input-group inputgroup-props">
-                              <input type="password"  class="form-control inputbox-props" ng-model="signup.confirm" required match="signup.password" name="confirm" placeholder="Confirm password" />
+                              <input type="password"  class="form-control inputbox-props" ng-model="signup.confirm" required match="signup.password" name="confirm" placeholder="Confirm Password" />
                            </div>
                         </div>
                      </form-group>
