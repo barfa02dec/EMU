@@ -27,7 +27,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "sprint")
 public class Sprint extends BaseModel {
 		@Indexed
-	    private Long sid;
+	    private Long sprintId;
 		private String projectId;
 	    private String start;
 	    private String end;
@@ -45,10 +45,10 @@ public class Sprint extends BaseModel {
 		}
 		
 		public Long getSid() {
-			return sid;
+			return sprintId;
 		}
 		public void setSid(Long sid) {
-			this.sid = sid;
+			this.sprintId = sid;
 		}
 		public String getStart() {
 			return start;

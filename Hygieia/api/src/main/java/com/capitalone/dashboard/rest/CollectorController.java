@@ -5,6 +5,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -102,6 +103,16 @@ public class CollectorController {
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CollectorItem>> collectorItemsByCollectorId(@PathVariable ObjectId collectorId) {
     	List<CollectorItem> collectorItemsList=collectorService.collectorsByCollectorId(collectorId);
+    	return ResponseEntity
+				.ok()
+				.body(collectorItemsList);
+    }
+    
+    @RequestMapping(value = "/collector/itemsByProject/{collectorId}/{projectId}", method = GET,
+            produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<CollectorItem>> collectorItemsByCollectorIdAndProjectId(@PathVariable ObjectId collectorId,@PathVariable String projectId) {
+    	List<CollectorItem> collectorItemsList=collectorService.collectorsByCollectorId(collectorId);
+    	collectorItemsList=collectorItemsList.stream().filter(item-> item.getProject().equals(projectId)).collect(Collectors.toList());
     	return ResponseEntity
 				.ok()
 				.body(collectorItemsList);

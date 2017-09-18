@@ -29,7 +29,7 @@ import com.capitalone.dashboard.model.Sprint;
 public interface SprintRepository extends CrudRepository<Sprint, ObjectId>,
 		QueryDslPredicateExecutor<Sprint>, SprintRepositoryCustom {
 
-	 	@Query(value = "{ 'sid' : ?0 , 'projectId' : ?1 }")
+	 	@Query(value = "{ 'sprintId' : ?0 , 'projectId' : ?1 }")
 	    Sprint findBySprintId(Long id,String projectId);
 	 	@Query(value = "{ 'projectId' : ?0 }")
 	    Iterable<Sprint> findByProjectId(String projectId);

@@ -49,7 +49,6 @@ public class Feature extends BaseModel {
 	private String sEstimate; // estimate in story points
 	private Integer sEstimateTime; // estimate in minutes
 	private String sUrl;
-	@Indexed
 	private String changeDate;
 	private String isDeleted;
 
