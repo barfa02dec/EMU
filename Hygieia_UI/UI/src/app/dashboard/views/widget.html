@@ -3,10 +3,10 @@
     <div class="widget row" ng-class="{'configure' : state == widget_state.CONFIGURE, 'alert': display == display_state.ERROR}" style="padding:0px;">
         <div class="kanban-widget-heading" ng-if="header" ng-hide=" {{(title == 'Monitor')}}" style="">
         <span style="font-size:20px;font-weight: 300;">
-            <span ng-show=" {{(title == 'Feature')}}">{{title}}</span>
-            <span ng-show=" {{(title == 'Build')}}">{{title}} <span style="color:#d6d6d6">|</span></span>
-            <span ng-show=" {{(title == 'Code Repo')}}">{{title}}</span>
-            <span ng-show=" {{(title == 'Quality')}}">Code {{title}} <span style="color:#d6d6d6">|</span></span></span>
+            <span ng-show=" {{(title == 'Feature')}}">FEATURE</span>
+            <span ng-show=" {{(title == 'Build')}}">BUILD<span style="color:#d6d6d6">|</span></span>
+            <span ng-show=" {{(title == 'Code Repo')}}">CODE REPO</span>
+            <span ng-show=" {{(title == 'Quality')}}">CODE QUALITY<span style="color:#d6d6d6">|</span></span></span>
         <span ng-show=" {{(title == 'Build')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
                   <!--   <select ng-model="selectedName" ng-options="selectedName.description for selectedName in collectorDetails" ng-change="check(selectedName)" style="color: #000;">
 

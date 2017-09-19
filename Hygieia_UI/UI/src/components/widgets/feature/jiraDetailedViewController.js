@@ -285,8 +285,8 @@
       function sprintdataProcess(data){
         ctrl.jirametricsdata  = data;
         var progress = ['Defect Closure'];
-        var comittedStoryPoints = ['committed Story Points'];
-        var completedStoryPoint = ['completed Story Points'];
+        var comittedStoryPoints = ['Committed Story Points'];
+        var completedStoryPoint = ['Completed Story Points'];
         var axisSprintName = [];
         var axisSprintNameclos = [];
 
@@ -372,31 +372,34 @@
        //Data Process for Velocity Chart Graphs
        for(var i=0;i<data.length;i++){
           if(data[i].sprintData != undefined){
-              comittedStoryPoints.push(data[i].sprintData.committedStoryPoints)
+              comittedStoryPoints.push(data[i].sprintData.committedStoryPoints);
+              completedStoryPoint.push(data[i].sprintData.completedStoryPoints);
+              var percentScore =  Math.round((data[i].sprintData.completedStoryPoints/data[i].sprintData.committedStoryPoints)*100);
+              progress.push(percentScore);
+              axisSprintNameclos.push(data[i].name);
+              axisSprintName.push(data[i].name)
           }
           
        }
 
-       for(var i=0;i<data.length;i++){
+       /*for(var i=0;i<data.length;i++){
           if(data[i].sprintData != undefined){
-           completedStoryPoint.push(data[i].sprintData.completedStoryPoints)
+           
           }
           
-       }
+       }*/
        
        //Data Process for Defect Closure Graph for taking the percentage Value
-        for(var i=0;i<data.length;i++){
+       /* for(var i=0;i<data.length;i++){
            if(data[i].sprintData != undefined){
-               var percentScore =  Math.round((data[i].sprintData.completedStoryPoints/data[i].sprintData.committedStoryPoints)*100);
-               progress.push(percentScore);
-                axisSprintNameclos.push(data[i].name)
+              
 
            }
-        }
+        }*/
 
        //Adding x axis label for both graphs
        for(var i=0;i<data.length;i++){
-         axisSprintName.push(data[i].name)
+        
         }
 
        //C3.js Sprint Graph Generation
@@ -476,11 +479,11 @@ padding: {
       //Processing Release Data
         function ReleaseDataProcessing(data){
           ctrl.releasegraph = data.versionData;
-          var noOfStoryCompleted = ["No of Story points completed"];
+          var noOfStoryCompleted = ["Completed Story Points"];
           var noOfStoryPoints = ["No of Stories Completed"];
-          var totaldefectsFound = ["Total Defects Found"];
+          var totaldefectsFound = ["Defects Found"];
           var releaseName = [];
-          var totalDefectsResolved = ["Total Defects Resolved"];
+          var totalDefectsResolved = ["Defects Resolved"];
 
           //Adding No of Story Points Completed to the Array
           for(var i=0;i<data.length;i++){
@@ -552,6 +555,11 @@ padding: {
             });
 
           
+        }
+        ctrl.mySplit = function(string, nb) {
+         
+            var array = string.split('"');            
+            return array[1].split('"')[0];
         }
     }
 })();
