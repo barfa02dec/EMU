@@ -307,6 +307,9 @@ fill-opacity:0;
                  <td ng-if="jdv.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' "><span>
                     <img src="assets/images/icon_completed.png">
                  </span>CLOSED</td> 
+                  <td ng-if="jdv.mySplit(sprintdata.sprintData.state,0) !== 'CLOSED' "><span>
+                    <img src="assets/images/icon_inprogress.png">
+                 </span>OPEN</td> 
 
               <!--     <td><span ng-if="!jdv.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' ">
                     <img src="assets/images/icon_completed.png">
