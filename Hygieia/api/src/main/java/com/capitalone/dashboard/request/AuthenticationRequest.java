@@ -12,6 +12,8 @@ public class AuthenticationRequest {
     @NotNull
     private String password;
 
+    private boolean isSysAdmin;
+    
     public String getUsername() {
         return username;
     }
@@ -27,9 +29,17 @@ public class AuthenticationRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public boolean isSysAdmin() {
+		return isSysAdmin;
+	}
 
-    public Authentication toAuthentication() {
-        return new Authentication(username, password);
+	public void setSysAdmin(boolean isSysAdmin) {
+		this.isSysAdmin = isSysAdmin;
+	}
+
+	public Authentication toAuthentication() {
+        return new Authentication(username, password,isSysAdmin);
     }
 
     public Authentication copyTo(Authentication authentication) {
