@@ -16,6 +16,8 @@
 
 package com.capitalone.dashboard.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,7 +27,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * 
  */
 @Document(collection = "sprint")
-public class Sprint extends BaseModel {
+public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 		@Indexed
 	    private Long sprintId;
 		private String projectId;
@@ -93,6 +95,31 @@ public class Sprint extends BaseModel {
 			this.sprintData = sprintData;
 		}
 
-	    
+		@Override
+		public boolean equals(Object o) {
+			if (this == o)
+				return true;
+			if (o == null || getClass() != o.getClass())
+				return false;
+
+			Sprint that = (Sprint) o;
+			EqualsBuilder builder = new EqualsBuilder();
+			return builder.append(sprintId, that.sprintId).build();
+		}
+
+		@Override
+		public int hashCode() {
+			return new HashCodeBuilder(17, 37).append(sprintId).toHashCode();
+		}
+		@Override
+		public int compareTo(Sprint arg0) {
+			//sort by descending order
+			if(arg0.sprintId>this.sprintId){
+				return 1;
+			}else if (arg0.sprintId==this.sprintId){
+				return 0;
+			}
+			return -1;
+		}
 	
 }

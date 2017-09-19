@@ -1,5 +1,8 @@
 package com.capitalone.dashboard.rest;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,8 +20,12 @@ public class ReleaseController {
 		this.releaseService = releaseService;
 	}
 	@RequestMapping(method=RequestMethod.GET,value="/projectReleaseList")
-	public Iterable<Release> getAllReleasesForProject(@RequestParam(name="projectId") String projectId){
-		return releaseService.getAllReleases(projectId);
+	public List<Release> getAllReleasesForProject(@RequestParam(name="projectId") String projectId){
+		List <Release> releaseList=(List<Release>) releaseService.getAllReleases(projectId);
+		Collections.sort(releaseList);
+		releaseList.stream().limit(8);
+		return releaseList;
+				
 	}
 	@RequestMapping(method=RequestMethod.GET,value="/releaseDetails")
 	public Release getReleaseDetailsWithID(@RequestParam(name="releaseId") Long releaseId,@RequestParam(name="projectId") String projectId)
