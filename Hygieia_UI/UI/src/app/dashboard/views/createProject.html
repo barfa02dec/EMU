@@ -1,6 +1,6 @@
 <widget-modal widget-modal-title="Create New Project" class="border-prop-modals">
    <form class="form-horizontal validation-message-align" name="cpr.createProModel" ng-submit="cpr.postProject();" name="formname" novalidate >
-      <label class="control-label col-sm-3 createproj-label-props" for="pwd">Project ID</label>
+      <label class="control-label col-sm-3 createproj-label-props" for="pwd">Project ID<span class="maanditory-red-key">*</span></label>
       <form-group input="projid" errors="{required: 'Project ID is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}" class="okok">
          <input
             type="text"
@@ -13,7 +13,7 @@
             minlength="3"
             required />
       </form-group>
-      <label class="control-label col-sm-3 createproj-label-props" for="pwd">Project Name</label>
+      <label class="control-label col-sm-3 createproj-label-props" for="pwd">Project Name<span class="maanditory-red-key">*</span></label>
       <form-group input="projname" errors="{required: 'Project Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
          <input
             type="text"
@@ -26,7 +26,7 @@
             minlength="3"
             required />
       </form-group>
-      <label class="control-label col-sm-3 createproj-label-props" for="pwd">BU</label>
+      <label class="control-label col-sm-3 createproj-label-props" for="pwd">BU<span class="maanditory-red-key">*</span></label>
       <form-group input="projBU" errors="{required: 'BU is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
          <input
             type="text"
@@ -39,7 +39,7 @@
             minlength="3"
             required />
       </form-group>
-      <label class="control-label col-sm-3 createproj-label-props" for="pwd">Owner</label>
+      <label class="control-label col-sm-3 createproj-label-props" for="pwd">Owner<span class="maanditory-red-key">*</span></label>
       <form-group input="projowner" errors="{required: 'Owner is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
          <input
             type="text"
@@ -63,7 +63,7 @@
             autocomplete="off"
             />
       </form-group>
-      <label class="control-label col-sm-3 createproj-label-props" for="pwd">Customer Name</label>
+      <label class="control-label col-sm-3 createproj-label-props" for="pwd">Customer Name<span class="maanditory-red-key">*</span></label>
       <form-group input="projcusname" errors="{required: 'Customer Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
          <input
             type="text"
