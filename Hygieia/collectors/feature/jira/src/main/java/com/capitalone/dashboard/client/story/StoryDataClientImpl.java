@@ -242,7 +242,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		
 		List<Sprint> list = new ArrayList<Sprint>();
 		for (JiraSprint js : sprintsJira) {
-			Sprint sprint = sprintRepository.findOne(QSprint.sprint.sid.eq(js.getId()));
+			Sprint sprint = sprintRepository.findOne(QSprint.sprint.sprintId.eq(js.getId()));
 			if (null == sprint) {
 				
 				sprint = new Sprint();

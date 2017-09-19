@@ -1,5 +1,8 @@
 package com.capitalone.dashboard.rest;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +26,11 @@ public class SprintController {
 
 
 	@RequestMapping(value = "/listAllSprints", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Iterable<Sprint> getAllDefects(@RequestParam(value = "projectId", required = true) String projectId) {
-		return sprintService.getAllSprints(projectId);
+	public List<Sprint> getAllDefects(@RequestParam(value = "projectId", required = true) String projectId) {
+		List<Sprint> sprintList=sprintService.getAllSprints(projectId);
+		Collections.sort(sprintList);
+		sprintList.stream().limit(8);
+		return sprintList;
 	}
 	
 	@RequestMapping(value = "/sprintDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
