@@ -1,4 +1,4 @@
-<widget-modal widget-modal-title="Create New Project" class="border-prop-modals">
+<widget-modal widget-modal-title="Create new project" class="border-prop-modals">
    <form class="form-horizontal validation-message-align" name="cpr.createProModel" ng-submit="cpr.postProject();" name="formname" novalidate >
       <label class="control-label col-sm-3 createproj-label-props" for="pwd">Project ID<span class="maanditory-red-key">*</span></label>
       <form-group input="projid" errors="{required: 'Project ID is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}" class="okok">
@@ -6,7 +6,7 @@
             type="text"
             name="projid"
             class="form-control create-project-inputboxes"
-            placeholder="Type in the Project ID"
+            placeholder="Project ID"
             ng-model="cpr.payl.projectId"
             maxlength="40"
             autocomplete="off"
@@ -14,12 +14,12 @@
             required />
       </form-group>
       <label class="control-label col-sm-3 createproj-label-props" for="pwd">Project Name<span class="maanditory-red-key">*</span></label>
-      <form-group input="projname" errors="{required: 'Project Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+      <form-group input="projname" errors="{required: 'Project name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
          <input
             type="text"
             name="projname"
             class="form-control create-project-inputboxes"
-            placeholder="Type in the new Project Name"
+            placeholder="Project name"
             ng-model="cpr.payl.projectName"
             maxlength="40"
             autocomplete="off"
@@ -32,7 +32,7 @@
             type="text"
             name="projBU"
             class="form-control create-project-inputboxes"
-            placeholder="Enter the LOB"
+            placeholder="BU"
             ng-model="cpr.payl.businessUnit"
             maxlength="40"
             autocomplete="off"
@@ -45,7 +45,7 @@
             type="text"
             name="projowner"
             class="form-control create-project-inputboxes"
-            placeholder="Enter the Project Owner"
+            placeholder="Project owner"
             ng-model="cpr.payl.projectOwner"
             maxlength="40"
             autocomplete="off"
@@ -58,18 +58,18 @@
             type="text"
             name="projprogname"
             class="form-control create-project-inputboxes"
-            placeholder="Type in the Program"
+            placeholder="Program"
             ng-model="cpr.payl.program"
             autocomplete="off"
             />
       </form-group>
       <label class="control-label col-sm-3 createproj-label-props" for="pwd">Customer Name<span class="maanditory-red-key">*</span></label>
-      <form-group input="projcusname" errors="{required: 'Customer Name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+      <form-group input="projcusname" errors="{required: 'Customer name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
          <input
             type="text"
             name="projcusname"
             class="form-control create-project-inputboxes"
-            placeholder="Type in the Customer Name"
+            placeholder="Customer name"
             ng-model="cpr.payl.client"
             maxlength="40"
             autocomplete="off"

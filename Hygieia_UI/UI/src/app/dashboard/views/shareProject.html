@@ -4,15 +4,15 @@
 <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="assets/images/dualmultiselect.css">
 <script src="assets/images/dualmultiselect.js"></script>
-<widget-modal widget-modal-title="ADD USER" class="modal-title-props">
+<widget-modal widget-modal-title="Add user" class="modal-title-props">
    <form class="form-horizontal validation-message-align-adduser" name="cpr.createProModel" ng-submit="spc.shareProjects()" name="adduser" novalidate >
-      <label class="control-label createproj-label-props shareproject-labels-props adduser-autocomplete-props" for="pwd">Select User Name<span style="color: red">*</span></label>
+      <label class="control-label createproj-label-props shareproject-labels-props adduser-autocomplete-props" for="pwd">Choose a user<span style="color: red">*</span></label>
       <form-group input="usernames">
          <input ng-model="spc.selected"  uib-typeahead="country for country in spc.getUserMaps | filter:$viewValue"
             type="text"
             name="usernames"
             class="form-control create-project-inputboxes"
-            placeholder="Add user"
+            placeholder="Choose a user"
             maxlength="40"
             autocomplete="off"
             minlength="3"
@@ -30,7 +30,7 @@
                </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
-               <label class="shareproject-labels-props">Selected Roles<span style="color: red">*</span></label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
+               <label class="shareproject-labels-props">Selected roles<span style="color: red">*</span></label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
                <div class="pool">
                   <ul>
                      <li ng-repeat="item in spc.getRolesKey.selectedItems | orderBy: spc.getRolesKey.orderProperty">
@@ -52,7 +52,7 @@
                </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
-               <label class="shareproject-labels-props">Selected Dashboards<span style="color: red">*</span></label>
+               <label class="shareproject-labels-props">Selected dashboards<span style="color: red">*</span></label>
                <div class="pool">
                   <ul>
                      <li ng-repeat="itemdashboard in spc.getdashboards.selectedItemsDashboard | orderBy: spc.getdashboards.orderProperty">
