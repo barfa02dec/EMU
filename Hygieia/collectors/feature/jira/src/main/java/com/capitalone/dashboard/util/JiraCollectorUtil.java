@@ -156,7 +156,6 @@ public class JiraCollectorUtil {
 			Collections.sort(versions);
 			return versions.stream().limit(limit).collect(Collectors.toList());
 		}catch (Exception e) {
-			e.printStackTrace();
 			return new ArrayList<JiraVersion>();
 		}
 	}
