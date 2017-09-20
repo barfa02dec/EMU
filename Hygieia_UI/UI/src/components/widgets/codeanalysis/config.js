@@ -22,9 +22,10 @@
         ctrl.submit = submitForm;
         ctrl.addTestConfig = addTestConfig;
         ctrl.deleteTestConfig = deleteTestConfig;
-
+        ctrl.projectspcID = $cookies.get('ProSpId');
         $scope.getCodeQualityCollectors = function(filter){
-        	return collectorData.itemsByType('codequality', {"search": filter, "size": 20}).then(function (response){
+            $scope.projectspcID = $cookies.get('ProSpId');
+        	return collectorData.itemsByType('codequality',ctrl.projectspcID,{"search": filter, "size": 20}).then(function (response){
         		return response;
         	});
         }
