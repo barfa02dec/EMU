@@ -21,8 +21,9 @@
             encrypt: encrypt
         };
 
-        function itemsByType(type, params) {
-            return $http.get(itemsByTypeRoute + type, {params: params}).then(function (response) {
+        function itemsByType(type,proI,params) {
+            //return $http.get(itemsByTypeRoute + type, {params: params}).then(function (response) {
+            return $http.get(itemsByTypeRoute + type+'/'+proI, {params: params}).then(function (response) {
                 return response.data;
             });
         }

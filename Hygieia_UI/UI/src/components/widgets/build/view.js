@@ -70,10 +70,10 @@
             'draw': draw
         };
         //endregion
-
+        ctrl.projectspcID = $cookies.get('ProSpId');
         ctrl.load = function() {
             $scope.clid = $cookies.get('mycollector');
-             dashboardData.getCollectorItem($scope.clid).then(function(data) {
+             dashboardData.getCollectorItem(ctrl.projectspcID).then(function(data) {
                 $scope.collectorDetails = data;
                 $scope.colll = $cookies.get('colId');
                 });

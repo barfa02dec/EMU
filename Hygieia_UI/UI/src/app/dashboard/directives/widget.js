@@ -147,13 +147,15 @@
             });
 
             $scope.clid = $cookies.get('mycollector');
-            dashboardData.getCollectorItem($scope.clid).then(function(data) {
+          
+            $scope.projectspcID = $cookies.get('ProSpId');
+            dashboardData.getCollectorItem($scope.projectspcID).then(function(data) {
                 $scope.collectorDetails = data;
                 $scope.colll = $cookies.get('colId');
             });
 
             $scope.clIdSnr = $cookies.get('sonarCollectrid');
-            dashboardData.getCollectorItemSonar($scope.clIdSnr).then(function(data) {
+            dashboardData.getCollectorItemSonar($scope.projectspcID).then(function(data) {
                 $scope.collectorDetailsSonar = data;
                 //$scope.colll = $cookies.get('colId');
             });

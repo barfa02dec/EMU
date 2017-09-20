@@ -14,11 +14,13 @@
         // public variables
         ctrl.buildDurationThreshold = 3;
         ctrl.buildConsecutiveFailureThreshold = 5;
-        
+        ctrl.projectspcID = $cookies.get('ProSpId');
         $scope.getJobs = function (filter) {
-        	return collectorData.itemsByType('build', {"search": filter}).then(function (response){
-        		return response;
-        	});
+            $cookies.put('getfilter', filter);
+            $scope.projectspcID = $cookies.get('ProSpId');
+            return collectorData.itemsByType('build',$scope.projectspcID,{"search": filter}).then(function (response){
+                return response;
+            });
         }
         
         loadSavedBuildJob();
@@ -36,10 +38,10 @@
 
         // method implementations
         function loadSavedBuildJob(){
-        	var buildCollector = modalData.dashboard.application.components[0].collectorItems.Build,
+            var buildCollector = modalData.dashboard.application.components[0].collectorItems.Build,
             savedCollectorBuildJob = buildCollector ? buildCollector[0].description : null;
             if(savedCollectorBuildJob) { 
-            	$scope.getJobs(savedCollectorBuildJob).then(getBuildsCallback) 
+                $scope.getJobs(savedCollectorBuildJob).then(getBuildsCallback) 
             }
         }
         
@@ -57,7 +59,7 @@
                 var postObj = {
                     name: 'build',
                     options: {
-                    	id: widgetConfig.options.id,
+                        id: widgetConfig.options.id,
                         buildDurationThreshold: parseFloat(form.buildDurationThreshold.value),
                         consecutiveFailureThreshold: parseFloat(form.buildConsecutiveFailureThreshold.value)
                     },

@@ -89,7 +89,7 @@
         }
 
         //Add User functionality
-        function shareProjectController($uibModalInstance, proid, $route, $scope,id) {
+        function shareProjectController($uibModalInstance, proid, $route, $scope,id,$cookies) {
             var sp = this;
             sp.selected = '';
             sp.projectId = proid;
@@ -310,7 +310,7 @@
         }
 
         //Show List of Dashboards Page for that particular project
-        $scope.showDahboardPage = function(ProId, ProName) {
+        $scope.showDahboardPage = function(ProId, ProName,projectspcID) {
             dashboardData.mydashboard(ProId,ctrl.usernamepro).then(function(){
 
             });
@@ -319,6 +319,10 @@
             $location.path('/site/');
             $cookies.put('ProId', ProId);
             $cookies.put('ProName', ProName);
+            $cookies.put('ProSpId', projectspcID);
+
+
+            
         }
 
         //Add user Popup which matches the user to the project

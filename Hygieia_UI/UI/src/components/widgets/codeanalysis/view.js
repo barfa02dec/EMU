@@ -24,12 +24,12 @@
         ctrl.showDetail = showDetail;
 
         coveragePieChart({});
-
+        ctrl.projectspcID = $cookies.get('ProSpId');
         ctrl.load = function() {
 
 
             $scope.clIdSnr = $cookies.get('sonarCollectrid');
-            dashboardData.getCollectorItemSonar($scope.clIdSnr).then(function(data) {
+            dashboardData.getCollectorItemSonar(ctrl.projectspcID).then(function(data) {
                 $scope.collectorDetailsSonar = data;
             });
 

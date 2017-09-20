@@ -48,12 +48,12 @@
             return getPromise(HygieiaConfig.local ? testSearchRoute : dashboardRoute);
         }
 
-        function getCollectorItem(collectorsids){
+        function getCollectorItem(projectspecificid){
 
-           return  $http.get('/api/collector/item/typeId/Build')
+           return  $http.get('/api/collector/item/type/Build/'+projectspecificid)
                     .then(function(data) {
-                        collectorsids=data.data;
-                             return $http.get('/api/collector/items/' +collectorsids)
+                        var jenkinsCollectorID = data.data[0].collectorId;
+                             return $http.get('/api/collector/itemsByProject/'+jenkinsCollectorID+'/'+projectspecificid)
                             .then(function(response) {
                                 return response.data;
                             });
@@ -62,12 +62,12 @@
             
         }
 
-        function getCollectorItemSonar(collectorsidsSnr){
+        function getCollectorItemSonar(projectspecificid){
 
-            return   $http.get('/api/collector/item/typeId/CodeQuality')
+            return   $http.get('/api/collector/item/type/CodeQuality/'+projectspecificid)
                     .then(function(data) {
-                        collectorsidsSnr=data.data;
-                            return $http.get('/api/collector/items/' +collectorsidsSnr)
+                        var sonarCollectorID = data.data[0].collectorId;
+                            return $http.get('/api/collector/itemsByProject/'+sonarCollectorID+'/'+projectspecificid)
                             .then(function(response) {
                                 return response.data;
                             });
