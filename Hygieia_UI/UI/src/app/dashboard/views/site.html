@@ -2,7 +2,7 @@
    <!--  <ng-include src="ctrl.templateUrl"></ng-include> -->
    <div class="blue-header" style="height: 50px;
       width:100%;background: #1766A4">
-      <span class="hamburger-ListdashPage project-map-hamburger" style="margin-left: 2.2%;">
+      <!-- <span class="hamburger-ListdashPage project-map-hamburger" style="margin-left: 2.2%;">
          <svg version="1.1"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
             x="0px" y="0px" width="15px" height="9px" viewBox="0 0 15 9" style="overflow:scroll;enable-background:new 0 0 15 9;"
@@ -17,8 +17,8 @@
                </g>
             </g>
          </svg>
-      </span>
-      <span class="edMenu-ListDash-Page project-map-ed">
+      </span> -->
+      <span class="edMenu-ListDash-Page project-map-ed" style="margin-left: 1.9%;">
       <img src="assets/images/emu-5w.png" style="height: 30px;
          width: 30px;">
       </span>
@@ -26,7 +26,7 @@
       <span class="edtext-ListdashPage userloggedin-label">{{ctrl.usernamepro}}</span>
       <div class="dropdown-logout" style="float: right;
          right: 3%;
-         top: 15%;">
+         top: 20%;">
          <div class="abc">
            <!--  <svg version="1.1"
                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
@@ -45,11 +45,11 @@
                   </g>
                </g>
             </svg> -->
-            <img src="assets/images/Group 131.png"></td>
+            <img src="assets/images/Group 131.png" class="log-out-icon-size"></td>
          </div>
          <div class="dropdown-contents" style="right: -36px;">
             <!-- <a href="#/userManagement"  ng-click="ctrl.UserManagement()" style="cursor: pointer;">User Management</a> -->
-            <a ng-click="ctrl.logout()" style="cursor: pointer;">Log Out</a>
+            <a ng-click="ctrl.logout()" style="cursor: pointer;">Sign out</a>
          </div>
       </div>
    </div>
@@ -60,13 +60,13 @@
                <div class="" style="margin-top: 3.1%;font-size: 22px;">
                   {{ctrl.projectName}} / Dashboards
                </div>
-               <div class="" style="font-size: 14px;"><a href="#/projects" style="color: #4482B2">All Projects</a></div>
+               <div class="" style="font-size: 14px;"><a href="#/projects" style="color: #4482B2">All projects</a></div>
             </div>
             <div class="col-md-6"></div>
             <div class="col-md-2" ng-if="ctrl.createDashboards" style="padding-left: 5.6%;
     padding-top: 0.5%;"> 
             <div>
-               <input type="submit" class="btn btn-info project-map-add-btn" value="Add Dashboard"  ng-click="ctrl.createDashboard()"> </div>
+               <input type="submit" class="btn btn-info project-map-add-btn" value="New dashboard"  ng-click="ctrl.createDashboard()"> </div>
             </div>
          </div>
       </div>
@@ -112,8 +112,8 @@
                         </div>
                         <div class="col-md-12" style="padding-left: 20px;">Description to go here</div>
                         <div class="col-md-12" style="padding-left: 15px;padding-top: 15px;">
-                           <div class="col-md-6" style="padding-left: 5px">Created On:</div>
-                           <div class="col-md-6">Created By:</div>
+                           <div class="col-md-6" style="padding-left: 5px">Created on:</div>
+                           <div class="col-md-6">Created by:</div>
                         </div>
                         <div class="col-md-12" style="padding-left: 15px;font-weight: 600;">
                            <div class="col-md-6" style="padding-left: 5px">12-2-2017</div>

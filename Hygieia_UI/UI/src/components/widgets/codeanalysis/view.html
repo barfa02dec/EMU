@@ -7,8 +7,8 @@
         <div class="col-md-12" style="padding-top: 20px;">
         <div class="col-lg-6 col-sm-6 col-md-6">
             <div class="widget ca-version" style="border-right: 1px solid #d6d6d6">
-                <div class="widget-heading">
-                    <span class="sub-header-maindashboard">QUALITY GATES</span>
+                <div class="widget-heading" style="text-transform:inherit;">
+                    <span class="sub-header-maindashboard">Quality gates</span>
                 </div>
                 <div class="widget-body" style="padding-right: 34%;">
                     <table class="table table-bordered table-striped" style="width:65%;">
@@ -50,7 +50,7 @@
         </div> -->
          <div class="col-lg-4 col-sm-4 col-md-4">
             <div class="widget ca-coverage">
-                <div class="widget-heading">
+                <div class="widget-heading" style="text-transform:inherit;">
                     <span class="codecoverage-widgetHeader sub-header-maindashboard">Code coverage</span>
                 </div>
                 <div class="widget-body graph-bg-gradient">
@@ -75,8 +75,8 @@
          <div class="col-lg-12 col-sm-12 col-md-12" >
          <div class="col-lg-6 col-sm-6 col-md-6">
             <div class="widget ca-issues" style="border-right: 1px solid #d6d6d6;">
-                <div class="widget-heading staticanalysis-widgetHeader" style="padding-left: 0px;border-top: 1px solid #d6d6d6;width: 97%;">
-                    <span class="sub-header-maindashboard">Static Analysis</span>
+                <div class="widget-heading staticanalysis-widgetHeader" style="padding-left: 0px;border-top: 1px solid #d6d6d6;width: 97%;text-transform:inherit;">
+                    <span class="sub-header-maindashboard">Static analysis</span>
                 </div>
                 <div class="widget-body">
                     <table class="table" >
@@ -111,23 +111,23 @@
        
         <div class="col-lg-6 col-sm-6 col-md-6" style="padding-top: 2%;border-top:1px solid #d6d6d6">
             <div class="widget ca-tests" style="padding-right: 6px;">
-                <div class="widget-heading" style="margin-bottom: 0px;">
+                <div class="widget-heading" style="margin-bottom: 0px;text-transform:inherit;">
                     <span class="sub-header-maindashboard">Unit tests</span>
                 </div>
                 <div class="widget-body">
                     <table class="table">
                         <div class="row" style="padding-top: 3%">
                             <!-- <td class="staticanalysis-textProps"><span dash-status="{{ test.status }}" ng-if="caWidget.showStatusIcon(test)"></span></td> -->
-                            <div class="ca-value staticanalysis-textProps col-md-3" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0"><div style="padding-top: 15%;" class="total-builds-text-props">{{test.formattedValue}}</div></div>
+                            <div class="ca-value staticanalysis-textProps col-md-2" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0"><div style="padding-top: 22%;" class="total-builds-text-props">{{test.formattedValue}}</div></div>
 </div>
 <div class="dash-row total-builds-label-props">
-                            <div class="ca-name staticanalysis-textProps col-md-3" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 2px;" ng-if="test.name == 'Success'">SUCCESS</div>
+                            <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 0px;" ng-if="test.name == 'Success'">SUCCESS</div>
 
-                            <div class="ca-name staticanalysis-textProps col-md-3" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 5px;" ng-if="test.name == 'Failures'">FAILURES</div>
+                            <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 2px;" ng-if="test.name == 'Failures'">FAILURES</div>
 
-                            <div class="ca-name staticanalysis-textProps col-md-3" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 13px;" ng-if="test.name == 'Errors'">ERRORS</div>
+                            <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 9px;" ng-if="test.name == 'Errors'">ERRORS</div>
 
-                            <div class="ca-name staticanalysis-textProps col-md-3" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 21px;" ng-if="test.name == 'Tests'">TESTS</div>
+                            <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 16px;" ng-if="test.name == 'Tests'">TESTS</div>
 
                             </div>
                             
