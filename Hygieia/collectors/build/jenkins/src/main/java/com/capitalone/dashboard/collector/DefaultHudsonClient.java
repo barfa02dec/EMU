@@ -565,6 +565,15 @@ public class DefaultHudsonClient implements HudsonClient {
 	        			if (StringUtils.isNotEmpty(domain1) && StringUtils.isNotEmpty(domain2) && domain1.equals(domain2)
 	        					&& getPort(sUrl) == getPort(servers.get(i))) {
 	                		exactMatchFound = true;	
+	        			}else{
+	        				// this fix is for a special scenario where Jenkins server was hosted in AWS and job url is aws url and we can't able to hit that URL through api.
+	        				//example: http://ec2-52-42-158-179.us-west-2.compute.amazonaws.com:9090/job/AM_Server_CI_JOB/
+	        				String revisedUrl=sUrl;
+	        				String serverUrl=servers.get(i);
+	        				String port=""+getPort(serverUrl);
+	        				revisedUrl=revisedUrl.substring(revisedUrl.indexOf(port)+4);
+	        				exactMatchFound = true;
+	        				thisuri = URI.create(serverUrl+revisedUrl);
 	        			}
 	        			if (exactMatchFound && (i < usernames.size()) && (i < apiKeys.size()) 
 	        					&& (StringUtils.isNotEmpty(usernames.get(i))) && (StringUtils.isNotEmpty(apiKeys.get(i)))) {
@@ -599,7 +608,7 @@ public class DefaultHudsonClient implements HudsonClient {
         String domain = uri.getHost();
         return domain;
     }
-    
+      
     private int getPort(String url) throws URISyntaxException {
         URI uri = new URI(url);
         return uri.getPort();
