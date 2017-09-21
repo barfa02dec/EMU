@@ -29,6 +29,7 @@
                     </select> -->
     <select ng-model="selectedName" ng-change="check(selectedName)" style="color: #000;background: #efefef;
     border: none;color: #4482B2;font-weight: 600">
+    <option value="Select any Jobs">Select any Jobs</option>
                          <option ng-repeat="eachSelectedName in collectorDetails" value="{{eachSelectedName.id}}">{{eachSelectedName.description}}</option>
                         </select>
  

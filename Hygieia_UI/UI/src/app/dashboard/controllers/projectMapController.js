@@ -25,9 +25,7 @@
         }
 
   
-        //$scope.example1model = []; $scope.example1data = [ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"} ]
-        var apiHost = 'http://localhost:3000';
-        var qahost = 'http://10.20.1.183:3000';
+       
         $scope.curPage = 0;
         ctrl.pageSize = 5;
 
@@ -109,12 +107,6 @@
                     response.data.selectedItemsDashboard = [];
                     sp.getdashboards = response.data;
                 });
-
-           /* $http.get("/api/dashboard/projectdashboard?projectId=" + sp.id)
-                .then(function(response) {
-                    response.data.selectedItemsDashboard = [];
-                    sp.getdashboards = response.data;
-                });*/
 
             //Fetch all roles that is displayed in dual list
             $http.get("/api/allActiveEngineeringDashboardUserRoles")
@@ -312,17 +304,11 @@
         //Show List of Dashboards Page for that particular project
         $scope.showDahboardPage = function(ProId, ProName,projectspcID) {
             dashboardData.mydashboard(ProId,ctrl.usernamepro).then(function(){
-
-            });
-
-          
+        });
             $location.path('/site/');
             $cookies.put('ProId', ProId);
             $cookies.put('ProName', ProName);
             $cookies.put('ProSpId', projectspcID);
-
-
-            
         }
 
         //Add user Popup which matches the user to the project

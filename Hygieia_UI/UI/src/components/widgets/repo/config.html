@@ -4,12 +4,12 @@
 	novalidate="novalidate">
 
 	<form-group input="repoOption"
-				class="text-center"
+				class=""
 				errors="{required:'Please select a repository type'}">
 		<label class="all-opopups-text-left">Repo Type</label>
 
 		<select name="repoOption"
-				class="form-control text-center"
+				class="form-control "
 				ng-model="repoConfig.repoOption"
 				ng-options="repoOption.value for repoOption in repoConfig.repoOptions"
 				required>
@@ -18,13 +18,13 @@
 	</form-group>
 
 	<form-group input="repoUrl"
-				class="text-center"
+				class=""
 				errors="{required:'Repository URL is required', url: 'Please enter a valid URL'}">
 
 		<label class="all-opopups-text-left">Repo URL</label>
 		<input type="url"
 			   name="repoUrl"
-			   class="form-control text-center"
+			   class="form-control "
 			   ng-model="repoConfig.repoUrl"
 			   placeholder="Enter URL"
 			   autocomplete="off"
@@ -34,14 +34,14 @@
 	<form-group ng-if="repoConfig.repoOption.name == 'GitHub'  || repoConfig.repoOption.name == 'Bitbucket' || repoConfig.repoOption.name == 'Gitlab'"
 				errors="{required:'Branch is required'}"
 				input="gitBranch"
-				class="text-center">
+				class="">
 
-		<label class="modal-label" id="repoLabel">Branch</label>
+		<label class="all-opopups-text-left" id="repoLabel">Branch</label>
 
 		<input
 			type="text"
 			name="gitBranch"
-			class="form-control text-center"
+			class="form-control"
 			ng-model="repoConfig.gitBranch"
 			placeholder="Enter Branch"
 			required />
