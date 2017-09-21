@@ -26,6 +26,7 @@
 
     register.$inject = ['widgetManagerProvider', 'WidgetState'];
     function register(widgetManagerProvider, WidgetState) {
+        
         widget_state = WidgetState;
         widgetManagerProvider.register('build', config);
     }

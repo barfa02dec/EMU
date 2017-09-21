@@ -37,7 +37,7 @@
                 <!-- widget content -->
             </div>
             <div class="widget-body-config clickable" ng-click="checkPermission()" style="background:#9AD2FF;border: 2px solid #66ccff;border-radius:3px;">
-                <div>
+                <div ng-if="configureProject">
                     <div class="">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="30px" height="30px" viewBox="0 0 30 30" style="overflow:scroll;enable-background:new 0 0 30 30;" xml:space="preserve">
                             <style type="text/css">
@@ -54,9 +54,11 @@
                             </g>
                         </svg>
                     </div>
-                    <div style="color:#fff;">Configure
+                    <div style="color:#fff;" >Configure
                         <br/>widget</div>
+                        
                 </div>
+                 <div style="color:#fff;" ng-if="!configureProject">To be configured</div>
             </div>
         </div>
         <div class="col-md-12" style="background:#f6f6f6;

@@ -82,9 +82,13 @@
 
         function controller($scope, $element, $routeParams,$cookies) {
             $scope.selectedDashboard = $routeParams.id;
-            $scope.selectedName = $cookies.get('selectedName');
+            //$scope.selectedName = $cookies.get('selectedName');
+            // if($cookies.putObject($routeParams.id) && $cookies.putObject($routeParams.id).selectedName)
+            //     $scope.selectedName = $cookies.putObject($routeParams.id).selectedName;
              $scope.selectedNameSonar = $cookies.get('selectedNameSonar');
-          
+            if($cookies.get('"'+$routeParams.id+'"') && JSON.parse($cookies.get('"'+$routeParams.id+'"')) && JSON.parse($cookies.get('"'+$routeParams.id+'"')).selectedName)
+                $scope.selectedName = JSON.parse($cookies.get('"'+$routeParams.id+'"')).selectedName;
+           
             
             //debugger;
             $scope.widget_state = WidgetState;
@@ -121,9 +125,26 @@
             $scope.usernamepro = $cookies.get('username');
 
             function checkPermission() {
-                $scope.displayViewAll = true;
-                dashboardData.myowner($scope.dashboard.title).then(processmyownerresponse);
+                /*$scope.displayViewAll = true;
+                dashboardData.myowner($scope.dashboard.title).then(processmyownerresponse);*/
+                $scope.projID = $cookies.get('ProId');
+                $http.get("/api/getProjectsByUser/?username=" + $scope.usernamepro)
+            .then(function(response) {
+                $scope.getAllProjects = response.data;
 
+                for (var i = 0; i < $scope.getAllProjects.length; i++) {
+                    for (var j = 0; j < $scope.getAllProjects[i].usersGroup.length; j++) {
+                        for (var k = 0; k < $scope.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
+                            $scope.vvv = $scope.getAllProjects[i].usersGroup[j].user;
+                            $scope.projectIDS = $scope.getAllProjects[i].id;
+                            if (($scope.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CONFIGURE_WIDGET") > -1) && ($scope.vvv == $scope.usernamepro) && ($scope.projectIDS == $scope.projID)) {
+                                configModal();
+                            }
+                          
+                        }
+                    }
+                }
+            });
 
             }
 
@@ -140,6 +161,7 @@
                             $scope.projectIDS = $scope.getAllProjects[i].id;
                             if (($scope.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CONFIGURE_WIDGET") > -1) && ($scope.vvv == $scope.usernamepro) && ($scope.projectIDS == $scope.projID)) {
                                 $scope.editProjectflag = true;
+                                $scope.configureProject = true;
                             }
                         }
                     }
@@ -170,8 +192,14 @@
                 $scope.wid = $cookies.get('widId');
                 $scope.present = 0;
                 //$cookies.putObject('cookieSelectedName',[]);
-                $cookies.put('selectedName', selectedName);
+                $cookies.put('"'+$routeParams.id+'"', JSON.stringify({ 'selectedName' : selectedName } ));
                
+//alert($cookies.getObject($routeParams.id))
+            //     if(typeof $cookies.getObject($routeParams.id) == "undefined") {
+            //         $cookies.putObject($routeParams.id,{"selectedName":selectedName});
+            //     }
+            // debugger;
+
                 $scope.postPayload = {
                     name: 'build',
                     options: {
@@ -212,16 +240,11 @@
                 //1234asd1234asd-projectname
                 //username-was1234
                $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/codeanalysis", ($scope.postObjsonar)).then(function(response) {
-
                     refreshSonar();
 				 }) 
-               
-
-
             }
 
             function processmyownerresponse(data) {
-
                 $scope.owner = data;
                 if ($scope.owner == $cookies.get('username') || $cookies.get('username') == 'admin') {
                     configModal();
