@@ -3,10 +3,26 @@
     <div class="widget row" ng-class="{'configure' : state == widget_state.CONFIGURE, 'alert': display == display_state.ERROR}" style="padding:0px;">
         <div class="kanban-widget-heading" ng-if="header" ng-hide=" {{(title == 'Monitor')}}" style="">
         <span style="font-size:20px;font-weight: 300;">
-            <span ng-show=" {{(title == 'Feature')}}">FEATURE</span>
-            <span ng-show=" {{(title == 'Build')}}">BUILD<span style="color:#d6d6d6">|</span></span>
-            <span ng-show=" {{(title == 'Code Repo')}}">CODE REPO</span>
-            <span ng-show=" {{(title == 'Quality')}}">CODE QUALITY<span style="color:#d6d6d6">|</span></span></span>
+            <span ng-show=" {{(title == 'Feature')}}">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block"><style type="text/css">.stheadb0 {
+        fill: #605587;
+    }</style><rect class="stheadb0" width="5.1" height="16"></rect></svg>
+            FEATURE</span>
+            <span ng-show=" {{(title == 'Build')}}">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block"><style type="text/css">.stheadb0 {
+        fill: #605587;
+    }</style><rect class="stheadb0" width="5.1" height="16"></rect></svg>
+            BUILD<span style="color:#d6d6d6">|</span></span>
+            <span ng-show=" {{(title == 'Code Repo')}}">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block"><style type="text/css">.stheadb0 {
+        fill: #605587;
+    }</style><rect class="stheadb0" width="5.1" height="16"></rect></svg>
+            CODE REPO</span>
+            <span ng-show=" {{(title == 'Quality')}}">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block"><style type="text/css">.stheadb0 {
+        fill: #605587;
+    }</style><rect class="stheadb0" width="5.1" height="16"></rect></svg>
+            CODE QUALITY<span style="color:#d6d6d6">|</span></span></span>
         <span ng-show=" {{(title == 'Build')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
                   <!--   <select ng-model="selectedName" ng-options="selectedName.description for selectedName in collectorDetails" ng-change="check(selectedName)" style="color: #000;">
 
