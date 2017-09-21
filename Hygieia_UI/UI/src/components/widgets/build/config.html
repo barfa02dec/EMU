@@ -3,7 +3,7 @@
           ng-submit="buildConfig.submit(buildConfigForm.$valid,buildConfig.collectorItemId)" novalidate="novalidate">
         <form-group class="text-center" input="collectorItemId" errors="{required: 'Please select a collector'}">
 
-            <label class="modal-label">Build Job</label>
+            <label class="all-opopups-text-left">Build Job</label>
  			 <input type="text" name="collectorItemId" class="form-control" placeholder="Search a build job"
        ng-model="buildConfig.collectorItemId"
  			 uib-typeahead="item as item.description for item in getJobs($viewValue)" typeahead-focus
@@ -20,8 +20,8 @@
 
         </form-group>
 
-        <form-group class="text-center" input="buildDurationThreshold" errors="{required:'Build threshold is required', pattern: 'Please enter a number'}">
-            <label class="modal-label">Build duration threshold</label>
+        <form-group class="" input="buildDurationThreshold" errors="{required:'Build threshold is required', pattern: 'Please enter a number'}">
+            <label class="all-opopups-text-left">Build duration threshold</label>
             <input
                 type="text"
                 name="buildDurationThreshold"
@@ -36,8 +36,8 @@
 
         <hr/>
 
-        <form-group input="buildConsecutiveFailureThreshold" class="text-center" errors="{required:'Takeover criteria is required', pattern:'Please enter a number'}">
-            <label class="modal-label">Alert takeover criteria:</label>
+        <form-group input="buildConsecutiveFailureThreshold" class="" errors="{required:'Takeover criteria is required', pattern:'Please enter a number'}">
+            <label class="all-opopups-text-left">Alert takeover criteria:</label>
             <input
                 type="text"
                 name="buildConsecutiveFailureThreshold"
@@ -50,8 +50,8 @@
                 required>&nbsp;&nbsp;&nbsp;consecutive build fails
         </form-group>
 
-        <div class="button-row row text-center">
-            <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="margin-top: 0px;">Save</button>
+        <div class="button-row row ">
+            <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="margin-top: 0px;margin-left: 1.5%;">Save</button>
         </div>
     </form>
 </widget-modal>

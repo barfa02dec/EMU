@@ -7,7 +7,7 @@
 
             <form-group input="caCollectorItem" class="text-center">
 
-                <div class="text-center modal-label">Static Code Analysis:</div>
+                <div class="all-opopups-text-left">Static Code Analysis:</div>
 
 				<input type="text" name="caCollectorItem" class="form-control" placeholder="Search a Code Analysis Job"
 					ng-model="caWidget.caCollectorItem"
@@ -27,7 +27,7 @@
 
 
         <div class="form-group text-center">
-            <div class="text-center modal-label">Security Scan:</div>
+            <div class="all-opopups-text-left">Security Scan:</div>
             <!-- <select name="saCollectorItem"
                      class="form-control"
                      ng-model="caWidget.saCollectorItem"
@@ -53,8 +53,8 @@
         </div>
 
 
-        <form-group class="text-center">
-            <div class="text-center modal-label">Functional Tests:</div>
+        <form-group class="">
+            <div class="all-opopups-text-left">Functional Tests:</div>
 
             <div class="form-group text-center" ng-repeat="configItem in caWidget.testConfigs">
                 <div class="col-sm-3">
@@ -93,11 +93,11 @@
                 </div>
                 <dash-trash class="fa-lg" ng-click="caWidget.deleteTestConfig(configItem)"></dash-trash>
             </div>
-            <div class="form-group text-center"
+            <div class="form-group "
                  ng-show="caWidget.testConfigs.length==0 || caWidget.testConfigs[caWidget.testConfigs.length-1].testCollectorItem != null">
                 <span class="fa fa-plus-circle fa-2x clickable" ng-click="caWidget.addTestConfig()"></span>
             </div>
-            <div class="form group text-center">
+            <div class="form group ">
                 <label></label>
                 <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="margin-top: 0px;">Save</button>
             </div>

@@ -5,8 +5,8 @@
 	<div class="form-group clearfix"
 		ng-class="{'has-error': (configForm.collectorItemId.$invalid || configForm.selectedProject.$invalid) && ctrl.submitted}">
 
-		<div class="col-sm-push-2 col-sm-8">
-			<label class="modal-label">Agile Content Tool Type:</label>
+		<div class="col-sm-8">
+			<label class="all-opopups-text-left">Agile Content Tool Type:</label>
 
 			<select
 				name="collectorId" class="form-control" ng-model="ctrl.collectorId"
@@ -35,8 +35,8 @@
 				a valid feature data source</p>
 		</div>
         
-        <div ng-hide="ctrl.hideProjectDropDown" class="col-sm-push-2 col-sm-8">
-            <label class="modal-label">Project Name:</label>
+        <div ng-hide="ctrl.hideProjectDropDown" class="col-sm-8 padding-bw-cols">
+            <label class="all-opopups-text-left">Project Name:</label>
             <ui-select id="selectedProject" ng-model="ctrl.selectedProject" theme="bootstrap"
                        ng-disabled="ctrl.projectsDropdownDisabled" required>
                 <ui-select-match placeholder={{ctrl.projectsDropdownPlaceholder}}>{{$select.selected.projectName}}
@@ -116,8 +116,8 @@
         </div> -->
 	</div>
 
-	<div class="button-row row text-center">
-		<button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="margin-top: 0px;">Save</button>
+	<div class="button-row row">
+		<button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="margin-top: 0px;margin-left: 3%;">Save</button>
 	</div>
 </form>
 </widget-modal>
