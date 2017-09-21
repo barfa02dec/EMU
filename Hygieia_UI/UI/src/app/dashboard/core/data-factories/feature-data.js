@@ -118,8 +118,8 @@
 		 *
 		 * @param collectorId
 		 */
-		function projectsByCollectorId(collectorId) {
-			return $http.get(HygieiaConfig.local ? testProjectsByCollectorId : buildProjectsByCollectorId + collectorId)
+		function projectsByCollectorId(collectorId,projectIDspec) {
+			return $http.get(HygieiaConfig.local ? testProjectsByCollectorId : buildProjectsByCollectorId + collectorId +'/'+ projectIDspec)
 				.then(function(response) {
 					return response.data;
 				});

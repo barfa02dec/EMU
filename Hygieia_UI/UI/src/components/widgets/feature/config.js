@@ -5,9 +5,9 @@
 			featureConfigController);
 
 	featureConfigController.$inject = [ 'modalData', '$uibModalInstance',
-			'collectorData', 'featureData' ];
+			'collectorData', 'featureData', '$cookies' ];
 
-	function featureConfigController(modalData, $uibModalInstance, collectorData, featureData) {
+	function featureConfigController(modalData, $uibModalInstance, collectorData, featureData, $cookies) {
 		/* jshint validthis:true */
 		var ctrl = this;
 		var widgetConfig = modalData.widgetConfig;
@@ -27,7 +27,7 @@
 		ctrl.hideSprintTypeDropDown = true;
         ctrl.hideListTypeDropDown = true;
 		ctrl.evaluateTypeSelection = evaluateTypeSelection;
-
+		ctrl.projectspcID = $cookies.get('ProSpId');
 		// public variables
 		ctrl.featureType = ctrl.featureTypeOption;
 		ctrl.collectorItemId = null;
@@ -158,14 +158,14 @@
 			}
 		}
 
-		function processCollectorsResponse(data) {
+		function processCollectorsResponse(data,$cookies) {
 			ctrl.collectors = data;
 			var featureCollector = modalData.dashboard.application.components[0].collectorItems.AgileTool;
 			var featureCollectorId = featureCollector ? featureCollector[0].collectorId
 					: null;
 
 			getCollectors(data, featureCollectorId);
-
+			
 			function getCollectors(data, currentCollectorId) {
 				for ( var x = 0; x < data.length; x++) {
 					var obj = data[x];
@@ -202,9 +202,9 @@
 					ctrl.hideTeamDropDown = false;
 					ctrl.hideSprintTypeDropDown = false;
 					ctrl.hideListTypeDropDown = false;
-
+					
 					// Request projects
-					featureData.projectsByCollectorId(ctrl.collectorId.id).then(
+					featureData.projectsByCollectorId(ctrl.collectorId.id,ctrl.projectspcID).then(
 						processProjectsResponse);
 
 					// Request teams

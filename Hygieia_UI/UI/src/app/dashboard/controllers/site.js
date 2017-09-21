@@ -94,6 +94,12 @@
                             if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("CREATE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro) && (ctrl.projectIDS == ctrl.projID)){
                                ctrl.createDashboards = true;
                             }
+                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("DASHBOARD_LIST_VIEW") > -1) && (ctrl.vvv == ctrl.usernamepro) && (ctrl.projectIDS == ctrl.projID)){
+                               ctrl.dashboardListViews = true;
+                            }
+                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("VIEW_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro) && (ctrl.projectIDS == ctrl.projID)){
+                               ctrl.dashboardViewWidget = true;
+                            }
                         }
                     }
                 }

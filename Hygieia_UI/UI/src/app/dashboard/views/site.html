@@ -91,7 +91,7 @@
          </form>
       </div>
    </div>
-   <div class="widget-modal" style="padding: 15px;">
+   <div class="widget-modal" style="padding: 15px;" ng-if="ctrl.dashboardListViews">
       <div class="widget-modal-body">
          <div class="row gap">
             <div class="">
@@ -102,8 +102,14 @@
                   </div>
                   <div class="col-md-3" ng-repeat="myitem in mydashboards = (ctrl.mydash | filter:ctrl.filterDashboards | orderBy: 'name')" style="padding-top: 2%;">
                      <div class="col-md-12" style="background: #F9F9F9;border-top:2px solid #1766A4;box-shadow: 0px 0px 3px #888888" >
-                        <div class="col-md-12" style="padding: 15px;">
+                        <div class="col-md-12" style="padding: 15px;" ng-if="ctrl.dashboardViewWidget">
                            <a class="btn-block clickable" ng-click="ctrl.open(myitem.id)" style="color: #568FBC;
+                              font-size: 20px;">
+                           <span class="fa fa-lg left-icon" ng-class="{'fa-cubes' : myitem.isProduct}"></span> {{ myitem.name }}
+                           </a>
+                        </div>
+                        <div class="col-md-12" style="padding: 15px;" ng-if="!ctrl.dashboardViewWidget">
+                           <a class="btn-block clickable"  style="color: #568FBC;
                               font-size: 20px;">
                            <span class="fa fa-lg left-icon" ng-class="{'fa-cubes' : myitem.isProduct}"></span> {{ myitem.name }}
                            </a>
