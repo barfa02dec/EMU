@@ -1,8 +1,8 @@
-<div class="repo-view">
- <div class="col-md-12 kanban-widget-styles" style="background: #fff;padding-top: 11.5px;">
-<div class="col-md-11" style="padding-right:0px;">
-    <div class="widget" style="color:black;text-shadow: none;border-bottom: 1px solid #d6d6d6;">
-        <div class="widget-sub-head sub-header-maindashboard" style="padding:3.7px;margin-bottom: 2.6%;">
+<div class="repo-view repo-container">
+ <div class="col-md-12 kanban-widget-styles repo-widget">
+<div class="col-md-11 repo-widget-col-one">
+    <div class="widget repo-widget-col-two">
+        <div class="widget-sub-head sub-header-maindashboard repo-widget-sub-head">
             Commits Per Day
         </div>
         <div class="widget-body graph-bg-gradient">
@@ -16,30 +16,24 @@
         </div>
     </div></div>
     <div class="">
-    <div class="col-md-11" style="padding-right:0px;">
-    <div class="widget" style="color:black;text-shadow: none">
+    <div class="col-md-11 repo-below-container">
+    <div class="widget repo-below-widget">
         <div class="widget-sub-head sub-header-maindashboard">
             Summary
         </div>
-        <div class="widget-body">
+        <div class="widget-body repo-below-body">
             <table class="table repo-summary-table table-striped">
                 <tr>
                     <td class="widget-inner-labels">TOTAL COMMITS</td>
-                    <td style="font-size: 14px;
-    font-weight: 600!important;">{{repoView.lastDayCommitCount}}</td>
-                    <td style="font-size: 14px;
-    font-weight: 600!important;">{{repoView.lastSevenDaysCommitCount}}</td>
-                    <td style="font-size: 14px;
-    font-weight: 600!important;">{{repoView.lastFourteenDaysCommitCount}}</td>
+                    <td class="repo-below-td">{{repoView.lastDayCommitCount}}</td>
+                    <td class="repo-below-td">{{repoView.lastSevenDaysCommitCount}}</td>
+                    <td class="repo-below-td">{{repoView.lastFourteenDaysCommitCount}}</td>
                 </tr>
                 <tr>
                     <td class="widget-inner-labels">CONTRIBUTORS</td>
-                    <td style="font-size: 14px;
-    font-weight: 600!important;">{{repoView.lastDayContributorCount}}</td>
-                    <td style="font-size: 14px;
-    font-weight: 600!important;">{{repoView.lastSevenDaysContributorCount}}</td>
-                    <td style="font-size: 14px;
-    font-weight: 600!important;">{{repoView.lastFourteenDaysContributorCount}}</td>
+                    <td class="repo-below-td">{{repoView.lastDayContributorCount}}</td>
+                    <td class="repo-below-td">{{repoView.lastSevenDaysContributorCount}}</td>
+                    <td class="repo-below-td">{{repoView.lastFourteenDaysContributorCount}}</td>
                 </tr>
                 <tr class="totals">
                     <td></td>
@@ -50,5 +44,4 @@
             </table>
         </div>
     </div></div></div>
-    <div>
-</div>
+</div></div>
