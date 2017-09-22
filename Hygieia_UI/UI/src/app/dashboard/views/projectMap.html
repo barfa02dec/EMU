@@ -142,7 +142,7 @@
                <span class="" ng-repeat="innerItem in proj.usersGroup">
                <span class="" ng-repeat="childItem in innerItem.userRoles">
                <span class="" ng-show="!proj.editorEnabled && childItem.permissions.indexOf('ADD_USER') !== -1 && innerItem.user.includes(pm.usernamepro)">
-               <img src="assets/images/icon_add_user.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.shareProjectPopUp(proj)" title="Add user">
+               <img src="assets/images/icon_add_user.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.shareProjectPopUp(proj)" title="Add user" style="margin-left: -3px;">
                </span>
                </span></span>
                <span class="" ng-repeat="innerItem in proj.usersGroup">
