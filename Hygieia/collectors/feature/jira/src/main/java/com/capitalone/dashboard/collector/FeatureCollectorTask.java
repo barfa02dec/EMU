@@ -1,6 +1,7 @@
 package com.capitalone.dashboard.collector;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,11 +157,12 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			long storyDataStart = System.currentTimeMillis();
 			StoryDataClientImpl storyData = new StoryDataClientImpl(this.coreFeatureSettings,
 					featureSettings, this.featureRepository,this.defectRepository,this.sprintRepository,this.defectAggregationRepository,this.releaseRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
-			count = storyData.updateStoryInformation();
+			count = storyData.updateDefectInformation();
 
 			List<Scope> projects=(List<Scope>) projectRepository.findAll();
 			for(Scope scopeProject: projects){
 				List<Defect> defectsInDB=(List<Defect>) defectRepository.findByProjectId(scopeProject.getpId());
+				defectsInDB=defectsInDB.stream().filter(defect->defect.getProjectName().equals(scopeProject.getName())).collect(Collectors.toList());
 				LOGGER.info("*************PROJECT ID::"+scopeProject.getpId()+"********DEFECTS COUNT::"+defectsInDB.size());
 				storyData.processDefectAggregation(featureSettings, defectsInDB,scopeProject);
 				

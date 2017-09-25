@@ -24,7 +24,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
@@ -67,7 +66,7 @@ public class DefaultJiraClient implements JiraClient {
 	private static final String TEMPO_TEAMS_REST_SUFFIX = "rest/tempo-teams/1/team";
 	
 	private final DateFormat QUERY_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	
+	private static final String GET_OPEN_DEFECTS_SEVERITY =  "type in (Bug) and  resolution in (Unresolved)";
 	private static final Set<String> DEFAULT_FIELDS = new HashSet<>();
 	static {
 		DEFAULT_FIELDS.add("*all,-comment,-watches,-worklog,-votes,-reporter,-creator,-attachment");
@@ -402,5 +401,46 @@ public class DefaultJiraClient implements JiraClient {
 		}
 		
 		return statusMap;
+	}
+
+	@Override
+	public List<Issue> getIssuesPMD(int pageStart, NewFeatureSettings featureSettings) {
+
+		List<Issue> rt = new ArrayList<>();
+		JiraRestClient client = restSupplier.get(featureSettings);
+		if (client != null) {
+			try {
+				// example "1900-01-01 00:00"
+				
+				//client.getSearchClient().searchJql(query);
+				Promise<SearchResult> promisedRs = client.getSearchClient().searchJql(
+						GET_OPEN_DEFECTS_SEVERITY, featureSettings.getPageSize(), pageStart, DEFAULT_FIELDS);
+				SearchResult sr = promisedRs.claim();
+
+				Iterable<Issue> jiraRawRs = sr.getIssues();
+				
+				if (jiraRawRs != null) {
+					if (LOGGER.isDebugEnabled()) {
+						int pageEnd = Math.min(pageStart + getPageSize() - 1, sr.getTotal());
+						
+						LOGGER.debug(String.format("Processing issues %d - %d out of %d", pageStart, pageEnd, sr.getTotal()));
+					}
+					
+					rt = Lists.newArrayList(jiraRawRs);
+				}
+			} catch (RestClientException e) {
+				if (e.getStatusCode().isPresent() && e.getStatusCode().get() == 401 ) {
+					LOGGER.error("Error 401 connecting to JIRA server, your credentials are probably wrong. Note: Ensure you are using JIRA user name not your email address.");
+				} else {
+					LOGGER.error("No result was available from Jira unexpectedly - defaulting to blank response. The reason for this fault is the following:" + e.getCause());
+				}
+				LOGGER.debug("Exception", e);
+			}
+		} else {
+			LOGGER.warn("Jira client setup failed. No results obtained. Check your jira setup.");
+		}
+		
+		return rt;
+	
 	}
 }

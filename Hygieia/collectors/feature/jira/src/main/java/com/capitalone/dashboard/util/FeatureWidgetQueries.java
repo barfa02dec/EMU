@@ -117,4 +117,16 @@ public class FeatureWidgetQueries {
 
 		return query;
 	}
+	
+	public String getStoryQueryPMD( String[] issueTypes, String queryName) {
+		ST st = folder.getInstanceOf(queryName);
+		String[] issueTypesQuoted = new String[issueTypes.length];
+		for (int i = 0; i < issueTypes.length; i++) {
+			issueTypesQuoted[i] = "'" + issueTypes[i] + "'";
+		}
+		st.add("issueTypes", String.join(",", issueTypesQuoted));
+		String query = st.render();
+
+		return query;
+	}
 }

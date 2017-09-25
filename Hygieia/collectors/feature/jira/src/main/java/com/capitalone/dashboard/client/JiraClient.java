@@ -11,6 +11,8 @@ import com.capitalone.dashboard.util.NewFeatureSettings;
 public interface JiraClient {
 	List<Issue> getIssues(long startTime, int pageStart, NewFeatureSettings featureSettings);
 	
+	List<Issue> getIssuesPMD(int pageStart,NewFeatureSettings featureSettings);
+	
 	List<BasicProject> getProjects(NewFeatureSettings featureSettings);
 	
 	List<Team> getTeams(NewFeatureSettings featureSettings);
