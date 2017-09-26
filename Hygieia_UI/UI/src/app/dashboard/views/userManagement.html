@@ -100,10 +100,13 @@
         <div class="col-md-6" style="padding-left: 0px;">
         
        <div class="expandcollapse-item panel-group">
-        <div class="panel-heading" style="cursor: pointer;border: 1px solid #d6d6d6;" ng-click="active = !active" ng-class="{'expandcollapse-heading-collapsed': active, 'expandcollapse-heading-expanded': !active}">{{fetchPro.projectName}}</div>
+        <div class="panel-heading col-md-12" style="cursor: pointer;border: 1px solid #d6d6d6;" ng-click="active = !active" ng-class="{'expandcollapse-heading-collapsed': active, 'expandcollapse-heading-expanded': !active}"><span class="col-md-11">{{fetchPro.projectName}}</span>
+          <span class="col-md-1"><i class="fa fa-chevron-up" aria-hidden="true" ng-if="active"></i>
+          <i class="fa fa-chevron-down" aria-hidden="true"  ng-if="!active"></i></span>
+        </div>
          <div class="slideDown" ng-hide="!active" style="border: 1px solid #d6d6d6;
     background: #f5f5f5;">
-    
+
           <div class="expand-collapse-content panel-body col-md-12" ng-repeat="innerItem in fetchPro.usersGroup" >
             <span class="col-md-10">{{innerItem.user}}</span>
             <span class="col-md-2">
