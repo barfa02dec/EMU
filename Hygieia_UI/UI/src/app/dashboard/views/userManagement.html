@@ -2,98 +2,88 @@
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<div class="blue-header project-map-blue-bar" style="min-height: 0px;">
-    <span class="hamburger-ListdashPage project-map-hamburger">
-        <svg version="1.1"
+   <div class="blue-header" style="height: 50px;
+      width:100%;background: #1766A4;min-height: 0px !important">
+      <!-- <span class="hamburger-ListdashPage project-map-hamburger" style="margin-left: 2.2%;">
+         <svg version="1.1"
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
             x="0px" y="0px" width="15px" height="9px" viewBox="0 0 15 9" style="overflow:scroll;enable-background:new 0 0 15 9;"
             xml:space="preserve">
             <style type="text/css">
-                .stham0{fill:#FFFFFF;}
+               .stham0{fill:#FFFFFF;}
             </style>
             <defs></defs>
             <g>
-                <g>
-                    <path class="stham0" d="M0,0h15v1.5H0V0z M0,3.8h15v1.5H0V3.8z M0,7.5h15V9H0V7.5z"/>
-                </g>
+               <g>
+                  <path class="stham0" d="M0,0h15v1.5H0V0z M0,3.8h15v1.5H0V3.8z M0,7.5h15V9H0V7.5z"/>
+               </g>
             </g>
-        </svg>
-    </span>
-    <span class="edMenu-ListDash-Page project-map-ed">
-        <svg version="1.1"
-            xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
-            x="0px" y="0px" width="23px" height="23px" viewBox="0 0 23 23" style="overflow:scroll;enable-background:new 0 0 23 23;"
-            xml:space="preserve">
-            <style type="text/css">
-                .stedlogo0{fill:#000;}
-                .stedlogo1{fill: #fff;}
-            </style>
-            <defs></defs>
-            <g>
-                <path class="stedlogo0" d="M11.5,0c0.8,0,1.6,0.1,2.3,0.2c1.9,0.4,3.6,1.2,5,2.4V0H11.5z M11.5,23h7.3v-2.6c-1.4,1.2-3.1,2-5,2.4
-                    C13.1,22.9,12.3,23,11.5,23z M4.6,23v-0.2l0-5.7l0-3.3L0,9.2V23H4.6z M0,9.2h4.6l0-1.9l0-7.1V0H0V9.2z"/>
-                <g class="stedlogo1">
-                    <path d="M18.8,2.6c-1.4-1.2-3.1-2-5-2.4C13.1,0.1,12.3,0,11.5,0H4.6v7.3h0l0,1.9H0l4.6,4.6l0,3.3h0V23h6.9c0.8,0,1.6-0.1,2.3-0.2
-                        c1.9-0.4,3.6-1.2,5-2.4c2.6-2.1,4.2-5.3,4.2-8.9S21.4,4.7,18.8,2.6z M18,13.8c-0.7,2-2.2,3.5-4.2,4.2c-0.7,0.3-1.5,0.4-2.3,0.4
-                        H9.2v-4.6h4.6L9.2,9.2V4.6h2.3c0.8,0,1.6,0.1,2.3,0.4c2,0.7,3.5,2.2,4.2,4.2c0.3,0.7,0.4,1.5,0.4,2.3S18.3,13.1,18,13.8z"/>
-                </g>
-            </g>
-        </svg>
-    </span>
-    <span class="edtext-ListdashPage project-map-edText">Engineering Dashboard</span>
-    <span id="demo" class="signout-ListdashPage project-map-signout-mainParent">
-        <div class="wrapper blddmenu">
-            <div class="content blddmenu project-map-firstChild">
-                <ul class="blddmenu">
-                    <a>
-                        <li ng-click="pm.logout()" style="text-align:center;">Log out</li>
-                    </a>
-                </ul>
-                <ul class="blddmenu">
-                    <a>
-                        <li ng-click="pm.UserManagement()" style="font-size: 12px;">
-                    <a href="#/userManagement">UserManagement</a></li>
-                    </a>
-                </ul>
-            </div>
-            <div class="parent">
-                <svg version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
-                    x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20" style="overflow:scroll;enable-background:new 0 0 20 20;"
-                    xml:space="preserve">
-                    <style type="text/css">
-                        .stedprofile0{fill:#FFFFFF;}
-                    </style>
-                    <defs></defs>
-                    <g>
-                        <g>
-                            <path class="stedprofile0" d="M2.9,2.9C4.9,1,7.2,0,10,0s5.1,1,7.1,2.9S20,7.2,20,10S19,15.1,17,17S12.7,20,10,20S4.9,19,2.9,17
-                                S0,12.7,0,10S1,4.9,2.9,2.9z M10,17.2c2.5,0,4.5-1.1,6-3.2c0-0.9-0.7-1.6-2.1-2.2s-2.7-0.9-3.9-0.9s-2.5,0.3-3.9,0.9S4,13.1,4,14
-                                C5.5,16.1,7.5,17.2,10,17.2z M12.1,3.9C11.5,3.3,10.8,3,10,3S8.5,3.3,7.9,3.9S7,5.2,7,6s0.3,1.5,0.9,2.1S9.2,9,10,9
-                                s1.5-0.3,2.1-0.9S13,6.8,13,6S12.7,4.5,12.1,3.9z"/>
-                        </g>
-                    </g>
-                </svg>
-            </div>
+         </svg>
+      </span> -->
+      <span class="edMenu-ListDash-Page project-map-ed" style="margin-left: 1.9%;">
+      <img src="assets/images/emu-5w.png" style="height: 30px;
+         width: 30px;">
+      </span>
+      <span class="edtext-ListdashPage project-map-edText">Engineering Metrics Unified</span>
+      <span class="edtext-ListdashPage userloggedin-label">{{ctrl.usernamepro}}</span>
+      <div class="dropdown-logout sign-out-box-specs">
+         <div class="abc">
+           <!--  <svg version="1.1"
+               xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/"
+               x="0px" y="0px" width="20px" height="20px" viewBox="0 0 20 20" style="overflow:scroll;enable-background:new 0 0 20 20;"
+               xml:space="preserve">
+               <style type="text/css">
+                  .stedprofile0{fill:#FFFFFF;}
+               </style>
+               <defs></defs>
+               <g>
+                  <g>
+                     <path class="stedprofile0" d="M2.9,2.9C4.9,1,7.2,0,10,0s5.1,1,7.1,2.9S20,7.2,20,10S19,15.1,17,17S12.7,20,10,20S4.9,19,2.9,17
+                        S0,12.7,0,10S1,4.9,2.9,2.9z M10,17.2c2.5,0,4.5-1.1,6-3.2c0-0.9-0.7-1.6-2.1-2.2s-2.7-0.9-3.9-0.9s-2.5,0.3-3.9,0.9S4,13.1,4,14
+                        C5.5,16.1,7.5,17.2,10,17.2z M12.1,3.9C11.5,3.3,10.8,3,10,3S8.5,3.3,7.9,3.9S7,5.2,7,6s0.3,1.5,0.9,2.1S9.2,9,10,9
+                        s1.5-0.3,2.1-0.9S13,6.8,13,6S12.7,4.5,12.1,3.9z"/>
+                  </g>
+               </g>
+            </svg> -->
+            <img src="assets/images/Group 131.png" class="log-out-icon-size"></td>
+         </div>
+         <div class="dropdown-contents" style="right: -36px;">
+            <!-- <a href="#/userManagement"  ng-click="ctrl.UserManagement()" style="cursor: pointer;">User Management</a> -->
+            <a ng-click="umc.logout()" style="cursor: pointer;">Sign out</a>
+         </div>
+      </div>
+   </div>
+<div class="black-header" style="height: 80px;min-height:0px;border-bottom:1px solid #b3b3b3;background-image: url('assets/images/bg_page_header.png');">
+    <div class="row">
+        <div class="col-md-12">
+        <div class="col-md-7" style="padding-top: 1%;padding-left: 2%;">
+        <div class="" style="font-size: 23px;color: #000;">
+             User Management</div>
+           <!--  <div class="" style="font-size: 14px;">Choose a Project</div> -->
         </div>
-    </span>
-</div>
-<div class="black-header" style="height: 30px;width:100%;background:#000;min-height: 0px;">
-    <div class="col-md-10" style="background: #000;
-        height: 27px;
-        font-size: 13px;">
-        <div class="col-md-4">
-            <a href="#/site">
-                <ul class="breadcrumb" style="background: none;margin-top: -3px;float:left">
-                    <li>
-            <a href="#/projects" style="text-decoration: underline;color: #fff;">Project List</a></li>
-            </ul></a>
+        <div class="col-md-3"></div>
+        <div class="col-md-2">
+                <button type="submit" ng-click="umc.openCreateRole()" class="btn btn-info project-map-add-btn" style="font-size: 12px;margin-top: 19px;
+    margin-left: 53%;">Create role</button>
+            </div>
+            </div>
+         <div class="row">
+        <div class="col-md-12">
+        <div class="col-md-4" style="padding-left: 3%;">
+        
+            <div class="" style="font-size: 14px;color: #4482B2"><a href="#/projects" style="color: #4482B2">All projects</a> <img src="assets/images/arrow_right.png" style="vertical-align: sub;"> <a href="#/site" style="color: #4482B2">All dashboards</a></div>
+        </div>
+        <div class="col-md-6">
+          
+        </div>
         </div>
     </div>
+    </div>
 </div>
-<h4 style="text-align: center;">User Management</h4>
+
 <div>
-    <div id="tabs">
+    <div id="tabs" style="padding-top: 1%;
+    padding-left: 1.8%;">
         <ul class="tab-styling-userManagement">
             <li class="style-forli" ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">{{tab.title}}</li>
         </ul>
@@ -103,17 +93,26 @@
     </div>
     <script type="text/ng-template" id="one.tpl.html">
         <div id="viewOne">
-            <h4 style="padding-top: 2%;">User Management</h4>
+           
           
-        <div class="col-md-12" style="padding-top: 30px" ng-repeat="fetchPro in umc.getprojectsUsers">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
+        <div class="col-md-12" style="padding-top: 30px;padding-left: 0px;" ng-repeat="fetchPro in umc.getprojectsUsers">
+      
+        <div class="col-md-6" style="padding-left: 0px;">
         
-       <div class="expandcollapse-item">
-        <div class="" style="cursor: pointer;" ng-click="active = !active" ng-class="{'expandcollapse-heading-collapsed': active, 'expandcollapse-heading-expanded': !active}">{{fetchPro.projectName}}</div>
-         <div class="slideDown" ng-hide="!active">
-          <div class="expand-collapse-content" ng-repeat="fetchuser in umc.newArr">
-            {{fetchuser[0].user}}
+       <div class="expandcollapse-item panel-group">
+        <div class="panel-heading" style="cursor: pointer;border: 1px solid #d6d6d6;" ng-click="active = !active" ng-class="{'expandcollapse-heading-collapsed': active, 'expandcollapse-heading-expanded': !active}">{{fetchPro.projectName}}</div>
+         <div class="slideDown" ng-hide="!active" style="border: 1px solid #d6d6d6;
+    background: #f5f5f5;">
+    
+          <div class="expand-collapse-content panel-body col-md-12" ng-repeat="innerItem in fetchPro.usersGroup" >
+            <span class="col-md-10">{{innerItem.user}}</span>
+            <span class="col-md-2">
+              <img src="assets/images/icon_delete.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.deleteRoleModel(per)" title="Delete">
+              <img src="assets/images/icon_edit.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.editRoleModel(per.roleKey,per)" title="Edit" > 
+            </span>
+            <span>
+               
+            </span>
           </div>
         </div>
        </div>
@@ -127,14 +126,12 @@
     <script type="text/ng-template" id="two.tpl.html">
         <div id="viewTwo">
             <div class="col-md-8" style="padding-top: 2%;">
-                <div style="font-size: 14px;font-weight: 600;">
+               <!--  <div style="font-size: 14px;font-weight: 600;">
                     Roles
-                </div>
+                </div> -->
             </div>
-            <div class="col-md-4">
-                <button type="submit" ng-click="umc.openCreateRole()" class="btn btn-raised btn-success green-btn-props" style="font-size: 12px;">Create Role</button>
-            </div>
-             <div class="col-md-12" style="padding-top: 30px">
+           
+          <!--    <div class="col-md-12" style="padding-top: 30px">
         <div class="col-md-1"></div>
         <div class="col-md-6">
         <div class="col-md-3 project-map-list-header">Role Name</div>
@@ -143,13 +140,13 @@
         
         
         </div>
-        </div>
-            <form name="umc.projectDetailBar">
+        </div> -->
+          <!--   <form name="umc.projectDetailBar">
         
                 <div class="col-md-12 " ng-repeat="per in umc.getRoles">
                     <div class="col-md-1"></div>
                     <div class="col-md-6 projectBar project-map-bar-prop">
-                        <!--  <a href="#/site" target="_self" >asdasd</a> -->
+                    
                         <div>
         
                             <div class="col-md-3" ng-attr-title="{{per.roleKey}}" style="">{{per.roleKey}}</div>
@@ -165,11 +162,33 @@
                     </div>
         
                 </div>
-            </form>
+            </form> -->
+            <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Role Name</th>
+                 <th>Created By</th>
+                  <th>Permissions</th>
+                   <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="per in umc.getRoles">
+              <td>{{per.roleKey}}</td>
+               <td>{{per.description}}</td>
+                <td><div ng-repeat="(key, value) in per.permissions">{{key}}</div></td>
+                <td> <img src="assets/images/icon_delete.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.deleteRoleModel(per)" title="Delete">
+                <img src="assets/images/icon_edit.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.editRoleModel(per.roleKey,per)" title="Edit" > 
+                </td>
+               
+              <tr>
+            </tbody>
+              
+            </table>
         
         </div>
     </script>
-    <script type="text/ng-template" id="three.tpl.html">
+<!--     <script type="text/ng-template" id="three.tpl.html">
         <div id="viewThree">
         <div class="col-md-8" style="padding-top: 2%;">
                 <div style="font-size: 14px;font-weight: 600;">
@@ -182,12 +201,11 @@
         <div class="col-md-12" style="padding-top: 30px">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-        <!-- <div class="col-md-2 project-map-list-header">Created By</div>
-        <div class="col-md-2 project-map-list-header">Created On</div> -->
+       
         <div class="col-md-4 project-map-list-header">Permission Name</div>
         <div class="col-md-4 project-map-list-header">Description</div>
         
-        <!--  <div class="col-md-2 project-map-list-header">Status</div> -->
+       
         
         </div>
         </div>
@@ -198,12 +216,10 @@
                 <div class="col-md-12 " ng-repeat="per in umc.getAllPermissions">
                     <div class="col-md-1"></div>
                     <div class="col-md-10 projectBar project-map-bar-prop">
-                        <!--  <a href="#/site" target="_self" >asdasd</a> -->
+                 
                         <div>
         
-                        <!--   <div class="col-md-2 project-map-list-data" ng-attr-title="{{per.createdBy}}" style="">{{per.createdBy}}</div>
-        
-                            <div class="col-md-2 project-map-list-data" ng-attr-title="{{per.createdOn}}" style="">{{per.createdOn}}</div> -->
+                     
                             <div class="col-md-4" ng-show="per.editorEnabled" ng-attr-title="{{per.name}}" style="">
                                 {{per.name}}
                             </div>
@@ -214,18 +230,10 @@
                             </div>
                             <div class="col-md-4" ng-attr-title="{{per.description}}" style="" ng-show="!per.editorEnabled">{{per.description}}</div> 
         
-                            <!--  <div class="col-md-2 project-map-list-data" ng-attr-title="{{umc.lastUpdatedOn}}" style="">{{per.lastUpdatedOn}}</div> -->
-        
                            
         
-                         <!--    <div class="col-md-2 project-map-list-data" ng-attr-title="{{per.status}}" style="">{{per.status}}</div> -->
-        
-                            <!--    <div class="col-md-1 project-map-list-data" ng-attr-title="{{umc.updatedBy}}" style="">{{per.updatedBy}}</div> -->
-        
                             <span class="col-md-4" style="padding-left: 43px;">
-            <!--  <span style="padding-left: 14px">
-                  <img src="assets/images/shareNew.png " class="ed-image-props project-map-crud-icons" style="width:22px;" ng-click="pm.shareProjectPopUp(proj)" title="Add User">
-               </span> -->
+           
                               <span class="" ng-show="!per.editorEnabled">
                  <img src="assets/images/editNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="umc.enableEditor(per.id)" title="Edit">
                </span> 
@@ -243,5 +251,5 @@
             </form>
         
         </div>
-    </script>
+    </script> -->
 </div>

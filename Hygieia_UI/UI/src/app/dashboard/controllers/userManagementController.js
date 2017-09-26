@@ -24,10 +24,10 @@
         }, {
             title: 'Role Management',
             url: 'two.tpl.html'
-        }, {
+        }/*, {
             title: 'Permissions',
             url: 'three.tpl.html'
-        }];
+        }*/];
 
         $scope.currentTab = 'one.tpl.html';
 
@@ -211,20 +211,47 @@
             ctrl.usernamepro = $cookies.get('username');
 
             //Fetch All Active Permissions to display in dual list
-            $http.get("/api/allActiveEngineeringDashboardPermissions")
+            $http.get("/api/allActiveEngineeringDashboardPermissionKeys")
                 .then(function(response) {
-                    response.data.selectedItems = [];
+                    
                     ctrl.getAllPermissions = response.data;
-
-                    /*ctrl.getAllPermissions = response.data;
-                    ctrl.newArr = [];
-                    for (var i = 0; i < ctrl.getAllPermissions.length; i++) {
-                        if (ctrl.getAllPermissions[i].name != undefined) {
-                            ctrl.newArr.push(ctrl.getAllPermissions[i].name);
-                        }
+                    ctrl.selectedItems = [];
+                    /*for(var i=0;i<ctrl.getAllPermissions;i++){
+                        if (ctrl.getAllPermissions[i].hasOwnProperty("name")) {
+                        selectedItems.push(ctrl.getAllPermissions[i].name);
                     }
-*/                    
+                    }*/
+                    ctrl.role = {
+                "createdBy": ctrl.usernamepro,
+                "description": ctrl.description,
+                "enabled": true,
+                "permissions":ctrl.selectedItems,
+                "roleKey": ctrl.roleKey,
+                "updatedBy": ctrl.usernamepro
+            }
                 });
+           //Create Role Payload Object
+             
+
+            //Create role post API call
+            if(ctrl.selectedItems !=0){
+            ctrl.postRole = function() {
+                ctrl.usernamepro = $cookies.get('username');
+                 
+                $http.post('/api/engineeringDashboardUserRole ', (ctrl.role)).then(function(response) {
+                    $route.reload();
+                    $uibModalInstance.dismiss("cancel");
+                    console.log("saas"+ctrl.role);
+                })
+            };
+        }
+        else{
+            $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/selectpermissionrequired.html',
+                        controller: 'userManagementController',
+                        controllerAs: 'umc'
+                    });
+        }
 
             //Adding Permissions to User Dual List Functionality
             ctrl.transfer = function(from, to, index) {
@@ -237,41 +264,6 @@
                     }
                     from.length = 0;
                 }
-            };
-
-            //Create Role Payload Object
-            ctrl.role = {
-                "createdBy": ctrl.usernamepro,
-                //"createdOn": "string",
-                "description": ctrl.description,
-                "enabled": true,
-                /*"id": {
-                    "counter": 0,
-                    "date": "2017-07-19T10:03:24.900Z",
-                    "machineIdentifier": 0,
-                    "processIdentifier": 0,
-                    "time": 0,
-                    "timeSecond": 0,
-                    "timestamp": 0
-            },*/
-                /*"lastUpdatedOn": "string",*/
-                "permissions":ctrl.getAllPermissions,
-                "roleKey": ctrl.roleKey,
-                "updatedBy": ctrl.usernamepro
-            }
-
-            //Create role post API call
-            console.log(ctrl.role);
-            ctrl.postRole = function() {
-                $http.post('/api/engineeringDashboardUserRole ', (ctrl.role)).then(function(response) {
-                    $route.reload();
-                    $uibModalInstance.dismiss("cancel");
-                    /* $uibModal.open({
-                         templateUrl: 'app/dashboard/views/postconfirm.html',
-                         controller: 'projectMapController',
-                         controllerAs: 'pm'
-                     });*/
-                })
             };
         }
 
@@ -332,11 +324,11 @@
                 $http.post('/api/deactivateEngineeringDashboardUserRoles?key=' + pid).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
-                    /* $uibModal.open({
-                         templateUrl: 'app/dashboard/views/deleteconfirm.html',
-                         controller: 'projectMapController',
-                         controllerAs: 'pm'
-                     });*/
+                     $uibModal.open({
+                         templateUrl: 'app/dashboard/views/ConfirmationModals/roleconfirmationMessage.html',
+                         controller: userManagementController,
+                         controllerAs: 'umc'
+                     });
                 })
             };
         }
@@ -345,7 +337,7 @@
         $http.get("/api/getProjects")
             .then(function(response) {
                 ctrl.getprojectsUsers = response.data;
-                console.log(ctrl.getprojectsUsers);
+                
 
                 //ctrl.getAllPermissions = response.data;
                     ctrl.newArr = [];
@@ -354,7 +346,7 @@
                             ctrl.newArr.push(ctrl.getprojectsUsers[i].usersGroup);
                         }
                     }
-                    console.log(ctrl.newArr);
+                    
                     ctrl.newArrusergrop = [];
                     for (var i = 0; i < ctrl.newArr.length; i++) {
                         if (ctrl.newArr != undefined) {
@@ -363,6 +355,80 @@
                     }
                     //console.log(ctrl.newArrusergrop);
             });
+            
+             //logout functionality
+             ctrl.logout = function() {
+            $cookieStore.remove("username");
+            $cookieStore.remove("authenticated");
+            $location.path('/');
+        };
 
+        ctrl.editRoleModel = function(rolename,roleObj){
+            
+            $uibModal.open({
+                templateUrl: 'app/dashboard/views/editRoleTemplate.html',
+                controller: editRoleController,
+                controllerAs: 'erc',
+                resolve: {
+                    rolename: function() {
+                        return rolename;
+                    },
+                    roleObj: function() {
+                        return roleObj;
+                    }
+                }
+            });
+
+           
+         }
+
+         function editRoleController(rolename,roleObj,$uibModalInstance){
+                var ctrl = this;
+            
+
+              $http.get("/api/allActiveEngineeringDashboardPermissionKeys")
+                .then(function(response) {
+                    
+                    ctrl.getAllPermissions = response.data;
+
+                 ctrl.roleObj = roleObj;
+
+                 ctrl.arrayconverted = _.keys(ctrl.roleObj.permissions);
+
+                 ctrl.usernamepro = $cookies.get('username');
+                 ctrl.role = {
+                "createdBy": ctrl.usernamepro,
+                "description": ctrl.roleObj.description,
+                "enabled": true,
+                "permissions":ctrl.arrayconverted,
+                "roleKey": ctrl.roleObj.roleKey,
+                "updatedBy": ctrl.usernamepro
+            }
+               ctrl.arraySelectedPermission = [];
+               
+                    ctrl.arraySelectedPermission.push(ctrl.roleObj.permissions);
+
+                });
+            ctrl.transfer = function(from, to, index) {
+            if (index >= -1) {
+            to.push(from[index]);
+            from.splice(index, 1);
+            } else {
+                for (var i = 0; i < from.length; i++) {
+                    to.push(from[i]);
+                }
+                from.length = 0;
+            }
+        };
+
+        ctrl.editRoleCall = function(){
+         $http.post('/api/engineeringDashboardUserRoleEdit ', (ctrl.role)).then(function(response) {
+                    $route.reload();
+                    $uibModalInstance.dismiss("cancel");
+                    console.log("saas"+ctrl.role);
+                })
+        }
+
+         }
     }
 })();
