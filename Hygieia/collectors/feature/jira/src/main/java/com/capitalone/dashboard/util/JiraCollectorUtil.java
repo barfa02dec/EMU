@@ -120,9 +120,9 @@ public class JiraCollectorUtil {
 	}
 
 
-	public static String getDefectUnresolved(String projectId, String startdate,String enddate,String baseUrl,String base64Credentials) {
+	public static String getDefectUnresolved(String projectId,String enddate,String baseUrl,String base64Credentials) {
 		try{
-			String query = String.format(GET_DEFECTS_UNRESOLVED, projectId, startdate, enddate);
+			String query = String.format(GET_DEFECTS_UNRESOLVED, projectId, enddate, enddate);
 			query=baseUrl+query;
 			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
 			RestTemplate restTemplate = new RestTemplate();
@@ -257,7 +257,7 @@ public class JiraCollectorUtil {
 		sprintdata.setDefectsResolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 
 		// Get unresolved defects
-		json = JiraCollectorUtil.getDefectUnresolved(projectId,startDate,endDate,featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials());
+		json = JiraCollectorUtil.getDefectUnresolved(projectId,endDate,featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials());
 		issues = DefectUtil.parseDefectsJson(json);		
 		jiraSprint.getSprintData().setDefectsUnresolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 		
