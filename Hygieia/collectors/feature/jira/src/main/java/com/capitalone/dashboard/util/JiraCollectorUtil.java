@@ -45,9 +45,10 @@ public class JiraCollectorUtil {
 	public static final String GET_ISSUE = "/rest/api/2/issue/%1s?fields=%2s";
 	public static final String GET_SPRINT_VELOCITY_REPORT = "/rest/greenhopper/1.0/rapid/charts/velocity?rapidViewId=%1s";
 	public static final String GET_ALL_DEFECTS_RESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) and status = Done and Sprint = %2s &maxResults=1000";
-	public static final String GET_VERSION_DEFECTS_CREATED =  "rest/api/2/search?jql=project=%1s and type in (Bug) and affectedVersion in (%2s) &maxResults=1000";
-	public static final String GET_VERSION_DEFECTS_RESOLVED = "rest/api/2/search?jql=project=%1s and type in (Bug) AND fixVersion in (%2s) and resolution not in (Unresolved) &maxResults=1000";	
-
+	public static final String GET_VERSION_DEFECTS_CREATED =  "/rest/api/2/search?jql=project=%1s and type in (Bug) and affectedVersion in (%2s) &maxResults=1000";
+	public static final String GET_VERSION_DEFECTS_RESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) AND fixVersion in (%2s) and resolution not in (Unresolved) &maxResults=1000";	
+	public static final String GET_OPEN_DEFECTS_SEVERITY =  "/rest/api/2/search?jql=project=%1s and type in (Bug) and  resolution in (Unresolved) &maxResults=1000";
+	public static final String GET_ALL_CLOSED_DEFECTS = "/rest/api/2/search?jql=project=%1s AND type in (Bug) and  resolution not in (Unresolved) &maxResults=1000";
 	public static String getDefectsFound(String projectId, String startdate, String enddate,String baseUrl,String base64Credentials) {
 		try{
 			String query = String.format(GET_DEFECTS_CREATED, projectId, startdate,enddate);
@@ -119,9 +120,9 @@ public class JiraCollectorUtil {
 	}
 
 
-	public static String getDefectUnresolved(String projectId, String startdate,String enddate,String baseUrl,String base64Credentials) {
+	public static String getDefectUnresolved(String projectId,String enddate,String baseUrl,String base64Credentials) {
 		try{
-			String query = String.format(GET_DEFECTS_UNRESOLVED, projectId, startdate, enddate);
+			String query = String.format(GET_DEFECTS_UNRESOLVED, projectId, enddate, enddate);
 			query=baseUrl+query;
 			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
 			RestTemplate restTemplate = new RestTemplate();
@@ -256,7 +257,7 @@ public class JiraCollectorUtil {
 		sprintdata.setDefectsResolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 
 		// Get unresolved defects
-		json = JiraCollectorUtil.getDefectUnresolved(projectId,startDate,endDate,featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials());
+		json = JiraCollectorUtil.getDefectUnresolved(projectId,endDate,featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials());
 		issues = DefectUtil.parseDefectsJson(json);		
 		jiraSprint.getSprintData().setDefectsUnresolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 		
@@ -432,7 +433,16 @@ public class JiraCollectorUtil {
 			// TODO: handle exception
 			return null;
 		}
-
-	}	
+	
+	}
+	
+	public static String getClosedDefectsByProject(String pid,String base64Credentials,String baseUrl){
+		String query=baseUrl+String.format(GET_ALL_CLOSED_DEFECTS, pid);
+		HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> result = restTemplate.exchange(query
+				, HttpMethod.GET, entity, String.class);
+		return result.getBody();
+	}
 
 }

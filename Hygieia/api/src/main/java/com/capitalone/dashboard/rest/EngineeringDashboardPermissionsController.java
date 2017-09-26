@@ -1,5 +1,8 @@
 package com.capitalone.dashboard.rest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +68,12 @@ public class EngineeringDashboardPermissionsController {
 		return permissionService.getAllActivePermissions();
 	}
 	
+	@RequestMapping(method=RequestMethod.GET,value="/allActiveEngineeringDashboardPermissionKeys")
+	public List<String> getAllActiveEngineeringDashboardPermissionKeys(){
+		List<String> permissionKeys= new ArrayList<String>();
+		permissionService.getAllActivePermissions().forEach(permission->permissionKeys.add(permission.getName()));
+		return permissionKeys;
+	}
 	@RequestMapping(method=RequestMethod.GET,value="/getEngineeringDashboardPermissionWithName")
 	public Permission getEngineeringDashboardPermissionWithName(@RequestParam(name="name") String name){
 		return permissionService.getPermissionWithName(name);

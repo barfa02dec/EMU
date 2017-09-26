@@ -44,15 +44,7 @@ public interface DefectRepository extends CrudRepository<Defect, ObjectId>,
 	 * @return A single Change Date value that is the maximum value of the
 	 *         existing collection
 	 */
-	/*@Query
-	List<Defect> findTopByCollectorIdAndChangeDateGreaterThanOrderByChangeDateDesc(
-			ObjectId collectorId, String changeDate);
-
-	@Query(value = "{'sId' : ?0}", fields = "{'sId' : 1}")
-	List<Defect> getFeatureIdById(String sId);
-
-	@Query(value = " {'sNumber' : ?0 }")
-	List<Defect> getStoryByNumber(String sNumber);*/
+	
 
 	@Query(value = "{'defectStatus' : ?0}")
 	List<Defect> findByStatus(String defectStatus);
@@ -72,7 +64,6 @@ public interface DefectRepository extends CrudRepository<Defect, ObjectId>,
 	@Query(value = "{'defectId' : ?0}", fields = "{'defectId' : 1}")
 	List<Defect> getDefectById(String sId);
 	
-	@Query(value = "{'defectResolutionInDays' : ?0}")
-	List<Defect> findByResolutionInRange(Integer begin,Integer end);
+	
 	
 }
