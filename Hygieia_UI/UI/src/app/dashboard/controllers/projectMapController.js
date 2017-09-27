@@ -41,6 +41,9 @@
                             if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("ADD_PROJECT") > -1) && (ctrl.vvv == ctrl.usernamepro)){
                                ctrl.CreateProjects = true;
                             }
+                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("VIEW_PROJECT_LIST") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                               ctrl.viewProjects = true;
+                            }
                         }
                     }
                 }

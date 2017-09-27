@@ -109,9 +109,9 @@
 
           <div class="expand-collapse-content panel-body col-md-12" ng-repeat="innerItem in fetchPro.usersGroup" >
             <span class="col-md-10">{{innerItem.user}}</span>
-            <span class="col-md-2">
+            <span class="col-md-2" ng-if="innerItem.user">
               <img src="assets/images/icon_delete.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.deleteRoleModel(per)" title="Delete">
-              <img src="assets/images/icon_edit.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.editRoleModel(per.roleKey,per)" title="Edit" > 
+              <img src="assets/images/icon_edit.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.editUserPopUp(fetchPro,innerItem.user,fetchPro.id,fetchPro.projectId)" title="Edit" > 
             </span>
             <span>
                

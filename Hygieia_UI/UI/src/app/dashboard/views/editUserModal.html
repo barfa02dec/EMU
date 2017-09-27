@@ -1,0 +1,72 @@
+<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+   rel = "stylesheet">
+<script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="assets/images/dualmultiselect.css">
+<script src="assets/images/dualmultiselect.js"></script>
+<widget-modal widget-modal-title="Edit user" class="modal-title-props">
+   <form class="form-horizontal validation-message-align-adduser" name="euc.editUserModel" ng-submit="euc.editUserCall()" name="edituser" novalidate >
+      <label class="control-label createproj-label-props shareproject-labels-props adduser-autocomplete-props" for="pwd">Choose a user<span style="color: red">*</span></label>
+      <form-group input="usernames">
+         <input ng-model="euc.userkey"
+            type="text"
+            name="usernames"
+            class="form-control create-project-inputboxes"
+            placeholder="Choose a user"
+            maxlength="40"
+            autocomplete="off"
+            minlength="3"
+            disabled 
+             />
+      </form-group>
+      <div class="dualmultiselect">
+         <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+               <label class="shareproject-labels-props">Roles</label>
+               <!--   <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.items, spc.demoOptions.selectedItems, -1)"> Select All </button>  -->
+               <div class="pool">
+                  <ul>
+                     <li ng-repeat="item in euc.getRolesKey | filter: euc.searchTerm | orderBy: euc.getRolesKey.orderProperty"><a href="" ng-click="euc.transfer(euc.getRolesKey, euc.getalluserroles, euc.getRolesKey.indexOf(item))">{{item.roleKey}}&nbsp;&rArr; </a> </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+               <label class="shareproject-labels-props">Selected roles<span style="color: red">*</span></label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
+               <div class="pool">
+                  <ul>
+                     <li ng-repeat="item in euc.getalluserroles | orderBy: euc.getalluserroles.orderProperty">
+                        <a href="" ng-click="euc.transfer(euc.getalluserroles, euc.getRolesKey, euc.getalluserroles.indexOf(item))"> &lArr;&nbsp;{{item.roleKey}}</a> 
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="dualmultiselect">
+         <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+               <label class="shareproject-labels-props">Dashboards</label>
+               <div class="pool">
+                  <ul>
+                     <li ng-repeat="everydashboard in euc.selectedItemsDashboardSpecific  | filter: euc.searchTerm | orderBy: euc.selectedItemsDashboardSpecific.orderProperty"> <a href="" ng-click="euc.transfer(euc.selectedItemsDashboardSpecific, euc.selectedItemsDashboard, euc.selectedItemsDashboardSpecific.indexOf(everydashboard))">{{everydashboard.title}}&nbsp;&rArr; </a> </li>
+                  </ul>
+               </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+               <label class="shareproject-labels-props">Selected dashboards<span style="color: red">*</span></label>
+               <div class="pool">
+                  <ul>
+                     <li ng-repeat="userspdashboard in euc.selectedItemsDashboard | filter: euc.searchTerm | orderBy: euc.selectedItemsDashboard.orderProperty"">
+                        <a href="" ng-click="euc.transfer(euc.selectedItemsDashboard,euc.selectedItemsDashboardSpecific,euc.selectedItemsDashboard.indexOf(userspdashboard))">{{userspdashboard.title}}</a> 
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="form-group" style="padding-top: 5%;">
+         <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" name=""  style="margin-left: 14px;margin-top: 0px;" >Add</button>
+         <input type="button" name="" class="btn btn-default white-cancel-btn" value="Cancel"  ng-click="$close()" style="margin-left: 20px;">
+      </div>
+   </form>
+</widget-modal>

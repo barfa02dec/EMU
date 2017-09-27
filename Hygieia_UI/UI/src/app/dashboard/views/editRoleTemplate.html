@@ -44,7 +44,7 @@
                 maxlength="40"
                 autocomplete="off"
                 minlength="3"
-                required/>
+                required disabled/>
         </form-group>  
 
         <div class="dualmultiselect">
@@ -60,7 +60,7 @@
                   <!--   <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.items, spc.demoOptions.selectedItems, -1)"> Select All </button>  -->
                     <div class="pool">
                         <ul>
-                            <li ng-repeat="item in erc.getAllPermissions | filter: erc.searchTerm | orderBy: erc.getAllPermissions.orderProperty"> <a href="" ng-click="erc.transfer(erc.getAllPermissions, erc.arrayconverted, erc.getAllPermissions.indexOf(item))">{{item}}</a></li>
+                            <li ng-repeat="item in erc.getAllPermissions | filter: erc.searchTerm | orderBy: erc.getAllPermissions.orderProperty "> <a href="" ng-click="erc.transfer(erc.getAllPermissions, erc.arrayconverted, erc.getAllPermissions.indexOf(item))">{{item}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
                            <!--  <li ng-repeat="(key, value) in erc.role.permissions">
                                 <a href="" > &lArr;&nbsp;{{value}}</a> 
                             </li> -->
-                             <li ng-repeat="(key, value) in erc.role.permissions | filter: erc.searchTerm | orderBy: erc.role.permissions.orderProperty"> <a href="" ng-click="erc.transfer(erc.role.permissions, erc.getAllPermissions, erc.role.permissions.indexOf(item))">{{value}}</a></li>
+                             <li ng-repeat="(key, value) in erc.arrayconverted  | filter: erc.searchTerm | orderBy: erc.arrayconverted.orderProperty "> <a href="" ng-click="erc.transfer(erc.arrayconverted, erc.getAllPermissions, erc.arrayconverted.indexOf(value))">{{value}}</a></li>
                         </ul>
                     </div>
                 </div>

@@ -65,7 +65,7 @@
          <div class="col-md-9"></div>
          <div class="col-md-1" style="padding-left: 3px;
     padding-top: 1%;">
-            <div ng-if="pm.CreateProjects">
+            <div ng-if="pm.CreateProjects && pm.viewProjects">
                <input type="submit"  class="btn btn-info project-map-add-btn" value="New project"  ng-click = "pm.createDashboard()" >
             </div>
          </div>
@@ -88,7 +88,7 @@
       </div> -->
       <div class="col-md-3 layout-sepeartion-thirddiv">
          <form>
-            <div class="form-group">
+            <div class="form-group" ng-if="pm.viewProjects">
                <label for="input-md"></label>
                <input class="form-control input-md project-map-search-bar" id="inputmd" type="text" placeholder="Search for project" ng-model="pm.searchText" style="width: 100%;border-radius: 4px;">
             </div>
@@ -99,7 +99,7 @@
       <div class="col-md-1"></div>
       <div class="col-md-1"></div>
    </div>
-   <table class="table table-bordered table-striped table-layoutprops table-layoutprops">
+   <table class="table table-bordered table-striped table-layoutprops table-layoutprops" ng-if="pm.viewProjects">
       <thead style="background:#EFEFEF;">
          <tr>
             <th>Project ID</th>
@@ -164,7 +164,7 @@
       </tbody>
    </table>
 </div>
-<div class="pagination-div pagination-parentdiv-props" ng-show="pm.getAllProjects.length">
+<div class="pagination-div pagination-parentdiv-props" ng-show="pm.getAllProjects.length" ng-if="pm.viewProjects">
    <button ng-click="curPage=curPage-1" ng-disabled="curPage == 0" type="button" class="pagination-btn-props">Prev</button>
    <span>Page {{curPage + 1}} of {{ pm.numberOfPages() }}</span>
    <button ng-click="curPage = curPage+1" ng-disabled="curPage >= pm.getAllProjects.length/pm.pageSize - 1" type="button" class="pagination-btn-props">Next</button>

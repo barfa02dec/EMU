@@ -87,7 +87,6 @@
                             if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("EDIT_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro) && (ctrl.projectIDS == ctrl.projID)) {
                                 ctrl.editDashboard = true;
                             }
-
                             if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("DELETE_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro) && (ctrl.projectIDS == ctrl.projID)){
                                ctrl.deleteDashboards = true;
                             }
