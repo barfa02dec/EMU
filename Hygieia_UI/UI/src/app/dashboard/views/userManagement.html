@@ -85,9 +85,10 @@
     <div id="tabs" style="padding-top: 1%;
     padding-left: 1.8%;">
         <ul class="tab-styling-userManagement">
-            <li class="style-forli" ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)">{{tab.title}}</li>
+            <li class="style-forli" ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)" style="padding-left: 0px;
+    margin-left: 0px;margin-right: 30px;">{{tab.title}}</li>
         </ul>
-        <div id="mainView">
+        <div id="mainView" style="padding-left: 0px;">
             <div ng-include="currentTab"></div>
         </div>
     </div>
@@ -166,12 +167,13 @@
         
                 </div>
             </form> -->
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped" style="width: 99.5%;">
             <thead>
               <tr>
                 <th>Role Name</th>
                  <th>Created By</th>
                   <th>Permissions</th>
+                  
                    <th>Actions</th>
               </tr>
             </thead>
@@ -179,7 +181,15 @@
             <tr ng-repeat="per in umc.getRoles">
               <td>{{per.roleKey}}</td>
                <td>{{per.description}}</td>
-                <td><div ng-repeat="(key, value) in per.permissions">{{key}}</div></td>
+               <!--  <td><div ng-repeat="(key, value) in umc.permissions">{{value}}</div></td> -->
+                  <td><div ng-repeat="(key, value) in per.permission">{{value}}</div>
+                  <div ng-repeat="(key, value) in per.permissions" ng-show="umc.showmorelink" ng-hide="umc.showlesslink">{{value}}</div>
+                  <span ng-click="umc.showMoreFlag()" ng-if="umc.onclickmore" style="font-size: 12px;color: #4482B2;cursor: pointer;">Show all</span>
+
+                   <span ng-click="umc.showLessFlag()" ng-if="umc.onclickless" style="font-size: 12px;color: #4482B2;cursor: pointer;">Show less</span>
+
+                  </td>
+                 
                 <td> <img src="assets/images/icon_delete.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.deleteRoleModel(per)" title="Delete">
                 <img src="assets/images/icon_edit.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.editRoleModel(per.roleKey,per)" title="Edit" > 
                 </td>

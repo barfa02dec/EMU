@@ -19,10 +19,10 @@
 
         //Tabs Settings
         $scope.tabs = [{
-                title: 'User Management',
+                title: 'Users',
                 url: 'one.tpl.html'
             }, {
-                title: 'Role Management',
+                title: 'Roles',
                 url: 'two.tpl.html'
             }
             /*, {
@@ -263,6 +263,7 @@
         }
 
         //Enable Edit
+        ctrl.showmorelink = true;
         ctrl.enableEditor = function(vall) {
             angular.forEach(ctrl.getAllPermissions, function(value, key) {
                 if (value.id === vall) {
@@ -286,16 +287,45 @@
         $http.get("/api/allActiveEngineeringDashboardUserRoles")
             .then(function(response) {
                 ctrl.getRoles = response.data;
-                ctrl.getOnlyPerArray = [];
                 for (var i = 0; i < response.data.length; i++) {
-                    if (response.data[i].permissions != undefined) {
-                        //ctrl.getOnlyPerArray.push(response.data[i].permissions)
-                        ctrl.permisArray = _.keys(response.data[i].permissions)
+                    if (response.data [i] != undefined) {
+                       response.data[i].permission  = Object.keys(response.data[i].permissions).splice(0,2);
                     }
                 }
-                ctrl.getOnlyPermission = response.data;
+
+                for (var i = 0; i < response.data.length; i++) {
+                    if (response.data [i] != undefined) {
+                       response.data[i].permissions  = Object.keys(response.data[i].permissions).splice(2);
+                    }
+                }
+
+                
+
+                //ctrl.getOnlyPerArray = [];
+                /*for (var i = 0; i < response.data.length; i++) {
+                    if (response.data[i] != undefined) {
+                        ctrl.permission = Object.keys(response.data[i].permissions).splice(0,2)
+                        //ctrl.permisArray = _.keys(response.data[i].permissions)
+                    }
+                }*/
+                //ctrl.getOnlyPermission = response.data;
 
             });
+            ctrl.onclickmore = true;
+            ctrl.onclickless = false;
+            ctrl.showmorelink = false;
+             ctrl.showlesslink = true;
+        ctrl.showMoreFlag =function(){
+            ctrl.showmorelink = true;
+            ctrl.onclickmore = false;
+            ctrl.onclickless = true;
+        }
+        ctrl.showLessFlag =function(){
+            ctrl.showmorelink = false;
+             ctrl.showlesslink = true;
+             ctrl.onclickmore = true;
+            ctrl.onclickless = false;
+        }
 
         //Open Delete Role Model
         ctrl.deleteRoleModel = function(per) {
@@ -469,17 +499,7 @@
                 
                 });
            
-            //Fetch all user specific dashboards
-            var mydashboardRouteProMap = "/api/dashboard/mydashboard";
-            $http.get(mydashboardRouteProMap + "?username=" + ctrl.userkey + "&projectId=" + ctrl.projectidkey)
-                .then(function(response) {
-                    ctrl.selectedItemsDashboard = [];
-                    ctrl.selectedItemsDashboard = response.data;
-                    /*for (var i = 0; i < ctrl.getUsrSpcificDashboards.length; i++) {
-                        ctrl.selectedItemsDashboard.push(ctrl.getUsrSpcificDashboards[i].title);
-                    }*/
-
-                })
+           
 
             //Fetch all dashboards for that project
             var fetchevrydashboard = "/api/dashboard/projectdashboard ";
@@ -492,8 +512,25 @@
                         ctrl.selectedItemsDashboardSpecific.push(ctrl.geteverydashboard[i].title);
                     }*/
 
+                
+
+                })
+
+                 //Fetch all user specific dashboards
+            var mydashboardRouteProMap = "/api/dashboard/mydashboard";
+            $http.get(mydashboardRouteProMap + "?username=" + ctrl.userkey + "&projectId=" + ctrl.projectidkey)
+                .then(function(response) {
+                    
+                    ctrl.selectedItemsDashboard = response.data;
+
+                    /*for (var i = 0; i < ctrl.getUsrSpcificDashboards.length; i++) {
+                        ctrl.selectedItemsDashboard.push(ctrl.getUsrSpcificDashboards[i].title);
+                    }*/
+
+                })
+
                     ctrl.transfer = function(from, to, index) {
-                        if (index >= 0) {
+                        if (index >= -1) {
                             to.push(from[index]);
                             from.splice(index, 1);
                         } else {
@@ -504,7 +541,7 @@
                         }
                     };
 
-                })
+
 
             ctrl.editUserCall = function() {
 
@@ -517,6 +554,8 @@
 
                 $http.post("/api/projectUsersMapping", (ctrl.projectUserPayl)).then(function(response) {
                     alert("created");
+
+
                 })
             }
         }
