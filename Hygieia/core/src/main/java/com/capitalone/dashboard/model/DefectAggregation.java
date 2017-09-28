@@ -40,7 +40,7 @@ public class DefectAggregation extends BaseModel{
 	private String valuesAsOn;
 	@Indexed(unique=true)
 	private String projectName;
-	@Indexed(unique=true)
+	@Indexed
 	private String projectId;
 	
 	

@@ -23,10 +23,12 @@ public class DefectSummeryController {
 		return defectSummeryService.getAllDefectDetails();
 	}
 	
-	@RequestMapping(value="/getDefectSummery/{projectId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public DefectAggregation getDefectSummeryByProjectId(@PathVariable("projectId") String projectId){
-		return defectSummeryService.findByProjectId(projectId);
+	@RequestMapping(value="/getDefectSummery/{projectId}/{projectName}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public DefectAggregation getDefectSummeryByProjectId(@PathVariable("projectId") String projectId, @PathVariable("projectName") String projectName){
+		return defectSummeryService.findByProjectId(projectId, projectName);
 	}
+	
+	
 	
 	
 

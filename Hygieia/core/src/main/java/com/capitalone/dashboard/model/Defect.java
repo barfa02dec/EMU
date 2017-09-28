@@ -37,7 +37,6 @@ public class Defect extends BaseModel {
 	/*
 	 * Defect specific attributes
 	 */
-	@Indexed(unique=true)
 	private String defectId;
 	private String projectName;
 	private String defectDescription;
@@ -59,7 +58,18 @@ public class Defect extends BaseModel {
 	private String dueDate; 
 	@Indexed
 	private String projectId;
-	
+	//the project ID that is provided in property file. This is because in multiple jira case same project id can be exists in different jira accounts.
+	@Indexed
+	private String emuProjectId;
+
+	public String getEmuProjectId() {
+		return emuProjectId;
+	}
+
+	public void setEmuProjectId(String emuProjectId) {
+		this.emuProjectId = emuProjectId;
+	}
+
 	public String getProjectId() {
 		return projectId;
 	}

@@ -20,8 +20,8 @@ public class ReleaseController {
 		this.releaseService = releaseService;
 	}
 	@RequestMapping(method=RequestMethod.GET,value="/projectReleaseList")
-	public List<Release> getAllReleasesForProject(@RequestParam(name="projectId") String projectId){
-		List <Release> releaseList=(List<Release>) releaseService.getAllReleases(projectId);
+	public List<Release> getAllReleasesForProject(@RequestParam(name="projectId") String projectId, @RequestParam(name="projectName") String projectName){
+		List <Release> releaseList=(List<Release>) releaseService.getAllReleases(projectId,projectName);
 		Collections.sort(releaseList);
 		releaseList.stream().limit(8);
 		return releaseList;

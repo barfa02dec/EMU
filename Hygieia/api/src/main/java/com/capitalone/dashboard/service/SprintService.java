@@ -6,7 +6,7 @@ import com.capitalone.dashboard.model.Sprint;
 
 public interface SprintService {
 
-	List<Sprint> getAllSprints(String projectId);
+	List<Sprint> getAllSprints(String projectId, String emuProjectId);
 
 	Sprint getDetailedSprintDetails(Long sprintId,String projectId);
 

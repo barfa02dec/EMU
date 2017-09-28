@@ -31,8 +31,8 @@ import com.capitalone.dashboard.model.Defect;
 public interface DefectRepository extends CrudRepository<Defect, ObjectId>,
 		QueryDslPredicateExecutor<Defect>, DefectRepositoryCustom {
 
-	@Query(value = "{'collectorId' : ?0}", fields = "{'defectId' : ?1}")
-	List<Defect> findById(ObjectId collectorId, String defectId);
+	@Query(value = "{'collectorId' : ?0}", fields = "{'collectorId' : ?1}")
+	List<Defect> findById(ObjectId collectorId);
 	/**
 	 * This essentially returns the max change date from the collection, based
 	 * on the last change date (or default delta change date property) available
@@ -51,9 +51,8 @@ public interface DefectRepository extends CrudRepository<Defect, ObjectId>,
 	
 	@Query(value = "{'defectId' : ?0}")
 	Defect findByDefectId(String defectId);
-	
-	@Query(value = "{'projectId' : ?0}")
-	List<Defect> findByProjectId(String projectId);
+	@Query(value = "{'projectId' : ?0, 'emuProjectId':?1}")
+	List<Defect> findByProjectId(String projectId, String emuProjectId);
 	
 	@Query(value = "{'defectSeverity' : ?0}")
 	List<Defect> findBySeverity(String defectSeverity);
@@ -63,6 +62,8 @@ public interface DefectRepository extends CrudRepository<Defect, ObjectId>,
 	
 	@Query(value = "{'defectId' : ?0}", fields = "{'defectId' : 1}")
 	List<Defect> getDefectById(String sId);
+	
+	
 	
 	
 	

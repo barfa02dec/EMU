@@ -17,8 +17,8 @@ public class SprintServiceImpl implements SprintService {
 	}
 
 	@Override
-	public List<Sprint> getAllSprints(String projectId) {
-		return (List<Sprint>) repository.findByProjectId(projectId);
+	public List<Sprint> getAllSprints(String projectId, String projectName) {
+		return (List<Sprint>) repository.findByProjectId(projectId,projectName);
 	}
 
 	@Override

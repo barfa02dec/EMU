@@ -19,8 +19,14 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
 	    private VersionData versionData;
 	    private String originalreleaseData;
 	    private String projectId;
-	    
+	    private String projectName;
 	    	    
+		public String getProjectName() {
+			return projectName;
+		}
+		public void setProjectName(String projectName) {
+			this.projectName = projectName;
+		}
 		public Long getReleaseId() {
 			return releaseId;
 		}
@@ -108,7 +114,7 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
 		@Override
 		public int compareTo(Release o) {
 			//sort by descending order
-			if(o.releaseId>this.releaseId){
+			if(o.releaseId<this.releaseId){
 				return 1;
 			}else if(o.releaseId==this.releaseId){
 				return 0;

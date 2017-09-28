@@ -16,9 +16,9 @@ public class ReleaseServiceImpl implements ReleaseService {
 	}
 
 	@Override
-	public Iterable<Release> getAllReleases(String projectId) {
+	public Iterable<Release> getAllReleases(String projectId, String projectName) {
 		
-		return releaseRepository.findByProjectId(projectId);
+		return releaseRepository.findByProjectId(projectId,projectName);
 	}
 
 	@Override

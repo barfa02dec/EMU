@@ -8,7 +8,7 @@ public interface DefectSummeryService {
 
 	Iterable<DefectAggregation> getAllDefectDetails();
 
-	DefectAggregation findByProjectId(String id);
+	DefectAggregation findByProjectId(String id, String projectName);
 	
 
 }
