@@ -45,7 +45,7 @@ public class Scope extends BaseModel {
 	private String changeDate;
 	private String assetState;
 	private String isDeleted;
-	@Indexed
+	
 	private String projectId;
 	@Transient
     private Collector collector;
