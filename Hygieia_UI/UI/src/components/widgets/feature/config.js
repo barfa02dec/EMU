@@ -62,6 +62,7 @@
 		initListType(widgetConfig);
 
 		function processProjectsResponse(data) {
+			$cookies.put('projectPath', data.name)
 			var projects = [];
 			var featureProjectId = widgetConfig.options.projectId;
 
@@ -301,6 +302,8 @@
 		}
 
 		function processCollectorItemResponse(response) {
+
+			$cookies.put("projectpaths",response.data.options.projectName)
 			var postObj = {
 				name : 'feature',
 				options : {

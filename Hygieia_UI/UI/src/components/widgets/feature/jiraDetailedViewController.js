@@ -14,6 +14,8 @@
         var apiHost = 'http://localhost:3000';
         var qahost = 'http://10.20.1.183:3001';
         ctrl.ppiidss = $cookies.get('projectIdd');
+        //ctrl.proname = $cookies.get('ProName');
+        ctrl.projectpath = $cookies.get('projectpaths');
         ctrl.usernamepro = $cookies.get('username');
         //Empty array created for Jira Defect Graphs
         
@@ -50,7 +52,7 @@
 
         
         //Retrieving Jira-Defect Response and Processing 
-        featureData.jiraData(ctrl.ppiidss).then(jiraDataFetch);
+        featureData.jiraData(ctrl.ppiidss,ctrl.projectpath).then(jiraDataFetch);
 
         
         //Processing Jira-Defect Response
@@ -279,7 +281,7 @@
 
     //Fetching Jira-Sprint Data
 
-      featureData.sprintDta(ctrl.ppiidss).then(sprintdataProcess);
+      featureData.sprintDta(ctrl.ppiidss,ctrl.projectpath).then(sprintdataProcess);
 
       //Processing Jira-Sprint Data
       function sprintdataProcess(data){
@@ -474,7 +476,7 @@ padding: {
 
 
         //Fetching Release  Data
-       featureData.ReleaseData(ctrl.ppiidss).then(ReleaseDataProcessing);
+       featureData.ReleaseData(ctrl.ppiidss,ctrl.projectpath).then(ReleaseDataProcessing);
 
       //Processing Release Data
         function ReleaseDataProcessing(data){

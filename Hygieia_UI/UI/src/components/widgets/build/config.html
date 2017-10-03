@@ -1,6 +1,6 @@
 <widget-modal widget-modal-title="Configure Build Widget" class="build-config border-prop-modals">
     <form name="buildConfigForm" role="form"
-          ng-submit="buildConfig.submit(buildConfigForm.$valid,buildConfig.collectorItemId)" novalidate="novalidate">
+          ng-submit="buildConfig.submit(buildConfigForm.$valid,buildConfig.collectorItemId)" novalidate="novalidate" class="validation-message-align-mainpopups">
         <form-group class="text-center" input="collectorItemId" errors="{required: 'Please select a collector'}">
 
             <label class="all-opopups-text-left">Build Job</label>

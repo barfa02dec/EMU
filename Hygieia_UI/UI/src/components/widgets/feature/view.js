@@ -30,7 +30,7 @@
     ctrl.doneStoryPointsKanban = null;
     ctrl.epicStoryPointsKanban = null;
     ctrl.issueStoryPointsKanban = [];
-    
+    ctrl.projectpath = $cookies.get('projectpaths');
     // Public Evaluators
     ctrl.setFeatureLimit = setFeatureLimit;
     ctrl.showStatus = $scope.widgetConfig.options.showStatus;
@@ -51,14 +51,14 @@
       var deferred = $q.all([
         // Scrum
         //featureData.sprintMetrics($scope.widgetConfig.componentId, filterTeamId, filterProjectId, ctrl.estimateMetricType, "scrum").then(processSprintEstimateResponse),
-        featureData.jiraData(filterProjectId).then(jiraDataFetch),
+        featureData.jiraData(filterProjectId,ctrl.projectpath).then(jiraDataFetch),
         featureData.featureWip($scope.widgetConfig.componentId, filterTeamId, filterProjectId, ctrl.estimateMetricType, "scrum").then(processFeatureWipResponse),
         featureData.sprint($scope.widgetConfig.componentId, filterTeamId, filterProjectId, "scrum")
           .then(function(data) { processSprintResponse(data, false) }),
 
         // Kanban
         //featureData.sprintMetrics($scope.widgetConfig.componentId, filterTeamId, filterProjectId, ctrl.estimateMetricType, "kanban").then(processSprintEstimateKanbanResponse),
-        featureData.jiraData(filterProjectId).then(jiraDataFetch),
+        featureData.jiraData(filterProjectId,ctrl.projectpath).then(jiraDataFetch),
         featureData.featureWip($scope.widgetConfig.componentId, filterTeamId, filterProjectId, ctrl.estimateMetricType, "kanban").then(processFeatureWipKanbanResponse),
         featureData.sprint($scope.widgetConfig.componentId, filterTeamId, filterProjectId, "kanban")
           .then(function(data) { processSprintResponse(data, true) })
@@ -393,7 +393,7 @@
       }
     };
     ctrl.ppiidss = $cookies.get('projectIdd');
-    featureData.sprintDta(ctrl.ppiidss).then(sprintdataProcessMain);
+    featureData.sprintDta(ctrl.ppiidss,ctrl.projectpath).then(sprintdataProcessMain);
 
     function sprintdataProcessMain(data){
      

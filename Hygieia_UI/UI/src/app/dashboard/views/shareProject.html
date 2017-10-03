@@ -23,7 +23,7 @@
             <div class="col-lg-6 col-md-6 col-sm-6">
                <label class="shareproject-labels-props">Roles</label>
                <!--   <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.items, spc.demoOptions.selectedItems, -1)"> Select All </button>  -->
-               <div class="pool">
+               <div class="pool scrollbar-processor-allpages">
                   <ul>
                      <li ng-repeat="item in spc.getRolesKey | filter: spc.searchTerm | orderBy: spc.getRolesKey.orderProperty"> <a href="" ng-click="spc.transfer(spc.getRolesKey, spc.getRolesKey.selectedItems, spc.getRolesKey.indexOf(item))">{{item.roleKey}}&nbsp;&rArr; </a> </li>
                   </ul>
@@ -31,7 +31,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
                <label class="shareproject-labels-props">Selected roles<span style="color: red">*</span></label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
-               <div class="pool">
+               <div class="pool scrollbar-processor-allpages">
                   <ul>
                      <li ng-repeat="item in spc.getRolesKey.selectedItems | orderBy: spc.getRolesKey.orderProperty">
                         <a href="" ng-click="spc.transfer(spc.getRolesKey.selectedItems, spc.getRolesKey, spc.getRolesKey.selectedItems.indexOf(item))"> &lArr;&nbsp;{{item.roleKey}}</a> 
@@ -45,7 +45,7 @@
          <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6">
                <label class="shareproject-labels-props">Dashboards</label>
-               <div class="pool">
+               <div class="pool scrollbar-processor-allpages">
                   <ul>
                      <li ng-repeat="itemdashboard in spc.getdashboards | filter: spc.searchTerm | orderBy: spc.getdashboards.orderProperty"> <a href="" ng-click="spc.transfer(spc.getdashboards, spc.getdashboards.selectedItemsDashboard, spc.getdashboards.indexOf(itemdashboard))">{{itemdashboard.title}}&nbsp;&rArr; </a> </li>
                   </ul>
@@ -53,7 +53,7 @@
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6">
                <label class="shareproject-labels-props">Selected dashboards<span style="color: red">*</span></label>
-               <div class="pool">
+               <div class="pool scrollbar-processor-allpages">
                   <ul>
                      <li ng-repeat="itemdashboard in spc.getdashboards.selectedItemsDashboard | orderBy: spc.getdashboards.orderProperty">
                         <a href="" ng-click="spc.transfer(spc.getdashboards.selectedItemsDashboard, spc.getdashboards, spc.getdashboards.selectedItemsDashboard.indexOf(itemdashboard))"> &lArr;&nbsp;{{itemdashboard.title}}</a> 

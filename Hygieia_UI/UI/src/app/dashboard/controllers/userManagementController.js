@@ -412,7 +412,7 @@
                 .then(function(response) {
                     ctrl.getAllPermissions = response.data;
                     ctrl.roleObj = roleObj;
-                    ctrl.arrayconverted = _.keys(ctrl.roleObj.permissions);
+                    ctrl.arrayconverted = ctrl.roleObj.permissions;
                     ctrl.usernamepro = $cookies.get('username');
                     ctrl.role = {
                         "createdBy": ctrl.usernamepro,
@@ -520,9 +520,7 @@
             var mydashboardRouteProMap = "/api/dashboard/mydashboard";
             $http.get(mydashboardRouteProMap + "?username=" + ctrl.userkey + "&projectId=" + ctrl.projectidkey)
                 .then(function(response) {
-                    
                     ctrl.selectedItemsDashboard = response.data;
-
                     /*for (var i = 0; i < ctrl.getUsrSpcificDashboards.length; i++) {
                         ctrl.selectedItemsDashboard.push(ctrl.getUsrSpcificDashboards[i].title);
                     }*/
@@ -553,8 +551,13 @@
                 }
 
                 $http.post("/api/projectUsersMapping", (ctrl.projectUserPayl)).then(function(response) {
-                    alert("created");
-
+                   $route.reload();
+                   $uibModalInstance.dismiss("cancel");
+                     $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/updateUserModal.html',
+                        controller: userManagementController,
+                        controllerAs: 'umc'
+                    });
 
                 })
             }
