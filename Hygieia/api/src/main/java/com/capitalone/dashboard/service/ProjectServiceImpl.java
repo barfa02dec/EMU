@@ -2,7 +2,6 @@ package com.capitalone.dashboard.service;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -99,7 +98,7 @@ public class ProjectServiceImpl implements ProjectService {
 		UserGroup defaultProjectAdmin= new UserGroup(request.getUser());
 		ProjectRoles projRole= new ProjectRoles();
 		projRole.setRole("SYS_ADMIN");
-		
+	
 		if(userRoleRepository.findByRoleKey(projRole.getRole())!=null){
 			projRole.setPermissions(userRoleRepository.findByRoleKey(projRole.getRole()).getPermissions().keySet());
 			Set<ProjectRoles> projRoles = new HashSet<ProjectRoles>();
@@ -211,7 +210,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public String disassociatedUserFromProject(String user, String projectId) {
-		Project existingDBProject=projectRepository.getProject(user, projectId);
+		Project existingDBProject=projectRepository.getProject(projectId, user);
 		for(UserGroup userGroup: existingDBProject.getUsersGroup()){
 			if(userGroup.getUser().equals(user)){
 				existingDBProject.getUsersGroup().remove(userGroup);
