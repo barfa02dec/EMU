@@ -520,9 +520,7 @@
             var mydashboardRouteProMap = "/api/dashboard/mydashboard";
             $http.get(mydashboardRouteProMap + "?username=" + ctrl.userkey + "&projectId=" + ctrl.projectidkey)
                 .then(function(response) {
-                    
                     ctrl.selectedItemsDashboard = response.data;
-
                     /*for (var i = 0; i < ctrl.getUsrSpcificDashboards.length; i++) {
                         ctrl.selectedItemsDashboard.push(ctrl.getUsrSpcificDashboards[i].title);
                     }*/

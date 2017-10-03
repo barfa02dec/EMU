@@ -60,24 +60,24 @@
 					});
 		}
 
-		function jiraDataGer(filterProjectId) { 
+		function jiraDataGer(filterProjectId,projectsname) { 
 			 
-			return $http.get('/api/getDefectSummery/' +filterProjectId)
+			return $http.get('/api/getDefectSummery/' +filterProjectId + "/" + projectsname)
 					.then(function(response) {
 						return response.data;
 					});
 		}
-		function sprintDataFetch(filterProjectId) {  
+		function sprintDataFetch(filterProjectId,projectsname) {  
 			 
-			return $http.get('/api/listAllSprints?projectId=' +filterProjectId)
+			return $http.get('/api/listAllSprints?projectId=' +filterProjectId + "&projectName=" + projectsname)
 					.then(function(response) { 
 						return response.data;
 					});
 		}
 
-		function ReleaseDataFetch(filterProjectId) {  
+		function ReleaseDataFetch(filterProjectId,projectsname) {  
 			 
-			return $http.get('/api/projectReleaseList?projectId=' +filterProjectId)
+			return $http.get('/api/projectReleaseList?projectId=' + filterProjectId + "&projectName=" + projectsname)
 					.then(function(response) { 
 						return response.data;
 					});
