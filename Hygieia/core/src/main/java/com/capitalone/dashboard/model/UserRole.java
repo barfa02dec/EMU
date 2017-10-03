@@ -17,9 +17,16 @@ public class UserRole extends BaseModel{
 	private String createdBy;
 	private String updatedBy;
 	private boolean enabled;
+	private boolean exposetoApi;
 	private Map<String , Boolean> permissions= new HashMap<String , Boolean>();
 	
 	
+	public boolean isExposetoApi() {
+		return exposetoApi;
+	}
+	public void setExposetoApi(boolean exposetoApi) {
+		this.exposetoApi = exposetoApi;
+	}
 	public Map<String, Boolean> getPermissions() {
 		return permissions;
 	}
