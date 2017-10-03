@@ -1,6 +1,6 @@
 
 
-<widget-modal widget-modal-title="Create Roles" style="background:#fff;" >
+<widget-modal widget-modal-title="Edit Roles" style="background:#fff;" >
 <form class="form-horizontal" name="editrole.editRoleModel" ng-submit="erc.editRoleCall();" name="formname" novalidate >
                     <label class="control-label col-sm-4 createproj-label-props" for="pwd">Created by</label>
                          <form-group input="createdBy" errors="{required: 'Created by is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
@@ -58,7 +58,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <label style="font-weight: normal;">Permissions</label>
                   <!--   <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.items, spc.demoOptions.selectedItems, -1)"> Select All </button>  -->
-                    <div class="pool">
+                    <div class="pool scrollbar-processor-allpages">
                         <ul>
                             <li ng-repeat="item in erc.getAllPermissions | filter: erc.searchTerm | orderBy: erc.getAllPermissions.orderProperty "> <a href="" ng-click="erc.transfer(erc.getAllPermissions, erc.arrayconverted, erc.getAllPermissions.indexOf(item))">{{item}}</a></li>
                         </ul>
@@ -66,7 +66,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <label style="font-weight: normal;">Selected permissions</label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
-                    <div class="pool">
+                    <div class="pool scrollbar-processor-allpages">
                         <ul> 
                            <!--  <li ng-repeat="(key, value) in erc.role.permissions">
                                 <a href="" > &lArr;&nbsp;{{value}}</a> 

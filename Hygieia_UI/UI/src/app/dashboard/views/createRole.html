@@ -58,7 +58,7 @@
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <label style="font-weight: normal;">Permissions</label>
                   <!--   <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.items, spc.demoOptions.selectedItems, -1)"> Select All </button>  -->
-                    <div class="pool">
+                    <div class="pool scrollbar-processor-allpages">
                         <ul>
                             <li ng-repeat="item in prc.getAllPermissions | filter: prc.searchTerm | orderBy: prc.getAllPermissions.orderProperty"> <a href="" ng-click="prc.transfer(prc.getAllPermissions, prc.selectedItems, prc.getAllPermissions.indexOf(item))">{{item}}&nbsp;&rArr; </a> </li>
                         </ul>
@@ -66,7 +66,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <label style="font-weight: normal;">Selected permissions</label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
-                    <div class="pool">
+                    <div class="pool scrollbar-processor-allpages">
                         <ul>
                             <li ng-repeat="item in prc.selectedItems | orderBy: prc.getAllPermissions.orderProperty">
                                 <a href="" ng-click="prc.transfer(prc.selectedItems, prc.getAllPermissions, prc.selectedItems.indexOf(item))" > &lArr;&nbsp;{{item}}</a> 
