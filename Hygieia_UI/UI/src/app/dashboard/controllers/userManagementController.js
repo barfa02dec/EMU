@@ -551,8 +551,13 @@
                 }
 
                 $http.post("/api/projectUsersMapping", (ctrl.projectUserPayl)).then(function(response) {
-                    alert("created");
-
+                   $route.reload();
+                   $uibModalInstance.dismiss("cancel");
+                     $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/updateUserModal.html',
+                        controller: userManagementController,
+                        controllerAs: 'umc'
+                    });
 
                 })
             }
