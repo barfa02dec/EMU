@@ -412,7 +412,7 @@
                 .then(function(response) {
                     ctrl.getAllPermissions = response.data;
                     ctrl.roleObj = roleObj;
-                    ctrl.arrayconverted = _.keys(ctrl.roleObj.permissions);
+                    ctrl.arrayconverted = ctrl.roleObj.permissions;
                     ctrl.usernamepro = $cookies.get('username');
                     ctrl.role = {
                         "createdBy": ctrl.usernamepro,
