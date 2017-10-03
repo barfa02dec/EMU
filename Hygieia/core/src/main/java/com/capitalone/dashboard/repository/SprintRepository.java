@@ -31,7 +31,7 @@ public interface SprintRepository extends CrudRepository<Sprint, ObjectId>,
 
 	 	@Query(value = "{ 'sprintId' : ?0 , 'projectId' : ?1 }")
 	    Sprint findBySprintId(Long id,String projectId);
-	 	@Query(value = "{ 'projectId' : ?0 }")
-	    Iterable<Sprint> findByProjectId(String projectId);
+	 	@Query(value = "{ 'projectId' : ?0, 'projectName' : ?1}")
+	    Iterable<Sprint> findByProjectId(String projectId, String projectName);
 	
 }

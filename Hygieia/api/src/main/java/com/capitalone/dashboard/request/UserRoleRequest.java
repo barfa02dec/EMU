@@ -12,7 +12,15 @@ public class UserRoleRequest {
 	private String updatedBy;
 	private boolean enabled;
 	private Set<String> permissions=new HashSet<String>();
+	private boolean exposetoApi;
 	
+	
+	public boolean isExposetoApi() {
+		return exposetoApi;
+	}
+	public void setExposetoApi(boolean exposetoApi) {
+		this.exposetoApi = exposetoApi;
+	}
 	public Set<String> getPermissions() {
 		return permissions;
 	}

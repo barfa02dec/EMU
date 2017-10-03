@@ -1,7 +1,6 @@
 package com.capitalone.dashboard.collector;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,15 +160,14 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 
 			List<Scope> projects=(List<Scope>) projectRepository.findAll();
 			for(Scope scopeProject: projects){
-				List<Defect> defectsInDB=(List<Defect>) defectRepository.findByProjectId(scopeProject.getpId());
-				defectsInDB=defectsInDB.stream().filter(defect->defect.getProjectName().equals(scopeProject.getName())).collect(Collectors.toList());
+				List<Defect> defectsInDB=(List<Defect>) defectRepository.findByProjectId(scopeProject.getpId(),scopeProject.getProjectId());
 				LOGGER.info("*************PROJECT ID::"+scopeProject.getpId()+"********DEFECTS COUNT::"+defectsInDB.size());
 				storyData.processDefectAggregation(featureSettings, defectsInDB,scopeProject);
 				
 				//logic to handle sprint and releases
 				
-				storyData.saveDetailedSprintData(scopeProject.getpId());
-				storyData.saveDetailedReleaseData(scopeProject.getpId());
+				storyData.saveDetailedSprintData(scopeProject.getpId(),scopeProject.getName());
+				storyData.saveDetailedReleaseData(scopeProject.getpId(),scopeProject.getName());
 			}
 			log("Story Data", storyDataStart, count);
 			/*log("Finished", teamDataStart);*/

@@ -1,5 +1,7 @@
 package com.capitalone.dashboard.model;
 
+import java.util.Map;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -14,6 +16,7 @@ public class JiraSprint implements Comparable<JiraSprint> {
 	    private String viewBoardsUrl;
 	    private String originalSprintData;
 	    private SprintData sprintData;
+	  
 		public Long getId() {
 			return id;
 		}

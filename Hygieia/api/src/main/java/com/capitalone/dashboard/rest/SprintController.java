@@ -26,8 +26,8 @@ public class SprintController {
 
 
 	@RequestMapping(value = "/listAllSprints", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Sprint> getAllDefects(@RequestParam(value = "projectId", required = true) String projectId) {
-		List<Sprint> sprintList=sprintService.getAllSprints(projectId);
+	public List<Sprint> getAllDefects(@RequestParam(value = "projectId", required = true) String projectId, @RequestParam(value = "projectName", required = true) String projectName) {
+		List<Sprint> sprintList=sprintService.getAllSprints(projectId,projectName);
 		Collections.sort(sprintList);
 		sprintList.stream().limit(8);
 		return sprintList;

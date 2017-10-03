@@ -28,7 +28,7 @@ public class DefectServiceImpl implements DefectService {
 			throw new IllegalStateException("No records found");
 		}
 		else {
-			defects = defectRepository.findById(collectorId, defectId);
+			defects = defectRepository.findById(collectorId);
 			
 		}
 		return defects;

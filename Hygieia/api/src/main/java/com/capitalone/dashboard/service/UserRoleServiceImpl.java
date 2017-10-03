@@ -46,6 +46,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 		userRole.setCreatedOn(new Date().toString());
 		userRole.setEnabled(role.isEnabled());
 		userRole.setDescription(role.getDescription());
+		userRole.setExposetoApi(role.isExposetoApi());
 		Map<String , Boolean> permissions= new HashMap<String , Boolean>();
 		List<String> permissionKeysInDB=getpermissionKeysInDB();
 		for(String permit:role.getPermissions()){
@@ -66,6 +67,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 			userRole.setCreatedBy(role.getCreatedBy());
 			userRole.setCreatedOn(new Date().toString());
 			userRole.setEnabled(role.isEnabled());
+			userRole.setExposetoApi(role.isExposetoApi());
 			Map<String , Boolean> permissions= new HashMap<String , Boolean>();
 			List<String> permissionKeysInDB=getpermissionKeysInDB();
 
@@ -82,12 +84,14 @@ public class UserRoleServiceImpl implements UserRoleService {
 	}
 	@Override
 	public Iterable<UserRole> getAllActiveUserRoles() {
-		return roleRepository.findByStatus(true);
+		//param1: active/not param2: exposetoAPI/not
+		return roleRepository.findByStatus(true,true);
 	}
 
 	@Override
 	public Iterable<UserRole> getAllInactiveUserRoles() {
-		return roleRepository.findByStatus(false);
+		//param1: active/not param2: exposetoAPI/not
+		return roleRepository.findByStatus(false,true);
 	}
 
 	@Override

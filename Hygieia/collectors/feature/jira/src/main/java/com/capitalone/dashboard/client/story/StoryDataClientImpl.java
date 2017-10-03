@@ -277,13 +277,13 @@ public class StoryDataClientImpl implements StoryDataClient {
 		}
 	}
 	
-	public void saveDetailedSprintData(String projectId) {
+	public void saveDetailedSprintData(String projectId, String projectName) {
 		List<JiraSprint> sprintsJira = JiraCollectorUtil.getSprintList(projectId, featureSettings.getJiraBaseUrl(),
 		featureSettings.getJiraCredentials(), featureSettings.getNoOfSprintsToShow());
 		
 		List<Sprint> list = new ArrayList<Sprint>();
 		for (JiraSprint js : sprintsJira) {
-			Sprint sprint = sprintRepository.findOne(QSprint.sprint.sprintId.eq(js.getId()));
+			Sprint sprint = sprintRepository.findOne(QSprint.sprint.sprintId.eq(js.getId()).and(QSprint.sprint.name.eq(js.getName())));
 			if (null == sprint) {
 				
 				sprint = new Sprint();
@@ -293,7 +293,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				sprint.setProjectId(projectId);
 				sprint.setStart(js.getStart());
 				sprint.setClosed(js.getClosed());
-
+				sprint.setProjectName(projectName);
 			}
 			// get the detailed metrics for sprint with status [open] 
 			// get the detailed metrics for sprint with status[closed] but detailed metrics/SprintData is null
@@ -313,7 +313,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 
 	}
 
-	public void saveDetailedReleaseData(String projectId) {
+	public void saveDetailedReleaseData(String projectId, String projectName) {
 
 		List<JiraVersion> jiraVersions = JiraCollectorUtil.getVersionsFromJira(projectId,
 				featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(), featureSettings.getRapidView(),
@@ -322,7 +322,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		List<Release> releaseList = new ArrayList<Release>();
 
 		for (JiraVersion jv : jiraVersions) {
-			Release release = releaseRepository.findOne(QRelease.release.releaseId.eq(jv.getId()));
+			Release release = releaseRepository.findOne(QRelease.release.releaseId.eq(jv.getId()).and(QRelease.release.name.eq(jv.getName())));
 			if (release == null) {
 				release = new Release();
 				release.setReleaseId(jv.getId());
@@ -330,6 +330,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				release.setName(jv.getName());
 				release.setStartDate(jv.getStartDate());
 				release.setReleased(jv.getReleased());
+				release.setProjectName(projectName);
 			}
 			// get the detailed metrics for release with status [not release] 
 			// get the detailed metrics for release with status[released] but detailed metrics/versionData is null
@@ -451,13 +452,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 
 	private Defect processDefects(Issue issue, Defect defect, Map<String, IssueField> fields) {
 
-		/*
-		 * setting the collector ID as multiple of defect ID and project ID to
-		 * avoid the creation of duplicate Defects. There are scenarios where
-		 * different projects will be same / defect ID will be same w.r.t
-		 * different JIRA's
-		 */
-		defect.setCollectorId(issue.getId() * issue.getProject().getId());
 		defect.setDefectId(TOOLS.sanitizeResponse(issue.getId()));
 		defect.setProjectId(issue.getProject().getId().toString());
 		defect.setProjectName(issue.getProject().getName());
@@ -491,6 +485,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		if (null == defect.getDefectResolutionStatus()) {
 			defect.setDefectAge(DateUtil.differenceInDays(now, createdDate));
 		}
+		defect.setEmuProjectId(featureSettings.getProjectId());
 		return defect;
 
 	}
@@ -526,7 +521,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		 * exists.Hence setting the collector ID as same as scope ID.
 		 */
 		LOGGER.info("processing Defects aggregation");
-		DefectAggregation summery = defectAggregationRepository.findByProjectId(scopeProject.getpId());
+		DefectAggregation summery = defectAggregationRepository.findByProjectIdAndName(scopeProject.getpId(),scopeProject.getName());
 		if (null == summery) {
 			summery = new DefectAggregation();
 		}
@@ -534,6 +529,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		summery.setProjectId(scopeProject.getpId());
 		summery.setProjectName(scopeProject.getName());
 		summery.setValuesAsOn(new Date().toString());
+		
 		defectAggregationRepository.save(summery);
 		LOGGER.info("Defects aggregation ends.");
 	}
@@ -621,6 +617,10 @@ public class StoryDataClientImpl implements StoryDataClient {
 	private void processDefectsByDefectResolutionPeriodPMD(DefectAggregation aggregation, Scope scopeProject) {
 		List<JiraIssue> issues = new ArrayList<JiraIssue>();
 		String json=JiraCollectorUtil.getClosedDefectsByProject(scopeProject.getpId(), featureSettings.getJiraCredentials(), featureSettings.getJiraBaseUrl());
+		if(null==json) 
+		{
+			return;
+		}
 		issues = DefectUtil.parseDefectsJson(json);
 		List<Integer> resolutionsList = new ArrayList<Integer>();
 		for (int i = 0; i < featureSettings.getResolutionPeriod().length; i++) {

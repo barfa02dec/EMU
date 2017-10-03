@@ -49,6 +49,7 @@ public class JiraCollectorUtil {
 	public static final String GET_VERSION_DEFECTS_RESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) AND fixVersion in (%2s) and resolution not in (Unresolved) &maxResults=1000";	
 	public static final String GET_OPEN_DEFECTS_SEVERITY =  "/rest/api/2/search?jql=project=%1s and type in (Bug) and  resolution in (Unresolved) &maxResults=1000";
 	public static final String GET_ALL_CLOSED_DEFECTS = "/rest/api/2/search?jql=project=%1s AND type in (Bug) and  resolution not in (Unresolved) &maxResults=1000";
+	
 	public static String getDefectsFound(String projectId, String startdate, String enddate,String baseUrl,String base64Credentials) {
 		try{
 			String query = String.format(GET_DEFECTS_CREATED, projectId, startdate,enddate);
@@ -65,7 +66,7 @@ public class JiraCollectorUtil {
 	
 	public static String getVersionDefectsFound(String projectId, Long releaseId,String baseUrl,String base64Credentials) {
 		try{
-			String query = String.format(GET_VERSION_DEFECTS_CREATED, releaseId);
+			String query = String.format(GET_VERSION_DEFECTS_CREATED,projectId,releaseId);
 			query=baseUrl+query;
 			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
 			RestTemplate restTemplate = new RestTemplate();
@@ -120,9 +121,9 @@ public class JiraCollectorUtil {
 	}
 
 
-	public static String getDefectUnresolved(String projectId,String enddate,String baseUrl,String base64Credentials) {
+	public static String getDefectUnresolved(String projectId, String startdate,String enddate,String baseUrl,String base64Credentials) {
 		try{
-			String query = String.format(GET_DEFECTS_UNRESOLVED, projectId, enddate, enddate);
+			String query = String.format(GET_DEFECTS_UNRESOLVED, projectId, startdate, enddate);
 			query=baseUrl+query;
 			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
 			RestTemplate restTemplate = new RestTemplate();
@@ -257,7 +258,7 @@ public class JiraCollectorUtil {
 		sprintdata.setDefectsResolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 
 		// Get unresolved defects
-		json = JiraCollectorUtil.getDefectUnresolved(projectId,endDate,featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials());
+		json = JiraCollectorUtil.getDefectUnresolved(projectId,startDate,endDate,featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials());
 		issues = DefectUtil.parseDefectsJson(json);		
 		jiraSprint.getSprintData().setDefectsUnresolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 		
@@ -274,9 +275,15 @@ public class JiraCollectorUtil {
 			String releaseDate=DateUtil.format(versionData.getReleaseDate(), "yyyy/MM/dd HH:mm");
 			//Get created defects 
 			String json = getVersionDefectsFound(projectId, versionData.getReleaseId(),baseUrl,base64Credentials);
-			if(null==json) return versionData;
-			issues = DefectUtil.parseDefectsJson(json);
-			versionData.setDefectsFound(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
+			if(null==json) {
+				json=getDefectsFound(projectId, versionData.getStartDate().toString(), versionData.getReleaseDate().toString(), baseUrl, base64Credentials);
+			}
+			
+			if(null!=json) {
+				issues = DefectUtil.parseDefectsJson(json);
+		    	versionData.setDefectsFound(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
+				
+			}
 			
 			//Get resolved defects 
 			json = getVersionDefectResolved(projectId,versionData.getReleaseId(),baseUrl,base64Credentials );
@@ -437,12 +444,16 @@ public class JiraCollectorUtil {
 	}
 	
 	public static String getClosedDefectsByProject(String pid,String base64Credentials,String baseUrl){
-		String query=baseUrl+String.format(GET_ALL_CLOSED_DEFECTS, pid);
-		HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> result = restTemplate.exchange(query
-				, HttpMethod.GET, entity, String.class);
-		return result.getBody();
+		try{
+			String query=baseUrl+String.format(GET_ALL_CLOSED_DEFECTS, pid);
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+					, HttpMethod.GET, entity, String.class);
+			return result.getBody();
+		}catch (Exception e) {
+			return null;
+		}
 	}
 
 }

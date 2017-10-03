@@ -26,8 +26,8 @@ public class DefectSummeryServiceImpl implements DefectSummeryService {
 
 
 	@Override
-	public DefectAggregation findByProjectId(String id) {
-		return aggregationRepository.findByProjectId(id);
+	public DefectAggregation findByProjectId(String id, String projectName) {
+		return aggregationRepository.findByProjectIdAndName(id,projectName);
 	}
 	
 

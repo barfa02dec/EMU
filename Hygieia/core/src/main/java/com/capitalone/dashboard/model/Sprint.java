@@ -28,8 +28,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "sprint")
 public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
-		@Indexed
+		
 	    private Long sprintId;
+	    @Indexed
 		private String projectId;
 	    private String start;
 	    private String end;
@@ -38,8 +39,17 @@ public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 	    private Boolean editable;
 	    private String viewBoardsUrl;
 	    private SprintData sprintData;
-	
-	    public String getProjectId() {
+	    private String projectName;
+	    
+	  
+		
+		public String getProjectName() {
+			return projectName;
+		}
+		public void setProjectName(String projectName) {
+			this.projectName = projectName;
+		}
+		public String getProjectId() {
 			return projectId;
 		}
 		public void setProjectId(String projectId) {
@@ -114,7 +124,7 @@ public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 		@Override
 		public int compareTo(Sprint arg0) {
 			//sort by descending order
-			if(arg0.sprintId>this.sprintId){
+			if(arg0.sprintId<this.sprintId){
 				return 1;
 			}else if (arg0.sprintId==this.sprintId){
 				return 0;
