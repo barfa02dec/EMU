@@ -259,7 +259,7 @@
 			}
 
 			// Request projects
-			featureData.projectsByCollectorId(ctrl.collectorId.id).then(
+			featureData.projectsByCollectorId(ctrl.collectorId.id,ctrl.projectspcID).then(
 				processProjectsResponse);
 
 			// Request teams
