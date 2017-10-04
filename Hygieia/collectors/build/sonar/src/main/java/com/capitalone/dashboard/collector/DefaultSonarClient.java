@@ -55,7 +55,11 @@ public class DefaultSonarClient implements SonarClient {
     private static final String ERROR="ERROR";
     private static final String FAILED="FAILED";
     private static final String QUALITY_GATE_LEVEL="level";
-    
+    private static final String QUALITY_GATE_DETAILS="quality_gate_details";
+    private static final String SECURITY_GATE_DETAILS="security_rating";
+    private static final String RELIABILITY_GATE_DETAILS="reliability_rating";
+    private static final String MAINTAINABILITY_GATE_DETAILS="sqale_rating";
+    //security_rating , reliability_rating, sqale_rating(maintainability) , 
     private final RestOperations rest;
     private final HttpEntity<String> httpHeaders;
     private final SonarSettings sonarSettings;
@@ -121,7 +125,7 @@ public class DefaultSonarClient implements SonarClient {
                     metric.setFormattedValue(str(metricJson, FORMATTED_VALUE));
                     metric.setStatus(metricStatus(str(metricJson, ALERT)));
                     metric.setStatusMessage(str(metricJson, ALERT_TEXT));
-                    if(metric.getName().equals("quality_gate_details")){
+                    if(metric.getName().equals(QUALITY_GATE_DETAILS)){
                          JSONObject qualityGate= (JSONObject) new JSONParser().parse(str(metricJson, DATA).replaceAll("'\'",""));
                          metric.setStatus(metricStatus(STATUS_ALERT));
                          metric.setFormattedValue(qualityGate.get(QUALITY_GATE_LEVEL).toString());
@@ -130,7 +134,34 @@ public class DefaultSonarClient implements SonarClient {
                         	 metric.setFormattedValue(FAILED);
                          }
                     }
+                    if(metric.getName().equals(SECURITY_GATE_DETAILS)){
+                    	switch(metric.getFormattedValue()){
+                    	case "A" : metric.setStatusMessage("0 vulnerability");
+                    	case "B": metric.setStatusMessage("At least 1 minor vulnerability");
+                    	case "C": metric.setStatusMessage("At least 1 major vulnerability");
+                    	case "D": metric.setStatusMessage("At least 1 critical vulnerability");
+                    	case "E": metric.setStatusMessage("At least 1 blocker vulnerability");
+                    	}
+                    }
+                    if(metric.getName().equals(RELIABILITY_GATE_DETAILS)){
+                    	switch(metric.getFormattedValue()){
+                    	case "A" : metric.setStatusMessage("0 bug");
+                    	case "B": metric.setStatusMessage("At least 1 minor bug");
+                    	case "C": metric.setStatusMessage("At least 1 major bug");
+                    	case "D": metric.setStatusMessage("At least 1 critical bug");
+                    	case "E": metric.setStatusMessage("At least 1 blocker bug");
+                    	}
+                    }
                     
+                    if(metric.getName().equals(MAINTAINABILITY_GATE_DETAILS)){
+                    	switch(metric.getFormattedValue()){
+                    	case "A" : metric.setStatusMessage("<=5%");
+                    	case "B": metric.setStatusMessage("between 6 to 10% ");
+                    	case "C": metric.setStatusMessage("between 11 to 20% ");
+                    	case "D": metric.setStatusMessage("between 21 to 50% ");
+                    	case "E": metric.setStatusMessage(">= 50% ");
+                    	}
+                    }
                     codeQuality.getMetrics().add(metric);
                 }
 
