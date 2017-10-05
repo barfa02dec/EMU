@@ -27,7 +27,7 @@
   
        
         $scope.curPage = 0;
-        ctrl.pageSize = 5;
+        ctrl.pageSize = 10;
 
         //Get All Projects
         $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
