@@ -542,7 +542,6 @@
 
 
             ctrl.editUserCall = function() {
-
                 ctrl.projectUserPayl = {
                     "user": ctrl.userkey,
                     "projectId": ctrl.projectidkeystring,
@@ -559,6 +558,46 @@
                         controllerAs: 'umc'
                     });
 
+                })
+            }
+        }
+
+         //delete user modal opens//
+        ctrl.deleteUserPopUp = function(wholeObj, userkey, projectidkey, projectidkeystring) {
+
+            $uibModal.open({
+                templateUrl: 'app/dashboard/views/ConfirmationModals/deleteUserModal.html',
+                controller: deleteUserController,
+                controllerAs: 'duc',
+                 resolve: {
+                    wholeObj: function() {
+                        return wholeObj;
+                    },
+                    userkey: function() {
+                        return userkey;
+                    },
+                    projectidkey: function() {
+                        return projectidkey;
+                    },
+                    projectidkeystring: function() {
+                        return projectidkeystring;
+                    }
+                }
+            });
+        }
+
+        function deleteUserController($uibModalInstance, wholeObj, $route, $scope, userkey, projectidkey, $cookies, projectidkeystring){
+            var ctrl = this;
+            ctrl.editUserCall = function() {
+                $http.delete("/api/disassociatedUserFromProject/" + userkey + "/" + projectidkeystring).then(function(response) {
+                    $route.reload();
+                   $uibModalInstance.dismiss("cancel");
+                    $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/deleteUserConfirmModal.html',
+                        controller: userManagementController,
+                        controllerAs: 'umc'
+                    });
+                     
                 })
             }
         }

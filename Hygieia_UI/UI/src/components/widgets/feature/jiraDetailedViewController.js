@@ -481,8 +481,8 @@ padding: {
       //Processing Release Data
         function ReleaseDataProcessing(data){
           ctrl.releasegraph = data.versionData;
-          var noOfStoryCompleted = ["Completed Story Points"];
-          var noOfStoryPoints = ["No of Stories Completed"];
+          var noOfStoryCompleted = ["No of Stories Completed"];
+          var noOfStoryPoints = ["Completed Story Points"];
           var totaldefectsFound = ["Defects Found"];
           var releaseName = [];
           var totalDefectsResolved = ["Defects Resolved"];
