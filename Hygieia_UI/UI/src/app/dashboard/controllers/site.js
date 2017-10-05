@@ -187,7 +187,7 @@
         }
 
         function processMyDashboardResponse(mydata) {
-
+            ctrl.rawdata = mydata;
             // add dashboards to list
             ctrl.mydash = [];
             var dashboards = [];
@@ -197,6 +197,7 @@
                     id: mydata[x].id,
                     name: mydata[x].title,
                     type: mydata[x].type,
+                    owner: mydata[x].owner,
                     isProduct: mydata[x].type && mydata[x].type.toLowerCase() === DashboardType.PRODUCT.toLowerCase()
                 });
             }
