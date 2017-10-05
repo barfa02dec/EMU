@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capitalone.dashboard.model.Authentication;
 import com.capitalone.dashboard.request.AuthenticationRequest;
+import com.capitalone.dashboard.request.AuthenticationResponse;
 import com.capitalone.dashboard.service.AuthenticationService;
 
 
@@ -34,7 +35,7 @@ public class AuthenticationController {
 
 
     @RequestMapping(value = "/authenticateUser", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> authenticateUser(@Valid @RequestBody AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponse> authenticateUser(@Valid @RequestBody AuthenticationRequest request) {
         // TODO: should return proper HTTP codes for invalid creds
         return ResponseEntity
                 .status(HttpStatus.OK)

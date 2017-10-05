@@ -33,7 +33,7 @@ public class AuthenticationServiceTest {
         pwField.set(nonHashPass, pw);
 
         when(authRepo.findByUsername(anyString())).thenReturn(nonHashPass);
-        assertTrue(authService.authenticate("u1", "pass1"));
+        assertTrue(authService.authenticate("u1", "pass1").isAuthenticated());
     }
 
     @Test
@@ -43,6 +43,6 @@ public class AuthenticationServiceTest {
         Authentication auth = new Authentication("u1", pw);
 
         when(authRepo.findByUsername(anyString())).thenReturn(auth);
-        assertTrue(authService.authenticate("u1", "pass1"));
+        assertTrue(authService.authenticate("u1", "pass1").isAuthenticated());
     }
 }

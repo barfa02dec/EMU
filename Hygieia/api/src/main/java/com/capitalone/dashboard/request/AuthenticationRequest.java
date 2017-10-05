@@ -12,7 +12,7 @@ public class AuthenticationRequest {
     @NotNull
     private String password;
 
-    private boolean isSysAdmin;
+    private boolean isSysAdmin=false;
     
     public String getUsername() {
         return username;
