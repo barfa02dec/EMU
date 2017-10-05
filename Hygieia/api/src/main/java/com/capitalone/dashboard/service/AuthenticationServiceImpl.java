@@ -2,6 +2,8 @@ package com.capitalone.dashboard.service;
 
 import com.capitalone.dashboard.model.Authentication;
 import com.capitalone.dashboard.repository.AuthenticationRepository;
+import com.capitalone.dashboard.request.AuthenticationResponse;
+
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -74,14 +76,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public boolean authenticate(String username, String password) {
+    public AuthenticationResponse authenticate(String username, String password) {
         boolean flag = false;
         Authentication authentication = authenticationRepository.findByUsername(username);
 
         if (authentication != null && authentication.checkPassword(password)) {
             flag = true;
         }
-        return flag;
+        AuthenticationResponse authResponse= new AuthenticationResponse();
+        authResponse.setAuthenticated(flag);
+        authResponse.setSysAdmin(authentication.isSysAdmin());
+        return authResponse;
+        
     }
 
 }

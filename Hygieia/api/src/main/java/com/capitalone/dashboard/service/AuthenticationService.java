@@ -3,6 +3,7 @@ package com.capitalone.dashboard.service;
 import org.bson.types.ObjectId;
 
 import com.capitalone.dashboard.model.Authentication;
+import com.capitalone.dashboard.request.AuthenticationResponse;
 
 public interface AuthenticationService {
 	
@@ -56,5 +57,5 @@ public interface AuthenticationService {
      * @param password
 	 * @return
 	 */
-	boolean authenticate(String username, String password);
+	AuthenticationResponse authenticate(String username, String password);
 }
