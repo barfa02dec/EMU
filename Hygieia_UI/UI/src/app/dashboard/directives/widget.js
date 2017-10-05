@@ -81,6 +81,7 @@
         }
 
         function controller($scope, $element, $routeParams,$cookies) {
+             $scope.configureProject = false;
             $scope.selectedDashboard = $routeParams.id;
             //$scope.selectedName = $cookies.get('selectedName');
             // if($cookies.putObject($routeParams.id) && $cookies.putObject($routeParams.id).selectedName)
