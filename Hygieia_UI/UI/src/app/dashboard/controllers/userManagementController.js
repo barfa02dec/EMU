@@ -238,7 +238,12 @@
                     $http.post('/api/engineeringDashboardUserRole ', (ctrl.role)).then(function(response) {
                         $route.reload();
                         $uibModalInstance.dismiss("cancel");
-                        console.log("saas" + ctrl.role);
+                         $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/postroleconfirmmodal.html',
+                        controller: 'userManagementController',
+                        controllerAs: 'umc'
+                });
+                        
                     })
                 };
             } else {
@@ -424,11 +429,27 @@
                         "updatedBy": ctrl.usernamepro,
                          "exposetoApi":true
                     }
+                    //ctrl.getAllPermissions =differenceArray(ctrl.getAllPermissions,ctrl.arrayconverted);
+
+                    ctrl.getAllPermissions = _.difference(ctrl.getAllPermissions, ctrl.arrayconverted);
+
                     ctrl.arraySelectedPermission = [];
                     ctrl.arraySelectedPermission.push(ctrl.roleObj.permissions);
                 });
 
-                 
+               /* function differenceArray (parentArr, childArr) {
+                    var diffArray = [];
+                  parentArr.sort();
+                  childArr.sort();
+                  for (var i = 0; i < parentArr.length; i += 1) {
+                    if (childArr.indexOf(parentArr[i]) > -1) {
+                      diffArray.push(parentArr[i]);
+                    }
+                  }
+                  return diffArray;
+                    }; */
+
+            
 
             ctrl.transfer = function(from, to, index) {
                 if (index >= 0) {
@@ -446,7 +467,11 @@
                 $http.post('/api/engineeringDashboardUserRoleEdit ', (ctrl.role)).then(function(response) {
                     $route.reload();
                     $uibModalInstance.dismiss("cancel");
-                    alert("created");
+                    $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/updateRoleConfirmModal.html',
+                        controller: userManagementController,
+                        controllerAs: 'umc'
+                    });
                 })
             }
 

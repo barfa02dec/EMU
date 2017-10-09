@@ -2,7 +2,7 @@
 
 <widget-modal widget-modal-title="Edit Roles" style="background:#fff;" >
 <form class="form-horizontal" name="editrole.editRoleModel" ng-submit="erc.editRoleCall();" name="formname" novalidate >
-                    <label class="control-label col-sm-4 createproj-label-props" for="pwd">Created by</label>
+                    <label class="control-label col-sm-4 createproj-label-props" for="pwd">Created By</label>
                          <form-group input="createdBy" errors="{required: 'Created by is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
                           
             <input
@@ -32,14 +32,14 @@
                 required />
         </form-group> 
                        
-                       <label class="control-label col-sm-4 createproj-label-props" for="pwd">Role key</label>
-                                  <form-group input="rolekeys" errors="{required: 'Role key is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                       <label class="control-label col-sm-4 createproj-label-props" for="pwd">Role Name</label>
+                                  <form-group input="rolekeys" errors="{required: 'Role name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
                          
             <input
                 type="text"
                 name="rolekeys"
                 class="form-control create-project-inputboxes"
-                placeholder="Role key"
+                placeholder="Role name"
                 ng-model="erc.role.roleKey"
                 maxlength="40"
                 autocomplete="off"
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <label style="font-weight: normal;">Selected permissions</label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
+                    <label style="font-weight: normal;">Selected Permissions</label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
                     <div class="pool scrollbar-processor-allpages">
                         <ul> 
                            <!--  <li ng-repeat="(key, value) in erc.role.permissions">
