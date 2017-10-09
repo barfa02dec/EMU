@@ -224,7 +224,8 @@
                         "enabled": true,
                         "permissions": ctrl.selectedItems,
                         "roleKey": ctrl.roleKey,
-                        "updatedBy": ctrl.usernamepro
+                        "updatedBy": ctrl.usernamepro,
+                        "exposetoApi":true
                     }
                 });
             //Create Role Payload Object
@@ -412,7 +413,7 @@
                 .then(function(response) {
                     ctrl.getAllPermissions = response.data;
                     ctrl.roleObj = roleObj;
-                    ctrl.arrayconverted = ctrl.roleObj.permissions;
+                    ctrl.arrayconverted = ctrl.roleObj.permission.concat(ctrl.roleObj.permissions);
                     ctrl.usernamepro = $cookies.get('username');
                     ctrl.role = {
                         "createdBy": ctrl.usernamepro,
@@ -420,15 +421,17 @@
                         "enabled": true,
                         "permissions": ctrl.arrayconverted,
                         "roleKey": ctrl.roleObj.roleKey,
-                        "updatedBy": ctrl.usernamepro
+                        "updatedBy": ctrl.usernamepro,
+                         "exposetoApi":true
                     }
                     ctrl.arraySelectedPermission = [];
-
                     ctrl.arraySelectedPermission.push(ctrl.roleObj.permissions);
-
                 });
+
+                 
+
             ctrl.transfer = function(from, to, index) {
-                if (index >= -1) {
+                if (index >= 0) {
                     to.push(from[index]);
                     from.splice(index, 1);
                 } else {
@@ -443,6 +446,7 @@
                 $http.post('/api/engineeringDashboardUserRoleEdit ', (ctrl.role)).then(function(response) {
                     $route.reload();
                     $uibModalInstance.dismiss("cancel");
+                    alert("created");
                 })
             }
 
@@ -473,6 +477,8 @@
             });
         }
 
+       
+
         //Edit User functionality
         function editUserController($uibModalInstance, wholeObj, $route, $scope, userkey, projectidkey, $cookies, projectidkeystring) {
             var ctrl = this;
@@ -481,6 +487,18 @@
             ctrl.projectidkey = projectidkey;
             ctrl.onlyroles = _.keys(ctrl.wholeObj.userRoles);
             ctrl.projectidkeystring = projectidkeystring;
+
+             /*function for filtering difference array when passing two arrays*/
+        function differenceArray (parentArr, childArr) {
+          var diffArray = [];
+          parentArr.sort();
+          childArr.sort();
+          for (var i = 0; i < childArr.length; i += 1) {
+             var index = (parentArr && parentArr[i].id).indexOf(childArr);
+                parentArr.splice(index,1);
+             }
+          return parentArr;
+        }; 
 
             //Fetch all roles that is displayed in dual list
             $http.get("/api/allActiveEngineeringDashboardUserRoles")
@@ -500,23 +518,7 @@
                 });
            
            
-
-            //Fetch all dashboards for that project
-            var fetchevrydashboard = "/api/dashboard/projectdashboard ";
-            $http.get(fetchevrydashboard + "?projectId=" + ctrl.projectidkey)
-                .then(function(response) {
-                    //ctrl.selectedItemsDashboardSpecific = [];
-                    ctrl.selectedItemsDashboardSpecific = response.data;
-
-                   /* for (var i = 0; i < ctrl.geteverydashboard.length; i++) {
-                        ctrl.selectedItemsDashboardSpecific.push(ctrl.geteverydashboard[i].title);
-                    }*/
-
-                
-
-                })
-
-                 //Fetch all user specific dashboards
+             //Fetch all user specific dashboards
             var mydashboardRouteProMap = "/api/dashboard/mydashboard";
             $http.get(mydashboardRouteProMap + "?username=" + ctrl.userkey + "&projectId=" + ctrl.projectidkey)
                 .then(function(response) {
@@ -525,7 +527,19 @@
                         ctrl.selectedItemsDashboard.push(ctrl.getUsrSpcificDashboards[i].title);
                     }*/
 
-                })
+                });
+
+
+             //Fetch all dashboards for that project
+            var fetchevrydashboard = "/api/dashboard/projectdashboard ";
+            $http.get(fetchevrydashboard + "?projectId=" + ctrl.projectidkey)
+                .then(function(response) {
+                    //ctrl.selectedItemsDashboardSpecific = [];
+                    if (response && response.data) {
+                         ctrl.selectedItemsDashboardSpecific =differenceArray(response.data,ctrl.selectedItemsDashboard);
+                    }
+                });
+
 
                     ctrl.transfer = function(from, to, index) {
                         if (index >= -1) {

@@ -27,26 +27,35 @@
   
        
         $scope.curPage = 0;
-        ctrl.pageSize = 10;
+        ctrl.pageSize = 5;
 
         //Get All Projects
         $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
             .then(function(response) {
                 ctrl.getAllProjects = response.data;
-                for (var i = 0; i < ctrl.getAllProjects.length; i++) {
-                    for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
+                ctrl.sysadmincheck = $cookies.get('sysAdmin');
+                if(ctrl.sysadmincheck == "true"){
+                        ctrl.CreateProjects = true;
+                         ctrl.viewProjects = true;
+                    }else{
+                        for (var i = 0; i < ctrl.getAllProjects.length; i++) {
+                        for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
                         for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
                             ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
                             ctrl.projectIDS = ctrl.getAllProjects[i].id;
+                            
                             if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("ADD_PROJECT") > -1) && (ctrl.vvv == ctrl.usernamepro)){
                                ctrl.CreateProjects = true;
                             }
                             if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("VIEW_PROJECT_LIST") > -1) && (ctrl.vvv == ctrl.usernamepro)){
                                ctrl.viewProjects = true;
                             }
+
                         }
                     }
-                }
+                } 
+                    }
+             
             });
 
         ctrl.numberOfPages = function() {

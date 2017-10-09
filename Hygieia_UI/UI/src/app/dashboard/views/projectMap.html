@@ -166,9 +166,10 @@
 </div>
 <div class="col-md-12">
 <div class="col-md-10"></div>
-<div class="pagination-div pagination-parentdiv-props col-md-2" ng-show="pm.getAllProjects.length" ng-if="pm.viewProjects" style="padding-left: 2%;padding-right: 0px;">
+<div class="pagination-div pagination-parentdiv-props col-md-2" ng-show="pm.getAllProjects.length" ng-hide="!pm.viewProjects" style="padding-left: 2%;padding-right: 0px;">
    <button ng-click="curPage=curPage-1" ng-disabled="curPage == 0" type="button" class="pagination-btn-props">Prev</button>
    <span>Page {{curPage + 1}} of {{ pm.numberOfPages() }}</span>
    <button ng-click="curPage = curPage+1" ng-disabled="curPage >= pm.getAllProjects.length/pm.pageSize - 1" type="button" class="pagination-btn-props">Next</button>
 </div>
 </div>
+

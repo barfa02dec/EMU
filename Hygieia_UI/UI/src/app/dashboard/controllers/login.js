@@ -30,7 +30,10 @@
                           data
                         );
                         if (data) {
-                            $cookies.put('authenticated', true);
+                           // $scope.data = data.sysAdmin;
+                            $cookies.put('authenticated', data.authenticated);
+
+                            $cookies.put('sysAdmin', data.sysAdmin);
                             $cookies.put('username', login.username);
                             //$location.path('/site');
                             $location.path('/projects');
