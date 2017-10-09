@@ -238,7 +238,12 @@
                     $http.post('/api/engineeringDashboardUserRole ', (ctrl.role)).then(function(response) {
                         $route.reload();
                         $uibModalInstance.dismiss("cancel");
-                        console.log("saas" + ctrl.role);
+                         $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/postroleconfirmmodal.html',
+                        controller: 'userManagementController',
+                        controllerAs: 'umc'
+                });
+                        
                     })
                 };
             } else {
@@ -462,7 +467,11 @@
                 $http.post('/api/engineeringDashboardUserRoleEdit ', (ctrl.role)).then(function(response) {
                     $route.reload();
                     $uibModalInstance.dismiss("cancel");
-                    alert("created");
+                    $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/updateRoleConfirmModal.html',
+                        controller: userManagementController,
+                        controllerAs: 'umc'
+                    });
                 })
             }
 
