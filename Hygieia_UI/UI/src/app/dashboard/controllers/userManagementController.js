@@ -424,11 +424,27 @@
                         "updatedBy": ctrl.usernamepro,
                          "exposetoApi":true
                     }
+                    //ctrl.getAllPermissions =differenceArray(ctrl.getAllPermissions,ctrl.arrayconverted);
+
+                    ctrl.getAllPermissions = _.difference(ctrl.getAllPermissions, ctrl.arrayconverted);
+
                     ctrl.arraySelectedPermission = [];
                     ctrl.arraySelectedPermission.push(ctrl.roleObj.permissions);
                 });
 
-                 
+               /* function differenceArray (parentArr, childArr) {
+                    var diffArray = [];
+                  parentArr.sort();
+                  childArr.sort();
+                  for (var i = 0; i < parentArr.length; i += 1) {
+                    if (childArr.indexOf(parentArr[i]) > -1) {
+                      diffArray.push(parentArr[i]);
+                    }
+                  }
+                  return diffArray;
+                    }; */
+
+            
 
             ctrl.transfer = function(from, to, index) {
                 if (index >= 0) {
