@@ -84,7 +84,7 @@
                             <!-- <td>
                                 <span dash-status="{{ issue.status }}" ng-if="caWidget.showStatusIcon(issue)" class="staticanalysis-textProps"></span>
                             </td> -->
-                           <div class="ca-value staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style=""><div style="padding-top: 22%;" class="total-builds-text-props">{{issue.formattedValue}}</div></div>
+                           <div class="ca-value staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style=""><div style="padding-top: 10px;" class="total-builds-text-props">{{issue.formattedValue}}</div></div>
                             </div>
                             <div class="dash-row total-builds-label-props">
                             
@@ -118,7 +118,7 @@
                     <table class="table">
                         <div class="row" style="padding-top: 3%">
                             <!-- <td class="staticanalysis-textProps"><span dash-status="{{ test.status }}" ng-if="caWidget.showStatusIcon(test)"></span></td> -->
-                            <div class="ca-value staticanalysis-textProps col-md-2" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0"><div style="padding-top: 22%;" class="total-builds-text-props">{{test.formattedValue}}</div></div>
+                            <div class="ca-value staticanalysis-textProps col-md-2" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0"><div style="padding-top: 10px;" class="total-builds-text-props">{{test.formattedValue}}</div></div>
 </div>
 <div class="dash-row total-builds-label-props">
                             <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="test in caWidget.unitTests track by test.name" ng-class="{'clickable': !!test.statusMessage}" popover-html-unsafe="{{test.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="max-width: inherit;padding-left: 0px;" ng-if="test.name == 'Success'">SUCCESS</div>
