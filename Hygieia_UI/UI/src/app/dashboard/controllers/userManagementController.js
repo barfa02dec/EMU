@@ -559,10 +559,11 @@
             var fetchevrydashboard = "/api/dashboard/projectdashboard ";
             $http.get(fetchevrydashboard + "?projectId=" + ctrl.projectidkey)
                 .then(function(response) {
+                    ctrl.selectedItemsDashboardSpecific = response.data;
                     //ctrl.selectedItemsDashboardSpecific = [];
-                    if (response && response.data) {
+                    /*if (response && response.data) {
                          ctrl.selectedItemsDashboardSpecific =differenceArray(response.data,ctrl.selectedItemsDashboard);
-                    }
+                    }*/
                 });
 
 
