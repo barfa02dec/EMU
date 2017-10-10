@@ -316,12 +316,48 @@ public class JiraCollectorUtil {
 		
 	}
 	
-	public static void processDefectsByPriorityAndEnvironment(List<Defect> defects,DefectAggregation aggregation,Scope scopeProject){
-		Map<String,Integer> defectsByProirity= new LinkedHashMap<String,Integer>();
-		Map<String,Integer> defectsByEnvironment= new LinkedHashMap<String,Integer>();
+	public static void processDefectsByEnvironment(DefectAggregation aggregation,String projectId,String baseUrl,String base64Credentials){
+		try{
+			String query = String.format(GET_OPEN_DEFECTS_SEVERITY, projectId);
+			query=baseUrl+query;
+			HttpEntity<String> entity = new HttpEntity<String>(getHeader(base64Credentials));
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<String> result = restTemplate.exchange(query
+					, HttpMethod.GET, entity, String.class);
+			String jsonResponse=result.getBody();
+			if(null!=jsonResponse){
+				List<JiraIssue> issues = new ArrayList<JiraIssue>();
+				issues = DefectUtil.parseDefectsEnvironmentJson(jsonResponse);
+				Map<String,Integer> defectsByEnvironment= new LinkedHashMap<String,Integer>();
+				for(JiraIssue defect: issues){
+					if(null!=defect.getEnvironment()){
+						if(defectsByEnvironment.containsKey(defect.getEnvironment()))
+						{
+							defectsByEnvironment.put(defect.getEnvironment(), defectsByEnvironment.get(defect.getEnvironment())+1);
+								
+						}else{
+							
+							defectsByEnvironment.put(defect.getEnvironment(), 1);
+						}
+						
+					}
+				}
+				if(!defectsByEnvironment.isEmpty()){
+					aggregation.setDefectsByEnvironment(defectsByEnvironment);
+				}
+			}
+			//return result.getBody();
+		}catch (Exception e) {
+			// TODO: handle exception
+			//return null;
+		}
 		
-			for(Defect defect: defects){
-			
+	}
+	
+	public static void processDefectsByPriority(List<Defect> defects,DefectAggregation aggregation,Scope scopeProject){
+		Map<String,Integer> defectsByProirity= new LinkedHashMap<String,Integer>();
+		
+			for(Defect defect: defects){			
 			if(!defect.getDefectStatus().equals(DONE) && defect.getProjectId().equals(scopeProject.getpId())){
 				if(defectsByProirity.containsKey(defect.getDefectPriority())){
 					defectsByProirity.put(defect.getDefectPriority(), defectsByProirity.get(defect.getDefectPriority())+1);
@@ -329,13 +365,7 @@ public class JiraCollectorUtil {
 					defectsByProirity.put(defect.getDefectPriority(), 1);
 				}
 				
-				if(defectsByEnvironment.containsKey(defect.getEnvironment())){
-					defectsByEnvironment.put(defect.getEnvironment(), defectsByEnvironment.get(defect.getEnvironment())+1);
-				}else if(null!=defect.getEnvironment()){
-					defectsByEnvironment.put(defect.getEnvironment(), 1);
-				}
-			}
-			
+			}		
 			
 			}
 		
@@ -343,10 +373,7 @@ public class JiraCollectorUtil {
 			{
 				aggregation.setDefectsByProirity(defectsByProirity);
 			}
-			if(!defectsByEnvironment.isEmpty())
-			{
-				aggregation.setDefectsByEnvironment(defectsByEnvironment);
-			}
+			
 		
 	}
 	

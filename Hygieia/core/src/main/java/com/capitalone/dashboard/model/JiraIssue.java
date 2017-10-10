@@ -80,4 +80,13 @@ public class JiraIssue {
 			createDate = jsonObject.getAsJsonObject("fields").get("created").getAsString();
 		}
 	}
+	
+	public void parseJsonForEnvironment(String json){
+		JsonObject jsonObject = new GsonBuilder().create().fromJson(json, JsonObject.class);
+		
+		if(!jsonObject.getAsJsonObject("fields").get("environment").isJsonNull()){
+				environment = jsonObject.getAsJsonObject("fields").get("environment").getAsString();
+		}		
+		
+	}
 }
