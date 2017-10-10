@@ -9,7 +9,7 @@ import com.capitalone.dashboard.model.Project;
 public interface ProjectRepository extends PagingAndSortingRepository<Project, ObjectId>{
 	
 	@Query(value = "{'projectId' : ?0}")
-	Project findByProjectId(String projectName);
+	Project findByProjectId(String projectId);
 	
 	@Query(value = "{'projectStatus' : ?0}")
 	Iterable<Project> getAllActiveProjects(boolean status);

@@ -1,7 +1,9 @@
 package com.capitalone.dashboard.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -170,11 +172,29 @@ public class ProjectServiceImpl implements ProjectService {
 				project.setUsersGroup(userGroupSet);
 			}
 			
-			Set<Dashboard> dashboardsList=projectUserRoleRequest.getDashboardsToAssign();
-			for(Dashboard dbDashboard: dashboardsList){
-				dbDashboard.getUsersList().add(projectUserRoleRequest.getUser());
+			Set<Dashboard> dashboardsListToPersist=new HashSet<Dashboard>();
+			Set<Dashboard> dashboardsListToRemove=new HashSet<Dashboard>();
+			//edit existing dashboards if it is deferenced.
+			List<Dashboard> existingProjectDashboards=dashboardRepository.findByProjectId(project.getId());
+			List<Dashboard> dashboardsToAssignToTheUser=new ArrayList<Dashboard>(projectUserRoleRequest.getDashboardsToAssign());
+			
+			for(Dashboard dbDashboard: existingProjectDashboards){
+				if(dashboardsToAssignToTheUser.contains(dbDashboard))
+				{
+					dbDashboard.getUsersList().add(projectUserRoleRequest.getUser());
+					dashboardsListToPersist.add(dbDashboard);
+				}else{
+					dashboardsListToRemove.add(dbDashboard);
+				}
 			}
-			dashboardRepository.save(dashboardsList);
+			
+			for(Dashboard dbDashboard: dashboardsListToRemove)
+			{
+				dbDashboard.getUsersList().remove(projectUserRoleRequest.getUser());
+				dashboardsListToPersist.add(dbDashboard);
+			}
+			
+			dashboardRepository.save(dashboardsListToPersist);
 			return projectRepository.save(project);
 		}
 		return null;

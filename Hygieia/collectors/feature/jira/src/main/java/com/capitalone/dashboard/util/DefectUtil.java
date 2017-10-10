@@ -33,6 +33,19 @@ public class DefectUtil {
 		return issues;
 	}
 	
+	public static List<JiraIssue> parseDefectsEnvironmentJson(String json){
+		JsonArray jsonArr = new GsonBuilder().create().fromJson(json, JsonObject.class).getAsJsonArray("issues");
+		
+		List<JiraIssue> issues = new ArrayList<JiraIssue>();
+		for(JsonElement element : jsonArr){
+		
+			JiraIssue issue = new JiraIssue();
+			issue.parseJsonForEnvironment(element.toString());
+			issues.add(issue);
+		}		
+		return issues;
+	}
+	
 public static List<NameValuePair> defectCountBySeverity(List<JiraIssue> issues){
 		
 		LinkedHashMap<String, NameValuePair> issuecountmap = new LinkedHashMap<String, NameValuePair> ();	

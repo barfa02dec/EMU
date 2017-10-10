@@ -494,9 +494,15 @@ public class StoryDataClientImpl implements StoryDataClient {
 			Scope scopeProject, DefectAggregation summery) {
 
 		/*
-		 * Logic to bucket the defects based on environment and priority.
+		 * Logic to bucket the defects based on priority.
 		 */
-		JiraCollectorUtil.processDefectsByPriorityAndEnvironment(defects, summery, scopeProject);
+		JiraCollectorUtil.processDefectsByPriority(defects, summery, scopeProject);
+		
+		/*
+		 * Logic to bucket the defects based on environment
+		 */
+		JiraCollectorUtil.processDefectsByEnvironment(summery, scopeProject.getpId(), featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials());
+		
 
 		/*
 		 * Logic for bucketing the defects based on resolution days and priority
