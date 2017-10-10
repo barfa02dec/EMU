@@ -6,6 +6,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,6 +60,7 @@ public class DashboardController {
     	Set<String> defaultDashboardUsers= new HashSet<String>();
     	defaultDashboardUsers.add(request.getOwner());
     	dashboardToCreate.setUsersList(defaultDashboardUsers);
+    	dashboardToCreate.setCreatedOn(new Date().toString());
         try {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
@@ -115,6 +117,7 @@ public class DashboardController {
         if (!titleExist) {
             try {
                 dashboard.setTitle(request.getTitle());
+                dashboard.setUpdatedOn(new Date().toString());
                 dashboardService.update(dashboard);
                 return ResponseEntity.ok("Renamed");
             } catch (HygieiaException he) {
