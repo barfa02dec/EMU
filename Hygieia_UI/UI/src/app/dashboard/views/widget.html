@@ -2,7 +2,7 @@
 <div class="">
     <div class="widget row" ng-class="{'configure' : state == widget_state.CONFIGURE, 'alert': display == display_state.ERROR}" style="padding:0px;">
         <div class="kanban-widget-heading" ng-if="header" ng-hide=" {{(title == 'Monitor')}}" style="">
-        <span style="font-size:20px;font-weight: 300;">
+            <span style="font-size:20px;font-weight: 300;">
             <span ng-show=" {{(title == 'Feature')}}">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block"><style type="text/css">.stheadb0 {
         fill: #605587;
@@ -22,32 +22,30 @@
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block"><style type="text/css">.stheadb0 {
         fill: #605587;
     }</style><rect class="stheadb0" width="5.1" height="16"></rect></svg>
-            CODE QUALITY<span style="color:#d6d6d6">|</span></span></span>
-        <span ng-show=" {{(title == 'Build')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
+            CODE QUALITY<span style="color:#d6d6d6">|</span></span>
+            </span>
+            <span ng-show=" {{(title == 'Build')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
                   <!--   <select ng-model="selectedName" ng-options="selectedName.description for selectedName in collectorDetails" ng-change="check(selectedName)" style="color: #000;">
 
                     </select> -->
-    <select ng-model="selectedName" ng-change="check(selectedName)" style="color: #000;background: #efefef;
-    border: none;color: #4482B2;font-weight: 600">
+    <select ng-model="selectedName" ng-change="check(selectedName)" class="widget-page-dropdownprops">
     <option value="Select any Jobs">Select any Jobs</option>
                          <option ng-repeat="eachSelectedName in collectorDetails" value="{{eachSelectedName.id}}">{{eachSelectedName.description}}</option>
                         </select>
- 
+
            </span>
 
             <span ng-show=" {{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
                 <!-- <select ng-model="selectedNameSonar" ng-options="selectedNameSonar.description for selectedNameSonar in collectorDetailsSonar" ng-change="checkSonar(selectedNameSonar)" style="color: #000;">
                 </select> -->
 
-                <select ng-model="selectedNameSonar" ng-change="checkSonar(selectedNameSonar)" style="color: #000;background: #efefef;
-    border: none;color: #4482B2;font-weight: 600">
+                <select ng-model="selectedNameSonar" ng-change="checkSonar(selectedNameSonar)" class="widget-page-dropdownprops">
                          <option ng-repeat="eachselectedNameSonar in collectorDetailsSonar" value="{{eachselectedNameSonar.id}}">{{eachselectedNameSonar.description}}</option>
                         </select>
- 
+
            </span>
 
         </div>
-
 
         <div class="widget-body">
             <div class="widget-body-main">
@@ -71,11 +69,11 @@
                             </g>
                         </svg>
                     </div>
-                    <div style="color:#fff;" >Configure
+                    <div style="color:#fff;">Configure
                         <br/>widget</div>
-                        
+
                 </div>
-                 <div style="color:#fff;" ng-show="!configureProject">To be configured</div>
+                <div style="color:#fff;" ng-show="!configureProject">To be configured</div>
             </div>
         </div>
         <div class="col-md-12 widget-page-footer">
@@ -87,47 +85,47 @@
             <div class="col-md-4"></div>
             <div class="col-md-2" style="color: #000;text-shadow: none;padding-left: 14%;" ng-if="editProjectflag" ng-show=" {{(title == 'Feature')}}">
 
-                <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()" >
+                <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()">
                      <img src="assets/images/icon_settings.png" class="widget-page-settings-icon">
                 </span>
-                </div>
+            </div>
 
-
-                 <div class="col-md-1 widget-page-build-code-repo"  ng-if="editProjectflag" ng-show=" {{(title == 'Build')}}">
-                <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()"  style="
+            <div class="col-md-1 widget-page-build-code-repo" ng-if="editProjectflag" ng-show=" {{(title == 'Build')}}">
+                <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()" style="
                float: right;">
                    <img src="assets/images/icon_settings.png" class="widget-page-settings-icon">
                </span></div>
 
-                <div class="col-md-1 widget-page-build-code-repo" ng-if="editProjectflag" ng-show=" {{(title == 'Code Repo')}}">
+            <div class="col-md-1 widget-page-build-code-repo" ng-if="editProjectflag" ng-show=" {{(title == 'Code Repo')}}">
                 <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()">
                      <img src="assets/images/icon_settings.png" class="widget-page-settings-icon">
                 </span>
-                </div>
-                 <div class="col-md-2" style="color: #000;text-shadow: none;padding-left: 31%;" ng-if="editProjectflag" ng-show=" {{(title == 'Quality')}}">
-                <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()" >
+            </div>
+            <div class="col-md-2" style="color: #000;text-shadow: none;padding-left: 31%;" ng-if="editProjectflag" ng-show=" {{(title == 'Quality')}}">
+                <span class="widget-settings-icon clickable" type="button" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" ng-click="checkPermission()">
                       <img src="assets/images/icon_settings.png" class="widget-page-settings-icon">
                  </span>
             </div>
 
-            <div class="col-md-4" ng-show="{{(title == 'Feature')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" >
-            <span style="padding-left: 5px;" class="widget-page-seperator"> | </span>
+            <div class="col-md-4" ng-show="{{(title == 'Feature')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
+                <span style="padding-left: 5px;" class="widget-page-seperator"> | </span>
 
-                <span >
+                <span>
             <a href="#/jiraDashboard" target="_self" > 
             <span class="report-link pull-right widget-page-moredetails">MORE DETAILS <img src="assets/images/arrow_right.png" class="widget-page-arrow"></span>
                 </a>
                 </span>
- </div>
+            </div>
 
-                <div class="col-md-2" ng-show="{{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY"  style="float: right;">
+            <div class="col-md-2" ng-show="{{(title == 'Quality')}}" ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY" style="float: right;">
                 <span style="padding-left: 0px;" class="widget-page-seperator"> | </span>
 
-                <span >
+                <span>
             <a href="#/detailedview/{{caWidget.dashBoardId}}" target="_self" > 
             <span class="report-link pull-right widget-page-moredetails">MORE DETAILS <img src="assets/images/arrow_right.png" class="widget-page-arrow"></span>
                 </a>
-                </span></div>
-           
+                </span>
+            </div>
+
         </div>
     </div>

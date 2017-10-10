@@ -5,9 +5,9 @@
         .module(HygieiaConfig.module)
         .controller('projectMapController', projectMapController);
 
-    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http', '$route', '$cookies', '$timeout', '$cookieStore', '$rootScope','dashboardData'];
+    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http', '$route', '$cookies', '$timeout', '$cookieStore', '$rootScope', 'dashboardData', 'projectData'];
 
-    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore, $rootScope,dashboardData) {
+    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore, $rootScope, dashboardData, projectData) {
         var ctrl = this;
         ctrl.usernamepro = $cookies.get('username');
         ctrl.showAddPopUpBox = false;
@@ -24,39 +24,39 @@
             "program": ctrl.program
         }
 
-  
-       
+
+
         $scope.curPage = 0;
         ctrl.pageSize = 5;
 
         //Get All Projects
-        $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
-            .then(function(response) {
-                ctrl.getAllProjects = response.data;
-                ctrl.sysadmincheck = $cookies.get('sysAdmin');
-                if(ctrl.sysadmincheck == "true"){
-                        ctrl.CreateProjects = true;
-                         ctrl.viewProjects = true;
-                    }else{
-                        for (var i = 0; i < ctrl.getAllProjects.length; i++) {
-                        for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
+        projectData.fetchallprojects(ctrl.usernamepro).then(function(response) {
+            ctrl.getAllProjects = response;
+            ctrl.sysadmincheck = $cookies.get('sysAdmin');
+            if (ctrl.sysadmincheck == "true") {
+                ctrl.CreateProjects = true;
+                ctrl.viewProjects = true;
+            } else {
+                for (var i = 0; i < ctrl.getAllProjects.length; i++) {
+                    for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
                         for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
                             ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
                             ctrl.projectIDS = ctrl.getAllProjects[i].id;
-                            
-                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("ADD_PROJECT") > -1) && (ctrl.vvv == ctrl.usernamepro)){
-                               ctrl.CreateProjects = true;
+
+                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("ADD_PROJECT") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
+                                ctrl.CreateProjects = true;
                             }
-                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("VIEW_PROJECT_LIST") > -1) && (ctrl.vvv == ctrl.usernamepro)){
-                               ctrl.viewProjects = true;
+                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("VIEW_PROJECT_LIST") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
+                                ctrl.viewProjects = true;
                             }
 
                         }
                     }
-                } 
-                    }
-             
-            });
+                }
+            }
+        });
+
+
 
         ctrl.numberOfPages = function() {
             return Math.ceil(ctrl.getAllProjects.length / ctrl.pageSize);
@@ -69,7 +69,7 @@
             };
         });
 
-      //open create Project Modal
+        //open create Project Modal
         ctrl.createDashboard = function() {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/createProject.html',
@@ -99,33 +99,30 @@
         }
 
         //Add User functionality
-        function shareProjectController($uibModalInstance, proid, $route, $scope,id,$cookies) {
+        function shareProjectController($uibModalInstance, proid, $route, $scope, id, $cookies) {
             var sp = this;
             sp.selected = '';
             sp.projectId = proid;
             sp.id = id;
             sp.usernameproject = $cookies.get('username');
-            
+
             //Fetch all users
-            $http.get("/api/getApplicationUsers/" + sp.id)
-                .then(function(response) {
-                    sp.getUserMaps = response.data;
-                });
+            projectData.fetchallusers(sp.id).then(function(response) {
+                sp.getUserMaps = response;
+            });
 
             //Fetch all dashboards
-             var mydashboardRouteProMap = "/api/dashboard/mydashboard"; 
-             $http.get(mydashboardRouteProMap + "?username=" + sp.usernameproject + "&projectId=" + sp.id)
-                .then(function(response) {
-                    response.data.selectedItemsDashboard = [];
-                    sp.getdashboards = response.data;
-                });
+            projectData.fetchalldashboard(sp.usernameproject, sp.id).then(function(response) {
+                response.data.selectedItemsDashboard = [];
+                sp.getdashboards = response.data;
+            });
 
             //Fetch all roles that is displayed in dual list
-            $http.get("/api/allActiveEngineeringDashboardUserRoles")
-                .then(function(response) {
-                    response.data.selectedItems = [];
-                    sp.getRolesKey = response.data;
-                });
+            projectData.fetchallroles().then(function(response) {
+                response.data.selectedItems = [];
+                sp.getRolesKey = response.data;
+            });
+
 
             sp.shareProjects = function(prob) {
                 var aa = sp.selected;
@@ -136,24 +133,23 @@
                     "userRoles": sp.getRolesKey.selectedItems,
                     "dashboardsToAssign": sp.getdashboards.selectedItemsDashboard
                 }
-                if(sp.getRolesKey.selectedItems !=0){
-                $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
-                    $uibModalInstance.dismiss("cancel");
-                    $route.reload();
+                if (sp.getRolesKey.selectedItems != 0) {
+                    $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
+                        $uibModalInstance.dismiss("cancel");
+                        $route.reload();
+                        $uibModal.open({
+                            templateUrl: 'app/dashboard/views/ConfirmationModals/adduserConfirm.html',
+                            controller: 'projectMapController',
+                            controllerAs: 'pm'
+                        });
+                    })
+                } else {
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/adduserConfirm.html',
-                        controller: 'projectMapController',
-                        controllerAs: 'pm'
-                    });
-                })
-            }
-            else{
-                $uibModal.open({
                         templateUrl: 'app/dashboard/views/ConfirmationModals/adduserrequired.html',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
-            }
+                }
             };
 
             //Adding Role to User Dual List Functionality
@@ -206,18 +202,20 @@
             var qahost = 'http://10.20.1.183:3000';
             if ((info.businessUnit) && (info.projectId) && (info.client) && (info.projectOwner)) {
                 if ((info.businessUnit.length >= 3) && (info.projectId.length >= 3) && (info.client.length >= 3) && (info.projectOwner.length >= 3) && (info.program.length >= 3)) {
-                    $http.post('/api/updateProject', (ctrl.editPayload)).then(function(response) {
+                    projectData.editprojectfn(ctrl.editPayload).then(function(response) {
                         $uibModal.open({
                             templateUrl: 'app/dashboard/views/ConfirmationModals/editConfirm.html',
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
+
                     }, function(response) {
                         if (response.status > 204 && response.status <= 500) {
                             info.editorEnabled = true;
                             alert("Server Error");
                         }
                     })
+
                 } else {
                     $uibModal.open({
                         templateUrl: 'app/dashboard/views/ConfirmationModals/validationminlength.html',
@@ -264,7 +262,7 @@
         function delProjetController($uibModalInstance, pid, $route) {
             var dpmObj = this;
             dpmObj.deleteProjects = function(pro) {
-                $http.delete('/api//deleteProject/' + pid).then(function(response) {
+                projectData.deleteProjectsfn(pid).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
@@ -272,7 +270,9 @@
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
+
                 })
+
             };
         }
 
@@ -292,7 +292,8 @@
             dpmObjpos.postProject = function() {
                 var apiHost = 'http://localhost:3000';
                 if (dpmObjpos.createProModel.$valid == true) {
-                    $http.post('/api/createProject ', (dpmObjpos.payl)).then(function(response) {
+
+                    projectData.postProjectfn(dpmObjpos.payl).then(function(response) {
                         $route.reload();
                         $uibModalInstance.dismiss("cancel");
                         $uibModal.open({
@@ -300,6 +301,7 @@
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
+
                     }, function(response) {
                         if (response.status == 409) {
                             $uibModal.open({
@@ -309,14 +311,14 @@
                             });
                         }
                     })
+
                 } else {}
             };
         }
 
         //Show List of Dashboards Page for that particular project
-        $scope.showDahboardPage = function(ProId, ProName,projectspcID) {
-            dashboardData.mydashboard(ProId,ctrl.usernamepro).then(function(){
-        });
+        $scope.showDahboardPage = function(ProId, ProName, projectspcID) {
+            dashboardData.mydashboard(ProId, ctrl.usernamepro).then(function() {});
             $location.path('/site/');
             $cookies.put('ProId', ProId);
             $cookies.put('ProName', ProName);
