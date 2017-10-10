@@ -198,6 +198,7 @@
                     name: mydata[x].title,
                     type: mydata[x].type,
                     owner: mydata[x].owner,
+                    createdOn: mydata[x].createdOn,
                     isProduct: mydata[x].type && mydata[x].type.toLowerCase() === DashboardType.PRODUCT.toLowerCase()
                 });
             }
