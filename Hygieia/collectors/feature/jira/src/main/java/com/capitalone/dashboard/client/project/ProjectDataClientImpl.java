@@ -85,7 +85,7 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 				/*
 				 * Initialize DOMs
 				 */
-				Scope scope = findOneScope(scopeId);
+				Scope scope = projectRepo.getScopeByIdAndProjectName(scopeId, jiraScope.getName());
 				
 				if (scope == null) {
 					scope = new Scope();
