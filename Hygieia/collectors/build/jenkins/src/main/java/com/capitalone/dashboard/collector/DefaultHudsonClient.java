@@ -565,16 +565,8 @@ public class DefaultHudsonClient implements HudsonClient {
 	        			if (StringUtils.isNotEmpty(domain1) && StringUtils.isNotEmpty(domain2) && domain1.equals(domain2)
 	        					&& getPort(sUrl) == getPort(servers.get(i))) {
 	                		exactMatchFound = true;	
-	        			}else{
-	        				// this fix is for a special scenario where Jenkins server was hosted in AWS and job url is aws url and we can't able to hit that URL through api.
-	        				//example: http://ec2-52-42-158-179.us-west-2.compute.amazonaws.com:9090/job/AM_Server_CI_JOB/
-	        				if(sUrl.contains("amazonaws") && getPort(sUrl) == getPort(servers.get(i))){
-	        					sUrl=sUrl.replace(domain1, domain2);
-	        					exactMatchFound = true;
-		        				thisuri = URI.create(sUrl);
-	        				}
-	        				
 	        			}
+	        			
 	        			if (exactMatchFound && (i < usernames.size()) && (i < apiKeys.size()) 
 	        					&& (StringUtils.isNotEmpty(usernames.get(i))) && (StringUtils.isNotEmpty(apiKeys.get(i)))) {
 	        				userInfo = usernames.get(i) + ":" + apiKeys.get(i);

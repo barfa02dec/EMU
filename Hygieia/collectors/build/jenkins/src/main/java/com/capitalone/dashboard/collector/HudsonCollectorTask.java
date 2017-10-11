@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestClientException;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -183,6 +185,7 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
      *
      * @param enabledJobs list of enabled {@link HudsonJob}s
      * @param buildsByJob maps a {@link HudsonJob} to a set of {@link Build}s.
+     * @throws URISyntaxException 
      */
     private void addNewBuilds(List<HudsonJob> enabledJobs,
                               Map<HudsonJob, Set<Build>> buildsByJob) {
@@ -193,6 +196,15 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
             if (job.isPushed()) continue;
             for (Build buildSummary : nullSafe(buildsByJob.get(job))) {
                 if (isNewBuild(job, buildSummary)) {
+                	
+                	try{
+                		if(!getDomain(buildSummary.getBuildUrl()).equals(getDomain(job.getInstanceUrl()))){
+                    		String modifiedUrl=buildSummary.getBuildUrl().replace(getDomain(buildSummary.getBuildUrl()), getDomain(job.getInstanceUrl()));
+                    		buildSummary.setBuildUrl(modifiedUrl);
+                    	}
+                	}catch (Exception e) {
+						e.printStackTrace();
+					}
                     Build build = hudsonClient.getBuildDetails(buildSummary
                             .getBuildUrl(), job.getInstanceUrl());
                     if (build != null) {
@@ -287,8 +299,23 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
  	   {
  		   hudsonJob.setProject(projectName);
  		   jobProjects.add(hudsonJob);
+ 		   try {
+					if(!getDomain(hudsonJob.getJobUrl()).equals(getDomain(hudsonJob.getInstanceUrl())))
+					{
+						hudsonJob.setJobUrl(hudsonJob.getJobUrl().replace(getDomain(hudsonJob.getJobUrl()), getDomain(hudsonJob.getInstanceUrl()))); 
+					}
+ 		   } catch (URISyntaxException e) {
+			e.printStackTrace();
+ 		   }
+ 		  
  	   }
  	   
  	   return jobProjects;
+    }
+    
+    private String getDomain(String url) throws URISyntaxException {
+        URI uri = new URI(url);
+        String domain = uri.getHost();
+        return domain;
     }
 }
