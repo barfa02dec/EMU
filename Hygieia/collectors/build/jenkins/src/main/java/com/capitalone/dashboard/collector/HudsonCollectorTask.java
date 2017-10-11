@@ -185,6 +185,7 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
      *
      * @param enabledJobs list of enabled {@link HudsonJob}s
      * @param buildsByJob maps a {@link HudsonJob} to a set of {@link Build}s.
+     * @throws URISyntaxException 
      */
     private void addNewBuilds(List<HudsonJob> enabledJobs,
                               Map<HudsonJob, Set<Build>> buildsByJob) {
@@ -195,6 +196,15 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
             if (job.isPushed()) continue;
             for (Build buildSummary : nullSafe(buildsByJob.get(job))) {
                 if (isNewBuild(job, buildSummary)) {
+                	
+                	try{
+                		if(!getDomain(buildSummary.getBuildUrl()).equals(getDomain(job.getInstanceUrl()))){
+                    		String modifiedUrl=buildSummary.getBuildUrl().replace(getDomain(buildSummary.getBuildUrl()), getDomain(job.getInstanceUrl()));
+                    		buildSummary.setBuildUrl(modifiedUrl);
+                    	}
+                	}catch (Exception e) {
+						e.printStackTrace();
+					}
                     Build build = hudsonClient.getBuildDetails(buildSummary
                             .getBuildUrl(), job.getInstanceUrl());
                     if (build != null) {
