@@ -19,6 +19,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestClientException;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -287,8 +289,23 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
  	   {
  		   hudsonJob.setProject(projectName);
  		   jobProjects.add(hudsonJob);
+ 		   try {
+					if(!getDomain(hudsonJob.getJobUrl()).equals(getDomain(hudsonJob.getInstanceUrl())))
+					{
+						hudsonJob.setJobUrl(hudsonJob.getJobUrl().replace(getDomain(hudsonJob.getJobUrl()), getDomain(hudsonJob.getInstanceUrl()))); 
+					}
+ 		   } catch (URISyntaxException e) {
+			e.printStackTrace();
+ 		   }
+ 		  
  	   }
  	   
  	   return jobProjects;
+    }
+    
+    private String getDomain(String url) throws URISyntaxException {
+        URI uri = new URI(url);
+        String domain = uri.getHost();
+        return domain;
     }
 }
