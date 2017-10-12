@@ -19,6 +19,11 @@ public class AuthenticationResponse {
 	public void setSysAdmin(boolean isSysAdmin) {
 		this.isSysAdmin = isSysAdmin;
 	}
+	public AuthenticationResponse(boolean isAuthenticated, boolean isSysAdmin) {
+		super();
+		this.isAuthenticated = isAuthenticated;
+		this.isSysAdmin = isSysAdmin;
+	}
 	
 	
 	
