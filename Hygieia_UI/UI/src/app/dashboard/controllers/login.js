@@ -29,7 +29,7 @@
                           'invalidUsernamePassword',
                           data
                         );
-                        if (data) {
+                        if (data.authenticated == true) {
                            // $scope.data = data.sysAdmin;
                             $cookies.put('authenticated', data.authenticated);
 
@@ -38,6 +38,7 @@
                             //$location.path('/site');
                             $location.path('/projects');
                         }
+                        
                     });
             }
         };
