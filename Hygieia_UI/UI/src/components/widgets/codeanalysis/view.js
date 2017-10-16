@@ -5,8 +5,8 @@
         .module(HygieiaConfig.module)
         .controller('CodeAnalysisViewController', CodeAnalysisViewController);
 
-    CodeAnalysisViewController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal','$location','$routeParams','$cookies','dashboardData'];
-    function CodeAnalysisViewController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams,$cookies,dashboardData) {
+    CodeAnalysisViewController.$inject = ['$scope', '$rootScope','codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal','$location','$routeParams','$cookies','dashboardData'];
+    function CodeAnalysisViewController($scope, $rootScope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams,$cookies,dashboardData) {
         var ctrl = this;
         ctrl.dashBoardId = $routeParams.id;
         $cookies.put('dashIdToJenkins', ctrl.dashBoardId);
@@ -19,20 +19,24 @@
             total: 200,
             showLabel: false
         };
-
+        $rootScope.$on('eventName', function (event, args) {
+        $scope.message = args.message;
+         $cookies.put('selectedNameSonar', $scope.message);   
+        });
         ctrl.showStatusIcon = showStatusIcon;
         ctrl.showDetail = showDetail;
 
         coveragePieChart({});
         ctrl.projectspcID = $cookies.get('ProSpId');
+        
         ctrl.load = function() {
-
-
-            $scope.clIdSnr = $cookies.get('sonarCollectrid');
             dashboardData.getCollectorItemSonar(ctrl.projectspcID).then(function(data) {
                 $scope.collectorDetailsSonar = data;
             });
+            
+            $scope.selectedNameSonar = $cookies.get('selectedNameSonar');
 
+           
             var caRequest = {
                 componentId: $scope.widgetConfig.componentId,
                 max: 1
@@ -54,6 +58,12 @@
         };
 
          ctrl.loadSonar = function() {
+           dashboardData.getCollectorItemSonar(ctrl.projectspcID).then(function(data) {
+                $scope.collectorDetailsSonar = data;
+            });
+            
+            $scope.selectedNameSonar = $cookies.get('selectedNameSonar');
+
             var caRequest = {
                 componentId: $scope.widgetConfig.componentId,
                 max: 1

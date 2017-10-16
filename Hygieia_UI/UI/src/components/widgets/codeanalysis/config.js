@@ -8,12 +8,12 @@
         .module(HygieiaConfig.module)
         .controller('CodeAnalysisConfigController', CodeAnalysisConfigController);
 
-    CodeAnalysisConfigController.$inject = ['modalData', '$scope', 'collectorData', '$uibModalInstance','$cookies'];
-    function CodeAnalysisConfigController(modalData, $scope, collectorData, $uibModalInstance,$cookies) {
+    CodeAnalysisConfigController.$inject = ['$rootScope', 'modalData', 'selectedNameSonar', '$scope', 'collectorData', '$uibModalInstance','$cookies'];
+    function CodeAnalysisConfigController($rootScope, modalData, selectedNameSonar, $scope, collectorData, $uibModalInstance,$cookies) {
         var ctrl = this,
         widgetConfig = modalData.widgetConfig,
         component = modalData.dashboard.application.components[0];
-
+        $scope.selectedNameSonar = selectedNameSonar;
         ctrl.saToolsDropdownPlaceholder = 'Loading Security Analysis Jobs...';
         ctrl.testToolsDropdownPlaceholder = 'Loading Functional Test Jobs...';
 
@@ -91,10 +91,14 @@
         }
 
         function submitForm(caCollectorItem, saCollectorItem, testConfigs) {
+            //$cookies.put('selectedNameSonar', $scope.caWidget.caCollectorItem.id);
+            $rootScope.$broadcast('eventName', { message: $scope.caWidget.caCollectorItem.id });
+            // alert($scope.caWidget.caCollectorItem.id);
             $scope.sonarCollectr = caCollectorItem.collectorId;
             $cookies.put('sonarCollectrid', $scope.sonarCollectr);
             var collectorItems = [];
             var testJobNames = [];
+            $scope.selectedNameSonar = $scope.caWidget.caCollectorItem.collectorId;
             if (caCollectorItem) collectorItems.push(caCollectorItem.id);
             if (saCollectorItem) collectorItems.push(saCollectorItem.id);
             if (testConfigs) {

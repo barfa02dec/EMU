@@ -25,9 +25,9 @@
         })
         .directive('widget', widgetDirective);
 
-    widgetDirective.$inject = ['$controller', '$http', '$templateCache', '$compile', 'widgetManager', '$uibModal', 'WidgetState', 'DisplayState', '$interval', 'dashboardData', '$cookies'];
+    widgetDirective.$inject = ['$route', '$controller', '$http', '$templateCache', '$compile', 'widgetManager', '$uibModal', 'WidgetState', 'DisplayState', '$interval', 'dashboardData', '$cookies', '$rootScope'];
 
-    function widgetDirective($controller, $http, $templateCache, $compile, widgetManager, $uibModal, WidgetState, DisplayState, $interval, dashboardData, $cookies) {
+    function widgetDirective($route, $controller, $http, $templateCache, $compile, widgetManager, $uibModal, WidgetState, DisplayState, $interval, dashboardData, $cookies, $rootScope) {
 
         return {
             templateUrl: 'app/dashboard/views/widget.html',
@@ -80,7 +80,7 @@
             }
         }
 
-        function controller($scope, $element, $routeParams,$cookies) {
+        function controller($scope, $element, $routeParams, $cookies, $rootScope) { 
              $scope.configureProject = false;
             $scope.selectedDashboard = $routeParams.id;
             //$scope.selectedName = $cookies.get('selectedName');
@@ -109,6 +109,15 @@
 
             $scope.alerts = [];
 
+            $rootScope.$on('eventName', function (event, args) {
+               
+                $scope.message = args.message;
+                //$scope.selectedNameSonar = args.message;
+                $cookies.put('selectedNameSonar', $scope.message);
+            
+            })
+            
+            
 
             $scope.upsertWidget = upsertWidget;
             $scope.closeAlert = function(index) {
@@ -170,18 +179,24 @@
             });
 
             $scope.clid = $cookies.get('mycollector');
-          
             $scope.projectspcID = $cookies.get('ProSpId');
             dashboardData.getCollectorItem($scope.projectspcID).then(function(data) {
                 $scope.collectorDetails = data;
                 $scope.colll = $cookies.get('colId');
             });
+      
+
+
+
+
 
             $scope.clIdSnr = $cookies.get('sonarCollectrid');
             dashboardData.getCollectorItemSonar($scope.projectspcID).then(function(data) {
                 $scope.collectorDetailsSonar = data;
-                //$scope.colll = $cookies.get('colId');
+                
             });
+            
+
             if(!$cookies.setCookieSelectedName || $cookies.setCookieSelectedName.length == 0)
                 $cookies.setCookieSelectedName = [];
 
@@ -208,9 +223,7 @@
                     componentId: $scope.colll,
                     collectorItemIds: [selectedName]
                 }
-                //asd43343434-dashboard name
-                //1234asd1234asd-projectname
-                //username-was1234
+              
                 $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/build" , ($scope.postPayload)).then(function(response) {
 
                     refreshJenkins();
@@ -221,13 +234,12 @@
             }
 
             $scope.checkSonar = function(selectedNameSonar) {
-                //selectedNameSonar=JSON.parse(selectedNameSonar);
+//                debugger;
                 $scope.dashBoardIds = $routeParams.id;
                 $scope.wid = $cookies.get('widId');
                 $scope.idComp = $cookies.get('compIdSonar');
                 $cookies.put('selectedNameSonar', selectedNameSonar);
-
-
+                $scope.selectedNameSonar = selectedNameSonar;
                 $scope.postObjsonar = {
                     name: 'codeanalysis',
                     options: {
@@ -271,6 +283,9 @@
                                 dashboard: $scope.dashboard,
                                 widgetConfig: $scope.widgetConfig
                             };
+                        },
+                        selectedNameSonar: function() {
+                            return $scope.selectedNameSonar;
                         }
                     }
                 }, $scope.widgetDefinition.config);
@@ -281,6 +296,7 @@
             }
 
             function upsertWidget(newWidgetConfig) {
+                //$scope.selectedNameSonar = newWidgetConfig.collectorItemIds[0];
                 if (newWidgetConfig) {
                     // use existing values if they're not defined
                     angular.extend($scope.widgetConfig, newWidgetConfig);
@@ -315,6 +331,8 @@
                             $scope.state = WidgetState.READY;
 
                             init();
+                           // $scope.selectedNameSonar = newWidgetConfig.collectorItemIds[0];
+                            $route.reload();
                         });
                 }
             }

@@ -180,15 +180,15 @@
          <div class="" ng-repeat="components in detailess.component_list ">
             <div class="row widget-inner-spacing" style="margin-left:2%;">
                <div class="" ng-repeat="components in components.securityNewArray track by $index">
-                  <span ng-if="$index == 0" class="styling-values col-md-4 round-props">{{components.formattedValue}}</span>
+                  <span ng-if="$index == 0" class="styling-values col-md-4 round-props" style="margin-top:2%;">{{components.formattedValue}}</span>
                   <span ng-if="$index == 2" class="widget-value-pro col-md-6" style="padding-left: 12%">{{components.formattedValue}}</span>
                </div>
             </div>
          </div>
          <div class="col-md-12 label-props widget-inner-spacing" style="margin-top: -22px;">
-            <div class="col-md-4">Vulnerabilities</div>
+            <div class="col-md-4" style="padding-left: 0px;">Vulnerabilities</div>
             <!-- <div class="col-md-4" style="padding-left: 17px;">Rating</div> -->
-            <div class="col-md-6 ">Remediation effort</div>
+            <div class="col-md-6 " style="padding-left:11px;">Remediation effort</div>
          </div>
       </div>
       <div class="col-md-4  layout-calcs security-widget all-box-props">
@@ -206,15 +206,15 @@
          <div class="" ng-repeat="component in detailess.component_list ">
             <div class="row widget-inner-spacing" style="margin-left:2%;">
                <div class="" ng-repeat="component in component.newArr track by $index">
-                  <span class="styling-values col-md-4 round-props" ng-if="$index == 0" style="margin-top: 7%;">{{component.formattedValue}}</span>
+                  <span class="styling-values col-md-4 round-props" ng-if="$index == 0" style="margin-top: 7.5%;">{{component.formattedValue}}</span>
                   <span class="widget-value-pro col-md-6" ng-if="$index == 2" style="margin-top: 7%">{{component.formattedValue}}</span>
                </div>
             </div>
          </div>
          <div class="col-md-12 label-props widget-inner-spacing" style="margin-top:-27px;">
-            <div class="col-md-4">Bugs</div>
+            <div class="col-md-4" style="padding-left:20px;">Bugs</div>
             <!--  <div class="col-md-4" style="padding-left: 17px;">Rating</div> -->
-            <div class="col-md-6">Remediation effort</div>
+            <div class="col-md-6" style="padding-left:5px;">Remediation effort</div>
          </div>
       </div>
       <div class="col-md-4  layout-calcs security-widget all-box-props">
@@ -228,15 +228,15 @@
          <div class="" ng-repeat="componentm in detailess.component_list ">
             <div class="row widget-inner-spacing" style="margin-left:2%;">
                <div class="" ng-repeat="componentm in componentm.maintainabilityNewArray track by $index">
-                  <span ng-if="$index == 0" class="styling-values col-md-4 round-props">{{componentm.formattedValue}}</span>
+                  <span ng-if="$index == 0" class="styling-values col-md-4 round-props" style="margin-top:1.1%">{{componentm.formattedValue}}</span>
                   <span ng-if="$index == 2" class="widget-value-pro col-md-6">{{componentm.formattedValue}}</span>
                </div>
             </div>
          </div>
-         <div class="col-md-12 label-props widget-inner-spacing" style="margin-top: -22px;">
+         <div class="col-md-12 label-props widget-inner-spacing" style="margin-top: -20px;">
             <!-- <div class="col-md-4">Rating</div> -->
-            <div class="col-md-4">Code Smells</div>
-            <div class="col-md-6" style="padding-left: 0px;">Technical debt</div>
+            <div class="col-md-4" style="padding-left:2px">Code Smells</div>
+            <div class="col-md-6" style="padding-left: 9px;">Technical debt</div>
          </div>
       </div>
    </div>
