@@ -79,13 +79,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthenticationResponse authenticate(String username, String password) {
         boolean flag = false;
         Authentication authentication = authenticationRepository.findByUsername(username);
+        AuthenticationResponse authResponse= new AuthenticationResponse(false,false);
 
         if (authentication != null && authentication.checkPassword(password)) {
             flag = true;
+            authResponse.setAuthenticated(flag);
+            authResponse.setSysAdmin(authentication.isSysAdmin());
+            return authResponse;
         }
-        AuthenticationResponse authResponse= new AuthenticationResponse();
-        authResponse.setAuthenticated(flag);
-        authResponse.setSysAdmin(authentication.isSysAdmin());
         return authResponse;
         
     }
