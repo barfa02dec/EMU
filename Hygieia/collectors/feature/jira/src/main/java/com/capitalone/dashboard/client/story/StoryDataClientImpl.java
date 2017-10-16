@@ -527,7 +527,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 		 * exists.Hence setting the collector ID as same as scope ID.
 		 */
 		LOGGER.info("processing Defects aggregation");
-		DefectAggregation summery = defectAggregationRepository.findByProjectIdAndName(scopeProject.getpId(),scopeProject.getName());
+		DefectAggregation summery = defectAggregationRepository.findByMetricsProjectId(scopeProject.getProjectId());
+		
 		if (null == summery) {
 			summery = new DefectAggregation();
 		}
@@ -535,7 +536,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		summery.setProjectId(scopeProject.getpId());
 		summery.setProjectName(scopeProject.getName());
 		summery.setValuesAsOn(new Date().toString());
-		
+		summery.setMetricsProjectId(scopeProject.getProjectId());
 		defectAggregationRepository.save(summery);
 		LOGGER.info("Defects aggregation ends.");
 	}

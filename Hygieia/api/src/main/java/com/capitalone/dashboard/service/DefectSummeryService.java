@@ -10,5 +10,7 @@ public interface DefectSummeryService {
 
 	DefectAggregation findByProjectId(String id, String projectName);
 	
+	DefectAggregation findByMetricsProjectId(String metricsProjectId);
+	
 
 }

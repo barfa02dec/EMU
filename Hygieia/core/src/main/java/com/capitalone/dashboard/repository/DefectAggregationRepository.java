@@ -33,5 +33,9 @@ public interface DefectAggregationRepository extends CrudRepository<DefectAggreg
 	
 	@Query(value = "{'projectName' : ?0}")
 	DefectAggregation findByProjectName(String projectName);
+	
+	@Query(value = "{'metricsProjectId' : ?0}")
+	DefectAggregation findByMetricsProjectId(String metricsProjectId);
+	
 		
 }

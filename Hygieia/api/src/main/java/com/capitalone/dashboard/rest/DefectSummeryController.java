@@ -29,7 +29,10 @@ public class DefectSummeryController {
 	}
 	
 	
-	
+	@RequestMapping(value="/getDefectSummery/{metricsProjectId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public DefectAggregation getDefectSummeryByMetricsProjectId(@PathVariable("metricsProjectId") String metricsProjectId){
+		return defectSummeryService.findByMetricsProjectId(metricsProjectId);
+	}
 	
 
 }

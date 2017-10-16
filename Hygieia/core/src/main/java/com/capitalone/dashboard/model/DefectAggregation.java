@@ -35,15 +35,32 @@ public class DefectAggregation extends BaseModel{
 	
 	private Map<String,Integer> defectsByProirity;
 	private Map<String,Integer> defectsByEnvironment;
-	Map<String, List<Map<String,String>>> fixeddefectsByResolutions;
-	Map<String, List<Map<String,String>>> openDefectsByAge;
+	private Map<String, List<Map<String,String>>> fixeddefectsByResolutions;
+	private Map<String, List<Map<String,String>>> openDefectsByAge;
 	private String valuesAsOn;
-	@Indexed(unique=true)
 	private String projectName;
-	
 	private String projectId;
+	@Indexed(unique=true)
+	private String metricsProjectId;
 	
-	
+	public Map<String, List<Map<String, String>>> getFixeddefectsByResolutions() {
+		return fixeddefectsByResolutions;
+	}
+	public void setFixeddefectsByResolutions(Map<String, List<Map<String, String>>> fixeddefectsByResolutions) {
+		this.fixeddefectsByResolutions = fixeddefectsByResolutions;
+	}
+	public Map<String, List<Map<String, String>>> getOpenDefectsByAge() {
+		return openDefectsByAge;
+	}
+	public void setOpenDefectsByAge(Map<String, List<Map<String, String>>> openDefectsByAge) {
+		this.openDefectsByAge = openDefectsByAge;
+	}
+	public String getMetricsProjectId() {
+		return metricsProjectId;
+	}
+	public void setMetricsProjectId(String metricsProjectId) {
+		this.metricsProjectId = metricsProjectId;
+	}
 	public String getProjectId() {
 		return projectId;
 	}
