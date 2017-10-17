@@ -51,6 +51,11 @@ public interface AuthenticationService {
      */
 	void delete(String username);
 	
+	/*
+	 * get the auth with user name
+	 */
+	Authentication getAuthUser(String username);
+	
 	/**
 	 * 
 	 * @param username

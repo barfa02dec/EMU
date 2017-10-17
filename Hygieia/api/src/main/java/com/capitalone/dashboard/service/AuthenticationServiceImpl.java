@@ -91,4 +91,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         
     }
 
+	@Override
+	public Authentication getAuthUser(String username) {
+		
+		return authenticationRepository.findByUsername(username);
+		
+		
+	}
+
 }

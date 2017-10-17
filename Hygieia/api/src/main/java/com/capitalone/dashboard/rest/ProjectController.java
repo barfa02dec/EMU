@@ -162,5 +162,37 @@ public class ProjectController {
 		}
 		
 	}
+	
+	@RequestMapping(value = "/createGlobalDeliveryUser", method = POST, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> createGlobalDeliveryUser(@RequestParam String username) {
+		
+		return ResponseEntity.status(HttpStatus.OK).body(projectService.createGlobalDeliveryUser(username));
+
+	}
+	
+	@RequestMapping(value = "/createGlobalDeliverySysAdmin", method = POST, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> createGlobalDeliverySysAdmin(@RequestParam String username) {
+		
+		return ResponseEntity.status(HttpStatus.OK).body(projectService.createAdditionalSysAdmins(username));
+
+	}
+	
+	@RequestMapping(value = "/purgeAppUser", method = DELETE, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> purgeUser(@RequestParam String username) {
+		//purge the user from auth
+			authService.delete(username);
+		//purge the user from projects && purge the user from dashboards
+		
+		return ResponseEntity.status(HttpStatus.OK).body(projectService.purgeUser(username));
+
+	}
+	
+	@RequestMapping(value = "/RevokeAppUserAccess", method = DELETE, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> revokeAppUserAccess(@RequestParam String username) {
+		//purge the user from projects && purge the user from dashboards
+		return ResponseEntity.status(HttpStatus.OK).body(projectService.purgeUser(username));
+
+	}
+	
 
 }
