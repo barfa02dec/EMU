@@ -187,6 +187,21 @@
         }
 
         function processMyDashboardResponse(mydata) {
+            var projectName;
+            var projectId;
+            for(var i = 0; i < mydata.length; i++){
+                for (var j = 0; j < mydata[i].widgets.length; j++) {
+                   if(mydata[i].widgets[j].name == "feature"){
+                        projectName = mydata[i].widgets[j].options.projectName;
+                        projectId = mydata[i].widgets[j].options.projectId;
+                       
+                         $cookies.put('projectNameJira', projectName);
+                          $cookies.put('projectIdJira', projectId);
+                   }
+                }
+
+            }
+
             ctrl.rawdata = mydata;
             // add dashboards to list
             ctrl.mydash = [];

@@ -5,9 +5,9 @@
 			featureConfigController);
 
 	featureConfigController.$inject = [ 'modalData', '$uibModalInstance',
-			'collectorData', 'featureData', '$cookies' ];
+			'collectorData', 'featureData', '$cookies', '$cookieStore' ];
 
-	function featureConfigController(modalData, $uibModalInstance, collectorData, featureData, $cookies) {
+	function featureConfigController(modalData, $uibModalInstance, collectorData, featureData, $cookies, $cookieStore) {
 		/* jshint validthis:true */
 		var ctrl = this;
 		var widgetConfig = modalData.widgetConfig;
@@ -302,8 +302,10 @@
 		}
 
 		function processCollectorItemResponse(response) {
-
-			$cookies.put("projectpaths",response.data.options.projectName)
+			$cookieStore.remove("projectNameJira");
+			$cookieStore.remove("projectIdJira");
+			$cookies.put("projectNameJira",response.data.options.projectName);
+			$cookies.put('projectIdJira', response.data.options.projectId);
 			var postObj = {
 				name : 'feature',
 				options : {

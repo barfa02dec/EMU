@@ -29,7 +29,7 @@
 
                     </select> -->
     <select ng-model="selectedName" ng-change="check(selectedName)" class="widget-page-dropdownprops">
-    <option value="Select any Jobs">Select any Jobs</option>
+    
                          <option ng-repeat="eachSelectedName in collectorDetails" value="{{eachSelectedName.id}}">{{eachSelectedName.description}}</option>
                         </select>
 
