@@ -22,7 +22,7 @@
                   <div class="emu-header-props">Engineering Metrics Unified</div>
                   <form class="form-horizontal" name="suf"  ng-submit="signup.doSignup(suf.$valid)" role="form" novalidate>
                      <div class="alert alert-success" ng-if="signup.userCreated">
-                        User created successfully
+                        <span style="margin-left: 35px;">User created successfully</span>
                      </div>
                      <form-group input="id" style="padding-top: 10px;" errors="{exists:'User already exists', required:'Username is required',minlength: 'Username should be of minimum 4 characters'}">
                         <label for="name" class="cols-sm-2 control-label upper-label-props">Username or email</label>
