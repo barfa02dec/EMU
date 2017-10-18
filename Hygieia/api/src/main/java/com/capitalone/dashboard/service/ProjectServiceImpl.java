@@ -29,7 +29,8 @@ public class ProjectServiceImpl implements ProjectService {
 	private final ProjectRepository projectRepository;
 	private final UserRoleRepository userRoleRepository;
 	private final DashboardRepository  dashboardRepository;
-	
+	private static final String SYS_ADMIN="SYS_ADMIN";
+	private static final String TEAM_MEMBER="TEAM_MEMBER";
 	@Autowired
 	public ProjectServiceImpl(ProjectRepository projectRepository,UserRoleRepository userRoleRepository,DashboardRepository  dashboardRepository) {
 		this.projectRepository = projectRepository;
@@ -99,7 +100,7 @@ public class ProjectServiceImpl implements ProjectService {
 		//setting the SYS_ADMIN role for the user who created the project.
 		UserGroup defaultProjectAdmin= new UserGroup(request.getUser());
 		ProjectRoles projRole= new ProjectRoles();
-		projRole.setRole("SYS_ADMIN");
+		projRole.setRole(SYS_ADMIN);
 	
 		if(userRoleRepository.findByRoleKey(projRole.getRole())!=null){
 			projRole.setPermissions(userRoleRepository.findByRoleKey(projRole.getRole()).getPermissions().keySet());
@@ -230,15 +231,99 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public String disassociatedUserFromProject(String user, String projectId) {
+		UserGroup userToPurge= new UserGroup(user);
 		Project existingDBProject=projectRepository.getProject(projectId, user);
-		for(UserGroup userGroup: existingDBProject.getUsersGroup()){
-			if(userGroup.getUser().equals(user)){
-				existingDBProject.getUsersGroup().remove(userGroup);
-				projectRepository.save(existingDBProject);
-				return "User has been disassociated successfully from the project";
-			}
+		existingDBProject.getUsersGroup().remove(userToPurge);
+		projectRepository.save(existingDBProject);
+		List<Dashboard> existingProjectDashboards=dashboardRepository.findByProjectId(existingDBProject.getId());
+		for(Dashboard dbDashboard: existingProjectDashboards){
+			dbDashboard.getUsersList().remove(user);
 		}
-		return "";
+		dashboardRepository.save(existingProjectDashboards);
+		return "User has been disassociated successfully from the project";
+	}
+
+	@Override
+	public String createGlobalDeliveryUser(String user) {
+		List<Project> dbProjectsList=(List<Project>) projectRepository.getAllActiveProjects(true);
+		UserGroup defaultProjectAccessUser= new UserGroup(user);
+		ProjectRoles projRole= new ProjectRoles();
+		projRole.setRole(TEAM_MEMBER);
+		projRole.setPermissions(userRoleRepository.findByRoleKey(projRole.getRole()).getPermissions().keySet());
+		Set<ProjectRoles> projRoles = new HashSet<ProjectRoles>();
+		projRoles.add(projRole);
+		defaultProjectAccessUser.setUserRoles(projRoles);
+		int counter =0;
+		List<Dashboard> existingProjectDashboards= new ArrayList<Dashboard>();
+		List<Dashboard> dashboardsToSave= new ArrayList<Dashboard>();
+		for(Project project: dbProjectsList){
+			project.getUsersGroup().add(defaultProjectAccessUser);
+			existingProjectDashboards=dashboardRepository.findByProjectId(project.getId());
+			for(Dashboard dbDashboard: existingProjectDashboards){
+				dbDashboard.getUsersList().add(user);
+				dashboardsToSave.add(dbDashboard);
+			}
+			counter++;
+		}
+		
+		projectRepository.save(dbProjectsList);
+		dashboardRepository.save(dashboardsToSave);
+		return "Access Granted for "+counter+" Projects";
+	}
+	
+	@Override
+	public String createAdditionalSysAdmins(String user) {
+		List<Project> dbProjectsList=(List<Project>) projectRepository.getAllActiveProjects(true);
+		UserGroup defaultProjectAccessUser= new UserGroup(user);
+		ProjectRoles projRole= new ProjectRoles();
+		projRole.setRole(SYS_ADMIN);
+		projRole.setPermissions(userRoleRepository.findByRoleKey(projRole.getRole()).getPermissions().keySet());
+		Set<ProjectRoles> projRoles = new HashSet<ProjectRoles>();
+		projRoles.add(projRole);
+		defaultProjectAccessUser.setUserRoles(projRoles);
+		int counter =0;
+		List<Dashboard> existingProjectDashboards= new ArrayList<Dashboard>();
+		List<Dashboard> dashboardsToSave= new ArrayList<Dashboard>();
+		for(Project project: dbProjectsList){
+			project.getUsersGroup().add(defaultProjectAccessUser);
+			existingProjectDashboards=dashboardRepository.findByProjectId(project.getId());
+			for(Dashboard dbDashboard: existingProjectDashboards){
+				dbDashboard.getUsersList().add(user);
+				dashboardsToSave.add(dbDashboard);
+			}
+			counter++;
+		}
+		
+		projectRepository.save(dbProjectsList);
+		dashboardRepository.save(dashboardsToSave);
+		return "Access Granted for "+counter+" Projects";
+	}
+
+	@Override
+	public String purgeUser(String user) {
+		try{
+			UserGroup userToPurge= new UserGroup(user);
+			List<Project> userAccessibleProjects= (List<Project>) projectRepository.findByProjectUser(user, true);
+			List<Dashboard> existingProjectDashboards= new ArrayList<Dashboard>();
+			List<Dashboard> dashboardsToSave= new ArrayList<Dashboard>();
+			int counter=0;
+			for( Project project: userAccessibleProjects){
+				if(null!=project.getUsersGroup()){
+					project.getUsersGroup().remove(userToPurge);
+					existingProjectDashboards=dashboardRepository.findByProjectId(project.getId());
+					for(Dashboard dbDashboard: existingProjectDashboards){
+						dbDashboard.getUsersList().remove(user);
+						dashboardsToSave.add(dbDashboard);
+					}
+				}
+				counter++;
+			}
+			projectRepository.save(userAccessibleProjects);
+			dashboardRepository.save(dashboardsToSave);
+			return "User has been disassociated from "+counter+" project(s)";
+		}catch (Exception e) {
+			return null;
+		}
 	}
 
 }

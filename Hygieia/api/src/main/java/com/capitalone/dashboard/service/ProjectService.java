@@ -26,5 +26,10 @@ public interface ProjectService {
 	Iterable<UserRole> getActiveprojectRolesOfUser( String projectId ,String user);
 	
 	String disassociatedUserFromProject(String user, String projectId);
-
+	
+	String createGlobalDeliveryUser(String user);
+	
+	String createAdditionalSysAdmins(String user);
+	
+	String purgeUser(String user);
 }
