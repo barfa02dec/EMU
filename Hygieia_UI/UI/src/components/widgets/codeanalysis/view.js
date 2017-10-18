@@ -87,7 +87,7 @@
         function processCaResponse(response) {
             var deferred = $q.defer();
             var caData = _.isEmpty(response.result) ? {} : response.result[0];
-
+            $scope.selectedNameSonar = response.result[0].collectorItemId;
             ctrl.reportUrl = caData.url;
             ctrl.versionNumber = caData.version;
 

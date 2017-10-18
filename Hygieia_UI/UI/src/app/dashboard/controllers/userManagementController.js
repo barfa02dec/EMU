@@ -12,18 +12,22 @@
         ctrl.usernamepro = $cookies.get('username');
 
         //Fetch All Application Users
-        /*$http.get("/api/getApplicationUsers")
+        $http.get("/api/getApplicationUsers")
             .then(function(response) {
                 ctrl.getAppUsers = response.data;
-            });*/
+            });
 
         //Tabs Settings
         $scope.tabs = [{
-                title: 'Users',
+                title: 'Project-Users',
                 url: 'one.tpl.html'
             }, {
                 title: 'Roles',
                 url: 'two.tpl.html'
+            },
+             {
+                title: 'Users',
+                url: 'three.tpl.html'
             }
             /*, {
                         title: 'Permissions',
@@ -565,5 +569,30 @@
                 })
             }
         }
+        ctrl.createGlobalDelivery = function(fetchPro){
+            $http.post('/api/createGlobalDeliveryUser?username=' + fetchPro).then(function(response) {
+                alert("Created Successfully");
+            })
+        }
+
+        ctrl.revokeAppUser = function(fetchPro){
+             $http.delete('/api/RevokeAppUserAccess?username=' + fetchPro).then(function(response) {
+                alert("Revoked Successfully");
+            })
+        }
+
+        ctrl.createGlobalDeliverySysAdmin = function(fetchPro){
+           $http.post('/api/createGlobalDeliverySysAdmin?username=' + fetchPro).then(function(response) {
+                alert("Created Successfully");
+            })
+        }
+
+        ctrl.purgeUser = function(fetchPro){
+           $http.delete('/api/purgeAppUser?username=' + fetchPro).then(function(response) {
+                alert("Removed Successfully");
+            })
+        }
+
+        
     }
 })();

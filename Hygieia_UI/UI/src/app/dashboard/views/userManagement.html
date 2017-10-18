@@ -201,6 +201,36 @@
         
         </div>
     </script>
+
+     <script type="text/ng-template" id="three.tpl.html">
+             <div class="col-md-12" style="padding-top: 30px;padding-left: 0px;" ng-repeat="fetchPro in umc.getAppUsers">
+      
+        <div class="col-md-8" style="padding-left: 0px;">
+        
+       <div class="expandcollapse-item panel-group">
+        <div class="panel-heading col-md-12" style="cursor: pointer;border: 1px solid #d6d6d6;" ng-click="active = !active" ng-class="{'expandcollapse-heading-collapsed': active, 'expandcollapse-heading-expanded': !active}"><span class="col-md-4">{{fetchPro}}</span>
+          <span class="col-md-2">
+              <input type="button" name="" ng-click="umc.createGlobalDelivery(fetchPro)" value="Create global">
+          </span>
+          <span class="col-md-2">
+              <input type="button" name="" ng-click="umc.revokeAppUser(fetchPro)" value="Revoke User">
+          </span>
+            <span class="col-md-2">
+              <input type="button" name="" ng-click="umc.createGlobalDeliverySysAdmin(fetchPro)" value="Create global sys">
+          </span>
+           <span class="col-md-2">
+              <input type="button" name="" ng-click="umc.purgeUser(fetchPro)" value="Purge user">
+          </span>
+
+        </div>
+        
+       </div>
+        
+        
+        </div>
+        </div>
+    </script>
+
 <!--     <script type="text/ng-template" id="three.tpl.html">
         <div id="viewThree">
         <div class="col-md-8" style="padding-top: 2%;">

@@ -8,13 +8,17 @@
         .module(HygieiaConfig.module)
         .controller('BuildWidgetViewController', BuildWidgetViewController);
 
-    BuildWidgetViewController.$inject = ['$scope', 'buildData', 'DisplayState', '$q', '$uibModal','dashboardData','$cookies'];
-    function BuildWidgetViewController($scope, buildData, DisplayState, $q, $uibModal,dashboardData,$cookies) {
+    BuildWidgetViewController.$inject = ['$scope', 'buildData', 'DisplayState', '$q', '$uibModal','dashboardData','$cookies','$rootScope'];
+    function BuildWidgetViewController($scope, buildData, DisplayState, $q, $uibModal,dashboardData,$cookies,$rootScope) {
         var ctrl = this;
         var builds = [];
 
         //region Chart Configuration
         // line chart config
+             $rootScope.$on('eventNameJenkins', function (event, args) {
+        $scope.message = args.message;
+         $cookies.put('selectedName', $scope.message);   
+        });
 
         ctrl.lineOptions = {
             plugins: [
@@ -77,7 +81,7 @@
                 $scope.collectorDetails = data;
                 $scope.colll = $cookies.get('colId');
                 });
-
+                $scope.selectedName = $cookies.get('selectedName');
             var deferred = $q.defer();
             var params = {
                 componentId: $scope.widgetConfig.componentId,
@@ -92,6 +96,7 @@
         };
 
          ctrl.loadJenkins = function() {
+            
             var deferred = $q.defer();
             var params = {
                 componentId: $scope.widgetConfig.componentId,
@@ -154,6 +159,7 @@
 
         //region Processing API Response
         function processResponse(data) {
+            //$scope.selectedName = data[0].collectorItemId;
             var worker = {
                     averageBuildDuration: averageBuildDuration,
                     buildsPerDay: buildsPerDay,

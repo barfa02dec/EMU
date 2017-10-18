@@ -6,8 +6,8 @@
     angular
         .module(HygieiaConfig.module)
         .controller('BuildWidgetConfigController', BuildWidgetConfigController);
-    BuildWidgetConfigController.$inject = ['modalData', '$scope', 'collectorData', '$uibModalInstance','$cookies'];
-    function BuildWidgetConfigController(modalData, $scope, collectorData, $uibModalInstance,$cookies) {
+    BuildWidgetConfigController.$inject = ['modalData', '$scope', 'collectorData', '$uibModalInstance','$cookies','$rootScope'];
+    function BuildWidgetConfigController(modalData, $scope, collectorData, $uibModalInstance,$cookies,$rootScope) {
         var ctrl = this,
         widgetConfig = modalData.widgetConfig;
         
@@ -52,7 +52,7 @@
         function submitForm(valid, collector) {
             $scope.collId = collector.collectorId;
             $cookies.put('mycollector', $scope.collId);
-
+                 $rootScope.$broadcast('eventNameJenkins', { message: collector.id });
             console.log("Collector" + JSON.stringify(collector));
             if (valid) {
                 var form = document.buildConfigForm;
