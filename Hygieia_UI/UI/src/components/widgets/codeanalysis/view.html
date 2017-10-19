@@ -14,7 +14,7 @@
 
                     <table class="table table-bordered table-striped" style="width:95%;">
                         <tr class="dash-row total-builds-label-props" ng-repeat="gate in caWidget.qualityGates" ng-class="{'clickable': !!gate.statusMessage}" popover-html-unsafe="{{gate.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="border: 1px solid #d6d6d6 !important;">
-                            <td class="ca-name staticanalysis-textProps" style="line-height: 3.25em;text-transform: uppercase;padding-left: 5% !important;">{{gate.name}}</td>
+                            <td class="ca-name staticanalysis-textProps" style="line-height: 3.25em;text-transform: uppercase;padding-left: 3% !important;">{{gate.name}}</td>
 
 
                             <td class="ca-value staticanalysis-textProps" ng-if="gate.formattedValue == 'E'" >
@@ -23,12 +23,16 @@
                              <td class="ca-value staticanalysis-textProps circle-props-rating"  ng-if="gate.formattedValue == 'A'" >
                             <img src="assets/images/status_a.png" style="padding-left: 10px;"></td>
 
+                            <td class="ca-value staticanalysis-textProps circle-props-rating"  ng-if="gate.formattedValue == 'B'" >
+                            <img src="assets/images/status_b.png" style="padding-left: 10px;"></td>
+
+
                              <td class="ca-value staticanalysis-textProps circle-props-rating"  ng-if="gate.formattedValue == 'D'" style="padding-left: 10px;">
                             D</td>
 
                              <td class="ca-value staticanalysis-textProps" ng-if="gate.formattedValue == 'C'"><img src="assets/images/status_c.png" style="padding-left: 10px;"></td>
                              
-                             <td class="ca-value staticanalysis-textProps" ng-if="gate.formattedValue == 'OK'">&nbsp;&nbsp;&nbsp;&nbsp;Passed</td>
+                             <td class="ca-value staticanalysis-textProps" ng-if="gate.formattedValue == 'OK'"><img src="assets/images/status_green.png" style="padding-left: 10px;"></td>
     
                             <td class="ca-value staticanalysis-textProps"  ng-if="gate.formattedValue == 'FAILED'"><img src="assets/images/status_failed.png" style="padding-left: 10px;"></td>
 
