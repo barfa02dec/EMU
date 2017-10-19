@@ -87,8 +87,9 @@
             // if($cookies.putObject($routeParams.id) && $cookies.putObject($routeParams.id).selectedName)
             //     $scope.selectedName = $cookies.putObject($routeParams.id).selectedName;
              $scope.selectedNameSonar = $cookies.get('selectedNameSonar');
-            if($cookies.get('"'+$routeParams.id+'"') && JSON.parse($cookies.get('"'+$routeParams.id+'"')) && JSON.parse($cookies.get('"'+$routeParams.id+'"')).selectedName)
-                $scope.selectedName = JSON.parse($cookies.get('"'+$routeParams.id+'"')).selectedName;
+             $scope.selectedName = $cookies.get('selectedName');
+           /* if($cookies.get('"'+$routeParams.id+'"') && JSON.parse($cookies.get('"'+$routeParams.id+'"')) && JSON.parse($cookies.get('"'+$routeParams.id+'"')).selectedName)
+                $scope.selectedName = JSON.parse($cookies.get('"'+$routeParams.id+'"')).selectedName;*/
            
             
             //debugger;
@@ -211,7 +212,8 @@
                 //$cookies.putObject('cookieSelectedName',[]);
                 //$cookies.put('"'+$routeParams.id+'"', JSON.stringify({ 'selectedName' : selectedName } ));
                 $cookies.put('selectedName', selectedName);  
-                             
+                $scope.selectedName = selectedName;
+
 //alert($cookies.getObject($routeParams.id))
             //     if(typeof $cookies.getObject($routeParams.id) == "undefined") {
             //         $cookies.putObject($routeParams.id,{"selectedName":selectedName});

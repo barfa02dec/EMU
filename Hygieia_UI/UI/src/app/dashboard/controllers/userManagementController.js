@@ -10,7 +10,7 @@
     function userManagementController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore,usermanagementData) {
         var ctrl = this;
         ctrl.usernamepro = $cookies.get('username');
-
+        
         //Fetch All Application Users
         $http.get("/api/getApplicationUsers")
             .then(function(response) {
