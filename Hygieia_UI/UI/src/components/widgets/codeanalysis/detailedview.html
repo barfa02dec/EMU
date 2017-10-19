@@ -235,7 +235,7 @@
          </div>
          <div class="col-md-12 label-props widget-inner-spacing" style="margin-top: -20px;">
             <!-- <div class="col-md-4">Rating</div> -->
-            <div class="col-md-4" style="padding-left:2px">Code Smells</div>
+            <div class="col-md-4" style="padding-left:2px">Code smells</div>
             <div class="col-md-6" >Technical debt</div>
          </div>
       </div>
@@ -268,7 +268,7 @@
                </div>
                <div class="row " style="margin-left:0%;">
                   <div class="" ng-repeat="componentdu in componentdu.duplicationsNewArray track by $index">
-                     <span ng-if="$index == 0" class="label-props col-md-3" style="padding-left: 4%;">Duplicated Lines(%)</span>
+                     <span ng-if="$index == 0" class="label-props col-md-3" style="padding-left: 4%;">Duplicated lines(%)</span>
                      <span ng-if="$index == 1" style="padding-left:11%;" class="label-props col-md-3">Lines</span>
                      <span ng-if="$index == 3" class="widget-value-pro-small col-md-3" style="padding-left:32px;margin-top:-3px;">{{componentdu.formattedValue}}</span>
                   </div>
@@ -309,8 +309,8 @@
                <div class="row">
                   <div class="">
                      <span class="styling-values col-md-2"></span>
-                     <span class="col-md-8 label-props">Uncovered Condition</span>
-                     <span class="label-props col-md-2">Condition Coverage</span>
+                     <span class="col-md-8 label-props">Uncovered condition</span>
+                     <span class="label-props col-md-2">Condition coverage</span>
                   </div>
                </div>
                <div class="" ng-repeat="componentcvr in detailess.component_list ">
@@ -327,7 +327,7 @@
                <div class="row">
                   <div class="">
                      <span class="styling-values col-md-2"></span>
-                     <span class="col-md-8 label-props">Line Coverage</span>
+                     <span class="col-md-8 label-props">Line coverage</span>
                      <span class="label-props col-md-2">Uncovered</span>
                   </div>
                </div>
@@ -405,15 +405,15 @@
                      <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
                         <span ng-if="$index == 0" class="styling-values col-md-4 round-props" ng-show="componentdoc.formattedValue" style="padding-left: 2px;">{{componentdoc.formattedValue}}</span>
                         <span ng-if="$index == 0" class="styling-values col-md-4 round-props" ng-show="!componentdoc.formattedValue" style="padding-left: 2px;">0</span>
-                        <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-top: 11px;padding-left: 19%;">Undoc API</span>
+                        <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-top: 11px;padding-left: 19%;">Undoc api</span>
                         <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 8px;padding-left: 25%;" ng-show="componentdoc.formattedValue">{{componentdoc.formattedValue}}</span>
                         <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 8px;padding-left: 24%;" ng-show="!componentdoc.formattedValue">0</span>
                      </div>
                   </div>
                   <div class="row " style="margin-left:2%;">
                      <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
-                        <span ng-if="$index == 0" class="label-props col-md-4 " style="padding-left: 0px;">Comment Lines</span>
-                        <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 12px;">Doc API (%)</span>
+                        <span ng-if="$index == 0" class="label-props col-md-4 " style="padding-left: 0px;">Comment lines</span>
+                        <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 12px;">Doc api (%)</span>
                         <span class="widget-value-pro-small col-md-3" ng-if="$index == 3" style="margin-top: -3px;padding-left: 30px;" ng-show="componentdoc.formattedValue">{{componentdoc.formattedValue}}</span>
                         <span class="widget-value-pro-small col-md-3" ng-if="$index == 3" style="margin-top: -3px;padding-left: 30px;" ng-show="!componentdoc.formattedValue">0</span>
                      </div>

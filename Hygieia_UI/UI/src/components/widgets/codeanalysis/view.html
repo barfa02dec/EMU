@@ -107,7 +107,7 @@
 
                               <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-if="issue.name == 'Info'" style="padding-left: 22px">INFO</div>
 
-                              <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-if="issue.name == 'Total Issues'" style="padding-left: 26px">TOTAL</div>
+                              <div class="ca-name staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" ng-if="issue.name == 'Total Issues'" style="padding-left: 26px" ng-attr-title="TOTAL">TOTAL</div>
 
                         </div>
                     </table>
