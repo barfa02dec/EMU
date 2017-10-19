@@ -95,7 +95,10 @@
                             <!-- <td>
                                 <span dash-status="{{ issue.status }}" ng-if="caWidget.showStatusIcon(issue)" class="staticanalysis-textProps"></span>
                             </td> -->
-                           <div class="ca-value staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style=""><div style="padding-top: 10px;" class="total-builds-text-props">{{issue.formattedValue}}</div></div>
+                           <div class="ca-value staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="" ng-if="issue.formattedValue"><div style="padding-top: 10px;" class="total-builds-text-props">{{issue.formattedValue}}</div></div>
+
+                             <div class="ca-value staticanalysis-textProps col-md-2" ng-repeat="issue in caWidget.issues track by issue.name" ng-class="{'clickable': !!issue.statusMessage}" popover-html-unsafe="{{issue.statusMessage}}" popover-trigger="focus" popover-placement="left" tabindex="0" style="" ng-if="!issue.formattedValue"><div style="padding-top: 10px;" class="total-builds-text-props">0</div></div>
+
                             </div>
                             <div class="dash-row total-builds-label-props">
                             

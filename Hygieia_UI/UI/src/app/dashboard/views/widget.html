@@ -28,7 +28,7 @@
                   <!--   <select ng-model="selectedName" ng-options="selectedName.description for selectedName in collectorDetails" ng-change="check(selectedName)" style="color: #000;">
 
                     </select> -->
-    <select ng-model="selectedName" ng-change="check(selectedName)" class="widget-page-dropdownprops">
+    <select ng-model="selectedName" ng-change="check(selectedName)" class="widget-page-dropdownprops" ng-if="collectorDetails">
     
                          <option ng-repeat="eachSelectedName in collectorDetails" value="{{eachSelectedName.id}}">{{eachSelectedName.description}}</option>
                         </select>
@@ -39,7 +39,7 @@
                 <!-- <select ng-model="selectedNameSonar" ng-options="selectedNameSonar.description for selectedNameSonar in collectorDetailsSonar" ng-change="checkSonar(selectedNameSonar)" style="color: #000;">
                 </select> -->
                
-                <select ng-model="selectedNameSonar" ng-change="checkSonar(selectedNameSonar)" class="widget-page-dropdownprops" >
+                <select ng-model="selectedNameSonar" ng-change="checkSonar(selectedNameSonar)" class="widget-page-dropdownprops" ng-if="collectorDetailsSonar">
                          <option ng-repeat="eachselectedNameSonar in collectorDetailsSonar" value={{eachselectedNameSonar.id}}>{{eachselectedNameSonar.description}}</option>
                         </select>
 
