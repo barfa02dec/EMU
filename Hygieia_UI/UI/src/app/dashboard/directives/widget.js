@@ -207,9 +207,11 @@
                 $scope.dashIds = $cookies.get('dashIdToJenkins');
                 $scope.wid = $cookies.get('widId');
                 $scope.present = 0;
+
                 //$cookies.putObject('cookieSelectedName',[]);
                 //$cookies.put('"'+$routeParams.id+'"', JSON.stringify({ 'selectedName' : selectedName } ));
-                $cookies.put('selectedName', selectedName);               
+                $cookies.put('selectedName', selectedName);  
+                             
 //alert($cookies.getObject($routeParams.id))
             //     if(typeof $cookies.getObject($routeParams.id) == "undefined") {
             //         $cookies.putObject($routeParams.id,{"selectedName":selectedName});

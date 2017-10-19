@@ -96,7 +96,7 @@
         };
 
          ctrl.loadJenkins = function() {
-            
+                
             var deferred = $q.defer();
             var params = {
                 componentId: $scope.widgetConfig.componentId,

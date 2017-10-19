@@ -188,7 +188,7 @@
          <div class="col-md-12 label-props widget-inner-spacing" style="margin-top: -22px;">
             <div class="col-md-4" style="padding-left: 0px;">Vulnerabilities</div>
             <!-- <div class="col-md-4" style="padding-left: 17px;">Rating</div> -->
-            <div class="col-md-6 " style="padding-left:11px;">Remediation effort</div>
+            <div class="col-md-6 ">Remediation effort</div>
          </div>
       </div>
       <div class="col-md-4  layout-calcs security-widget all-box-props">
@@ -207,7 +207,7 @@
             <div class="row widget-inner-spacing" style="margin-left:2%;">
                <div class="" ng-repeat="component in component.newArr track by $index">
                   <span class="styling-values col-md-4 round-props" ng-if="$index == 0" style="margin-top: 7.5%;">{{component.formattedValue}}</span>
-                  <span class="widget-value-pro col-md-6" ng-if="$index == 2" style="margin-top: 7%">{{component.formattedValue}}</span>
+                  <span class="widget-value-pro col-md-6" ng-if="$index == 2" style="margin-top: 7%;margin-left: -8px;">{{component.formattedValue}}</span>
                </div>
             </div>
          </div>
@@ -229,14 +229,14 @@
             <div class="row widget-inner-spacing" style="margin-left:2%;">
                <div class="" ng-repeat="componentm in componentm.maintainabilityNewArray track by $index">
                   <span ng-if="$index == 0" class="styling-values col-md-4 round-props" style="margin-top:1.1%">{{componentm.formattedValue}}</span>
-                  <span ng-if="$index == 2" class="widget-value-pro col-md-6">{{componentm.formattedValue}}</span>
+                  <span ng-if="$index == 2" class="widget-value-pro col-md-6" style="text-align: center;">{{componentm.formattedValue}}</span>
                </div>
             </div>
          </div>
          <div class="col-md-12 label-props widget-inner-spacing" style="margin-top: -20px;">
             <!-- <div class="col-md-4">Rating</div> -->
             <div class="col-md-4" style="padding-left:2px">Code Smells</div>
-            <div class="col-md-6" style="padding-left: 9px;">Technical debt</div>
+            <div class="col-md-6" >Technical debt</div>
          </div>
       </div>
    </div>
@@ -284,7 +284,8 @@
                   <div class="row" style="margin-left: 2%">
                      <div class="" ng-repeat="componentcvr in componentcvr.coverageNewArray track by $index">
                         <span ng-if="$index == 0" class="styling-values col-md-5 round-props" ng-show="componentcvr.formattedValue" style="margin-top: 25%;">{{componentcvr.formattedValue}}
-                        <span ng-if="$index == 0" class="col-md-3 label-props" style="padding-top: 56%;">Coverage</span></span>
+                        <span ng-if="$index == 0" class="col-md-3 label-props" style="padding-top: 99%;
+    margin-left: -10px;">Coverage</span></span>
 
 
                         <span ng-if="$index == 0" class="styling-values col-md-5 round-props" ng-show="!componentcvr.formattedValue" style="margin-top: 25%;">0
@@ -373,7 +374,7 @@
                </div>
                <div class="row " style="margin-left:2%;">
                   <div class="" ng-repeat="componentcos in componentco.complexityNewArray track by $index">
-                     <span ng-if="$index == 0" class="label-props col-md-3 ">Complexity</span>
+                     <span ng-if="$index == 0" class="label-props col-md-3 " style="padding-left: 7px;">Complexity</span>
                      <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 30px;">Class</span>
                      <span class="widget-value-pro-small col-md-3" ng-if="$index == 2" ng-show="componentcos.formattedValue">{{componentcos.formattedValue}}</span>
                      <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" ng-show="!componentcos.formattedValue">0</span>
@@ -411,7 +412,7 @@
                   </div>
                   <div class="row " style="margin-left:2%;">
                      <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
-                        <span ng-if="$index == 0" class="label-props col-md-4 ">Comment Lines</span>
+                        <span ng-if="$index == 0" class="label-props col-md-4 " style="padding-left: 0px;">Comment Lines</span>
                         <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 12px;">Doc API (%)</span>
                         <span class="widget-value-pro-small col-md-3" ng-if="$index == 3" style="margin-top: -3px;padding-left: 30px;" ng-show="componentdoc.formattedValue">{{componentdoc.formattedValue}}</span>
                         <span class="widget-value-pro-small col-md-3" ng-if="$index == 3" style="margin-top: -3px;padding-left: 30px;" ng-show="!componentdoc.formattedValue">0</span>
