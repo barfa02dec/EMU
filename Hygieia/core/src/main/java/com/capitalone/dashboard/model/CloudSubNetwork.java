@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Document(collection = "cloud_subnetwork")
 public class CloudSubNetwork extends BaseModel{
-    @Indexed
+    @Indexed(name="index_CloudSubNetwork_subnetId")
     private String subnetId;
     private String accountNumber;
     private String virtualNetworkId;

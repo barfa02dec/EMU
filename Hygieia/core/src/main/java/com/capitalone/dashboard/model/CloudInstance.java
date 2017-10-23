@@ -12,10 +12,10 @@ import java.util.Objects;
  */
 @Document(collection = "cloud_instance")
 public class CloudInstance extends BaseModel{
-    @Indexed
+    @Indexed(name="index_CloudInstance_instanceId")
     private String instanceId;
 
-    @Indexed
+    @Indexed(name="index_CloudInstance_accountNumber")
     private String accountNumber;
     private String instanceType;
     private String imageId;

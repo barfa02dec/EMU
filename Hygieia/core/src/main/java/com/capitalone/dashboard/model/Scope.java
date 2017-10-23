@@ -35,9 +35,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "scope")
 public class Scope extends BaseModel {
 	private ObjectId collectorId;
-	@Indexed
+	@Indexed(name="index_Scope_pId")
 	private String pId;
-	@Indexed
+	@Indexed(name="index_Scope_name")
 	private String name;
 	private String projectPath;
 	private String beginDate;

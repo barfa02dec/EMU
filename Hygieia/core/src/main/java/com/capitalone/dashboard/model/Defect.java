@@ -59,7 +59,7 @@ public class Defect extends BaseModel {
 	
 	private String projectId;
 	//the project ID that is provided in property file. This is because in multiple jira case same project id can be exists in different jira accounts.
-	@Indexed
+	@Indexed(name="index_Defect_emuProjectId")
 	private String emuProjectId;
 
 	public String getEmuProjectId() {

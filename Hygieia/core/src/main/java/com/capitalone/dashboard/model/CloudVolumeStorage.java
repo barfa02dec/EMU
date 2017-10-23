@@ -9,10 +9,10 @@ import java.util.List;
 
 @Document(collection = "cloud_volume")
 public class CloudVolumeStorage extends BaseModel{
-    @Indexed
+    @Indexed(name="index_CloudVolumeStorage_volumeId")
     private String volumeId;
 
-    @Indexed
+    @Indexed(name="index_CloudVolumeStorage_accountNumber")
     private String accountNumber;
     private String status;
     private long creationDate;

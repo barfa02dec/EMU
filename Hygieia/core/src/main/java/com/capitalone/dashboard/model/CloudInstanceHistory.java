@@ -8,9 +8,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Document(collection = "cloud_instance_history")
 public class CloudInstanceHistory extends BaseModel{
-    @Indexed
+    @Indexed(name="index_CloudInstanceHistory_accountNumber")
     private String accountNumber;
-    @Indexed
+    @Indexed(name="index_CloudInstanceHistory_time")
     private long time;
     private int total;
     private int nonTagged;

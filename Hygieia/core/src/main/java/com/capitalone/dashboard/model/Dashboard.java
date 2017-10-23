@@ -20,7 +20,7 @@ public class Dashboard extends BaseModel {
     private String template;
 
     //NOTE Mongodb treats strings as different if they have different case
-    @Indexed(unique=true)
+    @Indexed(unique=true, name="index_Dashboard_title")
     private String title;
 
     private List<Widget> widgets = new ArrayList<>();
