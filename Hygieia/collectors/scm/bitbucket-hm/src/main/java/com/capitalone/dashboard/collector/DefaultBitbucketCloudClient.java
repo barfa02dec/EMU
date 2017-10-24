@@ -136,8 +136,7 @@ public class DefaultBitbucketCloudClient implements GitClient {
 		
 		while (!lastPage) {
 			try {
-				//ResponseEntity<String> response = makeRestCall("https://bitbucket.org/api/1.0/repositories/trusthubbusinesslens/trust-hub_server_api_repo/changesets?limit=50", "rajesh.agrawal@happiestminds.com", "Welcome25");
-				ResponseEntity<String> response = makeRestCall(queryUrlPage, "rajesh.agrawal@happiestminds.com", "Welcome25");
+				ResponseEntity<String> response = makeRestCall(queryUrlPage, settings.getUsername(), settings.getPassword());
 				JSONObject jsonParentObject = paresAsObject(response);
 				JSONArray jsonArray = (JSONArray) jsonParentObject.get("changesets");
 

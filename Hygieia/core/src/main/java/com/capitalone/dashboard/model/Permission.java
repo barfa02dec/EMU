@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "permissions")
 public class Permission extends BaseModel{
-	@Indexed(unique=true)
+	@Indexed(unique=true, name="index_Permission_name")
 	private String name;
 	private String description;
 	private String createdOn;

@@ -16,7 +16,7 @@ import com.google.common.hash.Hashing;
 public class Authentication extends BaseModel {
     static final String HASH_PREFIX = "sha512:";
 
-    @Indexed(unique = true)
+    @Indexed(unique = true, name="index_Authentication_username")
     private String username;
 
     private String password;

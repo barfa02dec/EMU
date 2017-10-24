@@ -11,9 +11,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="team")
 public class Team extends BaseModel {
     private ObjectId collectorId;
-    @Indexed
+    @Indexed(name="index_Team_teamId")
     private String teamId;
-    @Indexed
+    @Indexed(name="index_Team_name")
     private String name;
     private String changeDate;
     private String assetState;

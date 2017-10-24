@@ -38,7 +38,7 @@ public class Feature extends BaseModel {
 	/*
 	 * Story data
 	 */
-	@Indexed
+	@Indexed(name="index_Feature_sId")
 	private String sId;
 	private String sNumber;
 	private String sName;

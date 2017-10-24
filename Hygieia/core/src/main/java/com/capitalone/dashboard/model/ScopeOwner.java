@@ -15,9 +15,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "scope-owner")
 public class ScopeOwner extends CollectorItem {
 	private ObjectId collectorItemId;
-	@Indexed
+	@Indexed(name="index_ScopeOwner_teamId")
 	private String teamId;
-	@Indexed
+	@Indexed(name="index_ScopeOwner_name")
 	private String name;
 	private String changeDate;
 	private String assetState;

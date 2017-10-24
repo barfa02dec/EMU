@@ -11,9 +11,9 @@ import org.springframework.data.mongodb.core.index.Indexed;
  * @author KFK884
  */
 public class ScopeOwnerCollectorItem extends CollectorItem {
-	@Indexed
+	@Indexed(name="index_ScopeOwnerCollectorItem_teamId")
 	private static final String TEAM_ID = "teamId";
-	@Indexed
+	@Indexed(name="index_ScopeOwnerCollectorItem_projectId")
 	private static final String PROJECT_ID = "projectId";
 	private static final String CHANGE_DATE = "changeDate";
 	private static final String ASSET_STATE = "assetState";

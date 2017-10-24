@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="release")
 public class Release extends BaseModel implements java.lang.Comparable<Release>{
-		@Indexed
+		@Indexed(name="index_Release_releaseId")
 		private Long releaseId;
 	    private String description;
 	    private String name;

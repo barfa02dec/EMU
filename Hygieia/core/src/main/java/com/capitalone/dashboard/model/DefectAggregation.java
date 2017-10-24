@@ -40,7 +40,6 @@ public class DefectAggregation extends BaseModel{
 	private String valuesAsOn;
 	private String projectName;
 	private String projectId;
-	@Indexed(unique=true)
 	private String metricsProjectId;
 	
 	public Map<String, List<Map<String, String>>> getFixeddefectsByResolutions() {

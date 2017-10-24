@@ -13,7 +13,7 @@ import java.util.Objects;
 
 @Document(collection = "cloud_virtual_network")
 public class CloudVirtualNetwork extends BaseModel{
-    @Indexed
+    @Indexed(name="index_CloudVirtualNetwork_virtualNetworkId")
     @NotNull
     @NotBlank
     private String virtualNetworkId;

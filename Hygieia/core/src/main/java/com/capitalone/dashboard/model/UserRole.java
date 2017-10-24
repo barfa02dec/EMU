@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user_roles")
 public class UserRole extends BaseModel{
 
-	@Indexed(unique=true)
+	@Indexed(unique=true, name="index_UserRole_roleKey")
 	private String roleKey;
 	private String description;
 	private String createdOn;
