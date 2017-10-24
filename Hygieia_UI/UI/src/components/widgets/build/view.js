@@ -159,7 +159,9 @@
 
         //region Processing API Response
         function processResponse(data) {
+            if(data != 0){
             $scope.selectedName = data[0].collectorItemId;
+        }
             var worker = {
                     averageBuildDuration: averageBuildDuration,
                     buildsPerDay: buildsPerDay,
