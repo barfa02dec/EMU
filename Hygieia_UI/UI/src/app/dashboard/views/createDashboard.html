@@ -1,6 +1,6 @@
 <widget-modal widget-modal-title="Create new dashboard" class="border-prop-modals">
     <form name="cdf" class="form" ng-submit="ctrl.submit(cdf)" novalidate>
-        <form-group input="dashboardType">
+     <!--    <form-group input="dashboardType">
             <select name="dashboardType"
                     class="form-control"
                     ng-model="ctrl.dashboardType"
@@ -20,7 +20,7 @@
                     required>
                 <option value="" disabled>Select a template</option>
             </select>
-        </form-group>
+        </form-group> -->
 
         <form-group input="dashboardTitle" errors="{required: 'Dashboard title is required', minlength: 'Min length of 6 characters', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
             <input

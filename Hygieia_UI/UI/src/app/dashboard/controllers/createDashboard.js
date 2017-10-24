@@ -88,9 +88,9 @@
             if (form.$valid) {
                 var appName = document.cdf.applicationName ? document.cdf.applicationName.value : document.cdf.dashboardType.value,
                     submitData = {
-                        template: document.cdf.selectedTemplate.value,
+                        template: 'capone',
                         title: document.cdf.dashboardTitle.value,
-                        type: document.cdf.dashboardType.value,
+                        type: 'team',
                         applicationName: appName,
                         componentName: appName,
                         owner: $cookies.get('username'),
