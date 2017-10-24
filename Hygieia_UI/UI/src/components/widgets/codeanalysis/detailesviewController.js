@@ -31,7 +31,22 @@
         /*codeAnalysisData.securityDetails(saRequest).then(processSaResponse),
         testSuiteData.details(testRequest).then(processTestResponse)*/
         /*]);*/
-
+        $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
+            .then(function(response) {
+                ctrl.getAllProjects = response.data;
+                for (var i = 0; i < ctrl.getAllProjects.length; i++) {
+                    for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
+                        for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
+                            ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
+                            ctrl.projectIDS = ctrl.getAllProjects[i].id;
+                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("USER_MANAGEMENT_VIEW") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                               ctrl.usermanagementviews = true;
+                            }
+                            
+                        }
+                    }
+                }
+            });
 
         function processCaResponse(response) {
             var deferred = $q.defer();
