@@ -36,6 +36,7 @@
             if (ctrl.sysadmincheck == "true") {
                 ctrl.CreateProjects = true;
                 ctrl.viewProjects = true;
+                 ctrl.usermanagementviews = true;
             } else {
                 for (var i = 0; i < ctrl.getAllProjects.length; i++) {
                     for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
@@ -48,6 +49,9 @@
                             }
                             if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("VIEW_PROJECT_LIST") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
                                 ctrl.viewProjects = true;
+                            }
+                             if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("USER_MANAGEMENT_VIEW") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                               ctrl.usermanagementviews = true;
                             }
 
                         }

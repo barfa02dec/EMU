@@ -99,7 +99,7 @@
                             if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("VIEW_DASHBOARD") > -1) && (ctrl.vvv == ctrl.usernamepro) && (ctrl.projectIDS == ctrl.projID)){
                                ctrl.dashboardViewWidget = true;
                             }
-                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("USER_MANAGEMENT_VIEW") > -1) && (ctrl.vvv == ctrl.usernamepro)  && (ctrl.projectIDS == ctrl.projID)){
+                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("USER_MANAGEMENT_VIEW") > -1) && (ctrl.vvv == ctrl.usernamepro)){
                                ctrl.usermanagementviews = true;
                             }
                         }
