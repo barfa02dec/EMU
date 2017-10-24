@@ -159,9 +159,9 @@ Issues/Defects</div>
     <tr class="font-props">
     <td></td>
       <td ng-repeat="sprintName in jdv.jirametricsdata" style="
-    max-width: 120px;
+    max-width: 100px;
     text-overflow: ellipsis;
-    overflow: hidden;">{{sprintName.name}}</td>
+    overflow: hidden;" ng-attr-title="{{sprintName.name}}">{{sprintName.name}}</td>
      
     </tr>
   </thead>
