@@ -18,7 +18,7 @@
         </form-group>
                        
                  <label class="control-label col-sm-4 createproj-label-props" for="pwd">Description</label>
-                              <form-group input="description" errors="{required: 'Description is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+                              <form-group input="description" errors="{minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
                          
             <input
                 type="text"
@@ -29,10 +29,10 @@
                 maxlength="40"
                 autocomplete="off"
                 minlength="3"
-                required />
+                 />
         </form-group> 
                        
-                       <label class="control-label col-sm-4 createproj-label-props" for="pwd">Role Name</label>
+                       <label class="control-label col-sm-4 createproj-label-props" for="pwd">Role Name<span style="color: red">*</span></label>
                                   <form-group input="rolekey" errors="{required: 'Role name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
                          
             <input
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <label style="font-weight: normal;">Selected Permissions</label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
+                    <label style="font-weight: normal;">Selected Permissions<span style="color: red">*</span></label><!--  <button type="button" class="btn btn-default btn-xs" ng-click="spc.transfer(spc.demoOptions.selectedItems, spc.demoOptions.items, -1)"> Deselect All </button>  -->
                     <div class="pool scrollbar-processor-allpages">
                         <ul>
                             <li ng-repeat="item in prc.selectedItems | orderBy: prc.getAllPermissions.orderProperty">

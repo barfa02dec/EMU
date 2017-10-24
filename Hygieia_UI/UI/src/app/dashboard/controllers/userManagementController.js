@@ -58,7 +58,22 @@
             }
         };
 
-
+         $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
+            .then(function(response) {
+                ctrl.getAllProjects = response.data;
+                for (var i = 0; i < ctrl.getAllProjects.length; i++) {
+                    for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
+                        for (var k = 0; k < ctrl.getAllProjects[i].usersGroup[j].userRoles.length; k++) {
+                            ctrl.vvv = ctrl.getAllProjects[i].usersGroup[j].user;
+                            ctrl.projectIDS = ctrl.getAllProjects[i].id;
+                            if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("DELETE_ROLE") > -1) && (ctrl.vvv == ctrl.usernamepro)){
+                               ctrl.deleteRole = true;
+                            }
+                            
+                        }
+                    }
+                }
+            });
 
         
 
@@ -178,9 +193,10 @@
             });
 
             //Create role post API call
-            if (ctrl.selectedItems != 0) {
+        
                 ctrl.postRole = function() {
                     ctrl.usernamepro = $cookies.get('username');
+                        if (ctrl.selectedItems != 0) {
                     usermanagementData.createRolefn(ctrl.role).then(function(response) {
                         $route.reload();
                         $uibModalInstance.dismiss("cancel");
@@ -191,16 +207,25 @@
                 });
 
                     })
+
+                }
+                else{
+                   $uibModal.open({
+                    templateUrl: 'app/dashboard/views/ConfirmationModals/selectpermissionrequired.html',
+                    controller: 'userManagementController',
+                    controllerAs: 'umc'
+                });
+                }
                  
         };
-            } else {
+             /*else {
                 $uibModal.open({
                     templateUrl: 'app/dashboard/views/ConfirmationModals/selectpermissionrequired.html',
                     controller: 'userManagementController',
                     controllerAs: 'umc'
                 });
             }
-
+*/
             //Adding Permissions to User Dual List Functionality
             ctrl.transfer = function(from, to, index) {
                 if (index >= 0) {

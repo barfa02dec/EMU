@@ -87,7 +87,7 @@
     padding-left: 1.8%;">
         <ul class="tab-styling-userManagement">
             <li class="style-forli" ng-repeat="tab in tabs" ng-class="{active:isActiveTab(tab.url)}" ng-click="onClickTab(tab)" style="padding-left: 0px;
-    margin-left: 0px;margin-right: 30px;">{{tab.title}}</li>
+    margin-left: 0px;margin-right: 30px;" ng-if="umc.deleteRole || tab.title != 'Users'">{{tab.title}}</li>
         </ul>
         <div id="mainView" style="padding-left: 0px;">
             <div ng-include="currentTab"></div>
@@ -192,7 +192,7 @@
                  
                 <td> 
                 <img src="assets/images/icon_edit.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.editRoleModel(per.roleKey,per)" title="Edit" > 
-                <img src="assets/images/icon_delete.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.deleteRoleModel(per)" title="Delete">
+                <img src="assets/images/icon_delete.png" class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="umc.deleteRoleModel(per)" title="Delete" ng-if="umc.deleteRole">
                 </td>
                
               <tr>
@@ -203,7 +203,7 @@
         </div>
     </script>
 
-     <script type="text/ng-template" id="three.tpl.html">
+     <script type="text/ng-template" id="three.tpl.html" ng-if="umc.deleteRole">
              <div class="col-md-12" style="padding-top: 30px;padding-left: 0px;" ng-repeat="fetchPro in umc.getAppUsers">
       
         <div class="col-md-8" style="padding-left: 0px;">
