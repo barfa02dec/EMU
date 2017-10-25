@@ -123,7 +123,7 @@ public class GitCollectorTask extends CollectorTask<Collector> {
         int repoCount = 0;
         int commitCount = 0;
 
-        clean(collector);
+        //clean(collector);
         for (GitRepo repo : enabledRepos(collector)) {
             boolean firstRun = false;
             if (repo.getLastUpdateTime() == null) firstRun = true;
