@@ -158,10 +158,10 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 					featureSettings, this.featureRepository,this.defectRepository,this.sprintRepository,this.defectAggregationRepository,this.releaseRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
 			count = storyData.updateDefectInformation();
 
-			List<Scope> projects=(List<Scope>) projectRepository.findAll();
+			List<Scope> projects=(List<Scope>) projectRepository.findByProjectId(featureSettings.getProjectId());
 			for(Scope scopeProject: projects){
 				List<Defect> defectsInDB=(List<Defect>) defectRepository.findByProjectId(scopeProject.getpId(),scopeProject.getProjectId());
-				LOGGER.info("*************PROJECT ID::"+scopeProject.getpId()+"********DEFECTS COUNT::"+defectsInDB.size());
+				LOGGER.info("PROJECT CODE::"+scopeProject.getProjectId()+" *************PROJECT ID::"+scopeProject.getpId()+" ********DEFECTS COUNT::"+defectsInDB.size());
 				storyData.processDefectAggregation(featureSettings, defectsInDB,scopeProject);
 				
 				//logic to handle sprint and releases
