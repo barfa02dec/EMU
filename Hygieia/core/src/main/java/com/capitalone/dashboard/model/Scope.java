@@ -45,6 +45,7 @@ public class Scope extends BaseModel {
 	private String changeDate;
 	private String assetState;
 	private String isDeleted;
+	private boolean toShowInEMUDashboard=false;
 	
 	private String projectId;
 	@Transient
@@ -156,5 +157,15 @@ public class Scope extends BaseModel {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).append(pId).append(collectorId).toHashCode();
 	}
+
+	public boolean isToShowInEMUDashboard() {
+		return toShowInEMUDashboard;
+	}
+
+	public void setToShowInEMUDashboard(boolean toShowInEMUDashboard) {
+		this.toShowInEMUDashboard = toShowInEMUDashboard;
+	}
+	
+	
 
 }

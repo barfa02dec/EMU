@@ -57,10 +57,20 @@ public class FeatureSettings {
 	private List<String> jiraProxyPort;
 	private List<String[]> resolutionPeriod;
 	private List<String[]> defectAge;
+	private List<String[]> jiraProjectIdList;
 	private List<String> rapidView;
 	private int noOfSprintsToShow;
 	private List<String> projectId;
 		
+	
+	public List<String[]> getJiraProjectIdList() {
+		return jiraProjectIdList;
+	}
+
+	public void setJiraProjectIdList(List<String[]> jiraProjectIdList) {
+		this.jiraProjectIdList = jiraProjectIdList;
+	}
+
 	public int getNoOfSprintsToShow() {
 		return noOfSprintsToShow;
 	}
