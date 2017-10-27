@@ -54,6 +54,21 @@ public class NewFeatureSettings {
 	private String rapidView;
 	private int noOfSprintsToShow;
 	private String projectId;
+
+	private String[] resolutionPeriod;
+	
+	private String[] defectAge;
+	
+	private String[] jiraProjectIdList;
+	
+	public String[] getJiraProjectIdList() {
+		return jiraProjectIdList;
+	}
+
+	public void setJiraProjectIdList(String[] jiraProjectIdList) {
+		this.jiraProjectIdList = jiraProjectIdList;
+	}
+
 	public int getNoOfSprintsToShow() {
 		return noOfSprintsToShow;
 	}
@@ -70,9 +85,6 @@ public class NewFeatureSettings {
 		this.rapidView = rapidView;
 	}
 
-	private String[] resolutionPeriod;
-	
-	private String[] defectAge;
 
 	public String[] getDefectAge() {
 		return defectAge;

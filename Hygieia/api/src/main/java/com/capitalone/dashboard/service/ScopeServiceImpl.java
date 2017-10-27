@@ -112,7 +112,7 @@ public class ScopeServiceImpl implements ScopeService {
 
 	@Override
 	public List<Scope> getScopesByCollectorAmdProjectId(ObjectId collectorId, String projectId) {
-		List<Scope> scopes = scopeRepository.findByCollectorIdAndProjectId(collectorId,projectId);
+		List<Scope> scopes = scopeRepository.findByCollectorIdAndProjectIdAndFlag(collectorId,projectId,true);
 
 		//clean up needed for < > characters
 		for (Scope scope : scopes) {

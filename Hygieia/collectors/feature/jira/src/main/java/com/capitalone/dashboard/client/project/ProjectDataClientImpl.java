@@ -1,5 +1,13 @@
 package com.capitalone.dashboard.client.project;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.atlassian.jira.rest.client.api.domain.BasicProject;
 import com.capitalone.dashboard.client.JiraClient;
 import com.capitalone.dashboard.model.Scope;
@@ -8,11 +16,6 @@ import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.util.ClientUtil;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
 import com.capitalone.dashboard.util.NewFeatureSettings;
-import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 /**
  * This is the primary implemented/extended data collector for the feature
@@ -79,6 +82,10 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 		
 		if (currentPagedJiraRs != null) {
 			ObjectId jiraCollectorId = featureCollectorRepository.findByName(FeatureCollectorConstants.JIRA).getId();
+			List<String> jiraProjectIdsToShowIndashboard=new ArrayList<String>();
+			String [] jiraIds=featureSettings.getJiraProjectIdList();
+			jiraProjectIdsToShowIndashboard=Arrays.asList(jiraIds);
+			
 			for (BasicProject jiraScope : currentPagedJiraRs) {
 				String scopeId = TOOLS.sanitizeResponse(jiraScope.getId());
 				
@@ -123,7 +130,8 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 
 				// path - does not exist for Jira
 				scope.setProjectPath(TOOLS.sanitizeResponse(jiraScope.getName()));
-
+				//set whether this project is exposed to emu dashboard/not
+				scope.setToShowInEMUDashboard(jiraProjectIdsToShowIndashboard.contains(scope.getpId()));
 				// Saving back to MongoDB
 				projectRepo.save(scope);
 				

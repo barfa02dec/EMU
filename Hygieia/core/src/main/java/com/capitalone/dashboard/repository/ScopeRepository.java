@@ -47,6 +47,9 @@ public interface ScopeRepository extends CrudRepository<Scope, ObjectId>,
 	@Query(value = "{ 'projectId' : ?1, 'collectorId' : ?0 }")
 	List<Scope> findByCollectorIdAndProjectId(ObjectId collectorId, String projectId);
 	
-	@Query(value = "{ 'projectId' : ?0 }")
-	List<Scope> findByProjectId(String projectId);
+	@Query(value = "{ 'toShowInEMUDashboard':?2, 'projectId' : ?1, 'collectorId' : ?0 }")
+	List<Scope> findByCollectorIdAndProjectIdAndFlag(ObjectId collectorId, String projectId,boolean toShowInEMUDashboard);
+	
+	@Query(value = "{ 'toShowInEMUDashboard':?1 ,'projectId' : ?0 }")
+	List<Scope> findByProjectId(String projectId, boolean toShowInEMUDashboard);
 }

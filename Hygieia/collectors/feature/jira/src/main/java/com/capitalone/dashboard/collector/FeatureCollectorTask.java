@@ -136,6 +136,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			featureSettings.setDefectAge(hmFeatureSettings.getDefectAge().get(i));
 			featureSettings.setRapidView(hmFeatureSettings.getRapidView().get(i));
 			featureSettings.setProjectId(hmFeatureSettings.getProjectId().get(i));
+			featureSettings.setJiraProjectIdList(hmFeatureSettings.getJiraProjectIdList().get(i));
 			featureSettings.setNoOfSprintsToShow(hmFeatureSettings.getNoOfSprintsToShow());
 			logBanner(featureSettings.getJiraBaseUrl());
 		    int count = 0;
@@ -158,7 +159,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 					featureSettings, this.featureRepository,this.defectRepository,this.sprintRepository,this.defectAggregationRepository,this.releaseRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
 			count = storyData.updateDefectInformation();
 
-			List<Scope> projects=(List<Scope>) projectRepository.findByProjectId(featureSettings.getProjectId());
+			List<Scope> projects=(List<Scope>) projectRepository.findByProjectId(featureSettings.getProjectId(),true);
 			for(Scope scopeProject: projects){
 				List<Defect> defectsInDB=(List<Defect>) defectRepository.findByProjectId(scopeProject.getpId(),scopeProject.getProjectId());
 				LOGGER.info("PROJECT CODE::"+scopeProject.getProjectId()+" *************PROJECT ID::"+scopeProject.getpId()+" ********DEFECTS COUNT::"+defectsInDB.size());
