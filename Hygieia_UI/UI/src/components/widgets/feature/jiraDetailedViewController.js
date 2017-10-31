@@ -17,7 +17,7 @@
         //ctrl.proname = $cookies.get('ProName');
         ctrl.projectpath = $cookies.get('projectNameJira');
       ctrl.projectpathId = $cookies.get('projectIdJira');
-
+      ctrl.projectiddefects = $cookies.get('ProSpId');
         ctrl.usernamepro = $cookies.get('username');
         //Empty array created for Jira Defect Graphs
         
@@ -71,7 +71,7 @@
 
         
         //Retrieving Jira-Defect Response and Processing 
-        featureData.jiraData(ctrl.projectpathId,ctrl.projectpath).then(jiraDataFetch);
+        featureData.jiraData(ctrl.projectiddefects,ctrl.projectpath).then(jiraDataFetch);
 
         
         //Processing Jira-Defect Response
