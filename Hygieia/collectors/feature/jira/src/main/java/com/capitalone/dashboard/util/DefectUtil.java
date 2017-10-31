@@ -41,7 +41,9 @@ public class DefectUtil {
 		
 			JiraIssue issue = new JiraIssue();
 			issue.parseJsonForEnvironment(element.toString());
-			issue.getEnvironment().replaceAll(".", "-");
+			if(null!=issue.getEnvironment()){
+				issue.getEnvironment().replaceAll(".", "-");
+			}
 			issues.add(issue);
 		}		
 		return issues;
