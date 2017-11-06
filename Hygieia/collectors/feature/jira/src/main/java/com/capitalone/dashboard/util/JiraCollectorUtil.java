@@ -348,8 +348,7 @@ public class JiraCollectorUtil {
 			}
 			//return result.getBody();
 		}catch (Exception e) {
-			// TODO: handle exception
-			//return null;
+			LOGGER.debug(e.getMessage());
 		}
 		
 	}

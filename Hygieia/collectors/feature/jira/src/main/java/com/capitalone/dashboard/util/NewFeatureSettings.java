@@ -16,8 +16,6 @@
 
 package com.capitalone.dashboard.util;
 
-import java.util.List;
-
 /**
  * Bean to hold settings specific to the Feature collector.
  * 
