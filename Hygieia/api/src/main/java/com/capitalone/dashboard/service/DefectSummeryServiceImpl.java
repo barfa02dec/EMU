@@ -72,9 +72,9 @@ public class DefectSummeryServiceImpl implements DefectSummeryService {
 		da.setDefectsByProirity(defectsByProirity);
 		//defects by environment 
 		Map<String,Integer> defectsByEnvironment=new HashMap<String,Integer>();
-		defectsByEnvironment.put("UAT", re.getUAT_DefectsCount());
-		defectsByEnvironment.put("QA", re.getQA_DefectsCount());
-		defectsByEnvironment.put("PROD", re.getPROD_DefectsCount());
+		defectsByEnvironment.put("UAT", re.getUatDefects());
+		defectsByEnvironment.put("QA", re.getQaDefects());
+		defectsByEnvironment.put("PROD", re.getProdDefects());
 		
 		da.setDefectsByEnvironment(defectsByEnvironment);
 		

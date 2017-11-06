@@ -30,13 +30,13 @@ public class DefectSummaryRequest {
 	private int criticalPriorityDefectsCount;
 	
 	@Min(value=0, message = "value must be greater than or equal to zero" )
-	private int QA_DefectsCount;
+	private int qaDefects;
 	
 	@Min(value=0, message = "value must be greater than or equal to zero" )
-	private int UAT_DefectsCount;
+	private int uatDefects;
 	
 	@Min(value=0, message = "value must be greater than or equal to zero" )
-	private int PROD_DefectsCount;
+	private int prodDefects;
 	
 	@Min(value=0, message = "value must be greater than or equal to zero" )
 	private int openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days;
@@ -191,23 +191,24 @@ public class DefectSummaryRequest {
 	public void setCriticalPriorityDefectsCount(int criticalPriorityDefectsCount) {
 		this.criticalPriorityDefectsCount = criticalPriorityDefectsCount;
 	}
-	public int getQA_DefectsCount() {
-		return QA_DefectsCount;
+	
+	public int getQaDefects() {
+		return qaDefects;
 	}
-	public void setQA_DefectsCount(int qA_DefectsCount) {
-		QA_DefectsCount = qA_DefectsCount;
+	public void setQaDefects(int qaDefects) {
+		this.qaDefects = qaDefects;
 	}
-	public int getUAT_DefectsCount() {
-		return UAT_DefectsCount;
+	public int getUatDefects() {
+		return uatDefects;
 	}
-	public void setUAT_DefectsCount(int uAT_DefectsCount) {
-		UAT_DefectsCount = uAT_DefectsCount;
+	public void setUatDefects(int uatDefects) {
+		this.uatDefects = uatDefects;
 	}
-	public int getPROD_DefectsCount() {
-		return PROD_DefectsCount;
+	public int getProdDefects() {
+		return prodDefects;
 	}
-	public void setPROD_DefectsCount(int pROD_DefectsCount) {
-		PROD_DefectsCount = pROD_DefectsCount;
+	public void setProdDefects(int prodDefects) {
+		this.prodDefects = prodDefects;
 	}
 	public int getOpenDefectsWithHighPriorityAndAgeLessThanOrEQ15Days() {
 		return openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days;
