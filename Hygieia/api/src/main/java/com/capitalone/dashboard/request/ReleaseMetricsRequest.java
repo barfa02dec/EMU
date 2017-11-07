@@ -28,7 +28,7 @@ public class ReleaseMetricsRequest {
     
     private int noofStoryCompleted;
     private int noofStoryCommitted;
-    
+    private int noOfStories;
 	public Long getReleaseId() {
 		return releaseId;
 	}
@@ -160,6 +160,12 @@ public class ReleaseMetricsRequest {
 	}
 	public void setNoofStoryCommitted(int noofStoryCommitted) {
 		this.noofStoryCommitted = noofStoryCommitted;
+	}
+	public int getNoOfStories() {
+		return noOfStories;
+	}
+	public void setNoOfStories(int noOfStories) {
+		this.noOfStories = noOfStories;
 	}
     
           
