@@ -70,8 +70,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 		data.setReleaseId(re.getReleaseId());
 		data.setReleaseName(re.getName());
 		
-		data.setReleaseDate(new SimpleDateFormat("dd/MM/yyyy").parse(re.getReleaseDate()));
-		data.setStartDate(new SimpleDateFormat("dd/MM/yyyy").parse(re.getStartDate()));
+		data.setReleaseDate(new SimpleDateFormat("dd-MM-yyyy").parse(re.getReleaseDate()));
+		data.setStartDate(new SimpleDateFormat("dd-MM-yyyy").parse(re.getStartDate()));
 		
 		//defects found
 		DefectCount defectsFound= new DefectCount();
