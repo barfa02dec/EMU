@@ -30,7 +30,7 @@
     ctrl.doneStoryPointsKanban = null;
     ctrl.epicStoryPointsKanban = null;
     ctrl.issueStoryPointsKanban = [];
-    ctrl.projectpath = $cookies.get('projectNameJira');
+    ctrl.projectpath = $cookies.get('ProName');
     ctrl.projectpathId = $cookies.get('projectIdJira');
     ctrl.projectiddefects = $cookies.get('ProSpId');
     // Public Evaluators
@@ -46,7 +46,7 @@
     ctrl.pauseAgileView = pauseAgileView;
     ctrl.pausePlaySymbol = "||";
     $cookies.put('projectIdd', filterProjectId);
- 
+  
 
     ctrl.load = function() {
       $cookies.put('projectIdd', filterProjectId);
