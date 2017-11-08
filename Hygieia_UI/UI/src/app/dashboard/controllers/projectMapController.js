@@ -338,27 +338,34 @@
             });
         }
 
-        ctrl.addDefect  = function(){
+        ctrl.addDefect  = function(probj){
                 $uibModal.open({
                 templateUrl: 'app/dashboard/views/addDefect.html',
                 windowClass: 'app-modal-window-defect',
                 controller: addDefectController,
-                controllerAs: 'adc'
+                controllerAs: 'adc',
+                resolve: {
+                    name: function() {
+                        return probj.projectName;
+                    },
+                    id: function() {
+                        return probj.projectId;
+                    }
+                }
             });
              }
 
-             function addDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies) {
+             function addDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
              
                 var ctrl = this;
                 
-              ctrl.postDefect = function() {
-                ctrl.projectIdDefect = $cookies.get('ProSpId');
-                 ctrl.projectNameDefect = $cookies.get('ProName');
+              ctrl.postDefect = function(probj) {
+                
 
                 ctrl.payloadDefect = {
-                "projectName": ctrl.projectNameDefect,
-                "metricsProjectId": ctrl.projectIdDefect,
-                "projectId": ctrl.projectIdDefect,
+                "projectName": name,
+                "metricsProjectId": id,
+                "projectId": id,
                 "valueAsOn": "test",
 
                 "lowPriorityDefectsCount": ctrl.lowPriorityDefectsCount,
@@ -439,27 +446,33 @@
 
              }
 
-              ctrl.addRelease  = function(){
+              ctrl.addRelease  = function(proje){
                 $uibModal.open({
                 templateUrl: 'app/dashboard/views/addRelease.html',
                 windowClass: 'app-modal-window-defect',
                 controller: addReleaseController,
-                controllerAs: 'arc'
+                controllerAs: 'arc',
+                 resolve: {
+                    name: function() {
+                        return proje.projectName;
+                    },
+                    id: function() {
+                        return proje.projectId;
+                    }
+                }
                 
             });
 
 
              }
 
-             function addReleaseController($uibModalInstance, $http, $route, $timeout, $scope, $cookies) {
+             function addReleaseController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
                 var ctrl = this;
-                 ctrl.projectIdRelease = $cookies.get('ProSpId');
-                 ctrl.projectNameRelease = $cookies.get('ProName');
-
-                ctrl.postRelease = function() {
+               
+                ctrl.postRelease = function(proje) {
                  ctrl.releasePayload = {
-                    "projectName":ctrl.projectNameRelease,
-                    "projectId":ctrl.projectIdRelease,
+                    "projectName":name,
+                    "projectId":id,
                     "releaseId" : ctrl.releaseId,
                     "name":ctrl.name,
 
