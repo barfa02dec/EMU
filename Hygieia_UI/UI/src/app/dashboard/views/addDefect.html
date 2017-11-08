@@ -1,0 +1,616 @@
+<widget-modal widget-modal-title="Add defects" class="border-prop-modals">
+    <form name="cdf" class="form" ng-submit="adc.postDefect()" novalidate>
+
+         <label class="control-label col-md-4 createproj-label-props" for="pwd">Open Defects by Severity</label>
+         <div class="col-md-2">
+        <form-group input="Lowods">
+            <input
+                type="number"
+                name="Lowods"
+                class="form-control"
+                placeholder="Low"
+                ng-model="adc.lowPriorityDefectsCount"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Mediumods">
+            <input
+                type="number"
+                name="Mediumods"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="adc.mediumPriorityDefectsCount"
+             />
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Highods">
+            <input
+                type="number"
+                name="Highods"
+                class="form-control"
+                placeholder="High"
+                 ng-model="adc.highPriorityDefectsCount"
+                
+               />
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Criticalods">
+            <input
+                type="number"
+                name="Criticalods"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="adc.criticalPriorityDefectsCount"
+              />
+        </form-group>
+        </div>
+        
+       
+         <label class="control-label col-md-4  createproj-label-props" for="pwd">Open Defects by Enviornment</label>
+         <div class="col-md-2">
+        <form-group input="QAenv">
+            <input
+                type="number"
+                name="QAenv"
+                class="form-control"
+                placeholder="QA"
+                ng-model="adc.QA_DefectsCount"
+                />
+
+        </form-group>
+        </div>
+        <div class="col-md-2">
+        <form-group input="UATenv">
+            <input
+                type="number"
+                name="UATenv"
+                class="form-control"
+                placeholder="UAT"
+                 ng-model="adc.UAT_DefectsCount"
+                />
+
+        </form-group>
+        </div>
+        <div class="col-md-2">
+        <form-group input="Productionenv">
+            <input
+                type="number"
+                name="Productionenv"
+                class="form-control"
+                placeholder="Production"
+                 ng-model="adc.PROD_DefectsCount"
+                />
+
+        </form-group>
+        </div>
+        
+        <div class="col-md-12" style="font-size: 15px;">
+            Age of open defects
+        </div>
+        <div class="col-md-6" style="padding-top: 2%;">
+             <label class="control-label col-md-4  createproj-label-props" for="pwd"> &lt;15days</label>
+         <div class="col-md-2">
+        <form-group input="Low1">
+            <input
+                type="number"
+                name="Low1"
+                class="form-control"
+                placeholder="Low"
+                 ng-model="adc.openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days"
+              />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium1">
+            <input
+                type="number"
+                name="Medium1"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="adc.openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High1">
+            <input
+                type="number"
+                name="High1"
+                class="form-control"
+                placeholder="High"
+                ng-model="adc.openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical1">
+            <input
+                type="number"
+                name="Critical1"
+                class="form-control"
+                placeholder="Critical"
+                 ng-model="adc.openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days"
+               />
+
+        </form-group>
+        </div>
+
+          <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 30 and &lt; 60 </label>
+         <div class="col-md-2">
+        <form-group input="Low2">
+            <input
+                type="number"
+                name="Low2"
+                class="form-control"
+                placeholder="Low"
+                 ng-model="adc.openDefectsWithLowPriorityAndAgeBetween15To30Days"
+              />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium2">
+            <input
+                type="number"
+                name="Medium2"
+                class="form-control"
+                placeholder="Medium"
+                 ng-model="adc.openDefectsWithMediumPriorityAndAgeBetween15To30Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High2">
+            <input
+                type="number"
+                name="High2"
+                class="form-control"
+                placeholder="High"
+                 ng-model="adc.openDefectsWithHighPriorityAndAgeBetween15To30Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical2">
+            <input
+                type="number"
+                name="Critical2"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="adc.openDefectsWithCriticalPriorityAndAgeBetween15To30Days"
+               />
+
+        </form-group>
+        </div>
+
+        </div>
+        <div class="col-md-6" style="padding-top: 2%">
+             <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 15 and &lt; 30</label>
+         <div class="col-md-2">
+        <form-group input="Low3">
+            <input
+                type="number"
+                name="Low3"
+                class="form-control"
+                placeholder="Low"
+                ng-model="adc.openDefectsWithLowPriorityAndAgeBetween30To60Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium3">
+            <input
+                type="number"
+                name="Medium3"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="adc.openDefectsWithMediumPriorityAndAgeBetween30To60Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High3">
+            <input
+                type="number"
+                name="High3"
+                class="form-control"
+                placeholder="High"
+                 ng-model="adc.openDefectsWithHighPriorityAndAgeBetween30To60Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical3">
+            <input
+                type="number"
+                name="Critical3"
+                class="form-control"
+                placeholder="Critical"
+                 ng-model="adc.openDefectsWithCriticalPriorityAndAgeBetween30To60Days"
+                />
+
+        </form-group>
+        </div>
+
+          <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 60 and &lt; 90</label>
+         <div class="col-md-2">
+        <form-group input="Low3">
+            <input
+                type="number"
+                name="Low3"
+                class="form-control"
+                placeholder="Low"
+                ng-model="adc.openDefectsWithLowPriorityAndAgeBetween60To90Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium3">
+            <input
+                type="number"
+                name="Medium3"
+                class="form-control"
+                placeholder="Medium"
+              ng-model="adc.openDefectsWithMediumPriorityAndAgeBetween60To90Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High3">
+            <input
+                type="number"
+                name="High3"
+                class="form-control"
+                placeholder="High"
+                ng-model="adc.openDefectsWithHighPriorityAndAgeBetween60To90Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical3">
+            <input
+                type="number"
+                name="Critical3"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="adc.openDefectsWithCriticalPriorityAndAgeBetween60To90Days"
+               />
+
+        </form-group>
+        </div>
+
+        <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 90 days</label>
+         <div class="col-md-2">
+        <form-group input="Low4">
+            <input
+                type="number"
+                name="Low4"
+                class="form-control"
+                placeholder="Low"
+                ng-model="adc.openDefectsWithLowPriorityAndAgeGreaterThan90"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium4">
+            <input
+                type="number"
+                name="Medium4"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="adc.openDefectsWithMediumPriorityAndAgeGreaterThan90"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High4">
+            <input
+                type="number"
+                name="High4"
+                class="form-control"
+                placeholder="High"
+               ng-model="adc.openDefectsWithHighPriorityAndAgeGreaterThan90"
+              
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical4">
+            <input
+                type="number"
+                name="Critical4"
+                class="form-control"
+                placeholder="Critical"
+                 ng-model="adc.openDefectsWithCriticalPriorityAndAgeGreaterThan90"
+                />
+
+        </form-group>
+        </div>
+
+        </div>
+        <div class="col-md-12" style="font-size: 15px;">
+            Resolution Time
+        </div>
+
+          <div class="col-md-6" style="padding-top: 2%">
+             <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 15 days</label>
+         <div class="col-md-2">
+        <form-group input="Low5">
+            <input
+                type="number"
+                name="Low5"
+                class="form-control"
+                placeholder="Low"
+                 ng-model="adc.fixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium5">
+            <input
+                type="number"
+                name="Medium5"
+                class="form-control"
+                placeholder="Medium"
+                 ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High5">
+            <input
+                type="number"
+                name="High5"
+                class="form-control"
+                placeholder="High"
+                 ng-model="adc.fixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical5">
+            <input
+                type="number"
+                name="Critical5"
+                class="form-control"
+                placeholder="Critical"
+              ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days"
+                />
+
+        </form-group>
+        </div>
+
+          <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 30 and &lt; 60</label>
+         <div class="col-md-2">
+        <form-group input="Low6">
+            <input
+                type="number"
+                name="Low6"
+                class="form-control"
+                placeholder="Low"
+                 ng-model="adc.fixedDefectsWithLowPriorityAndResolutionBetween30To60Days"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium6">
+            <input
+                type="number"
+                name="Medium6"
+                class="form-control"
+                placeholder="Medium"
+               ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionBetween30To60Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High6">
+            <input
+                type="number"
+                name="High6"
+                class="form-control"
+                placeholder="High"
+             ng-model="adc.fixedDefectsWithHighPriorityAndResolutionBetween30To60Days"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical6">
+            <input
+                type="number"
+                name="Critical6"
+                class="form-control"
+                placeholder="Critical"
+              ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days"
+               />
+
+        </form-group>
+        </div>
+
+        </div>
+        <div class="col-md-6" style="padding-top: 2%">
+             <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 15 and &gt; 30</label>
+         <div class="col-md-2">
+        <form-group input="Low7">
+            <input
+                type="number"
+                name="Low7"
+                class="form-control"
+                placeholder="Low"
+               ng-model="adc.fixedDefectsWithLowPriorityAndResolutionBetween15To30Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium7">
+            <input
+                type="number"
+                name="Medium7"
+                class="form-control"
+                placeholder="Medium"
+               ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionBetween15To30Days"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High7">
+            <input
+                type="number"
+                name="High7"
+                class="form-control"
+                placeholder="High"
+               ng-model="adc.fixedDefectsWithHighPriorityAndResolutionBetween15To30Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical7">
+            <input
+                type="number"
+                name="Critical7"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days"
+                />
+
+        </form-group>
+        </div>
+
+          <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 60 and &lt; 90</label>
+         <div class="col-md-2">
+        <form-group input="Low8">
+            <input
+                type="number"
+                name="Low8"
+                class="form-control"
+                placeholder="Low"
+                ng-model="adc.fixedDefectsWithLowPriorityAndResolutionBetween60To90Days"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium8">
+            <input
+                type="number"
+                name="Medium8"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High8">
+            <input
+                type="number"
+                name="High8"
+                class="form-control"
+                placeholder="High"
+               ng-model="adc.fixedDefectsWithHighPriorityAndResolutionBetween60To90Days"
+             />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical8">
+            <input
+                type="number"
+                name="Critical8"
+                class="form-control"
+                placeholder="Critical"
+             ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days"
+               />
+
+        </form-group>
+        </div>
+
+        <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 90 days</label>
+         <div class="col-md-2">
+        <form-group input="Low9">
+            <input
+                type="number"
+                name="Low9"
+                class="form-control"
+                placeholder="Low"
+               ng-model="adc.fixedDefectsWithLowPriorityAndResolutionGreaterThan90"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium9">
+            <input
+                type="number"
+                name="Medium9"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionGreaterThan90"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High9">
+            <input
+                type="number"
+                name="High9"
+                class="form-control"
+                placeholder="High"
+                ng-model="adc.fixedDefectsWithHighPriorityAndResolutionGreaterThan90"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical9">
+            <input
+                type="number"
+                name="Critical9"
+                class="form-control"
+                placeholder="Critical"
+                 ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90"
+                />
+
+        </form-group>
+        </div>
+
+        </div>
+           <form-group>
+        <div class="button-row row" style="padding-left: 12px;">
+            
+              
+                <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Create</button>
+                  <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
+        </div></form-group>
+
+    </form>
+</widget-modal>

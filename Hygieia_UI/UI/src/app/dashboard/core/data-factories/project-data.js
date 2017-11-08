@@ -22,7 +22,8 @@
             editprojectfn:editprojectfn,
             fetchallusers:fetchallusers,
             fetchalldashboard:fetchalldashboard,
-            fetchallroles:fetchallroles
+            fetchallroles:fetchallroles,
+            postDefect:postDefect
            
         };
 
@@ -87,6 +88,13 @@
                     .then(function(response) {
                        
                             return response;
+                    });
+        }
+
+        function postDefect(payload){
+            return   $http.post('/api/defectSummery', (payload))
+                    .then(function(response) {
+                       return response.data;
                     });
         }
         

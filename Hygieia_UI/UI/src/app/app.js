@@ -47,7 +47,9 @@ var localStorageSupported = (function () {
         'as.sortable',
         'ui.select',
         'ui.bootstrap',
-        'angular-c3'
+        'angular-c3',
+        '720kb.datepicker',
+        'datePicker'
     ])
     .config(['$httpProvider',
         // intercepting the http provider allows us to use relative routes

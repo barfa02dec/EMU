@@ -12,6 +12,7 @@
    <div class="col-md-1" style="padding-left: 1%;width: 5.33%"><img src="assets/images/emu-5w.png"></div>
     <div class="col-md-3" style="font-size: 17px;
     font-weight: 500;color: #fff;padding-top: 6px;">Engineering Metrics Unified</div>
+     <!-- <header-directive></header-directive> -->
     <div class="col-md-6"></div>
      <div class="col-md-1" style="color: #fff;direction: rtl;
     text-align: center;
@@ -92,6 +93,7 @@
          </tr>
       </thead>
       <tbody>
+
          <tr ng-repeat="proj in pm.getAllProjects | filter:pm.searchText |
             pagination: curPage * pm.pageSize | limitTo: pm.pageSize">
             <td ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" style="cursor: pointer;max-width: 96px;" class="project-map-list-data" ng-attr-title="{{proj.projectId}}">{{proj.projectId}}</td>
@@ -115,12 +117,13 @@
                <input type="" name="" ng-model="proj.program" class="set-width-input edit-inputbox-props middle">
             </td>
             <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.program}}">{{proj.program}}</td>
+
             <!--  <td><img src="assets/images/status_amber.png" style="height: 20px;
                width: 20px;">Near Critical</td> -->
             <td>
                <span class="" ng-repeat="innerItem in proj.usersGroup">
                <span class="" ng-repeat="childItem in innerItem.userRoles">
-               <span class="" ng-show="!proj.editorEnabled && childItem.permissions.indexOf('ADD_USER') !== -1 && innerItem.user.includes(pm.usernamepro)">
+               <span class="" ng-show="childItem.permissions.indexOf('ADD_USER') !== -1 && innerItem.user.includes(pm.usernamepro)">
                <img src="assets/images/icon_add_user.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.shareProjectPopUp(proj)" title="Add user" style="margin-left: -3px;">
                </span>
                </span></span>
@@ -137,6 +140,8 @@
                <span ng-show="childItem.permissions.indexOf('DELETE_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)">
                <img src="assets/images/icon_delete.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="pm.deleteProjectModel(proj)" title="Delete" > 
                </span>
+               <span ng-click="pm.addDefect()" style="cursor: pointer;"><i class="fa fa-bug" aria-hidden="true"></i></span>
+                <span ng-click="pm.addRelease()" style="cursor: pointer;"><i class="fa fa-bug" aria-hidden="true"></i></span>
                </span>  </span> 
             </td>
          </tr>
