@@ -1,13 +1,17 @@
 package com.capitalone.dashboard.rest;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capitalone.dashboard.model.DefectAggregation;
+import com.capitalone.dashboard.request.DefectSummaryRequest;
 import com.capitalone.dashboard.service.DefectSummeryService;
 @RestController
 public class DefectSummeryController {
@@ -32,6 +36,13 @@ public class DefectSummeryController {
 	@RequestMapping(value="/getDefectSummery/{metricsProjectId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public DefectAggregation getDefectSummeryByMetricsProjectId(@PathVariable("metricsProjectId") String metricsProjectId){
 		return defectSummeryService.findByMetricsProjectId(metricsProjectId);
+	}
+	
+	@RequestMapping(value="/defectSummery", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	public DefectAggregation createDefectDefectAggregationMetrics(@Valid @RequestBody DefectSummaryRequest defectSummery){
+		
+		return defectSummeryService.create(defectSummery);
+		
 	}
 	
 
