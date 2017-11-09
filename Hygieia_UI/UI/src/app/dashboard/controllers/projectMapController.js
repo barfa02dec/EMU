@@ -358,7 +358,9 @@
              function addDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
              
                 var ctrl = this;
-                
+
+               
+
               ctrl.postDefect = function(probj) {
                 
 
@@ -468,7 +470,13 @@
 
              function addReleaseController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
                 var ctrl = this;
-               
+                
+                 $scope.options = [
+                {value: '', label: 'Choose a value'},
+                {value: false, label: 'Closed'},
+                {value: true, label: 'Open'},
+                ];
+
                 ctrl.postRelease = function(proje) {
                  ctrl.releasePayload = {
                     "projectName":name,
@@ -537,6 +545,12 @@
              function addSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
                 var ctrl = this;
                 
+                  $scope.options = [
+                {value: '', label: 'Choose a value'},
+                {value: false, label: 'Closed'},
+                {value: true, label: 'Open'},
+                ];
+
                 ctrl.postSprint = function(proje) {
 
                  ctrl.sprintPayload = {
@@ -554,7 +568,7 @@
 
                 "storiesRemoed":ctrl.storiesRemoed,
                 "storypointsRemoed":ctrl.storypointsRemoed,
-
+                "released":ctrl.released,
            
                 "efforts":ctrl.efforts,
 

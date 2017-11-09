@@ -1,0 +1,385 @@
+<link href="assets/images/angular-datepicker.css" rel="stylesheet" type="text/css" />
+<script src="assets/images/angular-datepicker.js"></script>
+<link href="assets/images/fld/angular-datepicker.css" rel="stylesheet" type="text/css" />
+<script src="assets/images/fld/angular-datepicker.js"></script>
+
+<widget-modal widget-modal-title="Add Sprint" class="border-prop-modals">
+    <form name="cdf" class="form" ng-submit="asc.postSprint()" novalidate>
+      
+        <div class="col-md-6">
+        <form-group input="sprintid" errors="{required: 'Sprint id is required',maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
+            <input
+                type="text"
+                name="sprintid"
+                class="form-control"
+                placeholder="Sprint id"
+                ng-model="asc.sprintId"
+                required
+                maxlength="50"
+                autocomplete="off"
+                ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
+
+        </form-group>
+         <form-group input="sprintname" errors="{required: 'Sprint name is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
+            <input
+                type="text"
+                name="sprintname"
+                class="form-control"
+                placeholder="Sprint name"
+                ng-model="asc.sprintName"
+                required
+                maxlength="50"
+                autocomplete="off"
+                ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
+
+        </form-group>
+         <form-group input="description">
+            <input
+                type="text"
+                name="description"
+                class="form-control"
+                placeholder="Description"
+               ng-model="asc.desc"
+                autocomplete="off"
+               />
+
+        </form-group>
+         <form-group input="comittedstorypoints">
+            <input
+                type="text"
+                name="comittedstorypoints"
+                class="form-control"
+                placeholder="Committed story points"
+               ng-model="asc.committedStoryPoints"
+                />
+
+        </form-group>
+         <form-group input="comittedissuecount">
+            <input
+                type="text"
+                name="comittedissuecount"
+                class="form-control"
+                placeholder="Committed issue count"
+                ng-model="asc.committedStoriesCount"/>
+
+        </form-group>
+
+         <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Added</label>
+         <div class="col-md-4">
+         <form-group input="count">
+            <input
+                type="text"
+                name="count"
+                class="form-control"
+                placeholder="Count"
+              ng-model="asc.storiesAdded"
+                />
+
+        </form-group></div>
+        <div class="col-md-4">
+         <form-group input="points" >
+            <input
+                type="text"
+                name="points"
+                class="form-control"
+                placeholder="Points"
+              ng-model="asc.storypointsAdded"
+                />
+
+        </form-group></div>
+
+          <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Removed</label>
+         <div class="col-md-4">
+         <form-group input="countstoryremoved">
+            <input
+                type="text"
+                name="countstoryremoved"
+                class="form-control"
+                placeholder="Count"
+               ng-model="asc.storiesRemoed"
+               />
+
+        </form-group></div>
+        
+
+        
+        <div class="col-md-4">
+         <form-group input="pointstoryremoved">
+            <input
+                type="text"
+                name="pointstoryremoved"
+                class="form-control"
+                placeholder="Points"
+               ng-model="asc.storypointsRemoed"
+               />
+
+        </form-group></div>
+
+         <form-group input="efforts">
+            <input
+                type="text"
+                name="efforts"
+                class="form-control"
+                placeholder="Efforts (in PD)"
+             ng-model="asc.efforts"
+               />
+
+        </form-group>
+
+        </div>
+
+          <div class="col-md-6">
+          <form-group input="selectedTemplate" errors="{required: 'Status is required'}">
+             <select ng-options="o.value as o.label for o in options" ng-model="asc.released"></select>
+        </form-group>
+            <form-group input="completedstorypointscol2" >
+            <input
+                type="text"
+                name="completedstorypointscol2"
+                class="form-control"
+                placeholder="Completed story points"
+               ng-model="asc.completedStoryPoints"
+               />
+        </form-group>
+
+        <form-group input="comittedissuecountcol2">
+            <input
+                type="text"
+                name="comittedissuecountcol2"
+                class="form-control"
+                placeholder="Completed issue count"
+             ng-model="asc.completedStoriesCount"
+               />
+        </form-group>
+
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Found</label>
+        <div class="col-md-2">
+             <form-group input="criticalone">
+            <input
+                type="text"
+                name="criticalone"
+                class="form-control"
+                placeholder="Critical"
+               ng-model="asc.criticalDefectsFound"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="highone">
+            <input
+                type="text"
+                name="highone"
+                class="form-control"
+                placeholder="High"
+               ng-model="asc.highDefectsFound"
+              />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="mediumone">
+            <input
+                type="text"
+                name="mediumone"
+                class="form-control"
+                placeholder="Medium"
+             ng-model="asc.mediumDefectsFound"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="lowone">
+            <input
+                type="text"
+                name="lowone"
+                class="form-control"
+                placeholder="Low"
+            ng-model="asc.lowDefectsFound"
+                />
+        </form-group>  
+        </div>
+
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Resolved</label>
+        <div class="col-md-2">
+             <form-group input="Criticaltwo">
+            <input
+                type="text"
+                name="Criticaltwo"
+                class="form-control"
+                placeholder="Critical"
+             ng-model="asc.criticalDefectsClosed"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Hightwo">
+            <input
+                type="text"
+                name="Hightwo"
+                class="form-control"
+                placeholder="High"
+                ng-model="asc.highDefectsClosed"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Mediumtwo">
+            <input
+                type="text"
+                name="Mediumtwo"
+                class="form-control"
+                placeholder="Medium"
+              ng-model="asc.mediumDefectsClosed"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Lowtwo">
+            <input
+                type="text"
+                name="Lowtwo"
+                class="form-control"
+                placeholder="Low"
+                ng-model="asc.lowDefectsClosed"
+               />
+        </form-group>  
+        </div>
+
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Unresolved</label>
+        <div class="col-md-2">
+             <form-group input="Criticalthree">
+            <input
+                type="text"
+                name="Criticalthree"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="asc.criticalDefectsUnresolved"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Highthree">
+            <input
+                type="text"
+                name="Highthree"
+                class="form-control"
+                placeholder="High"
+                ng-model="asc.highDefectsUnresolved"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Mediumthree">
+            <input
+                type="text"
+                name="Mediumthree"
+                class="form-control"
+                placeholder="Medium"
+              ng-model="asc.mediumDefectsUnresolved"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Lowthree">
+            <input
+                type="text"
+                name="Lowthree"
+                class="form-control"
+                placeholder="Low"
+             ng-model="asc.lowDefectsUnresolved"
+              />
+        </form-group>  
+        </div>
+
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Sprint Defects Unresolved</label>
+        <div class="col-md-2">
+             <form-group input="Criticalfour">
+            <input
+                type="text"
+                name="Criticalfour"
+                class="form-control"
+                placeholder="Critical"
+               ng-model="asc.sprintId"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Highfour">
+            <input
+                type="text"
+                name="Highfour"
+                class="form-control"
+                placeholder="High"
+                ng-model="asc.sprintId"
+                />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Mediumfour">
+            <input
+                type="text"
+                name="Mediumfour"
+                class="form-control"
+                placeholder="Medium"
+               ng-model="asc.sprintId"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Lowfour">
+            <input
+                type="text"
+                name="Lowfour"
+                class="form-control"
+                placeholder="Low"
+                 ng-model="asc.sprintId"
+               />
+        </form-group>  
+        </div>
+         <div class="col-md-4">
+             <datepicker date-format="dd-MM-yyyy" selector="form-control">
+               <div class="input-group">
+                  <input class="form-control" ng-model="asc.startDate" name="date1" placeholder="start date"/>
+                  <span class="input-group-addon" style="cursor: pointer">
+                  <i class="fa fa-lg fa-calendar"></i>
+                  </span>
+               </div>
+            </datepicker>
+         </form-group> 
+        </div>
+
+          <div class="col-md-4">
+             <form-group input="date1">
+            <datepicker date-format="dd-MM-yyyy" selector="form-control">
+               <div class="input-group">
+                  <input class="form-control" ng-model="asc.endDate" name="date1" placeholder="End date"/>
+                  <span class="input-group-addon" style="cursor: pointer">
+                  <i class="fa fa-lg fa-calendar"></i>
+                  </span>
+               </div>
+            </datepicker>
+         </form-group>  
+        </div>
+        </div>
+          <form-group>
+        <div  style="padding-left: 12px;">
+            
+              
+                <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 50px;width: 13%;margin-left: 20%;">Create</button>
+                  <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;margin-top: 44px;width: 13% !important;" ng-click="$close()">Cancel</button>
+        </div>
+         </form-group> 
+    </form>
+ 
+</widget-modal>

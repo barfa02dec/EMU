@@ -57,12 +57,7 @@
       </div>
       <div class="col-md-6">
          <form-group input="Status1">
-            <select name="Status1"
-               class="form-control"
-               ng-model="ctrl.released">
-               <option value="volvo">Open</option>
-               <option value="saab">Closed</option>
-            </select>
+           <select ng-options="o.value as o.label for o in options" ng-model="arc.released"></select>
          </form-group>
       </div>
       <div class="col-md-12">
