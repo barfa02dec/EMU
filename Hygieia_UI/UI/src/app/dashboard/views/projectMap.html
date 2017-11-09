@@ -140,9 +140,12 @@
                <span ng-show="childItem.permissions.indexOf('DELETE_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)">
                <img src="assets/images/icon_delete.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="pm.deleteProjectModel(proj)" title="Delete" > 
                </span>
-               <span ng-click="pm.addDefect(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-bug" aria-hidden="true"></i></span>
-                <span ng-click="pm.addRelease(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-bug" aria-hidden="true"></i></span>
-                  <span ng-click="pm.addSprint(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-bug" aria-hidden="true"></i></span>
+               &nbsp&nbsp
+               <span ng-click="pm.addDefect(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-tags" aria-hidden="true" title="Add defects"></i></span>
+                  &nbsp&nbsp
+                <span ng-click="pm.addRelease(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-location-arrow" aria-hidden="true" title="Add release"></i></span>
+                &nbsp&nbsp
+                  <span ng-click="pm.addSprint(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-plus" aria-hidden="true" title="Add sprint"></i></span>
                </span>  </span> 
             </td>
          </tr>
