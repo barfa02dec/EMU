@@ -57,11 +57,12 @@ public class DefectSummeryServiceImpl implements DefectSummeryService {
 		DefectAggregation da=aggregationRepository.findByProjectIdAndName(re.getMetricsProjectId(),re.getProjectName());
 		if(null==da){
 			da= new DefectAggregation();
+			da.setProjectId(re.getProjectId());
+			da.setMetricsProjectId(re.getMetricsProjectId());
+			da.setProjectName(re.getProjectName());
+		
 		}
-		//basic details
-		da.setProjectId(re.getProjectId());
-		da.setMetricsProjectId(re.getMetricsProjectId());
-		da.setProjectName(re.getProjectName());
+		
 		//defects by priority
 		Map<String,Integer> defectsByProirity= new HashMap<String,Integer>();
 		defectsByProirity.put("Low", re.getLowPriorityDefectsCount());

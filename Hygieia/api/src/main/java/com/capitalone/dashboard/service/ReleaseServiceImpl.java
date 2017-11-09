@@ -53,15 +53,17 @@ public class ReleaseServiceImpl implements ReleaseService {
 		Release release=releaseRepository.findByReleaseId(re.getReleaseId(),re.getProjectId());
 		if(null==release){
 			release= new Release();
+			release.setReleaseId(re.getReleaseId());
+			release.setProjectId(re.getProjectId());
+			release.setProjectName(re.getProjectName());
+			release.setName(re.getName());
+			release.setDescription(re.getDescription());
+			release.setReleaseDate(re.getReleaseDate());
+			release.setStartDate(re.getStartDate());
+		
 		}
 		release.setReleased(re.isReleased());
-		release.setReleaseId(re.getReleaseId());
-		release.setProjectId(re.getProjectId());
-		release.setProjectName(re.getProjectName());
-		release.setName(re.getName());
-		release.setDescription(re.getDescription());
-		release.setReleaseDate(re.getReleaseDate());
-		release.setStartDate(re.getStartDate());
+		
 		VersionData data=new VersionData();
 		
 		data.setNoofStoryPoints(re.getNoofStoryCommitted());

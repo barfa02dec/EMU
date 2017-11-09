@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capitalone.dashboard.model.Sprint;
+import com.capitalone.dashboard.request.SprintMetrcisRequest;
 import com.capitalone.dashboard.service.SprintService;
 
 @RestController
@@ -36,6 +38,12 @@ public class SprintController {
 	@RequestMapping(value = "/sprintDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Sprint getAllDefects(@RequestParam(value = "sid", required = true) Long sid,@RequestParam(value = "projectId", required = true) String projectId) {
 		return sprintService.getDetailedSprintDetails(sid,projectId);
+	}
+	@RequestMapping(value = "/sprintMetrics", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Sprint createSprintMetrics(@RequestBody SprintMetrcisRequest re){
+		
+		return sprintService.create(re);
+		
 	}
 
 }
