@@ -1,15 +1,19 @@
 package com.capitalone.dashboard.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capitalone.dashboard.model.Burndown;
 import com.capitalone.dashboard.model.DefectCount;
 import com.capitalone.dashboard.model.NameValuePair;
 import com.capitalone.dashboard.model.Sprint;
 import com.capitalone.dashboard.model.SprintData;
+import com.capitalone.dashboard.model.Burndown.IssueCount;
 import com.capitalone.dashboard.repository.SprintRepository;
 import com.capitalone.dashboard.request.SprintMetrcisRequest;
 @Service
@@ -52,6 +56,17 @@ public class SprintServiceImpl implements SprintService {
 		s.setClosed(re.isReleased());
 		
 		SprintData sd= new SprintData();
+		sd.setSprintName(re.getSprintName());
+		sd.setSprintId(re.getSprintId());
+		sd.setCommittedStoryPoints(re.getCommittedStoryPoints());
+		sd.setCompletedStoryPoints(re.getCompletedStoryPoints());
+		try {
+			sd.setEndDate(new SimpleDateFormat("dd-MM-yyyy").parse(re.getEndDate()));
+			sd.setStartDate(new SimpleDateFormat("dd-MM-yyyy").parse(re.getStartDate()));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 				//defects found
 				DefectCount defectsFound= new DefectCount();
@@ -148,6 +163,31 @@ public class SprintServiceImpl implements SprintService {
 				defectsUnResolved.setSeverity(list3);
 				
 				sd.setDefectsUnresolved(defectsUnResolved);
+				
+				//burndown
+				
+				Burndown burndown = new Burndown();
+				
+				Burndown.IssueCount issuecount = burndown.new IssueCount();
+				
+				issuecount.setCount(re.getStoriesAdded());
+				issuecount.setStoryPoints(0.0d);
+				burndown.setIssuesAdded(issuecount);
+				
+				issuecount = burndown.new IssueCount();
+				issuecount.setCount(re.getStoriesRemoed());
+				issuecount.setStoryPoints(0.0d);
+				burndown.setIssuesRemoved(issuecount);
+				// this field is not populated from UI, hence setting zero for future implementation
+				int incompletedissuesount=0;
+				
+				sd.setCommittedIssueCount(re.getCommittedStoriesCount() + re.getStoriesRemoed() + incompletedissuesount - re.getStoriesAdded());
+				issuecount = burndown.new IssueCount();
+				issuecount.setCount(sd.getCommittedIssueCount());	
+				issuecount.setStoryPoints(0.0d);
+				burndown.setInitialIssueCount(issuecount);
+
+				sd.setBurndown(burndown);
 				
 				
 				s.setSprintData(sd);
