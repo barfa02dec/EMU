@@ -512,5 +512,84 @@
               }
 
              }
+
+               ctrl.addSprint  = function(proje){
+                $uibModal.open({
+                templateUrl: 'app/dashboard/views/addSprint.html',
+                windowClass: 'app-modal-window-defect',
+                controller: addSprintController,
+                controllerAs: 'asc',
+                 resolve: {
+                    name: function() {
+                        return proje.projectName;
+                    },
+                    id: function() {
+                        return proje.projectId;
+                    }
+                }
+                
+            });
+
+
+             }
+
+
+             function addSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
+                var ctrl = this;
+                
+                ctrl.postSprint = function(proje) {
+
+                 ctrl.sprintPayload = {
+                "sprintId":ctrl.sprintId,
+                "sprintName":ctrl.sprintName,
+                "desc":ctrl.desc,
+
+                "committedStoriesCount":ctrl.committedStoriesCount,
+                "committedStoryPoints":ctrl.committedStoryPoints,
+                "completedStoriesCount":ctrl.completedStoriesCount,
+                "completedStoryPoints":ctrl.completedStoryPoints,
+
+                "storiesAdded":ctrl.storiesAdded,
+                "storypointsAdded":ctrl.storypointsAdded,
+
+                "storiesRemoed":ctrl.storiesRemoed,
+                "storypointsRemoed":ctrl.storypointsRemoed,
+
+           
+                "efforts":ctrl.efforts,
+
+                "criticalDefectsFound":ctrl.criticalDefectsFound,
+                "mediumDefectsFound":ctrl.mediumDefectsFound,
+                "lowDefectsFound":ctrl.lowDefectsFound,
+                "highDefectsFound":ctrl.highDefectsFound,
+
+                "criticalDefectsClosed":ctrl.criticalDefectsClosed,
+                "mediumDefectsClosed":ctrl.mediumDefectsClosed,
+                "lowDefectsClosed":ctrl.lowDefectsClosed,
+                "highDefectsClosed":ctrl.highDefectsClosed,
+
+                "criticalDefectsUnresolved":ctrl.criticalDefectsUnresolved,
+                "mediumDefectsUnresolved":ctrl.mediumDefectsUnresolved,
+                "lowDefectsUnresolved":ctrl.lowDefectsUnresolved,
+                "highDefectsUnresolved":ctrl.highDefectsUnresolved,
+                
+                "endDate":ctrl.endDate,
+                "startDate":ctrl.startDate,
+                "projectId":id,
+                 "projectName":name
+                }
+
+                 $http.post("/api//sprintMetrics", (ctrl.sprintPayload)).then(function(response) {
+                    $uibModalInstance.dismiss("cancel");
+                    $uibModal.open({
+                            templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
+                            controller: 'projectMapController',
+                            controllerAs: 'pm'
+                        });
+             })
+
+              }
+
+             }
     }
 })();
