@@ -485,6 +485,7 @@
                     ctrl.normalformText = false;
                       ctrl.prevHeader = false;
                 }
+
               /*  ctrl.hideList = function(){
                        ctrl.hideListTemplate = true;
                 }*/
@@ -571,6 +572,11 @@
                     ctrl.prevousText = true;
                     ctrl.normalformText = false;
                       ctrl.prevHeader = false;
+                }
+                ctrl.showForm = function(){
+                    ctrl.prevousText = false;
+                    ctrl.normalformText = true;
+                      ctrl.prevHeader = true;
                 }
                    featureData.sprintDta(ctrl.projectpathId,ctrl.projectpath).then(sprintdataProcess);
 
