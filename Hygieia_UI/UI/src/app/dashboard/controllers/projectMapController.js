@@ -5,16 +5,16 @@
         .module(HygieiaConfig.module)
         .controller('projectMapController', projectMapController);
 
-    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http', '$route', '$cookies', '$timeout', '$cookieStore', '$rootScope', 'dashboardData', 'projectData'];
+    projectMapController.$inject = ['$scope', 'codeAnalysisData', 'testSuiteData', '$q', '$filter', '$uibModal', '$location', '$routeParams', '$http', '$route', '$cookies', '$timeout', '$cookieStore', '$rootScope', 'dashboardData', 'projectData', 'featureData'];
 
-    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore, $rootScope, dashboardData, projectData) {
+    function projectMapController($scope, codeAnalysisData, testSuiteData, $q, $filter, $uibModal, $location, $routeParams, $http, $route, $cookies, $timeout, $cookieStore, $rootScope, dashboardData, projectData, featureData) {
         var ctrl = this;
         ctrl.usernamepro = $cookies.get('username');
         ctrl.showAddPopUpBox = false;
         ctrl.editorEnabled = false;
         ctrl.title = "THB";
         $scope.selected = '';
-
+      
         ctrl.payl = {
             "projectId": ctrl.projectId,
             "projectName": ctrl.projectName,
@@ -477,6 +477,17 @@
                 {value: true, label: 'Open'},
                 ];
 
+                 ctrl.prevousText = false;
+                 ctrl.normalformText = true;
+                 ctrl.prevHeader = true;
+                ctrl.hideForm = function(){
+                    ctrl.prevousText = true;
+                    ctrl.normalformText = false;
+                      ctrl.prevHeader = false;
+                }
+              /*  ctrl.hideList = function(){
+                       ctrl.hideListTemplate = true;
+                }*/
                 ctrl.postRelease = function(proje) {
                  ctrl.releasePayload = {
                     "projectName":name,
@@ -544,13 +555,29 @@
 
              function addSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
                 var ctrl = this;
-                
+                   ctrl.projectpath = $cookies.get('projectNameJira');
+      ctrl.projectpathId = $cookies.get('projectIdJira');
+      ctrl.projectiddefects = $cookies.get('ProSpId');
                   $scope.options = [
                 {value: '', label: 'Choose a value'},
                 {value: false, label: 'Closed'},
                 {value: true, label: 'Open'},
                 ];
 
+                ctrl.prevousText = false;
+                 ctrl.normalformText = true;
+                 ctrl.prevHeader = true;
+                ctrl.hideForm = function(){
+                    ctrl.prevousText = true;
+                    ctrl.normalformText = false;
+                      ctrl.prevHeader = false;
+                }
+                   featureData.sprintDta(ctrl.projectpathId,ctrl.projectpath).then(sprintdataProcess);
+
+                 function sprintdataProcess(data){
+                          ctrl.spAllDetails = data;
+
+                 }
                 ctrl.postSprint = function(proje) {
 
                  ctrl.sprintPayload = {

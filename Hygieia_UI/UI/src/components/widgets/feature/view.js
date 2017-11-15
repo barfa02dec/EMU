@@ -30,7 +30,7 @@
     ctrl.doneStoryPointsKanban = null;
     ctrl.epicStoryPointsKanban = null;
     ctrl.issueStoryPointsKanban = [];
-    ctrl.projectpath = $cookies.get('ProName');
+    ctrl.projectpath = $cookies.get('projectNameJira');
     ctrl.projectpathId = $cookies.get('projectIdJira');
     ctrl.projectiddefects = $cookies.get('ProSpId');
     // Public Evaluators
