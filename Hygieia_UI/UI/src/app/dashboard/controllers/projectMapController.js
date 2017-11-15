@@ -14,7 +14,7 @@
         ctrl.editorEnabled = false;
         ctrl.title = "THB";
         $scope.selected = '';
-      
+
         ctrl.payl = {
             "projectId": ctrl.projectId,
             "projectName": ctrl.projectName,
@@ -36,7 +36,7 @@
             if (ctrl.sysadmincheck == "true") {
                 ctrl.CreateProjects = true;
                 ctrl.viewProjects = true;
-                 ctrl.usermanagementviews = true;
+                ctrl.usermanagementviews = true;
             } else {
                 for (var i = 0; i < ctrl.getAllProjects.length; i++) {
                     for (var j = 0; j < ctrl.getAllProjects[i].usersGroup.length; j++) {
@@ -50,8 +50,8 @@
                             if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("VIEW_PROJECT_LIST") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
                                 ctrl.viewProjects = true;
                             }
-                             if((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("USER_MANAGEMENT_VIEW") > -1) && (ctrl.vvv == ctrl.usernamepro)){
-                               ctrl.usermanagementviews = true;
+                            if ((ctrl.getAllProjects[i].usersGroup[j].userRoles[k].permissions.indexOf("USER_MANAGEMENT_VIEW") > -1) && (ctrl.vvv == ctrl.usernamepro)) {
+                                ctrl.usermanagementviews = true;
                             }
 
                         }
@@ -338,8 +338,8 @@
             });
         }
 
-        ctrl.addDefect  = function(probj){
-                $uibModal.open({
+        ctrl.addDefect = function(probj) {
+            $uibModal.open({
                 templateUrl: 'app/dashboard/views/addDefect.html',
                 windowClass: 'app-modal-window-defect',
                 controller: addDefectController,
@@ -353,108 +353,108 @@
                     }
                 }
             });
-             }
+        }
 
-             function addDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
-             
-                var ctrl = this;
+        function addDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
 
-               
+            var ctrl = this;
 
-              ctrl.postDefect = function(probj) {
-                
+
+
+            ctrl.postDefect = function(probj) {
+
 
                 ctrl.payloadDefect = {
-                "projectName": name,
-                "metricsProjectId": id,
-                "projectId": id,
-                "valueAsOn": "test",
+                    "projectName": name,
+                    "metricsProjectId": id,
+                    "projectId": id,
+                    "valueAsOn": "test",
 
-                "lowPriorityDefectsCount": ctrl.lowPriorityDefectsCount,
-                "mediumPriorityDefectsCount": ctrl.mediumPriorityDefectsCount,
-                "highPriorityDefectsCount": ctrl.highPriorityDefectsCount,
-                "criticalPriorityDefectsCount": ctrl.criticalPriorityDefectsCount,
+                    "lowPriorityDefectsCount": ctrl.lowPriorityDefectsCount,
+                    "mediumPriorityDefectsCount": ctrl.mediumPriorityDefectsCount,
+                    "highPriorityDefectsCount": ctrl.highPriorityDefectsCount,
+                    "criticalPriorityDefectsCount": ctrl.criticalPriorityDefectsCount,
 
-                "qaDefects": ctrl.QA_DefectsCount,
-                "uatDefects": ctrl.UAT_DefectsCount,
-                "prodDefects": ctrl.PROD_DefectsCount,
+                    "qaDefects": ctrl.QA_DefectsCount,
+                    "uatDefects": ctrl.UAT_DefectsCount,
+                    "prodDefects": ctrl.PROD_DefectsCount,
 
-                "openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days,
-                "openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days,
-                "openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days,
-                "openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days,
-                
-
-                "openDefectsWithHighPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithHighPriorityAndAgeBetween15To30Days,
-                "openDefectsWithLowPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithLowPriorityAndAgeBetween15To30Days,
-                "openDefectsWithMediumPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithMediumPriorityAndAgeBetween15To30Days,
-                "openDefectsWithCriticalPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithCriticalPriorityAndAgeBetween15To30Days,
-                
-                "openDefectsWithHighPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithHighPriorityAndAgeBetween30To60Days,
-                "openDefectsWithLowPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithLowPriorityAndAgeBetween30To60Days,
-                "openDefectsWithMediumPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithMediumPriorityAndAgeBetween30To60Days,
-                "openDefectsWithCriticalPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithCriticalPriorityAndAgeBetween30To60Days,
-                
-                "openDefectsWithHighPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithHighPriorityAndAgeBetween60To90Days,
-                "openDefectsWithLowPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithLowPriorityAndAgeBetween60To90Days,
-                "openDefectsWithMediumPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithMediumPriorityAndAgeBetween60To90Days,
-                "openDefectsWithCriticalPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithCriticalPriorityAndAgeBetween60To90Days,
-                
-                "openDefectsWithHighPriorityAndAgeGreaterThan90": ctrl.openDefectsWithHighPriorityAndAgeGreaterThan90,
-                "openDefectsWithLowPriorityAndAgeGreaterThan90": ctrl.openDefectsWithLowPriorityAndAgeGreaterThan90,
-                "openDefectsWithMediumPriorityAndAgeGreaterThan90": ctrl.openDefectsWithMediumPriorityAndAgeGreaterThan90,
-                "openDefectsWithCriticalPriorityAndAgeGreaterThan90": ctrl.openDefectsWithCriticalPriorityAndAgeGreaterThan90,
-                
-                "fixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days,
-                "fixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days,
-                "fixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days,
-                "fixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days,
-                
-                "fixedDefectsWithHighPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithHighPriorityAndResolutionBetween15To30Days,
-                "fixedDefectsWithLowPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithLowPriorityAndResolutionBetween15To30Days,
-                "fixedDefectsWithMediumPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionBetween15To30Days,
-                "fixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days,
-                
-                "fixedDefectsWithHighPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithHighPriorityAndResolutionBetween30To60Days,
-                "fixedDefectsWithLowPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithLowPriorityAndResolutionBetween30To60Days,
-                "fixedDefectsWithMediumPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionBetween30To60Days,
-                "fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days,
+                    "openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days,
+                    "openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days,
+                    "openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days,
+                    "openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days,
 
 
-                "fixedDefectsWithHighPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithHighPriorityAndResolutionBetween60To90Days,
-                "fixedDefectsWithLowPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithLowPriorityAndResolutionBetween60To90Days,
-                "fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days,
-                "fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days,
-                
-                "fixedDefectsWithHighPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithHighPriorityAndResolutionGreaterThan90,
-                "fixedDefectsWithLowPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithLowPriorityAndResolutionGreaterThan90,
-                "fixedDefectsWithMediumPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithMediumPriorityAndResolutionGreaterThan90,
-                "fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90
+                    "openDefectsWithHighPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithHighPriorityAndAgeBetween15To30Days,
+                    "openDefectsWithLowPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithLowPriorityAndAgeBetween15To30Days,
+                    "openDefectsWithMediumPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithMediumPriorityAndAgeBetween15To30Days,
+                    "openDefectsWithCriticalPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithCriticalPriorityAndAgeBetween15To30Days,
+
+                    "openDefectsWithHighPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithHighPriorityAndAgeBetween30To60Days,
+                    "openDefectsWithLowPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithLowPriorityAndAgeBetween30To60Days,
+                    "openDefectsWithMediumPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithMediumPriorityAndAgeBetween30To60Days,
+                    "openDefectsWithCriticalPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithCriticalPriorityAndAgeBetween30To60Days,
+
+                    "openDefectsWithHighPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithHighPriorityAndAgeBetween60To90Days,
+                    "openDefectsWithLowPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithLowPriorityAndAgeBetween60To90Days,
+                    "openDefectsWithMediumPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithMediumPriorityAndAgeBetween60To90Days,
+                    "openDefectsWithCriticalPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithCriticalPriorityAndAgeBetween60To90Days,
+
+                    "openDefectsWithHighPriorityAndAgeGreaterThan90": ctrl.openDefectsWithHighPriorityAndAgeGreaterThan90,
+                    "openDefectsWithLowPriorityAndAgeGreaterThan90": ctrl.openDefectsWithLowPriorityAndAgeGreaterThan90,
+                    "openDefectsWithMediumPriorityAndAgeGreaterThan90": ctrl.openDefectsWithMediumPriorityAndAgeGreaterThan90,
+                    "openDefectsWithCriticalPriorityAndAgeGreaterThan90": ctrl.openDefectsWithCriticalPriorityAndAgeGreaterThan90,
+
+                    "fixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days,
+                    "fixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days,
+                    "fixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days,
+                    "fixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days,
+
+                    "fixedDefectsWithHighPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithHighPriorityAndResolutionBetween15To30Days,
+                    "fixedDefectsWithLowPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithLowPriorityAndResolutionBetween15To30Days,
+                    "fixedDefectsWithMediumPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionBetween15To30Days,
+                    "fixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days,
+
+                    "fixedDefectsWithHighPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithHighPriorityAndResolutionBetween30To60Days,
+                    "fixedDefectsWithLowPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithLowPriorityAndResolutionBetween30To60Days,
+                    "fixedDefectsWithMediumPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionBetween30To60Days,
+                    "fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days,
+
+
+                    "fixedDefectsWithHighPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithHighPriorityAndResolutionBetween60To90Days,
+                    "fixedDefectsWithLowPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithLowPriorityAndResolutionBetween60To90Days,
+                    "fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days,
+                    "fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days,
+
+                    "fixedDefectsWithHighPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithHighPriorityAndResolutionGreaterThan90,
+                    "fixedDefectsWithLowPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithLowPriorityAndResolutionGreaterThan90,
+                    "fixedDefectsWithMediumPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithMediumPriorityAndResolutionGreaterThan90,
+                    "fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90
+                }
+                projectData.postDefect(ctrl.payloadDefect).then(function(response) {
+                    $uibModalInstance.dismiss("cancel");
+                    $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/defectaddConfirm.html',
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
+
+                })
+                /* $http.post("/api/defectSummery", (ctrl.payloadDefect)).then(function(response) {
+                    alert("success");
+                 })*/
+
             }
-             projectData.postDefect(ctrl.payloadDefect).then(function(response) {
-                $uibModalInstance.dismiss("cancel");
-               $uibModal.open({
-                            templateUrl: 'app/dashboard/views/ConfirmationModals/defectaddConfirm.html',
-                            controller: 'projectMapController',
-                            controllerAs: 'pm'
-                        });
 
-             })
-            /* $http.post("/api/defectSummery", (ctrl.payloadDefect)).then(function(response) {
-                alert("success");
-             })*/
+        }
 
-              }
-
-             }
-
-              ctrl.addRelease  = function(proje){
-                $uibModal.open({
+        ctrl.addRelease = function(proje) {
+            $uibModal.open({
                 templateUrl: 'app/dashboard/views/addRelease.html',
                 windowClass: 'app-modal-window-defect',
                 controller: addReleaseController,
                 controllerAs: 'arc',
-                 resolve: {
+                resolve: {
                     name: function() {
                         return proje.projectName;
                     },
@@ -462,84 +462,103 @@
                         return proje.projectId;
                     }
                 }
-                
+
             });
 
 
-             }
+        }
 
-             function addReleaseController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
-                var ctrl = this;
-                
-                 $scope.options = [
-                {value: '', label: 'Choose a value'},
-                {value: false, label: 'Closed'},
-                {value: true, label: 'Open'},
-                ];
+        function addReleaseController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
+            var ctrl = this;
+            ctrl.namerelease = name;
+            ctrl.id = id;
+            $scope.options = [{
+                    value: '',
+                    label: 'Choose a value'
+                },
+                {
+                    value: false,
+                    label: 'Closed'
+                },
+                {
+                    value: true,
+                    label: 'Open'
+                },
+            ];
 
-                 ctrl.prevousText = false;
-                 ctrl.normalformText = true;
-                 ctrl.prevHeader = true;
-                ctrl.hideForm = function(){
-                    ctrl.prevousText = true;
-                    ctrl.normalformText = false;
-                      ctrl.prevHeader = false;
+           ctrl.prevousText = true;
+            ctrl.normalformText = false;
+            ctrl.prevHeader = false;
+            ctrl.hideForm = function() {
+                ctrl.prevousText = true;
+                ctrl.normalformText = false;
+                ctrl.prevHeader = false;
+            }
+            ctrl.showForm = function() {
+                ctrl.prevousText = false;
+                ctrl.normalformText = true;
+                ctrl.prevHeader = true;
+            }
+
+
+              featureData.ReleaseData(ctrl.id,ctrl.namerelease).then(ReleaseDataProcessing);
+               function ReleaseDataProcessing(data){
+                 ctrl.releasegraph = data;
+            }
+            /*  ctrl.hideList = function(){
+                     ctrl.hideListTemplate = true;
+              }*/
+            ctrl.postRelease = function(proje) {
+                ctrl.releasePayload = {
+                    "projectName": name,
+                    "projectId": id,
+                    "releaseId": ctrl.releaseId,
+                    "name": ctrl.name,
+
+                    "startDate": ctrl.startDate,
+                    "releaseDate": ctrl.releaseDate,
+                    "released": ctrl.released,
+
+                    "description": ctrl.description,
+
+                    "criticalDefectsFound": ctrl.criticalDefectsFound,
+                    "highDefectsFound": ctrl.highDefectsFound,
+                    "mediumDefectsFound": ctrl.mediumDefectsFound,
+                    "lowDefectsFound": ctrl.lowDefectsFound,
+
+                    "criticalDefectsClosed": ctrl.criticalDefectsClosed,
+                    "highDefectsClosed": ctrl.highDefectsClosed,
+                    "mediumDefectsClosed": ctrl.mediumDefectsClosed,
+                    "lowDefectsClosed": ctrl.lowDefectsClosed,
+
+                    "criticalDefectsUnresolved": ctrl.criticalDefectsUnresolved,
+                    "highDefectsUnresolved": ctrl.highDefectsUnresolved,
+                    "mediumDefectsUnresolved": ctrl.mediumDefectsUnresolved,
+                    "lowDefectsUnresolved": ctrl.lowDefectsUnresolved,
+
+                    "noofStoryCompleted": ctrl.noofStoryCompleted,
+                    "noofStoryCommitted": ctrl.noofStoryCommitted
                 }
-
-              /*  ctrl.hideList = function(){
-                       ctrl.hideListTemplate = true;
-                }*/
-                ctrl.postRelease = function(proje) {
-                 ctrl.releasePayload = {
-                    "projectName":name,
-                    "projectId":id,
-                    "releaseId" : ctrl.releaseId,
-                    "name":ctrl.name,
-
-                    "startDate":ctrl.startDate,
-                    "releaseDate":ctrl.releaseDate,
-                    "released":ctrl.released,
-
-                    "description":ctrl.description,
-
-                    "criticalDefectsFound":ctrl.criticalDefectsFound,
-                    "highDefectsFound":ctrl.highDefectsFound,
-                    "mediumDefectsFound":ctrl.mediumDefectsFound,
-                    "lowDefectsFound":ctrl.lowDefectsFound,
-
-                    "criticalDefectsClosed":ctrl.criticalDefectsClosed,
-                    "highDefectsClosed":ctrl.highDefectsClosed,
-                    "mediumDefectsClosed":ctrl.mediumDefectsClosed,
-                    "lowDefectsClosed":ctrl.lowDefectsClosed,
-
-                    "criticalDefectsUnresolved":ctrl.criticalDefectsUnresolved,
-                    "highDefectsUnresolved":ctrl.highDefectsUnresolved,
-                    "mediumDefectsUnresolved":ctrl.mediumDefectsUnresolved,
-                    "lowDefectsUnresolved":ctrl.lowDefectsUnresolved,
-
-                    "noofStoryCompleted":ctrl.noofStoryCompleted,
-                    "noofStoryCommitted":ctrl.noofStoryCommitted
-                }
-                 $http.post("/api/releaseMetrcis", (ctrl.releasePayload)).then(function(response) {
+                $http.post("/api/releaseMetrcis", (ctrl.releasePayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                            templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
-                            controller: 'projectMapController',
-                            controllerAs: 'pm'
-                        });
-             })
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
+                })
 
-              }
+            }
 
-             }
+        }
 
-               ctrl.addSprint  = function(proje){
-                $uibModal.open({
+        ctrl.addSprint = function(proje) {
+            $uibModal.open({
                 templateUrl: 'app/dashboard/views/addSprint.html',
                 windowClass: 'app-modal-window-defect',
                 controller: addSprintController,
                 controllerAs: 'asc',
-                 resolve: {
+                resolve: {
                     name: function() {
                         return proje.projectName;
                     },
@@ -547,96 +566,107 @@
                         return proje.projectId;
                     }
                 }
-                
+
             });
 
 
-             }
+        }
 
 
-             function addSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
-                var ctrl = this;
-                   ctrl.projectpath = $cookies.get('projectNameJira');
-      ctrl.projectpathId = $cookies.get('projectIdJira');
-      ctrl.projectiddefects = $cookies.get('ProSpId');
-                  $scope.options = [
-                {value: '', label: 'Choose a value'},
-                {value: false, label: 'Closed'},
-                {value: true, label: 'Open'},
-                ];
+        function addSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
+            var ctrl = this;
+            ctrl.name = name;
+            ctrl.id = id;
+            ctrl.projectpath = $cookies.get('projectNameJira');
+            ctrl.projectpathId = $cookies.get('projectIdJira');
+            ctrl.projectiddefects = $cookies.get('ProSpId');
+            $scope.options = [{
+                    value: '',
+                    label: 'Choose a value'
+                },
+                {
+                    value: false,
+                    label: 'Closed'
+                },
+                {
+                    value: true,
+                    label: 'Open'
+                },
+            ];
 
+            ctrl.prevousText = true;
+            ctrl.normalformText = false;
+            ctrl.prevHeader = false;
+            ctrl.hideForm = function() {
+                ctrl.prevousText = true;
+                ctrl.normalformText = false;
+                ctrl.prevHeader = false;
+            }
+            ctrl.showForm = function() {
                 ctrl.prevousText = false;
-                 ctrl.normalformText = true;
-                 ctrl.prevHeader = true;
-                ctrl.hideForm = function(){
-                    ctrl.prevousText = true;
-                    ctrl.normalformText = false;
-                      ctrl.prevHeader = false;
-                }
-                ctrl.showForm = function(){
-                    ctrl.prevousText = false;
-                    ctrl.normalformText = true;
-                      ctrl.prevHeader = true;
-                }
-                   featureData.sprintDta(ctrl.projectpathId,ctrl.projectpath).then(sprintdataProcess);
+                ctrl.normalformText = true;
+                ctrl.prevHeader = true;
+            }
 
-                 function sprintdataProcess(data){
-                          ctrl.spAllDetails = data;
+            featureData.sprintDta(ctrl.id, ctrl.name).then(sprintdataProcess);
 
-                 }
-                ctrl.postSprint = function(proje) {
+            function sprintdataProcess(data) {
+                ctrl.spAllDetails = data;
 
-                 ctrl.sprintPayload = {
-                "sprintId":ctrl.sprintId,
-                "sprintName":ctrl.sprintName,
-                "desc":ctrl.desc,
+            }
+            ctrl.postSprint = function(proje) {
 
-                "committedStoriesCount":ctrl.committedStoriesCount,
-                "committedStoryPoints":ctrl.committedStoryPoints,
-                "completedStoriesCount":ctrl.completedStoriesCount,
-                "completedStoryPoints":ctrl.completedStoryPoints,
+                ctrl.sprintPayload = {
+                    "sprintId": ctrl.sprintId,
+                    "sprintName": ctrl.sprintName,
+                    "desc": ctrl.desc,
 
-                "storiesAdded":ctrl.storiesAdded,
-                "storypointsAdded":ctrl.storypointsAdded,
+                    "committedStoriesCount": ctrl.committedStoriesCount,
+                    "committedStoryPoints": ctrl.committedStoryPoints,
+                    "completedStoriesCount": ctrl.completedStoriesCount,
+                    "completedStoryPoints": ctrl.completedStoryPoints,
 
-                "storiesRemoed":ctrl.storiesRemoed,
-                "storypointsRemoed":ctrl.storypointsRemoed,
-                "released":ctrl.released,
-           
-                "efforts":ctrl.efforts,
+                    "storiesAdded": ctrl.storiesAdded,
+                    "storypointsAdded": ctrl.storypointsAdded,
 
-                "criticalDefectsFound":ctrl.criticalDefectsFound,
-                "mediumDefectsFound":ctrl.mediumDefectsFound,
-                "lowDefectsFound":ctrl.lowDefectsFound,
-                "highDefectsFound":ctrl.highDefectsFound,
+                    "storiesRemoed": ctrl.storiesRemoed,
+                    "storypointsRemoed": ctrl.storypointsRemoed,
+                    "released": ctrl.released,
 
-                "criticalDefectsClosed":ctrl.criticalDefectsClosed,
-                "mediumDefectsClosed":ctrl.mediumDefectsClosed,
-                "lowDefectsClosed":ctrl.lowDefectsClosed,
-                "highDefectsClosed":ctrl.highDefectsClosed,
+                    "efforts": ctrl.efforts,
 
-                "criticalDefectsUnresolved":ctrl.criticalDefectsUnresolved,
-                "mediumDefectsUnresolved":ctrl.mediumDefectsUnresolved,
-                "lowDefectsUnresolved":ctrl.lowDefectsUnresolved,
-                "highDefectsUnresolved":ctrl.highDefectsUnresolved,
-                
-                "endDate":ctrl.endDate,
-                "startDate":ctrl.startDate,
-                "projectId":id,
-                 "projectName":name
+                    "criticalDefectsFound": ctrl.criticalDefectsFound,
+                    "mediumDefectsFound": ctrl.mediumDefectsFound,
+                    "lowDefectsFound": ctrl.lowDefectsFound,
+                    "highDefectsFound": ctrl.highDefectsFound,
+
+                    "criticalDefectsClosed": ctrl.criticalDefectsClosed,
+                    "mediumDefectsClosed": ctrl.mediumDefectsClosed,
+                    "lowDefectsClosed": ctrl.lowDefectsClosed,
+                    "highDefectsClosed": ctrl.highDefectsClosed,
+
+                    "criticalDefectsUnresolved": ctrl.criticalDefectsUnresolved,
+                    "mediumDefectsUnresolved": ctrl.mediumDefectsUnresolved,
+                    "lowDefectsUnresolved": ctrl.lowDefectsUnresolved,
+                    "highDefectsUnresolved": ctrl.highDefectsUnresolved,
+
+                    "endDate": ctrl.endDate,
+                    "startDate": ctrl.startDate,
+                    "projectId": id,
+                    "projectName": name
                 }
 
-                 $http.post("/api//sprintMetrics", (ctrl.sprintPayload)).then(function(response) {
+                $http.post("/api//sprintMetrics", (ctrl.sprintPayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                            templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
-                            controller: 'projectMapController',
-                            controllerAs: 'pm'
-                        });
-             })
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
+                })
 
-              }
+            }
 
-             }
+        }
     }
 })();

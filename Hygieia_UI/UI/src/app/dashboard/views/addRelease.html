@@ -2,8 +2,8 @@
 <script src="assets/images/angular-datepicker.js"></script>
 <link href="assets/images/fld/angular-datepicker.css" rel="stylesheet" type="text/css" />
 <script src="assets/images/fld/angular-datepicker.js"></script>
-<widget-modal widget-modal-title="Add Release" class="border-prop-modals">
-   <form name="cdf" class="form" ng-submit="arc.postRelease()" novalidate>
+<widget-modal widget-modal-title="Add Release" class="border-prop-modals" ng-click="arc.hideList()">
+   <form name="cdf" class="form" ng-submit="arc.postRelease()" novalidate ng-if="arc.normalformText">
       <div class="col-md-6">
          <form-group input="dashboardTitle" errors="{required: 'Release id is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
             <input
@@ -248,4 +248,55 @@
          <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
       </div>
    </form>
+
+    <div class="" ng-click="arc.hideForm()"  >
+  <hr>
+   <span ng-if="arc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
+   View previously added releases</span>
+   <div class="" ng-if="arc.prevousText">
+       <table class="table table-bordered table-striped">
+        <thead>
+        <tr style="font-weight:400;font-size:11px">
+            <th>Sprint ID</th>
+             <th>Sprint Name</th>
+             <th>Sprint Status</th>
+
+        </tr>
+        </thead>
+        <tbody>
+            <tr class="font-props" ng-repeat="releasedta in arc.releasegraph">
+             <td>{{releasedta.releaseId}}</td>
+                 <td>{{releasedta.name}}</td>
+            <td ng-if="releasedta.released == true">OPEN</td> 
+            <td ng-if="releasedta.released == false">CLOSED</td> 
+
+                <!--  <td ng-if="arc.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' "><span>
+                    <img src="assets/images/icon_completed.png">
+                 </span>CLOSED</td> 
+                  <td ng-if="arc.mySplit(sprintdata.sprintData.state,0) !== 'CLOSED' "><span>
+                    <img src="assets/images/icon_inprogress.png">
+                 </span>OPEN</td>  -->
+
+              <!--     <td><span ng-if="!jdv.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' ">
+                    <img src="assets/images/icon_completed.png">
+                 </span>{{sprintdata.sprintData.state}}</td> --> 
+
+                
+                 
+               
+               
+ </tr>
+
+  
+
+        </tbody>
+
+    </table>
+      </div>
+    
+   </div>
+     <div ng-click="arc.showForm()">
+      <span ng-if="!arc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
+   Add release</span></div>
 </widget-modal>
+
