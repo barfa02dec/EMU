@@ -5,20 +5,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.DefectAggregation;
+import com.capitalone.dashboard.model.Scope;
+import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.DefectAggregationRepository;
+import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.request.DefectSummaryRequest;
 @Service
 public class DefectSummeryServiceImpl implements DefectSummeryService {
 	
 	private final DefectAggregationRepository aggregationRepository;
+	private final ScopeRepository  scopeRepository;
+	private final CollectorRepository collectorRepository;
 
 	
 	@Autowired
-	public DefectSummeryServiceImpl(DefectAggregationRepository aggregationRepository) {
+	public DefectSummeryServiceImpl(DefectAggregationRepository aggregationRepository,ScopeRepository  scopeRepository,CollectorRepository collectorRepository) {
+		this.collectorRepository = collectorRepository;
+		this.scopeRepository = scopeRepository;
 		this.aggregationRepository = aggregationRepository;
 	}
 
@@ -48,8 +57,43 @@ public class DefectSummeryServiceImpl implements DefectSummeryService {
 	@Override
 	public DefectAggregation create(DefectSummaryRequest request) {
 		// TODO Auto-generated method stub
+		createScope(request);
 		DefectAggregation dag=mapDefectSummeryReqToModel(request);
 		return aggregationRepository.save(dag);
+	}
+	
+	private void createScope(DefectSummaryRequest rq) {
+		Scope scope = scopeRepository.getScopeByIdAndProjectName(
+				rq.getProjectId(), rq.getProjectName());
+
+		if (scope == null) {
+			scope = new Scope();
+			scope.setCollectorId(getJiraCollectorId());
+
+			// ID;
+			scope.setpId(rq.getProjectId());
+			// project ID
+
+			scope.setProjectId(rq.getProjectId());
+
+			scope.setName(rq.getProjectName());
+
+			scope.setIsDeleted("False");
+
+			scope.setAssetState("Active");
+			
+			scope.setProjectPath(rq.getProjectName());
+			scope.setToShowInEMUDashboard(Boolean.TRUE);
+			
+			scopeRepository.save(scope);
+
+		}
+
+	}
+	
+	private ObjectId getJiraCollectorId(){
+		Collector collector = collectorRepository.findByName("Jira");
+		return collector.getId();
 	}
 	
 	private DefectAggregation mapDefectSummeryReqToModel(DefectSummaryRequest re){

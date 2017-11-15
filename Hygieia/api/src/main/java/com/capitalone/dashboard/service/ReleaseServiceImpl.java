@@ -1,28 +1,36 @@
 package com.capitalone.dashboard.service;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.DefectCount;
 import com.capitalone.dashboard.model.NameValuePair;
 import com.capitalone.dashboard.model.Release;
+import com.capitalone.dashboard.model.Scope;
 import com.capitalone.dashboard.model.VersionData;
+import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ReleaseRepository;
+import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.request.ReleaseMetricsRequest;
 @Service
 public class ReleaseServiceImpl implements ReleaseService {
 	
 	private final ReleaseRepository releaseRepository;
-		
+	private final ScopeRepository scopeRepository;
+	
+	private final CollectorRepository collectorRepository;
 	@Autowired
-	public ReleaseServiceImpl(ReleaseRepository releaseRepository) {
+	public ReleaseServiceImpl(ReleaseRepository releaseRepository, ScopeRepository scopeRepository, CollectorRepository collectorRepository) {
+		this.scopeRepository = scopeRepository;
 		this.releaseRepository = releaseRepository;
+		this.collectorRepository = collectorRepository;
 	}
 
 	@Override
@@ -40,6 +48,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 	public Release create(ReleaseMetricsRequest re) {
 		// TODO Auto-generated method stub
 		try {
+			createScope(re);
 			return releaseRepository.save(mapReleaseRequestToReleaseModel(re));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -48,7 +57,40 @@ public class ReleaseServiceImpl implements ReleaseService {
 		return null;
 	}
 	
+	private void createScope(ReleaseMetricsRequest rq) {
+		Scope scope = scopeRepository.getScopeByIdAndProjectName(
+				rq.getProjectId(), rq.getProjectName());
+
+		if (scope == null) {
+			scope = new Scope();
+			scope.setCollectorId(getJiraCollectorId());
+
+			// ID;
+			scope.setpId(rq.getProjectId());
+			// project ID
+
+			scope.setProjectId(rq.getProjectId());
+
+			scope.setName(rq.getProjectName());
+
+			scope.setIsDeleted("False");
+
+			scope.setAssetState("Active");
+			
+			scope.setToShowInEMUDashboard(Boolean.TRUE);
+			
+			scope.setProjectPath(rq.getProjectName());
+			
+			scopeRepository.save(scope);
+
+		}
+
+	}
 	
+	private ObjectId getJiraCollectorId(){
+		Collector collector = collectorRepository.findByName("Jira");
+		return collector.getId();
+	}
 	private Release mapReleaseRequestToReleaseModel(ReleaseMetricsRequest re) throws ParseException{
 		Release release=releaseRepository.findByReleaseId(re.getReleaseId(),re.getProjectId());
 		if(null==release){

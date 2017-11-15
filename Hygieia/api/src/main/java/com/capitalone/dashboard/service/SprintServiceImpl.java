@@ -5,25 +5,36 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capitalone.dashboard.model.Burndown;
+import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.DefectCount;
 import com.capitalone.dashboard.model.NameValuePair;
+import com.capitalone.dashboard.model.Scope;
 import com.capitalone.dashboard.model.Sprint;
 import com.capitalone.dashboard.model.SprintData;
 import com.capitalone.dashboard.model.Burndown.IssueCount;
+import com.capitalone.dashboard.repository.CollectorRepository;
+import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.repository.SprintRepository;
+import com.capitalone.dashboard.request.ReleaseMetricsRequest;
 import com.capitalone.dashboard.request.SprintMetrcisRequest;
 @Service
 public class SprintServiceImpl implements SprintService {
 
 	private final SprintRepository repository;
+	private final ScopeRepository  scopeRepository;
+	private final CollectorRepository collectorRepository;
 	
 	@Autowired
-	public SprintServiceImpl(SprintRepository repository) {
+	public SprintServiceImpl(SprintRepository repository, ScopeRepository  scopeRepository,CollectorRepository collectorRepository) {
 		this.repository = repository;
+		this.scopeRepository = scopeRepository;
+		this.collectorRepository = collectorRepository;
+		
 	}
 
 	@Override
@@ -38,9 +49,44 @@ public class SprintServiceImpl implements SprintService {
 
 	@Override
 	public Sprint create(SprintMetrcisRequest re) {
+		createScope(re);
 		return repository.save(mapSprintRequestToSprintModel(re));
 	}
 	
+	private void createScope(SprintMetrcisRequest rq) {
+		Scope scope = scopeRepository.getScopeByIdAndProjectName(
+				rq.getProjectId(), rq.getProjectName());
+
+		if (scope == null) {
+			scope = new Scope();
+			scope.setCollectorId(getJiraCollectorId());
+
+			// ID;
+			scope.setpId(rq.getProjectId());
+			// project ID
+
+			scope.setProjectId(rq.getProjectId());
+
+			scope.setName(rq.getProjectName());
+
+			scope.setIsDeleted("False");
+
+			scope.setAssetState("Active");
+			
+			scope.setToShowInEMUDashboard(Boolean.TRUE);
+			
+			scope.setProjectPath(rq.getProjectName());
+			
+			scopeRepository.save(scope);
+
+		}
+
+	}
+	
+	private ObjectId getJiraCollectorId(){
+		Collector collector = collectorRepository.findByName("Jira");
+		return collector.getId();
+	}
 	private Sprint mapSprintRequestToSprintModel(SprintMetrcisRequest re){
 		Sprint s= repository.findBySprintId(re.getSprintId(),re.getProjectId());
 		if(null==s){
