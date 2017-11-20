@@ -478,7 +478,7 @@
                   columns: [
                     comittedStoryPoints,completedStoryPoint
                   ],
-                  type: 'area-spline'
+                  type: 'bar'
                 },
                 legend: {
         show: false

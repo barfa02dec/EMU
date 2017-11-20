@@ -1,13 +1,14 @@
 <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" class="alert alert-info">{{alert.msg}}</alert>
 <div class="">
-    <div class="widget row" ng-class="{'configure' : state == widget_state.CONFIGURE, 'alert': display == display_state.ERROR}" style="padding:0px;">
+    <div class="widget row" ng-class="{'configure' : state == widget_state.CONFIGURE}" style="padding:0px;">
+    
         <div class="kanban-widget-heading" ng-if="header" ng-hide=" {{(title == 'Monitor')}}" style="">
             <span style="font-size:20px;font-weight: 300;">
             <span ng-show=" {{(title == 'Feature')}}">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block"><style type="text/css">.stheadb0 {
         fill: #605587;
     }</style><rect class="stheadb0" width="5.1" height="16"></rect></svg>
-            FEATURE</span>
+            AGILE BOARD</span>
             <span ng-show=" {{(title == 'Build')}}">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block"><style type="text/css">.stheadb0 {
         fill: #605587;
@@ -17,7 +18,7 @@
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block"><style type="text/css">.stheadb0 {
         fill: #605587;
     }</style><rect class="stheadb0" width="5.1" height="16"></rect></svg>
-            CODE REPO</span>
+            CODE REPOSITORY</span>
             <span ng-show=" {{(title == 'Quality')}}">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block"><style type="text/css">.stheadb0 {
         fill: #605587;

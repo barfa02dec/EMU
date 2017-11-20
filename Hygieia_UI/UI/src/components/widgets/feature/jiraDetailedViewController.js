@@ -430,7 +430,7 @@
                   columns: [
                     comittedStoryPoints,completedStoryPoint
                   ],
-                  type: 'area-spline'
+                  type: 'bar'
                 },
                 axis: {
                     x:{
