@@ -439,7 +439,7 @@
                     }
                 },
                 color: {
-                pattern: ['#CCEBF5', '#24AC45']
+                pattern: ['#CCEBF5', '#B8DBC4 ']
             },
                     legend: {
     position: 'inset',
