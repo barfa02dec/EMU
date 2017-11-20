@@ -597,15 +597,21 @@
             ctrl.prevousText = true;
             ctrl.normalformText = false;
             ctrl.prevHeader = false;
+             ctrl.update = false;
             ctrl.hideForm = function() {
                 ctrl.prevousText = true;
                 ctrl.normalformText = false;
                 ctrl.prevHeader = false;
             }
             ctrl.showForm = function() {
+              
                 ctrl.prevousText = false;
                 ctrl.normalformText = true;
                 ctrl.prevHeader = true;
+                ctrl.sprintPayload = {};
+                ctrl.action_name ="Add";
+                ctrl.addScreen = true;
+                ctrl.updateScreen = false;
             }
 
             featureData.sprintDta(ctrl.id, ctrl.name).then(sprintdataProcess);
@@ -614,9 +620,55 @@
                 ctrl.spAllDetails = data;
 
             }
-            ctrl.postSprint = function(proje) {
 
-                ctrl.sprintPayload = {
+            ctrl.updateSprint = function(sprintidUpdation){
+                ctrl.nname = sprintidUpdation.sid; 
+                ctrl.id = id;
+                 ctrl.action_name ="Update";
+                ctrl.addScreen = false;
+                ctrl.updateScreen = true;
+                ctrl.aaaa = sprintidUpdation;
+                  $uibModalInstance.dismiss("cancel");
+                $uibModal.open({
+                        templateUrl: 'app/dashboard/views/updateSprintmodal.html',
+                         windowClass: 'app-modal-window-defect',
+                        controller: updateSprintController,
+                        controllerAs: 'usc',
+                       resolve: {
+                    sprinpayl: function() {
+                        return ctrl.aaaa;
+                    },
+                    names: function() {
+                        return ctrl.id;
+                    },
+                    ids: function() {
+                        return ctrl.nname;
+                    }
+                }
+                    });
+              
+
+
+
+            }
+
+              // ctrl.postSprint = function(proje) {
+              //          $http.post("/api//sprintMetrics", (ctrl.sprintPayload)).then(function(response) {
+              //       $uibModalInstance.dismiss("cancel");
+              //       $uibModal.open({
+              //           templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
+              //           controller: 'projectMapController',
+              //           controllerAs: 'pm'
+              //       });
+              //   })
+              //     }
+
+            ctrl.postSprint = function(proje) {
+             
+
+                 ctrl.sprintPayload.projectName = name;
+                 ctrl.sprintPayload.projectId = id;
+             /*   ctrl.sprintPayload = {
                     "sprintId": ctrl.sprintId,
                     "sprintName": ctrl.sprintName,
                     "desc": ctrl.desc,
@@ -654,7 +706,7 @@
                     "startDate": ctrl.startDate,
                     "projectId": id,
                     "projectName": name
-                }
+                }*/
 
                 $http.post("/api//sprintMetrics", (ctrl.sprintPayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
@@ -667,6 +719,85 @@
 
             }
 
+        }
+
+        function updateSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, sprinpayl, names, ids){
+                var ctrl = this;
+                ctrl.names = names;
+                ctrl.ids = ids;
+                $scope.options = [{
+                    value: '',
+                    label: 'Choose a value'
+                },
+                {
+                    value: false,
+                    label: 'Closed'
+                },
+                {
+                    value: true,
+                    label: 'Open'
+                },
+            ];
+             ctrl.fetchdetails = {};
+            //ctrl.fetchdetails = sprinpayl;
+            
+             featureData.updateSprintDta(ctrl.names,ctrl.ids).then(function(data){
+                  ctrl.fetchdetails = data;
+             })
+            ctrl.updateSprint = function(){
+
+
+            ctrl.sprintEditPayload = {
+                    "sprintId": ctrl.fetchdetails.sid,
+                    "sprintName": ctrl.fetchdetails.sprintData.sprintName,
+                    //"desc": ctrl.desc,
+
+                    //"committedStoriesCount": ctrl.committedStoriesCount,
+                    "committedStoryPoints": ctrl.fetchdetails.sprintData.committedStoryPoints,
+                    "completedStoryPoints": ctrl.fetchdetails.sprintData.completedStoryPoints,
+
+                    "committedStoriesCount": ctrl.fetchdetails.sprintData.committedIssueCount,
+                    "completedStoriesCount":ctrl.fetchdetails.sprintData.completedIssueCount,
+
+                    //"storiesAdded": ctrl.storiesAdded,
+                    //"storypointsAdded": ctrl.storypointsAdded,
+
+                    //"storiesRemoed": ctrl.storiesRemoed,
+                    //"storypointsRemoed": ctrl.storypointsRemoed,
+                    "released": ctrl.fetchdetails.closed,
+
+                    //"efforts": ctrl.efforts,
+
+                    "criticalDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[3].value,
+                    "mediumDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[2].value,
+                    "lowDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[1].value,
+                    "highDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[0].value,
+
+                    "criticalDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[3].value,
+                    "mediumDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[2].value,
+                    "lowDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[1].value,
+                    "highDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[0].value,
+
+                    "criticalDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[3].value,
+                    "mediumDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[2].value,
+                    "lowDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[1].value,
+                    "highDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[0].value,
+
+                    "endDate": ctrl.fetchdetails.end,
+                    "startDate": ctrl.fetchdetails.start,
+                    "storiesAdded":ctrl.fetchdetails.sprintData.burndown.issuesAdded.count,
+                    "storiesRemoed":ctrl.fetchdetails.sprintData.burndown.issuesRemoved.count
+            }
+
+                $http.post("/api//sprintMetrics", (ctrl.sprintEditPayload)).then(function(response) {
+                    $uibModalInstance.dismiss("cancel");
+                    $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
+                })
+            }
         }
     }
 })();

@@ -3,7 +3,7 @@
 <link href="assets/images/fld/angular-datepicker.css" rel="stylesheet" type="text/css" />
 <script src="assets/images/fld/angular-datepicker.js"></script>
 
-<widget-modal widget-modal-title="Add Sprint" class="border-prop-modals">
+<widget-modal widget-modal-title="{{asc.action_name}} Sprint" class="border-prop-modals">
     <form name="cdf" class="form" ng-submit="asc.postSprint()" ng-if="asc.normalformText" novalidate>
       
         <div class="col-md-6">
@@ -13,20 +13,21 @@
                 name="sprintid"
                 class="form-control"
                 placeholder="Sprint id"
-                ng-model="asc.sprintId"
+                ng-model="asc.sprintPayload.sprintId"
                 required
                 maxlength="50"
                 autocomplete="off"
                 ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
 
         </form-group>
+       
          <form-group input="sprintname" errors="{required: 'Sprint name is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
             <input
                 type="text"
                 name="sprintname"
                 class="form-control"
                 placeholder="Sprint name"
-                ng-model="asc.sprintName"
+                ng-model="asc.sprintPayload.sprintName"
                 required
                 maxlength="50"
                 autocomplete="off"
@@ -39,7 +40,7 @@
                 name="description"
                 class="form-control"
                 placeholder="Description"
-               ng-model="asc.desc"
+               ng-model="asc.sprintPayload.desc"
                 autocomplete="off"
                />
 
@@ -50,7 +51,7 @@
                 name="comittedstorypoints"
                 class="form-control"
                 placeholder="Committed story points"
-               ng-model="asc.committedStoryPoints"
+               ng-model="asc.sprintPayload.committedStoryPoints"
                 />
 
         </form-group>
@@ -60,7 +61,7 @@
                 name="comittedissuecount"
                 class="form-control"
                 placeholder="Committed issue count"
-                ng-model="asc.committedStoriesCount"/>
+                ng-model="asc.sprintPayload.committedStoriesCount"/>
 
         </form-group>
 
@@ -72,7 +73,7 @@
                 name="count"
                 class="form-control"
                 placeholder="Count"
-              ng-model="asc.storiesAdded"
+              ng-model="asc.sprintPayload.storiesAdded"
                 />
 
         </form-group></div>
@@ -83,7 +84,7 @@
                 name="points"
                 class="form-control"
                 placeholder="Points"
-              ng-model="asc.storypointsAdded"
+              ng-model="asc.sprintPayload.storypointsAdded"
                 />
 
         </form-group></div>
@@ -96,7 +97,7 @@
                 name="countstoryremoved"
                 class="form-control"
                 placeholder="Count"
-               ng-model="asc.storiesRemoed"
+               ng-model="asc.sprintPayload.storiesRemoed"
                />
 
         </form-group></div>
@@ -110,7 +111,7 @@
                 name="pointstoryremoved"
                 class="form-control"
                 placeholder="Points"
-               ng-model="asc.storypointsRemoed"
+               ng-model="asc.sprintPayload.storypointsRemoed"
                />
 
         </form-group></div>
@@ -121,7 +122,7 @@
                 name="efforts"
                 class="form-control"
                 placeholder="Efforts (in PD)"
-             ng-model="asc.efforts"
+             ng-model="asc.sprintPayload.efforts"
                />
 
         </form-group>
@@ -130,7 +131,7 @@
 
           <div class="col-md-6">
           <form-group input="selectedTemplate" errors="{required: 'Status is required'}">
-             <select ng-options="o.value as o.label for o in options" ng-model="asc.released" class="form-control"></select>
+             <select ng-options="o.value as o.label for o in options" ng-model="asc.sprintPayload.released" class="form-control"></select>
         </form-group>
             <form-group input="completedstorypointscol2" >
             <input
@@ -138,7 +139,7 @@
                 name="completedstorypointscol2"
                 class="form-control"
                 placeholder="Completed story points"
-               ng-model="asc.completedStoryPoints"
+               ng-model="asc.sprintPayload.completedStoryPoints"
                />
         </form-group>
 
@@ -148,7 +149,7 @@
                 name="comittedissuecountcol2"
                 class="form-control"
                 placeholder="Completed issue count"
-             ng-model="asc.completedStoriesCount"
+             ng-model="asc.sprintPayload.completedStoriesCount"
                />
         </form-group>
 
@@ -160,7 +161,7 @@
                 name="criticalone"
                 class="form-control"
                 placeholder="Critical"
-               ng-model="asc.criticalDefectsFound"
+               ng-model="asc.sprintPayload.criticalDefectsFound"
                />
         </form-group>  
         </div>
@@ -172,7 +173,7 @@
                 name="highone"
                 class="form-control"
                 placeholder="High"
-               ng-model="asc.highDefectsFound"
+               ng-model="asc.sprintPayload.highDefectsFound"
               />
         </form-group>  
         </div>
@@ -184,7 +185,7 @@
                 name="mediumone"
                 class="form-control"
                 placeholder="Medium"
-             ng-model="asc.mediumDefectsFound"
+             ng-model="asc.sprintPayload.mediumDefectsFound"
                />
         </form-group>  
         </div>
@@ -196,7 +197,7 @@
                 name="lowone"
                 class="form-control"
                 placeholder="Low"
-            ng-model="asc.lowDefectsFound"
+            ng-model="asc.sprintPayload.lowDefectsFound"
                 />
         </form-group>  
         </div>
@@ -209,7 +210,7 @@
                 name="Criticaltwo"
                 class="form-control"
                 placeholder="Critical"
-             ng-model="asc.criticalDefectsClosed"
+             ng-model="asc.sprintPayload.criticalDefectsClosed"
                />
         </form-group>  
         </div>
@@ -221,7 +222,7 @@
                 name="Hightwo"
                 class="form-control"
                 placeholder="High"
-                ng-model="asc.highDefectsClosed"
+                ng-model="asc.sprintPayload.highDefectsClosed"
                />
         </form-group>  
         </div>
@@ -233,7 +234,7 @@
                 name="Mediumtwo"
                 class="form-control"
                 placeholder="Medium"
-              ng-model="asc.mediumDefectsClosed"
+              ng-model="asc.sprintPayload.mediumDefectsClosed"
                />
         </form-group>  
         </div>
@@ -245,7 +246,7 @@
                 name="Lowtwo"
                 class="form-control"
                 placeholder="Low"
-                ng-model="asc.lowDefectsClosed"
+                ng-model="asc.sprintPayload.lowDefectsClosed"
                />
         </form-group>  
         </div>
@@ -258,7 +259,7 @@
                 name="Criticalthree"
                 class="form-control"
                 placeholder="Critical"
-                ng-model="asc.criticalDefectsUnresolved"
+                ng-model="asc.sprintPayload.criticalDefectsUnresolved"
                />
         </form-group>  
         </div>
@@ -270,7 +271,7 @@
                 name="Highthree"
                 class="form-control"
                 placeholder="High"
-                ng-model="asc.highDefectsUnresolved"
+                ng-model="asc.sprintPayload.highDefectsUnresolved"
                />
         </form-group>  
         </div>
@@ -282,7 +283,7 @@
                 name="Mediumthree"
                 class="form-control"
                 placeholder="Medium"
-              ng-model="asc.mediumDefectsUnresolved"
+              ng-model="asc.sprintPayload.mediumDefectsUnresolved"
                />
         </form-group>  
         </div>
@@ -294,7 +295,7 @@
                 name="Lowthree"
                 class="form-control"
                 placeholder="Low"
-             ng-model="asc.lowDefectsUnresolved"
+             ng-model="asc.sprintPayload.lowDefectsUnresolved"
               />
         </form-group>  
         </div>
@@ -350,7 +351,7 @@
          <div class="col-md-4">
              <datepicker date-format="dd-MM-yyyy" selector="form-control">
                <div class="input-group">
-                  <input class="form-control" ng-model="asc.startDate" name="date1" placeholder="start date"/>
+                  <input class="form-control" ng-model="asc.sprintPayload.startDate" name="date1" placeholder="start date"/>
                   <span class="input-group-addon" style="cursor: pointer">
                   <i class="fa fa-lg fa-calendar"></i>
                   </span>
@@ -363,7 +364,7 @@
              <form-group input="date1">
             <datepicker date-format="dd-MM-yyyy" selector="form-control">
                <div class="input-group">
-                  <input class="form-control" ng-model="asc.endDate" name="date1" placeholder="End date"/>
+                  <input class="form-control" ng-model="asc.sprintPayload.endDate" name="date1" placeholder="End date"/>
                   <span class="input-group-addon" style="cursor: pointer">
                   <i class="fa fa-lg fa-calendar"></i>
                   </span>
@@ -376,7 +377,10 @@
         <div  style="padding-left: 12px;">
             
               
-                <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 50px;width: 13%;margin-left: 20%;">Create</button>
+                <button ng-if="asc.addScreen" type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 50px;width: 13%;margin-left: 20%;">Create</button>
+
+                  <button ng-if="asc.updateScreen"  type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 50px;width: 13%;margin-left: 20%;">Update</button>
+
                   <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;margin-top: 44px;width: 13% !important;" ng-click="$close()">Cancel</button>
         </div>
          </form-group> 
@@ -406,7 +410,25 @@
                  </span>CLOSED</td> 
                   <td ng-if="asc.mySplit(sprintdata.sprintData.state,0) !== 'CLOSED' "><span>
                     <img src="assets/images/icon_inprogress.png">
-                 </span>OPEN</td> 
+                 </span>OPEN
+                 <span style="margin-left: 1%;" ng-click="asc.updateSprint(sprintdata)">
+                     <svg version="1.1"
+            x="0px" y="0px" width="13px" height="13px" viewBox="0 0 19 19" style="enable-background:new 0 0 19 19;" xml:space="preserve">
+<style type="text/css">
+            .stedit0{fill:#404041;}
+</style>
+<defs>
+</defs>
+<path class="stedit0" d="M18.3,0.7C17.8,0.3,17.2,0,16.5,0c-0.7,0-1.3,0.3-1.8,0.7l-1,1L1.2,14.2c0,0,0,0,0,0c0,0,0,0.1-0.1,0.1
+            c0,0,0,0,0,0c0,0,0,0,0,0.1L0,18.5c0,0.1,0,0.3,0.1,0.4C0.2,19,0.3,19,0.4,19c0,0,0.1,0,0.1,0l4.1-1.1c0,0,0,0,0.1,0c0,0,0,0,0,0
+            c0,0,0.1,0,0.1-0.1c0,0,0,0,0,0L17.3,5.3l1-1C18.7,3.8,19,3.2,19,2.5C19,1.8,18.7,1.2,18.3,0.7z M1,18l0.7-2.7l2,2L1,18z M4.5,16.9
+            l-2.4-2.4L14,2.6L16.4,5L4.5,16.9z M17.7,3.7L17,4.4L14.6,2l0.7-0.7C15.6,1,16,0.8,16.5,0.8c0.5,0,0.9,0.2,1.2,0.5
+            C18.3,2,18.3,3.1,17.7,3.7z"/>
+</svg>
+
+                 </span>
+
+                 </td> 
 
               <!--     <td><span ng-if="!jdv.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' ">
                     <img src="assets/images/icon_completed.png">
