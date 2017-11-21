@@ -30,7 +30,7 @@
             showArea: true,
             lineSmooth: false,
             fullWidth: true,
-            chartPadding: 7,
+            chartPadding: 14,
             axisX: {
                 showLabel: false
             },
