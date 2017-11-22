@@ -70,7 +70,7 @@
 		}
 		function sprintDataFetch(filterProjectId,projectsname) {  
 			 
-			return $http.get('/api/listAllSprints?projectId=' +filterProjectId + "&projectName=" + projectsname)
+			return $http.get('/api/listAllSprints?projectId=' +filterProjectId + "&projectName=" + projectsname + "&noOfSprintToShow=" + "6")
 					.then(function(response) { 
 						return response.data;
 					});
