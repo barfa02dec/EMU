@@ -400,10 +400,12 @@
     function sprintdataProcessMain(data){
      
         var progress = ['Defect Closure'];
-        var comittedStoryPoints = ['committed Story Points'];
-        var completedStoryPoint = ['completed Story Points'];
+        var comittedStoryPoints = ['committedStoryPoints'];
+        var completedStoryPoint = ['completedStoryPoints'];
         var axisSprintName = [];
         var axisSprintNameclos = [];
+        var progressVelocity = ["Saydoratio"];
+        var sprint_chart_Data = [];
         ctrl.defectsfound = data[0].sprintData.defectsFound.total;
         ctrl.defectsResolved = data[0].sprintData.defectsResolved.total;
        ctrl.defectsUnresolved = data[0].sprintData.defectsUnresolved.total;
@@ -469,16 +471,41 @@
           
        }
 
+       for(var i=0;i<data.length;i++){
+          if(data[i].sprintData != undefined){
+           
+              //completedStoryPoint.push(data[i].sprintData.completedStoryPoints);
+              //comittedStoryPoints.push(data[i].sprintData.committedStoryPoints);
+              var percentScoreVelocity =  Math.round((data[i].sprintData.completedStoryPoints/data[i].sprintData.committedStoryPoints)*100);
+               progressVelocity.push(percentScoreVelocity);
+               var sprint_chart_Data = [completedStoryPoint, comittedStoryPoints, progressVelocity];
+          }
+          
+       }
+
 
 
        $scope.sprintdatasFeature = c3.generate({
                 bindto: '#sprintdatasFeature', 
                              
                 data: {
-                  columns: [
-                    comittedStoryPoints,completedStoryPoint
-                  ],
-                  type: 'bar'
+                  columns: 
+                    sprint_chart_Data
+                  ,
+                  names: {
+                        Saydoratio: 'Say Do Ratio',
+                        committedStoryPoints: 'Committed Story Points',
+                        completedStoryPoints: 'Completed Story Points',
+                       
+                    },
+
+                  type:'bar',
+                  types: {
+            Saydoratio: 'line',
+          
+           
+        }
+      ,
                 },
                 legend: {
         show: false
@@ -495,7 +522,7 @@
                     }
                 },
                 color: {
-                pattern: ['#CCEBF5', '#B8DBC4 ']
+                pattern: ['#CCEBF5', '#00A744','#000']
             }
   
             });
