@@ -34,6 +34,7 @@
             showArea: true,
             lineSmooth: false,
             fullWidth: true,
+            chartPadding: 25,
             axisY: {
                 offset: 30,
                 showGrid: true,
