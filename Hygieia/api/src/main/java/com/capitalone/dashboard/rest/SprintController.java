@@ -38,7 +38,7 @@ public class SprintController {
 				projectName);
 		Collections.sort(sprintListInDB);
 		sprintListInDB.stream().limit(noOfsprintsToShow)
-				.forEach(sprint -> sprintList.add(sprint));
+				 .forEach(sprint -> sprintList.add(sprint));
 		return sprintList;
 
 	}
