@@ -30,9 +30,10 @@
             showArea: true,
             lineSmooth: false,
             fullWidth: true,
-            chartPadding: 14,
+            chartPadding: 28,
             axisX: {
-                showLabel: false
+                showLabel: false,
+                offset:10
             },
             axisY: {
                 labelInterpolationFnc: function(value) {
