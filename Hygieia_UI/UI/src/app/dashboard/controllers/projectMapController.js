@@ -501,6 +501,39 @@
             }
 
 
+             ctrl.updateRelease = function(releaseidUpdation){
+                ctrl.nname = releaseidUpdation.releaseId; 
+                ctrl.id = id;
+                ctrl.projectId =releaseidUpdation.projectId;
+                ctrl.projectName =releaseidUpdation.projectName;
+                 ctrl.action_name ="Update";
+                ctrl.addScreen = false;
+                ctrl.updateScreen = true;
+                ctrl.aaaa = releaseidUpdation;
+                  $uibModalInstance.dismiss("cancel");
+                $uibModal.open({
+                        templateUrl: 'app/dashboard/views/updateReleasehtml.html',
+                         windowClass: 'app-modal-window-defect',
+                        controller: updateReleaseController,
+                        controllerAs: 'urc',
+                       resolve: {
+                    sprinpayl: function() {
+                        return ctrl.aaaa;
+                    },
+                    names: function() {
+                        return ctrl.id;
+                    },
+                    ids: function() {
+                        return ctrl.nname;
+                    },
+                    projectidsprint: function(){
+                        return ctrl.projectId;
+                    }
+                }
+                    });
+            }
+
+
               featureData.ReleaseData(ctrl.id,ctrl.namerelease).then(ReleaseDataProcessing);
                function ReleaseDataProcessing(data){
                  ctrl.releasegraph = data;
@@ -624,6 +657,7 @@
             ctrl.updateSprint = function(sprintidUpdation){
                 ctrl.nname = sprintidUpdation.sid; 
                 ctrl.id = id;
+                ctrl.projectId =sprintidUpdation.projectId;
                  ctrl.action_name ="Update";
                 ctrl.addScreen = false;
                 ctrl.updateScreen = true;
@@ -643,6 +677,9 @@
                     },
                     ids: function() {
                         return ctrl.nname;
+                    },
+                    projectidsprint: function(){
+                        return ctrl.projectId;
                     }
                 }
                     });
@@ -721,10 +758,79 @@
 
         }
 
-        function updateSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, sprinpayl, names, ids){
+        function updateReleaseController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, sprinpayl, names, ids, projectidsprint){
+            var ctrl = this;
+            ctrl.ids = ids;
+            ctrl.names = names;
+
+             $scope.options = [{
+                    value: '',
+                    label: 'Choose a value'
+                },
+                {
+                    value: false,
+                    label: 'Closed'
+                },
+                {
+                    value: true,
+                    label: 'Open'
+                },
+            ];
+            
+            featureData.updateReleaseDta(ctrl.ids,ctrl.names).then(function(data){
+                  ctrl.fetchReleasedetails = data;
+             })
+
+            ctrl.postRelease = function(proje) {
+                ctrl.releasePayload = {
+                    "projectName": ctrl.names,
+                    "projectId": ctrl.names,
+                    "releaseId": ctrl.fetchReleasedetails.releaseId,
+                    "name": ctrl.fetchReleasedetails.name,
+
+                    "startDate": ctrl.fetchReleasedetails.versionData.startDate,
+                    "releaseDate": ctrl.fetchReleasedetails.versionData.releaseDate,
+                    "released": ctrl.fetchReleasedetails.released,
+
+                    "description": ctrl.description,
+
+                    "criticalDefectsFound": ctrl.fetchReleasedetails.versionData.defectsFound.severity[3].value,
+                    "highDefectsFound": ctrl.fetchReleasedetails.versionData.defectsFound.severity[0].value,
+                    "mediumDefectsFound": ctrl.fetchReleasedetails.versionData.defectsFound.severity[2].value,
+                    "lowDefectsFound": ctrl.fetchReleasedetails.versionData.defectsFound.severity[1].value,
+
+                    "criticalDefectsClosed": ctrl.fetchReleasedetails.versionData.defectsResolved.severity[3].value,
+                    "highDefectsClosed": ctrl.fetchReleasedetails.versionData.defectsResolved.severity[0].value,
+                    "mediumDefectsClosed": ctrl.fetchReleasedetails.versionData.defectsResolved.severity[2].value,
+                    "lowDefectsClosed": ctrl.fetchReleasedetails.versionData.defectsResolved.severity[1].value,
+
+                    "criticalDefectsUnresolved": ctrl.fetchReleasedetails.versionData.defectsUnresolved.severity[3].value,
+                    "highDefectsUnresolved": ctrl.fetchReleasedetails.versionData.defectsUnresolved.severity[0].value,
+                    "mediumDefectsUnresolved": ctrl.fetchReleasedetails.versionData.defectsUnresolved.severity[2].value,
+                    "lowDefectsUnresolved": ctrl.fetchReleasedetails.versionData.defectsUnresolved.severity[1].value,
+
+                    "noofStoryCompleted": ctrl.noofStoryCompleted,
+                    "noofStoryCommitted": ctrl.noofStoryCommitted
+                }
+               $http.post("/api/releaseMetrcis", (ctrl.releasePayload)).then(function(response) {
+                    $uibModalInstance.dismiss("cancel");
+                    $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
+                })
+
+            }
+
+
+
+        }
+        function updateSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, sprinpayl, names, ids, projectidsprint){
                 var ctrl = this;
                 ctrl.names = names;
                 ctrl.ids = ids;
+                ctrl.ppid = projectidsprint;
                 $scope.options = [{
                     value: '',
                     label: 'Choose a value'
@@ -744,10 +850,14 @@
              featureData.updateSprintDta(ctrl.names,ctrl.ids).then(function(data){
                   ctrl.fetchdetails = data;
              })
-            ctrl.updateSprint = function(){
+            ctrl.updateSprintCall = function(){
 
+               
 
             ctrl.sprintEditPayload = {
+                    "projectId": projectidsprint,
+                    "projectName": ctrl.names,
+                    
                     "sprintId": ctrl.fetchdetails.sid,
                     "sprintName": ctrl.fetchdetails.sprintData.sprintName,
                     //"desc": ctrl.desc,

@@ -49,7 +49,9 @@
 			projectsByCollectorId : projectsByCollectorId,
 			sprintDta:sprintDataFetch,
 			ReleaseData:ReleaseDataFetch,
-			updateSprintDta:updateSprintDta
+			updateSprintDta:updateSprintDta,
+			getLatestSprint:getLatestSprint,
+			updateReleaseDta:updateReleaseDta
 		};
 		
 		function aggregateSprintEstimates(componentId, filterTeamId, filterProjectId, estimateMetricType, agileType) {
@@ -79,6 +81,14 @@
 		function updateSprintDta(sprintid,projectid) {  
 			 
 			return $http.get('/api/sprintDetails?sid=' +projectid + "&projectId=" + sprintid)
+					.then(function(response) { 
+						return response.data;
+					});
+		}
+
+		function getLatestSprint() {  
+			 
+			return $http.get('/api/sprintDetails?sid=' +"543" + "&projectId=" + "10300")
 					.then(function(response) { 
 						return response.data;
 					});
@@ -164,6 +174,13 @@
 				.then(function (response) {
 					return response.data;
 				});
+		}
+		
+		function updateReleaseDta(releaseId,projectId) {  
+			return $http.get('/api/releaseDetails?releaseId=' +releaseId + "&projectId=" + projectId)
+					.then(function(response) { 
+						return response.data;
+					});
 		}
 	}
 })();
