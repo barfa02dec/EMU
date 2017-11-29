@@ -788,8 +788,8 @@
                     "releaseId": ctrl.fetchReleasedetails.releaseId,
                     "name": ctrl.fetchReleasedetails.name,
 
-                    "startDate": ctrl.fetchReleasedetails.versionData.startDate,
-                    "releaseDate": ctrl.fetchReleasedetails.versionData.releaseDate,
+                    "startDate": ctrl.fetchReleasedetails.startDate,
+                    "releaseDate": ctrl.fetchReleasedetails.releaseDate,
                     "released": ctrl.fetchReleasedetails.released,
 
                     "description": ctrl.description,
