@@ -1,0 +1,459 @@
+<link href="assets/images/angular-datepicker.css" rel="stylesheet" type="text/css" />
+<script src="assets/images/angular-datepicker.js"></script>
+<link href="assets/images/fld/angular-datepicker.css" rel="stylesheet" type="text/css" />
+<script src="assets/images/fld/angular-datepicker.js"></script>
+
+<widget-modal widget-modal-title="{{asc.action_name}} Sprint" class="border-prop-modals">
+    <form name="cdf" class="form" ng-submit="usc.updateSprintCall()"  novalidate>
+      
+        <div class="col-md-6">
+        <form-group input="sprintid" errors="{required: 'Sprint id is required',maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
+            <input
+                type="text"
+                name="sprintid"
+                class="form-control"
+                placeholder="Sprint id"
+                ng-model="usc.fetchdetails.sid"
+                required
+                maxlength="50"
+                autocomplete="off"
+                ng-pattern="/^[a-zA-Z0-9 ]*$/" disabled/>
+
+        </form-group>
+       
+         <form-group input="sprintname" errors="{required: 'Sprint name is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
+            <input
+                type="text"
+                name="sprintname"
+                class="form-control"
+                placeholder="Sprint name"
+                ng-model="usc.fetchdetails.sprintData.sprintName"
+                required
+                maxlength="50"
+                autocomplete="off"
+                ng-pattern="/^[a-zA-Z0-9 ]*$/" disabled/>
+
+        </form-group>
+         <!-- <form-group input="description">
+            <input
+                type="text"
+                name="description"
+                class="form-control"
+                placeholder="Description"
+               ng-model="asc.sprintPayload.desc"
+                autocomplete="off"
+               />
+
+        </form-group> -->
+         <form-group input="comittedstorypoints">
+            <input
+                type="text"
+                name="comittedstorypoints"
+                class="form-control"
+                placeholder="Committed story points"
+                  ng-model="usc.fetchdetails.sprintData.committedStoryPoints"
+              
+                />
+
+        </form-group>
+         <form-group input="comittedissuecount">
+            <input
+                type="text"
+                name="comittedissuecount"
+                class="form-control"
+                placeholder="Committed issue count"
+               
+                 ng-model="usc.fetchdetails.sprintData.committedIssueCount"
+                />
+
+        </form-group>
+
+         <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Added</label>
+         <div class="col-md-8">
+         <form-group input="count">
+            <input
+                type="text"
+                name="count"
+                class="form-control"
+                placeholder="Count"
+              ng-model="usc.fetchdetails.sprintData.burndown.issuesAdded.count"
+                />
+
+        </form-group></div>
+   <!--      <div class="col-md-4">
+         <form-group input="points" >
+            <input
+                type="text"
+                name="points"
+                class="form-control"
+                placeholder="Points"
+              ng-model="asc.sprintPayload.storypointsAdded"
+                />
+
+        </form-group></div> -->
+
+          <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Removed</label>
+         <div class="col-md-8">
+         <form-group input="countstoryremoved">
+            <input
+                type="text"
+                name="countstoryremoved"
+                class="form-control"
+                placeholder="Count"
+               ng-model="usc.fetchdetails.sprintData.burndown.issuesRemoved.count"
+               />
+
+        </form-group></div>
+        
+
+        
+        <!-- <div class="col-md-4">
+         <form-group input="pointstoryremoved">
+            <input
+                type="text"
+                name="pointstoryremoved"
+                class="form-control"
+                placeholder="Points"
+               ng-model="asc.sprintPayload.storypointsRemoed"
+               />
+
+        </form-group></div> -->
+
+        <!--  <form-group input="efforts">
+            <input
+                type="text"
+                name="efforts"
+                class="form-control"
+                placeholder="Efforts (in PD)"
+             ng-model="asc.sprintPayload.efforts"
+               />
+
+        </form-group> -->
+
+        </div>
+
+          <div class="col-md-6">
+          <form-group input="selectedTemplate" errors="{required: 'Status is required'}">
+         
+             <select ng-options="o.value as o.label for o in options" ng-model="usc.fetchdetails.closed" class="form-control"></select>
+        </form-group>
+            <form-group input="completedstorypointscol2" >
+            <input
+                type="text"
+                name="completedstorypointscol2"
+                class="form-control"
+                placeholder="Completed story points"
+            
+               ng-model="usc.fetchdetails.sprintData.completedStoryPoints"
+               />
+        </form-group>
+
+        <form-group input="comittedissuecountcol2">
+            <input
+                type="text"
+                name="comittedissuecountcol2"
+                class="form-control"
+                placeholder="Completed issue count"
+             ng-model="usc.fetchdetails.sprintData.completedIssueCount"
+               />
+        </form-group>
+
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Found</label>
+        <div class="col-md-2">
+             <form-group input="criticalone">
+            <input
+                type="text"
+                name="criticalone"
+                class="form-control"
+                placeholder="Critical"
+               ng-model="usc.fetchdetails.sprintData.defectsFound.severity[3].value"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="highone">
+            <input
+                type="text"
+                name="highone"
+                class="form-control"
+                placeholder="High"
+               ng-model="usc.fetchdetails.sprintData.defectsFound.severity[0].value"
+              />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="mediumone">
+            <input
+                type="text"
+                name="mediumone"
+                class="form-control"
+                placeholder="Medium"
+           ng-model="usc.fetchdetails.sprintData.defectsFound.severity[2].value"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="lowone">
+            <input
+                type="text"
+                name="lowone"
+                class="form-control"
+                placeholder="Low"
+             ng-model="usc.fetchdetails.sprintData.defectsFound.severity[1].value"
+                />
+        </form-group>  
+        </div>
+
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Resolved</label>
+        <div class="col-md-2">
+             <form-group input="Criticaltwo">
+            <input
+                type="text"
+                name="Criticaltwo"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[3].value"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Hightwo">
+            <input
+                type="text"
+                name="Hightwo"
+                class="form-control"
+                placeholder="High"
+                   ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[0].value"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Mediumtwo">
+            <input
+                type="text"
+                name="Mediumtwo"
+                class="form-control"
+                placeholder="Medium"
+                 ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[2].value"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Lowtwo">
+            <input
+                type="text"
+                name="Lowtwo"
+                class="form-control"
+                placeholder="Low"
+              ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[1].value"
+               />
+        </form-group>  
+        </div>
+
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Unresolved</label>
+        <div class="col-md-2">
+             <form-group input="Criticalthree">
+            <input
+                type="text"
+                name="Criticalthree"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[3].value"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Highthree">
+            <input
+                type="text"
+                name="Highthree"
+                class="form-control"
+                placeholder="High"
+                  ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[0].value"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Mediumthree">
+            <input
+                type="text"
+                name="Mediumthree"
+                class="form-control"
+                placeholder="Medium"
+                 ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[2].value"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Lowthree">
+            <input
+                type="text"
+                name="Lowthree"
+                class="form-control"
+                placeholder="Low"
+              ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[1].value"
+              />
+        </form-group>  
+        </div>
+<!-- 
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Sprint Defects Unresolved</label>
+        <div class="col-md-2">
+             <form-group input="Criticalfour">
+            <input
+                type="text"
+                name="Criticalfour"
+                class="form-control"
+                placeholder="Critical"
+               ng-model="asc.sprintId"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Highfour">
+            <input
+                type="text"
+                name="Highfour"
+                class="form-control"
+                placeholder="High"
+                ng-model="asc.sprintId"
+                />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Mediumfour">
+            <input
+                type="text"
+                name="Mediumfour"
+                class="form-control"
+                placeholder="Medium"
+               ng-model="asc.sprintId"
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Lowfour">
+            <input
+                type="text"
+                name="Lowfour"
+                class="form-control"
+                placeholder="Low"
+                 ng-model="asc.sprintId"
+               />
+        </form-group>  
+        </div> -->
+         <div class="col-md-4">
+             <datepicker date-format="dd-MM-yyyy" selector="form-control">
+               <div class="input-group">
+                  <input class="form-control" ng-model="usc.fetchdetails.start" name="date1" placeholder="start date"/>
+                  <span class="input-group-addon" style="cursor: pointer">
+                  <i class="fa fa-lg fa-calendar"></i>
+                  </span>
+               </div>
+            </datepicker>
+         </form-group> 
+        </div>
+
+          <div class="col-md-4">
+             <form-group input="date1">
+            <datepicker date-format="dd-MM-yyyy" selector="form-control">
+               <div class="input-group">
+                  <input class="form-control" ng-model="usc.fetchdetails.end" name="date1" placeholder="End date"/>
+                  <span class="input-group-addon" style="cursor: pointer">
+                  <i class="fa fa-lg fa-calendar"></i>
+                  </span>
+               </div>
+            </datepicker>
+         </form-group>  
+        </div>
+        </div>
+          <form-group>
+        <div  style="padding-left: 12px;">
+            
+              
+                <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 50px;width: 13%;">Update</button>
+
+                 <!--  <button ng-if="asc.updateScreen"  type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 50px;width: 13%;margin-left: 20%;">Update</button>
+ -->
+                  <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;margin-top: 44px;width: 13% !important;" ng-click="$close()">Cancel</button>
+        </div>
+         </form-group> 
+    </form>
+  <div class="" ng-click="asc.hideForm()"  >
+  <hr>
+   <span ng-if="asc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
+   View previously added sprints</span>
+   <div class="" ng-if="asc.prevousText">
+       <table class="table table-bordered table-striped">
+        <thead>
+        <tr style="font-weight:400;font-size:11px">
+            <th>Sprint ID</th>
+             <th>Sprint Name</th>
+             <th>Sprint Status</th>
+
+        </tr>
+        </thead>
+        <tbody>
+            <tr class="font-props" ng-repeat="sprintdata in asc.spAllDetails">
+             {{sprintdata.sprintData.state}}
+                 <td>{{sprintdata.sprintData.sprintId}}</td>
+               <td>{{sprintdata.sprintData.sprintName}}</td>
+
+                 <td ng-if="asc.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' "><span>
+                    <img src="assets/images/icon_completed.png">
+                 </span>CLOSED</td> 
+                  <td ng-if="asc.mySplit(sprintdata.sprintData.state,0) !== 'CLOSED' "><span>
+                    <img src="assets/images/icon_inprogress.png">
+                 </span>OPEN
+                 <span style="margin-left: 1%;" ng-click="asc.updateSprint(sprintdata)">
+                     <svg version="1.1"
+            x="0px" y="0px" width="13px" height="13px" viewBox="0 0 19 19" style="enable-background:new 0 0 19 19;" xml:space="preserve">
+<style type="text/css">
+            .stedit0{fill:#404041;}
+</style>
+<defs>
+</defs>
+<path class="stedit0" d="M18.3,0.7C17.8,0.3,17.2,0,16.5,0c-0.7,0-1.3,0.3-1.8,0.7l-1,1L1.2,14.2c0,0,0,0,0,0c0,0,0,0.1-0.1,0.1
+            c0,0,0,0,0,0c0,0,0,0,0,0.1L0,18.5c0,0.1,0,0.3,0.1,0.4C0.2,19,0.3,19,0.4,19c0,0,0.1,0,0.1,0l4.1-1.1c0,0,0,0,0.1,0c0,0,0,0,0,0
+            c0,0,0.1,0,0.1-0.1c0,0,0,0,0,0L17.3,5.3l1-1C18.7,3.8,19,3.2,19,2.5C19,1.8,18.7,1.2,18.3,0.7z M1,18l0.7-2.7l2,2L1,18z M4.5,16.9
+            l-2.4-2.4L14,2.6L16.4,5L4.5,16.9z M17.7,3.7L17,4.4L14.6,2l0.7-0.7C15.6,1,16,0.8,16.5,0.8c0.5,0,0.9,0.2,1.2,0.5
+            C18.3,2,18.3,3.1,17.7,3.7z"/>
+</svg>
+
+                 </span>
+
+                 </td> 
+
+              <!--     <td><span ng-if="!jdv.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' ">
+                    <img src="assets/images/icon_completed.png">
+                 </span>{{sprintdata.sprintData.state}}</td> --> 
+
+                
+                 
+               
+               
+ </tr>
+
+  
+
+        </tbody>
+
+    </table>
+      </div>
+    
+   </div>
+     <div ng-click="asc.showForm()">
+      <span ng-if="!asc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
+   Add sprint</span></div>
+</widget-modal>
