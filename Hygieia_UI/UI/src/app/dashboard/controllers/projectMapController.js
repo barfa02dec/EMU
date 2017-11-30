@@ -355,11 +355,29 @@
             });
         }
 
+        ctrl.editDefect = function(probj) {
+            $uibModal.open({
+                templateUrl: 'app/dashboard/views/editDefect.html',
+                windowClass: 'app-modal-window-defect',
+                controller: editDefectController,
+                controllerAs: 'edc',
+                resolve: {
+                    name: function() {
+                        return probj.projectName;
+                    },
+                    id: function() {
+                        return probj.projectId;
+                    }
+                }
+            });
+        }
+
         function addDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
 
             var ctrl = this;
 
 
+            
 
             ctrl.postDefect = function(probj) {
 
@@ -439,7 +457,9 @@
                         controllerAs: 'pm'
                     });
 
+                  
                 })
+
                 /* $http.post("/api/defectSummery", (ctrl.payloadDefect)).then(function(response) {
                     alert("success");
                  })*/
@@ -448,6 +468,103 @@
 
         }
 
+         function editDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
+            ctrl = this;
+               featureData.jiraData(id,name).then(jiraDataFetch);
+                function jiraDataFetch(data){
+                    ctrl.dataEdit = data;
+                    /*if($scope.dataEdit != "undefined"){
+                         $cookies.put('dataEdit', $scope.ttt);
+                    }*/
+                }
+
+                ctrl.editDefectCall = function(){
+                    ctrl.editDefectPayl = {
+
+                    "projectName": name,
+                    "metricsProjectId": id,
+                    "projectId": id,
+                    "valueAsOn": "test",
+
+                    "lowPriorityDefectsCount": ctrl.dataEdit.defectsByProirity.Low,
+                    "mediumPriorityDefectsCount": ctrl.dataEdit.defectsByProirity.Medium,
+                    "highPriorityDefectsCount": ctrl.dataEdit.defectsByProirity.High,
+                    "criticalPriorityDefectsCount": ctrl.dataEdit.defectsByProirity.Critical,
+                        
+                    "qaDefects": ctrl.dataEdit.defectsByEnvironment.QA,
+                    "uatDefects": ctrl.dataEdit.defectsByEnvironment.UAT,
+                    "prodDefects": ctrl.dataEdit.defectsByEnvironment.PROD, 
+
+                   "openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].High),
+                    "openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].Low),
+                    "openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].Medium),
+                    "openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].Critical),
+
+
+                    "openDefectsWithHighPriorityAndAgeBetween15To30Days": Number(ctrl.dataEdit.openDefectsByAge.Range2[0].High),
+                    "openDefectsWithLowPriorityAndAgeBetween15To30Days": Number(ctrl.dataEdit.openDefectsByAge.Range2[0].Low),
+                    "openDefectsWithMediumPriorityAndAgeBetween15To30Days": Number(ctrl.dataEdit.openDefectsByAge.Range2[0].Medium),
+                    "openDefectsWithCriticalPriorityAndAgeBetween15To30Days": Number(ctrl.dataEdit.openDefectsByAge.Range2[0].Critical),
+
+                    "openDefectsWithHighPriorityAndAgeBetween30To60Days": Number(ctrl.dataEdit.openDefectsByAge.Range3[0].High),
+                    "openDefectsWithLowPriorityAndAgeBetween30To60Days": Number(ctrl.dataEdit.openDefectsByAge.Range3[0].Low),
+                    "openDefectsWithMediumPriorityAndAgeBetween30To60Days": Number(ctrl.dataEdit.openDefectsByAge.Range3[0].Medium),
+                    "openDefectsWithCriticalPriorityAndAgeBetween30To60Days": Number(ctrl.dataEdit.openDefectsByAge.Range3[0].Critical),
+
+                    "openDefectsWithHighPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].High),
+                    "openDefectsWithLowPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].High),
+                    "openDefectsWithMediumPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].High),
+                    "openDefectsWithCriticalPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].High),
+
+                    "openDefectsWithHighPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].High),
+                    "openDefectsWithLowPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].High),
+                    "openDefectsWithMediumPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].High),
+                    "openDefectsWithCriticalPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].High),
+
+
+
+
+                    "fixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range1[0].High),
+                    "fixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range1[0].Low),
+                    "fixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range1[0].Medium),
+                    "fixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range1[0].Critical),
+
+                    "fixedDefectsWithHighPriorityAndResolutionBetween15To30Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range2[0].High),
+                    "fixedDefectsWithLowPriorityAndResolutionBetween15To30Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range2[0].Low),
+                    "fixedDefectsWithMediumPriorityAndResolutionBetween15To30Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range2[0].Medium),
+                    "fixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range2[0].Critical),
+
+                    "fixedDefectsWithHighPriorityAndResolutionBetween30To60Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range3[0].High),
+                    "fixedDefectsWithLowPriorityAndResolutionBetween30To60Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range3[0].Low),
+                    "fixedDefectsWithMediumPriorityAndResolutionBetween30To60Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range3[0].Medium),
+                    "fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range3[0].Critical),
+
+
+                  "fixedDefectsWithHighPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].High),
+                    "fixedDefectsWithLowPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].Low),
+                    "fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].Medium),
+                    "fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].Critical),
+
+                    "fixedDefectsWithHighPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].High),
+                    "fixedDefectsWithLowPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].Low),
+                    "fixedDefectsWithMediumPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].Medium),
+                    "fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].Critical)
+                    }
+
+                    projectData.postDefect(ctrl.editDefectPayl).then(function(response) {
+                     $rootScope.ttt = true;
+                    $uibModalInstance.dismiss("cancel");
+                    $uibModal.open({
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/defectaddConfirm.html',
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
+
+                  
+                })
+                }
+
+         }
         ctrl.addRelease = function(proje) {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/addRelease.html',

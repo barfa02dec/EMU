@@ -1,0 +1,618 @@
+<widget-modal widget-modal-title="Add defects" class="border-prop-modals">
+    <form name="cdf" class="form" ng-submit="edc.editDefectCall()" novalidate>
+
+         <label class="control-label col-md-4 createproj-label-props" for="pwd">Open Defects by Severity</label>
+         <div class="col-md-2">
+        <form-group input="Lowods">
+            <input
+                type="number"
+                name="Lowods"
+                class="form-control"
+                placeholder="Low"
+                ng-model="edc.dataEdit.defectsByProirity.Low"
+                min="0"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Mediumods">
+            <input
+                type="number"
+                name="Mediumods"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="edc.dataEdit.defectsByProirity.Medium"
+             />
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Highods">
+            <input
+                type="number"
+                name="Highods"
+                class="form-control"
+                placeholder="High"
+                 ng-model="edc.dataEdit.defectsByProirity.High"
+                
+               />
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Criticalods">
+            <input
+                type="number"
+                name="Criticalods"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="edc.dataEdit.defectsByProirity.Critical"
+              />
+        </form-group>
+        </div>
+        
+       
+         <label class="control-label col-md-4  createproj-label-props" for="pwd">Open Defects by Enviornment</label>
+         <div class="col-md-2">
+        <form-group input="QAenv">
+            <input
+                type="number"
+                name="QAenv"
+                class="form-control"
+                placeholder="QA"
+                ng-model="edc.dataEdit.defectsByEnvironment.QA"
+                />
+
+        </form-group>
+        </div>
+        <div class="col-md-2">
+        <form-group input="UATenv">
+            <input
+                type="number"
+                name="UATenv"
+                class="form-control"
+                placeholder="UAT"
+                 ng-model="edc.dataEdit.defectsByEnvironment.UAT"
+                />
+
+        </form-group>
+        </div>
+        <div class="col-md-2">
+        <form-group input="Productionenv">
+            <input
+                type="number"
+                name="Productionenv"
+                class="form-control"
+                placeholder="Production"
+                 ng-model="edc.dataEdit.defectsByEnvironment.PROD"
+                />
+
+        </form-group>
+        </div>
+        
+        <div class="col-md-12" style="font-size: 15px;">
+            Age of open defects
+        </div>
+        <div class="col-md-6" style="padding-top: 2%;">
+             <label class="control-label col-md-4  createproj-label-props" for="pwd"> &lt;15days</label>
+         <div class="col-md-2">
+        <form-group input="Low1">
+            <input
+                type=""
+                name="Low1"
+                class="form-control"
+                placeholder="Low"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range1[0].Low"
+              />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium1">
+            <input
+                type=""
+                name="Medium1"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="edc.dataEdit.openDefectsByAge.Range1[0].Medium"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High1">
+            <input
+                type=""
+                name="High1"
+                class="form-control"
+                placeholder="High"
+                ng-model="edc.dataEdit.openDefectsByAge.Range1[0].High"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical1">
+            <input
+                type=""
+                name="Critical1"
+                class="form-control"
+                placeholder="Critical"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range1[0].Critical"
+               />
+
+        </form-group>
+        </div>
+
+          <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 30 and &lt; 60 </label>
+         <div class="col-md-2">
+        <form-group input="Low2">
+            <input
+                type=""
+                name="Low2"
+                class="form-control"
+                placeholder="Low"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range3[0].Low"
+              />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium2">
+            <input
+                type=""
+                name="Medium2"
+                class="form-control"
+                placeholder="Medium"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range3[0].Medium"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High2">
+            <input
+                type=""
+                name="High2"
+                class="form-control"
+                placeholder="High"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range3[0].High"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical2">
+            <input
+                type=""
+                name="Critical2"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="edc.dataEdit.openDefectsByAge.Range3[0].Critical"
+               />
+
+        </form-group>
+        </div>
+
+        </div>
+        <div class="col-md-6" style="padding-top: 2%">
+             <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 15 and &lt; 30</label>
+         <div class="col-md-2">
+        <form-group input="Low3">
+            <input
+                type=""
+                name="Low3"
+                class="form-control"
+                placeholder="Low"
+                ng-model="edc.dataEdit.openDefectsByAge.Range2[0].Low"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium3">
+            <input
+                type=""
+                name="Medium3"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="edc.dataEdit.openDefectsByAge.Range2[0].Medium"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High3">
+            <input
+                type=""
+                name="High3"
+                class="form-control"
+                placeholder="High"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range2[0].High"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical3">
+            <input
+                type=""
+                name="Critical3"
+                class="form-control"
+                placeholder="Critical"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range2[0].Critical"
+                />
+
+        </form-group>
+        </div>
+
+          <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 60 and &lt; 90</label>
+         <div class="col-md-2">
+        <form-group input="Low3">
+            <input
+                type=""
+                name="Low3"
+                class="form-control"
+                placeholder="Low"
+                ng-model="edc.dataEdit.openDefectsByAge.Range4[0].Low"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium3">
+            <input
+                type=""
+                name="Medium3"
+                class="form-control"
+                placeholder="Medium"
+              ng-model="edc.dataEdit.openDefectsByAge.Range4[0].Medium"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High3">
+            <input
+                type=""
+                name="High3"
+                class="form-control"
+                placeholder="High"
+                ng-model="edc.dataEdit.openDefectsByAge.Range4[0].High"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical3">
+            <input
+                type=""
+                name="Critical3"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="edc.dataEdit.openDefectsByAge.Range4[0].Critical"
+               />
+
+        </form-group>
+        </div>
+
+        <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 90 days</label>
+         <div class="col-md-2">
+        <form-group input="Low4">
+            <input
+                type=""
+                name="Low4"
+                class="form-control"
+                placeholder="Low"
+                ng-model="edc.dataEdit.openDefectsByAge.Range5[0].Low"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium4">
+            <input
+                type=""
+                name="Medium4"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="edc.dataEdit.openDefectsByAge.Range5[0].Medium"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High4">
+            <input
+                type=""
+                name="High4"
+                class="form-control"
+                placeholder="High"
+               ng-model="edc.dataEdit.openDefectsByAge.Range5[0].High"
+              
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical4">
+            <input
+                type=""
+                name="Critical4"
+                class="form-control"
+                placeholder="Critical"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range5[0].Critical"
+                />
+
+        </form-group>
+        </div>
+
+        </div>
+        <div class="col-md-12" style="font-size: 15px;">
+            Resolution Time
+        </div>
+
+          <div class="col-md-6" style="padding-top: 2%">
+             <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 15 days</label>
+         <div class="col-md-2">
+        <form-group input="Low5">
+            <input
+                type=""
+                name="Low5"
+                class="form-control"
+                placeholder="Low"
+                 ng-model="edc.dataEdit.fixeddefectsByResolutions.Range1[0].Low"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium5">
+            <input
+                type=""
+                name="Medium5"
+                class="form-control"
+                placeholder="Medium"
+                 ng-model="edc.dataEdit.fixeddefectsByResolutions.Range1[0].Medium"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High5">
+            <input
+                type=""
+                name="High5"
+                class="form-control"
+                placeholder="High"
+                 ng-model="edc.dataEdit.fixeddefectsByResolutions.Range1[0].High"
+               />
+
+        </form-group>
+       
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical5">
+            <input
+                type=""
+                name="Critical5"
+                class="form-control"
+                placeholder="Critical"
+              ng-model="edc.dataEdit.fixeddefectsByResolutions.Range1[0].Critical"
+                />
+
+        </form-group>
+        </div>
+
+          <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 30 and &lt; 60</label>
+         <div class="col-md-2">
+        <form-group input="Low6">
+            <input
+                type=""
+                name="Low6"
+                class="form-control"
+                placeholder="Low"
+                 ng-model="edc.dataEdit.fixeddefectsByResolutions.Range3[0].Low"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium6">
+            <input
+                type=""
+                name="Medium6"
+                class="form-control"
+                placeholder="Medium"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range3[0].Medium"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High6">
+            <input
+                type=""
+                name="High6"
+                class="form-control"
+                placeholder="High"
+             ng-model="edc.dataEdit.fixeddefectsByResolutions.Range3[0].High"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical6">
+            <input
+                type=""
+                name="Critical6"
+                class="form-control"
+                placeholder="Critical"
+              ng-model="edc.dataEdit.fixeddefectsByResolutions.Range3[0].Critical"
+               />
+
+        </form-group>
+        </div>
+
+        </div>
+        <div class="col-md-6" style="padding-top: 2%">
+             <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 15 and &lt; 30</label>
+         <div class="col-md-2">
+        <form-group input="Low7">
+            <input
+                type=""
+                name="Low7"
+                class="form-control"
+                placeholder="Low"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range2[0].Low"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium7">
+            <input
+                type=""
+                name="Medium7"
+                class="form-control"
+                placeholder="Medium"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range2[0].Medium"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High7">
+            <input
+                type=""
+                name="High7"
+                class="form-control"
+                placeholder="High"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range2[0].High"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical7">
+            <input
+                type=""
+                name="Critical7"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="edc.dataEdit.fixeddefectsByResolutions.Range2[0].Critical"
+                />
+
+        </form-group>
+        </div>
+
+          <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 60 and &lt; 90</label>
+         <div class="col-md-2">
+        <form-group input="Low8">
+            <input
+                type=""
+                name="Low8"
+                class="form-control"
+                placeholder="Low"
+                ng-model="edc.dataEdit.fixeddefectsByResolutions.Range4[0].Low"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium8">
+            <input
+                type=""
+                name="Medium8"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="edc.dataEdit.fixeddefectsByResolutions.Range4[0].Medium"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High8">
+            <input
+                type=""
+                name="High8"
+                class="form-control"
+                placeholder="High"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range4[0].High"
+             />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical8">
+            <input
+                type=""
+                name="Critical8"
+                class="form-control"
+                placeholder="Critical"
+             ng-model="edc.dataEdit.fixeddefectsByResolutions.Range4[0].Critical"
+               />
+
+        </form-group>
+        </div>
+
+        <label class="control-label col-md-4  createproj-label-props" for="pwd">&gt; 90 days</label>
+         <div class="col-md-2">
+        <form-group input="Low9">
+            <input
+                type=""
+                name="Low9"
+                class="form-control"
+                placeholder="Low"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range5[0].Low"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Medium9">
+            <input
+                type=""
+                name="Medium9"
+                class="form-control"
+                placeholder="Medium"
+                ng-model="edc.dataEdit.fixeddefectsByResolutions.Range5[0].Medium"
+                />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="High9">
+            <input
+                type=""
+                name="High9"
+                class="form-control"
+                placeholder="High"
+                ng-model="edc.dataEdit.fixeddefectsByResolutions.Range5[0].High"
+               />
+
+        </form-group>
+        </div>
+         <div class="col-md-2">
+        <form-group input="Critical9">
+            <input
+                type=""
+                name="Critical9"
+                class="form-control"
+                placeholder="Critical"
+                 ng-model="edc.dataEdit.fixeddefectsByResolutions.Range5[0].Critical"
+                />
+
+        </form-group>
+        </div>
+
+        </div>
+           <form-group>
+        <div class="button-row row" style="padding-left: 12px;">
+            
+              
+                <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Create</button>
+                  <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
+        </div></form-group>
+
+    </form>
+</widget-modal>
