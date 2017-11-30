@@ -373,15 +373,9 @@
         }
 
         function addDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
-
             var ctrl = this;
 
-
-            
-
             ctrl.postDefect = function(probj) {
-
-
                 ctrl.payloadDefect = {
                     "projectName": name,
                     "metricsProjectId": id,
@@ -457,29 +451,25 @@
                         controllerAs: 'pm'
                     });
 
-                  
+
                 })
-
-                /* $http.post("/api/defectSummery", (ctrl.payloadDefect)).then(function(response) {
-                    alert("success");
-                 })*/
-
             }
 
         }
 
-         function editDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
+        function editDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
             ctrl = this;
-               featureData.jiraData(id,name).then(jiraDataFetch);
-                function jiraDataFetch(data){
-                    ctrl.dataEdit = data;
-                    /*if($scope.dataEdit != "undefined"){
-                         $cookies.put('dataEdit', $scope.ttt);
-                    }*/
-                }
+            featureData.jiraData(id, name).then(jiraDataFetch);
 
-                ctrl.editDefectCall = function(){
-                    ctrl.editDefectPayl = {
+            function jiraDataFetch(data) {
+                ctrl.dataEdit = data;
+                /*if($scope.dataEdit != "undefined"){
+                     $cookies.put('dataEdit', $scope.ttt);
+                }*/
+            }
+
+            ctrl.editDefectCall = function() {
+                ctrl.editDefectPayl = {
 
                     "projectName": name,
                     "metricsProjectId": id,
@@ -490,12 +480,12 @@
                     "mediumPriorityDefectsCount": ctrl.dataEdit.defectsByProirity.Medium,
                     "highPriorityDefectsCount": ctrl.dataEdit.defectsByProirity.High,
                     "criticalPriorityDefectsCount": ctrl.dataEdit.defectsByProirity.Critical,
-                        
+
                     "qaDefects": ctrl.dataEdit.defectsByEnvironment.QA,
                     "uatDefects": ctrl.dataEdit.defectsByEnvironment.UAT,
-                    "prodDefects": ctrl.dataEdit.defectsByEnvironment.PROD, 
+                    "prodDefects": ctrl.dataEdit.defectsByEnvironment.PROD,
 
-                   "openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].High),
+                    "openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].High),
                     "openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].Low),
                     "openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].Medium),
                     "openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].Critical),
@@ -540,7 +530,7 @@
                     "fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range3[0].Critical),
 
 
-                  "fixedDefectsWithHighPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].High),
+                    "fixedDefectsWithHighPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].High),
                     "fixedDefectsWithLowPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].Low),
                     "fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].Medium),
                     "fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].Critical),
@@ -549,10 +539,10 @@
                     "fixedDefectsWithLowPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].Low),
                     "fixedDefectsWithMediumPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].Medium),
                     "fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].Critical)
-                    }
+                }
 
-                    projectData.postDefect(ctrl.editDefectPayl).then(function(response) {
-                     $rootScope.ttt = true;
+                projectData.postDefect(ctrl.editDefectPayl).then(function(response) {
+                    $rootScope.ttt = true;
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
                         templateUrl: 'app/dashboard/views/ConfirmationModals/defectaddConfirm.html',
@@ -560,11 +550,11 @@
                         controllerAs: 'pm'
                     });
 
-                  
-                })
-                }
 
-         }
+                })
+            }
+
+        }
         ctrl.addRelease = function(proje) {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/addRelease.html',
@@ -603,7 +593,7 @@
                 },
             ];
 
-           ctrl.prevousText = true;
+            ctrl.prevousText = true;
             ctrl.normalformText = false;
             ctrl.prevHeader = false;
             ctrl.hideForm = function() {
@@ -618,46 +608,44 @@
             }
 
 
-             ctrl.updateRelease = function(releaseidUpdation){
-                ctrl.nname = releaseidUpdation.releaseId; 
+            ctrl.updateRelease = function(releaseidUpdation) {
+                ctrl.nname = releaseidUpdation.releaseId;
                 ctrl.id = id;
-                ctrl.projectId =releaseidUpdation.projectId;
-                ctrl.projectName =releaseidUpdation.projectName;
-                 ctrl.action_name ="Update";
+                ctrl.projectId = releaseidUpdation.projectId;
+                ctrl.projectName = releaseidUpdation.projectName;
+                ctrl.action_name = "Update";
                 ctrl.addScreen = false;
                 ctrl.updateScreen = true;
                 ctrl.aaaa = releaseidUpdation;
-                  $uibModalInstance.dismiss("cancel");
+                $uibModalInstance.dismiss("cancel");
                 $uibModal.open({
-                        templateUrl: 'app/dashboard/views/updateReleasehtml.html',
-                         windowClass: 'app-modal-window-defect',
-                        controller: updateReleaseController,
-                        controllerAs: 'urc',
-                       resolve: {
-                    sprinpayl: function() {
-                        return ctrl.aaaa;
-                    },
-                    names: function() {
-                        return ctrl.id;
-                    },
-                    ids: function() {
-                        return ctrl.nname;
-                    },
-                    projectidsprint: function(){
-                        return ctrl.projectId;
+                    templateUrl: 'app/dashboard/views/updateReleasehtml.html',
+                    windowClass: 'app-modal-window-defect',
+                    controller: updateReleaseController,
+                    controllerAs: 'urc',
+                    resolve: {
+                        sprinpayl: function() {
+                            return ctrl.aaaa;
+                        },
+                        names: function() {
+                            return ctrl.id;
+                        },
+                        ids: function() {
+                            return ctrl.nname;
+                        },
+                        projectidsprint: function() {
+                            return ctrl.projectId;
+                        }
                     }
-                }
-                    });
+                });
             }
 
 
-              featureData.ReleaseData(ctrl.id,ctrl.namerelease).then(ReleaseDataProcessing);
-               function ReleaseDataProcessing(data){
-                 ctrl.releasegraph = data;
+            featureData.ReleaseData(ctrl.id, ctrl.namerelease).then(ReleaseDataProcessing);
+
+            function ReleaseDataProcessing(data) {
+                ctrl.releasegraph = data;
             }
-            /*  ctrl.hideList = function(){
-                     ctrl.hideListTemplate = true;
-              }*/
             ctrl.postRelease = function(proje) {
                 ctrl.releasePayload = {
                     "projectName": name,
@@ -747,19 +735,19 @@
             ctrl.prevousText = true;
             ctrl.normalformText = false;
             ctrl.prevHeader = false;
-             ctrl.update = false;
+            ctrl.update = false;
             ctrl.hideForm = function() {
                 ctrl.prevousText = true;
                 ctrl.normalformText = false;
                 ctrl.prevHeader = false;
             }
             ctrl.showForm = function() {
-              
+
                 ctrl.prevousText = false;
                 ctrl.normalformText = true;
                 ctrl.prevHeader = true;
                 ctrl.sprintPayload = {};
-                ctrl.action_name ="Add";
+                $rootScope.action_name = "Add";
                 ctrl.addScreen = true;
                 ctrl.updateScreen = false;
             }
@@ -771,96 +759,41 @@
 
             }
 
-            ctrl.updateSprint = function(sprintidUpdation){
-                ctrl.nname = sprintidUpdation.sid; 
+            ctrl.updateSprint = function(sprintidUpdation) {
+                ctrl.nname = sprintidUpdation.sid;
                 ctrl.id = id;
-                ctrl.projectId =sprintidUpdation.projectId;
-                 ctrl.action_name ="Update";
+                ctrl.projectId = sprintidUpdation.projectId;
+                ctrl.action_name = "Update";
                 ctrl.addScreen = false;
                 ctrl.updateScreen = true;
                 ctrl.aaaa = sprintidUpdation;
-                  $uibModalInstance.dismiss("cancel");
+                $uibModalInstance.dismiss("cancel");
                 $uibModal.open({
-                        templateUrl: 'app/dashboard/views/updateSprintmodal.html',
-                         windowClass: 'app-modal-window-defect',
-                        controller: updateSprintController,
-                        controllerAs: 'usc',
-                       resolve: {
-                    sprinpayl: function() {
-                        return ctrl.aaaa;
-                    },
-                    names: function() {
-                        return ctrl.id;
-                    },
-                    ids: function() {
-                        return ctrl.nname;
-                    },
-                    projectidsprint: function(){
-                        return ctrl.projectId;
+                    templateUrl: 'app/dashboard/views/updateSprintmodal.html',
+                    windowClass: 'app-modal-window-defect',
+                    controller: updateSprintController,
+                    controllerAs: 'usc',
+                    resolve: {
+                        sprinpayl: function() {
+                            return ctrl.aaaa;
+                        },
+                        names: function() {
+                            return ctrl.id;
+                        },
+                        ids: function() {
+                            return ctrl.nname;
+                        },
+                        projectidsprint: function() {
+                            return ctrl.projectId;
+                        }
                     }
-                }
-                    });
-              
-
-
-
+                });
             }
 
-              // ctrl.postSprint = function(proje) {
-              //          $http.post("/api//sprintMetrics", (ctrl.sprintPayload)).then(function(response) {
-              //       $uibModalInstance.dismiss("cancel");
-              //       $uibModal.open({
-              //           templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
-              //           controller: 'projectMapController',
-              //           controllerAs: 'pm'
-              //       });
-              //   })
-              //     }
 
             ctrl.postSprint = function(proje) {
-             
-
-                 ctrl.sprintPayload.projectName = name;
-                 ctrl.sprintPayload.projectId = id;
-             /*   ctrl.sprintPayload = {
-                    "sprintId": ctrl.sprintId,
-                    "sprintName": ctrl.sprintName,
-                    "desc": ctrl.desc,
-
-                    "committedStoriesCount": ctrl.committedStoriesCount,
-                    "committedStoryPoints": ctrl.committedStoryPoints,
-                    "completedStoriesCount": ctrl.completedStoriesCount,
-                    "completedStoryPoints": ctrl.completedStoryPoints,
-
-                    "storiesAdded": ctrl.storiesAdded,
-                    "storypointsAdded": ctrl.storypointsAdded,
-
-                    "storiesRemoed": ctrl.storiesRemoed,
-                    "storypointsRemoed": ctrl.storypointsRemoed,
-                    "released": ctrl.released,
-
-                    "efforts": ctrl.efforts,
-
-                    "criticalDefectsFound": ctrl.criticalDefectsFound,
-                    "mediumDefectsFound": ctrl.mediumDefectsFound,
-                    "lowDefectsFound": ctrl.lowDefectsFound,
-                    "highDefectsFound": ctrl.highDefectsFound,
-
-                    "criticalDefectsClosed": ctrl.criticalDefectsClosed,
-                    "mediumDefectsClosed": ctrl.mediumDefectsClosed,
-                    "lowDefectsClosed": ctrl.lowDefectsClosed,
-                    "highDefectsClosed": ctrl.highDefectsClosed,
-
-                    "criticalDefectsUnresolved": ctrl.criticalDefectsUnresolved,
-                    "mediumDefectsUnresolved": ctrl.mediumDefectsUnresolved,
-                    "lowDefectsUnresolved": ctrl.lowDefectsUnresolved,
-                    "highDefectsUnresolved": ctrl.highDefectsUnresolved,
-
-                    "endDate": ctrl.endDate,
-                    "startDate": ctrl.startDate,
-                    "projectId": id,
-                    "projectName": name
-                }*/
+                ctrl.sprintPayload.projectName = name;
+                ctrl.sprintPayload.projectId = id;
 
                 $http.post("/api//sprintMetrics", (ctrl.sprintPayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
@@ -875,12 +808,12 @@
 
         }
 
-        function updateReleaseController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, sprinpayl, names, ids, projectidsprint){
+        function updateReleaseController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, sprinpayl, names, ids, projectidsprint) {
             var ctrl = this;
             ctrl.ids = ids;
             ctrl.names = names;
 
-             $scope.options = [{
+            $scope.options = [{
                     value: '',
                     label: 'Choose a value'
                 },
@@ -893,10 +826,10 @@
                     label: 'Open'
                 },
             ];
-            
-            featureData.updateReleaseDta(ctrl.ids,ctrl.names).then(function(data){
-                  ctrl.fetchReleasedetails = data;
-             })
+
+            featureData.updateReleaseDta(ctrl.ids, ctrl.names).then(function(data) {
+                ctrl.fetchReleasedetails = data;
+            })
 
             ctrl.postRelease = function(proje) {
                 ctrl.releasePayload = {
@@ -929,7 +862,7 @@
                     "noofStoryCompleted": ctrl.noofStoryCompleted,
                     "noofStoryCommitted": ctrl.noofStoryCommitted
                 }
-               $http.post("/api/releaseMetrcis", (ctrl.releasePayload)).then(function(response) {
+                $http.post("/api/releaseMetrcis", (ctrl.releasePayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
                         templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
@@ -943,12 +876,13 @@
 
 
         }
-        function updateSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, sprinpayl, names, ids, projectidsprint){
-                var ctrl = this;
-                ctrl.names = names;
-                ctrl.ids = ids;
-                ctrl.ppid = projectidsprint;
-                $scope.options = [{
+
+        function updateSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, sprinpayl, names, ids, projectidsprint) {
+            var ctrl = this;
+            ctrl.names = names;
+            ctrl.ids = ids;
+            ctrl.ppid = projectidsprint;
+            $scope.options = [{
                     value: '',
                     label: 'Choose a value'
                 },
@@ -961,20 +895,20 @@
                     label: 'Open'
                 },
             ];
-             ctrl.fetchdetails = {};
+            ctrl.fetchdetails = {};
             //ctrl.fetchdetails = sprinpayl;
-            
-             featureData.updateSprintDta(ctrl.names,ctrl.ids).then(function(data){
-                  ctrl.fetchdetails = data;
-             })
-            ctrl.updateSprintCall = function(){
 
-               
+            featureData.updateSprintDta(ctrl.names, ctrl.ids).then(function(data) {
+                ctrl.fetchdetails = data;
+            })
+            ctrl.updateSprintCall = function() {
 
-            ctrl.sprintEditPayload = {
+
+
+                ctrl.sprintEditPayload = {
                     "projectId": projectidsprint,
                     "projectName": ctrl.names,
-                    
+
                     "sprintId": ctrl.fetchdetails.sid,
                     "sprintName": ctrl.fetchdetails.sprintData.sprintName,
                     //"desc": ctrl.desc,
@@ -984,7 +918,7 @@
                     "completedStoryPoints": ctrl.fetchdetails.sprintData.completedStoryPoints,
 
                     "committedStoriesCount": ctrl.fetchdetails.sprintData.committedIssueCount,
-                    "completedStoriesCount":ctrl.fetchdetails.sprintData.completedIssueCount,
+                    "completedStoriesCount": ctrl.fetchdetails.sprintData.completedIssueCount,
 
                     //"storiesAdded": ctrl.storiesAdded,
                     //"storypointsAdded": ctrl.storypointsAdded,
@@ -1012,9 +946,9 @@
 
                     "endDate": ctrl.fetchdetails.end,
                     "startDate": ctrl.fetchdetails.start,
-                    "storiesAdded":ctrl.fetchdetails.sprintData.burndown.issuesAdded.count,
-                    "storiesRemoed":ctrl.fetchdetails.sprintData.burndown.issuesRemoved.count
-            }
+                    "storiesAdded": ctrl.fetchdetails.sprintData.burndown.issuesAdded.count,
+                    "storiesRemoed": ctrl.fetchdetails.sprintData.burndown.issuesRemoved.count
+                }
 
                 $http.post("/api//sprintMetrics", (ctrl.sprintEditPayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
