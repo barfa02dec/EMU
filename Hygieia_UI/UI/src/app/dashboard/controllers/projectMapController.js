@@ -502,14 +502,14 @@
                     "openDefectsWithCriticalPriorityAndAgeBetween30To60Days": Number(ctrl.dataEdit.openDefectsByAge.Range3[0].Critical),
 
                     "openDefectsWithHighPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].High),
-                    "openDefectsWithLowPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].High),
-                    "openDefectsWithMediumPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].High),
-                    "openDefectsWithCriticalPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].High),
+                    "openDefectsWithLowPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].Low),
+                    "openDefectsWithMediumPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].Medium),
+                    "openDefectsWithCriticalPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].Critical),
 
                     "openDefectsWithHighPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].High),
-                    "openDefectsWithLowPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].High),
-                    "openDefectsWithMediumPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].High),
-                    "openDefectsWithCriticalPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].High),
+                    "openDefectsWithLowPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].Low),
+                    "openDefectsWithMediumPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].Medium),
+                    "openDefectsWithCriticalPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].Critical),
 
 
 
