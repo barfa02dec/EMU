@@ -88,14 +88,14 @@
                />
          </form-group>
       </div> -->
-      <div class="col-md-4">
+      <div class="col-md-6">
          <form-group input="stories1">
             <input
                type="text"
                name="stories1"
                class="form-control"
                placeholder="Number of stories"
-               ng-model="arc.startDates"
+               ng-model="urc.fetchReleasedetails.versionData.noofStoryPoints"
                /> 
             <!-- <div date-picker></div> -->
             <!-- <div date-picker timezone="Europe/London"></div> -->
@@ -103,18 +103,18 @@
                -->        
          </form-group>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
          <form-group input="story2">
             <input
                type="text"
                name="story2"
                class="form-control"
                placeholder="Number of story points"
-               ng-model="arc.noofStoryCommitted"
+               ng-model="urc.fetchReleasedetails.versionData.noofStoryCompleted"
                />
          </form-group>
       </div>
-      <div class="col-md-4">
+      <!-- <div class="col-md-4">
          <form-group input="Effort1">
             <input
                type="text"
@@ -124,7 +124,7 @@
                ng-model="arc.noofStoryCompleted"
                />
          </form-group>
-      </div>
+      </div> -->
       <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Found</label>
       <div class="col-md-2">
          <form-group input="Critical1" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
