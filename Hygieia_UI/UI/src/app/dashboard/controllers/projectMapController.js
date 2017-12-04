@@ -723,11 +723,11 @@
                     label: 'Choose a value'
                 },
                 {
-                    value: false,
+                    value: true,
                     label: 'Closed'
                 },
                 {
-                    value: true,
+                    value: false,
                     label: 'Open'
                 },
             ];
@@ -887,11 +887,11 @@
                     label: 'Choose a value'
                 },
                 {
-                    value: false,
+                    value: true,
                     label: 'Closed'
                 },
                 {
-                    value: true,
+                    value: false,
                     label: 'Open'
                 },
             ];

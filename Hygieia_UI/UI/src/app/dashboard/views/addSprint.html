@@ -9,7 +9,7 @@
         <div class="col-md-6">
         <form-group input="sprintid" errors="{required: 'Sprint id is required',maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
             <input
-                type="text"
+                type="number"
                 name="sprintid"
                 class="form-control"
                 placeholder="Sprint id"
@@ -34,7 +34,7 @@
                 ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
 
         </form-group>
-         <form-group input="description">
+        <!--  <form-group input="description">
             <input
                 type="text"
                 name="description"
@@ -44,10 +44,10 @@
                 autocomplete="off"
                />
 
-        </form-group>
+        </form-group> -->
          <form-group input="comittedstorypoints">
             <input
-                type="text"
+                type="number"
                 name="comittedstorypoints"
                 class="form-control"
                 placeholder="Committed story points"
@@ -57,7 +57,7 @@
         </form-group>
          <form-group input="comittedissuecount">
             <input
-                type="text"
+                type="number"
                 name="comittedissuecount"
                 class="form-control"
                 placeholder="Committed issue count"
@@ -66,10 +66,10 @@
         </form-group>
 
          <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Added</label>
-         <div class="col-md-4">
+         <div class="col-md-8">
          <form-group input="count">
             <input
-                type="text"
+                type="number"
                 name="count"
                 class="form-control"
                 placeholder="Count"
@@ -77,23 +77,23 @@
                 />
 
         </form-group></div>
-        <div class="col-md-4">
+       <!--  <div class="col-md-4">
          <form-group input="points" >
             <input
-                type="text"
+                type="number"
                 name="points"
                 class="form-control"
                 placeholder="Points"
               ng-model="asc.sprintPayload.storypointsAdded"
                 />
 
-        </form-group></div>
+        </form-group> </div> -->
 
           <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Removed</label>
-         <div class="col-md-4">
+         <div class="col-md-8">
          <form-group input="countstoryremoved">
             <input
-                type="text"
+                type="number"
                 name="countstoryremoved"
                 class="form-control"
                 placeholder="Count"
@@ -103,29 +103,29 @@
         </form-group></div>
         
 
-        
+     <!--    
         <div class="col-md-4">
          <form-group input="pointstoryremoved">
             <input
-                type="text"
+                type="number"
                 name="pointstoryremoved"
                 class="form-control"
                 placeholder="Points"
                ng-model="asc.sprintPayload.storypointsRemoed"
                />
 
-        </form-group></div>
+        </form-group> </div> -->
 
-         <form-group input="efforts">
+      <!--    <form-group input="efforts">
             <input
-                type="text"
+                type="number"
                 name="efforts"
                 class="form-control"
                 placeholder="Efforts (in PD)"
              ng-model="asc.sprintPayload.efforts"
                />
 
-        </form-group>
+        </form-group> -->
 
         </div>
 
@@ -135,7 +135,7 @@
         </form-group>
             <form-group input="completedstorypointscol2" >
             <input
-                type="text"
+                type="number"
                 name="completedstorypointscol2"
                 class="form-control"
                 placeholder="Completed story points"
@@ -145,7 +145,7 @@
 
         <form-group input="comittedissuecountcol2">
             <input
-                type="text"
+                type="number"
                 name="comittedissuecountcol2"
                 class="form-control"
                 placeholder="Completed issue count"
@@ -157,7 +157,7 @@
         <div class="col-md-2">
              <form-group input="criticalone">
             <input
-                type="text"
+                type="number"
                 name="criticalone"
                 class="form-control"
                 placeholder="Critical"
@@ -169,7 +169,7 @@
          <div class="col-md-2">
              <form-group input="highone">
             <input
-                type="text"
+                type="number"
                 name="highone"
                 class="form-control"
                 placeholder="High"
@@ -181,7 +181,7 @@
          <div class="col-md-2">
              <form-group input="mediumone">
             <input
-                type="text"
+                type="number"
                 name="mediumone"
                 class="form-control"
                 placeholder="Medium"
@@ -193,7 +193,7 @@
          <div class="col-md-2">
              <form-group input="lowone">
             <input
-                type="text"
+                type="number"
                 name="lowone"
                 class="form-control"
                 placeholder="Low"
@@ -206,7 +206,7 @@
         <div class="col-md-2">
              <form-group input="Criticaltwo">
             <input
-                type="text"
+                type="number"
                 name="Criticaltwo"
                 class="form-control"
                 placeholder="Critical"
@@ -218,7 +218,7 @@
          <div class="col-md-2">
              <form-group input="Hightwo">
             <input
-                type="text"
+                type="number"
                 name="Hightwo"
                 class="form-control"
                 placeholder="High"
@@ -230,7 +230,7 @@
          <div class="col-md-2">
              <form-group input="Mediumtwo">
             <input
-                type="text"
+                type="number"
                 name="Mediumtwo"
                 class="form-control"
                 placeholder="Medium"
@@ -242,7 +242,7 @@
          <div class="col-md-2">
              <form-group input="Lowtwo">
             <input
-                type="text"
+                type="number"
                 name="Lowtwo"
                 class="form-control"
                 placeholder="Low"
@@ -255,7 +255,7 @@
         <div class="col-md-2">
              <form-group input="Criticalthree">
             <input
-                type="text"
+                type="number"
                 name="Criticalthree"
                 class="form-control"
                 placeholder="Critical"
@@ -267,7 +267,7 @@
          <div class="col-md-2">
              <form-group input="Highthree">
             <input
-                type="text"
+                type="number"
                 name="Highthree"
                 class="form-control"
                 placeholder="High"
@@ -279,7 +279,7 @@
          <div class="col-md-2">
              <form-group input="Mediumthree">
             <input
-                type="text"
+                type="number"
                 name="Mediumthree"
                 class="form-control"
                 placeholder="Medium"
@@ -291,7 +291,7 @@
          <div class="col-md-2">
              <form-group input="Lowthree">
             <input
-                type="text"
+                type="number"
                 name="Lowthree"
                 class="form-control"
                 placeholder="Low"
@@ -351,8 +351,8 @@
          <div class="col-md-4">
              <datepicker date-format="dd-MM-yyyy" selector="form-control">
                <div class="input-group">
-                  <input class="form-control" ng-model="asc.sprintPayload.startDate" name="date1" placeholder="start date"/>
-                  <span class="input-group-addon" style="cursor: pointer">
+                  <input class="form-control" ng-model="asc.sprintPayload.startDate" name="date1" placeholder="start date" required/>
+                  <span class="input-group-addon" >
                   <i class="fa fa-lg fa-calendar"></i>
                   </span>
                </div>
@@ -405,10 +405,10 @@
                  <td>{{sprintdata.sprintData.sprintId}}</td>
                <td>{{sprintdata.sprintData.sprintName}}</td>
 
-                 <td ng-if="asc.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' "><span>
+                 <td ng-if="sprintdata.closed == true"><span>
                     <img src="assets/images/icon_completed.png">
                  </span>CLOSED</td> 
-                  <td ng-if="asc.mySplit(sprintdata.sprintData.state,0) !== 'CLOSED' "><span>
+                  <td ng-if="sprintdata.closed == false"><span>
                     <img src="assets/images/icon_inprogress.png">
                  </span>OPEN
                  <span style="margin-left: 1%;" ng-click="asc.updateSprint(sprintdata)">

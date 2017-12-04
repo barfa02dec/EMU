@@ -228,10 +228,11 @@ Issues/Defects</div>
                  <td>{{sprintdata.sprintData.sprintId}}</td>
                <td>{{sprintdata.sprintData.sprintName}}</td>
 
-                 <td ng-if="jdv.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' "><span>
+                 <td ng-if="sprintdata.closed == true"><span>
                     <img src="assets/images/icon_completed.png">
                  </span>CLOSED</td> 
-                  <td ng-if="jdv.mySplit(sprintdata.sprintData.state,0) !== 'CLOSED' "><span>
+
+                  <td ng-if="sprintdata.closed == false"><span>
                     <svg version="1.1"
             x="0px" y="0px" width="22px" height="19px" viewBox="0 0 25 19" style="enable-background:new 0 0 25 19;" xml:space="preserve">
 <style type="text/css">
