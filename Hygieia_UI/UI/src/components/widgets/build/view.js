@@ -24,17 +24,28 @@
             plugins: [
                 Chartist.plugins.gridBoundaries(),
                 Chartist.plugins.lineAboveArea(),
-                Chartist.plugins.tooltip(),
-                Chartist.plugins.pointHalo()
+                Chartist.plugins.tooltip({
+                  className: 'fixed-build-tooltip'
+                }),
+                Chartist.plugins.pointHalo(),
+                Chartist.plugins.axisLabels({
+                    stretchFactor: 1.4,
+                    axisX: {
+                        labels: [
+                            moment().subtract(14, 'days').format('MMM DD'),
+                            moment().subtract(7, 'days').format('MMM DD'),
+                            moment().format('MMM DD')
+                        ]
+                    }
+                })
             ],
             showArea: true,
-            lineSmooth: false,
+            lineSmooth: true,
             fullWidth: true,
-            chartPadding: 28,
-            axisX: {
-                showLabel: false,
-                offset:10
-            },
+                
+            tackBars: true,
+            centerLabels: true,
+           
             axisY: {
                 labelInterpolationFnc: function(value) {
                     return value === 0 ? 0 : ((Math.round(value * 100) / 100) + '');

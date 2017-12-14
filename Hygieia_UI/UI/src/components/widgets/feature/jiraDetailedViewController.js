@@ -86,6 +86,12 @@
             ctrl.ageOfOpenDefects = data.defectsByAgeDetails;
             ctrl.medlow = parseInt(ctrl.lowIssue) + (ctrl.mediumIssue);
             var highArr = [];
+            ctrl.dataEnv = _.keys(data.defectsByEnvironment);
+
+            ctrl.defectsByEnvVal = function(val){
+              
+              ctrl.dataEnvVal = _.values(data.defectsByEnvironment);
+            }
             for (var key in ctrl.graphData) {
                 if (ctrl.graphData.hasOwnProperty(key)) {
                     highArr.push(ctrl.graphData[key]);
@@ -157,12 +163,12 @@
 
                //Adding X axis label values into Array
                for (var i = 0; i < highArr.length; i++) {
-                if (highArr[i][0].hasOwnProperty("Resolution Strategy")) {
+                //if (highArr[i][0].hasOwnProperty("Resolution Strategy")) {
                 jiraLebels.push(highArr[i][0]['Resolution Strategy']);
-              }
-              else{
-                jiraLebels.push(0);
-              }
+              //}
+              //else{
+                //jiraLebels.push(0);
+              //}
             }
            
            
@@ -299,12 +305,61 @@
 
 
     //Fetching Jira-Sprint Data
-
+      ctrl.sprintId = $cookies.get('sprintId');
       featureData.sprintDta(ctrl.projectpathId,ctrl.projectpath).then(sprintdataProcess);
+      featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
+        
+        
+         function fetchLatestSprint(data){
+           var burnData = data.sprintData.burnDownHistory;
 
+             var burnDowndata = ['Burn Down'];
+              var xaxisDate = [];
+             burnData.forEach(function(burndata){
+                burnDowndata.push(burndata.allIssuesEstimateSum)
+                xaxisDate.push(moment(burndata.miliseconds).format('MMM DD'))
+             })
+            
+
+             $scope.burnDown = c3.generate({
+                bindto: '#burnDown', 
+                             
+                data: {
+                  columns: [
+                    burnDowndata
+                  ],
+                  type: 'line'
+                },
+                axis: {
+                    x:{
+                        type: 'category',
+                        categories: xaxisDate
+                    }
+                },
+                color: {
+                pattern: ['#ff4d4d']
+            },
+           legend: {
+    position: 'inset',
+    inset: {
+        anchor: 'top-left',
+        x: 20,
+        y: -40,
+        step: 1
+    }
+},
+padding: {
+    top: 40
+}
+  
+            });
+
+         }
       //Processing Jira-Sprint Data
       function sprintdataProcess(data){
         ctrl.jirametricsdata  = data;
+        ctrl.sprintIds = ctrl.jirametricsdata[5].sprintData.sprintId;
+         $cookies.put('sprintId', ctrl.sprintIds);
         var progress = ['Defect Closure'];
         var comittedStoryPoints = ['Committed Story Points'];
         var completedStoryPoint = ['Completed Story Points'];
@@ -403,6 +458,8 @@
           }
           
        }
+
+     
 
        /*for(var i=0;i<data.length;i++){
           if(data[i].sprintData != undefined){

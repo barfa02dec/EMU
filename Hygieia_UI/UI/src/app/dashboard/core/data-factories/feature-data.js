@@ -86,9 +86,9 @@
 					});
 		}
 
-		function getLatestSprint() {  
+		function getLatestSprint(sidd,pidd) {  
 			 
-			return $http.get('/api/sprintDetails?sid=' +"543" + "&projectId=" + "10300")
+			return $http.get('/api/sprintDetails?sid=' +sidd+ "&projectId=" + pidd)
 					.then(function(response) { 
 						return response.data;
 					});
