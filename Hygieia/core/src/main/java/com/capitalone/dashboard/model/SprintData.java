@@ -3,6 +3,8 @@ package com.capitalone.dashboard.model;
 
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SprintData {
 
@@ -29,7 +31,17 @@ public class SprintData {
     
     private Burndown burndown;
     
-    public Long getSprintId() {
+    private Set<BurnDownHistory> burnDownHistory = new HashSet<BurnDownHistory>();
+    
+	public Set<BurnDownHistory> getBurnDownHistory() {
+		return burnDownHistory;
+	}
+
+	public void setBurnDownHistory(Set<BurnDownHistory> burnDownHistory) {
+		this.burnDownHistory = burnDownHistory;
+	}
+
+	public Long getSprintId() {
 		return sprintId;
 	}
 

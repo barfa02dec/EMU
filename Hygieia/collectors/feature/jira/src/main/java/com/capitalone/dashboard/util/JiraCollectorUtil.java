@@ -212,7 +212,7 @@ public class JiraCollectorUtil {
 		}
 	}
 	
-	public static void getRecentSprintMetrics(JiraSprint jiraSprint, String projectId,NewFeatureSettings featureSettings){
+	public static void getRecentSprintMetrics(JiraSprint jiraSprint, String projectId,NewFeatureSettings featureSettings) {
 		LOGGER.info("Processing Sprint"+jiraSprint.getName());
 		String originalSprintData=fectSprintMetrcis(projectId,jiraSprint.getId(),featureSettings.getJiraBaseUrl(),featureSettings.getJiraCredentials(),featureSettings.getRapidView());
 		SprintData sprintdata =ClientUtil.parseToSprintData(jiraSprint,originalSprintData);
@@ -230,13 +230,8 @@ public class JiraCollectorUtil {
 		   sprintdata.getBurndown().getInitialIssueCount().setStoryPoints(sprintdata.getBurndown().getInitialIssueCount().getStoryPoints() - addedstorypoints);
 		   sprintdata.setCommittedStoryPoints(sprintdata.getCommittedStoryPoints() - addedstorypoints);
 		}
-				
-		json = getVelocityChart(featureSettings.getRapidView(),featureSettings.getJiraCredentials(),featureSettings.getJiraBaseUrl());
-		Double estimate = ClientUtil.getSprintVelocity(json, jiraSprint.getId(), "estimated");
-		if(estimate != null){
-			sprintdata.getBurndown().getInitialIssueCount().setStoryPoints(estimate.doubleValue());
-			sprintdata.setCommittedStoryPoints(estimate.doubleValue());
-		}
+		
+		
 		// code changes incorporated from PMD-- ENDS
 		List<JiraIssue> issues = new ArrayList<JiraIssue>();
 		String startDate=DateUtil.format(jiraSprint.getSprintData().getStartDate(),	ClientUtil.DATE_FORMAT_5);
@@ -263,6 +258,7 @@ public class JiraCollectorUtil {
 		jiraSprint.getSprintData().setDefectsUnresolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 		
 	}
+	
 	public static VersionData getReleaseData(String versionJson, String projectId ,String baseUrl,String base64Credentials,String rapidViewId){
 		
 		VersionData versionData = parseToVersionData(versionJson);
@@ -402,6 +398,7 @@ public class JiraCollectorUtil {
     	return releasedata;		
 	}
 
+	
 	private static String isJsonObjectNull(JsonElement gsonelement){
 		return gsonelement == null ? null : gsonelement.toString();
 	}
@@ -481,5 +478,4 @@ public class JiraCollectorUtil {
 			return null;
 		}
 	}
-
 }

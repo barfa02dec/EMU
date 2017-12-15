@@ -235,7 +235,7 @@ public class DefectSummeryServiceImpl implements DefectSummeryService {
 		rl5.add(rm5);
 		
 		fixeddefectsByResolutions.put("Range1", rl1);
-		fixeddefectsByResolutions.put("Range2", l2);
+		fixeddefectsByResolutions.put("Range2", rl2);
 		fixeddefectsByResolutions.put("Range3", rl3);
 		fixeddefectsByResolutions.put("Range4", rl4);
 		fixeddefectsByResolutions.put("Range5", rl5);
