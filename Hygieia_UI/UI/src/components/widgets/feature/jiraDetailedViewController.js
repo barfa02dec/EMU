@@ -307,7 +307,7 @@
     //Fetching Jira-Sprint Data
       ctrl.sprintId = $cookies.get('sprintId');
       featureData.sprintDta(ctrl.projectpathId,ctrl.projectpath).then(sprintdataProcess);
-      featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
+      /*featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
         
         
          function fetchLatestSprint(data){
@@ -354,12 +354,12 @@ padding: {
   
             });
 
-         }
+         }*/
       //Processing Jira-Sprint Data
       function sprintdataProcess(data){
         ctrl.jirametricsdata  = data;
-        ctrl.sprintIds = ctrl.jirametricsdata[5].sprintData.sprintId;
-         $cookies.put('sprintId', ctrl.sprintIds);
+        /*ctrl.sprintIds = ctrl.jirametricsdata[5].sprintData.sprintId;
+         $cookies.put('sprintId', ctrl.sprintIds);*/
         var progress = ['Defect Closure'];
         var comittedStoryPoints = ['Committed Story Points'];
         var completedStoryPoint = ['Completed Story Points'];
