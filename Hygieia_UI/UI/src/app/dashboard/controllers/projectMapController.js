@@ -674,8 +674,8 @@
                     "mediumDefectsUnresolved": ctrl.mediumDefectsUnresolved,
                     "lowDefectsUnresolved": ctrl.lowDefectsUnresolved,
 
-                    "noofStoryCompleted": ctrl.noofStoryCompleted,
-                    "noofStoryCommitted": ctrl.noofStoryCommitted
+                    "noofStoryCompleted": ctrl.noofStoryCommitted,
+                    "noofStoryCommitted": ctrl.noofStoryCompleted
                 }
                 $http.post("/api/releaseMetrcis", (ctrl.releasePayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");

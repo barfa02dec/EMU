@@ -207,42 +207,23 @@
             <div class="col-md-6" style="padding-bottom: 2%">
                <div class="col-md-12">
                   <div class="col-md-10 sprint-box-val-head sprint-priority-env-head-padding jira-header-padding-props">Open Defects By Enviornment</div>
-                  <div class="col-md-2"></div>
+                  <div class="col-md-2">
+                     <select ng-options="value as key for (key , value) in jdv.dataEnv" ng-model='jdv.environmemt'>
+                     </select>
+                  </div>
                </div>
                <div class="col-md-12" style="padding-top: 4%;
                   ">
                   <div class="col-md-2" >
                      <div class="total-builds-text-props" style="border:4px solid rgb(172,8,4);color: #000;">
-                        <span >0</span>
+                        <span >{{jdv.environmemt}}</span>
                      </div>
                   </div>
-                  <div class="col-md-2" >
-                     <div class="total-builds-text-props" style="border:4px solid rgb(222,29,24);color: #000;">
-                        <span >0</span>
-                     </div>
-                  </div>
-                  <div class="col-md-2" >
-                     <div class="total-builds-text-props" style="border:4px solid rgb(255, 191, 0);color: #000;">
-                        <span >0</span>
-                     </div>
-                  </div>
-                  <div class="col-md-2" >
-                     <div class="total-builds-text-props" style="border:4px solid rgb(105, 203, 143);color: #000;">
-                        <span >0</span>
-                     </div>
-                  </div>
-                  <div class="col-md-2" >
-                     <div class="total-builds-text-props" style="border:4px solid rgb(5, 169, 68);color: #000;">
-                        <span >0</span>
-                     </div>
-                  </div>
+                 
                </div>
                <div class="col-md-12 font-props">
-                  <div class="col-md-2 padding-highest-text">HIGHEST</div>
-                  <div class="col-md-2 padding-high-text">HIGH</div>
-                  <div class="col-md-2 padding-medium-text">MEDIUM</div>
-                  <div class="col-md-2 padding-low-text">LOW</div>
-                  <div class="col-md-2 padding-lowest-text">LOWEST</div>
+                  <div class="col-md-2 padding-highest-text">COUNT</div>
+                  
                </div>
             </div>
             <div class="col-md-6" style="padding-bottom: 2%">
