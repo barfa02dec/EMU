@@ -86,7 +86,7 @@
             ctrl.ageOfOpenDefects = data.defectsByAgeDetails;
             ctrl.medlow = parseInt(ctrl.lowIssue) + (ctrl.mediumIssue);
             var highArr = [];
-            ctrl.dataEnv = _.keys(data.defectsByEnvironment);
+            ctrl.dataEnv = data.defectsByEnvironment;
 
             ctrl.defectsByEnvVal = function(val){
               
@@ -106,7 +106,7 @@
                     else{
                         highest.push(0);
                        }
-                     }
+                    }
 
                   //Adding Low values into Array
                 for (var i = 0; i < highArr.length; i++) {
@@ -164,7 +164,7 @@
                //Adding X axis label values into Array
                for (var i = 0; i < highArr.length; i++) {
                 //if (highArr[i][0].hasOwnProperty("Resolution Strategy")) {
-                jiraLebels.push(highArr[i][0]['Resolution Strategy']);
+                jiraLebels.push(highArr[i][0]['Defect Resolution Strategy']);
               //}
               //else{
                 //jiraLebels.push(0);
@@ -307,7 +307,7 @@
     //Fetching Jira-Sprint Data
       ctrl.sprintId = $cookies.get('sprintId');
       featureData.sprintDta(ctrl.projectpathId,ctrl.projectpath).then(sprintdataProcess);
-      featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
+      /*featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
         
         
          function fetchLatestSprint(data){
@@ -354,12 +354,12 @@ padding: {
   
             });
 
-         }
+         }*/
       //Processing Jira-Sprint Data
       function sprintdataProcess(data){
         ctrl.jirametricsdata  = data;
-        ctrl.sprintIds = ctrl.jirametricsdata[5].sprintData.sprintId;
-         $cookies.put('sprintId', ctrl.sprintIds);
+        /*ctrl.sprintIds = ctrl.jirametricsdata[5].sprintData.sprintId;
+         $cookies.put('sprintId', ctrl.sprintIds);*/
         var progress = ['Defect Closure'];
         var comittedStoryPoints = ['Committed Story Points'];
         var completedStoryPoint = ['Completed Story Points'];
