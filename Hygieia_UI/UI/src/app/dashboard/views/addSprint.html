@@ -2,39 +2,16 @@
 <script src="assets/images/angular-datepicker.js"></script>
 <link href="assets/images/fld/angular-datepicker.css" rel="stylesheet" type="text/css" />
 <script src="assets/images/fld/angular-datepicker.js"></script>
-
 <widget-modal widget-modal-title="Add Sprint" class="border-prop-modals">
     <form name="cdf" class="form" ng-submit="asc.postSprint()" ng-if="asc.normalformText" novalidate>
-      
         <div class="col-md-6">
-        <form-group input="sprintid" errors="{required: 'Sprint id is required',maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
-            <input
-                type="number"
-                name="sprintid"
-                class="form-control"
-                placeholder="Sprint id"
-                ng-model="asc.sprintPayload.sprintId"
-                required
-                maxlength="50"
-                autocomplete="off"
-                ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
-
-        </form-group>
-       
-         <form-group input="sprintname" errors="{required: 'Sprint name is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
-            <input
-                type="text"
-                name="sprintname"
-                class="form-control"
-                placeholder="Sprint name"
-                ng-model="asc.sprintPayload.sprintName"
-                required
-                maxlength="50"
-                autocomplete="off"
-                ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
-
-        </form-group>
-        <!--  <form-group input="description">
+            <form-group input="sprintid" errors="{required: 'Sprint id is required',maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
+                <input type="number" name="sprintid" class="form-control" placeholder="Sprint id" ng-model="asc.sprintPayload.sprintId" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
+            </form-group>
+            <form-group input="sprintname" errors="{required: 'Sprint name is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
+                <input type="text" name="sprintname" class="form-control" placeholder="Sprint name" ng-model="asc.sprintPayload.sprintName" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
+            </form-group>
+            <!--  <form-group input="description">
             <input
                 type="text"
                 name="description"
@@ -45,39 +22,19 @@
                />
 
         </form-group> -->
-         <form-group input="comittedstorypoints">
-            <input
-                type="number"
-                name="comittedstorypoints"
-                class="form-control"
-                placeholder="Committed story points"
-               ng-model="asc.sprintPayload.committedStoryPoints"
-                />
-
-        </form-group>
-         <form-group input="comittedissuecount">
-            <input
-                type="number"
-                name="comittedissuecount"
-                class="form-control"
-                placeholder="Committed issue count"
-                ng-model="asc.sprintPayload.committedStoriesCount"/>
-
-        </form-group>
-
-         <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Added</label>
-         <div class="col-md-8">
-         <form-group input="count">
-            <input
-                type="number"
-                name="count"
-                class="form-control"
-                placeholder="Count"
-              ng-model="asc.sprintPayload.storiesAdded"
-                />
-
-        </form-group></div>
-       <!--  <div class="col-md-4">
+            <form-group input="comittedstorypoints">
+                <input type="number" name="comittedstorypoints" class="form-control" placeholder="Committed story points" ng-model="asc.sprintPayload.committedStoryPoints" />
+            </form-group>
+            <form-group input="comittedissuecount">
+                <input type="number" name="comittedissuecount" class="form-control" placeholder="Committed issue count" ng-model="asc.sprintPayload.committedStoriesCount" />
+            </form-group>
+            <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Added</label>
+            <div class="col-md-8">
+                <form-group input="count">
+                    <input type="number" name="count" class="form-control" placeholder="Count" ng-model="asc.sprintPayload.storiesAdded" />
+                </form-group>
+            </div>
+            <!--  <div class="col-md-4">
          <form-group input="points" >
             <input
                 type="number"
@@ -88,22 +45,13 @@
                 />
 
         </form-group> </div> -->
-
-          <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Removed</label>
-         <div class="col-md-8">
-         <form-group input="countstoryremoved">
-            <input
-                type="number"
-                name="countstoryremoved"
-                class="form-control"
-                placeholder="Count"
-               ng-model="asc.sprintPayload.storiesRemoed"
-               />
-
-        </form-group></div>
-        
-
-     <!--    
+            <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Removed</label>
+            <div class="col-md-8">
+                <form-group input="countstoryremoved">
+                    <input type="number" name="countstoryremoved" class="form-control" placeholder="Count" ng-model="asc.sprintPayload.storiesRemoed" />
+                </form-group>
+            </div>
+            <!--    
         <div class="col-md-4">
          <form-group input="pointstoryremoved">
             <input
@@ -115,8 +63,7 @@
                />
 
         </form-group> </div> -->
-
-      <!--    <form-group input="efforts">
+            <!--    <form-group input="efforts">
             <input
                 type="number"
                 name="efforts"
@@ -126,180 +73,81 @@
                />
 
         </form-group> -->
-
         </div>
-
-          <div class="col-md-6">
-          <form-group input="selectedTemplate" errors="{required: 'Status is required'}">
-             <select ng-options="o.value as o.label for o in options" ng-model="asc.sprintPayload.released" class="form-control"></select>
-        </form-group>
-            <form-group input="completedstorypointscol2" >
-            <input
-                type="number"
-                name="completedstorypointscol2"
-                class="form-control"
-                placeholder="Completed story points"
-               ng-model="asc.sprintPayload.completedStoryPoints"
-               />
-        </form-group>
-
-        <form-group input="comittedissuecountcol2">
-            <input
-                type="number"
-                name="comittedissuecountcol2"
-                class="form-control"
-                placeholder="Completed issue count"
-             ng-model="asc.sprintPayload.completedStoriesCount"
-               />
-        </form-group>
-
-        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Found</label>
-        <div class="col-md-2">
-             <form-group input="criticalone">
-            <input
-                type="number"
-                name="criticalone"
-                class="form-control"
-                placeholder="Critical"
-               ng-model="asc.sprintPayload.criticalDefectsFound"
-               />
-        </form-group>  
-        </div>
-
-         <div class="col-md-2">
-             <form-group input="highone">
-            <input
-                type="number"
-                name="highone"
-                class="form-control"
-                placeholder="High"
-               ng-model="asc.sprintPayload.highDefectsFound"
-              />
-        </form-group>  
-        </div>
-
-         <div class="col-md-2">
-             <form-group input="mediumone">
-            <input
-                type="number"
-                name="mediumone"
-                class="form-control"
-                placeholder="Medium"
-             ng-model="asc.sprintPayload.mediumDefectsFound"
-               />
-        </form-group>  
-        </div>
-
-         <div class="col-md-2">
-             <form-group input="lowone">
-            <input
-                type="number"
-                name="lowone"
-                class="form-control"
-                placeholder="Low"
-            ng-model="asc.sprintPayload.lowDefectsFound"
-                />
-        </form-group>  
-        </div>
-
-        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Resolved</label>
-        <div class="col-md-2">
-             <form-group input="Criticaltwo">
-            <input
-                type="number"
-                name="Criticaltwo"
-                class="form-control"
-                placeholder="Critical"
-             ng-model="asc.sprintPayload.criticalDefectsClosed"
-               />
-        </form-group>  
-        </div>
-
-         <div class="col-md-2">
-             <form-group input="Hightwo">
-            <input
-                type="number"
-                name="Hightwo"
-                class="form-control"
-                placeholder="High"
-                ng-model="asc.sprintPayload.highDefectsClosed"
-               />
-        </form-group>  
-        </div>
-
-         <div class="col-md-2">
-             <form-group input="Mediumtwo">
-            <input
-                type="number"
-                name="Mediumtwo"
-                class="form-control"
-                placeholder="Medium"
-              ng-model="asc.sprintPayload.mediumDefectsClosed"
-               />
-        </form-group>  
-        </div>
-
-         <div class="col-md-2">
-             <form-group input="Lowtwo">
-            <input
-                type="number"
-                name="Lowtwo"
-                class="form-control"
-                placeholder="Low"
-                ng-model="asc.sprintPayload.lowDefectsClosed"
-               />
-        </form-group>  
-        </div>
-
-        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Unresolved</label>
-        <div class="col-md-2">
-             <form-group input="Criticalthree">
-            <input
-                type="number"
-                name="Criticalthree"
-                class="form-control"
-                placeholder="Critical"
-                ng-model="asc.sprintPayload.criticalDefectsUnresolved"
-               />
-        </form-group>  
-        </div>
-
-         <div class="col-md-2">
-             <form-group input="Highthree">
-            <input
-                type="number"
-                name="Highthree"
-                class="form-control"
-                placeholder="High"
-                ng-model="asc.sprintPayload.highDefectsUnresolved"
-               />
-        </form-group>  
-        </div>
-
-         <div class="col-md-2">
-             <form-group input="Mediumthree">
-            <input
-                type="number"
-                name="Mediumthree"
-                class="form-control"
-                placeholder="Medium"
-              ng-model="asc.sprintPayload.mediumDefectsUnresolved"
-               />
-        </form-group>  
-        </div>
-
-         <div class="col-md-2">
-             <form-group input="Lowthree">
-            <input
-                type="number"
-                name="Lowthree"
-                class="form-control"
-                placeholder="Low"
-             ng-model="asc.sprintPayload.lowDefectsUnresolved"
-              />
-        </form-group>  
-        </div>
-<!-- 
+        <div class="col-md-6">
+            <form-group input="selectedTemplate" errors="{required: 'Status is required'}">
+                <select ng-options="o.value as o.label for o in options" ng-model="asc.sprintPayload.released" class="form-control"></select>
+            </form-group>
+            <form-group input="completedstorypointscol2">
+                <input type="number" name="completedstorypointscol2" class="form-control" placeholder="Completed story points" ng-model="asc.sprintPayload.completedStoryPoints" />
+            </form-group>
+            <form-group input="comittedissuecountcol2">
+                <input type="number" name="comittedissuecountcol2" class="form-control" placeholder="Completed issue count" ng-model="asc.sprintPayload.completedStoriesCount" />
+            </form-group>
+            <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Found</label>
+            <div class="col-md-2">
+                <form-group input="criticalone">
+                    <input type="number" name="criticalone" class="form-control" placeholder="Critical" ng-model="asc.sprintPayload.criticalDefectsFound" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="highone">
+                    <input type="number" name="highone" class="form-control" placeholder="High" ng-model="asc.sprintPayload.highDefectsFound" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="mediumone">
+                    <input type="number" name="mediumone" class="form-control" placeholder="Medium" ng-model="asc.sprintPayload.mediumDefectsFound" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="lowone">
+                    <input type="number" name="lowone" class="form-control" placeholder="Low" ng-model="asc.sprintPayload.lowDefectsFound" />
+                </form-group>
+            </div>
+            <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Resolved</label>
+            <div class="col-md-2">
+                <form-group input="Criticaltwo">
+                    <input type="number" name="Criticaltwo" class="form-control" placeholder="Critical" ng-model="asc.sprintPayload.criticalDefectsClosed" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="Hightwo">
+                    <input type="number" name="Hightwo" class="form-control" placeholder="High" ng-model="asc.sprintPayload.highDefectsClosed" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="Mediumtwo">
+                    <input type="number" name="Mediumtwo" class="form-control" placeholder="Medium" ng-model="asc.sprintPayload.mediumDefectsClosed" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="Lowtwo">
+                    <input type="number" name="Lowtwo" class="form-control" placeholder="Low" ng-model="asc.sprintPayload.lowDefectsClosed" />
+                </form-group>
+            </div>
+            <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Unresolved</label>
+            <div class="col-md-2">
+                <form-group input="Criticalthree">
+                    <input type="number" name="Criticalthree" class="form-control" placeholder="Critical" ng-model="asc.sprintPayload.criticalDefectsUnresolved" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="Highthree">
+                    <input type="number" name="Highthree" class="form-control" placeholder="High" ng-model="asc.sprintPayload.highDefectsUnresolved" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="Mediumthree">
+                    <input type="number" name="Mediumthree" class="form-control" placeholder="Medium" ng-model="asc.sprintPayload.mediumDefectsUnresolved" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="Lowthree">
+                    <input type="number" name="Lowthree" class="form-control" placeholder="Low" ng-model="asc.sprintPayload.lowDefectsUnresolved" />
+                </form-group>
+            </div>
+            <!-- 
         <label class="control-label col-md-4 createproj-label-props" for="pwd">Sprint Defects Unresolved</label>
         <div class="col-md-2">
              <form-group input="Criticalfour">
@@ -348,7 +196,7 @@
                />
         </form-group>  
         </div> -->
-         <div class="col-md-6">
+            <div class="col-md-6">
                 <form-group input="date1">
                     <datepicker date-format="yyyy-MM-dd" selector="form-control" date-max-limit="{{asc.sprintPayload.endDate}}">
                         <input class="form-control font-fontawesome font-light" ng-model="asc.sprintPayload.startDate" name="date1" placeholder="  Start date" required/>
@@ -362,61 +210,40 @@
                     </datepicker>
                 </form-group>
             </div>
-
         </div>
-          <form-group>
-        <div  style="padding-left: 12px;">
-            
-              
+        <form-group>
+            <div style="padding-left: 12px;">
                 <button ng-if="asc.addScreen" type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 50px;width: 13%;margin-left: 20%;">Create</button>
-
-                  <button ng-if="asc.updateScreen"  type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 50px;width: 13%;margin-left: 20%;">Update</button>
-
-                  <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;margin-top: 44px;width: 13% !important;" ng-click="$close()">Cancel</button>
-        </div>
-         </form-group> 
+                <button ng-if="asc.updateScreen" type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 50px;width: 13%;margin-left: 20%;">Update</button>
+                <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;margin-top: 44px;width: 13% !important;" ng-click="$close()">Cancel</button>
+            </div>
+        </form-group>
     </form>
-  <div class="" ng-click="asc.hideForm()"  >
-  <hr>
-   <span ng-if="asc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
+    <div class="" ng-click="asc.hideForm()">
+        <hr>
+        <span ng-if="asc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
    View previously added sprints</span>
-   <div class="" ng-if="asc.prevousText">
-       <table class="table table-bordered table-striped">
-        <thead>
-        <tr style="font-weight:400;font-size:11px">
-            <th>Sprint ID</th>
-             <th>Sprint Name</th>
-             <th>Sprint Status</th>
-
-        </tr>
-        </thead>
-        <tbody>
-            <tr class="font-props" ng-repeat="sprintdata in asc.spAllDetails">
-             {{sprintdata.sprintData.state}}
-                 <td>{{sprintdata.sprintData.sprintId}}</td>
-               <td>{{sprintdata.sprintData.sprintName}}</td>
-
-                 <td ng-if="sprintdata.closed == true"><span>
+        <div class="" ng-if="asc.prevousText">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr style="font-weight:400;font-size:11px">
+                        <th>Sprint ID</th>
+                        <th>Sprint Name</th>
+                        <th>Sprint Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="font-props" ng-repeat="sprintdata in asc.spAllDetails">
+                        {{sprintdata.sprintData.state}}
+                        <td>{{sprintdata.sprintData.sprintId}}</td>
+                        <td>{{sprintdata.sprintData.sprintName}}</td>
+                        <td ng-if="sprintdata.closed == true"><span>
                     <img src="assets/images/icon_completed.png">
-                 </span>CLOSED</td> 
-                  <td ng-if="sprintdata.closed == false"><span>
-                    <svg version="1.1"
-                           x="0px" y="0px" width="22px" height="19px" viewBox="0 0 25 19" style="enable-background:new 0 0 25 19;" xml:space="preserve">
-                           <style type="text/css">
-                              .stopen0{fill:#FF8A22;}
-                           </style>
-                           <defs></defs>
-                           <g>
-                              <path class="stopen0" d="M5.8,15H3l0.8-0.8c0.4-0.4,0.4-0.9,0-1.3c-0.4-0.4-0.9-0.4-1.3,0l-2.3,2.3c-0.4,0.4-0.4,0.9,0,1.3l2.3,2.3
-                                 C2.7,18.9,3,19,3.2,19c0.2,0,0.5-0.1,0.6-0.3c0.4-0.4,0.4-0.9,0-1.3l-0.6-0.6H8L5.8,15z M13.2,0c-1.3,0-2.6,0.3-3.7,0.8h0.2
-                                 c0.5,0,1,0.4,1,1v0.5c0.8-0.3,1.6-0.5,2.5-0.5c3.6,0,6.6,3,6.6,6.6c0,2-0.9,3.8-2.4,5.1H20c1.1-1.4,1.7-3.2,1.7-5.1
-                                 C21.7,3.8,17.9,0,13.2,0z"/>
-                              <path d="M13.2,15c-3.6,0-6.6-3-6.6-6.6c0-1.3,0.4-2.5,1-3.5v1c0,0.5,0.4,0.9,0.9,0.9c0.5,0,0.9-0.4,0.9-0.9V2.7
-                                 c0-0.5-0.4-0.9-0.9-0.9H5.3c-0.5,0-0.9,0.4-0.9,0.9s0.4,0.9,0.9,0.9h1c-1,1.4-1.5,3-1.5,4.8c0,4.7,3.8,8.4,8.4,8.4H25V15H13.2z"/>
-                           </g>
-                        </svg>
+                 </span>CLOSED</td>
+                        <td ng-if="sprintdata.closed == false"><span>
+                    <img src="assets/images/icon_inprogress.png">
                  </span>OPEN
-                 <span style="margin-left: 1%;" ng-click="asc.updateSprint(sprintdata)">
+                            <span style="margin-left: 1%;" ng-click="asc.updateSprint(sprintdata)">
                      <svg version="1.1"
             x="0px" y="0px" width="13px" height="13px" viewBox="0 0 19 19" style="enable-background:new 0 0 19 19;" xml:space="preserve">
 <style type="text/css">
@@ -432,28 +259,16 @@
 </svg>
 
                  </span>
-
-                 </td> 
-
-              <!--     <td><span ng-if="!jdv.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' ">
+                        </td>
+                        <!--     <td><span ng-if="!jdv.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' ">
                     <img src="assets/images/icon_completed.png">
-                 </span>{{sprintdata.sprintData.state}}</td> --> 
-
-                
-                 
-               
-               
- </tr>
-
-  
-
-        </tbody>
-
-    </table>
-      </div>
-    
-   </div>
-     <div ng-click="asc.showForm()">
-      <span ng-if="!asc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
+                 </span>{{sprintdata.sprintData.state}}</td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div ng-click="asc.showForm()">
+        <span ng-if="!asc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
    Add sprint</span></div>
 </widget-modal>
