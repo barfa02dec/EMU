@@ -545,7 +545,7 @@
                     $rootScope.ttt = true;
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/defectaddConfirm.html',
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/defectUpdateConfirmation.html',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -798,7 +798,7 @@
                 $http.post("/api//sprintMetrics", (ctrl.sprintPayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/sprintAddConfirmation.html',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -865,7 +865,7 @@
                 $http.post("/api/releaseMetrcis", (ctrl.releasePayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/releaseUpdateConfirmation.html',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -953,7 +953,7 @@
                 $http.post("/api//sprintMetrics", (ctrl.sprintEditPayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
+                        templateUrl: 'app/dashboard/views/ConfirmationModals/sprintUpdateConfirmation.html',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
