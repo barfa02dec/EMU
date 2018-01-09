@@ -27,7 +27,7 @@
                      <form-group input="id" style="padding-top: 10px;" errors="{exists:'User already exists', required:'Username is required',minlength: 'Username should be of minimum 4 characters',pattern: 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
                         <label for="name" class="cols-sm-2 control-label upper-label-props">Username or email</label>
                         <div class="cols-sm-10">
-                           <div class="input-group inputgroup-props">
+                            <div class="input-group inputgroup-props">
                               <input 
                               type="text"  
                               class="form-control inputbox-props" 
@@ -35,9 +35,11 @@
                               minlength="4" 
                               ng-pattern="/^.[a-zA-Z0-9 ]*$/"
                               name="id" 
-                              placeholder="Username or email" 
+                              placeholder="Username or email"
+                              ng-change="signup.doRemoveServerError(suf)"
                               autocomplete="off" required />
                            </div>
+
                         </div>
                      </form-group>
                      <form-group input="password" errors="{required: 'Password is required', minlength: 'Password should be of minimum of 6 characters'}">

@@ -28,6 +28,7 @@
         //public methods
         signup.doSignup = doSignup;
         signup.doLogin = doLogin;
+        signup.doRemoveServerError = doRemoveServerError;
 
         function doSignup(valid) {
             if (valid) {
@@ -44,6 +45,11 @@
             $scope.suf.id.$setValidity('exists', !exists);
             signup.userCreated = !exists;
         }
+
+         function doRemoveServerError(form) {
+            $scope.suf.id.$setValidity('exists', true);
+        }
+
 
     }
 })();
