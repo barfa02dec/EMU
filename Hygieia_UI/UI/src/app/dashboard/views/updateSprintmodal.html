@@ -354,26 +354,17 @@
         </form-group>  
         </div> -->
          <div class="col-md-4">
-             <datepicker date-format="yyyy-MM-dd" selector="form-control">
-               <div class="input-group">
-                  <input class="form-control" ng-model="usc.fetchdetails.start" name="date1" placeholder="start date"/>
-                  <span class="input-group-addon" style="cursor: pointer">
-                  <i class="fa fa-lg fa-calendar"></i>
-                  </span>
-               </div>
+            <form-group input="date1">
+             <datepicker date-format="dd-MM-yyyy" selector="form-control">
+                  <input class="form-control font-fontawesome font-light" ng-model="usc.fetchdetails.start" name="date1" placeholder="  Start date" required/>
             </datepicker>
          </form-group> 
         </div>
 
           <div class="col-md-4">
              <form-group input="date1">
-            <datepicker date-format="yyyy-MM-dd" selector="form-control">
-               <div class="input-group">
-                  <input class="form-control" ng-model="usc.fetchdetails.end" name="date1" placeholder="End date"/>
-                  <span class="input-group-addon" style="cursor: pointer">
-                  <i class="fa fa-lg fa-calendar"></i>
-                  </span>
-               </div>
+            <datepicker date-format="dd-MM-yyyy" selector="form-control">
+                  <input class="form-control font-fontawesome font-light" ng-model="usc.fetchdetails.end" name="date1" placeholder="  End date" required/>
             </datepicker>
          </form-group>  
         </div>
