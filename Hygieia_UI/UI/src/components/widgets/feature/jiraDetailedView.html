@@ -1,144 +1,147 @@
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 <style type="text/css">
-   .c3 line, .c3 path{
-   fill:none;
-   stroke: #000;
-   }
-   svg[Attributes Style] {
-   width: 310.719;
-   height: 125;
-   }
-   .c3-legend-background{
-   fill-opacity:0;
-   }
+    .c3 line,
+    .c3 path {
+        fill: none;
+        stroke: #000;
+    }
+    
+    svg[Attributes Style] {
+        width: 310.719;
+        height: 125;
+    }
+    
+    .c3-legend-background {
+        fill-opacity: 0;
+    }
 </style>
 <!-- <h2>JIRA GOES HERE</h2> -->
 <div class="col-md-12 jira-widget-props" style="padding: 0px">
-<div class="container-fluid" style="
+    <div class="container-fluid" style="
    background: #1766A4;
    margin-left: 0px;
    margin-right: 0px;min-height: 0px;">
-   <div class="row justify-content-md-center" style="padding-top: 8px;padding-bottom: 6px;">
-      <div class="col-md-1" style="padding-left: 1.4%;width: 5.33%"><img src="assets/images/emu-5w.png"></div>
-      <div class="col-md-3" style="font-size: 17px;
+        <div class="row justify-content-md-center" style="padding-top: 8px;padding-bottom: 6px;">
+            <div class="col-md-1" style="padding-left: 1.4%;width: 5.33%"><img src="assets/images/emu-5w.png"></div>
+            <div class="col-md-3" style="font-size: 17px;
          font-weight: 500;color: #fff;padding-top: 6px;">Engineering Metrics Unified</div>
-      <div class="col-md-6"></div>
-      <div class="col-md-1" style="color: #fff;direction: rtl;
+            <div class="col-md-6"></div>
+            <div class="col-md-1" style="color: #fff;direction: rtl;
          text-align: center;
          padding-left: 14.1%;padding-top: 8px;">{{jdv.usernamepro}}</div>
-      <div class="col-md-1" style="width: 4.33% !important;padding-top: 4px">
-         <div class="dropdown-logout sign-out-box-specs">
-            <div class="abc">
-               <img src="assets/images/Group 131.png" class="log-out-icon-size"></td>
+            <div class="col-md-1" style="width: 4.33% !important;padding-top: 4px">
+                <div class="dropdown-logout sign-out-box-specs">
+                    <div class="abc">
+                        <img src="assets/images/Group 131.png" class="log-out-icon-size"></td>
+                    </div>
+                    <div class="dropdown-contents" style="right: -6px;">
+                        <a href="#/userManagement" ng-click="jdv.UserManagement()" ng-if="jdv.usermanagementviews" style="cursor: pointer;">User Management</a>
+                        <a ng-click="jdv.logout()" style="cursor: pointer;">Sign out</a>
+                    </div>
+                </div>
             </div>
-            <div class="dropdown-contents" style="right: -6px;">
-               <a href="#/userManagement"  ng-click="jdv.UserManagement()" ng-if="jdv.usermanagementviews" style="cursor: pointer;">User Management</a>
-               <a ng-click="jdv.logout()" style="cursor: pointer;">Sign out</a>
+        </div>
+    </div>
+    <div class="black-header" style="height: 80px;border-bottom:1px solid #b3b3b3;background-image: url('assets/images/bg_page_header.png');">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-4" style="padding-left: 1.6%;">
+                    <div class="" style="margin-top: 3.1%;font-size: 22px;">
+                        Agile Board
+                    </div>
+                    <div class="" style="font-size: 14px;">
+                        <a href="#/projects" style="color: #4482B2">All projects</a> <img src="assets/images/arrow_right.png" style="vertical-align: sub;">
+                        <a href="#/site" style="color: #4482B2">All dashboards</a> <img src="assets/images/arrow_right.png" style="vertical-align: sub;">
+                        <a ng-click="jdv.openback()" style="color: #4482B2;cursor: pointer;">System dashboard</a>
+                    </div>
+                </div>
+                <div class="col-md-6"></div>
             </div>
-         </div>
-      </div>
-   </div>
-</div>
-<div class="black-header" style="height: 80px;border-bottom:1px solid #b3b3b3;background-image: url('assets/images/bg_page_header.png');">
-   <div class="row">
-      <div class="col-md-12">
-         <div class="col-md-4" style="padding-left: 1.6%;">
-            <div class="" style="margin-top: 3.1%;font-size: 22px;">
-               Agile Board
+        </div>
+    </div>
+    <div class="col-md-12" style="padding-top: 30px;font-size: 20px;padding-left: 20px;">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block">
+            <style type="text/css">
+                .stheadb0 {
+                    fill: #605587;
+                }
+            </style>
+            <rect class="stheadb0" width="5.1" height="16"></rect>
+        </svg>
+        SPRINT
+    </div>
+    <div class="col-md-12" style="padding-left: 20px;padding-right: 20px">
+        <div class="col-md-12 bg-color-opacity">
+            <div class="col-md-12 header-properties">
+                <div class="sprint-box-val-head">
+                    <div class="col-md-6 jira-header-padding-props">
+                        Issues/Defects
+                    </div>
+                    <div class="col-md-6" style="padding-left: 15px;">Sprint List</div>
+                </div>
             </div>
-            <div class="" style="font-size: 14px;">
-               <a href="#/projects" style="color: #4482B2">All projects</a> <img src="assets/images/arrow_right.png" style="vertical-align: sub;">
-               <a href="#/site" style="color: #4482B2">All dashboards</a> <img src="assets/images/arrow_right.png" style="vertical-align: sub;">
-               <a ng-click="jdv.openback()" style="color: #4482B2;cursor: pointer;">System dashboard</a>
-            </div>
-         </div>
-         <div class="col-md-6"></div>
-      </div>
-   </div>
-</div>
-<div class="col-md-12" style="padding-top: 30px;font-size: 20px;padding-left: 20px;">
-   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block">
-      <style type="text/css">.stheadb0 {
-         fill: #605587;
-         }
-      </style>
-      <rect class="stheadb0" width="5.1" height="16"></rect>
-   </svg>
-   SPRINT
-</div>
-<div class="col-md-12" style="padding-left: 20px;padding-right: 20px">
-   <div class="col-md-12 bg-color-opacity">
-      <div class="col-md-12 header-properties">
-         <div class="sprint-box-val-head">
-            <div class="col-md-6 jira-header-padding-props">
-               Issues/Defects
-            </div>
-            <div class="col-md-6" style="padding-left: 15px;">Sprint List</div>
-         </div>
-      </div>
-   <div class="col-md-6" style="padding-top: 10px;padding-left: 20px;">
-         <table class="table table-bordered table-striped">
-            <thead>
-               <tr class="font-props">
-                  <td></td>
-                  <td ng-repeat="sprintName in jdv.jirametricsdata" style="
+            <div class="col-md-6" style="padding-top: 10px;padding-left: 20px;">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr class="font-props">
+                            <td></td>
+                            <td ng-repeat="sprintName in jdv.jirametricsdata" style="
                      max-width: 100px;
                      text-overflow: ellipsis;
                      overflow: hidden;" ng-attr-title="{{sprintName.name}}">{{sprintName.name}}</td>
-               </tr>
-            </thead>
-            <tbody class="font-props">
-               <tr>
-                  <td class="custom-td-width-defect" >Completed issue count</td>
-                  <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(0,153,255)">{{sprintNames.sprintData.completedIssueCount}}</td>
-               </tr>
-               <tr>
-                  <td class="custom-td-width-defect">Committed issue count</td>
-                  <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(0,128,43)">{{sprintNames.sprintData.committedIssueCount}}</td>
-               </tr>
-               <tr>
-                  <td class="custom-td-width-defect">Issues added</td>
-                  <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(255,71,26)">{{sprintNames.sprintData.burndown.issuesAdded.count}}</td>
-               </tr>
-               <tr>
-                  <td class="custom-td-width-defect">Issues removed</td>
-                  <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(140,87,214)">{{sprintNames.sprintData.burndown.issuesRemoved.count}}</td>
-               </tr>
-               <tr>
-                  <td class="custom-td-width-defect">Defects found</td>
-                  <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(107,184,255)">{{sprintNames.sprintData.defectsFound.total}}</td>
-               </tr>
-               <tr>
-                  <td class="custom-td-width-defect">Defects resolved</td>
-                  <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(0,128,43)">{{sprintNames.sprintData.defectsResolved.total}}</td>
-               </tr>
-               <tr>
-                  <td class="custom-td-width-defect">Defects unresolved</td>
-                  <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(255,71,26)">{{sprintNames.sprintData.defectsUnresolved.total}}</td>
-               </tr>
-            </tbody>
-         </table>
-      </div>
-      <div class="col-md-6 sprint-list-parent" style="padding-top: 10px;padding-left: 20px;padding-right: 20px;">
-      <table class="table table-bordered table-striped">
-            <thead>
-               <tr style="font-weight:400;font-size:11px">
-                  <th>Sprint ID</th>
-                  <th>Sprint Name</th>
-                  <th>Sprint Status</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr class="font-props" ng-repeat="sprintdata in jdv.spAllDetails">
-                  {{sprintdata.sprintData.state}}
-                  <td>{{sprintdata.sprintData.sprintId}}</td>
-                  <td>{{sprintdata.sprintData.sprintName}}</td>
-                  <td ng-if="sprintdata.closed == true"><span>
+                        </tr>
+                    </thead>
+                    <tbody class="font-props">
+                        <tr>
+                            <td class="custom-td-width-defect">Completed issue count</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(0,153,255)">{{sprintNames.sprintData.completedIssueCount}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Committed issue count</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(0,128,43)">{{sprintNames.sprintData.committedIssueCount}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Issues added</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(255,71,26)">{{sprintNames.sprintData.burndown.issuesAdded.count}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Issues removed</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(140,87,214)">{{sprintNames.sprintData.burndown.issuesRemoved.count}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Defects found</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(107,184,255)">{{sprintNames.sprintData.defectsFound.total}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Defects resolved</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(0,128,43)">{{sprintNames.sprintData.defectsResolved.total}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Defects unresolved</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" style="color: rgb(255,71,26)">{{sprintNames.sprintData.defectsUnresolved.total}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 sprint-list-parent" style="padding-top: 10px;padding-left: 20px;padding-right: 20px;">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr style="font-weight:400;font-size:11px">
+                            <th>Sprint ID</th>
+                            <th>Sprint Name</th>
+                            <th>Sprint Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="font-props" ng-repeat="sprintdata in jdv.spAllDetails">
+                            {{sprintdata.sprintData.state}}
+                            <td>{{sprintdata.sprintData.sprintId}}</td>
+                            <td>{{sprintdata.sprintData.sprintName}}</td>
+                            <td ng-if="sprintdata.closed == true"><span>
                      <img src="assets/images/icon_completed.png">
                      </span>CLOSED
-                  </td>
-                  <td ng-if="sprintdata.closed == false">
-                     <span>
+                            </td>
+                            <td ng-if="sprintdata.closed == false">
+                                <span>
                         <svg version="1.1"
                            x="0px" y="0px" width="22px" height="19px" viewBox="0 0 25 19" style="enable-background:new 0 0 25 19;" xml:space="preserve">
                            <style type="text/css">
@@ -154,132 +157,133 @@
                                  c0-0.5-0.4-0.9-0.9-0.9H5.3c-0.5,0-0.9,0.4-0.9,0.9s0.4,0.9,0.9,0.9h1c-1,1.4-1.5,3-1.5,4.8c0,4.7,3.8,8.4,8.4,8.4H25V15H13.2z"/>
                            </g>
                         </svg>
-                     </span>
-                     OPEN
-                  </td>
-               </tr>
-            </tbody>
-         </table>
-      </div>
-      <div class="col-md-12 row-padding-widgets">
-         <div class="col-md-12">
-            <div class="col-md-6 sprint-box-val-head jira-header-padding-props">Velocity Chart</div>
-            <div class="col-md-6 sprint-box-val-head">Burndown Chart</div>
-         </div>
-         <div class="col-md-6 sprint-border-topprop" style="padding-top: 10px;padding-bottom: 10px">
-            <c3-chart id="sprintdatas" config="sprintdatas"  class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
-         </div>
-         <div class="col-md-6" style="padding-top: 10px;padding-bottom: 10px">
-            <c3-chart id="burnDown" config="burnDown" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
-         </div>
-         <div class="col-md-12">
-            <div class="col-md-12 sprint-box-val-head jira-header-padding-props">Defect Closure</div>
-         </div>
-         <div class="col-md-12 sprint-border-topprop" style="padding-top: 10px;padding-bottom: 10px">
-            <c3-chart id="defectClosure" config="defectClosure" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
-         </div>
-      </div>
-   </div>
-   <div class="col-md-12" style="padding-top: 30px;font-size: 20px;padding-left: 0px;">
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block">
-         <style type="text/css">.stheadb0 {
-            fill: #605587;
-            }
-         </style>
-         <rect class="stheadb0" width="5.1" height="16"></rect>
-      </svg>
-      DEFECT
-   </div>
-   <div class="col-md-12" style="padding-left: 0px;
-      padding-right: 0px;">
-      <div class="col-md-12 row-padding-widgets bg-color-opacity">
-        <div class="col-md-12 sprint-box-val-head">
-            <div class="col-md-6 jira-header-padding-props">Age Of Open Defects</div>
-            <div class="col-md-6">Resolution Time Report</div>
-         </div>
-         <div class="col-md-6" style="padding-top: 10px;">
-            <c3-chart id="restime" config="configresTime"  class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
-         </div>
-         <div class="col-md-6" style="padding-top: 10px;">
-            <c3-chart id="openDef" config="configopenDef" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
-         </div>
-         <div class="col-md-12 row-padding-widgets">
-            <div class="col-md-6" style="padding-bottom: 2%">
-               <div class="col-md-12">
-                  <div class="col-md-10 sprint-box-val-head sprint-priority-env-head-padding jira-header-padding-props">Open Defects By Enviornment</div>
-                  <div class="col-md-2">
-                     <select ng-options="value as key for (key , value) in jdv.dataEnv" ng-model='jdv.environmemt'>
-                     </select>
-                  </div>
-               </div>
-               <div class="col-md-12" style="padding-top: 4%;
-                  ">
-                  <div class="col-md-2" >
-                     <div class="total-builds-text-props" style="border:4px solid rgb(172,8,4);color: #000;">
-                        <span >{{jdv.environmemt}}</span>
-                     </div>
-                  </div>
-                 
-               </div>
-               <div class="col-md-12 font-props">
-                  <div class="col-md-2 padding-highest-text">COUNT</div>
-                  
-               </div>
+                     </span> OPEN
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="col-md-6" style="padding-bottom: 2%">
-               <div class="col-md-12">
-                  <div class="col-md-10 sprint-box-val-head sprint-priority-env-head-padding">Open Defects By Priority</div>
-                  <div class="col-md-2"></div>
-               </div>
-               <div class="col-md-12" style="padding-top: 4%;
-                  ">
-                  <div class="col-md-2 sprint-def-priorty-response">
-                     <div class="total-builds-text-props" ng-if="jdv.criIssue" style="border:4px solid rgb(172,8,4);color: #000;">{{jdv.criIssue}}</div>
-                     <div class="total-builds-text-props" ng-if="!jdv.criIssue" style="border:4px solid rgb(172,8,4);color: #000;">0</div>
-                  </div>
-                  <div class="col-md-2 sprint-def-priorty-response-secnd">
-                     <div class="total-builds-text-props" ng-if="jdv.majorIssue" style="border:4px solid rgb(222,29,24);color: #000;">{{jdv.majorIssue}}</div>
-                     <div class="total-builds-text-props" ng-if="!jdv.majorIssue" style="border:4px solid rgb(222,29,24);color: #000;">0</div>
-                  </div>
-                  <div class="col-md-2 sprint-def-priorty-response-thrd">
-                     <div class="total-builds-text-props" ng-if="jdv.mediumIssue" style="border:4px solid #FFBF00;color: #000;">{{jdv.mediumIssue}}</div>
-                     <div class="total-builds-text-props" ng-if="!jdv.mediumIssue" style="border:4px solid #FFBF00;color: #000;">0</div>
-                  </div>
-                  <div class="col-md-2 sprint-def-priorty-response-thrd">
-                     <div class="total-builds-text-props" ng-if="jdv.lowIssue" style="border:4px solid rgb(105,203,143);color: #000;">{{jdv.lowIssue}}</div>
-                     <div class="total-builds-text-props" ng-if="!jdv.lowIssue" style="border:4px solid rgb(105,203,143);color: #000;">0</div>
-                  </div>
-                  <div class="col-md-2 sprint-def-priorty-response-thrd">
-                     <div class="total-builds-text-props" ng-if="jdv.lowestIssue" style="border:4px solid rgb(5,169,68);color: #000;">{{jdv.lowestIssue}}</div>
-                     <div class="total-builds-text-props" ng-if="!jdv.lowestIssue" style="border:4px solid rgb(5,169,68);color: #000;">0</div>
-                  </div>
-               </div>
-               <div class="col-md-12 font-props">
-                  <div class="col-md-2 padding-highest-text">HIGHEST</div>
-                  <div class="col-md-2 padding-high-text">HIGH</div>
-                  <div class="col-md-2 padding-medium-text">MEDIUM</div>
-                  <div class="col-md-2 padding-low-text">LOW</div>
-                  <div class="col-md-2 padding-lowest-text">LOWEST</div>
-               </div>
+            <div class="col-md-12 row-padding-widgets">
+                <div class="col-md-12">
+                    <div class="col-md-6 sprint-box-val-head jira-header-padding-props">Velocity Chart</div>
+                    <div class="col-md-6 sprint-box-val-head">Burndown Chart</div>
+                </div>
+                <div class="col-md-6 sprint-border-topprop" style="padding-top: 10px;padding-bottom: 10px">
+                    <c3-chart id="sprintdatas" config="sprintdatas" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                </div>
+                <div class="col-md-6" style="padding-top: 10px;padding-bottom: 10px">
+                    <c3-chart id="burnDown" config="burnDown" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-12 sprint-box-val-head jira-header-padding-props">Defect Closure</div>
+                </div>
+                <div class="col-md-12 sprint-border-topprop" style="padding-top: 10px;padding-bottom: 10px">
+                    <c3-chart id="defectClosure" config="defectClosure" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                </div>
             </div>
         </div>
-      </div>
-   </div>
-   <div class="col-md-12" style="padding-top: 30px;font-size: 20px;padding-left: 0px;">
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block">
-         <style type="text/css">.stheadb0 {
-            fill: #605587;
-            }
-         </style>
-         <rect class="stheadb0" width="5.1" height="16"></rect>
-      </svg>
-      RELEASE
-   </div>
-   <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
-      <div class="col-md-12 row-padding-widgets bg-color-opacity">
-         <div class="col-md-12">
-            <c3-chart id="releaseGraph" config="releaseGraph" class="sprint-graphs-prop graph-bg-gradient" ></c3-chart>
-         </div>
-      </div>
-   </div>
-</div>
+        <div class="col-md-12" style="padding-top: 30px;font-size: 20px;padding-left: 0px;">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block">
+                <style type="text/css">
+                    .stheadb0 {
+                        fill: #605587;
+                    }
+                </style>
+                <rect class="stheadb0" width="5.1" height="16"></rect>
+            </svg>
+            DEFECT
+        </div>
+        <div class="col-md-12" style="padding-left: 0px;
+      padding-right: 0px;">
+            <div class="col-md-12 row-padding-widgets bg-color-opacity">
+                <div class="col-md-12 sprint-box-val-head">
+                    <div class="col-md-6 jira-header-padding-props">Age Of Open Defects</div>
+                    <div class="col-md-6">Resolution Time Report</div>
+                </div>
+                <div class="col-md-6" style="padding-top: 10px;">
+                    <c3-chart id="restime" config="configresTime" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                </div>
+                <div class="col-md-6" style="padding-top: 10px;">
+                    <c3-chart id="openDef" config="configopenDef" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                </div>
+                <div class="col-md-12 row-padding-widgets">
+                    <div class="col-md-6" style="padding-bottom: 2%">
+                        <div class="col-md-12">
+                            <div class="col-md-10 sprint-box-val-head sprint-priority-env-head-padding jira-header-padding-props">Open Defects By Enviornment</div>
+                            <div class="col-md-2">
+                                <select ng-options="value as key for (key , value) in jdv.dataEnv" ng-model='jdv.environmemt'>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="padding-top: 4%;
+                  ">
+                            <div class="col-md-2">
+                                <div class="total-builds-text-props" style="border:4px solid rgb(172,8,4);color: #000;">
+                                    <span>{{jdv.environmemt}}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 font-props">
+                            <div class="col-md-2 padding-highest-text">COUNT</div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="padding-bottom: 2%">
+                        <div class="col-md-12">
+                            <div class="col-md-10 sprint-box-val-head sprint-priority-env-head-padding">Open Defects By Priority</div>
+                            <div class="col-md-2"></div>
+                        </div>
+                        <div class="col-md-12" style="padding-top: 4%;
+                  ">
+                            <div class="col-md-2 sprint-def-priorty-response">
+                                <div class="total-builds-text-props" ng-if="jdv.criIssue" style="border:4px solid rgb(172,8,4);color: #000;">{{jdv.criIssue}}</div>
+                                <div class="total-builds-text-props" ng-if="!jdv.criIssue" style="border:4px solid rgb(172,8,4);color: #000;">0</div>
+                            </div>
+                            <div class="col-md-2 sprint-def-priorty-response-secnd">
+                                <div class="total-builds-text-props" ng-if="jdv.majorIssue" style="border:4px solid rgb(222,29,24);color: #000;">{{jdv.majorIssue}}</div>
+                                <div class="total-builds-text-props" ng-if="!jdv.majorIssue" style="border:4px solid rgb(222,29,24);color: #000;">0</div>
+                            </div>
+                            <div class="col-md-2 sprint-def-priorty-response-thrd">
+                                <div class="total-builds-text-props" ng-if="jdv.mediumIssue" style="border:4px solid #FFBF00;color: #000;">{{jdv.mediumIssue}}</div>
+                                <div class="total-builds-text-props" ng-if="!jdv.mediumIssue" style="border:4px solid #FFBF00;color: #000;">0</div>
+                            </div>
+                            <div class="col-md-2 sprint-def-priorty-response-thrd">
+                                <div class="total-builds-text-props" ng-if="jdv.lowIssue" style="border:4px solid rgb(105,203,143);color: #000;">{{jdv.lowIssue}}</div>
+                                <div class="total-builds-text-props" ng-if="!jdv.lowIssue" style="border:4px solid rgb(105,203,143);color: #000;">0</div>
+                            </div>
+                            <div class="col-md-2 sprint-def-priorty-response-thrd">
+                                <div class="total-builds-text-props" ng-if="jdv.lowestIssue" style="border:4px solid rgb(5,169,68);color: #000;">{{jdv.lowestIssue}}</div>
+                                <div class="total-builds-text-props" ng-if="!jdv.lowestIssue" style="border:4px solid rgb(5,169,68);color: #000;">0</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 font-props">
+                            <div class="col-md-2 padding-highest-text">HIGHEST</div>
+                            <div class="col-md-2 padding-high-text">HIGH</div>
+                            <div class="col-md-2 padding-medium-text">MEDIUM</div>
+                            <div class="col-md-2 padding-low-text">LOW</div>
+                            <div class="col-md-2 padding-lowest-text">LOWEST</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" style="padding-top: 30px;font-size: 20px;padding-left: 0px;">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block">
+                <style type="text/css">
+                    .stheadb0 {
+                        fill: #605587;
+                    }
+                </style>
+                <rect class="stheadb0" width="5.1" height="16"></rect>
+            </svg>
+            RELEASE
+        </div>
+        <div class="col-md-12" style="padding-left: 0px;padding-right: 0px;">
+            <div class="col-md-12 row-padding-widgets bg-color-opacity">
+                <div class="col-md-12">
+                    <c3-chart id="releaseGraph" config="releaseGraph" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                </div>
+            </div>
+        </div>
+    </div>
