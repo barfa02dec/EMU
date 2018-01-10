@@ -134,7 +134,12 @@
 
             //Adding X axis label values into Array
             for (var i = 0; i < highArr.length; i++) {
+                if (highArr[i][0].hasOwnProperty("Defect Resolution Strategy")) {
                 jiraLebels.push(highArr[i][0]['Defect Resolution Strategy']);
+            }
+            if (highArr[i][0].hasOwnProperty("Resolution Strategy")) {
+                jiraLebels.push(highArr[i][0]['Resolution Strategy']);
+            }
             }
 
             //open defects graph
