@@ -343,10 +343,10 @@ padding: {
             var progressVelocity = ["Saydoratio"];
 
             //Data procesing and fetching two sprints Data
-            ctrl.defectsfound = data[0].sprintData.defectsFound.total;
+            /*ctrl.defectsfound = data[0].sprintData.defectsFound.total;
             ctrl.defectsResolved = data[0].sprintData.defectsResolved.total;
             ctrl.defectsUnresolved = data[0].sprintData.defectsUnresolved.total;
-            /*if (data[1].sprintData.defectsFound.total != undefined) {
+            if (data[1].sprintData.defectsFound.total != undefined) {
                 ctrl.defectsfoundprev = data[1].sprintData.defectsFound.total;
             } else {
                 ctrl.defectsfoundprev = 0;
@@ -365,11 +365,11 @@ padding: {
 
             //Processing data for sprint list table
             ctrl.spAllDetails = data;
-            ctrl.spname = data[0].name;
+            /*ctrl.spname = data[0].name;
             ctrl.sidd = data[0].sid;
             ctrl.stat = data[0].sprintData.state;
             ctrl.spname = data[0].sprintData.sprintName;
-            /*ctrl.spnameprev = data[1].name;
+            ctrl.spnameprev = data[1].name;
             ctrl.siddprev = data[1].sid;
             ctrl.statprev = data[1].sprintData.state;
             ctrl.spnameprev = data[1].sprintData.sprintName;*/
@@ -378,7 +378,7 @@ padding: {
 
 
             //Data procesing and fetching two sprints Data
-            if (data[0].sprintData.completedIssueCount != undefined) {
+           /* if (data[0].sprintData.completedIssueCount != undefined) {
                 ctrl.completedIssueCount = data[0].sprintData.completedIssueCount;
             } else {
                 ctrl.completedIssueCount = 0;
@@ -386,7 +386,7 @@ padding: {
             ctrl.committedIssueCount = data[0].sprintData.committedIssueCount;
             ctrl.committedStoryPoints = data[0].sprintData.burndown.issuesAdded.count;
             ctrl.completedStoryPoints = data[0].sprintData.burndown.issuesRemoved.count;
-         /*   if (data[1].sprintData.completedIssueCount != undefined) {
+           if (data[1].sprintData.completedIssueCount != undefined) {
                 ctrl.completedIssueCountprev = data[1].sprintData.completedIssueCount;
             } else {
                 ctrl.completedIssueCountprev = 0;
