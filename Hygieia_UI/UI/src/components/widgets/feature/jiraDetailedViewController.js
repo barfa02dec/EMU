@@ -114,19 +114,6 @@
                 }
             }
 
-            //Adding Low and Medium values into Array
-            /*for (var i = 0; i < highArr.length; i++) {
-                if (highArr[i][0].hasOwnProperty("Low") && highArr[i][0].hasOwnProperty("Medium")) {
-                  var convertt = Number(highArr[i][0].Low);
-                  var converttMed = Number(highArr[i][0].Medium);
-                  var valpars =convertt + converttMed;
-                  lowval.push(valpars); 
-              }
-              else{
-                lowval.push(0);
-              }
-            }*/
-
             //Adding High values into Array            
             for (var i = 0; i < highArr.length; i++) {
                 if (highArr[i][0].hasOwnProperty("High")) {
@@ -147,12 +134,7 @@
 
             //Adding X axis label values into Array
             for (var i = 0; i < highArr.length; i++) {
-                //if (highArr[i][0].hasOwnProperty("Resolution Strategy")) {
                 jiraLebels.push(highArr[i][0]['Defect Resolution Strategy']);
-                //}
-                //else{
-                //jiraLebels.push(0);
-                //}
             }
 
             //open defects graph
@@ -180,19 +162,6 @@
                     opndefhigh.push(0);
                 }
             }
-
-            //Adding Low and Medium values into Array
-            /*for (var i = 0; i < openDef.length; i++) {
-                if (openDef[i][0].hasOwnProperty("Low") && openDef[i][0].hasOwnProperty("Medium")) {
-                  var convertLowval = Number(openDef[i][0].Low);
-                  var convertMedVal = Number(openDef[i][0].Medium);
-                  var parsinh = convertLowval + convertMedVal;
-                  opndeflow.push(parsinh);
-               }
-              else{
-               opndeflow.push(0);
-             }
-            }*/
 
             //Adding Medium values into Array
             for (var i = 0; i < openDef.length; i++) {
@@ -278,63 +247,13 @@
             });
         }
 
-
         //Fetching Jira-Sprint Data
         ctrl.sprintId = $cookies.get('sprintId');
         featureData.sprintDta(ctrl.projectpathId, ctrl.projectpath).then(sprintdataProcess);
-        /*featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
         
-        
-         function fetchLatestSprint(data){
-           var burnData = data.sprintData.burnDownHistory;
-
-             var burnDowndata = ['Burn Down'];
-              var xaxisDate = [];
-             burnData.forEach(function(burndata){
-                burnDowndata.push(burndata.allIssuesEstimateSum)
-                xaxisDate.push(moment(burndata.miliseconds).format('MMM DD'))
-             })
-            
-
-             $scope.burnDown = c3.generate({
-                bindto: '#burnDown', 
-                             
-                data: {
-                  columns: [
-                    burnDowndata
-                  ],
-                  type: 'line'
-                },
-                axis: {
-                    x:{
-                        type: 'category',
-                        categories: xaxisDate
-                    }
-                },
-                color: {
-                pattern: ['#ff4d4d']
-            },
-           legend: {
-    position: 'inset',
-    inset: {
-        anchor: 'top-left',
-        x: 20,
-        y: -40,
-        step: 1
-    }
-},
-padding: {
-    top: 40
-}
-  
-            });
-
-         }*/
         //Processing Jira-Sprint Data
         function sprintdataProcess(data) {
             ctrl.jirametricsdata = data;
-            /*ctrl.sprintIds = ctrl.jirametricsdata[5].sprintData.sprintId;
-             $cookies.put('sprintId', ctrl.sprintIds);*/
             var progress = ['Defect Closure'];
             var comittedStoryPoints = ['Committed Story Points'];
             var completedStoryPoint = ['Completed Story Points'];
@@ -342,74 +261,8 @@ padding: {
             var axisSprintNameclos = [];
             var progressVelocity = ["Saydoratio"];
 
-            //Data procesing and fetching two sprints Data
-            /*ctrl.defectsfound = data[0].sprintData.defectsFound.total;
-            ctrl.defectsResolved = data[0].sprintData.defectsResolved.total;
-            ctrl.defectsUnresolved = data[0].sprintData.defectsUnresolved.total;
-            if (data[1].sprintData.defectsFound.total != undefined) {
-                ctrl.defectsfoundprev = data[1].sprintData.defectsFound.total;
-            } else {
-                ctrl.defectsfoundprev = 0;
-            }
-
-            if (data[1].sprintData.defectsResolved.total != undefined) {
-                ctrl.defectsResolvedprev = data[1].sprintData.defectsResolved.total;
-            } else {
-                ctrl.defectsResolvedprev = 0;
-            }
-            if (data[1].sprintData.defectsUnresolved.total != undefined) {
-                ctrl.defectsUnresolvedprev = data[1].sprintData.defectsUnresolved.total;
-            } else {
-                ctrl.defectsUnresolvedprev = 0;
-            }*/
-
             //Processing data for sprint list table
             ctrl.spAllDetails = data;
-            /*ctrl.spname = data[0].name;
-            ctrl.sidd = data[0].sid;
-            ctrl.stat = data[0].sprintData.state;
-            ctrl.spname = data[0].sprintData.sprintName;
-            ctrl.spnameprev = data[1].name;
-            ctrl.siddprev = data[1].sid;
-            ctrl.statprev = data[1].sprintData.state;
-            ctrl.spnameprev = data[1].sprintData.sprintName;*/
-
-
-
-
-            //Data procesing and fetching two sprints Data
-           /* if (data[0].sprintData.completedIssueCount != undefined) {
-                ctrl.completedIssueCount = data[0].sprintData.completedIssueCount;
-            } else {
-                ctrl.completedIssueCount = 0;
-            }
-            ctrl.committedIssueCount = data[0].sprintData.committedIssueCount;
-            ctrl.committedStoryPoints = data[0].sprintData.burndown.issuesAdded.count;
-            ctrl.completedStoryPoints = data[0].sprintData.burndown.issuesRemoved.count;
-           if (data[1].sprintData.completedIssueCount != undefined) {
-                ctrl.completedIssueCountprev = data[1].sprintData.completedIssueCount;
-            } else {
-                ctrl.completedIssueCountprev = 0;
-            }
-
-            if (data[1].sprintData.committedIssueCount != undefined) {
-                ctrl.committedIssueCountprev = data[1].sprintData.committedIssueCount;
-            } else {
-                ctrl.committedIssueCountprev = 0;
-            }
-
-            if (data[1].sprintData.burndown.issuesAdded.count != undefined) {
-                ctrl.committedStoryPointsprev = data[1].sprintData.burndown.issuesAdded.count;
-            } else {
-                ctrl.committedStoryPointsprev = 0;
-            }
-
-            if (data[1].sprintData.burndown.issuesRemoved.count != undefined) {
-                ctrl.completedStoryPointsprev = data[1].sprintData.burndown.issuesRemoved.count;
-            } else {
-                ctrl.completedStoryPointsprev = 0;
-            }*/
-
 
             //Data Process for Velocity Chart Graphs
             for (var i = 0; i < data.length; i++) {
@@ -424,39 +277,15 @@ padding: {
 
             }
 
-
-
-            /*for(var i=0;i<data.length;i++){
-               if(data[i].sprintData != undefined){
-                
-               }
-               
-            }*/
-
-            //Data Process for Defect Closure Graph for taking the percentage Value
-            /* for(var i=0;i<data.length;i++){
-                if(data[i].sprintData != undefined){
-                   
-
-                }
-             }*/
-
             //Adding x axis label for both graphs
             for (var i = 0; i < data.length; i++) {
-
-            }
-
-            for (var i = 0; i < data.length; i++) {
                 if (data[i].sprintData != undefined) {
-
-                    //completedStoryPoint.push(data[i].sprintData.completedStoryPoints);
-                    //comittedStoryPoints.push(data[i].sprintData.committedStoryPoints);
                     var percentScoreVelocity = Math.round((data[i].sprintData.completedStoryPoints / data[i].sprintData.committedStoryPoints) * 100);
                     progressVelocity.push(percentScoreVelocity);
                     var sprint_chart_Data = [completedStoryPoint, comittedStoryPoints, progressVelocity];
                 }
-
             }
+
             //C3.js Sprint Graph Generation
             $scope.sprintdatas = c3.generate({
                 bindto: '#sprintdatas',
@@ -530,9 +359,6 @@ padding: {
                 }
 
             });
-
-
-
         }
 
 
