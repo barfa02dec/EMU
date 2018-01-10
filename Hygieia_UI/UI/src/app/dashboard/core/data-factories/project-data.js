@@ -23,7 +23,9 @@
             fetchallusers:fetchallusers,
             fetchalldashboard:fetchalldashboard,
             fetchallroles:fetchallroles,
-            postDefect:postDefect
+            postDefect:postDefect,
+            postSprint:postSprint,
+            postRelease:postRelease
            
         };
 
@@ -93,6 +95,20 @@
 
         function postDefect(payload){
             return   $http.post('/api/defectSummery', (payload))
+                    .then(function(response) {
+                       return response.data;
+                    });
+        }
+
+         function postSprint(payload){
+            return   $http.post('/api/sprintMetrics', (payload))
+                    .then(function(response) {
+                       return response.data;
+                    });
+        }
+
+        function postRelease(payload){
+            return   $http.post('/api/releaseMetrcis', (payload))
                     .then(function(response) {
                        return response.data;
                     });

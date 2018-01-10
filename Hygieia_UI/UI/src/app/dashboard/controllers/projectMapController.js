@@ -615,7 +615,7 @@
                     "noofStoryCommitted": ctrl.noofStoryCompleted
                 }
 
-                $http.post("/api/releaseMetrcis", (ctrl.releasePayload)).then(function(response) {
+                projectData.postRelease(ctrl.releasePayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
                         templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
@@ -720,7 +720,7 @@
             ctrl.postSprint = function(proje) {
                 ctrl.sprintPayload.projectName = name;
                 ctrl.sprintPayload.projectId = id;
-                $http.post("/api//sprintMetrics", (ctrl.sprintPayload)).then(function(response) {
+                projectData.postSprint(ctrl.sprintPayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
                         templateUrl: 'app/dashboard/views/ConfirmationModals/sprintAddConfirmation.html',
@@ -776,7 +776,7 @@
                     "noofStoryCommitted": ctrl.fetchReleasedetails.versionData.noofStoryPoints
                 }
 
-                $http.post("/api/releaseMetrcis", (ctrl.releasePayload)).then(function(response) {
+               projectData.postRelease(ctrl.releasePayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
                         templateUrl: 'app/dashboard/views/ConfirmationModals/releaseUpdateConfirmation.html',
@@ -837,9 +837,9 @@
                     "storiesRemoed": ctrl.fetchdetails.sprintData.burndown.issuesRemoved.count
                 }
 
-                $http.post("/api//sprintMetrics", (ctrl.sprintEditPayload)).then(function(response) {
+               projectData.postSprint(ctrl.sprintEditPayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
-                    $uibModal.open({
+                   $uibModal.open({
                         templateUrl: 'app/dashboard/views/ConfirmationModals/sprintUpdateConfirmation.html',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
