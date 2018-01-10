@@ -135,11 +135,11 @@
             //Adding X axis label values into Array
             for (var i = 0; i < highArr.length; i++) {
                 if (highArr[i][0].hasOwnProperty("Defect Resolution Strategy")) {
-                jiraLebels.push(highArr[i][0]['Defect Resolution Strategy']);
-            }
-            if (highArr[i][0].hasOwnProperty("Resolution Strategy")) {
-                jiraLebels.push(highArr[i][0]['Resolution Strategy']);
-            }
+                    jiraLebels.push(highArr[i][0]['Defect Resolution Strategy']);
+                }
+                if (highArr[i][0].hasOwnProperty("Resolution Strategy")) {
+                    jiraLebels.push(highArr[i][0]['Resolution Strategy']);
+                }
             }
 
             //open defects graph
@@ -203,9 +203,7 @@
                 }
             }
 
-
             //c3.js graphs
-
             //Resolution Time Graph Generation
             $scope.openDef = c3.generate({
                 bindto: '#openDef',
@@ -255,7 +253,7 @@
         //Fetching Jira-Sprint Data
         ctrl.sprintId = $cookies.get('sprintId');
         featureData.sprintDta(ctrl.projectpathId, ctrl.projectpath).then(sprintdataProcess);
-        
+
         //Processing Jira-Sprint Data
         function sprintdataProcess(data) {
             ctrl.jirametricsdata = data;
@@ -366,7 +364,6 @@
             });
         }
 
-
         //Fetching Release  Data
         featureData.ReleaseData(ctrl.projectpathId, ctrl.projectpath).then(ReleaseDataProcessing);
 
@@ -423,7 +420,6 @@
                 }
             }
 
-
             //Release Graph Generation
             $scope.releaseGraph = c3.generate({
                 bindto: '#releaseGraph',
@@ -445,11 +441,9 @@
                 }
 
             });
-
-
         }
-        ctrl.mySplit = function(string, nb) {
 
+        ctrl.mySplit = function(string, nb) {
             var array = string.split('"');
             return array[1].split('"')[0];
         }

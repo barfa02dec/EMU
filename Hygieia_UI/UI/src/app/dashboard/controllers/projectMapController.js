@@ -14,7 +14,6 @@
         ctrl.editorEnabled = false;
         ctrl.title = "THB";
         $scope.selected = '';
-
         ctrl.payl = {
             "projectId": ctrl.projectId,
             "projectName": ctrl.projectName,
@@ -23,8 +22,6 @@
             "businessUnit": ctrl.businessUnit,
             "program": ctrl.program
         }
-
-
 
         $scope.curPage = 0;
         ctrl.pageSize = 5;
@@ -59,8 +56,6 @@
                 }
             }
         });
-
-
 
         ctrl.numberOfPages = function() {
             return Math.ceil(ctrl.getAllProjects.length / ctrl.pageSize);
@@ -109,7 +104,6 @@
             sp.projectId = proid;
             sp.id = id;
             sp.usernameproject = $cookies.get('username');
-
             //Fetch all users
             projectData.fetchallusers(sp.id).then(function(response) {
                 sp.getUserMaps = response;
@@ -126,7 +120,6 @@
                 response.data.selectedItems = [];
                 sp.getRolesKey = response.data;
             });
-
 
             sp.shareProjects = function(prob) {
                 var aa = sp.selected;
@@ -177,7 +170,6 @@
                     value.editorEnabled = true;
                 }
             });
-
         };
 
         //Disable Edit
@@ -244,7 +236,6 @@
             $cookieStore.remove("authenticated");
             $location.path('/');
         };
-
 
         //Open Delete Project Modal
         ctrl.deleteProjectModel = function(pro) {
@@ -374,70 +365,55 @@
 
         function addDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
             var ctrl = this;
-
             ctrl.postDefect = function(probj) {
                 ctrl.payloadDefect = {
                     "projectName": name,
                     "metricsProjectId": id,
                     "projectId": id,
                     "valueAsOn": "test",
-
                     "lowPriorityDefectsCount": ctrl.lowPriorityDefectsCount,
                     "mediumPriorityDefectsCount": ctrl.mediumPriorityDefectsCount,
                     "highPriorityDefectsCount": ctrl.highPriorityDefectsCount,
                     "criticalPriorityDefectsCount": ctrl.criticalPriorityDefectsCount,
-
                     "qaDefects": ctrl.QA_DefectsCount,
                     "uatDefects": ctrl.UAT_DefectsCount,
                     "prodDefects": ctrl.PROD_DefectsCount,
-
                     "openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days,
                     "openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days,
                     "openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days,
                     "openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days": ctrl.openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days,
-
-
                     "openDefectsWithHighPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithHighPriorityAndAgeBetween15To30Days,
                     "openDefectsWithLowPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithLowPriorityAndAgeBetween15To30Days,
                     "openDefectsWithMediumPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithMediumPriorityAndAgeBetween15To30Days,
                     "openDefectsWithCriticalPriorityAndAgeBetween15To30Days": ctrl.openDefectsWithCriticalPriorityAndAgeBetween15To30Days,
-
                     "openDefectsWithHighPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithHighPriorityAndAgeBetween30To60Days,
                     "openDefectsWithLowPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithLowPriorityAndAgeBetween30To60Days,
                     "openDefectsWithMediumPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithMediumPriorityAndAgeBetween30To60Days,
                     "openDefectsWithCriticalPriorityAndAgeBetween30To60Days": ctrl.openDefectsWithCriticalPriorityAndAgeBetween30To60Days,
-
                     "openDefectsWithHighPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithHighPriorityAndAgeBetween60To90Days,
                     "openDefectsWithLowPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithLowPriorityAndAgeBetween60To90Days,
                     "openDefectsWithMediumPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithMediumPriorityAndAgeBetween60To90Days,
                     "openDefectsWithCriticalPriorityAndAgeBetween60To90Days": ctrl.openDefectsWithCriticalPriorityAndAgeBetween60To90Days,
-
                     "openDefectsWithHighPriorityAndAgeGreaterThan90": ctrl.openDefectsWithHighPriorityAndAgeGreaterThan90,
                     "openDefectsWithLowPriorityAndAgeGreaterThan90": ctrl.openDefectsWithLowPriorityAndAgeGreaterThan90,
                     "openDefectsWithMediumPriorityAndAgeGreaterThan90": ctrl.openDefectsWithMediumPriorityAndAgeGreaterThan90,
                     "openDefectsWithCriticalPriorityAndAgeGreaterThan90": ctrl.openDefectsWithCriticalPriorityAndAgeGreaterThan90,
-
                     "fixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days,
                     "fixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days,
                     "fixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days,
                     "fixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days,
-
                     "fixedDefectsWithHighPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithHighPriorityAndResolutionBetween15To30Days,
                     "fixedDefectsWithLowPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithLowPriorityAndResolutionBetween15To30Days,
                     "fixedDefectsWithMediumPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionBetween15To30Days,
                     "fixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days,
-
                     "fixedDefectsWithHighPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithHighPriorityAndResolutionBetween30To60Days,
                     "fixedDefectsWithLowPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithLowPriorityAndResolutionBetween30To60Days,
                     "fixedDefectsWithMediumPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionBetween30To60Days,
                     "fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days,
-
-
                     "fixedDefectsWithHighPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithHighPriorityAndResolutionBetween60To90Days,
                     "fixedDefectsWithLowPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithLowPriorityAndResolutionBetween60To90Days,
                     "fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days,
                     "fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days": ctrl.fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days,
-
                     "fixedDefectsWithHighPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithHighPriorityAndResolutionGreaterThan90,
                     "fixedDefectsWithLowPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithLowPriorityAndResolutionGreaterThan90,
                     "fixedDefectsWithMediumPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithMediumPriorityAndResolutionGreaterThan90,
@@ -450,11 +426,8 @@
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
-
-
                 })
             }
-
         }
 
         function editDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
@@ -463,78 +436,57 @@
 
             function jiraDataFetch(data) {
                 ctrl.dataEdit = data;
-                /*if($scope.dataEdit != "undefined"){
-                     $cookies.put('dataEdit', $scope.ttt);
-                }*/
             }
 
             ctrl.editDefectCall = function() {
                 ctrl.editDefectPayl = {
-
                     "projectName": name,
                     "metricsProjectId": id,
                     "projectId": id,
                     "valueAsOn": "test",
-
                     "lowPriorityDefectsCount": ctrl.dataEdit.defectsByProirity.Low,
                     "mediumPriorityDefectsCount": ctrl.dataEdit.defectsByProirity.Medium,
                     "highPriorityDefectsCount": ctrl.dataEdit.defectsByProirity.High,
                     "criticalPriorityDefectsCount": ctrl.dataEdit.defectsByProirity.Critical,
-
                     "qaDefects": ctrl.dataEdit.defectsByEnvironment.QA,
                     "uatDefects": ctrl.dataEdit.defectsByEnvironment.UAT,
                     "prodDefects": ctrl.dataEdit.defectsByEnvironment.PROD,
-
                     "openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].High),
                     "openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].Low),
                     "openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].Medium),
                     "openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days": Number(ctrl.dataEdit.openDefectsByAge.Range1[0].Critical),
-
-
                     "openDefectsWithHighPriorityAndAgeBetween15To30Days": Number(ctrl.dataEdit.openDefectsByAge.Range2[0].High),
                     "openDefectsWithLowPriorityAndAgeBetween15To30Days": Number(ctrl.dataEdit.openDefectsByAge.Range2[0].Low),
                     "openDefectsWithMediumPriorityAndAgeBetween15To30Days": Number(ctrl.dataEdit.openDefectsByAge.Range2[0].Medium),
                     "openDefectsWithCriticalPriorityAndAgeBetween15To30Days": Number(ctrl.dataEdit.openDefectsByAge.Range2[0].Critical),
-
                     "openDefectsWithHighPriorityAndAgeBetween30To60Days": Number(ctrl.dataEdit.openDefectsByAge.Range3[0].High),
                     "openDefectsWithLowPriorityAndAgeBetween30To60Days": Number(ctrl.dataEdit.openDefectsByAge.Range3[0].Low),
                     "openDefectsWithMediumPriorityAndAgeBetween30To60Days": Number(ctrl.dataEdit.openDefectsByAge.Range3[0].Medium),
                     "openDefectsWithCriticalPriorityAndAgeBetween30To60Days": Number(ctrl.dataEdit.openDefectsByAge.Range3[0].Critical),
-
                     "openDefectsWithHighPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].High),
                     "openDefectsWithLowPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].Low),
                     "openDefectsWithMediumPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].Medium),
                     "openDefectsWithCriticalPriorityAndAgeBetween60To90Days": Number(ctrl.dataEdit.openDefectsByAge.Range4[0].Critical),
-
                     "openDefectsWithHighPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].High),
                     "openDefectsWithLowPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].Low),
                     "openDefectsWithMediumPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].Medium),
                     "openDefectsWithCriticalPriorityAndAgeGreaterThan90": Number(ctrl.dataEdit.openDefectsByAge.Range5[0].Critical),
-
-
-
-
                     "fixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range1[0].High),
                     "fixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range1[0].Low),
                     "fixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range1[0].Medium),
                     "fixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range1[0].Critical),
-
                     "fixedDefectsWithHighPriorityAndResolutionBetween15To30Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range2[0].High),
                     "fixedDefectsWithLowPriorityAndResolutionBetween15To30Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range2[0].Low),
                     "fixedDefectsWithMediumPriorityAndResolutionBetween15To30Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range2[0].Medium),
                     "fixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range2[0].Critical),
-
                     "fixedDefectsWithHighPriorityAndResolutionBetween30To60Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range3[0].High),
                     "fixedDefectsWithLowPriorityAndResolutionBetween30To60Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range3[0].Low),
                     "fixedDefectsWithMediumPriorityAndResolutionBetween30To60Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range3[0].Medium),
                     "fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range3[0].Critical),
-
-
                     "fixedDefectsWithHighPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].High),
                     "fixedDefectsWithLowPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].Low),
                     "fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].Medium),
                     "fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range4[0].Critical),
-
                     "fixedDefectsWithHighPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].High),
                     "fixedDefectsWithLowPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].Low),
                     "fixedDefectsWithMediumPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].Medium),
@@ -549,12 +501,10 @@
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
-
-
                 })
             }
-
         }
+
         ctrl.addRelease = function(proje) {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/addRelease.html',
@@ -569,10 +519,7 @@
                         return proje.projectId;
                     }
                 }
-
             });
-
-
         }
 
         function addReleaseController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
@@ -580,18 +527,15 @@
             ctrl.namerelease = name;
             ctrl.id = id;
             $scope.options = [{
-                    value: '',
-                    label: 'Choose a value'
-                },
-                {
-                    value: false,
-                    label: 'Closed'
-                },
-                {
-                    value: true,
-                    label: 'Open'
-                },
-            ];
+                value: '',
+                label: 'Choose a value'
+            }, {
+                value: false,
+                label: 'Closed'
+            }, {
+                value: true,
+                label: 'Open'
+            }, ];
 
             ctrl.prevousText = true;
             ctrl.normalformText = false;
@@ -606,7 +550,6 @@
                 ctrl.normalformText = true;
                 ctrl.prevHeader = true;
             }
-
 
             ctrl.updateRelease = function(releaseidUpdation) {
                 ctrl.nname = releaseidUpdation.releaseId;
@@ -640,43 +583,38 @@
                 });
             }
 
-
             featureData.ReleaseData(ctrl.id, ctrl.namerelease).then(ReleaseDataProcessing);
 
             function ReleaseDataProcessing(data) {
                 ctrl.releasegraph = data;
             }
+
             ctrl.postRelease = function(proje) {
                 ctrl.releasePayload = {
                     "projectName": name,
                     "projectId": id,
                     "releaseId": ctrl.releaseId,
                     "name": ctrl.name,
-
                     "startDate": ctrl.startDate,
                     "releaseDate": ctrl.releaseDate,
                     "released": ctrl.released,
-
                     "description": ctrl.description,
-
                     "criticalDefectsFound": ctrl.criticalDefectsFound,
                     "highDefectsFound": ctrl.highDefectsFound,
                     "mediumDefectsFound": ctrl.mediumDefectsFound,
                     "lowDefectsFound": ctrl.lowDefectsFound,
-
                     "criticalDefectsClosed": ctrl.criticalDefectsClosed,
                     "highDefectsClosed": ctrl.highDefectsClosed,
                     "mediumDefectsClosed": ctrl.mediumDefectsClosed,
                     "lowDefectsClosed": ctrl.lowDefectsClosed,
-
                     "criticalDefectsUnresolved": ctrl.criticalDefectsUnresolved,
                     "highDefectsUnresolved": ctrl.highDefectsUnresolved,
                     "mediumDefectsUnresolved": ctrl.mediumDefectsUnresolved,
                     "lowDefectsUnresolved": ctrl.lowDefectsUnresolved,
-
                     "noofStoryCompleted": ctrl.noofStoryCommitted,
                     "noofStoryCommitted": ctrl.noofStoryCompleted
                 }
+
                 $http.post("/api/releaseMetrcis", (ctrl.releasePayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -685,9 +623,7 @@
                         controllerAs: 'pm'
                     });
                 })
-
             }
-
         }
 
         ctrl.addSprint = function(proje) {
@@ -704,12 +640,8 @@
                         return proje.projectId;
                     }
                 }
-
             });
-
-
         }
-
 
         function addSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
             var ctrl = this;
@@ -719,18 +651,15 @@
             ctrl.projectpathId = $cookies.get('projectIdJira');
             ctrl.projectiddefects = $cookies.get('ProSpId');
             $scope.options = [{
-                    value: '',
-                    label: 'Choose a value'
-                },
-                {
-                    value: true,
-                    label: 'Closed'
-                },
-                {
-                    value: false,
-                    label: 'Open'
-                },
-            ];
+                value: '',
+                label: 'Choose a value'
+            }, {
+                value: true,
+                label: 'Closed'
+            }, {
+                value: false,
+                label: 'Open'
+            }, ];
 
             ctrl.prevousText = true;
             ctrl.normalformText = false;
@@ -742,7 +671,6 @@
                 ctrl.prevHeader = false;
             }
             ctrl.showForm = function() {
-
                 ctrl.prevousText = false;
                 ctrl.normalformText = true;
                 ctrl.prevHeader = true;
@@ -756,7 +684,6 @@
 
             function sprintdataProcess(data) {
                 ctrl.spAllDetails = data;
-
             }
 
             ctrl.updateSprint = function(sprintidUpdation) {
@@ -790,11 +717,9 @@
                 });
             }
 
-
             ctrl.postSprint = function(proje) {
                 ctrl.sprintPayload.projectName = name;
                 ctrl.sprintPayload.projectId = id;
-
                 $http.post("/api//sprintMetrics", (ctrl.sprintPayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -803,29 +728,23 @@
                         controllerAs: 'pm'
                     });
                 })
-
             }
-
         }
 
         function updateReleaseController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, sprinpayl, names, ids, projectidsprint) {
             var ctrl = this;
             ctrl.ids = ids;
             ctrl.names = names;
-
             $scope.options = [{
-                    value: '',
-                    label: 'Choose a value'
-                },
-                {
-                    value: false,
-                    label: 'Closed'
-                },
-                {
-                    value: true,
-                    label: 'Open'
-                },
-            ];
+                value: '',
+                label: 'Choose a value'
+            }, {
+                value: false,
+                label: 'Closed'
+            }, {
+                value: true,
+                label: 'Open'
+            }, ];
 
             featureData.updateReleaseDta(ctrl.ids, ctrl.names).then(function(data) {
                 ctrl.fetchReleasedetails = data;
@@ -837,31 +756,26 @@
                     "projectId": ctrl.names,
                     "releaseId": ctrl.fetchReleasedetails.releaseId,
                     "name": ctrl.fetchReleasedetails.name,
-
                     "startDate": ctrl.fetchReleasedetails.startDate,
                     "releaseDate": ctrl.fetchReleasedetails.releaseDate,
                     "released": ctrl.fetchReleasedetails.released,
-
                     "description": ctrl.description,
-
                     "criticalDefectsFound": ctrl.fetchReleasedetails.versionData.defectsFound.severity[3].value,
                     "highDefectsFound": ctrl.fetchReleasedetails.versionData.defectsFound.severity[0].value,
                     "mediumDefectsFound": ctrl.fetchReleasedetails.versionData.defectsFound.severity[2].value,
                     "lowDefectsFound": ctrl.fetchReleasedetails.versionData.defectsFound.severity[1].value,
-
                     "criticalDefectsClosed": ctrl.fetchReleasedetails.versionData.defectsResolved.severity[3].value,
                     "highDefectsClosed": ctrl.fetchReleasedetails.versionData.defectsResolved.severity[0].value,
                     "mediumDefectsClosed": ctrl.fetchReleasedetails.versionData.defectsResolved.severity[2].value,
                     "lowDefectsClosed": ctrl.fetchReleasedetails.versionData.defectsResolved.severity[1].value,
-
                     "criticalDefectsUnresolved": ctrl.fetchReleasedetails.versionData.defectsUnresolved.severity[3].value,
                     "highDefectsUnresolved": ctrl.fetchReleasedetails.versionData.defectsUnresolved.severity[0].value,
                     "mediumDefectsUnresolved": ctrl.fetchReleasedetails.versionData.defectsUnresolved.severity[2].value,
                     "lowDefectsUnresolved": ctrl.fetchReleasedetails.versionData.defectsUnresolved.severity[1].value,
-
                     "noofStoryCompleted": ctrl.fetchReleasedetails.versionData.noofStoryCompleted,
                     "noofStoryCommitted": ctrl.fetchReleasedetails.versionData.noofStoryPoints
                 }
+
                 $http.post("/api/releaseMetrcis", (ctrl.releasePayload)).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -870,11 +784,7 @@
                         controllerAs: 'pm'
                     });
                 })
-
             }
-
-
-
         }
 
         function updateSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, sprinpayl, names, ids, projectidsprint) {
@@ -883,67 +793,44 @@
             ctrl.ids = ids;
             ctrl.ppid = projectidsprint;
             $scope.options = [{
-                    value: '',
-                    label: 'Choose a value'
-                },
-                {
-                    value: true,
-                    label: 'Closed'
-                },
-                {
-                    value: false,
-                    label: 'Open'
-                },
-            ];
+                value: '',
+                label: 'Choose a value'
+            }, {
+                value: true,
+                label: 'Closed'
+            }, {
+                value: false,
+                label: 'Open'
+            }, ];
             ctrl.fetchdetails = {};
-            //ctrl.fetchdetails = sprinpayl;
 
             featureData.updateSprintDta(ctrl.names, ctrl.ids).then(function(data) {
                 ctrl.fetchdetails = data;
             })
+
             ctrl.updateSprintCall = function() {
-
-
-
                 ctrl.sprintEditPayload = {
                     "projectId": projectidsprint,
                     "projectName": ctrl.names,
-
                     "sprintId": ctrl.fetchdetails.sid,
                     "sprintName": ctrl.fetchdetails.sprintData.sprintName,
-                    //"desc": ctrl.desc,
-
-                    //"committedStoriesCount": ctrl.committedStoriesCount,
                     "committedStoryPoints": ctrl.fetchdetails.sprintData.committedStoryPoints,
                     "completedStoryPoints": ctrl.fetchdetails.sprintData.completedStoryPoints,
-
                     "committedStoriesCount": ctrl.fetchdetails.sprintData.committedIssueCount,
                     "completedStoriesCount": ctrl.fetchdetails.sprintData.completedIssueCount,
-
-                    //"storiesAdded": ctrl.storiesAdded,
-                    //"storypointsAdded": ctrl.storypointsAdded,
-
-                    //"storiesRemoed": ctrl.storiesRemoed,
-                    //"storypointsRemoed": ctrl.storypointsRemoed,
                     "released": ctrl.fetchdetails.closed,
-
-                    //"efforts": ctrl.efforts,
-
                     "criticalDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[3].value,
                     "mediumDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[2].value,
                     "lowDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[1].value,
                     "highDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[0].value,
-
                     "criticalDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[3].value,
                     "mediumDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[2].value,
                     "lowDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[1].value,
                     "highDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[0].value,
-
                     "criticalDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[3].value,
                     "mediumDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[2].value,
                     "lowDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[1].value,
                     "highDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[0].value,
-
                     "endDate": ctrl.fetchdetails.end,
                     "startDate": ctrl.fetchdetails.start,
                     "storiesAdded": ctrl.fetchdetails.sprintData.burndown.issuesAdded.count,
