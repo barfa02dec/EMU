@@ -814,10 +814,14 @@
                     "projectName": ctrl.names,
                     "sprintId": ctrl.fetchdetails.sid,
                     "sprintName": ctrl.fetchdetails.sprintData.sprintName,
+
                     "committedStoryPoints": ctrl.fetchdetails.sprintData.committedStoryPoints,
                     "completedStoryPoints": ctrl.fetchdetails.sprintData.completedStoryPoints,
                     "committedStoriesCount": ctrl.fetchdetails.sprintData.committedIssueCount,
-                    "completedStoriesCount": ctrl.fetchdetails.sprintData.completedIssueCount,
+                    "completedIssueCount": ctrl.fetchdetails.sprintData.completedIssueCount,
+
+                    
+
                     "released": ctrl.fetchdetails.closed,
                     "criticalDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[3].value,
                     "mediumDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[2].value,
