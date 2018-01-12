@@ -524,6 +524,7 @@
 
         function addReleaseController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
             var ctrl = this;
+            ctrl.title = "List of Releases";
             ctrl.namerelease = name;
             ctrl.id = id;
             $scope.options = [{
@@ -544,11 +545,13 @@
                 ctrl.prevousText = true;
                 ctrl.normalformText = false;
                 ctrl.prevHeader = false;
+                ctrl.title = "List of Releases";
             }
             ctrl.showForm = function() {
                 ctrl.prevousText = false;
                 ctrl.normalformText = true;
                 ctrl.prevHeader = true;
+                ctrl.title = "Add Release";
             }
 
             ctrl.updateRelease = function(releaseidUpdation) {
@@ -645,6 +648,7 @@
 
         function addSprintController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
             var ctrl = this;
+            ctrl.title = "List of Sprints";
             ctrl.name = name;
             ctrl.id = id;
             ctrl.projectpath = $cookies.get('projectNameJira');
@@ -669,6 +673,7 @@
                 ctrl.prevousText = true;
                 ctrl.normalformText = false;
                 ctrl.prevHeader = false;
+                ctrl.title = "List of Sprints";
             }
             ctrl.showForm = function() {
                 ctrl.prevousText = false;
@@ -678,6 +683,7 @@
                 $rootScope.action_name = "Add";
                 ctrl.addScreen = true;
                 ctrl.updateScreen = false;
+                ctrl.title = "Add Sprint";
             }
 
             featureData.sprintDta(ctrl.id, ctrl.name).then(sprintdataProcess);
