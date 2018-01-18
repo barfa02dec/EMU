@@ -32,7 +32,12 @@
         ];
 
         $scope.currentTab = 'one.tpl.html';
-
+        $scope.deletePermission = "Permission deactivated successfully";
+        $scope.createRole = "Role created successfully";
+        $scope.updateRole = "Role updated successfully";
+        $scope.deleteRole = "Role deactivated successfully";
+        $scope.editUser = "User updated successfully";
+        $scope.deleteUser = "User deleted successfully";
         $scope.onClickTab = function(tab) {
             $scope.currentTab = tab.url;
         }
@@ -148,7 +153,7 @@
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/deletepermissionConfirmation.html',
+                        template: '<confirm-popup msg="deletePermission" action="$close()"></confirm-popup>',
                         controller: delPermissionController,
                         controllerAs: 'delpc'
                     });
@@ -194,7 +199,7 @@
                         $route.reload();
                         $uibModalInstance.dismiss("cancel");
                         $uibModal.open({
-                            templateUrl: 'app/dashboard/views/ConfirmationModals/postroleconfirmmodal.html',
+                            template: '<confirm-popup msg="createRole" action="$close()"></confirm-popup>',
                             controller: 'userManagementController',
                             controllerAs: 'umc'
                         });
@@ -301,7 +306,7 @@
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/roleconfirmationMessage.html',
+                        template: '<confirm-popup msg="deleteRole" action="$close()"></confirm-popup>',
                         controller: userManagementController,
                         controllerAs: 'umc'
                     });
@@ -411,7 +416,7 @@
                     $route.reload();
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/updateRoleConfirmModal.html',
+                        template: '<confirm-popup msg="updateRole" action="$close()"></confirm-popup>',
                         controller: userManagementController,
                         controllerAs: 'umc'
                     });
@@ -538,7 +543,7 @@
                     $route.reload();
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/updateUserModal.html',
+                        template: '<confirm-popup msg="editUser" action="$close()"></confirm-popup>',
                         controller: userManagementController,
                         controllerAs: 'umc'
                     });
@@ -578,7 +583,7 @@
                     $route.reload();
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/deleteUserConfirmModal.html',
+                        template: '<confirm-popup msg="deleteUser" action="$close()"></confirm-popup>',
                         controller: userManagementController,
                         controllerAs: 'umc'
                     });

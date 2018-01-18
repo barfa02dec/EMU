@@ -33,7 +33,7 @@
         ctrl.renameDashboard = renameDashboard;
         ctrl.usernamepro = $cookies.get('username');
         ctrl.projectName = $cookies.get('ProName');
-
+        $scope.deleteDashboard = "Dashboard deleted successfully";
         if (ctrl.username === 'admin') {
             ctrl.myadmin = true;
         }
@@ -292,7 +292,7 @@
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/deletedashboardsuccess.html',
+                        template: '<confirm-popup msg="deleteDashboard" action="$close()"></confirm-popup>',
                         controller: 'SiteController',
                         controllerAs: 'ctrl'
                     });

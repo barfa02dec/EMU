@@ -26,6 +26,37 @@
         $scope.curPage = 0;
         ctrl.pageSize = 5;
 
+        
+        $scope.adduser = "User created succcessfully";
+        
+        $scope.addSprint = "Sprint added succcessfully";
+        
+        $scope.updateSprint = "Sprint updated succcessfully";
+    
+        $scope.addRelease = "Release added succcessfully";
+        
+        $scope.updateRelease = "Release updated succcessfully";
+        
+        $scope.addDefect = "Defect added succcessfully";
+        
+        $scope.updateDefect = "Defect updated succcessfully";
+
+        $scope.postProject = "Project created successfully";
+
+        $scope.deleteProject = "Project deleted successfully";
+        
+
+        $scope.confirmButton = function() {
+            alert("asas");
+            $scope.$modalInstance.close();
+            $scope.$modalInstance.dismiss('cancel');
+        };
+
+        $scope.cancel = function() {
+        $scope.$modalInstance.dismiss('cancel');
+        };
+
+
         //Get All Projects
         projectData.fetchallprojects(ctrl.usernamepro).then(function(response) {
             ctrl.getAllProjects = response;
@@ -135,7 +166,7 @@
                         $uibModalInstance.dismiss("cancel");
                         $route.reload();
                         $uibModal.open({
-                            templateUrl: 'app/dashboard/views/ConfirmationModals/adduserConfirm.html',
+                            template: '<confirm-popup msg="adduser" action="$close()"></confirm-popup>',
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
@@ -261,7 +292,7 @@
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/deleteconfirm.html',
+                        template: '<confirm-popup msg="deleteProject" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -292,7 +323,7 @@
                         $route.reload();
                         $uibModalInstance.dismiss("cancel");
                         $uibModal.open({
-                            templateUrl: 'app/dashboard/views/ConfirmationModals/postconfirm.html',
+                            template: '<confirm-popup msg="postProject" action="$close()"></confirm-popup>',
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
@@ -422,7 +453,7 @@
                 projectData.postDefect(ctrl.payloadDefect).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/defectaddConfirm.html',
+                        template: '<confirm-popup msg="addDefect" action="$close()"></confirm-popup>', 
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -497,7 +528,7 @@
                     $rootScope.ttt = true;
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/defectUpdateConfirmation.html',
+                        template: '<confirm-popup msg="updateDefect" action="$close()"></confirm-popup>', 
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -621,7 +652,7 @@
                 projectData.postRelease(ctrl.releasePayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/releaseaddConfirm.html',
+                        template: '<confirm-popup msg="addRelease" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -729,7 +760,7 @@
                 projectData.postSprint(ctrl.sprintPayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/sprintAddConfirmation.html',
+                        template: '<confirm-popup msg="addSprint" action="$close()"></confirm-popup>', 
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -785,7 +816,7 @@
                projectData.postRelease(ctrl.releasePayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/releaseUpdateConfirmation.html',
+                        template: '<confirm-popup msg="updateRelease" action="$close()"></confirm-popup>', 
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -850,7 +881,7 @@
                projectData.postSprint(ctrl.sprintEditPayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                    $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/sprintUpdateConfirmation.html',
+                        template: '<confirm-popup msg="updateSprint" action="$close()"></confirm-popup>', 
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
