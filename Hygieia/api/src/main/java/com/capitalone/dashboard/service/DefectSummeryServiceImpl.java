@@ -171,7 +171,7 @@ public class DefectSummeryServiceImpl implements DefectSummeryService {
 		m5.put("High", ""+re.getOpenDefectsWithHighPriorityAndAgeGreaterThan90());
 		m5.put("Medium", ""+re.getOpenDefectsWithMediumPriorityAndAgeGreaterThan90());
 		m5.put("Low", ""+re.getOpenDefectsWithLowPriorityAndAgeGreaterThan90());
-		m5.put("Defect Age Strategy", "days >30");
+		m5.put("Defect Age Strategy", "days >90");
 		l5.add(m5);
 		
 		openDefectsByAge.put("Range1", l1);
@@ -231,7 +231,7 @@ public class DefectSummeryServiceImpl implements DefectSummeryService {
 		rm5.put("High", ""+re.getFixedDefectsWithHighPriorityAndResolutionGreaterThan90());
 		rm5.put("Medium", ""+re.getFixedDefectsWithMediumPriorityAndResolutionGreaterThan90());
 		rm5.put("Low", ""+re.getFixedDefectsWithLowPriorityAndResolutionGreaterThan90());
-		rm5.put("Defect Resolution Strategy", "days >30");
+		rm5.put("Defect Resolution Strategy", "days >90");
 		rl5.add(rm5);
 		
 		fixeddefectsByResolutions.put("Range1", rl1);

@@ -36,7 +36,23 @@ public class SprintMetrcisRequest {
 	private String projectId;
 	private String projectName;
 	
-		
+	//Sprint Isue count
+	private Integer completedIssueCount;
+	private Integer committedIssueCount;
+	
+	
+	public Integer getCompletedIssueCount() {
+		return completedIssueCount;
+	}
+	public void setCompletedIssueCount(Integer completedIssueCount) {
+		this.completedIssueCount = completedIssueCount;
+	}
+	public Integer getCommittedIssueCount() {
+		return committedIssueCount;
+	}
+	public void setCommittedIssueCount(Integer committedIssueCount) {
+		this.committedIssueCount = committedIssueCount;
+	}
 	public String getProjectId() {
 		return projectId;
 	}

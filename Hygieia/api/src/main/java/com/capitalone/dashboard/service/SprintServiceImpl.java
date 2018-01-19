@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.capitalone.dashboard.model.Burndown;
 import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.DefectCount;
 import com.capitalone.dashboard.model.NameValuePair;
 import com.capitalone.dashboard.model.Scope;
@@ -85,6 +86,22 @@ public class SprintServiceImpl implements SprintService {
 	
 	private ObjectId getJiraCollectorId(){
 		Collector collector = collectorRepository.findByName("Jira");
+		/*
+		 * Fix for the scenario where jira collector is not required for
+		 * dashboard setup, but user will provide jira metrcis through forms. If
+		 * user create jira metrics through forms, then this API will create a
+		 * collector of type jira iff doesn't exists in DB
+		 */
+		if (null == collector) {
+			Collector jiraCollector = new Collector();
+			jiraCollector.setName("Jira");
+			jiraCollector.setEnabled(true);
+			jiraCollector.setCollectorType(CollectorType.AgileTool);
+			jiraCollector.setOnline(true);
+			jiraCollector.setLastExecuted(System.currentTimeMillis());
+			collectorRepository.save(jiraCollector);
+			collector = collectorRepository.findByName("Jira");
+		}
 		return collector.getId();
 	}
 	private Sprint mapSprintRequestToSprintModel(SprintMetrcisRequest re){
@@ -101,11 +118,14 @@ public class SprintServiceImpl implements SprintService {
 		
 		s.setClosed(re.isReleased());
 		
+		//s.setClosed(re.);
+		
 		SprintData sd= new SprintData();
 		sd.setSprintName(re.getSprintName());
 		sd.setSprintId(re.getSprintId());
 		sd.setCommittedStoryPoints(re.getCommittedStoryPoints());
 		sd.setCompletedStoryPoints(re.getCompletedStoryPoints());
+		
 		try {
 			sd.setEndDate(new SimpleDateFormat("dd-MM-yyyy").parse(re.getEndDate()));
 			sd.setStartDate(new SimpleDateFormat("dd-MM-yyyy").parse(re.getStartDate()));
@@ -201,7 +221,6 @@ public class SprintServiceImpl implements SprintService {
 				list3.add(dnpp3);
 				list3.add(dnpp4);
 				
-				
 				Long total3 =  0L;
 				total3=(long) (re.getHighDefectsUnresolved()+re.getLowDefectsUnresolved()+re.getMediumDefectsUnresolved()+re.getCriticalDefectsUnresolved());
 				
@@ -227,7 +246,14 @@ public class SprintServiceImpl implements SprintService {
 				// this field is not populated from UI, hence setting zero for future implementation
 				int incompletedissuesount=0;
 				
+				// committed issue count
+				//sd.setCommittedIssueCount(re.getCommittedIssueCount());
+				// Completed Issue Count
+				
+				
 				sd.setCommittedIssueCount(re.getCommittedStoriesCount() + re.getStoriesRemoed() + incompletedissuesount - re.getStoriesAdded());
+				sd.setCompletedIssueCount(re.getCompletedIssueCount());
+				//sd.setCompletedIssueCount(re.getCompletedIssueCount());
 				issuecount = burndown.new IssueCount();
 				issuecount.setCount(sd.getCommittedIssueCount());	
 				issuecount.setStoryPoints(0.0d);
@@ -235,10 +261,7 @@ public class SprintServiceImpl implements SprintService {
 
 				sd.setBurndown(burndown);
 				
-				
 				s.setSprintData(sd);
-				
-				
 		
 				return s;
 	}
