@@ -1,5 +1,5 @@
-<widget-modal widget-modal-title="Add defects" class="border-prop-modals">
-    <form name="cdf" class="form" ng-submit="adc.postDefect()" novalidate>
+<widget-modal widget-modal-title="Update Defects" class="border-prop-modals">
+    <form name="cdf" class="form" ng-submit="edc.editDefectCall()" novalidate>
 
          <label class="control-label col-md-4 createproj-label-props" for="pwd">Open Defects by Severity</label>
          <div class="col-md-2">
@@ -9,7 +9,7 @@
                 name="Lowods"
                 class="form-control"
                 placeholder="Low"
-                ng-model="adc.lowPriorityDefectsCount"
+                ng-model="edc.dataEdit.defectsByProirity.Low"
                 min="0"
                />
 
@@ -22,7 +22,7 @@
                 name="Mediumods"
                 class="form-control"
                 placeholder="Medium"
-                ng-model="adc.mediumPriorityDefectsCount"
+                ng-model="edc.dataEdit.defectsByProirity.Medium"
              />
         </form-group>
         </div>
@@ -33,7 +33,7 @@
                 name="Highods"
                 class="form-control"
                 placeholder="High"
-                 ng-model="adc.highPriorityDefectsCount"
+                 ng-model="edc.dataEdit.defectsByProirity.High"
                 
                />
         </form-group>
@@ -45,7 +45,7 @@
                 name="Criticalods"
                 class="form-control"
                 placeholder="Critical"
-                ng-model="adc.criticalPriorityDefectsCount"
+                ng-model="edc.dataEdit.defectsByProirity.Critical"
               />
         </form-group>
         </div>
@@ -59,7 +59,7 @@
                 name="QAenv"
                 class="form-control"
                 placeholder="QA"
-                ng-model="adc.QA_DefectsCount"
+                ng-model="edc.dataEdit.defectsByEnvironment.QA"
                 />
 
         </form-group>
@@ -71,7 +71,7 @@
                 name="UATenv"
                 class="form-control"
                 placeholder="UAT"
-                 ng-model="adc.UAT_DefectsCount"
+                 ng-model="edc.dataEdit.defectsByEnvironment.UAT"
                 />
 
         </form-group>
@@ -83,7 +83,7 @@
                 name="Productionenv"
                 class="form-control"
                 placeholder="Production"
-                 ng-model="adc.PROD_DefectsCount"
+                 ng-model="edc.dataEdit.defectsByEnvironment.PROD"
                 />
 
         </form-group>
@@ -97,11 +97,11 @@
          <div class="col-md-2">
         <form-group input="Low1">
             <input
-                type="number"
+                type=""
                 name="Low1"
                 class="form-control"
                 placeholder="Low"
-                 ng-model="adc.openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range1[0].Low"
               />
 
         </form-group>
@@ -109,11 +109,11 @@
          <div class="col-md-2">
         <form-group input="Medium1">
             <input
-                type="number"
+                type=""
                 name="Medium1"
                 class="form-control"
                 placeholder="Medium"
-                ng-model="adc.openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days"
+                ng-model="edc.dataEdit.openDefectsByAge.Range1[0].Medium"
                />
 
         </form-group>
@@ -121,11 +121,11 @@
          <div class="col-md-2">
         <form-group input="High1">
             <input
-                type="number"
+                type=""
                 name="High1"
                 class="form-control"
                 placeholder="High"
-                ng-model="adc.openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days"
+                ng-model="edc.dataEdit.openDefectsByAge.Range1[0].High"
                />
 
         </form-group>
@@ -133,11 +133,11 @@
          <div class="col-md-2">
         <form-group input="Critical1">
             <input
-                type="number"
+                type=""
                 name="Critical1"
                 class="form-control"
                 placeholder="Critical"
-                 ng-model="adc.openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range1[0].Critical"
                />
 
         </form-group>
@@ -147,11 +147,11 @@
          <div class="col-md-2">
         <form-group input="Low2">
             <input
-                type="number"
+                type=""
                 name="Low2"
                 class="form-control"
                 placeholder="Low"
-                 ng-model="adc.openDefectsWithLowPriorityAndAgeBetween30To60Days"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range3[0].Low"
               />
 
         </form-group>
@@ -159,11 +159,11 @@
          <div class="col-md-2">
         <form-group input="Medium2">
             <input
-                type="number"
+                type=""
                 name="Medium2"
                 class="form-control"
                 placeholder="Medium"
-                 ng-model="adc.openDefectsWithMediumPriorityAndAgeBetween30To60Days"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range3[0].Medium"
                />
 
         </form-group>
@@ -171,11 +171,11 @@
          <div class="col-md-2">
         <form-group input="High2">
             <input
-                type="number"
+                type=""
                 name="High2"
                 class="form-control"
                 placeholder="High"
-                 ng-model="adc.openDefectsWithHighPriorityAndAgeBetween30To60Days"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range3[0].High"
                />
 
         </form-group>
@@ -183,11 +183,11 @@
          <div class="col-md-2">
         <form-group input="Critical2">
             <input
-                type="number"
+                type=""
                 name="Critical2"
                 class="form-control"
                 placeholder="Critical"
-                ng-model="adc.openDefectsWithCriticalPriorityAndAgeBetween30To60Days"
+                ng-model="edc.dataEdit.openDefectsByAge.Range3[0].Critical"
                />
 
         </form-group>
@@ -199,11 +199,11 @@
          <div class="col-md-2">
         <form-group input="Low3">
             <input
-                type="number"
+                type=""
                 name="Low3"
                 class="form-control"
                 placeholder="Low"
-                ng-model="adc.openDefectsWithLowPriorityAndAgeBetween15To30Days"
+                ng-model="edc.dataEdit.openDefectsByAge.Range2[0].Low"
                />
 
         </form-group>
@@ -211,11 +211,11 @@
          <div class="col-md-2">
         <form-group input="Medium3">
             <input
-                type="number"
+                type=""
                 name="Medium3"
                 class="form-control"
                 placeholder="Medium"
-                ng-model="adc.openDefectsWithMediumPriorityAndAgeBetween15To30Days"
+                ng-model="edc.dataEdit.openDefectsByAge.Range2[0].Medium"
                />
 
         </form-group>
@@ -223,11 +223,11 @@
          <div class="col-md-2">
         <form-group input="High3">
             <input
-                type="number"
+                type=""
                 name="High3"
                 class="form-control"
                 placeholder="High"
-                 ng-model="adc.openDefectsWithHighPriorityAndAgeBetween15To30Days"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range2[0].High"
                />
 
         </form-group>
@@ -235,11 +235,11 @@
          <div class="col-md-2">
         <form-group input="Critical3">
             <input
-                type="number"
+                type=""
                 name="Critical3"
                 class="form-control"
                 placeholder="Critical"
-                 ng-model="adc.openDefectsWithCriticalPriorityAndAgeBetween15To30Days"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range2[0].Critical"
                 />
 
         </form-group>
@@ -249,11 +249,11 @@
          <div class="col-md-2">
         <form-group input="Low3">
             <input
-                type="number"
+                type=""
                 name="Low3"
                 class="form-control"
                 placeholder="Low"
-                ng-model="adc.openDefectsWithLowPriorityAndAgeBetween60To90Days"
+                ng-model="edc.dataEdit.openDefectsByAge.Range4[0].Low"
                />
 
         </form-group>
@@ -261,11 +261,11 @@
          <div class="col-md-2">
         <form-group input="Medium3">
             <input
-                type="number"
+                type=""
                 name="Medium3"
                 class="form-control"
                 placeholder="Medium"
-              ng-model="adc.openDefectsWithMediumPriorityAndAgeBetween60To90Days"
+              ng-model="edc.dataEdit.openDefectsByAge.Range4[0].Medium"
                />
 
         </form-group>
@@ -273,11 +273,11 @@
          <div class="col-md-2">
         <form-group input="High3">
             <input
-                type="number"
+                type=""
                 name="High3"
                 class="form-control"
                 placeholder="High"
-                ng-model="adc.openDefectsWithHighPriorityAndAgeBetween60To90Days"
+                ng-model="edc.dataEdit.openDefectsByAge.Range4[0].High"
                />
 
         </form-group>
@@ -285,11 +285,11 @@
          <div class="col-md-2">
         <form-group input="Critical3">
             <input
-                type="number"
+                type=""
                 name="Critical3"
                 class="form-control"
                 placeholder="Critical"
-                ng-model="adc.openDefectsWithCriticalPriorityAndAgeBetween60To90Days"
+                ng-model="edc.dataEdit.openDefectsByAge.Range4[0].Critical"
                />
 
         </form-group>
@@ -299,11 +299,11 @@
          <div class="col-md-2">
         <form-group input="Low4">
             <input
-                type="number"
+                type=""
                 name="Low4"
                 class="form-control"
                 placeholder="Low"
-                ng-model="adc.openDefectsWithLowPriorityAndAgeGreaterThan90"
+                ng-model="edc.dataEdit.openDefectsByAge.Range5[0].Low"
                 />
 
         </form-group>
@@ -311,11 +311,11 @@
          <div class="col-md-2">
         <form-group input="Medium4">
             <input
-                type="number"
+                type=""
                 name="Medium4"
                 class="form-control"
                 placeholder="Medium"
-                ng-model="adc.openDefectsWithMediumPriorityAndAgeGreaterThan90"
+                ng-model="edc.dataEdit.openDefectsByAge.Range5[0].Medium"
                 />
 
         </form-group>
@@ -323,11 +323,11 @@
          <div class="col-md-2">
         <form-group input="High4">
             <input
-                type="number"
+                type=""
                 name="High4"
                 class="form-control"
                 placeholder="High"
-               ng-model="adc.openDefectsWithHighPriorityAndAgeGreaterThan90"
+               ng-model="edc.dataEdit.openDefectsByAge.Range5[0].High"
               
                 />
 
@@ -336,11 +336,11 @@
          <div class="col-md-2">
         <form-group input="Critical4">
             <input
-                type="number"
+                type=""
                 name="Critical4"
                 class="form-control"
                 placeholder="Critical"
-                 ng-model="adc.openDefectsWithCriticalPriorityAndAgeGreaterThan90"
+                 ng-model="edc.dataEdit.openDefectsByAge.Range5[0].Critical"
                 />
 
         </form-group>
@@ -356,11 +356,11 @@
          <div class="col-md-2">
         <form-group input="Low5">
             <input
-                type="number"
+                type=""
                 name="Low5"
                 class="form-control"
                 placeholder="Low"
-                 ng-model="adc.fixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days"
+                 ng-model="edc.dataEdit.fixeddefectsByResolutions.Range1[0].Low"
                 />
 
         </form-group>
@@ -368,11 +368,11 @@
          <div class="col-md-2">
         <form-group input="Medium5">
             <input
-                type="number"
+                type=""
                 name="Medium5"
                 class="form-control"
                 placeholder="Medium"
-                 ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days"
+                 ng-model="edc.dataEdit.fixeddefectsByResolutions.Range1[0].Medium"
                 />
 
         </form-group>
@@ -380,23 +380,24 @@
          <div class="col-md-2">
         <form-group input="High5">
             <input
-                type="number"
+                type=""
                 name="High5"
                 class="form-control"
                 placeholder="High"
-                 ng-model="adc.fixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days"
+                 ng-model="edc.dataEdit.fixeddefectsByResolutions.Range1[0].High"
                />
 
         </form-group>
+       
         </div>
          <div class="col-md-2">
         <form-group input="Critical5">
             <input
-                type="number"
+                type=""
                 name="Critical5"
                 class="form-control"
                 placeholder="Critical"
-              ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days"
+              ng-model="edc.dataEdit.fixeddefectsByResolutions.Range1[0].Critical"
                 />
 
         </form-group>
@@ -406,11 +407,11 @@
          <div class="col-md-2">
         <form-group input="Low6">
             <input
-                type="number"
+                type=""
                 name="Low6"
                 class="form-control"
                 placeholder="Low"
-                 ng-model="adc.fixedDefectsWithLowPriorityAndResolutionBetween30To60Days"
+                 ng-model="edc.dataEdit.fixeddefectsByResolutions.Range3[0].Low"
                 />
 
         </form-group>
@@ -418,11 +419,11 @@
          <div class="col-md-2">
         <form-group input="Medium6">
             <input
-                type="number"
+                type=""
                 name="Medium6"
                 class="form-control"
                 placeholder="Medium"
-               ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionBetween30To60Days"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range3[0].Medium"
                />
 
         </form-group>
@@ -430,11 +431,11 @@
          <div class="col-md-2">
         <form-group input="High6">
             <input
-                type="number"
+                type=""
                 name="High6"
                 class="form-control"
                 placeholder="High"
-             ng-model="adc.fixedDefectsWithHighPriorityAndResolutionBetween30To60Days"
+             ng-model="edc.dataEdit.fixeddefectsByResolutions.Range3[0].High"
                 />
 
         </form-group>
@@ -442,11 +443,11 @@
          <div class="col-md-2">
         <form-group input="Critical6">
             <input
-                type="number"
+                type=""
                 name="Critical6"
                 class="form-control"
                 placeholder="Critical"
-              ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days"
+              ng-model="edc.dataEdit.fixeddefectsByResolutions.Range3[0].Critical"
                />
 
         </form-group>
@@ -458,11 +459,11 @@
          <div class="col-md-2">
         <form-group input="Low7">
             <input
-                type="number"
+                type=""
                 name="Low7"
                 class="form-control"
                 placeholder="Low"
-               ng-model="adc.fixedDefectsWithLowPriorityAndResolutionBetween15To30Days"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range2[0].Low"
                />
 
         </form-group>
@@ -470,11 +471,11 @@
          <div class="col-md-2">
         <form-group input="Medium7">
             <input
-                type="number"
+                type=""
                 name="Medium7"
                 class="form-control"
                 placeholder="Medium"
-               ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionBetween15To30Days"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range2[0].Medium"
                 />
 
         </form-group>
@@ -482,11 +483,11 @@
          <div class="col-md-2">
         <form-group input="High7">
             <input
-                type="number"
+                type=""
                 name="High7"
                 class="form-control"
                 placeholder="High"
-               ng-model="adc.fixedDefectsWithHighPriorityAndResolutionBetween15To30Days"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range2[0].High"
                />
 
         </form-group>
@@ -494,11 +495,11 @@
          <div class="col-md-2">
         <form-group input="Critical7">
             <input
-                type="number"
+                type=""
                 name="Critical7"
                 class="form-control"
                 placeholder="Critical"
-                ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days"
+                ng-model="edc.dataEdit.fixeddefectsByResolutions.Range2[0].Critical"
                 />
 
         </form-group>
@@ -508,11 +509,11 @@
          <div class="col-md-2">
         <form-group input="Low8">
             <input
-                type="number"
+                type=""
                 name="Low8"
                 class="form-control"
                 placeholder="Low"
-                ng-model="adc.fixedDefectsWithLowPriorityAndResolutionBetween60To90Days"
+                ng-model="edc.dataEdit.fixeddefectsByResolutions.Range4[0].Low"
                />
 
         </form-group>
@@ -520,11 +521,11 @@
          <div class="col-md-2">
         <form-group input="Medium8">
             <input
-                type="number"
+                type=""
                 name="Medium8"
                 class="form-control"
                 placeholder="Medium"
-                ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days"
+                ng-model="edc.dataEdit.fixeddefectsByResolutions.Range4[0].Medium"
                 />
 
         </form-group>
@@ -532,11 +533,11 @@
          <div class="col-md-2">
         <form-group input="High8">
             <input
-                type="number"
+                type=""
                 name="High8"
                 class="form-control"
                 placeholder="High"
-               ng-model="adc.fixedDefectsWithHighPriorityAndResolutionBetween60To90Days"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range4[0].High"
              />
 
         </form-group>
@@ -544,11 +545,11 @@
          <div class="col-md-2">
         <form-group input="Critical8">
             <input
-                type="number"
+                type=""
                 name="Critical8"
                 class="form-control"
                 placeholder="Critical"
-             ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days"
+             ng-model="edc.dataEdit.fixeddefectsByResolutions.Range4[0].Critical"
                />
 
         </form-group>
@@ -558,11 +559,11 @@
          <div class="col-md-2">
         <form-group input="Low9">
             <input
-                type="number"
+                type=""
                 name="Low9"
                 class="form-control"
                 placeholder="Low"
-               ng-model="adc.fixedDefectsWithLowPriorityAndResolutionGreaterThan90"
+               ng-model="edc.dataEdit.fixeddefectsByResolutions.Range5[0].Low"
                 />
 
         </form-group>
@@ -570,11 +571,11 @@
          <div class="col-md-2">
         <form-group input="Medium9">
             <input
-                type="number"
+                type=""
                 name="Medium9"
                 class="form-control"
                 placeholder="Medium"
-                ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionGreaterThan90"
+                ng-model="edc.dataEdit.fixeddefectsByResolutions.Range5[0].Medium"
                 />
 
         </form-group>
@@ -582,11 +583,11 @@
          <div class="col-md-2">
         <form-group input="High9">
             <input
-                type="number"
+                type=""
                 name="High9"
                 class="form-control"
                 placeholder="High"
-                ng-model="adc.fixedDefectsWithHighPriorityAndResolutionGreaterThan90"
+                ng-model="edc.dataEdit.fixeddefectsByResolutions.Range5[0].High"
                />
 
         </form-group>
@@ -594,11 +595,11 @@
          <div class="col-md-2">
         <form-group input="Critical9">
             <input
-                type="number"
+                type=""
                 name="Critical9"
                 class="form-control"
                 placeholder="Critical"
-                 ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90"
+                 ng-model="edc.dataEdit.fixeddefectsByResolutions.Range5[0].Critical"
                 />
 
         </form-group>

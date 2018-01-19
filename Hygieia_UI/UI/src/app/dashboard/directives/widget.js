@@ -412,7 +412,9 @@
                 if (load && load.then) {
                     load.then(function(result) {
                         var lastUpdated = angular.isArray(result) ? _.max(result) : result;
-                        $scope.lastUpdatedDisplay = moment(lastUpdated).dash('ago');
+                        //var string = moment('18/01/2016', 'DD/MM/YYYY').format("DD MMM YYYY")
+                        $scope.lastUpdatedDisplay = moment(lastUpdated).format("DD MMM YYYY  HH:mm:ss");
+                        //$scope.lastUpdatedDisplay = moment(lastUpdated).dash('ago');
                     });
                 }
             }
@@ -423,7 +425,8 @@
                 if (load && load.then) {
                     load.then(function(result) {
                         var lastUpdated = angular.isArray(result) ? _.max(result) : result;
-                        $scope.lastUpdatedDisplay = moment(lastUpdated).dash('ago');
+                        //$scope.lastUpdatedDisplay = moment(lastUpdated).dash('ago');
+                        $scope.lastUpdatedDisplay = moment(lastUpdated).format("DD MMM YYYY  HH:mm:ss");
                     });
                 }
             }
@@ -433,7 +436,8 @@
                 if (load && load.then) {
                     load.then(function(result) {
                         var lastUpdated = angular.isArray(result) ? _.max(result) : result;
-                        $scope.lastUpdatedDisplay = moment(lastUpdated).dash('ago');
+                        //$scope.lastUpdatedDisplay = moment(lastUpdated).dash('ago');
+                        $scope.lastUpdatedDisplay = moment(lastUpdated).format("DD MMM YYYY  HH:mm:ss");
                     });
                 }
             }

@@ -1,0 +1,261 @@
+<link href="assets/images/angular-datepicker.css" rel="stylesheet" type="text/css" />
+<script src="assets/images/angular-datepicker.js"></script>
+<link href="assets/images/fld/angular-datepicker.css" rel="stylesheet" type="text/css" />
+<script src="assets/images/fld/angular-datepicker.js"></script>
+<widget-modal widget-modal-title="Update Release" class="border-prop-modals" >
+   <form name="cdf" class="form" ng-submit="urc.postRelease()" novalidate >
+      <div class="col-md-6">
+         <form-group input="dashboardTitle" errors="{required: 'Release id is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
+            <input
+               type="number"
+               name="dashboardTitle"
+               class="form-control"
+               placeholder="Release id"
+               ng-model="urc.fetchReleasedetails.releaseId"
+               required
+               maxlength="50"
+               autocomplete="off"
+               ng-pattern="/^[a-zA-Z0-9 ]*$/" disabled>
+         </form-group>
+      </div>
+      <div class="col-md-6">
+         <form-group input="applicationName" errors="{required: 'Release name is required', maxlength: 'Max length of 50 characters'}">
+            <input
+               type="text"
+               name="applicationName"
+               class="form-control"
+               placeholder="Release name"
+               ng-model="urc.fetchReleasedetails.name"
+               maxlength="50"
+               autocomplete="off"
+               required 
+               disabled />
+         </form-group>
+      </div>
+      <div class="col-md-3">
+         <form-group input="date1">
+          <!--   <datepicker date-format="dd-MM-yyyy" selector="form-control">
+               <div class="input-group"> 
+                  <input class="form-control" ng-model="urc.fetchReleasedetails.versionData.startDate" name="date1" placeholder="start date"/>
+                  <span class="input-group-addon" style="cursor: pointer">
+                  <i class="fa fa-lg fa-calendar"></i>
+                  </span>
+               </div>
+            </datepicker> -->
+
+              <datepicker date-format="dd-MM-yyyy" selector="form-control">
+                  <input class="form-control font-fontawesome font-light"  ng-model="urc.fetchReleasedetails.startDate" name="date1" placeholder="  Start date" required/>
+            </datepicker>
+
+         </form-group>
+      </div>
+      <div class="col-md-3">
+         <form-group input="date1">
+            <datepicker date-format="dd-MM-yyyy" selector="form-control">
+                  <input class="form-control font-fontawesome font-light" ng-model="urc.fetchReleasedetails.releaseDate" name="date1" placeholder="  End date" required/>
+            </datepicker>
+         </form-group>
+      </div>
+      <div class="col-md-6">
+        <!--  <form-group input="Status1">
+           <select ng-options="o.value as o.label for o in options" ng-model="arc.released" class="form-control"></select>
+         </form-group> -->
+
+          <form-group input="selectedTemplate" errors="{required: 'Status is required'}">
+         
+             <select ng-options="o.value as o.label for o in options" ng-model="urc.fetchReleasedetails.released" class="form-control"></select>
+        </form-group>
+
+      </div>
+      <!-- <div class="col-md-12">
+         <form-group input="Description1">
+            <input
+               type="text"
+               name="Description1"
+               class="form-control"
+               placeholder="Description"
+               ng-model="arc.description"
+               />
+         </form-group>
+      </div> -->
+      <div class="col-md-6">
+         <form-group input="stories1">
+            <input
+               type="number"
+               name="stories1"
+               class="form-control"
+               placeholder="Number of stories"
+               ng-model="urc.fetchReleasedetails.versionData.noofStoryPoints"
+               /> 
+            <!-- <div date-picker></div> -->
+            <!-- <div date-picker timezone="Europe/London"></div> -->
+            <!-- <input date-time id="pickerToUpdate">
+               -->        
+         </form-group>
+      </div>
+      <div class="col-md-6">
+         <form-group input="story2">
+            <input
+               type="number"
+               name="story2"
+               class="form-control"
+               placeholder="Number of story points"
+               ng-model="urc.fetchReleasedetails.versionData.noofStoryCompleted"
+               />
+         </form-group>
+      </div>
+      <!-- <div class="col-md-4">
+         <form-group input="Effort1">
+            <input
+               type="text"
+               name="Effort1"
+               class="form-control"
+               placeholder="Effort (In PD)"
+               ng-model="arc.noofStoryCompleted"
+               />
+         </form-group>
+      </div> -->
+      <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Found</label>
+      <div class="col-md-2">
+         <form-group input="Critical1" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+            <input
+               type="number"
+               name="Critical1"
+               class="form-control"
+               placeholder="Critical"
+               ng-model="urc.fetchReleasedetails.versionData.defectsFound.severity[3].value"
+               />
+         </form-group>
+      </div>
+      <div class="col-md-2">
+         <form-group input="High1">
+            <input
+               type="number"
+               name="High1"
+               class="form-control"
+               placeholder="High"
+               ng-model="urc.fetchReleasedetails.versionData.defectsFound.severity[0].value"
+               />
+         </form-group>
+      </div>
+      <div class="col-md-2">
+         <form-group input="Medium1">
+            <input
+               type="number"
+               name="Medium1"
+               class="form-control"
+               placeholder="Medium"
+               ng-model="urc.fetchReleasedetails.versionData.defectsFound.severity[2].value"
+               />
+         </form-group>
+      </div>
+      <div class="col-md-2">
+         <form-group input="Low1">
+            <input
+               type="number"
+               name="Low1"
+               class="form-control"
+               placeholder="Low"
+               ng-model="urc.fetchReleasedetails.versionData.defectsFound.severity[1].value"
+               />
+         </form-group>
+      </div>
+      <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Closed</label>
+      <div class="col-md-2">
+         <form-group input="Critical2">
+            <input
+               type="number"
+               name="Critical2"
+               class="form-control"
+               placeholder="Critical"
+               ng-model="urc.fetchReleasedetails.versionData.defectsResolved.severity[3].value"
+               />
+         </form-group>
+      </div>
+      <div class="col-md-2">
+         <form-group input="High2">
+            <input
+               type="number"
+               name="High2"
+               class="form-control"
+               placeholder="High"
+               ng-model="urc.fetchReleasedetails.versionData.defectsResolved.severity[0].value"
+               />
+         </form-group>
+      </div>
+      <div class="col-md-2">
+         <form-group input="Medium2">
+            <input
+               type="number"
+               name="Medium2"
+               class="form-control"
+               placeholder="Medium"
+               ng-model="urc.fetchReleasedetails.versionData.defectsResolved.severity[2].value"
+               />
+         </form-group>
+      </div>
+      <div class="col-md-2">
+         <form-group input="Low2">
+            <input
+               type="number"
+               name="Low2"
+               class="form-control"
+               placeholder="Low"
+               ng-model="urc.fetchReleasedetails.versionData.defectsResolved.severity[1].value"
+               />
+         </form-group>
+      </div>
+      <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Unresolved</label>
+      <div class="col-md-2">
+         <form-group input="Critical3">
+            <input
+               type="number"
+               name="Critical3"
+               class="form-control"
+               placeholder="Critical"
+               ng-model="urc.fetchReleasedetails.versionData.defectsUnresolved.severity[3].value"
+               />
+         </form-group>
+      </div>
+      <div class="col-md-2">
+         <form-group input="High3">
+            <input
+               type="number"
+               name="High3"
+               class="form-control"
+               placeholder="High"
+               ng-model="urc.fetchReleasedetails.versionData.defectsUnresolved.severity[0].value"
+               />
+         </form-group>
+      </div>
+      <div class="col-md-2">
+         <form-group input="Medium3">
+            <input
+               type="number"
+               name="Medium3"
+               class="form-control"
+               placeholder="Medium"
+               ng-model="urc.fetchReleasedetails.versionData.defectsUnresolved.severity[2].value"
+               />
+         </form-group>
+      </div>
+      <div class="col-md-2">
+         <form-group input="Low3">
+            <input
+               type="number"
+               name="Low3"
+               class="form-control"
+               placeholder="Low"
+               ng-model="urc.fetchReleasedetails.versionData.defectsUnresolved.severity[1].value"
+               />
+         </form-group>
+      </div>
+      <div class="button-row row" style="padding-left: 12px;">
+         <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Create</button>
+         <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
+      </div>
+   </form>
+
+   
+</widget-modal>
+

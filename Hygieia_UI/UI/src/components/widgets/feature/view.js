@@ -410,19 +410,19 @@
         ctrl.defectsResolved = data[0].sprintData.defectsResolved.total;
        ctrl.defectsUnresolved = data[0].sprintData.defectsUnresolved.total;
 
-       ctrl.defectsfoundprev = data[1].sprintData.defectsFound.total;
+       /*ctrl.defectsfoundprev = data[1].sprintData.defectsFound.total;
         ctrl.defectsResolvedprev = data[1].sprintData.defectsResolved.total;
-       ctrl.defectsUnresolvedprev = data[1].sprintData.defectsUnresolved.total;
+       ctrl.defectsUnresolvedprev = data[1].sprintData.defectsUnresolved.total;*/
 
        ctrl.spname = data[0].name;
        ctrl.sidd = data[0].sid;
        ctrl.stat = data[0].sprintData.state;
        ctrl.spname = data[0].sprintData.sprintName;
 
-       ctrl.spnameprev = data[1].name;
+       /*ctrl.spnameprev = data[1].name;
        ctrl.siddprev = data[1].sid;
        ctrl.statprev = data[1].sprintData.state;
-       ctrl.spnameprev = data[1].sprintData.sprintName; 
+       ctrl.spnameprev = data[1].sprintData.sprintName;*/ 
 
        //ctrl.defectsfoundPrvSprint = data[1].sprintData.defectsFound.total;
        //ctrl.defectsResolvedPrvSprint =data[1].sprintData.defectsResolved.total;
@@ -435,10 +435,10 @@
        ctrl.committedStoryPoints = data[0].sprintData.burndown.issuesAdded.count;
        ctrl.completedStoryPoints = data[0].sprintData.burndown.issuesRemoved.count;
 
-       ctrl.completedIssueCountprev = data[1].sprintData.completedIssueCount;
+       /*ctrl.completedIssueCountprev = data[1].sprintData.completedIssueCount;
        ctrl.committedIssueCountprev = data[1].sprintData.committedIssueCount;
        ctrl.committedStoryPointsprev = data[1].sprintData.burndown.issuesAdded.count;
-       ctrl.completedStoryPointsprev = data[1].sprintData.burndown.issuesRemoved.count;
+       ctrl.completedStoryPointsprev = data[1].sprintData.burndown.issuesRemoved.count;*/
 
        for(var i=0;i<data.length;i++){
           if(data[i].sprintData != undefined){

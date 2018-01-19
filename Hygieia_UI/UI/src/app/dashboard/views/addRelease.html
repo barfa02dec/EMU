@@ -2,65 +2,43 @@
 <script src="assets/images/angular-datepicker.js"></script>
 <link href="assets/images/fld/angular-datepicker.css" rel="stylesheet" type="text/css" />
 <script src="assets/images/fld/angular-datepicker.js"></script>
-<widget-modal widget-modal-title="Add Release" class="border-prop-modals" ng-click="arc.hideList()">
-   <form name="cdf" class="form" ng-submit="arc.postRelease()" novalidate ng-if="arc.normalformText">
-      <div class="col-md-6">
-         <form-group input="dashboardTitle" errors="{required: 'Release id is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
-            <input
-               type="text"
-               name="dashboardTitle"
-               class="form-control"
-               placeholder="Release id"
-               ng-model="arc.releaseId"
-               required
-               maxlength="50"
-               autocomplete="off"
-               ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
-         </form-group>
-      </div>
-      <div class="col-md-6">
-         <form-group input="applicationName" errors="{required: 'Release name is required', maxlength: 'Max length of 50 characters'}">
-            <input
-               type="text"
-               name="applicationName"
-               class="form-control"
-               placeholder="Release name"
-               ng-model="arc.name"
-               maxlength="50"
-               autocomplete="off"
-               required />
-         </form-group>
-      </div>
-      <div class="col-md-3">
-         <form-group input="date1">
-            <datepicker date-format="dd-MM-yyyy" selector="form-control">
-               <div class="input-group">
-                  <input class="form-control" ng-model="arc.startDate" name="date1" placeholder="start date"/>
-                  <span class="input-group-addon" style="cursor: pointer">
-                  <i class="fa fa-lg fa-calendar"></i>
-                  </span>
-               </div>
-            </datepicker>
-         </form-group>
-      </div>
-      <div class="col-md-3">
-         <form-group input="date1">
-            <datepicker date-format="dd-MM-yyyy" selector="form-control">
-               <div class="input-group">
-                  <input class="form-control" ng-model="arc.releaseDate" name="date1" placeholder="Release date"/>
-                  <span class="input-group-addon" style="cursor: pointer">
-                  <i class="fa fa-lg fa-calendar"></i>
-                  </span>
-               </div>
-            </datepicker>
-         </form-group>
-      </div>
-      <div class="col-md-6">
-         <form-group input="Status1">
-           <select ng-options="o.value as o.label for o in options" ng-model="arc.released" class="form-control"></select>
-         </form-group>
-      </div>
-      <div class="col-md-12">
+<widget-modal  class="border-prop-modals" ng-click="arc.hideList()">
+    <div class="widget-modal-heading">{{arc.title}}</div> 
+    <form name="cdf" class="form" ng-submit="arc.postRelease()" novalidate ng-if="arc.normalformText">
+        <div class="col-md-6">
+            <form-group input="dashboardTitle" errors="{required: 'Release id is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
+                <input type="number" name="dashboardTitle" class="form-control" placeholder="Release id" ng-model="arc.releaseId" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
+            </form-group>
+        </div>
+        <div class="col-md-6">
+            <form-group input="applicationName" errors="{required: 'Release name is required', maxlength: 'Max length of 50 characters'}">
+                <input type="text" name="applicationName" class="form-control" placeholder="Release name" ng-model="arc.name" maxlength="50" autocomplete="off" required />
+            </form-group>
+        </div>
+        <div class="col-md-3">
+            <form-group input="date1">
+                <datepicker date-format="yyyy-MM-dd" selector="form-control" date-max-limit="{{arc.releaseDate}}">
+                    <div class="input-group">
+                        <input class="form-control font-fontawesome font-light" ng-model="arc.startDate" name="date1" placeholder="  Start date" required/>
+                    </div>
+                </datepicker>
+            </form-group>
+        </div>
+        <div class="col-md-3">
+            <form-group input="date2">
+                <datepicker date-format="yyyy-MM-dd" selector="form-control" date-min-limit="{{arc.startDate}}">
+                    <div class="input-group">
+                        <input class="form-control font-fontawesome font-light" ng-model="arc.releaseDate" name="date2" placeholder="  Release date" required/>
+                    </div>
+                </datepicker>
+            </form-group>
+        </div>
+        <div class="col-md-6">
+            <form-group input="Status1">
+                <select ng-options="o.value as o.label for o in options" ng-model="arc.released" class="form-control"></select>
+            </form-group>
+        </div>
+        <!-- <div class="col-md-12">
          <form-group input="Description1">
             <input
                type="text"
@@ -70,34 +48,22 @@
                ng-model="arc.description"
                />
          </form-group>
-      </div>
-      <div class="col-md-4">
-         <form-group input="stories1">
-            <input
-               type="text"
-               name="stories1"
-               class="form-control"
-               placeholder="Number of stories"
-               ng-model="arc.startDates"
-               /> 
-            <!-- <div date-picker></div> -->
-            <!-- <div date-picker timezone="Europe/London"></div> -->
-            <!-- <input date-time id="pickerToUpdate">
-               -->        
-         </form-group>
-      </div>
-      <div class="col-md-4">
-         <form-group input="story2">
-            <input
-               type="text"
-               name="story2"
-               class="form-control"
-               placeholder="Number of story points"
-               ng-model="arc.noofStoryCommitted"
-               />
-         </form-group>
-      </div>
-      <div class="col-md-4">
+      </div> -->
+        <div class="col-md-6">
+            <form-group input="stories1">
+                <input type="number" name="stories1" class="form-control" placeholder="Number of stories" ng-model="arc.noofStoryCommitted" />
+                <!-- <div date-picker></div> -->
+                <!-- <div date-picker timezone="Europe/London"></div> -->
+                <!-- <input date-time id="pickerToUpdate">
+               -->
+            </form-group>
+        </div>
+        <div class="col-md-6">
+            <form-group input="story2">
+                <input type="number" name="story2" class="form-control" placeholder="Number of story points" ng-model="arc.noofStoryCompleted" />
+            </form-group>
+        </div>
+        <!-- <div class="col-md-4">
          <form-group input="Effort1">
             <input
                type="text"
@@ -107,196 +73,132 @@
                ng-model="arc.noofStoryCompleted"
                />
          </form-group>
-      </div>
-      <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Found</label>
-      <div class="col-md-2">
-         <form-group input="Critical1" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-            <input
-               type="text"
-               name="Critical1"
-               class="form-control"
-               placeholder="Critical"
-               ng-model="arc.criticalDefectsFound"
-               />
-         </form-group>
-      </div>
-      <div class="col-md-2">
-         <form-group input="High1">
-            <input
-               type="text"
-               name="High1"
-               class="form-control"
-               placeholder="High"
-               ng-model="arc.highDefectsFound"
-               />
-         </form-group>
-      </div>
-      <div class="col-md-2">
-         <form-group input="Medium1">
-            <input
-               type="text"
-               name="Medium1"
-               class="form-control"
-               placeholder="Medium"
-               ng-model="arc.mediumDefectsFound"
-               />
-         </form-group>
-      </div>
-      <div class="col-md-2">
-         <form-group input="Low1">
-            <input
-               type="text"
-               name="Low1"
-               class="form-control"
-               placeholder="Low"
-               ng-model="arc.lowDefectsFound"
-               />
-         </form-group>
-      </div>
-      <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Closed</label>
-      <div class="col-md-2">
-         <form-group input="Critical2">
-            <input
-               type="text"
-               name="Critical2"
-               class="form-control"
-               placeholder="Critical"
-               ng-model="arc.criticalDefectsClosed"
-               />
-         </form-group>
-      </div>
-      <div class="col-md-2">
-         <form-group input="High2">
-            <input
-               type="text"
-               name="High2"
-               class="form-control"
-               placeholder="High"
-               ng-model="arc.highDefectsClosed"
-               />
-         </form-group>
-      </div>
-      <div class="col-md-2">
-         <form-group input="Medium2">
-            <input
-               type="text"
-               name="Medium2"
-               class="form-control"
-               placeholder="Medium"
-               ng-model="arc.mediumDefectsClosed"
-               />
-         </form-group>
-      </div>
-      <div class="col-md-2">
-         <form-group input="Low2">
-            <input
-               type="text"
-               name="Low2"
-               class="form-control"
-               placeholder="Low"
-               ng-model="arc.lowDefectsClosed"
-               />
-         </form-group>
-      </div>
-      <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Unresolved</label>
-      <div class="col-md-2">
-         <form-group input="Critical3">
-            <input
-               type="text"
-               name="Critical3"
-               class="form-control"
-               placeholder="Critical"
-               ng-model="arc.criticalDefectsUnresolved"
-               />
-         </form-group>
-      </div>
-      <div class="col-md-2">
-         <form-group input="High3">
-            <input
-               type="text"
-               name="High3"
-               class="form-control"
-               placeholder="High"
-               ng-model="arc.highDefectsUnresolved"
-               />
-         </form-group>
-      </div>
-      <div class="col-md-2">
-         <form-group input="Medium3">
-            <input
-               type="text"
-               name="Medium3"
-               class="form-control"
-               placeholder="Medium"
-               ng-model="arc.mediumDefectsUnresolved"
-               />
-         </form-group>
-      </div>
-      <div class="col-md-2">
-         <form-group input="Low3">
-            <input
-               type="text"
-               name="Low3"
-               class="form-control"
-               placeholder="Low"
-               ng-model="arc.lowDefectsUnresolved"
-               />
-         </form-group>
-      </div>
-      <div class="button-row row" style="padding-left: 12px;">
-         <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Create</button>
-         <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
-      </div>
-   </form>
-
-    <div class="" ng-click="arc.hideForm()"  >
-  <hr>
-   <span ng-if="arc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
+      </div> -->
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Found</label>
+        <div class="col-md-2">
+            <form-group input="Critical1" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+                <input type="number" name="Critical1" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsFound" />
+            </form-group>
+        </div>
+        <div class="col-md-2">
+            <form-group input="High1">
+                <input type="number" name="High1" class="form-control" placeholder="High" ng-model="arc.highDefectsFound" />
+            </form-group>
+        </div>
+        <div class="col-md-2">
+            <form-group input="Medium1">
+                <input type="number" name="Medium1" class="form-control" placeholder="Medium" ng-model="arc.mediumDefectsFound" />
+            </form-group>
+        </div>
+        <div class="col-md-2">
+            <form-group input="Low1">
+                <input type="number" name="Low1" class="form-control" placeholder="Low" ng-model="arc.lowDefectsFound" />
+            </form-group>
+        </div>
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Closed</label>
+        <div class="col-md-2">
+            <form-group input="Critical2">
+                <input type="number" name="Critical2" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsClosed" />
+            </form-group>
+        </div>
+        <div class="col-md-2">
+            <form-group input="High2">
+                <input type="number" name="High2" class="form-control" placeholder="High" ng-model="arc.highDefectsClosed" />
+            </form-group>
+        </div>
+        <div class="col-md-2">
+            <form-group input="Medium2">
+                <input type="number" name="Medium2" class="form-control" placeholder="Medium" ng-model="arc.mediumDefectsClosed" />
+            </form-group>
+        </div>
+        <div class="col-md-2">
+            <form-group input="Low2">
+                <input type="number" name="Low2" class="form-control" placeholder="Low" ng-model="arc.lowDefectsClosed" />
+            </form-group>
+        </div>
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Unresolved</label>
+        <div class="col-md-2">
+            <form-group input="Critical3">
+                <input type="number" name="Critical3" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsUnresolved" />
+            </form-group>
+        </div>
+        <div class="col-md-2">
+            <form-group input="High3">
+                <input type="number" name="High3" class="form-control" placeholder="High" ng-model="arc.highDefectsUnresolved" />
+            </form-group>
+        </div>
+        <div class="col-md-2">
+            <form-group input="Medium3">
+                <input type="number" name="Medium3" class="form-control" placeholder="Medium" ng-model="arc.mediumDefectsUnresolved" />
+            </form-group>
+        </div>
+        <div class="col-md-2">
+            <form-group input="Low3">
+                <input type="number" name="Low3" class="form-control" placeholder="Low" ng-model="arc.lowDefectsUnresolved" />
+            </form-group>
+        </div>
+        <div class="button-row row" style="padding-left: 12px;">
+            <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Create</button>
+            <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
+        </div>
+    </form>
+    <div class="" ng-click="arc.hideForm()">
+        <hr>
+        <span ng-if="arc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
    View previously added releases</span>
-   <div class="" ng-if="arc.prevousText">
-       <table class="table table-bordered table-striped">
-        <thead>
-        <tr style="font-weight:400;font-size:11px">
-            <th>Sprint ID</th>
-             <th>Sprint Name</th>
-             <th>Sprint Status</th>
+        <div class="" ng-if="arc.prevousText">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr style="font-weight:400;font-size:11px">
+                        <th>Release ID</th>
+                        <th>Release Name</th>
+                        <th>Release Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="font-props" ng-repeat="releasedta in arc.releasegraph">
+                        <td>{{releasedta.releaseId}}</td>
+                        <td>{{releasedta.name}}</td>
+                        <td ng-if="releasedta.released == true">OPEN
+                            <span ng-click="arc.updateRelease(releasedta)" style="margin-left: 1%;cursor: pointer;">
+                                 <svg version="1.1"
+            x="0px" y="0px" width="13px" height="13px" viewBox="0 0 19 19" style="enable-background:new 0 0 19 19;" xml:space="preserve">
+<style type="text/css">
+            .stedit0{fill:#404041;}
+</style>
+<defs>
+</defs>
+<path class="stedit0" d="M18.3,0.7C17.8,0.3,17.2,0,16.5,0c-0.7,0-1.3,0.3-1.8,0.7l-1,1L1.2,14.2c0,0,0,0,0,0c0,0,0,0.1-0.1,0.1
+            c0,0,0,0,0,0c0,0,0,0,0,0.1L0,18.5c0,0.1,0,0.3,0.1,0.4C0.2,19,0.3,19,0.4,19c0,0,0.1,0,0.1,0l4.1-1.1c0,0,0,0,0.1,0c0,0,0,0,0,0
+            c0,0,0.1,0,0.1-0.1c0,0,0,0,0,0L17.3,5.3l1-1C18.7,3.8,19,3.2,19,2.5C19,1.8,18.7,1.2,18.3,0.7z M1,18l0.7-2.7l2,2L1,18z M4.5,16.9
+            l-2.4-2.4L14,2.6L16.4,5L4.5,16.9z M17.7,3.7L17,4.4L14.6,2l0.7-0.7C15.6,1,16,0.8,16.5,0.8c0.5,0,0.9,0.2,1.2,0.5
+            C18.3,2,18.3,3.1,17.7,3.7z"/>
+</svg>
+                            </span>
+                        </td>
+                        <td ng-if="releasedta.released == false">CLOSED
+                        </td>
+                       <!--  <td>
+                            <span style="margin-left: 1%;cursor: pointer;" ng-click="arc.updateRelease(releasedta)" ng-if="releasedta.released == true">
+                    
 
-        </tr>
-        </thead>
-        <tbody>
-            <tr class="font-props" ng-repeat="releasedta in arc.releasegraph">
-             <td>{{releasedta.releaseId}}</td>
-                 <td>{{releasedta.name}}</td>
-            <td ng-if="releasedta.released == true">OPEN</td> 
-            <td ng-if="releasedta.released == false">CLOSED</td> 
-
-                <!--  <td ng-if="arc.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' "><span>
+                 </span>
+                        </td> -->
+                        <!--  <td ng-if="arc.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' "><span>
                     <img src="assets/images/icon_completed.png">
                  </span>CLOSED</td> 
                   <td ng-if="arc.mySplit(sprintdata.sprintData.state,0) !== 'CLOSED' "><span>
                     <img src="assets/images/icon_inprogress.png">
                  </span>OPEN</td>  -->
-
-              <!--     <td><span ng-if="!jdv.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' ">
+                        <!--     <td><span ng-if="!jdv.mySplit(sprintdata.sprintData.state,0) == 'CLOSED' ">
                     <img src="assets/images/icon_completed.png">
-                 </span>{{sprintdata.sprintData.state}}</td> --> 
-
-                
-                 
-               
-               
- </tr>
-
-  
-
-        </tbody>
-
-    </table>
-      </div>
-    
-   </div>
-     <div ng-click="arc.showForm()">
-      <span ng-if="!arc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
+                 </span>{{sprintdata.sprintData.state}}</td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div ng-click="arc.showForm()">
+        <span ng-if="!arc.prevHeader" style="cursor: pointer;"><img src="assets/images/arrow_right.png" style="vertical-align: sub">
    Add release</span></div>
 </widget-modal>
-

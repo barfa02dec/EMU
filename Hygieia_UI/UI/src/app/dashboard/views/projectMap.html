@@ -1,145 +1,130 @@
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <div class="main-container project-map-container" style="background: #fff !important;">
-<div class="container-fluid" style="
+    <div class="container-fluid" style="
    background: #1766A4;
    margin-left: 0px;
    margin-right: 0px;min-height: 0px;">
-   <div class="row justify-content-md-center" style="padding-top: 8px;padding-bottom: 6px;">
-      <div class="col-md-1" style="padding-left: 1%;width: 5.33%"><img src="assets/images/emu-5w.png"></div>
-      <div class="col-md-3" style="font-size: 17px;
+        <div class="row justify-content-md-center" style="padding-top: 8px;padding-bottom: 6px;">
+            <div class="col-md-1" style="padding-left: 1%;width: 5.33%"><img src="assets/images/emu-5w.png"></div>
+            <div class="col-md-3" style="font-size: 17px;
          font-weight: 500;color: #fff;padding-top: 6px;">Engineering Metrics Unified</div>
-      <!-- <header-directive></header-directive> -->
-      <div class="col-md-6"></div>
-      <div class="col-md-1" style="color: #fff;direction: rtl;
+            <!-- <header-directive></header-directive> -->
+            <div class="col-md-6"></div>
+            <div class="col-md-1" style="color: #fff;direction: rtl;
          text-align: center;
          padding-left: 14.1%;padding-top: 8px;">{{pm.usernamepro}}</div>
-      <div class="col-md-1" style="width: 4.33% !important;padding-top: 4px">
-         <div class="dropdown-logout sign-out-box-specs">
-            <div class="abc">
-               <img src="assets/images/Group 131.png" class="log-out-icon-size"></td>
+            <div class="col-md-1" style="width: 4.33% !important;padding-top: 4px">
+                <div class="dropdown-logout sign-out-box-specs">
+                    <div class="abc">
+                        <img src="assets/images/Group 131.png" class="log-out-icon-size"></td>
+                    </div>
+                    <div class="dropdown-contents" style="right: -6px;">
+                        <a href="#/userManagement" ng-click="pm.UserManagement()" ng-if="pm.usermanagementviews" style="cursor: pointer;">User Management</a>
+                        <a ng-click="pm.logout()" style="cursor: pointer;">Sign out</a>
+                    </div>
+                </div>
             </div>
-            <div class="dropdown-contents" style="right: -6px;">
-               <a href="#/userManagement"  ng-click="pm.UserManagement()" ng-if="pm.usermanagementviews" style="cursor: pointer;">User Management</a>
-               <a ng-click="pm.logout()" style="cursor: pointer;">Sign out</a>
+        </div>
+    </div>
+    <div class="page-header-gradient col-md-12" style="background-image: url('assets/images/bg_page_header.png');">
+        <div class="">
+            <div class="col-md-2 project-header-label">
+                <div class="">
+                    Projects
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
-</div>
-<div class="page-header-gradient col-md-12" style="background-image: url('assets/images/bg_page_header.png');">
-   <div class="">
-      <div class="col-md-2 project-header-label">
-         <div class="">
-            Projects
-         </div>
-         <!--  <div class="" style="font-size: 14px;">Choose a Project</div> -->
-      </div>
-      <div class="col-md-9"></div>
-      <div class="col-md-1" style="padding-left: 3px;
+            <div class="col-md-9"></div>
+            <div class="col-md-1" style="padding-left: 3px;
          padding-top: 1%;">
-         <div ng-if="pm.CreateProjects && pm.viewProjects">
-            <input type="submit"  class="btn btn-info project-map-add-btn" value="New project"  ng-click = "pm.createDashboard()" >
-         </div>
-      </div>
-   </div>
-</div>
-<div class="content-goes">
-   <div class="col-md-12">
-      <div class="col-md-2 layout-sepeartion-firstdiv">
-         <!--  <div class="chooseproject-label">Choose a project<span class="label label-default"></span></div> -->
-      </div>
-      <div class="col-md-7"></div>
-      <!--  <div class="col-md-2 layout-sepeartion-seconddiv" >
-         <select class="form-control selectbox-props" id="sel1">
-            <option>Search By</option>
-            <option>Project ID</option>
-            <option>Project Name</option>
-            <option>BU</option>
-         </select>
-         </div> -->
-      <div class="col-md-3 layout-sepeartion-thirddiv">
-         <form>
-            <div class="form-group" ng-if="pm.viewProjects">
-               <label for="input-md"></label>
-               <input class="form-control input-md project-map-search-bar" id="inputmd" type="text" placeholder="Search for project" ng-model="pm.searchText" style="width: 100%;border-radius: 4px;">
+                <div ng-if="pm.CreateProjects && pm.viewProjects">
+                    <input type="submit" class="btn btn-info project-map-add-btn" value="New project" ng-click="pm.createDashboard()">
+                </div>
             </div>
-         </form>
-      </div>
-   </div>
-   <div class="col-md-12">
-      <div class="col-md-1"></div>
-      <div class="col-md-1"></div>
-   </div>
-   <table class="table table-bordered table-striped table-layoutprops table-layoutprops" ng-if="pm.viewProjects">
-      <thead style="background:#EFEFEF;">
-         <tr>
-            <th>Project ID</th>
-            <th>Project Name</th>
-            <th>Customer Name</th>
-            <th>Project Owner</th>
-            <th>Line of BU</th>
-            <th>Program</th>
-            <!-- <th>Status</th> -->
-            <th>Actions</th>
-         </tr>
-      </thead>
-      <tbody>
-         <tr ng-repeat="proj in pm.getAllProjects | filter:pm.searchText |
+        </div>
+    </div>
+    <div class="content-goes">
+        <div class="col-md-12">
+            <div class="col-md-2 layout-sepeartion-firstdiv">
+            </div>
+            <div class="col-md-7"></div>
+            <div class="col-md-3 layout-sepeartion-thirddiv">
+                <form>
+                    <div class="form-group" ng-if="pm.viewProjects">
+                        <label for="input-md"></label>
+                        <input class="form-control input-md project-map-search-bar" id="inputmd" type="text" placeholder="Search for project" ng-model="pm.searchText" style="width: 100%;border-radius: 4px;">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-1"></div>
+            <div class="col-md-1"></div>
+        </div>
+        <table class="table table-bordered table-striped table-layoutprops table-layoutprops" ng-if="pm.viewProjects">
+            <thead style="background:#EFEFEF;">
+                <tr>
+                    <th>Project ID</th>
+                    <th>Project Name</th>
+                    <th>Customer Name</th>
+                    <th>Project Owner</th>
+                    <th>Line of BU</th>
+                    <th>Program</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="proj in pm.getAllProjects | filter:pm.searchText |
             pagination: curPage * pm.pageSize | limitTo: pm.pageSize">
-            <td ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" style="cursor: pointer;max-width: 96px;" class="project-map-list-data" ng-attr-title="{{proj.projectId}}">{{proj.projectId}}</td>
-            <td ng-show="proj.editorEnabled">
-               <input type="" name="" ng-model="proj.projectName" class="set-width-input edit-inputbox-props middle">
-            </td>
-            <td ng-show="!proj.editorEnabled" style="" class="project-map-list-data" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.projectName}}">{{proj.projectName}}</td>
-            <td ng-show="proj.editorEnabled">
-               <input type="" name="" ng-model="proj.client" class="set-width-input edit-inputbox-props middle">
-            </td>
-            <td ng-show="!proj.editorEnabled" style="" class="project-map-list-data" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.client}}">{{proj.client}}</td>
-            <td ng-show="proj.editorEnabled">
-               <input type="" name="" ng-model="proj.projectOwner" class="set-width-input edit-inputbox-props middle">
-            </td>
-            <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.projectOwner}}">{{proj.projectOwner}}</td>
-            <td ng-show="proj.editorEnabled">
-               <input type="" name="" ng-model="proj.businessUnit" class="set-width-input edit-inputbox-props middle">
-            </td>
-            <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.businessUnit}}">{{proj.businessUnit}}</td>
-            <td ng-show="proj.editorEnabled">
-               <input type="" name="" ng-model="proj.program" class="set-width-input edit-inputbox-props middle">
-            </td>
-            <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.program}}">{{proj.program}}</td>
-            <!--  <td><img src="assets/images/status_amber.png" style="height: 20px;
-               width: 20px;">Near Critical</td> -->
-            <td>
-               <span class="" ng-repeat="innerItem in proj.usersGroup">
+                    <td ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" style="cursor: pointer;max-width: 96px;" class="project-map-list-data" ng-attr-title="{{proj.projectId}}">{{proj.projectId}}</td>
+                    <td ng-show="proj.editorEnabled">
+                        <input type="" name="" ng-model="proj.projectName" class="set-width-input edit-inputbox-props middle">
+                    </td>
+                    <td ng-show="!proj.editorEnabled" style="" class="project-map-list-data" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.projectName}}">{{proj.projectName}}</td>
+                    <td ng-show="proj.editorEnabled">
+                        <input type="" name="" ng-model="proj.client" class="set-width-input edit-inputbox-props middle">
+                    </td>
+                    <td ng-show="!proj.editorEnabled" style="" class="project-map-list-data" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.client}}">{{proj.client}}</td>
+                    <td ng-show="proj.editorEnabled">
+                        <input type="" name="" ng-model="proj.projectOwner" class="set-width-input edit-inputbox-props middle">
+                    </td>
+                    <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.projectOwner}}">{{proj.projectOwner}}</td>
+                    <td ng-show="proj.editorEnabled">
+                        <input type="" name="" ng-model="proj.businessUnit" class="set-width-input edit-inputbox-props middle">
+                    </td>
+                    <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.businessUnit}}">{{proj.businessUnit}}</td>
+                    <td ng-show="proj.editorEnabled">
+                        <input type="" name="" ng-model="proj.program" class="set-width-input edit-inputbox-props middle">
+                    </td>
+                    <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.program}}">{{proj.program}}</td>
+                    <td>
+                        <span class="" ng-repeat="innerItem in proj.usersGroup">
                <span class="" ng-repeat="childItem in innerItem.userRoles">
                <span class="" ng-show="childItem.permissions.indexOf('ADD_USER') !== -1 && innerItem.user.includes(pm.usernamepro)">
                <img src="assets/images/icon_add_user.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.shareProjectPopUp(proj)" title="Add user" style="margin-left: -3px;">
                </span>
-               </span></span>
-               <span class="" ng-repeat="innerItem in proj.usersGroup">
+                        </span>
+                        </span>
+                        <span class="" ng-repeat="innerItem in proj.usersGroup">
                <span class="" ng-repeat="childItem in innerItem.userRoles">
                <span class="" ng-show="!proj.editorEnabled && childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)">
                <img src="assets/images/icon_edit.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
-               </span></span></span>
-               <span ng-click="pm.editproject(proj)" ng-show="proj.editorEnabled">
+               </span></span>
+                        </span>
+                        <span ng-click="pm.editproject(proj)" ng-show="proj.editorEnabled">
                <img src="assets/images/savNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  title="Save">
-               </span> 
-               <span class="" ng-repeat="innerItem in proj.usersGroup" ng-init="inner.innerVariable=innerItem.user">
+               </span>
+                        <span class="" ng-repeat="innerItem in proj.usersGroup" ng-init="inner.innerVariable=innerItem.user">
                   <span class="" ng-repeat="childItem in innerItem.userRoles" ng-init="my.Variable=childItem.permissions">
                      <span ng-show="childItem.permissions.indexOf('DELETE_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)">
                      <img src="assets/images/icon_delete.png " class="ed-image-props project-map-crud-icons project-map-padding-icons" ng-click="pm.deleteProjectModel(proj)" title="Delete" > 
                      </span>
-                    
-                    <!--  <span ng-click="pm.addDefect(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-tags" aria-hidden="true" title="Add defects" style="color: grey"></i></span>
+
+                        <!--  <span ng-click="pm.addDefect(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-tags" aria-hidden="true" title="Add defects" style="color: grey"></i></span>
                      &nbsp&nbsp
                      <span ng-click="pm.addRelease(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-location-arrow" aria-hidden="true" title="Add release" style="color: grey"></i></span>
                      &nbsp&nbsp
                      <span ng-click="pm.addSprint(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-plus" aria-hidden="true" title="Add sprint" style="color: grey"></i></span> -->
-                     <!--    &nbsp&nbsp -->
-                   <!--   <span ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)" style="vertical-align: sub">
+                        &nbsp&nbsp
+                        <span ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)" style="vertical-align: sub">
                         <div class="dropdown" style="cursor: pointer;">
                            <svg version="1.1"
                               x="0px" y="0px" width="15px" height="15px" viewBox="0 0 19 19" style="enable-background:new 0 0 19 19;" xml:space="preserve">
@@ -155,21 +140,22 @@
                               <a ng-click="pm.addSprint(proj)">Sprints</a>
                               <a ng-click="pm.addRelease(proj)">Releases</a>
                               <a ng-click="pm.addDefect(proj)">Defects</a>
+                              <a ng-click="pm.editDefect(proj)">Update Defects</a>
                            </div>
                         </div>
-                     </span> -->
-                  </span>
-               </span>
-            </td>
-         </tr>
-      </tbody>
-   </table>
-</div>
-<div class="col-md-12">
-   <div class="col-md-10"></div>
-   <div class="pagination-div pagination-parentdiv-props col-md-2" ng-show="pm.getAllProjects.length" ng-hide="!pm.viewProjects" style="padding-left: 2%;padding-right: 0px;">
-      <button ng-click="curPage=curPage-1" ng-disabled="curPage == 0" type="button" class="pagination-btn-props">Prev</button>
-      <span>Page {{curPage + 1}} of {{ pm.numberOfPages() }}</span>
-      <button ng-click="curPage = curPage+1" ng-disabled="curPage >= pm.getAllProjects.length/pm.pageSize - 1" type="button" class="pagination-btn-props">Next</button>
-   </div>
-</div>
+                     </span>
+                        </span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-10"></div>
+        <div class="pagination-div pagination-parentdiv-props col-md-2" ng-show="pm.getAllProjects.length" ng-hide="!pm.viewProjects" style="padding-left: 2%;padding-right: 0px;">
+            <button ng-click="curPage=curPage-1" ng-disabled="curPage == 0" type="button" class="pagination-btn-props">Prev</button>
+            <span>Page {{curPage + 1}} of {{ pm.numberOfPages() }}</span>
+            <button ng-click="curPage = curPage+1" ng-disabled="curPage >= pm.getAllProjects.length/pm.pageSize - 1" type="button" class="pagination-btn-props">Next</button>
+        </div>
+    </div>

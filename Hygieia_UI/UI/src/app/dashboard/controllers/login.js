@@ -27,7 +27,7 @@
                     .then(function (data) {
                         $scope.lg.username.$setValidity(
                           'invalidUsernamePassword',
-                          data
+                          data.authenticated
                         );
                         if (data.authenticated == true) {
                            // $scope.data = data.sysAdmin;
