@@ -20,7 +20,9 @@ import java.nio.ByteBuffer;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -500,7 +502,9 @@ public static SprintData parseToSprintData(JiraSprint sprint,String sprintDetail
 
 		List<BurnDownHistory> burnDownHistoryList = new ArrayList<BurnDownHistory>();
 		BurnDownHistory burnDownHistory = new BurnDownHistory();
-		burnDownHistory.setMiliseconds(ZonedDateTime.now().toInstant().toEpochMilli());
+		 LocalDate localDate = LocalDate.now();
+		    
+		burnDownHistory.setDate(DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate));
 		burnDownHistory.setAllIssuesEstimateSum(allIssuesEstimateSum);
 		burnDownHistory.setCompletedIssuesEstimateSum(completedIssuesEstimateSum);
 		burnDownHistory.setRemainingIssues(allIssuesEstimateSum-completedIssuesEstimateSum);
