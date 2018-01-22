@@ -254,15 +254,17 @@
         
         featureData.sprintDta(ctrl.projectpathId, ctrl.projectpath).then(sprintdataProcess);
 
-
-
         //Processing Jira-Sprint Data
         function sprintdataProcess(data) {
             ctrl.jirametricsdata = data;
             if( ctrl.jirametricsdata[5] != undefined ){
             ctrl.sprintIds = ctrl.jirametricsdata[5].sprintData.sprintId;
             }
-            $cookies.put('sprintId', ctrl.sprintIds);
+            featureData.sprintId = ctrl.sprintIds;
+            ctrl.sprintId = featureData.sprintId;
+            featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
+      
+            // $cookies.put('sprintId', ctrl.sprintIds);
             var progress = ['Defect Closure'];
             var comittedStoryPoints = ['Committed Story Points'];
             var completedStoryPoint = ['Completed Story Points'];
@@ -369,9 +371,7 @@
 
             });
         }
-
-        ctrl.sprintId = $cookies.get('sprintId');
-        featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
+        
         function fetchLatestSprint(data){
            var burnData = data.sprintData.burnDownHistory;
 
@@ -425,7 +425,6 @@ padding: {
             });
 
          }
-
         //Fetching Release  Data
         featureData.ReleaseData(ctrl.projectpathId, ctrl.projectpath).then(ReleaseDataProcessing);
 
