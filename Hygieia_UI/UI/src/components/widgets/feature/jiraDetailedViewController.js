@@ -251,57 +251,10 @@
         }
 
         //Fetching Jira-Sprint Data
-        ctrl.sprintId = $cookies.get('sprintId');
+        
         featureData.sprintDta(ctrl.projectpathId, ctrl.projectpath).then(sprintdataProcess);
 
-         featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
-        
-        
-         function fetchLatestSprint(data){
-           var burnData = data.sprintData.burnDownHistory;
 
-             var burnDowndata = ['Burn Down'];
-              var xaxisDate = [];
-             burnData.forEach(function(burndata){
-                burnDowndata.push(burndata.allIssuesEstimateSum)
-                xaxisDate.push(moment(burndata.miliseconds).format('MMM DD'))
-             })
-            
-
-             $scope.burnDown = c3.generate({
-                bindto: '#burnDown', 
-                             
-                data: {
-                  columns: [
-                    burnDowndata
-                  ],
-                  type: 'line'
-                },
-                axis: {
-                    x:{
-                        type: 'category',
-                        categories: xaxisDate
-                    }
-                },
-                color: {
-                pattern: ['#ff4d4d']
-            },
-           legend: {
-    position: 'inset',
-    inset: {
-        anchor: 'top-left',
-        x: 20,
-        y: -40,
-        step: 1
-    }
-},
-padding: {
-    top: 40
-}
-  
-            });
-
-         }
 
         //Processing Jira-Sprint Data
         function sprintdataProcess(data) {
@@ -416,6 +369,62 @@ padding: {
 
             });
         }
+
+        ctrl.sprintId = $cookies.get('sprintId');
+        featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
+        function fetchLatestSprint(data){
+           var burnData = data.sprintData.burnDownHistory;
+
+             var burnDowndata = ['Burn Down'];
+              var xaxisDate = [];
+            /* burnData.forEach(function(burndata){
+                burnDowndata.push(burndata.allIssuesEstimateSum)
+                xaxisDate.push(moment(burndata.date.miliseconds).format('MMM DD'))
+             })*/
+            
+             for (var i = 0; i < burnData.length; i++) {
+                if (burnData[i] != undefined) {
+                    burnDowndata.push(burnData[i].allIssuesEstimateSum);
+                     xaxisDate.push(burnData[i].date);
+                   // xaxisDate.push(moment(burndata[i].date.miliseconds).format('MMM DD'));
+                }
+            }
+
+
+             $scope.burnDown = c3.generate({
+                bindto: '#burnDown', 
+                             
+                data: {
+                  columns: [
+                    burnDowndata
+                  ],
+                  type: 'line'
+                },
+                axis: {
+                    x:{
+                        type: 'category',
+                        categories: xaxisDate
+                    }
+                },
+                color: {
+                pattern: ['#ff4d4d']
+            },
+           legend: {
+    position: 'inset',
+    inset: {
+        anchor: 'top-left',
+        x: 20,
+        y: -40,
+        step: 1
+    }
+},
+padding: {
+    top: 40
+}
+  
+            });
+
+         }
 
         //Fetching Release  Data
         featureData.ReleaseData(ctrl.projectpathId, ctrl.projectpath).then(ReleaseDataProcessing);
