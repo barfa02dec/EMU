@@ -292,7 +292,7 @@
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
-                        template: '<confirm-popup msg="deleteDashboard" action="$close()"></confirm-popup>',
+                        template: '<confirm-popup msg="deleteDashboard" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: 'SiteController',
                         controllerAs: 'ctrl'
                     });
