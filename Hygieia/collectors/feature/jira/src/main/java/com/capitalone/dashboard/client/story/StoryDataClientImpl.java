@@ -30,6 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.codehaus.jettison.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +51,7 @@ import com.capitalone.dashboard.model.QSprint;
 import com.capitalone.dashboard.model.Release;
 import com.capitalone.dashboard.model.Scope;
 import com.capitalone.dashboard.model.Sprint;
+import com.capitalone.dashboard.model.SprintData;
 import com.capitalone.dashboard.repository.DefectAggregationRepository;
 import com.capitalone.dashboard.repository.DefectRepository;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
@@ -277,7 +279,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		}
 	}
 	
-	public void saveDetailedSprintData(String projectId, String projectName) {
+	public void saveDetailedSprintData(String projectId, String projectName) throws JSONException {
 		List<JiraSprint> sprintsJira = JiraCollectorUtil.getSprintList(projectId, featureSettings.getJiraBaseUrl(),
 		featureSettings.getJiraCredentials(), featureSettings.getNoOfSprintsToShow());
 		
@@ -298,10 +300,14 @@ public class StoryDataClientImpl implements StoryDataClient {
 			// get the detailed metrics for sprint with status [open] 
 			// get the detailed metrics for sprint with status[closed] but detailed metrics/SprintData is null
 						
+			
 			if(((sprint.getClosed() && null==sprint.getSprintData())||!sprint.getClosed())){
 				JiraCollectorUtil.getRecentSprintMetrics(js, projectId,
 						featureSettings);
-				sprint.setSprintData(js.getSprintData());
+				SprintData sprintData = js.getSprintData();
+				if (sprint.getSprintData() != null)
+					sprintData.getBurnDownHistory().addAll(sprint.getSprintData().getBurnDownHistory());
+				sprint.setSprintData(sprintData);
 			}
 			sprint.setEditable(js.getEditable());
 			sprint.setEnd(js.getEnd());
@@ -310,9 +316,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 		if (!list.isEmpty()) {
 			sprintRepository.save(list);
 		}
-
 	}
-
+	
 	public void saveDetailedReleaseData(String projectId, String projectName) {
 
 		List<JiraVersion> jiraVersions = JiraCollectorUtil.getVersionsFromJira(projectId,

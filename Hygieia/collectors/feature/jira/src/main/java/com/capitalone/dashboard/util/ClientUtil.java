@@ -20,9 +20,13 @@ import java.nio.ByteBuffer;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +44,7 @@ import org.slf4j.LoggerFactory;
 import com.capitalone.dashboard.client.Sprint;
 import com.capitalone.dashboard.model.Burndown;
 import com.capitalone.dashboard.model.JiraSprint;
+import com.capitalone.dashboard.model.BurnDownHistory;
 import com.capitalone.dashboard.model.SprintData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -439,6 +444,8 @@ public static SprintData parseToSprintData(JiraSprint sprint,String sprintDetail
 		double completedIssuesInitialEstimateSum = 0;
 		double incompletedissuesestimateSum = 0;
 		double puntedIssuesestimatesum = 0;
+		double completedIssuesEstimateSum = 0;
+		double allIssuesEstimateSum = 0;
 
 		if(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesInitialEstimateSum") != null)
 			completedIssuesInitialEstimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesInitialEstimateSum").get("value") == null ?
@@ -463,7 +470,16 @@ public static SprintData parseToSprintData(JiraSprint sprint,String sprintDetail
 		
 		sprintdata.setCompletedStoryPoints(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value") == null ?
 				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value").getAsFloat());
-	
+
+		
+		if(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum") != null)
+			completedIssuesEstimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value") == null ?
+				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value").getAsDouble();
+		
+		if(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("allIssuesEstimateSum") != null)
+			allIssuesEstimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("allIssuesEstimateSum").get("value") == null ?
+				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("allIssuesEstimateSum").get("value").getAsDouble();
+		
 		// code changes incorporated from PMD-- ENDS
 		Burndown burndown = new Burndown();
 		
@@ -482,12 +498,21 @@ public static SprintData parseToSprintData(JiraSprint sprint,String sprintDetail
 		issuecount.setCount(sprintdata.getCommittedIssueCount());	
 		issuecount.setStoryPoints(0.0d);
 		burndown.setInitialIssueCount(issuecount);
-
 		sprintdata.setBurndown(burndown);
+
+		List<BurnDownHistory> burnDownHistoryList = new ArrayList<BurnDownHistory>();
+		BurnDownHistory burnDownHistory = new BurnDownHistory();
+		 LocalDate localDate = LocalDate.now();
+		    
+		burnDownHistory.setDate(DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate));
+		burnDownHistory.setAllIssuesEstimateSum(allIssuesEstimateSum);
+		burnDownHistory.setCompletedIssuesEstimateSum(completedIssuesEstimateSum);
+		burnDownHistory.setRemainingIssues(allIssuesEstimateSum-completedIssuesEstimateSum);
+		burnDownHistoryList.add(burnDownHistory);
+		Set<BurnDownHistory> burnDownset = new HashSet<>();
+		burnDownset.addAll(burnDownHistoryList);
+		sprintdata.setBurnDownHistory(burnDownset);
 		
-		
-		
-	
 		return sprintdata;
     }
 
@@ -516,4 +541,5 @@ public static SprintData parseToSprintData(JiraSprint sprint,String sprintDetail
 		
 		return null;
 	}
+
 }

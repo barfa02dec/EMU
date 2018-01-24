@@ -37,7 +37,7 @@
 
 		var testTeamsByCollectorId = 'test-data/teams.json';
 		var buildTeamsByCollectorId = '/api/teamcollector/';
-
+		var sprintId = undefined;
 		return {
 			sprintMetrics : aggregateSprintEstimates,
 			jiraData:jiraDataGer,

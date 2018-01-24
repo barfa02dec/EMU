@@ -156,15 +156,16 @@
             </div>
             <div class="col-md-12 agile-board-row-padding-widgets">
                 <div class="col-md-12">
-                    <div class="col-md-6 agile-board-sub-header agile-board-sub-header-padding">Velocity Chart</div>
                     <div class="col-md-6 agile-board-sub-header">Burndown Chart</div>
+                    <div class="col-md-6 agile-board-sub-header agile-board-sub-header-padding">Velocity Chart</div>
+                </div>
+                 <div class="col-md-6 agile-board-sprint-chart-padding">
+                    <c3-chart id="burnDown" config="burnDown" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
                 </div>
                 <div class="col-md-6 agile-board-sprint-chart-padding">
                     <c3-chart id="sprintdatas" config="sprintdatas" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
                 </div>
-                <div class="col-md-6 agile-board-sprint-chart-padding">
-                    <c3-chart id="burnDown" config="burnDown" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
-                </div>
+               
                 <div class="col-md-12">
                     <div class="col-md-12 agile-board-sub-header agile-board-sub-header-padding">Defect Closure</div>
                 </div>
@@ -208,7 +209,8 @@
                         <div class="col-md-12 agile-board-defect-col-padding">
                             <div class="col-md-2">
                                 <div class="total-builds-text-props defects-by-priority-critical-border">
-                                    <span>{{jdv.environmemt}}</span>
+                                    <span ng-if="jdv.environmemt">{{jdv.environmemt}}</span>
+                                    <span ng-if="!jdv.environmemt">0</span>
                                 </div>
                             </div>
 
