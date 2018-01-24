@@ -44,6 +44,12 @@
         $scope.postProject = "Project created successfully";
 
         $scope.deleteProject = "Project deleted successfully";
+
+        $scope.adduserrequired = "Please fill the required fields";
+
+        $scope.validationrequired = "Field cannot be empty";
+
+        $scope.editConfirm = "Project updated successfully";
         
 
         $scope.confirmButton = function() {
@@ -166,14 +172,14 @@
                         $uibModalInstance.dismiss("cancel");
                         $route.reload();
                         $uibModal.open({
-                            template: '<confirm-popup msg="adduser" action="$close()"></confirm-popup>',
+                            template: '<confirm-popup msg="adduser" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
                     })
                 } else {
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/adduserrequired.html',
+                        template: '<confirm-popup msg="adduserrequired" icon="btn btn-warning" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -231,7 +237,7 @@
                 if ((info.businessUnit.length >= 3) && (info.projectId.length >= 3) && (info.client.length >= 3) && (info.projectOwner.length >= 3) && (info.program.length >= 3)) {
                     projectData.editprojectfn(ctrl.editPayload).then(function(response) {
                         $uibModal.open({
-                            templateUrl: 'app/dashboard/views/ConfirmationModals/editConfirm.html',
+                            template: '<confirm-popup msg="editConfirm" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
@@ -253,7 +259,7 @@
                 }
             } else {
                 $uibModal.open({
-                    templateUrl: 'app/dashboard/views/ConfirmationModals/validationrequiredmessage.html',
+                    template: '<confirm-popup msg="validationrequired" icon="btn btn-warning" action="$close()"></confirm-popup>',
                     controller: 'projectMapController',
                     controllerAs: 'pm'
                 });
@@ -292,7 +298,7 @@
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
-                        template: '<confirm-popup msg="deleteProject" action="$close()"></confirm-popup>',
+                        template: '<confirm-popup msg="deleteProject" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -323,7 +329,7 @@
                         $route.reload();
                         $uibModalInstance.dismiss("cancel");
                         $uibModal.open({
-                            template: '<confirm-popup msg="postProject" action="$close()"></confirm-popup>',
+                            template: '<confirm-popup msg="postProject" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
@@ -453,7 +459,7 @@
                 projectData.postDefect(ctrl.payloadDefect).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="addDefect" action="$close()"></confirm-popup>', 
+                        template: '<confirm-popup msg="addDefect" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>', 
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -528,7 +534,7 @@
                     $rootScope.ttt = true;
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="updateDefect" action="$close()"></confirm-popup>', 
+                        template: '<confirm-popup msg="updateDefect" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>', 
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -652,7 +658,7 @@
                 projectData.postRelease(ctrl.releasePayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="addRelease" action="$close()"></confirm-popup>',
+                        template: '<confirm-popup msg="addRelease" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -760,7 +766,7 @@
                 projectData.postSprint(ctrl.sprintPayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="addSprint" action="$close()"></confirm-popup>', 
+                        template: '<confirm-popup msg="addSprint" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>', 
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -816,7 +822,7 @@
                projectData.postRelease(ctrl.releasePayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="updateRelease" action="$close()"></confirm-popup>', 
+                        template: '<confirm-popup msg="updateRelease" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>', 
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -881,7 +887,7 @@
                projectData.postSprint(ctrl.sprintEditPayload).then(function(response) {
                     $uibModalInstance.dismiss("cancel");
                    $uibModal.open({
-                        template: '<confirm-popup msg="updateSprint" action="$close()"></confirm-popup>', 
+                        template: '<confirm-popup msg="updateSprint"icon="btn btn-info project-map-add-btn inner-btn-prop"  action="$close()"></confirm-popup>', 
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });

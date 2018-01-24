@@ -38,6 +38,7 @@
         $scope.deleteRole = "Role deactivated successfully";
         $scope.editUser = "User updated successfully";
         $scope.deleteUser = "User deleted successfully";
+        $scope.selectpermissionrequired = "Please fill the required fields";
         $scope.onClickTab = function(tab) {
             $scope.currentTab = tab.url;
         }
@@ -153,7 +154,7 @@
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
-                        template: '<confirm-popup msg="deletePermission" action="$close()"></confirm-popup>',
+                        template: '<confirm-popup msg="deletePermission" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: delPermissionController,
                         controllerAs: 'delpc'
                     });
@@ -199,7 +200,7 @@
                         $route.reload();
                         $uibModalInstance.dismiss("cancel");
                         $uibModal.open({
-                            template: '<confirm-popup msg="createRole" action="$close()"></confirm-popup>',
+                            template: '<confirm-popup msg="createRole" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                             controller: 'userManagementController',
                             controllerAs: 'umc'
                         });
@@ -208,7 +209,7 @@
 
                 } else {
                     $uibModal.open({
-                        templateUrl: 'app/dashboard/views/ConfirmationModals/selectpermissionrequired.html',
+                        template: '<confirm-popup msg="selectpermissionrequired" icon="btn btn-warning" action="$close()"></confirm-popup>',
                         controller: 'userManagementController',
                         controllerAs: 'umc'
                     });
@@ -306,7 +307,7 @@
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
-                        template: '<confirm-popup msg="deleteRole" action="$close()"></confirm-popup>',
+                        template: '<confirm-popup msg="deleteRole" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: userManagementController,
                         controllerAs: 'umc'
                     });
@@ -416,7 +417,7 @@
                     $route.reload();
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="updateRole" action="$close()"></confirm-popup>',
+                        template: '<confirm-popup msg="updateRole" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: userManagementController,
                         controllerAs: 'umc'
                     });
@@ -543,7 +544,7 @@
                     $route.reload();
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="editUser" action="$close()"></confirm-popup>',
+                        template: '<confirm-popup msg="editUser" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: userManagementController,
                         controllerAs: 'umc'
                     });
@@ -583,7 +584,7 @@
                     $route.reload();
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="deleteUser" action="$close()"></confirm-popup>',
+                        template: '<confirm-popup msg="deleteUser" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: userManagementController,
                         controllerAs: 'umc'
                     });

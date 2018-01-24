@@ -10,12 +10,13 @@
                     '<div class="col-md-12"></div>' +
                     '<div class="col-md-5"></div>' +
                     '<div class="col-md-2 ok-btn-prop">' +
-                    ' <input type="button" name="namess" class="btn btn-info project-map-add-btn inner-btn-prop" value="OK" ng-click=action()>' +
+                    ' <input type="button" name="namess" class={{icon}} value="OK" ng-click=action()>' +
                     '</div>' +
                     '</div>',
                 scope: {
-                    msg: "=msg",
-                    action: "&action"
+                    msg: "=",
+                    action: "&",
+                    icon: '@'
                 },
                  link: function(scope,elem,attr){
             // code goes here ...
