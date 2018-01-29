@@ -66,6 +66,7 @@
         //Get All Projects
         projectData.fetchallprojects(ctrl.usernamepro).then(function(response) {
             ctrl.getAllProjects = response;
+            ctrl.numberOfPages = Math.ceil(ctrl.getAllProjects.length / ctrl.pageSize);
             ctrl.sysadmincheck = $cookies.get('sysAdmin');
             if (ctrl.sysadmincheck == "true") {
                 ctrl.CreateProjects = true;
@@ -94,9 +95,8 @@
             }
         });
 
-        ctrl.numberOfPages = function() {
-            return Math.ceil(ctrl.getAllProjects.length / ctrl.pageSize);
-        };
+        
+        
 
         angular.module(HygieiaConfig.module).filter('pagination', function() {
             return function(input, start) {
