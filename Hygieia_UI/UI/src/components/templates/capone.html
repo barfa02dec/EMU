@@ -1,109 +1,79 @@
-<link href='https://fonts.googleapis.com/css?family=Sintony' rel='stylesheet'>
-<style>
-body {
-    font-family: "Segoe UI";
-}
-</style>
 <div ng-controller="CapOneTemplateController as template">
-   <div class="container-fluid" style="
-    background: #1766A4;
-   
-    margin-left: 0px;
-    margin-right: 0px;">
-  <div class="row justify-content-md-center" style="padding-top: 8px;padding-bottom: 6px;">
-   <div class="col-md-1" style="padding-left: 2%;width: 5.33%;"><img src="assets/images/emu-5w.png"></div>
-    <div class="col-md-3" style="font-size: 17px;
-    font-weight: 500;color: #fff;padding-top: 6px;">Engineering Metrics Unified</div>
-    <div class="col-md-6"></div>
-     <div class="col-md-1" style="color: #fff;direction: rtl;
-    text-align: center;
-    padding-left: 13.5%;padding-top: 8px;">{{template.usernamepro}}</div>
-      <div class="col-md-1" style="width: 4.33% !important;padding-top: 4px">
-          <div class="dropdown-logout sign-out-box-specs">
-         <div class="abc">
-      
-            <img src="assets/images/Group 131.png" class="log-out-icon-size"></td>
-         </div>
-         <div class="dropdown-contents" style="right: -6px;">
-             <a href="#/userManagement"  ng-click="template.UserManagement()" ng-if="template.usermanagementviews" style="cursor: pointer;">User Management</a>
-   
-            <a ng-click="template.logout()" style="cursor: pointer;">Sign out</a>
-         </div>
-      </div>
-      </div>
-  </div>
- 
-</div>
-<div class="black-header" style="height: 80px;border-bottom:1px solid #b3b3b3;background-image: url('assets/images/bg_page_header.png');">
-    <div class="row">
-        <div class="col-md-12">
-        <div class="col-md-7" style="padding-top: 1%;padding-left: 2%;">
-        <div class="" style="font-size: 23px;color: #000;">
-             {{::ctrl.dashboard.title}}</div>
-           <!--  <div class="" style="font-size: 14px;">Choose a Project</div> -->
-        </div>
-        <div class="col-md-3"></div>
-        <div class="col-md-2">
-            
-        </div></div>
-         <div class="row">
-        <div class="col-md-12">
-        <div class="col-md-4" style="padding-left: 2.7%;">
-        
-            <div class="" style="font-size: 14px;color: #4482B2"><a href="#/projects" style="color: #4482B2">All projects</a> <img src="assets/images/arrow_right.png" style="vertical-align: sub;"> <a href="#/site" style="color: #4482B2">All dashboards</a></div>
-        </div>
-        <div class="col-md-6"></div>
-        </div>
-    </div>
-    </div>
-</div>
-   <div class="dashboard-widgets container-fluid " widget-container dashboard="ctrl.dashboard" ng-if="template.widgetView == 'Widget'" style="background:#eeeeee;padding-top:1%;padding-right: 22px;">
-      
-         <!-- <div class="col-md-3">
-            <div class="row">
-               <div class="col-sm-6 col-md-12">
-                  <widget name="Monitor"></widget>
+   <div class="container-fluid top-blue-header">
+      <div class="row top-header-padding">
+         <div class="col-md-1 top-header-image"><img src="assets/images/emu-5w.png"></div>
+         <div class="col-md-3 top-header-emu-text">Engineering Metrics Unified</div>
+         <div class="col-md-6"></div>
+         <div class="col-md-1 top-header-username">{{template.usernamepro}}</div>
+         <div class="col-md-1 top-header-logout">
+            <div class="dropdown-logout sign-out-box-specs">
+               <div class="abc">
+                  <img src="assets/images/Group 131.png" class="log-out-icon-size"></td>
                </div>
-               <div class="col-sm-6 col-md-12">
-                  <widget name="deploy"></widget>
+               <div class="dropdown-contents" style="right: -6px;">
+                  <a href="#/userManagement"  ng-click="template.UserManagement()" ng-if="template.usermanagementviews">User Management</a>
+                  <a ng-click="template.logout()">Sign out</a>
                </div>
             </div>
-            </div> -->
-     
-
-      <div class="col-md-12" style="padding-left: 1.4%;padding-top: 1.4%">
-        <div class="col-md-4">
-          <widget name="feature"></widget>
-        </div>
-        <div class="col-md-8" style="padding-left: 40px;">
-          <widget name="build"></widget>
-        </div>
-      </div>
-
-       <div class="col-md-12" style="padding:2% 0px 2% 1.4%">
-        <div class="col-md-4">
-          <widget name="repo"></widget>
-        </div>
-        <div class="col-md-8" style="padding-left: 38px;
-    padding-right: 19px;">
-          <widget name="codeanalysis"></widget>
-        </div>
-      </div> </div>
-
-
-   </div>
-   <div class="container-fluid" widget-container dashboard="ctrl.dashboard" ng-if="template.widgetView == 'Pipeline'">
-      <div class="row">
-         <div class="col-xs-12">
-            <widget name="pipeline" widget-title="Delivery Pipeline"></widget>
          </div>
       </div>
    </div>
-   <div class="container-fluid" widget-container dashboard="ctrl.dashboard" ng-if="template.widgetView == 'Cloud'">
+   <div class="gradient-header" style="background-image: url('assets/images/bg_page_header.png');">
       <div class="row">
-         <div class="col-xs-12">
-            <widget name="cloud" widget-title="Cloud"></widget>
+         <div class="col-md-12">
+            <div class="col-md-4 gradient-header-padding">
+               <div class="gradient-header-project-name">
+                  {{::ctrl.dashboard.title}}
+               </div>
+               <div class="gradient-header-project-link"><a href="#/projects" class="gradient-header-project-link-color">All projects</a>
+                  <img src="assets/images/arrow_right.png" style="vertical-align: sub;"> <a href="#/site" class="gradient-header-project-link-color">All dashboards</a>
+               </div>
+               </div>
+            <div class="col-md-6"></div>
+           </div>
+      </div>
+   </div>
+   <div class="dashboard-widgets container-fluid capone-widgets" widget-container dashboard="ctrl.dashboard" ng-if="template.widgetView == 'Widget'">
+      <!-- <div class="col-md-3">
+         <div class="row">
+            <div class="col-sm-6 col-md-12">
+               <widget name="Monitor"></widget>
+            </div>
+            <div class="col-sm-6 col-md-12">
+               <widget name="deploy"></widget>
+            </div>
+         </div>
+         </div> -->
+      <div class="col-md-12 capone-top-widgets">
+         <div class="col-md-4">
+            <widget name="feature"></widget>
+         </div>
+         <div class="col-md-8 capone-build-widget">
+            <widget name="build"></widget>
+         </div>
+      </div>
+      <div class="col-md-12 capone-bottom-widgets">
+         <div class="col-md-4">
+            <widget name="repo"></widget>
+         </div>
+         <div class="col-md-8 capone-code-analysis">
+            <widget name="codeanalysis"></widget>
          </div>
       </div>
    </div>
+</div>
+<div class="container-fluid" widget-container dashboard="ctrl.dashboard" ng-if="template.widgetView == 'Pipeline'">
+   <div class="row">
+      <div class="col-xs-12">
+         <widget name="pipeline" widget-title="Delivery Pipeline"></widget>
+      </div>
+   </div>
+</div>
+<div class="container-fluid" widget-container dashboard="ctrl.dashboard" ng-if="template.widgetView == 'Cloud'">
+   <div class="row">
+      <div class="col-xs-12">
+         <widget name="cloud" widget-title="Cloud"></widget>
+      </div>
+   </div>
+</div>
 </div>

@@ -384,7 +384,7 @@
             
              for (var i = 0; i < burnData.length; i++) {
                 if (burnData[i] != undefined) {
-                    burnDowndata.push(burnData[i].allIssuesEstimateSum);
+                    burnDowndata.push(burnData[i].remainingIssues);
                      xaxisDate.push(burnData[i].date);
                    // xaxisDate.push(moment(burndata[i].date.miliseconds).format('MMM DD'));
                 }
