@@ -28,5 +28,5 @@ public interface ProjectDataClient {
 	 * update to MongoDB from those calls.
 	 * @return the number of records processed
 	 */
-	int updateProjectInformation();
+	void updateJiraProjectInfo();
 }

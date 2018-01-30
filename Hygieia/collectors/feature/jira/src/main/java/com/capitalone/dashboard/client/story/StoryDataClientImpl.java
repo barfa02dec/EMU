@@ -33,6 +33,7 @@ import java.util.Set;
 import org.codehaus.jettison.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.atlassian.jira.rest.client.api.domain.IssueField;
@@ -184,42 +185,37 @@ public class StoryDataClientImpl implements StoryDataClient {
 		return count;
 	}
 	
-	public int updateDefectInformation() {
+	public int updateJiraDefectInfo() {
 
-		int count = 0;
 		epicCache.clear();
-
 		int pageSize = jiraClient.getPageSize();
 
 		boolean hasMore = true;
+		int issuecount = 0;
 		for (int i = 0; hasMore; i += pageSize) {
-			if (LOGGER.isDebugEnabled()) {
+			
+			if (LOGGER.isDebugEnabled()) 
 				LOGGER.debug("Obtaining story information starting at index " + i + "...");
-			}
+			
 			long queryStart = System.currentTimeMillis();
 			List<Issue> issues = jiraClient.getIssuesPMD(i, featureSettings);
-			if (LOGGER.isDebugEnabled()) {
-				LOGGER.debug("Story information query took " + (System.currentTimeMillis() - queryStart) + " ms");
-			}
 
-			if (issues != null && !issues.isEmpty()) {
+			if (LOGGER.isDebugEnabled())
+				LOGGER.debug("Story information query took " + (System.currentTimeMillis() - queryStart) + " ms");
+
+			if (!CollectionUtils.isEmpty(issues)) {
 				updateMongoInfo(issues);
-				count += issues.size();
+				issuecount += issues.size();
 			}
 
 			LOGGER.info("Loop i " + i + " pageSize " + issues.size());
 
-			// will result in an extra call if number of results == pageSize
-			// but I would rather do that then complicate the jira client
-			// implementation
 			if (issues == null || issues.size() < pageSize) {
 				hasMore = false;
 				break;
 			}
 		}
-
-		return count;
-	
+		return issuecount;
 	}
 
 
@@ -238,7 +234,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 		}
 
 		if (currentPagedJiraRs != null) {
-
 			Set<String> issueTypeNames = new HashSet<>();
 			for (String issueTypeName : featureSettings.getJiraIssueTypeNames()) {
 				issueTypeNames.add(issueTypeName.toLowerCase(Locale.getDefault()));
@@ -262,20 +257,15 @@ public class StoryDataClientImpl implements StoryDataClient {
 							defect = new Defect();
 						}
 						defectsToSave.add(processDefects(issue, defect, fields));
-
 					}
-
 				}
 			}
 
 			if (null != defectsToSave && !defectsToSave.isEmpty()) {
-
 				defectRepository.save(defectsToSave);
-
 			}
 
 			defectsToSave = null;
-
 		}
 	}
 	
@@ -465,8 +455,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 		defect.setDefectPriority(null != issue.getPriority() ? issue.getPriority().getName() : null);
 		defect.setCreationDate(issue.getCreationDate().toString());
 		defect.setCreatedBy(null != issue.getReporter() ? issue.getReporter().getName() : null);
+		
 		int originalEstimate = 0;
-
 		if (issue.getTimeTracking() != null && issue.getTimeTracking().getOriginalEstimateMinutes() != null) {
 			originalEstimate = issue.getTimeTracking().getOriginalEstimateMinutes();
 		} else if (fields.get("aggregatetimeoriginalestimate") != null
@@ -474,12 +464,14 @@ public class StoryDataClientImpl implements StoryDataClient {
 			// this value is in seconds
 			originalEstimate = ((Integer) fields.get("aggregatetimeoriginalestimate").getValue()) / 60;
 		}
+		
 		defect.setOriginalEstimate(originalEstimate);
 		defect.setDefectResolutionStatus(null != issue.getResolution() ? issue.getResolution().getName() : null);
 		defect.setReporter(null != issue.getReporter() ? issue.getReporter().toString() : null);
 		defect.setUpdateDate(null != issue.getUpdateDate() ? issue.getUpdateDate().toString() : null);
 		defect.setAssignee(null != issue.getAssignee() ? issue.getAssignee().getName().toString() : null);
-		// defect age
+		
+		// calculate the defect age in days
 		Date createdDate = DateUtil.fromISODateTimeFormat(issue.getCreationDate().toString());
 		Date updateDate = DateUtil.fromISODateTimeFormat(issue.getUpdateDate().toString());
 		Date now = new Date();
@@ -490,23 +482,23 @@ public class StoryDataClientImpl implements StoryDataClient {
 		if (null == defect.getDefectResolutionStatus()) {
 			defect.setDefectAge(DateUtil.differenceInDays(now, createdDate));
 		}
+		
 		defect.setEmuProjectId(featureSettings.getProjectId());
 		return defect;
-
 	}
 
 	private DefectAggregation processDefectsSummary(NewFeatureSettings featureSettings, List<Defect> defects,
-			Scope scopeProject, DefectAggregation summery) {
+			Scope scopeProject, DefectAggregation summary) {
 
 		/*
 		 * Logic to bucket the defects based on priority.
 		 */
-		JiraCollectorUtil.processDefectsByPriority(defects, summery, scopeProject);
+		JiraCollectorUtil.processDefectsByPriority(defects, summary, scopeProject);
 		
 		/*
 		 * Logic to bucket the defects based on environment
 		 */
-		JiraCollectorUtil.processDefectsByEnvironment(summery, scopeProject.getpId(), featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials());
+		JiraCollectorUtil.processDefectsByEnvironment(summary, scopeProject.getpId(), featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials());
 		
 
 		/*
@@ -514,35 +506,37 @@ public class StoryDataClientImpl implements StoryDataClient {
 		 * in each class of resolution.
 		 */
 		//processDefectsByDefectResolutionPeriod(summery, scopeProject);
-		processDefectsByDefectResolutionPeriodPMD(summery, scopeProject);
+		processDefectsByDefectResolutionPeriodPMD(summary, scopeProject);
 
 		/*
 		 * Logic for bucketing the defects based on age of open defects.
 		 */
-		processDefectsByDefectAge(summery, scopeProject);
+		processDefectsByDefectAge(summary, scopeProject);
 
-		return summery;
+		return summary;
 	}
 
 	@Override
-	public void processDefectAggregation(NewFeatureSettings featureSettings, List<Defect> defectsInDB,
-			Scope scopeProject) {
+	public void processDefectAggregation(NewFeatureSettings featureSettings, List<Defect> projectDefects,
+			Scope project) {
 		/*
 		 * For a single project, there is always a single aggregater
 		 * exists.Hence setting the collector ID as same as scope ID.
 		 */
 		LOGGER.info("processing Defects aggregation");
-		DefectAggregation summery = defectAggregationRepository.findByProjectIdAndName(scopeProject.getProjectId(), scopeProject.getName());
+		DefectAggregation summary = defectAggregationRepository.findByProjectIdAndName(project.getProjectId(), project.getName());
 		
-		if (null == summery) {
-			summery = new DefectAggregation();
+		if (null == summary) {
+			summary = new DefectAggregation();
 		}
-		summery = processDefectsSummary(featureSettings, defectsInDB, scopeProject, summery);
-		summery.setProjectId(scopeProject.getpId());
-		summery.setProjectName(scopeProject.getName());
-		summery.setValuesAsOn(new Date().toString());
-		summery.setMetricsProjectId(scopeProject.getProjectId());
-		defectAggregationRepository.save(summery);
+		summary = processDefectsSummary(featureSettings, projectDefects, project, summary);
+		summary.setProjectId(project.getpId());
+		summary.setProjectName(project.getName());
+		summary.setValuesAsOn(new Date().toString());
+		summary.setMetricsProjectId(project.getProjectId());
+		
+		defectAggregationRepository.save(summary);
+		
 		LOGGER.info("Defects aggregation ends.");
 	}
 	
