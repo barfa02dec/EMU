@@ -35,17 +35,17 @@
             </div>
         </div>
     </div>
-    <div class="black-header" style="height: 80px;border-bottom:1px solid #b3b3b3;background-image: url('assets/images/bg_page_header.png');">
+    <div class="agile-board-image" style="background-image: url('assets/images/bg_page_header.png');">
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-4" style="padding-left: 1.6%;">
-                    <div class="" style="margin-top: 3.1%;font-size: 22px;">
+                <div class="col-md-4 agile-board-padding">
+                    <div class="agile-board-text">
                         Agile Board
                     </div>
-                    <div class="" style="font-size: 14px;">
-                        <a href="#/projects" style="color: #4482B2">All projects</a> <img src="assets/images/arrow_right.png" style="vertical-align: sub;">
-                        <a href="#/site" style="color: #4482B2">All dashboards</a> <img src="assets/images/arrow_right.png" style="vertical-align: sub;">
-                        <a ng-click="jdv.openback()" style="color: #4482B2;cursor: pointer;">System dashboard</a>
+                    <div class="agile-board-link">
+                        <a href="#/projects" class="gradient-header-project-link-color">All projects</a> <img src="assets/images/arrow_right.png" style="vertical-align: sub;">
+                        <a href="#/site" class="gradient-header-project-link-color">All dashboards</a> <img src="assets/images/arrow_right.png" style="vertical-align: sub;">
+                        <a ng-click="jdv.openback()" class="gradient-header-project-link-color">System dashboard</a>
                     </div>
                 </div>
                 <div class="col-md-6"></div>
@@ -160,17 +160,17 @@
                     <div class="col-md-6 agile-board-sub-header agile-board-sub-header-padding">Velocity Chart</div>
                 </div>
                  <div class="col-md-6 agile-board-sprint-chart-padding">
-                    <c3-chart id="burnDown" config="burnDown" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                    <div id="burnDown" config="burnDown" class="sprint-graphs-prop graph-bg-gradient"></div>
                 </div>
                 <div class="col-md-6 agile-board-sprint-chart-padding">
-                    <c3-chart id="sprintdatas" config="sprintdatas" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                    <div id="sprintdatas" config="sprintdatas" class="sprint-graphs-prop graph-bg-gradient"></div>
                 </div>
                
                 <div class="col-md-12">
                     <div class="col-md-12 agile-board-sub-header agile-board-sub-header-padding">Defect Closure</div>
                 </div>
                 <div class="col-md-12 agile-board-sprint-chart-padding">
-                    <c3-chart id="defectClosure" config="defectClosure" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                    <div id="defectClosure" config="defectClosure" class="sprint-graphs-prop graph-bg-gradient"></div>
                 </div>
             </div>
         </div>
@@ -192,10 +192,10 @@
                     <div class="col-md-6">Resolution Time Report</div>
                 </div>
                 <div class="col-md-6 agile-board-defect-chart-padding">
-                    <c3-chart id="restime" config="configresTime" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                    <div id="restime" config="configresTime" class="sprint-graphs-prop graph-bg-gradient"></div>
                 </div>
                 <div class="col-md-6 agile-board-defect-chart-padding">
-                    <c3-chart id="openDef" config="configopenDef" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                    <div id="openDef" config="configopenDef" class="sprint-graphs-prop graph-bg-gradient"></div>
                 </div>
                 <div class="col-md-12 agile-board-row-padding-widgets">
                     <div class="col-md-6 agile-board-defect-block-padding">
@@ -272,7 +272,7 @@
         <div class="col-md-12 agile-board-release-padding">
             <div class="col-md-12 agile-board-row-padding-widgets agile-board-outer-box">
                 <div class="col-md-12">
-                    <c3-chart id="releaseGraph" config="releaseGraph" class="sprint-graphs-prop graph-bg-gradient"></c3-chart>
+                    <div id="releaseGraph" config="releaseGraph" class="sprint-graphs-prop graph-bg-gradient"></div>
                 </div>
             </div>
         </div>
