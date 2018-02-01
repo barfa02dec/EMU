@@ -34,12 +34,14 @@ import com.google.gson.JsonObject;
 public class JiraCollectorUtil {
 	private static final Logger LOGGER = LoggerFactory.getLogger(JiraCollectorUtil.class);
 
+	private static final String DONE = "Done";
 	private static final String GET_PROJECT_SPRINTS = "/rest/greenhopper/1.0/integration/teamcalendars/sprint/list?jql=project=%1s";
 	private static final String GET_PROJECT_SPRINT_DETAILS = "/rest/greenhopper/1.0/rapid/charts/sprintreport?rapidViewId=%1s&sprintId=%2$d";
+
 	private static final String GET_DEFECTS_CREATED =  "/rest/api/2/search?jql=project=%1s and type in (Bug) and createdDate >\"%2s\" and createdDate <\"%3s\" &maxResults=1000";
 	private static final String GET_DEFECTS_RESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) AND createddate>\"%2s\" and status = Done and Sprint = %3s &maxResults=1000";
 	private static final String GET_DEFECTS_UNRESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) and createddate<\"%2s\" and (resolutiondate > \"%2s\" or resolution in (unresolved)) &maxResults=1000";
-	private static final String DONE = "Done";
+
 	public static final String GET_PROJECT_VERSIONS = "/rest/api/2/project/%1s/versions";
 	public static final String GET_PROJECT_VERSION = "/rest/greenhopper/1.0/rapid/charts/versionreport?rapidViewId=%1s&versionId=%2s";
 	public static final String GET_ISSUE = "/rest/api/2/issue/%1s?fields=%2s";
@@ -353,23 +355,19 @@ public class JiraCollectorUtil {
 		Map<String,Integer> defectsByProirity= new LinkedHashMap<String,Integer>();
 		
 			for(Defect defect: defects){			
-			if(!defect.getDefectStatus().equals(DONE) && defect.getProjectId().equals(scopeProject.getpId())){
-				if(defectsByProirity.containsKey(defect.getDefectPriority())){
-					defectsByProirity.put(defect.getDefectPriority(), defectsByProirity.get(defect.getDefectPriority())+1);
-				}else{
-					defectsByProirity.put(defect.getDefectPriority(), 1);
-				}
-				
-			}		
-			
+				if(!defect.getDefectStatus().equals(DONE) && defect.getProjectId().equals(scopeProject.getpId())){
+					if(defectsByProirity.containsKey(defect.getDefectPriority())){
+						defectsByProirity.put(defect.getDefectPriority(), defectsByProirity.get(defect.getDefectPriority())+1);
+					}else{
+						defectsByProirity.put(defect.getDefectPriority(), 1);
+					}
+				}		
 			}
 		
 			if(!defectsByProirity.isEmpty())
 			{
 				aggregation.setDefectsByProirity(defectsByProirity);
 			}
-			
-		
 	}
 	
 	public static VersionData parseToVersionData(String json){

@@ -55,17 +55,12 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 	 * Explicitly updates queries for the source system, and initiates the
 	 * update to MongoDB from those calls.
 	 */
-	public int updateProjectInformation() {
-		int count = 0;
-		
+	public void updateJiraProjectInfo() {
 		List<BasicProject> projects = jiraClient.getProjects(featureSettings);
 		
 		if (projects != null && !projects.isEmpty()) {
 			updateMongoInfo(projects);
-			count += projects.size();
 		}
-		
-		return count;
 	}
 	
 	/**
@@ -82,26 +77,20 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 		
 		if (currentPagedJiraRs != null) {
 			ObjectId jiraCollectorId = featureCollectorRepository.findByName(FeatureCollectorConstants.JIRA).getId();
-			List<String> jiraProjectIdsToShowIndashboard=new ArrayList<String>();
-			String [] jiraIds=featureSettings.getJiraProjectIdList();
-			jiraProjectIdsToShowIndashboard=Arrays.asList(jiraIds);
+			List<String> jiraProjectsToShowInDashboard = new ArrayList<String>();
+			jiraProjectsToShowInDashboard = Arrays.asList(featureSettings.getJiraProjectIdList());
 			
 			for (BasicProject jiraScope : currentPagedJiraRs) {
 				String scopeId = TOOLS.sanitizeResponse(jiraScope.getId());
 				
-				/*
-				 * Initialize DOMs
-				 */
 				Scope scope = projectRepo.getScopeByIdAndProjectName(scopeId, jiraScope.getName());
 				
-				if (scope == null) {
+				if (scope == null && jiraProjectsToShowInDashboard.contains(scopeId)) {
 					scope = new Scope();
+				}else if (scope == null && !jiraProjectsToShowInDashboard.contains(scopeId)){
+					continue;
 				}
 
-				/*
-				 * Project Data
-				 */
-				// collectorId
 				scope.setCollectorId(jiraCollectorId);
 
 				// ID;
@@ -113,17 +102,10 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 				// name;
 				scope.setName(TOOLS.sanitizeResponse(jiraScope.getName()));
 
-				// beginDate - does not exist for jira
-				scope.setBeginDate("");
-
-				// endDate - does not exist for jira
+				/*scope.setBeginDate("");
 				scope.setEndDate("");
-
-				// changeDate - does not exist for jira
 				scope.setChangeDate("");
-
-				// assetState - does not exist for jira
-				scope.setAssetState("Active");
+				scope.setAssetState("Active");*/
 
 				// isDeleted - does not exist for jira
 				scope.setIsDeleted("False");
@@ -131,10 +113,9 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 				// path - does not exist for Jira
 				scope.setProjectPath(TOOLS.sanitizeResponse(jiraScope.getName()));
 				//set whether this project is exposed to emu dashboard/not
-				scope.setToShowInEMUDashboard(jiraProjectIdsToShowIndashboard.contains(scope.getpId()));
+				scope.setToShowInEMUDashboard(jiraProjectsToShowInDashboard.contains(scope.getpId()));
 				// Saving back to MongoDB
 				projectRepo.save(scope);
-				
 			}
 		}
 	}

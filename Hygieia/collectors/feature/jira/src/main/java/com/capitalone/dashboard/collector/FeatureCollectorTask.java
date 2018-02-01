@@ -149,31 +149,32 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			log("Team Data", teamDataStart, count);*/
 	
 			long projectDataStart = System.currentTimeMillis();
-			ProjectDataClientImpl projectData = new ProjectDataClientImpl(featureSettings,
+			
+			ProjectDataClientImpl jiraProjectData = new ProjectDataClientImpl(featureSettings,
 					this.projectRepository, this.featureCollectorRepository, jiraClient);
-			count = projectData.updateProjectInformation();
-			log("Project Data", projectDataStart, count);
+			jiraProjectData.updateJiraProjectInfo();
+			
+			long projectDataEnd = System.currentTimeMillis();			
+			log("Project information query took " + (projectDataEnd - projectDataStart) + " ms");
 	
 			long storyDataStart = System.currentTimeMillis();
 			StoryDataClientImpl storyData = new StoryDataClientImpl(this.coreFeatureSettings,
 					featureSettings, this.featureRepository,this.defectRepository,this.sprintRepository,this.defectAggregationRepository,this.releaseRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
-			count = storyData.updateDefectInformation();
+			count = storyData.updateJiraDefectInfo();
 
 			List<Scope> projects=(List<Scope>) projectRepository.findByProjectId(featureSettings.getProjectId(),true);
-			for(Scope scopeProject: projects){
-				List<Defect> defectsInDB=(List<Defect>) defectRepository.findByProjectId(scopeProject.getpId(),scopeProject.getProjectId());
-				LOGGER.info("PROJECT CODE::"+scopeProject.getProjectId()+" *************PROJECT ID::"+scopeProject.getpId()+" ********DEFECTS COUNT::"+defectsInDB.size());
-				storyData.processDefectAggregation(featureSettings, defectsInDB,scopeProject);
+			
+			for(Scope project: projects){
+				List<Defect> projectDefects = (List<Defect>) defectRepository.findByProjectId(project.getpId(),project.getProjectId());
+				LOGGER.info("PROJECT CODE::"+project.getProjectId()+" *************PROJECT ID::"+project.getpId()+" ********DEFECTS COUNT::"+projectDefects.size());
+				storyData.processDefectAggregation(featureSettings, projectDefects,project);
 				
 				//logic to handle sprint and releases
-				
-				storyData.saveDetailedSprintData(scopeProject.getpId(),scopeProject.getName());
-				storyData.saveDetailedReleaseData(scopeProject.getpId(),scopeProject.getName());
+				storyData.saveDetailedSprintData(project.getpId(),project.getName());
+				storyData.saveDetailedReleaseData(project.getpId(),project.getName());
 			}
 			log("Story Data", storyDataStart, count);
-			/*log("Finished", teamDataStart);*/
 		} catch (Exception e) {
-			// catch exception here so we don't blow up the collector completely
 			LOGGER.error("Failed to collect jira information", e);
 		}
 	}
