@@ -21,7 +21,6 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,9 +41,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.capitalone.dashboard.client.Sprint;
+import com.capitalone.dashboard.model.BurnDownHistory;
 import com.capitalone.dashboard.model.Burndown;
 import com.capitalone.dashboard.model.JiraSprint;
-import com.capitalone.dashboard.model.BurnDownHistory;
 import com.capitalone.dashboard.model.SprintData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -408,45 +407,41 @@ public final class ClientUtil {
 	public static ClientUtil getInstance() {
 		return INSTANCE;
 	}
-public static SprintData parseToSprintData(JiraSprint sprint,String sprintDetailJson){
-    	
+	public static SprintData parseToSprintData(JiraSprint sprint,String sprintDetailJson){
 		SprintData sprintdata = new SprintData();
 		
-    	Gson gson = new GsonBuilder().create();
-    	sprintdata.setSprintId(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("id").getAsLong());
-    	sprintdata.setSprintName(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("name").toString());
-    	sprintdata.setState(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("state").toString());
-    	sprintdata.setDaysRemaining(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("daysRemaining").getAsInt());
-    	
-    	// code changes incorporated from PMD-- BEGINS
-    	sprintdata.setStartDate(DateUtil.convertStringToDate(sprint.getStart(), ClientUtil.DATE_FORMAT_2));     			
-    	sprintdata.setEndDate(DateUtil.convertStringToDate(sprint.getEnd(), ClientUtil.DATE_FORMAT_2));
-    	sprintdata.setCompleteDate(DateUtil.convertStringToDate(sprint.getEnd(), ClientUtil.DATE_FORMAT_2));
-    	String completedatestr =  gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("completeDate").getAsString();
-    	if(!completedatestr.equalsIgnoreCase("None"))
-    		sprintdata.setCompleteDate(DateUtil.convertStringToDate(completedatestr, ClientUtil.DATE_FORMAT_1));
-    	//// code changes incorporated from PMD-- ENDS
-    
-    	
-    	sprintdata.setCompletedIssueCount(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("completedIssues") == null ? 
+		Gson gson = new GsonBuilder().create();
+		sprintdata.setSprintId(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("id").getAsLong());
+		sprintdata.setSprintName(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("name").toString());
+		sprintdata.setState(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("state").toString());
+		sprintdata.setDaysRemaining(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("daysRemaining").getAsInt());
+		sprintdata.setStartDate(DateUtil.convertStringToDate(sprint.getStart(), DATE_FORMAT_2));     			
+		sprintdata.setEndDate(DateUtil.convertStringToDate(sprint.getEnd(), DATE_FORMAT_2));
+		sprintdata.setCompleteDate(DateUtil.convertStringToDate(sprint.getEnd(), DATE_FORMAT_2));
+		
+		String completedatestr =  gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("completeDate").getAsString();
+		if(!completedatestr.equalsIgnoreCase("None"))
+			sprintdata.setCompleteDate(DateUtil.convertStringToDate(completedatestr, DATE_FORMAT_1));
+		
+		sprintdata.setCompletedIssueCount(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("completedIssues") == null ? 
 				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("completedIssues").size());
-
-    	int incompletedissuesount = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("issuesNotCompletedInCurrentSprint") == null? 
+	
+		int incompletedissuesount = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("issuesNotCompletedInCurrentSprint") == null? 
 				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("issuesNotCompletedInCurrentSprint").size();
 		
 		int puntedissuescount = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("puntedIssues") ==null ? 
 						0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonArray("puntedIssues").size();
-		// code changes incorporated from PMD-- BEGINS
+	
 		int issuekeysaddedduringsprintcount = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issueKeysAddedDuringSprint").entrySet() == null? 
 				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issueKeysAddedDuringSprint").entrySet().size();
-
+	
 		sprintdata.setCommittedIssueCount(sprintdata.getCompletedIssueCount() + puntedissuescount + incompletedissuesount - issuekeysaddedduringsprintcount);
+		
+		
 		double completedIssuesInitialEstimateSum = 0;
 		double incompletedissuesestimateSum = 0;
 		double puntedIssuesestimatesum = 0;
-		double completedIssuesEstimateSum = 0;
-		double allIssuesEstimateSum = 0;
-
+		
 		if(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesInitialEstimateSum") != null)
 			completedIssuesInitialEstimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesInitialEstimateSum").get("value") == null ?
 				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesInitialEstimateSum").get("value").getAsFloat();
@@ -454,7 +449,6 @@ public static SprintData parseToSprintData(JiraSprint sprint,String sprintDetail
 			completedIssuesInitialEstimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value") == null ?
 					0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value").getAsFloat();
 		
-
 		if(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issuesNotCompletedEstimateSum") != null)
 			incompletedissuesestimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issuesNotCompletedEstimateSum").get("value") == null ?
 				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issuesNotCompletedEstimateSum").get("value").getAsFloat();
@@ -470,56 +464,32 @@ public static SprintData parseToSprintData(JiraSprint sprint,String sprintDetail
 		
 		sprintdata.setCompletedStoryPoints(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value") == null ?
 				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value").getAsFloat());
-
-		
-		if(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum") != null)
-			completedIssuesEstimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value") == null ?
-				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("completedIssuesEstimateSum").get("value").getAsDouble();
-		
-		if(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("allIssuesEstimateSum") != null)
-			allIssuesEstimateSum = gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("allIssuesEstimateSum").get("value") == null ?
-				0 : gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("allIssuesEstimateSum").get("value").getAsDouble();
-		
-		// code changes incorporated from PMD-- ENDS
+	
 		Burndown burndown = new Burndown();
-		
 		Burndown.IssueCount issuecount = burndown.new IssueCount();
 		issuecount.setCount(issuekeysaddedduringsprintcount);
-		issuecount.setStoryPoints(0.0d);
+		issuecount.setStoryPoints(0.0);
 		burndown.setIssuesAdded(issuecount);
 		
 		issuecount = burndown.new IssueCount();
 		issuecount.setCount(puntedissuescount);
-		issuecount.setStoryPoints(0.0d);
+		issuecount.setStoryPoints(puntedIssuesestimatesum + incompletedissuesestimateSum);
 		burndown.setIssuesRemoved(issuecount);
 		
-		sprintdata.setCommittedIssueCount(sprintdata.getCompletedIssueCount() + puntedissuescount + incompletedissuesount - issuekeysaddedduringsprintcount);
 		issuecount = burndown.new IssueCount();
 		issuecount.setCount(sprintdata.getCommittedIssueCount());	
-		issuecount.setStoryPoints(0.0d);
+		issuecount.setStoryPoints(completedIssuesInitialEstimateSum + puntedIssuesestimatesum + incompletedissuesestimateSum);
 		burndown.setInitialIssueCount(issuecount);
+	
 		sprintdata.setBurndown(burndown);
 
-		List<BurnDownHistory> burnDownHistoryList = new ArrayList<BurnDownHistory>();
-		BurnDownHistory burnDownHistory = new BurnDownHistory();
-		 LocalDate localDate = LocalDate.now();
-		    
-		burnDownHistory.setDate(DateTimeFormatter.ofPattern("yyy/MM/dd").format(localDate));
-		burnDownHistory.setAllIssuesEstimateSum(allIssuesEstimateSum);
-		burnDownHistory.setCompletedIssuesEstimateSum(completedIssuesEstimateSum);
-		burnDownHistory.setRemainingIssues(allIssuesEstimateSum-completedIssuesEstimateSum);
-		burnDownHistoryList.add(burnDownHistory);
-		Set<BurnDownHistory> burnDownset = new HashSet<>();
-		burnDownset.addAll(burnDownHistoryList);
-		sprintdata.setBurnDownHistory(burnDownset);
-		
 		return sprintdata;
     }
 
 	public static List<String> getIssuesAddedDuringSprint(String issueJson){
 		List<String> issuelist = new ArrayList<>();
 		
-		Gson gson = new GsonBuilder().create();
+    	Gson gson = new GsonBuilder().create();
 		Set issuekeysaddedduringsprint = gson.fromJson(issueJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issueKeysAddedDuringSprint").entrySet() == null? 
 				null : gson.fromJson(issueJson, JsonObject.class).getAsJsonObject("contents").getAsJsonObject("issueKeysAddedDuringSprint").entrySet();
 		
@@ -533,6 +503,7 @@ public static SprintData parseToSprintData(JiraSprint sprint,String sprintDetail
 		}
 		return issuelist;
 	}
+
 	public static Double getSprintVelocity(String json, Long sprintId, String field){
 		try{
     		return new GsonBuilder().create().fromJson(json, JsonObject.class).getAsJsonObject("velocityStatEntries").getAsJsonObject(String.valueOf(sprintId)).getAsJsonObject(field).get("value").getAsDouble();

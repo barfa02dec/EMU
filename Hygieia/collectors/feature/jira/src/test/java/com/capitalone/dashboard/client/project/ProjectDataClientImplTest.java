@@ -18,7 +18,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.atlassian.jira.rest.client.api.domain.BasicProject;
 import com.capitalone.dashboard.client.JiraClient;
-import com.capitalone.dashboard.client.project.ProjectDataClientImpl;
 import com.capitalone.dashboard.model.FeatureCollector;
 import com.capitalone.dashboard.model.Scope;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
@@ -55,11 +54,11 @@ public class ProjectDataClientImplTest {
 
 		//Mockito.when(jiraClient.getProjects()).thenReturn(jiraResponse);
 		ArgumentCaptor<Scope> captor = ArgumentCaptor.forClass(Scope.class);
-		int cnt = projectDataClient.updateProjectInformation();
+		projectDataClient.updateJiraProjectInfo();
 
 		Mockito.verify(projectRepo, Mockito.times(2)).save(captor.capture());
 
-		assertEquals(2, cnt);
+		//assertEquals(2, cnt);
 
 		Scope scope1 = captor.getAllValues().get(0);
 		assertEquals(JIRA_COLLECTORID, scope1.getCollectorId());

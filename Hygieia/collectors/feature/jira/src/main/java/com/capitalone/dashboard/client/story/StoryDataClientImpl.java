@@ -52,7 +52,6 @@ import com.capitalone.dashboard.model.QSprint;
 import com.capitalone.dashboard.model.Release;
 import com.capitalone.dashboard.model.Scope;
 import com.capitalone.dashboard.model.Sprint;
-import com.capitalone.dashboard.model.SprintData;
 import com.capitalone.dashboard.repository.DefectAggregationRepository;
 import com.capitalone.dashboard.repository.DefectRepository;
 import com.capitalone.dashboard.repository.FeatureCollectorRepository;
@@ -63,7 +62,6 @@ import com.capitalone.dashboard.repository.TeamRepository;
 import com.capitalone.dashboard.util.ClientUtil;
 import com.capitalone.dashboard.util.CoreFeatureSettings;
 import com.capitalone.dashboard.util.DateUtil;
-import com.capitalone.dashboard.util.DefectUtil;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
 import com.capitalone.dashboard.util.JiraCollectorUtil;
 import com.capitalone.dashboard.util.NewFeatureSettings;
@@ -173,9 +171,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 
 			LOGGER.info("Loop i " + i + " pageSize " + issues.size());
 
-			// will result in an extra call if number of results == pageSize
-			// but I would rather do that then complicate the jira client
-			// implementation
 			if (issues == null || issues.size() < pageSize) {
 				hasMore = false;
 				break;
@@ -264,43 +259,36 @@ public class StoryDataClientImpl implements StoryDataClient {
 			if (null != defectsToSave && !defectsToSave.isEmpty()) {
 				defectRepository.save(defectsToSave);
 			}
-
 			defectsToSave = null;
 		}
 	}
 	
 	public void saveDetailedSprintData(String projectId, String projectName) throws JSONException {
-		List<JiraSprint> sprintsJira = JiraCollectorUtil.getSprintList(projectId, featureSettings.getJiraBaseUrl(),
-		featureSettings.getJiraCredentials(), featureSettings.getNoOfSprintsToShow());
+		List<JiraSprint> jiraSprints = JiraCollectorUtil.getSprintList(projectId, featureSettings);
 		
 		List<Sprint> list = new ArrayList<Sprint>();
-		for (JiraSprint js : sprintsJira) {
-			Sprint sprint = sprintRepository.findOne(QSprint.sprint.sprintId.eq(js.getId()).and(QSprint.sprint.name.eq(js.getName())));
+		for (JiraSprint jiraSprint : jiraSprints) {
+			Sprint sprint = sprintRepository.findOne(QSprint.sprint.sprintId.eq(jiraSprint.getId()).and(QSprint.sprint.name.eq(jiraSprint.getName())));
+			
 			if (null == sprint) {
-				
 				sprint = new Sprint();
-				sprint.setSid(js.getId());
-				sprint.setName(js.getName());
-				sprint.setViewBoardsUrl(js.getViewBoardsUrl());
+				sprint.setSid(jiraSprint.getId());
+				sprint.setName(jiraSprint.getName());
+				sprint.setViewBoardsUrl(jiraSprint.getViewBoardsUrl());
 				sprint.setProjectId(projectId);
-				sprint.setStart(js.getStart());
-				sprint.setClosed(js.getClosed());
+				sprint.setStart(jiraSprint.getStart());
+				sprint.setClosed(jiraSprint.getClosed());
 				sprint.setProjectName(projectName);
 			}
-			// get the detailed metrics for sprint with status [open] 
-			// get the detailed metrics for sprint with status[closed] but detailed metrics/SprintData is null
-						
 			
-			if(((sprint.getClosed() && null==sprint.getSprintData())||!sprint.getClosed())){
-				JiraCollectorUtil.getRecentSprintMetrics(js, projectId,
-						featureSettings);
-				SprintData sprintData = js.getSprintData();
-				if (sprint.getSprintData() != null)
-					sprintData.getBurnDownHistory().addAll(sprint.getSprintData().getBurnDownHistory());
-				sprint.setSprintData(sprintData);
+			// Get the detailed metrics for sprint with status [open] 
+			// Get the detailed metrics for sprint with status[closed] but detailed metrics/SprintData is null
+			if(((sprint.getClosed() && null == sprint.getSprintData()) ||!sprint.getClosed())){
+				JiraCollectorUtil.getSprintMetrics(jiraSprint, projectId, featureSettings);
+				sprint.setSprintData(jiraSprint.getSprintData());
 			}
-			sprint.setEditable(js.getEditable());
-			sprint.setEnd(js.getEnd());
+			sprint.setEditable(jiraSprint.getEditable());
+			sprint.setEnd(jiraSprint.getEnd());
 			list.add(sprint);
 		}
 		if (!list.isEmpty()) {
@@ -310,40 +298,34 @@ public class StoryDataClientImpl implements StoryDataClient {
 	
 	public void saveDetailedReleaseData(String projectId, String projectName) {
 
-		List<JiraVersion> jiraVersions = JiraCollectorUtil.getVersionsFromJira(projectId,
-				featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(), featureSettings.getRapidView(),
-				featureSettings.getNoOfSprintsToShow());
-
+		List<JiraVersion> jiraVersions = JiraCollectorUtil.getVersionsFromJira(projectId, featureSettings);
 		List<Release> releaseList = new ArrayList<Release>();
 
-		for (JiraVersion jv : jiraVersions) {
-			Release release = releaseRepository.findOne(QRelease.release.releaseId.eq(jv.getId()).and(QRelease.release.name.eq(jv.getName())));
+		for (JiraVersion jiraVersion : jiraVersions) {
+			Release release = releaseRepository.findOne(QRelease.release.releaseId.eq(jiraVersion.getId()).and(QRelease.release.name.eq(jiraVersion.getName())));
+			
 			if (release == null) {
 				release = new Release();
-				release.setReleaseId(jv.getId());
+				release.setReleaseId(jiraVersion.getId());
 				release.setProjectId(projectId);
-				release.setName(jv.getName());
-				release.setStartDate(jv.getStartDate());
-				release.setReleased(jv.getReleased());
+				release.setName(jiraVersion.getName());
+				release.setStartDate(jiraVersion.getStartDate());
+				release.setReleased(jiraVersion.getReleased());
 				release.setProjectName(projectName);
 			}
-			// get the detailed metrics for release with status [not release] 
-			// get the detailed metrics for release with status[released] but detailed metrics/versionData is null
 			
+			// Get the detailed version metrics for release with status [not release] 
+			// Get the detailed version metrics for release with status[released] but detailed metrics/versionData is null
 			if ((release.getReleased() && null == release.getVersionData())|| !release.getReleased()) {
-				String detailedVersionMetrics = JiraCollectorUtil.getVersionDetailsFromJira(
-						featureSettings.getRapidView(), jv.getId(), featureSettings.getJiraBaseUrl(),
-						featureSettings.getJiraCredentials());
-				jv.setVersionData(JiraCollectorUtil.getReleaseData(detailedVersionMetrics, projectId,
-						featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials(),
-						featureSettings.getRapidView()));
+				String versionDetails = JiraCollectorUtil.getVersionDetailsFromJira(jiraVersion.getId(), featureSettings);
+				jiraVersion.setVersionData(JiraCollectorUtil.getReleaseData(versionDetails, projectId, featureSettings));
 				// setting the detailed metrics to release.
-				release.setVersionData(jv.getVersionData());
+				release.setVersionData(jiraVersion.getVersionData());
 
 			}
 
-			release.setOverdue(jv.getOverdue());
-			release.setReleaseDate(jv.getReleaseDate());
+			release.setOverdue(jiraVersion.getOverdue());
+			release.setReleaseDate(jiraVersion.getReleaseDate());
 			releaseList.add(release);
 		}
 		if (!jiraVersions.isEmpty()) {
@@ -487,244 +469,211 @@ public class StoryDataClientImpl implements StoryDataClient {
 		return defect;
 	}
 
-	private DefectAggregation processDefectsSummary(NewFeatureSettings featureSettings, List<Defect> defects,
-			Scope scopeProject, DefectAggregation summary) {
-
-		/*
-		 * Logic to bucket the defects based on priority.
-		 */
-		JiraCollectorUtil.processDefectsByPriority(defects, summary, scopeProject);
-		
-		/*
-		 * Logic to bucket the defects based on environment
-		 */
-		JiraCollectorUtil.processDefectsByEnvironment(summary, scopeProject.getpId(), featureSettings.getJiraBaseUrl(), featureSettings.getJiraCredentials());
-		
-
-		/*
-		 * Logic for bucketing the defects based on resolution days and priority
-		 * in each class of resolution.
-		 */
-		//processDefectsByDefectResolutionPeriod(summery, scopeProject);
-		processDefectsByDefectResolutionPeriodPMD(summary, scopeProject);
-
-		/*
-		 * Logic for bucketing the defects based on age of open defects.
-		 */
-		processDefectsByDefectAge(summary, scopeProject);
-
-		return summary;
-	}
-
 	@Override
-	public void processDefectAggregation(NewFeatureSettings featureSettings, List<Defect> projectDefects,
+	public void defectMetricsAggregation(NewFeatureSettings featureSettings, List<Defect> opendefects,
 			Scope project) {
-		/*
-		 * For a single project, there is always a single aggregater
-		 * exists.Hence setting the collector ID as same as scope ID.
-		 */
+		
+		 //For a single project, there is always a single aggregator exists.
+		 //hence setting the collector ID as same as scope ID.
+		 
 		LOGGER.info("processing Defects aggregation");
 		DefectAggregation summary = defectAggregationRepository.findByProjectIdAndName(project.getProjectId(), project.getName());
 		
 		if (null == summary) {
 			summary = new DefectAggregation();
 		}
-		summary = processDefectsSummary(featureSettings, projectDefects, project, summary);
+
 		summary.setProjectId(project.getpId());
 		summary.setProjectName(project.getName());
 		summary.setValuesAsOn(new Date().toString());
 		summary.setMetricsProjectId(project.getProjectId());
 		
+		/*
+		 * Logic to bucket the defects based on priority.
+		 */
+		processDefectsByPriority(opendefects, summary, project);
+		
+		/*
+		 * Logic to bucket the defects based on environment
+		 */
+		processDefectsByEnvironment(summary, featureSettings);
+		
+		/*
+		 * Logic for bucketing the defects based on resolution days and priority
+		 * in each class of resolution.
+		 */
+		resolutionTimeForClosedDefects(summary, project);
+
+		/*
+		 * Logic for bucketing the defects based on age of open defects.
+		 */
+		ageOfOpenDefects(summary, project);
+
+
 		defectAggregationRepository.save(summary);
 		
 		LOGGER.info("Defects aggregation ends.");
 	}
 	
-	
-
-	private void processDefectsByDefectResolutionPeriod(DefectAggregation aggregation, Scope scopeProject) {
-		List<Integer> resolutionsList = new ArrayList<Integer>();
-		for (int i = 0; i < featureSettings.getResolutionPeriod().length; i++) {
-			try {
-				if (!resolutionsList.contains(featureSettings.getResolutionPeriod()[i]))
-					resolutionsList.add(Integer.parseInt(featureSettings.getResolutionPeriod()[i]));
-			} catch (Exception e) {
-				LOGGER.debug(e.getMessage());
-			}
-		}
-		Collections.sort(resolutionsList);
-		Map<String, List<Map<String, String>>> fixedDefectsByResolution = new LinkedHashMap<String, List<Map<String, String>>>();
-
-		boolean firstIndex = true;
-		int resolCount = resolutionsList.size();
-		Set<String> defectPriorities = null != aggregation.getDefectsByProirity()
-				? aggregation.getDefectsByProirity().keySet() : null;
-		// If defect priority set is null, then there are no defects in that
-		// particular project. So no need to show the defects by resolution.
-		if (null == defectPriorities) {
-			return;
-		}
-		for (int i = 0; i < resolCount; i++) {
-			Map<String, String> metric = new HashMap<String, String>();
-			if (firstIndex) {
-				String key = "days <" + resolutionsList.get(i);
-				firstIndex = false;
-				List<Map<String, String>> defectsByResolution = new ArrayList<Map<String, String>>();
-				for (String priorityKey : defectPriorities) {
-					metric.put(priorityKey,
-							(String.valueOf(defectRepository
-									.count(QDefect.defect.defectResolutionInDays.lt(resolutionsList.get(i) + 1)
-											.and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey))
-											.and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId())
-													.and(QDefect.defect.defectStatus.equalsIgnoreCase(DONE)))))));
+	public static void processDefectsByEnvironment(DefectAggregation aggregation, NewFeatureSettings featureSettings){
+		try{
+			List<JiraIssue> issues = JiraCollectorUtil.getOpenDefectsByProject(featureSettings);
+			Map<String,Integer> defectsByEnvironment= new LinkedHashMap<String,Integer>();
+				
+				for(JiraIssue defect: issues){
+					if(null!=defect.getEnvironment()){
+						if(defectsByEnvironment.containsKey(defect.getEnvironment()))
+						{
+							defectsByEnvironment.put(defect.getEnvironment(), defectsByEnvironment.get(defect.getEnvironment())+1);
+						}else{
+							defectsByEnvironment.put(defect.getEnvironment(), 1);
+						}
+					}
 				}
-				metric.put("Resolution Strategy", key);
-				defectsByResolution.add(metric);
-				fixedDefectsByResolution.put("Range" + (i + 1), defectsByResolution);
-			} else {
-				String key = (resolutionsList.get(i - 1)) + "< days <" + resolutionsList.get(i);
-				List<Map<String, String>> defectsByResolution = new ArrayList<Map<String, String>>();
-				for (String priorityKey : defectPriorities) {
-
-					metric.put(priorityKey,
-							(String.valueOf(defectRepository.count(QDefect.defect.defectResolutionInDays
-									.between(resolutionsList.get(i - 1) + 1, resolutionsList.get(i)).and(
-											QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey))
-									.and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId())
-											.and(QDefect.defect.defectStatus.equalsIgnoreCase(DONE)))))));
-
+				if(!defectsByEnvironment.isEmpty()){
+					aggregation.setDefectsByEnvironment(defectsByEnvironment);
 				}
-				metric.put("Resolution Strategy", key);
-				defectsByResolution.add(metric);
-
-				fixedDefectsByResolution.put("Range" + (i + 1), defectsByResolution);
-			}
-
-		}
-		String keyAfterUpperLimit = "days >" + resolutionsList.get(resolCount - 1);
-		List<Map<String, String>> defectsByResolutionMorethanUpperLimit = new ArrayList<Map<String, String>>();
-		Map<String, String> metricsAfterUpperLimit = new HashMap<String, String>();
-		for (String priorityKey : defectPriorities) {
-			metricsAfterUpperLimit.put(priorityKey,
-					(String.valueOf(defectRepository
-							.count(QDefect.defect.defectResolutionInDays.gt(resolutionsList.get(resolCount - 1))
-									.and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey))
-									.and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId())
-											.and(QDefect.defect.defectStatus.equalsIgnoreCase(DONE)))))));
-		}
-		metricsAfterUpperLimit.put("Resolution Strategy", keyAfterUpperLimit);
-		defectsByResolutionMorethanUpperLimit.add(metricsAfterUpperLimit);
-		fixedDefectsByResolution.put("Range" + (resolCount + 1), defectsByResolutionMorethanUpperLimit);
-		if (!fixedDefectsByResolution.isEmpty()) {
-			aggregation.setDefectsByResolutionDetails(fixedDefectsByResolution);
+		}catch (Exception e) {
+			LOGGER.debug(e.getMessage());
 		}
 	}
-
-	private void processDefectsByDefectResolutionPeriodPMD(DefectAggregation aggregation, Scope scopeProject) {
-		List<JiraIssue> issues = new ArrayList<JiraIssue>();
-		String json=JiraCollectorUtil.getClosedDefectsByProject(scopeProject.getpId(), featureSettings.getJiraCredentials(), featureSettings.getJiraBaseUrl());
-		if(null==json) 
-		{
-			return;
+	
+	public static void processDefectsByPriority(List<Defect> defects,DefectAggregation aggregation,Scope scopeProject){
+		Map<String,Integer> defectsByProirity= new LinkedHashMap<String,Integer>();
+		
+		for(Defect defect: defects){			
+			if(!defect.getDefectStatus().equals(DONE) && defect.getProjectId().equals(scopeProject.getpId())){
+				if(defectsByProirity.containsKey(defect.getDefectPriority())){
+					defectsByProirity.put(defect.getDefectPriority(), defectsByProirity.get(defect.getDefectPriority())+1);
+				}else{
+					defectsByProirity.put(defect.getDefectPriority(), 1);
+				}
+			}		
 		}
-		issues = DefectUtil.parseDefectsJson(json);
-		List<Integer> resolutionsList = new ArrayList<Integer>();
+	
+		if(!defectsByProirity.isEmpty())
+		{
+			aggregation.setDefectsByProirity(defectsByProirity);
+		}
+	}
+	
+	
+	private void resolutionTimeForClosedDefects(DefectAggregation aggregation, Scope scopeProject) {
+		
+		List<JiraIssue> issues = JiraCollectorUtil.getClosedDefectsByProject(featureSettings);
+		
+		if(CollectionUtils.isEmpty(issues)) 
+			return;
+
+		List<Integer> resolutionsPeriodRange = new ArrayList<Integer>();
 		for (int i = 0; i < featureSettings.getResolutionPeriod().length; i++) {
 			try {
-				if (!resolutionsList.contains(featureSettings.getResolutionPeriod()[i]))
-					resolutionsList.add(Integer.parseInt(featureSettings.getResolutionPeriod()[i]));
+				if (!resolutionsPeriodRange.contains(featureSettings.getResolutionPeriod()[i]))
+					resolutionsPeriodRange.add(Integer.parseInt(featureSettings.getResolutionPeriod()[i]));
 			} catch (Exception e) {
 				LOGGER.debug(e.getMessage());
 			}
 		}
-		Collections.sort(resolutionsList);
+		
+		Collections.sort(resolutionsPeriodRange);
 		Map<String, List<Map<String, String>>> fixedDefectsByResolution = new LinkedHashMap<String, List<Map<String, String>>>();
+		
 		boolean firstIndex = true;
-		int resolCount = resolutionsList.size();
+		int rangeCount = resolutionsPeriodRange.size();
 		Set<String> defectPriorities = null != aggregation.getDefectsByProirity()
 				? aggregation.getDefectsByProirity().keySet() : null;
 	
 		if (null == defectPriorities) {
-					return;
+			return;
 		 }
 		
-		for (int i = 0; i < resolCount; i++) {
+		for (int i = 0; i < rangeCount; i++) {
 			Map<String, String> metric = new HashMap<String, String>();
-			int upperBound=resolutionsList.get(i);
+			int upperBound = resolutionsPeriodRange.get(i);
 			
 			if (firstIndex) {
-				String key = "days <=" + resolutionsList.get(i);
 				firstIndex = false;
-				List<Map<String, String>> defectsByResolution = new ArrayList<Map<String, String>>();
+				String key = "days <=" + resolutionsPeriodRange.get(i);
+				List<Map<String, String>> defectCountByPriority = new ArrayList<Map<String, String>>();
 
 				for (String priorityKey : defectPriorities) {
-						metric.put(priorityKey,""+issues.stream().filter(issue-> DateUtil.differenceInDays(DateUtil.fromISODateTimeFormat(issue.getCreateDate()), DateUtil.fromISODateTimeFormat(issue.getResolutionDate()))<= upperBound).filter(issue-> issue.getSeverity().equals(priorityKey)).count());
+						metric.put(priorityKey, ""+issues.stream().filter(issue-> DateUtil.differenceInDays(DateUtil.fromISODateTimeFormat(issue.getResolutionDate()), DateUtil.fromISODateTimeFormat(issue.getCreateDate()))<= upperBound).filter(issue-> issue.getSeverity().equals(priorityKey)).count());
 				}
 				metric.put("Resolution Strategy", key);
-				defectsByResolution.add(metric);
-				fixedDefectsByResolution.put("Range" + (i + 1), defectsByResolution);
-			} else {
-				int lowerBound=resolutionsList.get(i-1);
-				String key = (resolutionsList.get(i - 1)) + "< days <=" + resolutionsList.get(i);
-				List<Map<String, String>> defectsByResolution = new ArrayList<Map<String, String>>();
-				for (String priorityKey : defectPriorities) {
 				
-					metric.put(priorityKey,""+issues.stream().filter(issue-> DateUtil.differenceInDays(DateUtil.fromISODateTimeFormat(issue.getCreateDate()), DateUtil.fromISODateTimeFormat(issue.getResolutionDate()))> lowerBound).filter(issue-> DateUtil.differenceInDays(DateUtil.fromISODateTimeFormat(issue.getCreateDate()), DateUtil.fromISODateTimeFormat(issue.getResolutionDate()))<= upperBound).filter(issue-> issue.getSeverity().equals(priorityKey)).count());
-
+				defectCountByPriority.add(metric);
+				fixedDefectsByResolution.put("Range" + (i + 1), defectCountByPriority);
+				
+			} else {
+				int lowerBound = resolutionsPeriodRange.get(i-1);
+				String key = (resolutionsPeriodRange.get(i - 1)) + "< days <=" + resolutionsPeriodRange.get(i);
+				
+				List<Map<String, String>> defectCountByPriority = new ArrayList<Map<String, String>>();
+				for (String priorityKey : defectPriorities) {
+					metric.put(priorityKey, "" + issues.stream().filter(issue-> DateUtil.differenceInDays( DateUtil.fromISODateTimeFormat(issue.getResolutionDate()), DateUtil.fromISODateTimeFormat(issue.getCreateDate()))> lowerBound).filter(issue-> DateUtil.differenceInDays(DateUtil.fromISODateTimeFormat(issue.getResolutionDate()), DateUtil.fromISODateTimeFormat(issue.getCreateDate()))<= upperBound).filter(issue-> issue.getSeverity().equals(priorityKey)).count());
 				}
 				metric.put("Resolution Strategy", key);
-				defectsByResolution.add(metric);
+				defectCountByPriority.add(metric);
 
-				fixedDefectsByResolution.put("Range" + (i + 1), defectsByResolution);
+				fixedDefectsByResolution.put("Range" + (i + 1), defectCountByPriority);
 			}
-
 		}
-		String keyAfterUpperLimit = "days >" + resolutionsList.get(resolCount - 1);
-		int beyondUpperBound=resolutionsList.get(resolCount - 1);
-		List<Map<String, String>> defectsByResolutionMorethanUpperLimit = new ArrayList<Map<String, String>>();
+		
+		String keyAfterUpperLimit = "days >" + resolutionsPeriodRange.get(rangeCount - 1);
+		int beyondUpperBound = resolutionsPeriodRange.get(rangeCount - 1);
+		
+		List<Map<String, String>> defectCountByPriority = new ArrayList<Map<String, String>>();
+		
 		Map<String, String> metricsAfterUpperLimit = new HashMap<String, String>();
 		for (String priorityKey : defectPriorities) {
-			metricsAfterUpperLimit.put(priorityKey,""+issues.stream().filter(issue-> DateUtil.differenceInDays(DateUtil.fromISODateTimeFormat(issue.getCreateDate()), DateUtil.fromISODateTimeFormat(issue.getResolutionDate()))> beyondUpperBound).filter(issue-> issue.getSeverity().equals(priorityKey)).count());
+			metricsAfterUpperLimit.put(priorityKey,"" + issues.stream().filter(issue-> DateUtil.differenceInDays(DateUtil.fromISODateTimeFormat(issue.getResolutionDate()), DateUtil.fromISODateTimeFormat(issue.getCreateDate()))> beyondUpperBound).filter(issue-> issue.getSeverity().equals(priorityKey)).count());
 		}
 		metricsAfterUpperLimit.put("Resolution Strategy", keyAfterUpperLimit);
-		defectsByResolutionMorethanUpperLimit.add(metricsAfterUpperLimit);
-		fixedDefectsByResolution.put("Range" + (resolCount + 1), defectsByResolutionMorethanUpperLimit);
+		defectCountByPriority.add(metricsAfterUpperLimit);
+		fixedDefectsByResolution.put("Range" + (rangeCount + 1), defectCountByPriority);
+		
 		if (!fixedDefectsByResolution.isEmpty()) {
 			aggregation.setDefectsByResolutionDetails(fixedDefectsByResolution);
 		}
-		
 	}
-	private void processDefectsByDefectAge(DefectAggregation aggregation, Scope scopeProject) {
-		List<Integer> defectAgeList = new ArrayList<Integer>();
+	
+	
+	private void ageOfOpenDefects(DefectAggregation aggregation, Scope scopeProject) {
+		
+		List<Integer> defectAgePeriodRanges = new ArrayList<Integer>();
 		for (int i = 0; i < featureSettings.getDefectAge().length; i++) {
 			try {
-				if (!defectAgeList.contains(featureSettings.getDefectAge()[i]))
-					defectAgeList.add(Integer.parseInt(featureSettings.getDefectAge()[i]));
+				if (!defectAgePeriodRanges.contains(featureSettings.getDefectAge()[i]))
+					defectAgePeriodRanges.add(Integer.parseInt(featureSettings.getDefectAge()[i]));
 			} catch (Exception e) {
 				LOGGER.debug(e.getMessage());
 			}
 		}
-		Collections.sort(defectAgeList);
+		
+		Collections.sort(defectAgePeriodRanges);
 		Map<String, List<Map<String, String>>> openDefectsByAge = new LinkedHashMap<String, List<Map<String, String>>>();
 
-		boolean firstIndex = true;
-		int resolCount = defectAgeList.size();
+		int rangeCount = defectAgePeriodRanges.size();
+		
 		Set<String> defectPriorities = null != aggregation.getDefectsByProirity()
 				? aggregation.getDefectsByProirity().keySet() : null;
+
 		// If defect priority set is null, then there are no defects in that
 		// particular project. So no need to show the defects by age.
 		if (null == defectPriorities) {
 			return;
 		}
-		for (int i = 0; i < resolCount; i++) {
+		
+		boolean firstIndex = true;
+		for (int i = 0; i < rangeCount; i++) {
 			Map<String, String> metric = new HashMap<String, String>();
 			if (firstIndex) {
-				String key = "days <" + defectAgeList.get(i);
+				String key = "days <" + defectAgePeriodRanges.get(i);
 				firstIndex = false;
 				List<Map<String, String>> defectsByAge = new ArrayList<Map<String, String>>();
 				for (String priorityKey : defectPriorities) {
 					metric.put(priorityKey, (String
-							.valueOf(defectRepository.count(QDefect.defect.defectAge.lt(defectAgeList.get(i) + 1)
+							.valueOf(defectRepository.count(QDefect.defect.defectAge.lt(defectAgePeriodRanges.get(i) + 1)
 									.and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey)).and(
 											QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
 				}
@@ -732,12 +681,12 @@ public class StoryDataClientImpl implements StoryDataClient {
 				defectsByAge.add(metric);
 				openDefectsByAge.put("Range" + (i + 1), defectsByAge);
 			} else {
-				String key =  (defectAgeList.get(i - 1)) + "< days <" + defectAgeList.get(i) ;
+				String key =  (defectAgePeriodRanges.get(i - 1)) + "< days <" + defectAgePeriodRanges.get(i) ;
 				List<Map<String, String>> defectsByAge = new ArrayList<Map<String, String>>();
 				for (String priorityKey : defectPriorities) {
 
 					metric.put(priorityKey, (String.valueOf(defectRepository
-							.count(QDefect.defect.defectAge.between(defectAgeList.get(i - 1) + 1, defectAgeList.get(i))
+							.count(QDefect.defect.defectAge.between(defectAgePeriodRanges.get(i - 1) + 1, defectAgePeriodRanges.get(i))
 									.and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey))
 									.and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
 
@@ -749,22 +698,22 @@ public class StoryDataClientImpl implements StoryDataClient {
 			}
 
 		}
-		String keyAfterUpperLimit = "days >" + defectAgeList.get(resolCount - 1);
+		
+		String keyAfterUpperLimit = "days >" + defectAgePeriodRanges.get(rangeCount - 1);
 		List<Map<String, String>> defectsByAgeMorethanUpperLimit = new ArrayList<Map<String, String>>();
 		Map<String, String> metricsAfterUpperLimit = new HashMap<String, String>();
 		for (String priorityKey : defectPriorities) {
 			metricsAfterUpperLimit.put(priorityKey,
 					(String.valueOf(
-							defectRepository.count(QDefect.defect.defectAge.gt(defectAgeList.get(resolCount - 1))
+							defectRepository.count(QDefect.defect.defectAge.gt(defectAgePeriodRanges.get(rangeCount - 1))
 									.and(QDefect.defect.defectPriority.equalsIgnoreCase(priorityKey))
 									.and(QDefect.defect.projectId.equalsIgnoreCase(scopeProject.getpId()))))));
 		}
 		metricsAfterUpperLimit.put("Defect Age Strategy", keyAfterUpperLimit);
 		defectsByAgeMorethanUpperLimit.add(metricsAfterUpperLimit);
-		openDefectsByAge.put("Range" + (resolCount + 1), defectsByAgeMorethanUpperLimit);
+		openDefectsByAge.put("Range" + (rangeCount + 1), defectsByAgeMorethanUpperLimit);
 		if (!openDefectsByAge.isEmpty()) {
 			aggregation.setDefectsByAgeDetails(openDefectsByAge);
 		}
 	}
-
 }

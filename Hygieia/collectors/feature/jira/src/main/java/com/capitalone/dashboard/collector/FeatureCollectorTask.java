@@ -165,9 +165,10 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			List<Scope> projects=(List<Scope>) projectRepository.findByProjectId(featureSettings.getProjectId(),true);
 			
 			for(Scope project: projects){
-				List<Defect> projectDefects = (List<Defect>) defectRepository.findByProjectId(project.getpId(),project.getProjectId());
-				LOGGER.info("PROJECT CODE::"+project.getProjectId()+" *************PROJECT ID::"+project.getpId()+" ********DEFECTS COUNT::"+projectDefects.size());
-				storyData.processDefectAggregation(featureSettings, projectDefects,project);
+				List<Defect> opendefects = (List<Defect>) defectRepository.findByProjectId(project.getpId(),project.getProjectId());
+				//LOGGER.info("PROJECT CODE::"+project.getProjectId()+" *************PROJECT ID::"+project.getpId()+" ********DEFECTS COUNT::"+opendefects.size());
+				
+				storyData.defectMetricsAggregation(featureSettings, opendefects, project);
 				
 				//logic to handle sprint and releases
 				storyData.saveDetailedSprintData(project.getpId(),project.getName());

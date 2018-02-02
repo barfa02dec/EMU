@@ -11,8 +11,8 @@ public class Project extends BaseModel {
 	@Indexed(unique = true, name="index_Project_projectId")
 	private String projectId;
 	private boolean projectStatus;
-	private String BusinessUnit;
-	private String ProjectOwner;
+	private String businessUnit;
+	private String projectOwner;
 	private String program;
 	private String client;
 	private Set<UserGroup> usersGroup;
@@ -40,16 +40,16 @@ public class Project extends BaseModel {
 		this.projectStatus = projectStatus;
 	}
 	public String getBusinessUnit() {
-		return BusinessUnit;
+		return businessUnit;
 	}
 	public void setBusinessUnit(String businessUnit) {
-		BusinessUnit = businessUnit;
+		this.businessUnit = businessUnit;
 	}
 	public String getProjectOwner() {
-		return ProjectOwner;
+		return projectOwner;
 	}
 	public void setProjectOwner(String projectOwner) {
-		ProjectOwner = projectOwner;
+		this.projectOwner = projectOwner;
 	}
 	public String getProgram() {
 		return program;
@@ -93,7 +93,4 @@ public class Project extends BaseModel {
 	public void setUpdatedOn(String updatedOn) {
 		this.updatedOn = updatedOn;
 	}
-	
-	
-	
 }
