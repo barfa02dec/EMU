@@ -66,7 +66,8 @@ public class DefaultJiraClient implements JiraClient {
 	private static final String TEMPO_TEAMS_REST_SUFFIX = "rest/tempo-teams/1/team";
 	
 	private final DateFormat QUERY_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	private static final String GET_OPEN_DEFECTS_SEVERITY =  "type in (Bug) and  resolution in (Unresolved)";
+	//private static final String GET_OPEN_DEFECTS_SEVERITY =  "type in (Bug) and  resolution in (Unresolved)";
+	private static final String GET_OPEN_DEFECTS_SEVERITY =  "project=%1s and type in (Bug) and  resolution in (Unresolved)";
 	private static final Set<String> DEFAULT_FIELDS = new HashSet<>();
 	static {
 		DEFAULT_FIELDS.add("*all,-comment,-watches,-worklog,-votes,-reporter,-creator,-attachment");
@@ -83,7 +84,6 @@ public class DefaultJiraClient implements JiraClient {
 		this.featureSettings = featureSettings;
 		this.featureWidgetQueries = featureWidgetQueries;
 		this.restSupplier = restSupplier;
-		//this.client = restSupplier.get();
 	}
 	
 	@Override
@@ -97,7 +97,7 @@ public class DefaultJiraClient implements JiraClient {
 				
 				String query = featureWidgetQueries.getStoryQuery(startDateStr,
 						featureSettings.getJiraIssueTypeNames(), featureSettings.getStoryQuery());
-				//client.getSearchClient().searchJql(query);
+
 				Promise<SearchResult> promisedRs = client.getSearchClient().searchJql(
 						query, featureSettings.getPageSize(), pageStart, DEFAULT_FIELDS);
 				SearchResult sr = promisedRs.claim();
@@ -410,11 +410,8 @@ public class DefaultJiraClient implements JiraClient {
 		JiraRestClient client = restSupplier.get(featureSettings);
 		if (client != null) {
 			try {
-				// example "1900-01-01 00:00"
-				
-				//client.getSearchClient().searchJql(query);
 				Promise<SearchResult> promisedRs = client.getSearchClient().searchJql(
-						GET_OPEN_DEFECTS_SEVERITY, featureSettings.getPageSize(), pageStart, DEFAULT_FIELDS);
+						String.format(GET_OPEN_DEFECTS_SEVERITY, featureSettings.getJiraProjectIdList()[0]), featureSettings.getPageSize(), pageStart, DEFAULT_FIELDS);
 				SearchResult sr = promisedRs.claim();
 
 				Iterable<Issue> jiraRawRs = sr.getIssues();
@@ -422,25 +419,21 @@ public class DefaultJiraClient implements JiraClient {
 				if (jiraRawRs != null) {
 					if (LOGGER.isDebugEnabled()) {
 						int pageEnd = Math.min(pageStart + getPageSize() - 1, sr.getTotal());
-						
 						LOGGER.debug(String.format("Processing issues %d - %d out of %d", pageStart, pageEnd, sr.getTotal()));
 					}
-					
 					rt = Lists.newArrayList(jiraRawRs);
 				}
 			} catch (RestClientException e) {
 				if (e.getStatusCode().isPresent() && e.getStatusCode().get() == 401 ) {
-					LOGGER.error("Error 401 connecting to JIRA server, your credentials are probably wrong. Note: Ensure you are using JIRA user name not your email address.");
+					LOGGER.error("401 error occurred while connecting to JIRA server, your credentials are probably incorrect :" + e.getMessage());
 				} else {
-					LOGGER.error("No result was available from Jira unexpectedly - defaulting to blank response. The reason for this fault is the following:" + e.getCause());
+					LOGGER.error("No response from Jira. The reason for this failure could be:" + e.getCause());
 				}
 				LOGGER.debug("Exception", e);
 			}
 		} else {
-			LOGGER.warn("Jira client setup failed. No results obtained. Check your jira setup.");
+			LOGGER.warn("Failed to establish jira connection");
 		}
-		
 		return rt;
-	
 	}
 }

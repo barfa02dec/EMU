@@ -19,7 +19,6 @@ package com.capitalone.dashboard.model;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -33,7 +32,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "defects_summary")
 public class DefectAggregation extends BaseModel{
 	
-	private Map<String,Integer> defectsByProirity;
+	private Map<String,Integer> defectsByPriority;
 	private Map<String,Integer> defectsByEnvironment;
 	private Map<String, List<Map<String,String>>> fixeddefectsByResolutions;
 	private Map<String, List<Map<String,String>>> openDefectsByAge;
@@ -74,10 +73,10 @@ public class DefectAggregation extends BaseModel{
 	}
 	
 	public Map<String, Integer> getDefectsByProirity() {
-		return defectsByProirity;
+		return defectsByPriority;
 	}
-	public void setDefectsByProirity(Map<String, Integer> defectsByProirity) {
-		this.defectsByProirity = defectsByProirity;
+	public void setDefectsByProirity(Map<String, Integer> defectsByPriority) {
+		this.defectsByPriority = defectsByPriority;
 	}
 	public Map<String, Integer> getDefectsByEnvironment() {
 		return defectsByEnvironment;
@@ -103,6 +102,4 @@ public class DefectAggregation extends BaseModel{
 	public void setValuesAsOn(String valuesAsOn) {
 		this.valuesAsOn = valuesAsOn;
 	}
-	
-	
 }

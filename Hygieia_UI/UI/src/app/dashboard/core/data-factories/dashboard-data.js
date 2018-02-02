@@ -52,11 +52,13 @@
 
            return  $http.get('/api/collector/item/type/Build/'+projectspecificid)
                     .then(function(data) {
+                        if(data.data[0] != undefined) {
                         var jenkinsCollectorID = data.data[0].collectorId;
                              return $http.get('/api/collector/itemsByProject/'+jenkinsCollectorID+'/'+projectspecificid)
                             .then(function(response) {
                                 return response.data;
                             });
+                        }
                     });
 
             
@@ -66,11 +68,13 @@
 
             return   $http.get('/api/collector/item/type/CodeQuality/'+projectspecificid)
                     .then(function(data) {
+                        if(data.data[0] != undefined) {
                         var sonarCollectorID = data.data[0].collectorId;
                             return $http.get('/api/collector/itemsByProject/'+sonarCollectorID+'/'+projectspecificid)
                             .then(function(response) {
                                 return response.data;
                             });
+                        }
                     });
 
             

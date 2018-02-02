@@ -23,9 +23,14 @@ public class DefectUtil {
 	public static List<JiraIssue> parseDefectsJson(String json){
 		JsonArray jsonArr = new GsonBuilder().create().fromJson(json, JsonObject.class).getAsJsonArray("issues");
 		
+		if(json != null && new GsonBuilder().create().fromJson(json, JsonObject.class).has("issues")){
+			jsonArr = new GsonBuilder().create().fromJson(json, JsonObject.class).getAsJsonArray("issues");
+		}else{ 
+			return null;
+		}
+			
 		List<JiraIssue> issues = new ArrayList<JiraIssue>();
 		for(JsonElement element : jsonArr){
-		
 			JiraIssue issue = new JiraIssue();
 			issue.parseJson(element.toString());
 			issues.add(issue);
@@ -49,7 +54,7 @@ public class DefectUtil {
 		return issues;
 	}
 	
-public static List<NameValuePair> defectCountBySeverity(List<JiraIssue> issues){
+	public static List<NameValuePair> defectCountBySeverity(List<JiraIssue> issues){
 		
 		LinkedHashMap<String, NameValuePair> issuecountmap = new LinkedHashMap<String, NameValuePair> ();	
 		if(!CollectionUtils.isEmpty(issues)){

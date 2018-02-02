@@ -1,7 +1,5 @@
 package com.capitalone.dashboard.model;
 
-import java.util.Date;
-
 /**
  * 
  * @author Xoz

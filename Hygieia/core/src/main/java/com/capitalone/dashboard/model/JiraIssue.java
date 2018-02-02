@@ -62,11 +62,6 @@ public class JiraIssue {
 			severity = jsonObject.getAsJsonObject("fields").getAsJsonObject("priority").get("name").getAsString();
 		}
 		
-		/*if(JsonNull.INSTANCE != jsonObject.getAsJsonObject("fields").get("environment")  
-				&& null != jsonObject.getAsJsonObject("fields").getAsJsonObject("environment") ){
-			environment = jsonObject.getAsJsonObject("fields").getAsJsonObject("environment").get("name").getAsString();
-		}*/
-		
 		if(!jsonObject.getAsJsonObject("fields").get("environment").isJsonNull() &&
 				jsonObject.getAsJsonObject("fields").get("environment").isJsonObject()){
 				environment = jsonObject.getAsJsonObject("fields").getAsJsonObject("environment").get("name").getAsString();

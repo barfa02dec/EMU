@@ -86,12 +86,14 @@
       return getLastUpdated(data);
     }*/
     function jiraDataFetch(data) {
+      if(data.defectsByProirity != undefined) {
         ctrl.mediumIssue = data.defectsByProirity.Medium;
         ctrl.critcissue = data.defectsByProirity.Highest;
         ctrl.lowIssue = data.defectsByProirity.Low;
         ctrl.majorIssue = data.defectsByProirity.High;
         ctrl.lowestissue = data.defectsByProirity.Lowest;
-         ctrl.medlowcnt = parseInt(ctrl.lowIssue) + (ctrl.mediumIssue);
+        ctrl.medlowcnt = parseInt(ctrl.lowIssue) + (ctrl.mediumIssue);
+       }
     }
 
     

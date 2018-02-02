@@ -19,5 +19,6 @@ public interface StoryDataClient {
 	 * @return the number of records updated
 	 */
 	int updateStoryInformation();
-	void processDefectAggregation(NewFeatureSettings featureSettings,List<Defect> defectsInDB,Scope scopeProject);
+	
+	void defectMetricsAggregation(NewFeatureSettings featureSettings,List<Defect> defectsInDB,Scope scopeProject);
 }
