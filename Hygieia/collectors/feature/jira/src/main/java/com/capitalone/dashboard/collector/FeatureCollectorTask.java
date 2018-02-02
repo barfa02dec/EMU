@@ -166,7 +166,9 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			
 			for(Scope project: projects){
 				List<Defect> opendefects = (List<Defect>) defectRepository.findByProjectId(project.getpId(),project.getProjectId());
-				//LOGGER.info("PROJECT CODE::"+project.getProjectId()+" *************PROJECT ID::"+project.getpId()+" ********DEFECTS COUNT::"+opendefects.size());
+				
+				LOGGER.info("DATA COLLECTION FOR PROJECT CODE:: " + project.getProjectId() + 
+						"  AND PROJECT ID:: " + project.getpId() + " AND OPEN DEFECTS COUNT:: " + opendefects.size());
 				
 				storyData.defectMetricsAggregation(featureSettings, opendefects, project);
 				

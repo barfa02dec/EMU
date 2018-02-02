@@ -201,7 +201,7 @@ public class JiraCollectorUtil {
 	public static VersionData getReleaseData(String versionDetailJson, String projectId , NewFeatureSettings featureSettings){
 
 		VersionData versionData = parseToVersionData(versionDetailJson);
-		LOGGER.info("processing Release metrics"+versionData.getReleaseName());
+		LOGGER.info("Processing Release Metrics "+ versionData.getReleaseName());
 
 		List<JiraIssue> issues = new ArrayList<JiraIssue>();
 	
@@ -212,7 +212,7 @@ public class JiraCollectorUtil {
 			issues = getIssues(query, featureSettings);
 			 
 			if(CollectionUtils.isEmpty(issues)) {
-				query = String.format(GET_DEFECTS_CREATED, projectId, versionData.getStartDate().toString(),versionData.getReleaseDate().toString());
+				query = String.format(GET_DEFECTS_CREATED, projectId, DateUtil.format(versionData.getStartDate(), "yyyy/MM/dd HH:mm"),DateUtil.format(versionData.getReleaseDate(), "yyyy/MM/dd HH:mm"));
 				issues = getIssues(query, featureSettings);
 			}
 			

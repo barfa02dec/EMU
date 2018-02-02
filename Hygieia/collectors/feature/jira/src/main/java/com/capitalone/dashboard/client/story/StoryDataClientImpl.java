@@ -268,28 +268,34 @@ public class StoryDataClientImpl implements StoryDataClient {
 		
 		List<Sprint> list = new ArrayList<Sprint>();
 		for (JiraSprint jiraSprint : jiraSprints) {
-			Sprint sprint = sprintRepository.findOne(QSprint.sprint.sprintId.eq(jiraSprint.getId()).and(QSprint.sprint.name.eq(jiraSprint.getName())));
 			
-			if (null == sprint) {
-				sprint = new Sprint();
-				sprint.setSid(jiraSprint.getId());
-				sprint.setName(jiraSprint.getName());
-				sprint.setViewBoardsUrl(jiraSprint.getViewBoardsUrl());
-				sprint.setProjectId(projectId);
-				sprint.setStart(jiraSprint.getStart());
-				sprint.setClosed(jiraSprint.getClosed());
-				sprint.setProjectName(projectName);
+			try{
+				Sprint sprint = sprintRepository.findOne(QSprint.sprint.sprintId.eq(jiraSprint.getId()).and(QSprint.sprint.name.eq(jiraSprint.getName())));
+				
+				if (null == sprint) {
+					sprint = new Sprint();
+					sprint.setSid(jiraSprint.getId());
+					sprint.setName(jiraSprint.getName());
+					sprint.setViewBoardsUrl(jiraSprint.getViewBoardsUrl());
+					sprint.setProjectId(projectId);
+					sprint.setStart(jiraSprint.getStart());
+					sprint.setClosed(jiraSprint.getClosed());
+					sprint.setProjectName(projectName);
+				}
+				
+				// Get the detailed metrics for sprint with status [open] 
+				// Get the detailed metrics for sprint with status[closed] but detailed metrics/SprintData is null
+				if(((sprint.getClosed() && null == sprint.getSprintData()) ||!sprint.getClosed())){
+					JiraCollectorUtil.getSprintMetrics(jiraSprint, projectId, featureSettings);
+					sprint.setSprintData(jiraSprint.getSprintData());
+				}
+				sprint.setEditable(jiraSprint.getEditable());
+				sprint.setEnd(jiraSprint.getEnd());
+				list.add(sprint);
+			}catch(Exception ex){
+				ex.printStackTrace();
+				LOGGER.error("Failed to collect the version info for project " + projectName + " and sprint " + jiraSprint.getName() , ex);
 			}
-			
-			// Get the detailed metrics for sprint with status [open] 
-			// Get the detailed metrics for sprint with status[closed] but detailed metrics/SprintData is null
-			if(((sprint.getClosed() && null == sprint.getSprintData()) ||!sprint.getClosed())){
-				JiraCollectorUtil.getSprintMetrics(jiraSprint, projectId, featureSettings);
-				sprint.setSprintData(jiraSprint.getSprintData());
-			}
-			sprint.setEditable(jiraSprint.getEditable());
-			sprint.setEnd(jiraSprint.getEnd());
-			list.add(sprint);
 		}
 		if (!list.isEmpty()) {
 			sprintRepository.save(list);
@@ -302,31 +308,36 @@ public class StoryDataClientImpl implements StoryDataClient {
 		List<Release> releaseList = new ArrayList<Release>();
 
 		for (JiraVersion jiraVersion : jiraVersions) {
-			Release release = releaseRepository.findOne(QRelease.release.releaseId.eq(jiraVersion.getId()).and(QRelease.release.name.eq(jiraVersion.getName())));
-			
-			if (release == null) {
-				release = new Release();
-				release.setReleaseId(jiraVersion.getId());
-				release.setProjectId(projectId);
-				release.setName(jiraVersion.getName());
-				release.setStartDate(jiraVersion.getStartDate());
-				release.setReleased(jiraVersion.getReleased());
-				release.setProjectName(projectName);
+			try{
+				Release release = releaseRepository.findOne(QRelease.release.releaseId.eq(jiraVersion.getId()).and(QRelease.release.name.eq(jiraVersion.getName())));
+				
+				if (release == null) {
+					release = new Release();
+					release.setReleaseId(jiraVersion.getId());
+					release.setProjectId(projectId);
+					release.setName(jiraVersion.getName());
+					release.setStartDate(jiraVersion.getStartDate());
+					release.setReleased(jiraVersion.getReleased());
+					release.setProjectName(projectName);
+				}
+				
+				// Get the detailed version metrics for release with status [not release] 
+				// Get the detailed version metrics for release with status[released] but detailed metrics/versionData is null
+				if ((release.getReleased() && null == release.getVersionData())|| !release.getReleased()) {
+					String versionDetails = JiraCollectorUtil.getVersionDetailsFromJira(jiraVersion.getId(), featureSettings);
+					jiraVersion.setVersionData(JiraCollectorUtil.getReleaseData(versionDetails, projectId, featureSettings));
+					// setting the detailed metrics to release.
+					release.setVersionData(jiraVersion.getVersionData());
+	
+				}
+	
+				release.setOverdue(jiraVersion.getOverdue());
+				release.setReleaseDate(jiraVersion.getReleaseDate());
+				releaseList.add(release);
+			}catch(Exception ex){
+				ex.printStackTrace();
+				LOGGER.error("Failed to collect the version info for project " + projectName + " and version " + jiraVersion.getName() , ex);
 			}
-			
-			// Get the detailed version metrics for release with status [not release] 
-			// Get the detailed version metrics for release with status[released] but detailed metrics/versionData is null
-			if ((release.getReleased() && null == release.getVersionData())|| !release.getReleased()) {
-				String versionDetails = JiraCollectorUtil.getVersionDetailsFromJira(jiraVersion.getId(), featureSettings);
-				jiraVersion.setVersionData(JiraCollectorUtil.getReleaseData(versionDetails, projectId, featureSettings));
-				// setting the detailed metrics to release.
-				release.setVersionData(jiraVersion.getVersionData());
-
-			}
-
-			release.setOverdue(jiraVersion.getOverdue());
-			release.setReleaseDate(jiraVersion.getReleaseDate());
-			releaseList.add(release);
 		}
 		if (!jiraVersions.isEmpty()) {
 			releaseRepository.save(releaseList);
