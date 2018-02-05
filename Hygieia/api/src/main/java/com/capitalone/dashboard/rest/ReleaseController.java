@@ -21,24 +21,22 @@ public class ReleaseController {
 	public ReleaseController(ReleaseService releaseService) {
 		this.releaseService = releaseService;
 	}
-	@RequestMapping(method=RequestMethod.GET,value="/projectReleaseList")
+	@RequestMapping(method=RequestMethod.GET,value="/releases")
 	public List<Release> getAllReleasesForProject(@RequestParam(name="projectId") String projectId, @RequestParam(name="projectName") String projectName){
-		List <Release> releaseList=(List<Release>) releaseService.getAllReleases(projectId,projectName);
+		List <Release> releaseList=(List<Release>) releaseService.getAllReleases(projectId, projectName);
 		Collections.sort(releaseList);
 		releaseList.stream().limit(8);
 		return releaseList;
-				
 	}
-	@RequestMapping(method=RequestMethod.GET,value="/releaseDetails")
+	
+	@RequestMapping(method=RequestMethod.GET,value="/releases/details")
 	public Release getReleaseDetailsWithID(@RequestParam(name="releaseId") Long releaseId,@RequestParam(name="projectId") String projectId)
 	{
-		return releaseService.getDetailedReleaseDetails(releaseId,projectId);
+		return releaseService.getDetailedReleaseDetails(releaseId, projectId);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/releaseMetrcis")
+	@RequestMapping(method=RequestMethod.POST, value="/releases")
 	public Release createReleaseMetrics(@RequestBody ReleaseMetricsRequest req){
-		
 		return releaseService.create(req);
 	}
-	
 }

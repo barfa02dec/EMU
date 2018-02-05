@@ -14,36 +14,32 @@ import com.capitalone.dashboard.model.DefectAggregation;
 import com.capitalone.dashboard.request.DefectSummaryRequest;
 import com.capitalone.dashboard.service.DefectSummeryService;
 @RestController
-public class DefectSummeryController {
+public class DefectSummaryController {
 	
 	private final DefectSummeryService defectSummeryService;
 	@Autowired
-	public DefectSummeryController(DefectSummeryService defectSummeryService) {
+	public DefectSummaryController(DefectSummeryService defectSummeryService) {
 		this.defectSummeryService = defectSummeryService;
 	}
 	
-	@RequestMapping(value="/getDefectSummery", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/defectSummary", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public Iterable<DefectAggregation> getDefectSummery(){
 		return defectSummeryService.getAllDefectDetails();
 	}
 	
-	@RequestMapping(value="/getDefectSummery/{projectId}/{projectName}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/defectSummary/{projectId}/{projectName}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public DefectAggregation getDefectSummeryByProjectId(@PathVariable("projectId") String projectId, @PathVariable("projectName") String projectName){
 		return defectSummeryService.findByProjectId(projectId, projectName);
 	}
 	
 	
-	@RequestMapping(value="/getDefectSummery/{metricsProjectId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/defectSummary/{metricsProjectId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
 	public DefectAggregation getDefectSummeryByMetricsProjectId(@PathVariable("metricsProjectId") String metricsProjectId){
 		return defectSummeryService.findByMetricsProjectId(metricsProjectId);
 	}
 	
-	@RequestMapping(value="/defectSummery", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/defectSummary", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
 	public DefectAggregation createDefectDefectAggregationMetrics(@Valid @RequestBody DefectSummaryRequest defectSummery){
-		
 		return defectSummeryService.create(defectSummery);
-		
 	}
-	
-
 }

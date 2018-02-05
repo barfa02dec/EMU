@@ -29,7 +29,7 @@ public class DefectController {
 		this.defectService = defectService;
 	}
 	
-	@RequestMapping(value = "/defect", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/defects", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Defect> defects(@RequestParam(value = "collectorId", required = true) String cId,
 			@RequestParam(value = "defectId", required = true) String defectId) {
 		ObjectId collectorId = new ObjectId(cId);
@@ -42,19 +42,19 @@ public class DefectController {
 		return defects;
 	}
 	
-	@RequestMapping(value = "/defect/status", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/defects/status", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Defect> defectStatus(@RequestParam(value = "defectStatus", required = true) String defectStatus) {
 		List<Defect> defects = defectService.getDefectByStatus(defectStatus);
 		return defects;
 	}
 	
-	@RequestMapping(value = "/defect/severity", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/defects/severity", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Defect> defectSeverity(@RequestParam(value = "defectSeverity", required = true) String defectSeverity) {
 		List<Defect> defects = defectService.defectBySeverity(defectSeverity);
 		return defects;
 	}
 	
-	@RequestMapping(value = "/defect/age", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/defects/age", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Defect> defectAge(@RequestParam(value = "defectAge", required = true) Integer defectAge) {
 		List<Defect> defects = defectService.defectByAge(defectAge);
 		return defects;
