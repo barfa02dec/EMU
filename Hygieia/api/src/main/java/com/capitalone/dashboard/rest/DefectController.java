@@ -29,12 +29,12 @@ public class DefectController {
 		this.defectService = defectService;
 	}
 	
-	@RequestMapping(value = "/defects", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	/*@RequestMapping(value = "/defects", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Defect> defects(@RequestParam(value = "collectorId", required = true) String cId,
 			@RequestParam(value = "defectId", required = true) String defectId) {
 		ObjectId collectorId = new ObjectId(cId);
 		return this.defectService.getDefects(collectorId, defectId);
-	}
+	}*/
 	
 	@RequestMapping(value = "/defects", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Defect> getAllDefects() {
