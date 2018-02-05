@@ -17,11 +17,9 @@ import com.capitalone.dashboard.model.NameValuePair;
 import com.capitalone.dashboard.model.Scope;
 import com.capitalone.dashboard.model.Sprint;
 import com.capitalone.dashboard.model.SprintData;
-import com.capitalone.dashboard.model.Burndown.IssueCount;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.repository.SprintRepository;
-import com.capitalone.dashboard.request.ReleaseMetricsRequest;
 import com.capitalone.dashboard.request.SprintMetrcisRequest;
 @Service
 public class SprintServiceImpl implements SprintService {
@@ -246,14 +244,9 @@ public class SprintServiceImpl implements SprintService {
 				// this field is not populated from UI, hence setting zero for future implementation
 				int incompletedissuesount=0;
 				
-				// committed issue count
-				//sd.setCommittedIssueCount(re.getCommittedIssueCount());
-				// Completed Issue Count
-				
 				
 				sd.setCommittedIssueCount(re.getCommittedStoriesCount() + re.getStoriesRemoed() + incompletedissuesount - re.getStoriesAdded());
 				sd.setCompletedIssueCount(re.getCompletedIssueCount());
-				//sd.setCompletedIssueCount(re.getCompletedIssueCount());
 				issuecount = burndown.new IssueCount();
 				issuecount.setCount(sd.getCommittedIssueCount());	
 				issuecount.setStoryPoints(0.0d);

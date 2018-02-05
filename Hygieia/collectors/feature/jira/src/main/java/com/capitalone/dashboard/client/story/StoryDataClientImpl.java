@@ -727,4 +727,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 			aggregation.setDefectsByAgeDetails(openDefectsByAge);
 		}
 	}
+	
+	public static void activeSprintBurnDown(){
+		
+	}
 }

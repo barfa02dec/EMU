@@ -26,8 +26,6 @@ public class SprintController {
 		this.sprintService = sprintService;
 	}
 
-
-
 	@RequestMapping(value = "/listAllSprints", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Sprint> getAllDefects(
 			@RequestParam(value = "projectId", required = true) String projectId,
