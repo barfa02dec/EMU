@@ -3,7 +3,7 @@ package com.capitalone.dashboard.service;
 import com.capitalone.dashboard.model.DefectAggregation;
 import com.capitalone.dashboard.request.DefectSummaryRequest;
 
-public interface DefectSummeryService {
+public interface DefectSummaryService {
 
 	
 

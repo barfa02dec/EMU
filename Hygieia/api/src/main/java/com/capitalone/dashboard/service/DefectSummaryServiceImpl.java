@@ -17,7 +17,7 @@ import com.capitalone.dashboard.repository.DefectAggregationRepository;
 import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.request.DefectSummaryRequest;
 @Service
-public class DefectSummeryServiceImpl implements DefectSummeryService {
+public class DefectSummaryServiceImpl implements DefectSummaryService {
 	
 	private final DefectAggregationRepository aggregationRepository;
 	private final ScopeRepository  scopeRepository;
@@ -25,7 +25,7 @@ public class DefectSummeryServiceImpl implements DefectSummeryService {
 
 	
 	@Autowired
-	public DefectSummeryServiceImpl(DefectAggregationRepository aggregationRepository,ScopeRepository  scopeRepository,CollectorRepository collectorRepository) {
+	public DefectSummaryServiceImpl(DefectAggregationRepository aggregationRepository,ScopeRepository  scopeRepository,CollectorRepository collectorRepository) {
 		this.collectorRepository = collectorRepository;
 		this.scopeRepository = scopeRepository;
 		this.aggregationRepository = aggregationRepository;
@@ -58,7 +58,7 @@ public class DefectSummeryServiceImpl implements DefectSummeryService {
 	public DefectAggregation create(DefectSummaryRequest request) {
 		// TODO Auto-generated method stub
 		createScope(request);
-		DefectAggregation dag=mapDefectSummeryReqToModel(request);
+		DefectAggregation dag = mapDefectSummaryReqToModel(request);
 		return aggregationRepository.save(dag);
 	}
 	
@@ -96,7 +96,7 @@ public class DefectSummeryServiceImpl implements DefectSummeryService {
 		return collector.getId();
 	}
 	
-	private DefectAggregation mapDefectSummeryReqToModel(DefectSummaryRequest re){
+	private DefectAggregation mapDefectSummaryReqToModel(DefectSummaryRequest re){
 		
 		DefectAggregation da=aggregationRepository.findByProjectIdAndName(re.getMetricsProjectId(),re.getProjectName());
 		if(null==da){

@@ -2,7 +2,6 @@ package com.capitalone.dashboard.rest;
 
 import java.util.List;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +37,7 @@ public class DefectController {
 	
 	@RequestMapping(value = "/defects", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Defect> getAllDefects() {
-		List<Defect> defects = defectService.getAllDefects();
+		List<Defect> defects = defectService.getDefects();
 		return defects;
 	}
 	

@@ -10,12 +10,11 @@ public interface DefectService {
 
 	List<Defect> getDefects(ObjectId collectorId, String defectId);
 
-	List<Defect> getAllDefects();
+	List<Defect> getDefects();
 
 	List<Defect> getDefectByStatus(String defectStatus);
 
 	List<Defect> defectBySeverity(String defectSeverity);
 
 	List<Defect> defectByAge(Integer defectAge);
-
 }

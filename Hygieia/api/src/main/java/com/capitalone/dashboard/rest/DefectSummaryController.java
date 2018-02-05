@@ -12,34 +12,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capitalone.dashboard.model.DefectAggregation;
 import com.capitalone.dashboard.request.DefectSummaryRequest;
-import com.capitalone.dashboard.service.DefectSummeryService;
+import com.capitalone.dashboard.service.DefectSummaryService;
 @RestController
 public class DefectSummaryController {
 	
-	private final DefectSummeryService defectSummeryService;
+	private final DefectSummaryService defectSummaryService;
 	@Autowired
-	public DefectSummaryController(DefectSummeryService defectSummeryService) {
-		this.defectSummeryService = defectSummeryService;
+	public DefectSummaryController(DefectSummaryService defectSummaryService) {
+		this.defectSummaryService = defectSummaryService;
 	}
 	
 	@RequestMapping(value="/defectSummary", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public Iterable<DefectAggregation> getDefectSummery(){
-		return defectSummeryService.getAllDefectDetails();
+	public Iterable<DefectAggregation> getDefectSummary(){
+		return defectSummaryService.getAllDefectDetails();
 	}
 	
 	@RequestMapping(value="/defectSummary/{projectId}/{projectName}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public DefectAggregation getDefectSummeryByProjectId(@PathVariable("projectId") String projectId, @PathVariable("projectName") String projectName){
-		return defectSummeryService.findByProjectId(projectId, projectName);
+	public DefectAggregation getDefectSummaryByProjectId(@PathVariable("projectId") String projectId, @PathVariable("projectName") String projectName){
+		return defectSummaryService.findByProjectId(projectId, projectName);
 	}
 	
 	
 	@RequestMapping(value="/defectSummary/{metricsProjectId}", method=RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
-	public DefectAggregation getDefectSummeryByMetricsProjectId(@PathVariable("metricsProjectId") String metricsProjectId){
-		return defectSummeryService.findByMetricsProjectId(metricsProjectId);
+	public DefectAggregation getDefectSummaryByMetricsProjectId(@PathVariable("metricsProjectId") String metricsProjectId){
+		return defectSummaryService.findByMetricsProjectId(metricsProjectId);
 	}
 	
 	@RequestMapping(value="/defectSummary", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE)
-	public DefectAggregation createDefectDefectAggregationMetrics(@Valid @RequestBody DefectSummaryRequest defectSummery){
-		return defectSummeryService.create(defectSummery);
+	public DefectAggregation createDefectDefectAggregationMetrics(@Valid @RequestBody DefectSummaryRequest defectSummary){
+		return defectSummaryService.create(defectSummary);
 	}
 }

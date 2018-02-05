@@ -29,13 +29,12 @@ public class DefectServiceImpl implements DefectService {
 		}
 		else {
 			defects = defectRepository.findById(collectorId);
-			
 		}
 		return defects;
 	}
 
 	@Override
-	public List<Defect> getAllDefects() {
+	public List<Defect> getDefects() {
 		return (List<Defect>) defectRepository.findAll();
 	}
 
@@ -76,9 +75,4 @@ public class DefectServiceImpl implements DefectService {
 		}
 		return defects;
 	}
-
-	
-	
-
-	
 }
