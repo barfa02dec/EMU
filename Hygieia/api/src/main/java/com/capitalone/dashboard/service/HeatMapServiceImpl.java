@@ -2,7 +2,6 @@ package com.capitalone.dashboard.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -44,7 +43,7 @@ public class HeatMapServiceImpl implements HeatMapService{
 			heat = new HeatMap();
 			heat.setProjectId(hre.getProjectId());
 			try {
-				heat.setSubmissionDate(new SimpleDateFormat("ddMMyyyy").parse(hre.getSubmissionDate()));
+				heat.setSubmissionDate(new SimpleDateFormat("MM-dd-yyyy").parse(hre.getSubmissionDate()));
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -160,11 +159,10 @@ public class HeatMapServiceImpl implements HeatMapService{
 		heat.setProjectId(hre.getProjectId());
 		
 		try {
-			heat.setSubmissionDate(new SimpleDateFormat("ddMMyyyy").parse(hre.getSubmissionDate()));
+			heat.setSubmissionDate(new SimpleDateFormat("MM-dd-yyyy").parse(hre.getSubmissionDate()));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
 
 		ProjectHeatmapData projectHeatmapData = new ProjectHeatmapData();
 

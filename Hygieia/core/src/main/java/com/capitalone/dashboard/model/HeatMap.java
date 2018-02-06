@@ -5,6 +5,8 @@ import java.util.Date;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 
  * Representation of Heatmap
@@ -20,8 +22,8 @@ public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
 
 	private ProjectHeatmapData projectHeatmapData;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date submissionDate;
-
 
 	/**
 	 * @return the projectId
