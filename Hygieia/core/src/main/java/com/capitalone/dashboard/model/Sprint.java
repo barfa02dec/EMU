@@ -40,8 +40,6 @@ public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 	    private String viewBoardsUrl;
 	    private SprintData sprintData;
 	    private String projectName;
-	    
-	  
 		
 		public String getProjectName() {
 			return projectName;

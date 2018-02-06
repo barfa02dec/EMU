@@ -34,13 +34,12 @@ public class ReleaseServiceImpl implements ReleaseService {
 	}
 
 	@Override
-	public Iterable<Release> getAllReleases(String projectId, String projectName) {
-		
+	public Iterable<Release> getReleases(String projectId, String projectName) {
 		return releaseRepository.findByProjectId(projectId,projectName);
 	}
 
 	@Override
-	public Release getDetailedReleaseDetails(Long releaseId,String projectId) {
+	public Release getReleaseDetails(Long releaseId,String projectId) {
 		return releaseRepository.findByReleaseId(releaseId,projectId);
 	}
 
@@ -65,26 +64,16 @@ public class ReleaseServiceImpl implements ReleaseService {
 			scope = new Scope();
 			scope.setCollectorId(getJiraCollectorId());
 
-			// ID;
 			scope.setpId(rq.getProjectId());
-			// project ID
-
 			scope.setProjectId(rq.getProjectId());
-
 			scope.setName(rq.getProjectName());
-
 			scope.setIsDeleted("False");
-
 			scope.setAssetState("Active");
-			
 			scope.setToShowInEMUDashboard(Boolean.TRUE);
-			
 			scope.setProjectPath(rq.getProjectName());
-			
+
 			scopeRepository.save(scope);
-
 		}
-
 	}
 	
 	private ObjectId getJiraCollectorId(){
@@ -93,7 +82,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 	}
 	private Release mapReleaseRequestToReleaseModel(ReleaseMetricsRequest re) throws ParseException{
 		Release release=releaseRepository.findByReleaseId(re.getReleaseId(),re.getProjectId());
-		if(null==release){
+		if(null == release){
 			release= new Release();
 			release.setReleaseId(re.getReleaseId());
 			release.setProjectId(re.getProjectId());
@@ -102,7 +91,6 @@ public class ReleaseServiceImpl implements ReleaseService {
 			release.setDescription(re.getDescription());
 			release.setReleaseDate(re.getReleaseDate());
 			release.setStartDate(re.getStartDate());
-		
 		}
 		release.setReleased(re.isReleased());
 		
@@ -201,7 +189,6 @@ public class ReleaseServiceImpl implements ReleaseService {
 		list3.add(dnpp3);
 		list3.add(dnpp4);
 		
-		
 		Long total3 =  0L;
 		total3=(long) (re.getHighDefectsUnresolved()+re.getLowDefectsUnresolved()+re.getMediumDefectsUnresolved()+re.getCriticalDefectsUnresolved());
 		
@@ -209,11 +196,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 		defectsUnResolved.setSeverity(list3);
 		
 		data.setDefectsUnresolved(defectsUnResolved);
-		
 		release.setVersionData(data);
 		
 		return release;
-		
 	}
-
 }

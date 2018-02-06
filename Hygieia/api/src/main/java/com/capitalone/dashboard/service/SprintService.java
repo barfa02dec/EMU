@@ -7,9 +7,9 @@ import com.capitalone.dashboard.request.SprintMetrcisRequest;
 
 public interface SprintService {
 
-	List<Sprint> getAllSprints(String projectId, String emuProjectId);
+	List<Sprint> getSprints(String projectId, String emuProjectId);
 
-	Sprint getDetailedSprintDetails(Long sprintId,String projectId);
+	Sprint getSprintDetails(Long sprintId,String projectId);
 	
 	Sprint create(SprintMetrcisRequest re);
 

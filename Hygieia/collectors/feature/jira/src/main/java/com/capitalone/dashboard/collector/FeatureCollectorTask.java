@@ -175,6 +175,9 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 				//logic to handle sprint and releases
 				storyData.saveDetailedSprintData(project.getpId(),project.getName());
 				storyData.saveDetailedReleaseData(project.getpId(),project.getName());
+				
+				//storyData.activeSprintBurnDown();
+				
 			}
 			log("Story Data", storyDataStart, count);
 		} catch (Exception e) {
@@ -182,6 +185,4 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 		}
 	}
 	}
-	
-	
 }

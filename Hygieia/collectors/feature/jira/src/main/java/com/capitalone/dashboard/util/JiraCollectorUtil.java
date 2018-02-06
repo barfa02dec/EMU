@@ -50,7 +50,10 @@ public class JiraCollectorUtil {
 	public static final String GET_PROJECT_VERSION = "/rest/greenhopper/1.0/rapid/charts/versionreport?rapidViewId=%1s&versionId=%2s";
 
 	public static final String GET_VERSION_DEFECTS_CREATED =  "/rest/api/2/search?jql=project=%1s and type in (Bug) and affectedVersion in (%2s) &maxResults=100";
-	public static final String GET_VERSION_DEFECTS_RESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) AND fixVersion in (%2s) and resolution not in (Unresolved) &maxResults=100";	
+	public static final String GET_VERSION_DEFECTS_RESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) AND fixVersion in (%2s) and resolution not in (Unresolved) &maxResults=100";
+	
+	public static final String GET_SPRINTS = "/rest/greenhopper/1.0/sprintquery/%1s?includeFutureSprints=false";
+	public static final String	GET_SPRINT_BURNDOWN = "/rest/greenhopper/1.0/rapid/charts/scopechangeburndownchart.json?rapidViewId=%1$d&sprintId=%2$d";
 
 	
 	/*public static String getDefectsFound(String projectId, String startdate, String enddate, NewFeatureSettings featureSettings) {
@@ -142,7 +145,6 @@ public class JiraCollectorUtil {
 		
 		String json = null;
 		List<String> issuesAdded = ClientUtil.getIssuesAddedDuringSprint(originalSprintData);
-		
 		if(issuesAdded != null && issuesAdded.size() > 0){
 		   Double addedstorypoints = 0.0;
 		   for( String issueAdded : issuesAdded){
@@ -153,7 +155,7 @@ public class JiraCollectorUtil {
 		   sprintdata.getBurndown().getInitialIssueCount().setStoryPoints(sprintdata.getBurndown().getInitialIssueCount().getStoryPoints() - addedstorypoints);
 		   sprintdata.setCommittedStoryPoints(sprintdata.getCommittedStoryPoints() - addedstorypoints);
 		}
-		
+
 		String query = String.format(GET_SPRINT_VELOCITY_REPORT, featureSettings.getRapidView());
 		json = executeJiraQuery(featureSettings, query);
 		
@@ -354,7 +356,6 @@ public class JiraCollectorUtil {
 		return issuelist;
 	}
 
-	
 	private static String executeJiraQuery(NewFeatureSettings featureSettings, String query){
 		String jiraQuery = featureSettings.getJiraBaseUrl() + query;
 
@@ -370,5 +371,28 @@ public class JiraCollectorUtil {
 		final HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Basic " + base64Credentials);
 		return headers;
+	}
+
+	public static List<JiraSprint> getSprints(NewFeatureSettings featureSettings){
+		String query = String.format(GET_SPRINTS, featureSettings.getProjectId());
+		String json = executeJiraQuery(featureSettings, query);
+		
+		JsonArray sprintArray = new GsonBuilder().create().fromJson(json, JsonObject.class).getAsJsonArray("sprints");
+		
+		List<JiraSprint> jiraSprints = new ArrayList<JiraSprint>();
+		if (sprintArray != null && sprintArray.size() > 0) {
+			for (int count = 0; count < sprintArray.size(); count++) {
+				JiraSprint jsprint = new Gson().fromJson(sprintArray.get(count), JiraSprint.class);
+				jiraSprints.add(jsprint);
+			}
+		}
+		return jiraSprints;
+	}
+	
+	public static void getSprintBurnDown(NewFeatureSettings featureSettings){
+		String query = String.format(GET_SPRINT_BURNDOWN, featureSettings.getRapidView(), 12345);
+		String json = executeJiraQuery(featureSettings, query);
+		
+		//JsonArray sprintArray = new GsonBuilder().create().fromJson(json, JsonObject.class).getAsJsonArray("sprints");
 	}
 }

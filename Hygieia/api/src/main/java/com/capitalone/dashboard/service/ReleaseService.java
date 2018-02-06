@@ -5,9 +5,9 @@ import com.capitalone.dashboard.request.ReleaseMetricsRequest;
 
 public interface ReleaseService {
 
-	Iterable<Release> getAllReleases(String projectId, String projectName);
+	Iterable<Release> getReleases(String projectId, String projectName);
 
-	Release getDetailedReleaseDetails(Long releaseId,String projectId);
+	Release getReleaseDetails(Long releaseId,String projectId);
 
 	Release create(ReleaseMetricsRequest re);
 }

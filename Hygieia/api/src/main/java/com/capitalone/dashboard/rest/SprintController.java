@@ -26,32 +26,31 @@ public class SprintController {
 		this.sprintService = sprintService;
 	}
 
-
-
-	@RequestMapping(value = "/listAllSprints", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/sprints", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Sprint> getAllDefects(
 			@RequestParam(value = "projectId", required = true) String projectId,
 			@RequestParam(value = "projectName", required = true) String projectName,
 			@RequestParam(value = "noOfSprintToShow", required = true) int noOfsprintsToShow) {
-		List<Sprint> sprintList = new ArrayList<Sprint>();
-		List<Sprint> sprintListInDB = sprintService.getAllSprints(projectId,
-				projectName);
-		Collections.sort(sprintListInDB);
-		sprintListInDB.stream().limit(noOfsprintsToShow)
-				 .forEach(sprint -> sprintList.add(sprint));
-		return sprintList;
 
+		List<Sprint> sprintsInDB = sprintService.getSprints(projectId,
+				projectName);
+		Collections.sort(sprintsInDB);
+
+		List<Sprint> sprints = new ArrayList<Sprint>();
+		sprintsInDB.stream().limit(noOfsprintsToShow)
+				 .forEach(sprint -> sprints.add(sprint));
+		
+		return sprints;
 	}
 	
-	@RequestMapping(value = "/sprintDetails", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/sprints/details", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Sprint getAllDefects(@RequestParam(value = "sid", required = true) Long sid,@RequestParam(value = "projectId", required = true) String projectId) {
-		return sprintService.getDetailedSprintDetails(sid,projectId);
+		return sprintService.getSprintDetails(sid,projectId);
 	}
-	@RequestMapping(value = "/sprintMetrics", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	
+	@RequestMapping(value = "/sprints", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Sprint createSprintMetrics(@RequestBody SprintMetrcisRequest re){
-		
 		return sprintService.create(re);
-		
 	}
 	
 }

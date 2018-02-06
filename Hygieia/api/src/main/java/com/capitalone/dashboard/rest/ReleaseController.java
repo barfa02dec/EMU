@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.rest;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,24 +22,29 @@ public class ReleaseController {
 	public ReleaseController(ReleaseService releaseService) {
 		this.releaseService = releaseService;
 	}
-	@RequestMapping(method=RequestMethod.GET,value="/projectReleaseList")
-	public List<Release> getAllReleasesForProject(@RequestParam(name="projectId") String projectId, @RequestParam(name="projectName") String projectName){
-		List <Release> releaseList=(List<Release>) releaseService.getAllReleases(projectId,projectName);
-		Collections.sort(releaseList);
-		releaseList.stream().limit(8);
-		return releaseList;
-				
+	@RequestMapping(method=RequestMethod.GET,value="/releases")
+	public List<Release> getReleasesForProject(
+			@RequestParam(name="projectId") String projectId, 
+			@RequestParam(name="projectName") String projectName,
+			@RequestParam(value = "noOfReleaseToShow", required = true) int noOfReleaseToShow){
+		
+		List<Release> releases = new ArrayList<Release>();
+		List <Release> releasesfromDB = (List<Release>) releaseService.getReleases(projectId, projectName);
+		Collections.sort(releasesfromDB);
+		
+		releasesfromDB.stream().limit(noOfReleaseToShow).forEach(release -> releases.add(release));
+		
+		return releases;
 	}
-	@RequestMapping(method=RequestMethod.GET,value="/releaseDetails")
+	
+	@RequestMapping(method=RequestMethod.GET,value="/releases/details")
 	public Release getReleaseDetailsWithID(@RequestParam(name="releaseId") Long releaseId,@RequestParam(name="projectId") String projectId)
 	{
-		return releaseService.getDetailedReleaseDetails(releaseId,projectId);
+		return releaseService.getReleaseDetails(releaseId, projectId);
 	}
 	
-	@RequestMapping(method=RequestMethod.POST, value="/releaseMetrcis")
+	@RequestMapping(method=RequestMethod.POST, value="/releases")
 	public Release createReleaseMetrics(@RequestBody ReleaseMetricsRequest req){
-		
 		return releaseService.create(req);
 	}
-	
 }

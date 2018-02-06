@@ -1,7 +1,5 @@
 package com.capitalone.dashboard.model;
 
-import java.util.Map;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -11,6 +9,7 @@ public class JiraSprint implements Comparable<JiraSprint> {
 	    private String start;
 	    private String end;
 	    private String name;
+	    private String state;
 	    private Boolean closed;
 	    private Boolean editable;
 	    private String viewBoardsUrl;
@@ -23,48 +22,63 @@ public class JiraSprint implements Comparable<JiraSprint> {
 		public void setId(Long id) {
 			this.id = id;
 		}
+		
 		public String getStart() {
 			return start;
 		}
 		public void setStart(String start) {
 			this.start = start;
 		}
+		
 		public String getEnd() {
 			return end;
 		}
 		public void setEnd(String end) {
 			this.end = end;
 		}
+		
 		public String getName() {
 			return name;
 		}
 		public void setName(String name) {
 			this.name = name;
 		}
+
+		public String getState() {
+			return state;
+		}
+		public void setState(String state) {
+			this.state = state;
+		}
+
 		public Boolean getClosed() {
 			return closed;
 		}
 		public void setClosed(Boolean closed) {
 			this.closed = closed;
 		}
+
 		public Boolean getEditable() {
 			return editable;
 		}
 		public void setEditable(Boolean editable) {
 			this.editable = editable;
 		}
+		
 		public String getViewBoardsUrl() {
 			return viewBoardsUrl;
 		}
 		public void setViewBoardsUrl(String viewBoardsUrl) {
 			this.viewBoardsUrl = viewBoardsUrl;
 		}
+		
 		public String getOriginalSprintData() {
 			return originalSprintData;
 		}
 		public void setOriginalSprintData(String originalSprintData) {
 			this.originalSprintData = originalSprintData;
 		}
+		
 		public SprintData getSprintData() {
 			return sprintData;
 		}
@@ -72,8 +86,6 @@ public class JiraSprint implements Comparable<JiraSprint> {
 			this.sprintData = sprintData;
 		}	
 	    
-	    
-
 	@Override
 	public int compareTo(JiraSprint js) {
 		
