@@ -4,17 +4,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class HeatMapRequest {
-
-	@NotNull
-    @Size(min=3,max=40, message="heatmapId should be min=3,max=40 characters")
-	private Long heatmapId; 
 	
 	@NotNull
-    @Size(min=3,max=40, message="heatmapId should be min=3,max=40 characters")
+    @Size(min=3,max=40, message="projectId should be min=3,max=40 characters")
 	private String projectId;
 	
 	@NotNull
-    @Size(min=3,max=40, message="heatmapId should be min=3,max=40 characters")
+    @Size(min=3,max=40, message="submissionDate should be min=3,max=40 characters")
 	private String submissionDate;
 
 	private String customerWSRStatus;
@@ -75,19 +71,6 @@ public class HeatMapRequest {
 	
 	private String development;
 
-	/**
-	 * @return the heatmapId
-	 */
-	public Long getHeatmapId() {
-		return heatmapId;
-	}
-
-	/**
-	 * @param heatmapId the heatmapId to set
-	 */
-	public void setHeatmapId(Long heatmapId) {
-		this.heatmapId = heatmapId;
-	}
 
 	/**
 	 * @return the projectId

@@ -13,30 +13,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 
 @Document(collection = "heatmap")
-public class HeatMap extends BaseModel implements java.lang.Comparable<HeatMap> {
+public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
 
-	@Indexed(unique = true, name="index_HeatMap_heatmapId")
-	private Long heatmapId; 
-
+	@Indexed(name="index_heatmap_projectId")
 	private String projectId;
 
 	private ProjectHeatmapData projectHeatmapData;
 
 	private Date submissionDate;
 
-	/**
-	 * @return the heatmapId
-	 */
-	public Long getHeatmapId() {
-		return heatmapId;
-	}
-
-	/**
-	 * @param heatmapId the heatmapId to set
-	 */
-	public void setHeatmapId(Long heatmapId) {
-		this.heatmapId = heatmapId;
-	}
 
 	/**
 	 * @return the projectId
@@ -51,7 +36,6 @@ public class HeatMap extends BaseModel implements java.lang.Comparable<HeatMap> 
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
-
 
 	/**
 	 * @return the projectHeatmapData
@@ -70,31 +54,31 @@ public class HeatMap extends BaseModel implements java.lang.Comparable<HeatMap> 
 	/**
 	 * @return the submissionDate
 	 */
-	public Date getSubmissionDate() {
+	public Date  getSubmissionDate() {
 		return submissionDate;
 	}
 
 	/**
 	 * @param submissionDate the submissionDate to set
 	 */
-	public void setSubmissionDate(Date submissionDate) {
+	public void setSubmissionDate(Date  submissionDate) {
 		this.submissionDate = submissionDate;
 	}
 
-	/* 
-	 * hashcode for heatmap
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((heatmapId == null) ? 0 : heatmapId.hashCode());
+				+ ((submissionDate == null) ? 0 : submissionDate.hashCode());
 		return result;
 	}
 
-	/* 
-	 * equals for heatmap
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -105,10 +89,10 @@ public class HeatMap extends BaseModel implements java.lang.Comparable<HeatMap> 
 		if (getClass() != obj.getClass())
 			return false;
 		HeatMap other = (HeatMap) obj;
-		if (heatmapId == null) {
-			if (other.heatmapId != null)
+		if (submissionDate == null) {
+			if (other.submissionDate != null)
 				return false;
-		} else if (!heatmapId.equals(other.heatmapId))
+		} else if (!submissionDate.equals(other.submissionDate))
 			return false;
 		return true;
 	}
@@ -116,12 +100,12 @@ public class HeatMap extends BaseModel implements java.lang.Comparable<HeatMap> 
 	@Override
 	public int compareTo(HeatMap arg0) {
 		//sort by descending order
-		if(arg0.heatmapId<this.heatmapId){
+		if((arg0.submissionDate).compareTo(this.submissionDate) > 0){
 			return 1;
-		}else if (arg0.heatmapId==this.heatmapId){
+		}else if ((arg0.submissionDate).compareTo(this.submissionDate) == 0){
 			return 0;
 		}
 		return -1;
 	}
+	
 }
-
