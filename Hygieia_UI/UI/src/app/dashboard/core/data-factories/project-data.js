@@ -25,7 +25,9 @@
             fetchallroles:fetchallroles,
             postDefect:postDefect,
             postSprint:postSprint,
-            postRelease:postRelease
+            postRelease:postRelease,
+            postHeatMap:postHeatMap,
+            updateHeatMap:updateHeatMap
            
         };
 
@@ -33,9 +35,8 @@
 
             return   $http.get("/api/getProjectsByUser/?username=" + usrnam)
                     .then(function(response) {
-                       
-                            return response.data;
-                    });
+                       return response.data;
+            });
 
             
         }
@@ -101,19 +102,35 @@
         }
 
          function postSprint(payload){
-            return   $http.post('/api/sprintMetrics', (payload))
+            return   $http.post('/api/sprints', (payload))
                     .then(function(response) {
                        return response.data;
                     });
         }
 
         function postRelease(payload){
-            return   $http.post('/api/releaseMetrcis', (payload))
+            return   $http.post('/api/releases', (payload))
                     .then(function(response) {
                        return response.data;
                     });
         }
         
+        function postHeatMap(payload) {
+            return   $http.post('/api/projectheatmaps/create', (payload))
+                    .then(function(response) {
+                       return response.data;
+                    });
+        }
+
+        function updateHeatMap(payload,objId) {
+            http://localhost:3001/api/projectheatmaps/update/{objectId}
+            return   $http.put('/api/projectheatmaps/update/' + objId, (payload))
+                    .then(function(response) {
+                       return response.data;
+                    });
+        }
+
+       
 
 }
 })();
