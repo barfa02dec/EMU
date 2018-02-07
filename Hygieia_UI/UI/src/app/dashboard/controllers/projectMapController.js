@@ -926,8 +926,6 @@
                 { value: 'Red', name: 'Red' },
                 { value: 'NA', name: 'NA' }
             ];
-
-
             ctrl.hideForm = function () {
                 ctrl.prevousText = true;
                 ctrl.normalformText = false;
