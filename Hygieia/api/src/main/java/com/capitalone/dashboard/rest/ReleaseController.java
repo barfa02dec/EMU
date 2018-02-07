@@ -38,7 +38,8 @@ public class ReleaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/releases/details")
-	public Release getReleaseDetailsWithID(@RequestParam(name="releaseId") Long releaseId,@RequestParam(name="projectId") String projectId)
+	public Release getReleaseDetailsWithID(@RequestParam(name="releaseId") Long releaseId,
+			@RequestParam(name="projectId") String projectId)
 	{
 		return releaseService.getReleaseDetails(releaseId, projectId);
 	}

@@ -328,7 +328,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 					jiraVersion.setVersionData(JiraCollectorUtil.getReleaseData(versionDetails, projectId, featureSettings));
 					// setting the detailed metrics to release.
 					release.setVersionData(jiraVersion.getVersionData());
-	
 				}
 	
 				release.setOverdue(jiraVersion.getOverdue());

@@ -122,12 +122,11 @@ public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 		@Override
 		public int compareTo(Sprint arg0) {
 			//sort by descending order
-			if(arg0.sprintId<this.sprintId){
+			if(arg0.sprintId > this.sprintId){
 				return 1;
-			}else if (arg0.sprintId==this.sprintId){
+			}else if (arg0.sprintId == this.sprintId){
 				return 0;
 			}
 			return -1;
 		}
-	
 }
