@@ -920,12 +920,15 @@
             ctrl.normalformText = false;
             ctrl.prevHeader = false;
             ctrl.update = false;
+            ctrl.title="Add Heat Map"
             $scope.color = [
                 { value: 'Green', name: 'Green' },
                 { value: 'Amber', name: 'Amber' },
                 { value: 'Red', name: 'Red' },
                 { value: 'NA', name: 'NA' }
             ];
+
+
             ctrl.hideForm = function () {
                 ctrl.prevousText = true;
                 ctrl.normalformText = false;
