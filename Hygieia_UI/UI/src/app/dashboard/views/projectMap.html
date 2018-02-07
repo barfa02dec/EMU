@@ -124,7 +124,7 @@
                      &nbsp&nbsp
                      <span ng-click="pm.addSprint(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-plus" aria-hidden="true" title="Add sprint" style="color: grey"></i></span> -->
                         
-                      <!--   <span ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)" style="vertical-align: sub">
+                        <span ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)" style="vertical-align: sub">
                         <div class="dropdown" style="cursor: pointer;">
                            <svg version="1.1"
                               x="0px" y="0px" width="15px" height="15px" viewBox="0 0 19 19" style="enable-background:new 0 0 19 19;" xml:space="preserve">
@@ -141,9 +141,10 @@
                               <a ng-click="pm.addRelease(proj)">Releases</a>
                               <a ng-click="pm.addDefect(proj)">Defects</a>
                               <a ng-click="pm.editDefect(proj)">Update Defects</a>
+                               <a ng-click="pm.heatMap(proj)">Heat Map</a>
                            </div>
                         </div>
-                     </span> -->
+                     </span> 
                         </span>
                         </span>
                     </td>

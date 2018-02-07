@@ -97,7 +97,7 @@
 		
 		function ReleaseDataFetch(filterProjectId,projectsname) {  
 			 
-			return $http.get('/api/releases?projectId=' + filterProjectId + "&projectName=" + projectsname)
+			return $http.get('/api/releases?projectId=' + filterProjectId + "&projectName=" + projectsname + "&noOfReleaseToShow=" + "6")
 					.then(function(response) { 
 						return response.data;
 					});
@@ -178,7 +178,7 @@
 		}
 		
 		function updateReleaseDta(releaseId,projectId) {  
-			return $http.get('/api/releaseDetails?releaseId=' +releaseId + "&projectId=" + projectId)
+			return $http.get('/api/releases/details?releaseId=' +releaseId + "&projectId=" + projectId)
 					.then(function(response) { 
 						return response.data;
 					});

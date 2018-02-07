@@ -51,6 +51,7 @@
 
         $scope.editConfirm = "Project updated successfully";
         
+        $scope.addHeatMap = "Heatmap added succcessfully";
 
         $scope.confirmButton = function() {
             alert("asas");
@@ -894,5 +895,153 @@
                 })
             }
         }
+
+        ctrl.heatMap = function(probj) {
+            $uibModal.open({
+                templateUrl: 'app/dashboard/views/heatmap.html',
+                windowClass: 'app-modal-window-defect',
+                controller: heatMapController,
+                controllerAs: 'hmc',
+                resolve: {
+                    name: function() {
+                        return probj.projectName;
+                    },
+                    id: function() {
+                        return probj.projectId;
+                    }
+                }
+            });
+        }
+
+        function heatMapController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
+            var ctrl = this;
+            ctrl.title = "List of HeatMap";
+             ctrl.prevousText = true;
+            ctrl.normalformText = false;
+            ctrl.prevHeader = false;
+            ctrl.update = false;
+
+            $scope.color = [
+                {value: 'Green', name:'Green'},
+                {value: 'Amber', name: 'Amber'},
+                {value: 'Red', name: 'Red'},
+                {value: 'NA', name: 'NA'}
+            ]; 
+
+
+            ctrl.hideForm = function() {
+                ctrl.prevousText = true;
+                ctrl.normalformText = false;
+                ctrl.prevHeader = false;
+                ctrl.title = "List of HeatMap";
+            }
+            ctrl.showForm = function() {
+                ctrl.prevousText = false;
+                ctrl.normalformText = true;
+                ctrl.prevHeader = true;
+                ctrl.heatMapPayload = {};
+                $rootScope.action_name = "Add";
+                ctrl.addScreen = true;
+                ctrl.updateScreen = false;
+                ctrl.title = "Add Heat Map";
+            }
+
+            featureData.heatMapData(id).then(heatMapDataProcess);
+
+            function heatMapDataProcess(data) {
+                ctrl.heatMapDetails = data;
+            }
+
+        
+            ctrl.updateHeatMap = function(releaseidUpdation) {
+               
+                
+                $uibModal.open({
+                    templateUrl: 'app/dashboard/views/updateHeatMap.html',
+                    windowClass: 'app-modal-window-defect',
+                    controller: updateHeatMapController,
+                    controllerAs: 'uhc',
+                    resolve: {
+                       data: function() {
+                            return releaseidUpdation;
+                        }
+                    }
+                });
+            }
+            
+
+            ctrl.postHeatMap = function() {
+                //ctrl.heatMapPayload.heatmapId = "75";
+                ctrl.heatMapPayload.projectId = id;
+                projectData.postHeatMap(ctrl.heatMapPayload).then(function(response) {
+                    $uibModalInstance.dismiss("cancel");
+                    $uibModal.open({
+                        template: '<confirm-popup msg="addHeatMap" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>', 
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
+                })
+            }
+
+        }
+
+        function updateHeatMapController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, data) {
+            var ctrl = this;
+
+             $scope.color = [
+                {value: 'Green', name:'Green'},
+                {value: 'Amber', name: 'Amber'},
+                {value: 'Red', name: 'Red'},
+                {value: 'NA', name: 'NA'}
+            ]; 
+
+             ctrl.updateHeatmapPayload = {
+
+                    "projectId" : data.projectId,
+                    "submissionDate" : data.submissionDate,
+                    "customerWSRStatus" : data.projectHeatmapData.customerWSR.customerWSRStatus,
+                    "architectureFocusStatus" : data.projectHeatmapData.architectureFocus.architectureFocusStatus,
+                    "automatedUnitTestingStatus" : data.projectHeatmapData.automatedUnitTesting.automatedUnitTestingStatus,
+                    "codeCoveragePercentage" : data.projectHeatmapData.codeCoverage.codeCoveragePercentage,
+                    "continuousIntegrationIndex" : data.projectHeatmapData.continuousIntegration.continuousIntegrationIndex,
+
+                    "domainKnowlwdgeStatus" : data.projectHeatmapData.domainKnowledge.domainKnowledgeStatus,
+                    "manualCodeReviewStatus" : data.projectHeatmapData.manualCodeReview.manualCodeReviewStatus,
+                    //"manualCodeReviewCount" : data.projectHeatmapData,
+                    "metricsStatus" : data.projectHeatmapData.metrics.metricsStatus,
+                    //"performanceAssessmentStatus" : data.projectHeatmapData,
+                    "performanceAssessmentPercentage" : data.projectHeatmapData.performanceAssessment.performanceAssessmentPercentage,
+
+                    "requirementsStatus" : data.projectHeatmapData.requirements.requirementsStatus,
+                    "releaseProcessStatus" : data.projectHeatmapData.releaseProcess.releaseProcessStatus,
+                    //"securityAssessmentStatus" : data.projectHeatmapData,
+                    "securityAssessmentIndex" : data.projectHeatmapData.securityAssessment.securityAssessmentIndex,
+                    //"staticCodeAnalysisStatus" : data.projectHeatmapData,
+                    //"staticCodeAnalysisIndex" : data.projectHeatmapData,
+                    //"teamSizeTesting" : data.projectHeatmapData,
+                    "testingProcessStatus" : data.projectHeatmapData.testingProcess.testingProcessStatus,
+                    //"testAutomationStatus" : data.projectHeatmapData,
+                    //"testAutomationPercentage" : data.projectHeatmapData,
+                    "designFocusStatus" : data.projectHeatmapData.designFocus.designFocusStatus,
+                    "productKnowledgeIndex" : data.projectHeatmapData.productKnowledge.productKnowledgeIndex
+                    
+
+                
+            }
+
+            ctrl.updateHeatMap = function() {
+                    ctrl.objId = data.id;
+                   projectData.updateHeatMap(ctrl.updateHeatmapPayload,ctrl.objId).then(function(response) {
+                    $uibModalInstance.dismiss("cancel");
+                    $uibModal.open({
+                        template: '<confirm-popup msg="addHeatMap" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>', 
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
+                })
+            }
+
+        }
+
     }
 })();

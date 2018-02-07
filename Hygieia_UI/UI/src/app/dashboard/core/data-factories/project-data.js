@@ -95,7 +95,7 @@
         }
 
         function postDefect(payload){
-            return   $http.post('/api/defectSummery', (payload))
+            return   $http.post('/api/defectSummary', (payload))
                     .then(function(response) {
                        return response.data;
                     });

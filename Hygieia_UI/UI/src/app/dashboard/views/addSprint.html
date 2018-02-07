@@ -77,7 +77,9 @@
         </div>
         <div class="col-md-6">
             <form-group input="selectedTemplate" errors="{required: 'Status is required'}">
-                <select ng-options="o.value as o.label for o in options" ng-model="asc.sprintPayload.released" class="form-control"></select>
+                <select ng-options="o.value as o.label for o in options" ng-model="asc.sprintPayload.released" class="form-control">
+                     <option value="" disabled selected hidden>Choose a value</option>
+                </select>
             </form-group>
             <form-group input="completedstorypointscol2">
                 <input type="number" name="completedstorypointscol2" class="form-control" placeholder="Completed story points" ng-model="asc.sprintPayload.completedStoryPoints" />
