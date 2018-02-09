@@ -7,8 +7,10 @@
       </div>
       <div class="col-md-3">
         <form-group input="dashboardTitle">
-          <input type="text" name="dashboardTitle" class="form-control" ng-model="hmc.heatMapPayload.submissionDate" maxlength="50"
-            autocomplete="off" minlength="6" />
+        <input type="text" name="dashboardTitle" class="form-control" ng-model="hmc.heatMapPayload.submissionDate" min=0 maxlength="50"
+            autocomplete="off" minlength="6" /> 
+        <!-- <select class="form-control fa" ng-model="hmc.heatMapPayload.requirementsStatus" ng-options="item for item in hmc.monthOptions">
+        </select> -->
         </form-group>
       </div>
     </div>
@@ -21,7 +23,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.productKnowledgeIndex" maxlength="50"
+          <input type="text" numbers-only name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.productKnowledgeIndex" maxlength="50"
             autocomplete="off" />
         </form-group>
       </div>
@@ -36,7 +38,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.productKnowledgeIndex" maxlength="50"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="hmc.heatMapPayload.productKnowledgeIndex" maxlength="50"
             autocomplete="off" />
         </form-group>
       </div>
@@ -51,7 +53,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.teamSizeTesting" maxlength="50"
+          <input type="text" numbers-only name="applicationName" min=0 class="form-control" ng-model="hmc.heatMapPayload.teamSizeTesting" maxlength="50"
             autocomplete="off" />
         </form-group>
       </div>
@@ -68,10 +70,10 @@
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
           <select class="form-control fa" ng-model="hmc.heatMapPayload.requirementsStatus">
             <option value="" disabled selected hidden></option>
-                        <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
-                        <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
-                        <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
-                        <option value="NA"> &#xf1fc; NA</option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -88,7 +90,12 @@
 
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="hmc.heatMapPayload.domainKnowlwdgeStatus">
+          <select class="form-control fa" ng-model="hmc.heatMapPayload.domainKnowlwdgeStatus">
+            <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -104,7 +111,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="hmc.heatMapPayload.architectureFocusStatus">
+          <select class="form-control fa" ng-model="hmc.heatMapPayload.architectureFocusStatus">
+              <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -121,7 +133,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select style="font-family:'FontAwesome',Arial;" class="form-control" ng-options="c.value as c.name for c in color" ng-model="hmc.heatMapPayload.designFocusStatus">
+          <select class="form-control fa" ng-model="hmc.heatMapPayload.designFocusStatus">
+              <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -138,7 +155,7 @@
 
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.staticCodeAnalysisStatus" maxlength="50"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="hmc.heatMapPayload.staticCodeAnalysisStatus" maxlength="50"
             autocomplete="off" />
         </form-group>
       </div>
@@ -153,7 +170,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="hmc.heatMapPayload.manualCodeReviewStatus">
+          <select class="form-control fa" ng-model="hmc.heatMapPayload.manualCodeReviewStatus">
+              <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -172,7 +194,7 @@
           <!--   <select style="font-family:'FontAwesome',Arial;" class="form-control" ng-options="c.value as c.name for c in color" ng-model="hmc.heatMapPayload.automatedUnitTestingStatus">  
               <option value="" disabled selected hidden>Automated Unit Testing</option>
             </select> -->
-          <input type="text" name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.automatedUnitTestingStatus" maxlength="50"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="hmc.heatMapPayload.automatedUnitTestingStatus" maxlength="50"
             autocomplete="off" />
         </form-group>
       </div>
@@ -187,7 +209,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.codeCoveragePercentage" maxlength="50"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="hmc.heatMapPayload.codeCoveragePercentage" maxlength="50"
             autocomplete="off" />
         </form-group>
       </div>
@@ -201,7 +223,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.continuousIntegrationIndex" maxlength="50"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="hmc.heatMapPayload.continuousIntegrationIndex" maxlength="50"
             autocomplete="off" />
         </form-group>
       </div>
@@ -216,8 +238,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="hmc.heatMapPayload.testingProcessStatus">
-
+          <select class="form-control fa" ng-model="hmc.heatMapPayload.testingProcessStatus">
+              <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -232,7 +258,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.performanceAssessmentPercentage"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="hmc.heatMapPayload.performanceAssessmentPercentage"
             maxlength="50" autocomplete="off" />
         </form-group>
       </div>
@@ -249,7 +275,7 @@
 
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.securityAssessmentIndex" maxlength="50"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="hmc.heatMapPayload.securityAssessmentIndex" maxlength="50"
             autocomplete="off" />
         </form-group>
       </div>
@@ -264,7 +290,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.testAutomationPercentage" maxlength="50"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="hmc.heatMapPayload.testAutomationPercentage" maxlength="50"
             autocomplete="off" />
         </form-group>
       </div>
@@ -281,7 +307,12 @@
 
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="hmc.heatMapPayload.releaseProcessStatus">
+          <select class="form-control fa" ng-model="hmc.heatMapPayload.releaseProcessStatus">
+              <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -296,7 +327,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="hmc.heatMapPayload.metricsStatus">
+          <select class="form-control fa" ng-model="hmc.heatMapPayload.metricsStatus">
+              <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -311,7 +347,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="hmc.heatMapPayload.customerWSRStatus">
+          <select class="form-control fa" ng-model="hmc.heatMapPayload.customerWSRStatus">
+              <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -369,7 +410,21 @@
             <th>Selected Month</th>
             <th ng-repeat="heatmap in hmc.heatMapDetails">
               <span>{{heatmap.submissionDate | date}}</span>
-              <span ng-click="hmc.updateHeatMap(heatmap)">EDIT</span>
+              <span ng-click="hmc.updateHeatMap(heatmap)">
+                 <svg version="1.1"
+            x="0px" y="0px" width="13px" height="13px" viewBox="0 0 19 19" style="enable-background:new 0 0 19 19;" xml:space="preserve">
+<style type="text/css">
+            .stedit0{fill:#404041;}
+</style>
+<defs>
+</defs>
+<path class="stedit0" d="M18.3,0.7C17.8,0.3,17.2,0,16.5,0c-0.7,0-1.3,0.3-1.8,0.7l-1,1L1.2,14.2c0,0,0,0,0,0c0,0,0,0.1-0.1,0.1
+            c0,0,0,0,0,0c0,0,0,0,0,0.1L0,18.5c0,0.1,0,0.3,0.1,0.4C0.2,19,0.3,19,0.4,19c0,0,0.1,0,0.1,0l4.1-1.1c0,0,0,0,0.1,0c0,0,0,0,0,0
+            c0,0,0.1,0,0.1-0.1c0,0,0,0,0,0L17.3,5.3l1-1C18.7,3.8,19,3.2,19,2.5C19,1.8,18.7,1.2,18.3,0.7z M1,18l0.7-2.7l2,2L1,18z M4.5,16.9
+            l-2.4-2.4L14,2.6L16.4,5L4.5,16.9z M17.7,3.7L17,4.4L14.6,2l0.7-0.7C15.6,1,16,0.8,16.5,0.8c0.5,0,0.9,0.2,1.2,0.5
+            C18.3,2,18.3,3.1,17.7,3.7z"/>
+</svg>
+              </span>
             </th>
           </tr>
         </thead>

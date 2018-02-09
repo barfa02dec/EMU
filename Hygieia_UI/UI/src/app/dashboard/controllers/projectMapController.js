@@ -566,9 +566,6 @@
             ctrl.namerelease = name;
             ctrl.id = id;
             $scope.options = [{
-                value: '',
-                label: 'Choose a value'
-            }, {
                 value: false,
                 label: 'Closed'
             }, {
@@ -693,9 +690,6 @@
             ctrl.projectpathId = $cookies.get('projectIdJira');
             ctrl.projectiddefects = $cookies.get('ProSpId');
             $scope.options = [{
-                value: '',
-                label: 'Choose a value'
-            }, {
                 value: true,
                 label: 'Closed'
             }, {
@@ -780,9 +774,6 @@
             ctrl.ids = ids;
             ctrl.names = names;
             $scope.options = [{
-                value: '',
-                label: 'Choose a value'
-            }, {
                 value: false,
                 label: 'Closed'
             }, {
@@ -837,9 +828,6 @@
             ctrl.ids = ids;
             ctrl.ppid = projectidsprint;
             $scope.options = [{
-                value: '',
-                label: 'Choose a value'
-            }, {
                 value: true,
                 label: 'Closed'
             }, {
@@ -920,7 +908,21 @@
             ctrl.normalformText = false;
             ctrl.prevHeader = false;
             ctrl.update = false;
-            ctrl.title="Add Heat Map"
+            ctrl.title="Add Heat Map";
+         /*   var monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+            ];  
+            var currentdate = new Date();
+            var currentMonth = Number(currentdate.getMonth());
+            var currentMonthLabel = monthNames[currentMonth];
+            debugger;
+            var prevMonth = currentMonth>0 ? monthNames[(currentMonth-1)] : monthNames[11];
+            var nextMonth = currentMonth<11 ? monthNames[(currentMonth+1)] : monthNames[0];
+            ctrl.monthOptions = [];
+            ctrl.monthOptions.push(prevMonth);
+            ctrl.monthOptions.push(currentMonthLabel);
+            ctrl.monthOptions.push(nextMonth);*/
+
             $scope.color = [
                 { value: 'Green', name: 'Green' },
                 { value: 'Amber', name: 'Amber' },
@@ -954,7 +956,7 @@
 
 
             ctrl.updateHeatMap = function (releaseidUpdation) {
-
+                 $uibModalInstance.dismiss("cancel");
 
                 $uibModal.open({
                     templateUrl: 'app/dashboard/views/updateHeatMap.html',

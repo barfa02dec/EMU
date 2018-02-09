@@ -21,7 +21,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="ctrl.applicationName" maxlength="50" autocomplete="off"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="ctrl.applicationName" maxlength="50" autocomplete="off"
           />
         </form-group>
       </div>
@@ -37,7 +37,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="uhc.updateHeatmapPayload.productKnowledgeIndex"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.productKnowledgeIndex"
             maxlength="50" autocomplete="off" />
         </form-group>
       </div>
@@ -55,7 +55,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="ctrl.applicationName" maxlength="50" autocomplete="off"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="ctrl.applicationName" maxlength="50" autocomplete="off"
           />
         </form-group>
       </div>
@@ -71,8 +71,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="uhc.updateHeatmapPayload.requirementsStatus">
-
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.requirementsStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -89,7 +93,12 @@
 
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="uhc.updateHeatmapPayload.domainKnowlwdgeStatus">
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.domainKnowlwdgeStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -105,8 +114,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="uhc.updateHeatmapPayload.architectureFocusStatus">
-
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.architectureFocusStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -124,8 +137,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="uhc.updateHeatmapPayload.designFocusStatus">
-
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.designFocusStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -143,7 +160,7 @@
 
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" maxlength="50" autocomplete="off" />
+          <input type="text" name="applicationName" numbers-only class="form-control" maxlength="50" autocomplete="off" />
         </form-group>
       </div>
     </div>
@@ -157,7 +174,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="uhc.updateHeatmapPayload.manualCodeReviewStatus">
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.manualCodeReviewStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -175,7 +197,7 @@
           <!--   <select style="font-family:'FontAwesome',Arial;" class="form-control" ng-options="c.value as c.name for c in color" ng-model="hmc.heatMapPayload.automatedUnitTestingStatus">  
               <option value="" disabled selected hidden>Automated Unit Testing</option>
             </select> -->
-          <input type="text" name="applicationName" class="form-control" ng-model="uhc.updateHeatmapPayload.automatedUnitTestingStatus"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.automatedUnitTestingStatus"
             maxlength="50" autocomplete="off" />
         </form-group>
       </div>
@@ -190,7 +212,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="uhc.updateHeatmapPayload.codeCoveragePercentage"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.codeCoveragePercentage"
             maxlength="50" autocomplete="off" />
         </form-group>
       </div>
@@ -204,7 +226,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="uhc.updateHeatmapPayload.continuousIntegrationIndex"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.continuousIntegrationIndex"
             maxlength="50" autocomplete="off" />
         </form-group>
       </div>
@@ -219,8 +241,13 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="uhc.updateHeatmapPayload">
 
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.testingProcessStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -235,7 +262,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="uhc.updateHeatmapPayload.performanceAssessmentPercentage"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.performanceAssessmentPercentage"
             maxlength="50" autocomplete="off" />
         </form-group>
       </div>
@@ -252,7 +279,7 @@
 
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" ng-model="uhc.updateHeatmapPayload.securityAssessmentIndex"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.securityAssessmentIndex"
             maxlength="50" autocomplete="off" />
         </form-group>
       </div>
@@ -267,7 +294,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" class="form-control" maxlength="50" autocomplete="off" />
+          <input type="text" name="applicationName" numbers-only class="form-control" maxlength="50" autocomplete="off" />
         </form-group>
       </div>
     </div>
@@ -283,8 +310,12 @@
 
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="uhc.updateHeatmapPayload.releaseProcessStatus">
-
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.releaseProcessStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -299,8 +330,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="uhc.updateHeatmapPayload.metricsStatus">
-
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.metricsStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -315,8 +350,12 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-          <select class="form-control fa" ng-options="c.value as c.name for c in color" ng-model="uhc.updateHeatmapPayload.customerWSRStatus">
-
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.customerWSRStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
           </select>
         </form-group>
       </div>
@@ -359,7 +398,7 @@
       <div class="button-row row" style="padding-left: 12px;">
 
 
-        <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Create</button>
+        <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Update</button>
         <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
       </div>
     </form-group>
