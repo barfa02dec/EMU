@@ -19,7 +19,7 @@
             <form-group input="date1">
                 <datepicker date-format="yyyy-MM-dd" selector="form-control" date-max-limit="{{arc.releaseDate}}">
                     <div class="input-group">
-                        <input class="form-control font-fontawesome font-light" ng-model="arc.startDate" name="date1" placeholder="  Start date" required/>
+                        <input class="form-control font-fontawesome font-light" datepicker-validation ng-model="arc.startDate" name="date1" placeholder="  Start date" required/>
                     </div>
                 </datepicker>
             </form-group>
@@ -28,7 +28,7 @@
             <form-group input="date2">
                 <datepicker date-format="yyyy-MM-dd" selector="form-control" date-min-limit="{{arc.startDate}}">
                     <div class="input-group">
-                        <input class="form-control font-fontawesome font-light" ng-model="arc.releaseDate" name="date2" placeholder="  Release date" required/>
+                        <input class="form-control font-fontawesome font-light" datepicker-validation ng-model="arc.releaseDate" name="date2" placeholder="  Release date" required/>
                     </div>
                 </datepicker>
             </form-group>

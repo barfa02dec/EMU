@@ -256,7 +256,8 @@
 
         //Processing Jira-Sprint Data
         function sprintdataProcess(data) {
-            ctrl.jirametricsdata = data;
+            ctrl.jirametricsdatanormal = data;
+            ctrl.jirametricsdata = ctrl.jirametricsdatanormal.reverse();
             if( ctrl.jirametricsdata[5] != undefined ){
             ctrl.sprintIds = ctrl.jirametricsdata[5].sprintData.sprintId;
             }

@@ -7,7 +7,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="dashboardTitle">
-          <input type="text" name="dashboardTitle" class="form-control" ng-model="uhc.updateHeatmapPayload.submissionDate" maxlength="50"
+          <input type="text" name="dashboardTitle" class="form-control" ng-model="uhc.updateHeatmapPayload.submissionDate | date:'MM/dd/yyyy'" maxlength="50"
             autocomplete="off" minlength="6" disabled />
         </form-group>
       </div>
@@ -21,7 +21,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="ctrl.applicationName" maxlength="50" autocomplete="off"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.development" maxlength="50" autocomplete="off"
           />
         </form-group>
       </div>
@@ -55,7 +55,7 @@
       </div>
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="ctrl.applicationName" maxlength="50" autocomplete="off"
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.testing" maxlength="50" autocomplete="off"
           />
         </form-group>
       </div>
@@ -160,7 +160,7 @@
 
       <div class="col-md-3">
         <form-group input="applicationName">
-          <input type="text" name="applicationName" numbers-only class="form-control" maxlength="50" autocomplete="off" />
+          <input type="text" name="applicationName" ng-model="uhc.updateHeatmapPayload.staticCodeAnalysisIndex" numbers-only class="form-control" maxlength="50" autocomplete="off" />
         </form-group>
       </div>
     </div>

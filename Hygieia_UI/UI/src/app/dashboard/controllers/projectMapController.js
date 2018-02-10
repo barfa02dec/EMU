@@ -53,6 +53,8 @@
 
         $scope.addHeatMap = "Heatmap added succcessfully";
 
+        $scope.updateHeatMap = "Heatmap updated successfully";
+
         $scope.confirmButton = function () {
             alert("asas");
             $scope.$modalInstance.close();
@@ -909,19 +911,40 @@
             ctrl.prevHeader = false;
             ctrl.update = false;
             ctrl.title="Add Heat Map";
-         /*   var monthNames = ["January", "February", "March", "April", "May", "June",
+            var nextMonth, prevMonth, prevYear, nextYear;
+
+            var monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
             ];  
             var currentdate = new Date();
             var currentMonth = Number(currentdate.getMonth());
+            var currentYear = Number(currentdate.getFullYear());
             var currentMonthLabel = monthNames[currentMonth];
             debugger;
-            var prevMonth = currentMonth>0 ? monthNames[(currentMonth-1)] : monthNames[11];
-            var nextMonth = currentMonth<11 ? monthNames[(currentMonth+1)] : monthNames[0];
+                           if(currentMonth == 0){
+                        nextYear =  currentYear;
+                prevYear =  currentYear-1;     
+                prevMonth = monthNames[11];
+                 nextMonth = currentMonth<11 ? monthNames[(currentMonth+1)] : monthNames[0];
+            } else if(currentMonth ==11){
+                prevYear =  currentYear;
+                nextYear =  currentYear+1;
+                nextMonth = monthNames[0];
+                prevMonth = currentMonth>0 ? monthNames[(currentMonth-1)] : monthNames[11];
+            } else {
+                prevYear = currentYear;
+                nextYear = currentYear;
+                prevMonth = currentMonth>0 ? monthNames[(currentMonth-1)] : monthNames[11];
+                nextMonth = currentMonth<11 ? monthNames[(currentMonth+1)] : monthNames[0];
+
+            }
+
+
             ctrl.monthOptions = [];
-            ctrl.monthOptions.push(prevMonth);
-            ctrl.monthOptions.push(currentMonthLabel);
-            ctrl.monthOptions.push(nextMonth);*/
+
+            ctrl.monthOptions.push(prevMonth+","+prevYear);
+            ctrl.monthOptions.push(currentMonthLabel+","+currentYear);
+            ctrl.monthOptions.push(nextMonth+","+nextYear);
 
             $scope.color = [
                 { value: 'Green', name: 'Green' },
@@ -970,10 +993,32 @@
                     }
                 });
             }
+            
+            function getDate(date){
+                 var year = date.split(",")[1]
+                 var month = date.split(",")[0]
+                 var monthNames = ["January", "February", "March", "April", "May", "June",
+                                    "July", "August", "September", "October", "November", "December"
+                                  ];
+                  for(var i = 0;i<monthNames.length;i++){
+                    if(month == monthNames[i]){
+                        month = i+1;
+                    }
+                  }
+                  if(month < 10){
+                    month = "0"+month;
+                  }
 
+                  return month+"-"+"01-"+year;
+
+
+            }
 
             ctrl.postHeatMap = function () {
                 //ctrl.heatMapPayload.heatmapId = "75";
+                //console.log(ctrl.heatMapPayload.requirementsStatus)
+                ctrl.heatMapPayload.submissionDate = getDate(ctrl.heatMapPayload.submissionDate);
+                console.log(ctrl.heatMapPayload.submissionDate);
                 ctrl.heatMapPayload.projectId = id;
                 projectData.postHeatMap(ctrl.heatMapPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
@@ -1019,13 +1064,14 @@
                 //"securityAssessmentStatus" : data.projectHeatmapData,
                 "securityAssessmentIndex": data.projectHeatmapData.securityAssessment.securityAssessmentIndex,
                 //"staticCodeAnalysisStatus" : data.projectHeatmapData,
-                //"staticCodeAnalysisIndex" : data.projectHeatmapData,
-                //"teamSizeTesting" : data.projectHeatmapData,
+                "staticCodeAnalysisIndex" : data.projectHeatmapData.staticCodeAnalysis.staticCodeAnalysisIndex,
                 "testingProcessStatus": data.projectHeatmapData.testingProcess.testingProcessStatus,
                 //"testAutomationStatus" : data.projectHeatmapData,
-                //"testAutomationPercentage" : data.projectHeatmapData,
+                //"testAutomationTestingPercentage" : data.projectHeatmapData.testAutomation.testAutomationTestingPercentage,
                 "designFocusStatus": data.projectHeatmapData.designFocus.designFocusStatus,
-                "productKnowledgeIndex": data.projectHeatmapData.productKnowledge.productKnowledgeIndex
+                "productKnowledgeIndex": data.projectHeatmapData.productKnowledge.productKnowledgeIndex,
+                "development":data.projectHeatmapData.teamSize.development,
+                "testing":data.projectHeatmapData.teamSize.testing
 
 
 
@@ -1036,7 +1082,7 @@
                 projectData.updateHeatMap(ctrl.updateHeatmapPayload, ctrl.objId).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="addHeatMap" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
+                        template: '<confirm-popup msg="updateHeatMap" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
