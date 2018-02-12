@@ -3,49 +3,51 @@
 
          <label class="control-label col-md-4 createproj-label-props" for="pwd">Open Defects by Severity</label>
          <div class="col-md-2">
-        <form-group input="Lowods">
+        <form-group input="Lowods" errors="{required: 'Release id is required'}">
             <input
-                type="number"
+                type="text"
                 name="Lowods"
                 class="form-control"
                 placeholder="Low"
                 ng-model="adc.lowPriorityDefectsCount"
-                min="0"
+                numbers-only
                />
-
+               <!-- <input type="number" name="comittedstorypoints" min="0" class="form-control" placeholder="Committed story points" ng-model="asc.sprintPayload.committedStoryPoints" /> -->
         </form-group>
         </div>
          <div class="col-md-2">
         <form-group input="Mediumods">
             <input
-                type="number"
+                type="text"
                 name="Mediumods"
                 class="form-control"
                 placeholder="Medium"
                 ng-model="adc.mediumPriorityDefectsCount"
+                numbers-only
              />
         </form-group>
         </div>
          <div class="col-md-2">
         <form-group input="Highods">
             <input
-                type="number"
+                type="text"
                 name="Highods"
                 class="form-control"
                 placeholder="High"
-                 ng-model="adc.highPriorityDefectsCount"
-                
+                ng-model="adc.highPriorityDefectsCount"
+                numbers-only
                />
         </form-group>
         </div>
          <div class="col-md-2">
         <form-group input="Criticalods">
             <input
-                type="number"
+                type="text"
                 name="Criticalods"
                 class="form-control"
                 placeholder="Critical"
                 ng-model="adc.criticalPriorityDefectsCount"
+                numbers-only
               />
         </form-group>
         </div>
@@ -55,11 +57,12 @@
          <div class="col-md-2">
         <form-group input="QAenv">
             <input
-                type="number"
+                type="text"
                 name="QAenv"
                 class="form-control"
                 placeholder="QA"
                 ng-model="adc.QA_DefectsCount"
+                numbers-only
                 />
 
         </form-group>
@@ -67,11 +70,12 @@
         <div class="col-md-2">
         <form-group input="UATenv">
             <input
-                type="number"
+                type="text"
                 name="UATenv"
                 class="form-control"
                 placeholder="UAT"
                  ng-model="adc.UAT_DefectsCount"
+                 numbers-only
                 />
 
         </form-group>
@@ -79,11 +83,12 @@
         <div class="col-md-2">
         <form-group input="Productionenv">
             <input
-                type="number"
+                type="text"
                 name="Productionenv"
                 class="form-control"
                 placeholder="Production"
                  ng-model="adc.PROD_DefectsCount"
+                 numbers-only
                 />
 
         </form-group>
@@ -97,11 +102,12 @@
          <div class="col-md-2">
         <form-group input="Low1">
             <input
-                type="number"
+                type="text"
                 name="Low1"
                 class="form-control"
                 placeholder="Low"
                  ng-model="adc.openDefectsWithLowPriorityAndAgeLessThanOrEQ15Days"
+                 numbers-only
               />
 
         </form-group>
@@ -109,11 +115,12 @@
          <div class="col-md-2">
         <form-group input="Medium1">
             <input
-                type="number"
+                type="text"
                 name="Medium1"
                 class="form-control"
                 placeholder="Medium"
                 ng-model="adc.openDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days"
+                numbers-only
                />
 
         </form-group>
@@ -121,11 +128,12 @@
          <div class="col-md-2">
         <form-group input="High1">
             <input
-                type="number"
+                type="text"
                 name="High1"
                 class="form-control"
                 placeholder="High"
                 ng-model="adc.openDefectsWithHighPriorityAndAgeLessThanOrEQ15Days"
+                numbers-only
                />
 
         </form-group>
@@ -133,11 +141,12 @@
          <div class="col-md-2">
         <form-group input="Critical1">
             <input
-                type="number"
+                type="text"
                 name="Critical1"
                 class="form-control"
                 placeholder="Critical"
                  ng-model="adc.openDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days"
+                 numbers-only
                />
 
         </form-group>
@@ -147,11 +156,12 @@
          <div class="col-md-2">
         <form-group input="Low2">
             <input
-                type="number"
+                type="text"
                 name="Low2"
                 class="form-control"
                 placeholder="Low"
                  ng-model="adc.openDefectsWithLowPriorityAndAgeBetween30To60Days"
+                 numbers-only
               />
 
         </form-group>
@@ -159,11 +169,12 @@
          <div class="col-md-2">
         <form-group input="Medium2">
             <input
-                type="number"
+                type="text"
                 name="Medium2"
                 class="form-control"
                 placeholder="Medium"
                  ng-model="adc.openDefectsWithMediumPriorityAndAgeBetween30To60Days"
+                 numbers-only
                />
 
         </form-group>
@@ -171,11 +182,12 @@
          <div class="col-md-2">
         <form-group input="High2">
             <input
-                type="number"
+                type="text"
                 name="High2"
                 class="form-control"
                 placeholder="High"
                  ng-model="adc.openDefectsWithHighPriorityAndAgeBetween30To60Days"
+                 numbers-only
                />
 
         </form-group>
@@ -183,11 +195,12 @@
          <div class="col-md-2">
         <form-group input="Critical2">
             <input
-                type="number"
+                type="text"
                 name="Critical2"
                 class="form-control"
                 placeholder="Critical"
                 ng-model="adc.openDefectsWithCriticalPriorityAndAgeBetween30To60Days"
+                numbers-only
                />
 
         </form-group>
@@ -199,11 +212,12 @@
          <div class="col-md-2">
         <form-group input="Low3">
             <input
-                type="number"
+                type="text"
                 name="Low3"
                 class="form-control"
                 placeholder="Low"
                 ng-model="adc.openDefectsWithLowPriorityAndAgeBetween15To30Days"
+                numbers-only
                />
 
         </form-group>
@@ -211,11 +225,12 @@
          <div class="col-md-2">
         <form-group input="Medium3">
             <input
-                type="number"
+                type="text"
                 name="Medium3"
                 class="form-control"
                 placeholder="Medium"
                 ng-model="adc.openDefectsWithMediumPriorityAndAgeBetween15To30Days"
+                numbers-only
                />
 
         </form-group>
@@ -223,11 +238,12 @@
          <div class="col-md-2">
         <form-group input="High3">
             <input
-                type="number"
+                type="text"
                 name="High3"
                 class="form-control"
                 placeholder="High"
                  ng-model="adc.openDefectsWithHighPriorityAndAgeBetween15To30Days"
+                 numbers-only
                />
 
         </form-group>
@@ -235,11 +251,12 @@
          <div class="col-md-2">
         <form-group input="Critical3">
             <input
-                type="number"
+                type="text"
                 name="Critical3"
                 class="form-control"
                 placeholder="Critical"
                  ng-model="adc.openDefectsWithCriticalPriorityAndAgeBetween15To30Days"
+                 numbers-only
                 />
 
         </form-group>
@@ -249,11 +266,12 @@
          <div class="col-md-2">
         <form-group input="Low3">
             <input
-                type="number"
+                type="text"
                 name="Low3"
                 class="form-control"
                 placeholder="Low"
                 ng-model="adc.openDefectsWithLowPriorityAndAgeBetween60To90Days"
+                numbers-only
                />
 
         </form-group>
@@ -261,11 +279,12 @@
          <div class="col-md-2">
         <form-group input="Medium3">
             <input
-                type="number"
+                type="text"
                 name="Medium3"
                 class="form-control"
                 placeholder="Medium"
               ng-model="adc.openDefectsWithMediumPriorityAndAgeBetween60To90Days"
+              numbers-only
                />
 
         </form-group>
@@ -273,11 +292,12 @@
          <div class="col-md-2">
         <form-group input="High3">
             <input
-                type="number"
+                type="text"
                 name="High3"
                 class="form-control"
                 placeholder="High"
                 ng-model="adc.openDefectsWithHighPriorityAndAgeBetween60To90Days"
+                numbers-only
                />
 
         </form-group>
@@ -285,11 +305,12 @@
          <div class="col-md-2">
         <form-group input="Critical3">
             <input
-                type="number"
+                type="text"
                 name="Critical3"
                 class="form-control"
                 placeholder="Critical"
                 ng-model="adc.openDefectsWithCriticalPriorityAndAgeBetween60To90Days"
+                numbers-only
                />
 
         </form-group>
@@ -299,11 +320,12 @@
          <div class="col-md-2">
         <form-group input="Low4">
             <input
-                type="number"
+                type="text"
                 name="Low4"
                 class="form-control"
                 placeholder="Low"
                 ng-model="adc.openDefectsWithLowPriorityAndAgeGreaterThan90"
+                numbers-only
                 />
 
         </form-group>
@@ -311,11 +333,12 @@
          <div class="col-md-2">
         <form-group input="Medium4">
             <input
-                type="number"
+                type="text"
                 name="Medium4"
                 class="form-control"
                 placeholder="Medium"
                 ng-model="adc.openDefectsWithMediumPriorityAndAgeGreaterThan90"
+                numbers-only
                 />
 
         </form-group>
@@ -323,11 +346,12 @@
          <div class="col-md-2">
         <form-group input="High4">
             <input
-                type="number"
+                type="text"
                 name="High4"
                 class="form-control"
                 placeholder="High"
                ng-model="adc.openDefectsWithHighPriorityAndAgeGreaterThan90"
+               numbers-only
               
                 />
 
@@ -336,11 +360,12 @@
          <div class="col-md-2">
         <form-group input="Critical4">
             <input
-                type="number"
+                type="text"
                 name="Critical4"
                 class="form-control"
                 placeholder="Critical"
                  ng-model="adc.openDefectsWithCriticalPriorityAndAgeGreaterThan90"
+                 numbers-only
                 />
 
         </form-group>
@@ -356,11 +381,12 @@
          <div class="col-md-2">
         <form-group input="Low5">
             <input
-                type="number"
+                type="text"
                 name="Low5"
                 class="form-control"
                 placeholder="Low"
                  ng-model="adc.fixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days"
+                 numbers-only
                 />
 
         </form-group>
@@ -368,11 +394,12 @@
          <div class="col-md-2">
         <form-group input="Medium5">
             <input
-                type="number"
+                type="text"
                 name="Medium5"
                 class="form-control"
                 placeholder="Medium"
                  ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days"
+                 numbers-only
                 />
 
         </form-group>
@@ -380,11 +407,12 @@
          <div class="col-md-2">
         <form-group input="High5">
             <input
-                type="number"
+                type="text"
                 name="High5"
                 class="form-control"
                 placeholder="High"
                  ng-model="adc.fixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days"
+                 numbers-only
                />
 
         </form-group>
@@ -392,11 +420,12 @@
          <div class="col-md-2">
         <form-group input="Critical5">
             <input
-                type="number"
+                type="text"
                 name="Critical5"
                 class="form-control"
                 placeholder="Critical"
               ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days"
+              numbers-only
                 />
 
         </form-group>
@@ -406,11 +435,12 @@
          <div class="col-md-2">
         <form-group input="Low6">
             <input
-                type="number"
+                type="text"
                 name="Low6"
                 class="form-control"
                 placeholder="Low"
                  ng-model="adc.fixedDefectsWithLowPriorityAndResolutionBetween30To60Days"
+                 numbers-only
                 />
 
         </form-group>
@@ -418,11 +448,12 @@
          <div class="col-md-2">
         <form-group input="Medium6">
             <input
-                type="number"
+                type="text"
                 name="Medium6"
                 class="form-control"
                 placeholder="Medium"
                ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionBetween30To60Days"
+               numbers-only
                />
 
         </form-group>
@@ -430,11 +461,12 @@
          <div class="col-md-2">
         <form-group input="High6">
             <input
-                type="number"
+                type="text"
                 name="High6"
                 class="form-control"
                 placeholder="High"
              ng-model="adc.fixedDefectsWithHighPriorityAndResolutionBetween30To60Days"
+             numbers-only
                 />
 
         </form-group>
@@ -442,11 +474,12 @@
          <div class="col-md-2">
         <form-group input="Critical6">
             <input
-                type="number"
+                type="text"
                 name="Critical6"
                 class="form-control"
                 placeholder="Critical"
               ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days"
+              numbers-only
                />
 
         </form-group>
@@ -458,11 +491,12 @@
          <div class="col-md-2">
         <form-group input="Low7">
             <input
-                type="number"
+                type="text"
                 name="Low7"
                 class="form-control"
                 placeholder="Low"
                ng-model="adc.fixedDefectsWithLowPriorityAndResolutionBetween15To30Days"
+               numbers-only
                />
 
         </form-group>
@@ -470,11 +504,12 @@
          <div class="col-md-2">
         <form-group input="Medium7">
             <input
-                type="number"
+                type="text"
                 name="Medium7"
                 class="form-control"
                 placeholder="Medium"
                ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionBetween15To30Days"
+               numbers-only
                 />
 
         </form-group>
@@ -482,11 +517,12 @@
          <div class="col-md-2">
         <form-group input="High7">
             <input
-                type="number"
+                type="text"
                 name="High7"
                 class="form-control"
                 placeholder="High"
                ng-model="adc.fixedDefectsWithHighPriorityAndResolutionBetween15To30Days"
+               numbers-only
                />
 
         </form-group>
@@ -494,11 +530,12 @@
          <div class="col-md-2">
         <form-group input="Critical7">
             <input
-                type="number"
+                type="text"
                 name="Critical7"
                 class="form-control"
                 placeholder="Critical"
                 ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days"
+                numbers-only
                 />
 
         </form-group>
@@ -508,11 +545,12 @@
          <div class="col-md-2">
         <form-group input="Low8">
             <input
-                type="number"
+                type="text"
                 name="Low8"
                 class="form-control"
                 placeholder="Low"
                 ng-model="adc.fixedDefectsWithLowPriorityAndResolutionBetween60To90Days"
+                numbers-only
                />
 
         </form-group>
@@ -520,11 +558,12 @@
          <div class="col-md-2">
         <form-group input="Medium8">
             <input
-                type="number"
+                type="text"
                 name="Medium8"
                 class="form-control"
                 placeholder="Medium"
                 ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionBetween60To90Days"
+                numbers-only
                 />
 
         </form-group>
@@ -532,11 +571,12 @@
          <div class="col-md-2">
         <form-group input="High8">
             <input
-                type="number"
+                type="text"
                 name="High8"
                 class="form-control"
                 placeholder="High"
                ng-model="adc.fixedDefectsWithHighPriorityAndResolutionBetween60To90Days"
+               numbers-only
              />
 
         </form-group>
@@ -544,11 +584,12 @@
          <div class="col-md-2">
         <form-group input="Critical8">
             <input
-                type="number"
+                type="text"
                 name="Critical8"
                 class="form-control"
                 placeholder="Critical"
              ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days"
+             numbers-only
                />
 
         </form-group>
@@ -558,11 +599,12 @@
          <div class="col-md-2">
         <form-group input="Low9">
             <input
-                type="number"
+                type="text"
                 name="Low9"
                 class="form-control"
                 placeholder="Low"
                ng-model="adc.fixedDefectsWithLowPriorityAndResolutionGreaterThan90"
+               numbers-only
                 />
 
         </form-group>
@@ -570,11 +612,12 @@
          <div class="col-md-2">
         <form-group input="Medium9">
             <input
-                type="number"
+                type="text"
                 name="Medium9"
                 class="form-control"
                 placeholder="Medium"
                 ng-model="adc.fixedDefectsWithMediumPriorityAndResolutionGreaterThan90"
+                numbers-only
                 />
 
         </form-group>
@@ -582,11 +625,12 @@
          <div class="col-md-2">
         <form-group input="High9">
             <input
-                type="number"
+                type="text"
                 name="High9"
                 class="form-control"
                 placeholder="High"
                 ng-model="adc.fixedDefectsWithHighPriorityAndResolutionGreaterThan90"
+                numbers-only
                />
 
         </form-group>
@@ -594,24 +638,25 @@
          <div class="col-md-2">
         <form-group input="Critical9">
             <input
-                type="number"
+                type="text"
                 name="Critical9"
                 class="form-control"
                 placeholder="Critical"
                  ng-model="adc.fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90"
+                 numbers-only
                 />
 
         </form-group>
         </div>
 
         </div>
-           <form-group>
+           
         <div class="button-row row" style="padding-left: 12px;">
             
               
                 <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Create</button>
                   <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
-        </div></form-group>
+        </div>
 
     </form>
 </widget-modal>

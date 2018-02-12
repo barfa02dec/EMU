@@ -7,7 +7,7 @@
       <div class="col-md-6">
          <form-group input="dashboardTitle" errors="{required: 'Release id is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
             <input
-               type="number"
+               type="text"
                name="dashboardTitle"
                class="form-control"
                placeholder="Release id"
@@ -15,6 +15,7 @@
                required
                maxlength="50"
                autocomplete="off"
+               numbers-only
                ng-pattern="/^[a-zA-Z0-9 ]*$/" disabled>
          </form-group>
       </div>
@@ -81,11 +82,12 @@
       <div class="col-md-6">
          <form-group input="stories1">
             <input
-               type="number"
+               type="text"
                name="stories1"
                class="form-control"
                placeholder="Number of stories"
                ng-model="urc.fetchReleasedetails.versionData.noofStoryPoints"
+               numbers-only
                /> 
             <!-- <div date-picker></div> -->
             <!-- <div date-picker timezone="Europe/London"></div> -->
@@ -96,11 +98,12 @@
       <div class="col-md-6">
          <form-group input="story2">
             <input
-               type="number"
+               type="text"
                name="story2"
                class="form-control"
                placeholder="Number of story points"
                ng-model="urc.fetchReleasedetails.versionData.noofStoryCompleted"
+               numbers-only
                />
          </form-group>
       </div>
@@ -119,44 +122,48 @@
       <div class="col-md-2">
          <form-group input="Critical1" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
             <input
-               type="number"
+               type="text"
                name="Critical1"
                class="form-control"
                placeholder="Critical"
                ng-model="urc.fetchReleasedetails.versionData.defectsFound.severity[3].value"
+               numbers-only
                />
          </form-group>
       </div>
       <div class="col-md-2">
          <form-group input="High1">
             <input
-               type="number"
+               type="text"
                name="High1"
                class="form-control"
                placeholder="High"
                ng-model="urc.fetchReleasedetails.versionData.defectsFound.severity[0].value"
+               numbers-only
                />
          </form-group>
       </div>
       <div class="col-md-2">
          <form-group input="Medium1">
             <input
-               type="number"
+               type="text"
                name="Medium1"
                class="form-control"
                placeholder="Medium"
                ng-model="urc.fetchReleasedetails.versionData.defectsFound.severity[2].value"
+               numbers-only
                />
          </form-group>
       </div>
       <div class="col-md-2">
          <form-group input="Low1">
             <input
-               type="number"
+               type="text"
                name="Low1"
                class="form-control"
                placeholder="Low"
                ng-model="urc.fetchReleasedetails.versionData.defectsFound.severity[1].value"
+               numbers-only
                />
          </form-group>
       </div>
@@ -164,44 +171,48 @@
       <div class="col-md-2">
          <form-group input="Critical2">
             <input
-               type="number"
+               type="text"
                name="Critical2"
                class="form-control"
                placeholder="Critical"
                ng-model="urc.fetchReleasedetails.versionData.defectsResolved.severity[3].value"
+               numbers-only
                />
          </form-group>
       </div>
       <div class="col-md-2">
          <form-group input="High2">
             <input
-               type="number"
+               type="text"
                name="High2"
                class="form-control"
                placeholder="High"
                ng-model="urc.fetchReleasedetails.versionData.defectsResolved.severity[0].value"
+               numbers-only
                />
          </form-group>
       </div>
       <div class="col-md-2">
          <form-group input="Medium2">
             <input
-               type="number"
+               type="text"
                name="Medium2"
                class="form-control"
                placeholder="Medium"
                ng-model="urc.fetchReleasedetails.versionData.defectsResolved.severity[2].value"
+               numbers-only
                />
          </form-group>
       </div>
       <div class="col-md-2">
          <form-group input="Low2">
             <input
-               type="number"
+               type="text"
                name="Low2"
                class="form-control"
                placeholder="Low"
                ng-model="urc.fetchReleasedetails.versionData.defectsResolved.severity[1].value"
+               numbers-only
                />
          </form-group>
       </div>
@@ -209,49 +220,53 @@
       <div class="col-md-2">
          <form-group input="Critical3">
             <input
-               type="number"
+               type="text"
                name="Critical3"
                class="form-control"
                placeholder="Critical"
                ng-model="urc.fetchReleasedetails.versionData.defectsUnresolved.severity[3].value"
+               numbers-only
                />
          </form-group>
       </div>
       <div class="col-md-2">
          <form-group input="High3">
             <input
-               type="number"
+               type="text"
                name="High3"
                class="form-control"
                placeholder="High"
                ng-model="urc.fetchReleasedetails.versionData.defectsUnresolved.severity[0].value"
+               numbers-only
                />
          </form-group>
       </div>
       <div class="col-md-2">
          <form-group input="Medium3">
             <input
-               type="number"
+               type="text"
                name="Medium3"
                class="form-control"
                placeholder="Medium"
                ng-model="urc.fetchReleasedetails.versionData.defectsUnresolved.severity[2].value"
+               numbers-only
                />
          </form-group>
       </div>
       <div class="col-md-2">
          <form-group input="Low3">
             <input
-               type="number"
+               type="text"
                name="Low3"
                class="form-control"
                placeholder="Low"
                ng-model="urc.fetchReleasedetails.versionData.defectsUnresolved.severity[1].value"
+               numbers-only
                />
          </form-group>
       </div>
       <div class="button-row row" style="padding-left: 12px;">
-         <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Create</button>
+         <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Update</button>
          <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
       </div>
    </form>

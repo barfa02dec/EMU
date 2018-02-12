@@ -17,6 +17,7 @@
                 required
                 maxlength="50"
                 autocomplete="off"
+                numbers-only
                 ng-pattern="/^[a-zA-Z0-9 ]*$/" disabled/>
         </form-group>
        
@@ -46,10 +47,11 @@
         </form-group> -->
          <form-group input="comittedstorypoints">
             <input
-                type="number"
+                type="text"
                 name="comittedstorypoints"
                 class="form-control"
                 placeholder="Committed story points"
+                numbers-only
                   ng-model="usc.fetchdetails.sprintData.committedStoryPoints"
               
                 />
@@ -57,11 +59,11 @@
         </form-group>
          <form-group input="comittedissuecount">
             <input
-                type="number"
+                type="text"
                 name="comittedissuecount"
                 class="form-control"
                 placeholder="Committed issue count"
-               
+                numbers-only
                  ng-model="usc.fetchdetails.sprintData.committedIssueCount"
                 />
 
@@ -71,11 +73,12 @@
          <div class="col-md-8">
          <form-group input="count">
             <input
-                type="number"
+                type="text"
                 name="count"
                 class="form-control"
                 placeholder="Count"
               ng-model="usc.fetchdetails.sprintData.burndown.issuesAdded.count"
+              numbers-only
                 />
 
         </form-group></div>
@@ -95,11 +98,12 @@
          <div class="col-md-8">
          <form-group input="countstoryremoved">
             <input
-                type="number"
+                type="text"
                 name="countstoryremoved"
                 class="form-control"
                 placeholder="Count"
                ng-model="usc.fetchdetails.sprintData.burndown.issuesRemoved.count"
+               numbers-only
                />
 
         </form-group></div>
@@ -138,22 +142,23 @@
         </form-group>
             <form-group input="completedstorypointscol2" >
             <input
-                type="number"
+                type="text"
                 name="completedstorypointscol2"
                 class="form-control"
                 placeholder="Completed story points"
-            
+                numbers-only
                ng-model="usc.fetchdetails.sprintData.completedStoryPoints"
                />
         </form-group>
 
         <form-group input="comittedissuecountcol2">
             <input
-                type="number"
+                type="text"
                 name="comittedissuecountcol2"
                 class="form-control"
                 placeholder="Completed issue count"
              ng-model="usc.fetchdetails.sprintData.completedIssueCount"
+             numbers-only
                />
         </form-group>
 
@@ -161,11 +166,12 @@
         <div class="col-md-2">
              <form-group input="criticalone">
             <input
-                type="number"
+                type="text"
                 name="criticalone"
                 class="form-control"
                 placeholder="Critical"
                ng-model="usc.fetchdetails.sprintData.defectsFound.severity[3].value"
+               numbers-only
                />
         </form-group>  
         </div>
@@ -173,11 +179,12 @@
          <div class="col-md-2">
              <form-group input="highone">
             <input
-                type="number"
+                type="text"
                 name="highone"
                 class="form-control"
                 placeholder="High"
                ng-model="usc.fetchdetails.sprintData.defectsFound.severity[0].value"
+               numbers-only
               />
         </form-group>  
         </div>
@@ -185,11 +192,12 @@
          <div class="col-md-2">
              <form-group input="mediumone">
             <input
-                type="number"
+                type="text"
                 name="mediumone"
                 class="form-control"
                 placeholder="Medium"
            ng-model="usc.fetchdetails.sprintData.defectsFound.severity[2].value"
+           numbers-only
                />
         </form-group>  
         </div>
@@ -197,11 +205,12 @@
          <div class="col-md-2">
              <form-group input="lowone">
             <input
-                type="number"
+                type="text"
                 name="lowone"
                 class="form-control"
                 placeholder="Low"
              ng-model="usc.fetchdetails.sprintData.defectsFound.severity[1].value"
+             numbers-only
                 />
         </form-group>  
         </div>
@@ -210,11 +219,12 @@
         <div class="col-md-2">
              <form-group input="Criticaltwo">
             <input
-                type="number"
+                type="text"
                 name="Criticaltwo"
                 class="form-control"
                 placeholder="Critical"
                 ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[3].value"
+                numbers-only
                />
         </form-group>  
         </div>
@@ -222,11 +232,12 @@
          <div class="col-md-2">
              <form-group input="Hightwo">
             <input
-                type="number"
+                type="text"
                 name="Hightwo"
                 class="form-control"
                 placeholder="High"
                    ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[0].value"
+                   numbers-only
                />
         </form-group>  
         </div>
@@ -234,11 +245,12 @@
          <div class="col-md-2">
              <form-group input="Mediumtwo">
             <input
-                type="number"
+                type="text"
                 name="Mediumtwo"
                 class="form-control"
                 placeholder="Medium"
                  ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[2].value"
+                 numbers-only
                />
         </form-group>  
         </div>
@@ -246,11 +258,12 @@
          <div class="col-md-2">
              <form-group input="Lowtwo">
             <input
-                type="number"
+                type="text"
                 name="Lowtwo"
                 class="form-control"
                 placeholder="Low"
               ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[1].value"
+              numbers-only
                />
         </form-group>  
         </div>
@@ -259,11 +272,12 @@
         <div class="col-md-2">
              <form-group input="Criticalthree">
             <input
-                type="number"
+                type="text"
                 name="Criticalthree"
                 class="form-control"
                 placeholder="Critical"
                 ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[3].value"
+                numbers-only
                />
         </form-group>  
         </div>
@@ -271,11 +285,12 @@
          <div class="col-md-2">
              <form-group input="Highthree">
             <input
-                type="number"
+                type="text"
                 name="Highthree"
                 class="form-control"
                 placeholder="High"
                   ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[0].value"
+                  numbers-only
                />
         </form-group>  
         </div>
@@ -283,11 +298,12 @@
          <div class="col-md-2">
              <form-group input="Mediumthree">
             <input
-                type="number"
+                type="text"
                 name="Mediumthree"
                 class="form-control"
                 placeholder="Medium"
                  ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[2].value"
+                 numbers-only
                />
         </form-group>  
         </div>
@@ -295,11 +311,12 @@
          <div class="col-md-2">
              <form-group input="Lowthree">
             <input
-                type="number"
+                type="text"
                 name="Lowthree"
                 class="form-control"
                 placeholder="Low"
               ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[1].value"
+              numbers-only
               />
         </form-group>  
         </div>

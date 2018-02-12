@@ -51,7 +51,8 @@
 			ReleaseData:ReleaseDataFetch,
 			updateSprintDta:updateSprintDta,
 			getLatestSprint:getLatestSprint,
-			updateReleaseDta:updateReleaseDta
+			updateReleaseDta:updateReleaseDta,
+			heatMapData:heatMapData
 		};
 		
 		function aggregateSprintEstimates(componentId, filterTeamId, filterProjectId, estimateMetricType, agileType) {
@@ -65,14 +66,14 @@
 
 		function jiraDataGer(filterProjectId,projectsname) { 
 			 
-			return $http.get('/api/getDefectSummery/' +filterProjectId + "/" + projectsname)
+			return $http.get('/api/defectSummary/' +filterProjectId + "/" + projectsname)
 					.then(function(response) {
 						return response.data;
 					});
 		}
 		function sprintDataFetch(filterProjectId,projectsname) {  
 			 
-			return $http.get('/api/listAllSprints?projectId=' +filterProjectId + "&projectName=" + projectsname + "&noOfSprintToShow=" + "6")
+			return $http.get('/api/sprints?projectId=' +filterProjectId + "&projectName=" + projectsname + "&noOfSprintToShow=" + "6")
 					.then(function(response) { 
 						return response.data;
 					});
@@ -80,7 +81,7 @@
 
 		function updateSprintDta(sprintid,projectid) {  
 			 
-			return $http.get('/api/sprintDetails?sid=' +projectid + "&projectId=" + sprintid)
+			return $http.get('/api/sprints/details?sid=' +projectid + "&projectId=" + sprintid)
 					.then(function(response) { 
 						return response.data;
 					});
@@ -88,7 +89,7 @@
 
 		function getLatestSprint(sidd,pidd) {  
 			 
-			return $http.get('/api/sprintDetails?sid=' +sidd+ "&projectId=" + pidd)
+			return $http.get('/api/details?sid=' +sidd+ "&projectId=" + pidd)
 					.then(function(response) { 
 						return response.data;
 					});
@@ -96,7 +97,7 @@
 		
 		function ReleaseDataFetch(filterProjectId,projectsname) {  
 			 
-			return $http.get('/api/projectReleaseList?projectId=' + filterProjectId + "&projectName=" + projectsname)
+			return $http.get('/api/releases?projectId=' + filterProjectId + "&projectName=" + projectsname + "&noOfReleaseToShow=" + "6")
 					.then(function(response) { 
 						return response.data;
 					});
@@ -177,10 +178,18 @@
 		}
 		
 		function updateReleaseDta(releaseId,projectId) {  
-			return $http.get('/api/releaseDetails?releaseId=' +releaseId + "&projectId=" + projectId)
+			return $http.get('/api/releases/details?releaseId=' +releaseId + "&projectId=" + projectId)
 					.then(function(response) { 
 						return response.data;
 					});
 		}
+
+		 function heatMapData(projectid) {
+            
+             return   $http.get("/api/getheatmaps/?projectId=" + projectid + '&noOfHeatMapToShow=' + 3)
+                    .then(function(response) {
+                       return response.data;
+                    });
+        }
 	}
 })();

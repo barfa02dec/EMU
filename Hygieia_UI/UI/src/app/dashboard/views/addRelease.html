@@ -7,7 +7,7 @@
     <form name="cdf" class="form" ng-submit="arc.postRelease()" novalidate ng-if="arc.normalformText">
         <div class="col-md-6">
             <form-group input="dashboardTitle" errors="{required: 'Release id is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
-                <input type="number" name="dashboardTitle" class="form-control" placeholder="Release id" ng-model="arc.releaseId" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
+                <input type="text" name="dashboardTitle" numbers-only class="form-control" placeholder="Release id" ng-model="arc.releaseId" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
             </form-group>
         </div>
         <div class="col-md-6">
@@ -19,7 +19,7 @@
             <form-group input="date1">
                 <datepicker date-format="yyyy-MM-dd" selector="form-control" date-max-limit="{{arc.releaseDate}}">
                     <div class="input-group">
-                        <input class="form-control font-fontawesome font-light" ng-model="arc.startDate" name="date1" placeholder="  Start date" required/>
+                        <input class="form-control font-fontawesome font-light" datepicker-validation ng-model="arc.startDate" name="date1" placeholder="  Start date" required/>
                     </div>
                 </datepicker>
             </form-group>
@@ -28,14 +28,16 @@
             <form-group input="date2">
                 <datepicker date-format="yyyy-MM-dd" selector="form-control" date-min-limit="{{arc.startDate}}">
                     <div class="input-group">
-                        <input class="form-control font-fontawesome font-light" ng-model="arc.releaseDate" name="date2" placeholder="  Release date" required/>
+                        <input class="form-control font-fontawesome font-light" datepicker-validation ng-model="arc.releaseDate" name="date2" placeholder="  Release date" required/>
                     </div>
                 </datepicker>
             </form-group>
         </div>
         <div class="col-md-6">
             <form-group input="Status1">
-                <select ng-options="o.value as o.label for o in options" ng-model="arc.released" class="form-control"></select>
+                <select ng-options="o.value as o.label for o in options" ng-model="arc.released" class="form-control">
+                     <option value="" disabled selected hidden>Choose a value</option>
+                </select>
             </form-group>
         </div>
         <!-- <div class="col-md-12">
@@ -51,7 +53,7 @@
       </div> -->
         <div class="col-md-6">
             <form-group input="stories1">
-                <input type="number" name="stories1" class="form-control" placeholder="Number of stories" ng-model="arc.noofStoryCommitted" />
+                <input type="text" name="stories1" numbers-only class="form-control" placeholder="Number of stories" ng-model="arc.noofStoryCommitted" />
                 <!-- <div date-picker></div> -->
                 <!-- <div date-picker timezone="Europe/London"></div> -->
                 <!-- <input date-time id="pickerToUpdate">
@@ -60,7 +62,7 @@
         </div>
         <div class="col-md-6">
             <form-group input="story2">
-                <input type="number" name="story2" class="form-control" placeholder="Number of story points" ng-model="arc.noofStoryCompleted" />
+                <input type="text" name="story2" numbers-only class="form-control" placeholder="Number of story points" ng-model="arc.noofStoryCompleted" />
             </form-group>
         </div>
         <!-- <div class="col-md-4">
@@ -77,64 +79,64 @@
         <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Found</label>
         <div class="col-md-2">
             <form-group input="Critical1" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
-                <input type="number" name="Critical1" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsFound" />
+                <input type="text" numbers-only name="Critical1" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsFound" />
             </form-group>
         </div>
         <div class="col-md-2">
             <form-group input="High1">
-                <input type="number" name="High1" class="form-control" placeholder="High" ng-model="arc.highDefectsFound" />
+                <input type="text" numbers-only name="High1" class="form-control" placeholder="High" ng-model="arc.highDefectsFound" />
             </form-group>
         </div>
         <div class="col-md-2">
             <form-group input="Medium1">
-                <input type="number" name="Medium1" class="form-control" placeholder="Medium" ng-model="arc.mediumDefectsFound" />
+                <input type="text" numbers-only name="Medium1" class="form-control" placeholder="Medium" ng-model="arc.mediumDefectsFound" />
             </form-group>
         </div>
         <div class="col-md-2">
             <form-group input="Low1">
-                <input type="number" name="Low1" class="form-control" placeholder="Low" ng-model="arc.lowDefectsFound" />
+                <input type="text" numbers-only name="Low1" class="form-control" placeholder="Low" ng-model="arc.lowDefectsFound" />
             </form-group>
         </div>
         <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Closed</label>
         <div class="col-md-2">
             <form-group input="Critical2">
-                <input type="number" name="Critical2" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsClosed" />
+                <input type="text" numbers-only name="Critical2" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsClosed" />
             </form-group>
         </div>
         <div class="col-md-2">
             <form-group input="High2">
-                <input type="number" name="High2" class="form-control" placeholder="High" ng-model="arc.highDefectsClosed" />
+                <input type="text" numbers-only name="High2" class="form-control" placeholder="High" ng-model="arc.highDefectsClosed" />
             </form-group>
         </div>
         <div class="col-md-2">
             <form-group input="Medium2">
-                <input type="number" name="Medium2" class="form-control" placeholder="Medium" ng-model="arc.mediumDefectsClosed" />
+                <input type="text" numbers-only name="Medium2" class="form-control" placeholder="Medium" ng-model="arc.mediumDefectsClosed" />
             </form-group>
         </div>
         <div class="col-md-2">
             <form-group input="Low2">
-                <input type="number" name="Low2" class="form-control" placeholder="Low" ng-model="arc.lowDefectsClosed" />
+                <input type="text" numbers-only name="Low2" class="form-control" placeholder="Low" ng-model="arc.lowDefectsClosed" />
             </form-group>
         </div>
         <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Unresolved</label>
         <div class="col-md-2">
             <form-group input="Critical3">
-                <input type="number" name="Critical3" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsUnresolved" />
+                <input type="text" numbers-only name="Critical3" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsUnresolved" />
             </form-group>
         </div>
         <div class="col-md-2">
             <form-group input="High3">
-                <input type="number" name="High3" class="form-control" placeholder="High" ng-model="arc.highDefectsUnresolved" />
+                <input type="text" numbers-only name="High3" class="form-control" placeholder="High" ng-model="arc.highDefectsUnresolved" />
             </form-group>
         </div>
         <div class="col-md-2">
             <form-group input="Medium3">
-                <input type="number" name="Medium3" class="form-control" placeholder="Medium" ng-model="arc.mediumDefectsUnresolved" />
+                <input type="text" numbers-only name="Medium3" class="form-control" placeholder="Medium" ng-model="arc.mediumDefectsUnresolved" />
             </form-group>
         </div>
         <div class="col-md-2">
             <form-group input="Low3">
-                <input type="number" name="Low3" class="form-control" placeholder="Low" ng-model="arc.lowDefectsUnresolved" />
+                <input type="text" numbers-only name="Low3" class="form-control" placeholder="Low" ng-model="arc.lowDefectsUnresolved" />
             </form-group>
         </div>
         <div class="button-row row" style="padding-left: 12px;">

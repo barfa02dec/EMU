@@ -1,0 +1,524 @@
+<widget-modal class="border-prop-modals">
+  <form name="cdf" class="form" ng-submit="uhc.updateHeatMap()" novalidate>
+    <div class="widget-modal-heading">{{uhc.title}}</div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Submission month:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="dashboardTitle">
+          <input type="text" name="dashboardTitle" class="form-control" ng-model="uhc.updateHeatmapPayload.submissionDate | date:'MM/dd/yyyy'" maxlength="50"
+            autocomplete="off" minlength="6" disabled />
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Enter date of Submission month" data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Development Team Size:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName">
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.development" maxlength="50" autocomplete="off"
+          />
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Enter the&#013;Development&#013;Team Size"
+        data-toggle="tooltip">
+    </div>
+    <div>
+
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Product knowledge:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName">
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.productKnowledgeIndex"
+            maxlength="50" autocomplete="off" />
+        </form-group>
+      </div>
+    </div>
+
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Use Product Knowledge assessment &#013; worksheet to assess the Team Product &#013; Knowledge"
+        data-toggle="tooltip">
+    </div>
+
+
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Testing Team Size:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName">
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.testing" maxlength="50" autocomplete="off"
+          />
+        </form-group>
+      </div>
+    </div>
+
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Enter the&#013;Testing&#013; Team Size"
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Requirments:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.requirementsStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
+          </select>
+        </form-group>
+      </div>
+    </div>
+
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Is there clarity on requirements of&#013;the project? Are the requirements&#013;captured documented,reviewed and&#013;signed off by the customer? Do we&#013;have clear understanding of the&#013;acceptance criteria(FR/NFR)&#013;for the project."
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Domain Knowledge:</label>
+      </div>
+
+      <div class="col-md-3">
+        <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.domainKnowlwdgeStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
+          </select>
+        </form-group>
+      </div>
+    </div>
+
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Does the&#013;team have&#013;required&#013;Domain&#013;Knowledge / &#013;Customer&#013;Business&#013;Knowledge?&#013;Are Gaps&#013;identified and&#013;Training Plan&#013;in place to&#013;fill the Gaps?"
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Arcitecture Focus:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.architectureFocusStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
+          </select>
+        </form-group>
+      </div>
+    </div>
+
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Is the project getting required&#013;Architectural review or support?&#013;Is the architecture documented?"
+        data-toggle="tooltip">
+    </div>
+
+
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Design Focus:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.designFocusStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
+          </select>
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Is design&#013;activity&#013;carried out&#013;separately and&#013;documented?&#013;Is the design&#013;reviewed and&#013;review&#013;comments&#013;tracked to&#013;closure?"
+        data-toggle="tooltip">
+    </div>
+
+
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Static code analysis:</label>
+      </div>
+
+      <div class="col-md-3">
+        <form-group input="applicationName">
+          <input type="text" name="applicationName" ng-model="uhc.updateHeatmapPayload.staticCodeAnalysisIndex" numbers-only class="form-control" maxlength="50" autocomplete="off" />
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Index= 5*(# of Blocker)+3* &#013; (Critical)+2* (Major)+ 1* (Minor)+ 0.5* &#013; (Trivial)/ (Total #  of defects). Note: &#013; For inherited code we need to make sure &#013; that we baseline the code. Index &#013; would be calculated for new Defects. &#013; Also there needs to be plan in &#013; place to fix the old defects"
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Manual Code Review:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.manualCodeReviewStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
+          </select>
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Is Manual&#013;code review done&#013;and review&#013;defects captured&#013;and tracked&#013;to closure?"
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Automated Unit Testing:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+          <!--   <select style="font-family:'FontAwesome',Arial;" class="form-control" ng-options="c.value as c.name for c in color" ng-model="hmc.heatMapPayload.automatedUnitTestingStatus">  
+              <option value="" disabled selected hidden>Automated Unit Testing</option>
+            </select> -->
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.automatedUnitTestingStatus"
+            maxlength="50" autocomplete="off" />
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Is Unit Testing being&#013;done in a Formal manner.&#013;If yes are the Test cases&#013;and results recorded?"
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Code coverage(%):</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName">
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.codeCoveragePercentage"
+            maxlength="50" autocomplete="off" />
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Percentage&#013;Code&#013;Coverage" data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Continous integration:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName">
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.continuousIntegrationIndex"
+            maxlength="50" autocomplete="off" />
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="5|If there Primary build for&#013;every check in and Build Failure&#013;are monitored.QA takes build generated&#013;by CI 3|If there is Daily Build and&#013;Build Failure is monitored.QA takes build&#013;generated by CI 2|Build is triggered&#013;Manually on Need Basis. QA takes build&#013;generated by CI 1|Devops setup is&#013;done and not used.0|Manual Build5:&#013;If there Primary build for every check&#013;in and Build Failure are monitored.&#013;QA takes build generated by CI"
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Testing Process:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.testingProcessStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
+          </select>
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Are test cases&#013;captured and&#013;linked to&#013;requirements?&#013;Are test results&#013;formally&#013;documented?&#013;Are we using&#013;defect&#013;management&#013;system&#013;effectively?"
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Performance assessment:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName">
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.performanceAssessmentPercentage"
+            maxlength="50" autocomplete="off" />
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Number of Performance Goals&#013;Compliant/Total Number of&#013;Performance Goals"
+        data-toggle="tooltip">
+    </div>
+
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Security assessment:</label>
+      </div>
+
+      <div class="col-md-3">
+        <form-group input="applicationName">
+          <input type="text" name="applicationName" numbers-only class="form-control" ng-model="uhc.updateHeatmapPayload.securityAssessmentIndex"
+            maxlength="50" autocomplete="off" />
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Index=5*&#013;(# of Blocker)&#013;+3*(Critical)+&#013;2*(Major)+&#013;1*(Minor)+&#013;0.5*(Trivial)/&#013;(# of defects). &#013;Note: For &#013;inherited code &#013;we need to &#013;make sure that &#013;we baseline the&#013;code.Index&#013;would be&#013;calculated for&#013;new Defects. &#013;Also there &#013;needs to be &#013;plan in place to&#013;fix the old&#013;defects."
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Test automation:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName">
+          <input type="text" name="applicationName" numbers-only class="form-control" maxlength="50" autocomplete="off" />
+        </form-group>
+      </div>
+    </div>
+
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Is Unit Testing being done&#013;in a Formal manner. If&#013;yes are the Test cases and&#013;results recorded?"
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Release Process:</label>
+      </div>
+
+      <div class="col-md-3">
+        <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.releaseProcessStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
+          </select>
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Is formal&#013;Release&#013;process&#013;being&#013;followed?"
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Metrics:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.metricsStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
+          </select>
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Are adequate metrics being&#013;captured for the project?&#013;Do we review the metrics&#013;with customer?"
+        data-toggle="tooltip">
+    </div>
+    <div>
+      <div class="col-md-2">
+        <label class="control-label createproj-label-props">Customer WSR:</label>
+      </div>
+      <div class="col-md-3">
+        <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
+          <select class="form-control fa" ng-model="uhc.updateHeatmapPayload.customerWSRStatus">
+             <option value="" disabled selected hidden></option>
+            <option value="Green" style="color:#008000"> &#xf1fc; Green</option>
+            <option value="Amber" style="color:#FFBF00"> &#xf1fc; Amber</option>
+            <option value="Red" style="color:#FF0000"> &#xf1fc; Red</option>
+            <option value="NA"> &#xf1fc; NA</option>
+          </select>
+        </form-group>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Are Customer&#013;weekly status&#013;report shared&#013;with the&#013;customer on&#013;weekly basis?"
+        data-toggle="tooltip">
+    </div>
+    <div class="col-md-6 fa" style="padding-top:10px;">
+      <div class="col-md-2">
+        <div class="col-md-1">
+          <div value="Green" style="color:#008000"> &#xf1fc;</div>
+        </div>
+        <div class="col-md-1">
+          <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Green-Done | Is the process&#013;carried out on a regular basis? |&#013;Sufficient artifacts are available |&#013;Process has been reviewed"
+            data-toggle="tooltip">
+        </div>
+      </div>
+      <div class="col-md-2">
+
+        <div class="col-md-2">
+          <div value="Amber" style="color:#FFBF00"> &#xf1fc;</div>
+        </div>
+        <div class="col-md-1">
+          <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Amber-WIP | Process is carried&#013;out on sporadic basis.&#013;Implementation is not uniform&#013;across the team | Required&#013;artifacts are absent or not&#013;updated on a regular basis |&#013;There are known weaknesses in&#013;the process and needs to be improved"
+            data-toggle="tooltip">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="col-md-1">
+          <div value="Red" style="color:#FF0000"> &#xf1fc;</div>
+        </div>
+        <div class="col-md-1">
+          <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Not implemented-Not Done&#013;| Process is not initiated in the&#013;project | Required  artifacts are not&#013;captured or saved| No other evidence&#013;to support the implementation"
+            data-toggle="tooltip">
+        </div>
+      </div>
+    </div>
+    <form-group>
+      <div class="button-row row" style="padding-left: 12px;">
+
+
+        <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Update</button>
+        <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
+      </div>
+    </form-group>
+  </form>
+
+  <div class="" ng-click="hmc.hideForm()">
+    <hr>
+    <span ng-if="hmc.prevHeader" style="cursor: pointer;">
+      <img src="assets/images/arrow_right.png" style="vertical-align: sub"> View list of Heat Map</span>
+    <div class="" ng-if="hmc.prevousText">
+
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr style="font-weight:400;font-size:11px">
+            <th>Selected Month</th>
+            <th ng-repeat="heatmap in hmc.heatMapDetails">
+              <span>{{heatmap.submissionDate | date}}</span>
+              <span ng-click="hmc.updateHeatMap(heatmap)">EDIT</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="font-props">
+            <td>Domain Knowledge</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              <span class="{{val.projectHeatmapData.domainKnowledge.domainKnowledgeStatus}}-color"></span>
+            </td>
+          </tr>
+          <tr class="font-props">
+            <td>Requirements</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              <span class="{{val.projectHeatmapData.requirements.requirementsStatus}}-color"></span>
+            </td>
+          </tr>
+
+          <tr class="font-props">
+            <td>Code Coverage</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              {{val.projectHeatmapData.codeCoverage.codeCoveragePercentage}}
+
+            </td>
+          </tr>
+
+          <tr class="font-props">
+            <td>Architrcture Focus</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              <span class="{{val.projectHeatmapData.architectureFocus.architectureFocusStatus}}-color"></span>
+            </td>
+          </tr>
+
+          <tr class="font-props">
+            <td>Security Assessment</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              {{val.projectHeatmapData.securityAssessment.securityAssessmentIndex}}
+            </td>
+          </tr>
+
+          <tr class="font-props">
+            <td>Automated Unit Testing</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              {{val.projectHeatmapData.automatedUnitTesting.automatedUnitTestingStatus}}
+            </td>
+          </tr>
+
+          <tr class="font-props">
+            <td>Metrics Status</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              {{val.projectHeatmapData.metrics.metricsStatus}}
+            </td>
+          </tr>
+
+          <tr class="font-props">
+            <td>Design Focus</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              <span class="{{val.projectHeatmapData.designFocus.designFocusStatus}}-color"></span>
+            </td>
+          </tr>
+
+          <tr class="font-props">
+            <td>Testing Process</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              <span class="{{val.projectHeatmapData.testingProcess.testingProcessStatus}}-color"></span>
+            </td>
+          </tr>
+
+
+          <tr class="font-props">
+            <td>Release Process</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              <span class="{{val.projectHeatmapData.releaseProcess.releaseProcessStatus}}-color"></span>
+            </td>
+          </tr>
+
+          <tr class="font-props">
+            <td>Customer WSR</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              <span class="{{val.projectHeatmapData.customerWSR.customerWSRStatus}}-color"></span>
+            </td>
+          </tr>
+
+          <tr class="font-props">
+            <td>Performance Assessment</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              {{val.projectHeatmapData.performanceAssessment.performanceAssessmentPercentage}}
+            </td>
+          </tr>
+
+          <tr class="font-props">
+            <td>Manual Code Review</td>
+            <td data-ng-repeat="val in hmc.heatMapDetails">
+              <span class="{{val.projectHeatmapData.manualCodeReview.manualCodeReviewStatus}}-color"></span>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div ng-click="hmc.showForm()">
+    <span ng-if="!hmc.prevHeader" style="cursor: pointer;">
+      <img src="assets/images/arrow_right.png" style="vertical-align: sub"> Add Heat Map</span>
+  </div>
+</widget-modal>

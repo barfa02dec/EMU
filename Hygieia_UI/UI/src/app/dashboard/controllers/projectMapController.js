@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -26,19 +26,19 @@
         $scope.curPage = 0;
         ctrl.pageSize = 5;
 
-        
+
         $scope.adduser = "User created succcessfully";
-        
+
         $scope.addSprint = "Sprint added succcessfully";
-        
+
         $scope.updateSprint = "Sprint updated succcessfully";
-    
+
         $scope.addRelease = "Release added succcessfully";
-        
+
         $scope.updateRelease = "Release updated succcessfully";
-        
+
         $scope.addDefect = "Defect added succcessfully";
-        
+
         $scope.updateDefect = "Defect updated succcessfully";
 
         $scope.postProject = "Project created successfully";
@@ -50,21 +50,24 @@
         $scope.validationrequired = "Field cannot be empty";
 
         $scope.editConfirm = "Project updated successfully";
-        
 
-        $scope.confirmButton = function() {
+        $scope.addHeatMap = "Heatmap added succcessfully";
+
+        $scope.updateHeatMap = "Heatmap updated successfully";
+
+        $scope.confirmButton = function () {
             alert("asas");
             $scope.$modalInstance.close();
             $scope.$modalInstance.dismiss('cancel');
         };
 
-        $scope.cancel = function() {
-        $scope.$modalInstance.dismiss('cancel');
+        $scope.cancel = function () {
+            $scope.$modalInstance.dismiss('cancel');
         };
 
 
         //Get All Projects
-        projectData.fetchallprojects(ctrl.usernamepro).then(function(response) {
+        projectData.fetchallprojects(ctrl.usernamepro).then(function (response) {
             ctrl.getAllProjects = response;
             ctrl.numberOfPages = Math.ceil(ctrl.getAllProjects.length / ctrl.pageSize);
             ctrl.sysadmincheck = $cookies.get('sysAdmin');
@@ -95,18 +98,18 @@
             }
         });
 
-        
-        
 
-        angular.module(HygieiaConfig.module).filter('pagination', function() {
-            return function(input, start) {
+
+
+        angular.module(HygieiaConfig.module).filter('pagination', function () {
+            return function (input, start) {
                 start = +start;
                 return input.slice(start);
             };
         });
 
         //open create Project Modal
-        ctrl.createDashboard = function() {
+        ctrl.createDashboard = function () {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/createProject.html',
                 controller: postProjetController,
@@ -116,17 +119,17 @@
         }
 
         //open add user Modal
-        ctrl.shareProjectPopUp = function(prob) {
+        ctrl.shareProjectPopUp = function (prob) {
             ctrl.ProObjData = prob;
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/shareProject.html',
                 controller: shareProjectController,
                 controllerAs: 'spc',
                 resolve: {
-                    proid: function() {
+                    proid: function () {
                         return prob.projectId;
                     },
-                    id: function() {
+                    id: function () {
                         return prob.id;
                     }
 
@@ -142,23 +145,23 @@
             sp.id = id;
             sp.usernameproject = $cookies.get('username');
             //Fetch all users
-            projectData.fetchallusers(sp.id).then(function(response) {
+            projectData.fetchallusers(sp.id).then(function (response) {
                 sp.getUserMaps = response;
             });
 
             //Fetch all dashboards
-            projectData.fetchalldashboard(sp.usernameproject, sp.id).then(function(response) {
+            projectData.fetchalldashboard(sp.usernameproject, sp.id).then(function (response) {
                 response.data.selectedItemsDashboard = [];
                 sp.getdashboards = response.data;
             });
 
             //Fetch all roles that is displayed in dual list
-            projectData.fetchallroles().then(function(response) {
+            projectData.fetchallroles().then(function (response) {
                 response.data.selectedItems = [];
                 sp.getRolesKey = response.data;
             });
 
-            sp.shareProjects = function(prob) {
+            sp.shareProjects = function (prob) {
                 var aa = sp.selected;
                 sp.projectId = proid;
                 sp.projectUserPayl = {
@@ -168,7 +171,7 @@
                     "dashboardsToAssign": sp.getdashboards.selectedItemsDashboard
                 }
                 if (sp.getRolesKey.selectedItems != 0) {
-                    $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function(response) {
+                    $http.post("/api/projectUsersMapping", (sp.projectUserPayl)).then(function (response) {
                         $uibModalInstance.dismiss("cancel");
                         $route.reload();
                         $uibModal.open({
@@ -187,7 +190,7 @@
             };
 
             //Adding Role to User Dual List Functionality
-            sp.transfer = function(from, to, index) {
+            sp.transfer = function (from, to, index) {
                 if (index >= 0) {
                     to.push(from[index]);
                     from.splice(index, 1);
@@ -201,8 +204,8 @@
         }
 
         //Enable Edit
-        ctrl.enableEditor = function(vall) {
-            angular.forEach(ctrl.getAllProjects, function(value, key) {
+        ctrl.enableEditor = function (vall) {
+            angular.forEach(ctrl.getAllProjects, function (value, key) {
                 if (value.id === vall) {
                     value.editorEnabled = true;
                 }
@@ -210,12 +213,12 @@
         };
 
         //Disable Edit
-        ctrl.disableEditor = function() {
+        ctrl.disableEditor = function () {
             ctrl.editorEnabled = false;
         };
 
         //Edit Project 
-        ctrl.editproject = function(info) {
+        ctrl.editproject = function (info) {
             console.log(info);
             ctrl.usernamepro = $cookies.get('username');
             ctrl.editPayload = {
@@ -235,14 +238,14 @@
             var qahost = 'http://10.20.1.183:3000';
             if ((info.businessUnit) && (info.projectId) && (info.client) && (info.projectOwner)) {
                 if ((info.businessUnit.length >= 3) && (info.projectId.length >= 3) && (info.client.length >= 3) && (info.projectOwner.length >= 3) && (info.program.length >= 3)) {
-                    projectData.editprojectfn(ctrl.editPayload).then(function(response) {
+                    projectData.editprojectfn(ctrl.editPayload).then(function (response) {
                         $uibModal.open({
                             template: '<confirm-popup msg="editConfirm" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                             controller: 'projectMapController',
                             controllerAs: 'pm'
                         });
 
-                    }, function(response) {
+                    }, function (response) {
                         if (response.status > 204 && response.status <= 500) {
                             info.editorEnabled = true;
                             alert("Server Error");
@@ -268,14 +271,14 @@
         }
 
         //logout functionality
-        ctrl.logout = function() {
+        ctrl.logout = function () {
             $cookieStore.remove("username");
             $cookieStore.remove("authenticated");
             $location.path('/');
         };
 
         //Open Delete Project Modal
-        ctrl.deleteProjectModel = function(pro) {
+        ctrl.deleteProjectModel = function (pro) {
             console.log(pro);
             ctrl.proData = pro;
             $uibModal.open({
@@ -283,7 +286,7 @@
                 controller: delProjetController,
                 controllerAs: 'dpc',
                 resolve: {
-                    pid: function() {
+                    pid: function () {
                         return pro.id;
                     }
                 }
@@ -293,8 +296,8 @@
         //Delete Project Functionality
         function delProjetController($uibModalInstance, pid, $route) {
             var dpmObj = this;
-            dpmObj.deleteProjects = function(pro) {
-                projectData.deleteProjectsfn(pid).then(function(response) {
+            dpmObj.deleteProjects = function (pro) {
+                projectData.deleteProjectsfn(pid).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $route.reload();
                     $uibModal.open({
@@ -321,11 +324,11 @@
                 "program": ctrl.program,
                 "user": dpmObjpos.usernamepro
             }
-            dpmObjpos.postProject = function() {
+            dpmObjpos.postProject = function () {
                 var apiHost = 'http://localhost:3000';
                 if (dpmObjpos.createProModel.$valid == true) {
 
-                    projectData.postProjectfn(dpmObjpos.payl).then(function(response) {
+                    projectData.postProjectfn(dpmObjpos.payl).then(function (response) {
                         $route.reload();
                         $uibModalInstance.dismiss("cancel");
                         $uibModal.open({
@@ -334,7 +337,7 @@
                             controllerAs: 'pm'
                         });
 
-                    }, function(response) {
+                    }, function (response) {
                         if (response.status == 409) {
                             $uibModal.open({
                                 templateUrl: 'app/dashboard/views/ConfirmationModals/createErrorModal.html',
@@ -344,13 +347,13 @@
                         }
                     })
 
-                } else {}
+                } else { }
             };
         }
 
         //Show List of Dashboards Page for that particular project
-        $scope.showDahboardPage = function(ProId, ProName, projectspcID) {
-            dashboardData.mydashboard(ProId, ctrl.usernamepro).then(function() {});
+        $scope.showDahboardPage = function (ProId, ProName, projectspcID) {
+            dashboardData.mydashboard(ProId, ctrl.usernamepro).then(function () { });
             $location.path('/site/');
             $cookies.put('ProId', ProId);
             $cookies.put('ProName', ProName);
@@ -358,7 +361,7 @@
         }
 
         //Add user Popup which matches the user to the project
-        ctrl.UserMap = function() {
+        ctrl.UserMap = function () {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/userPermissionMap.html',
                 controller: 'projectMapController',
@@ -366,34 +369,34 @@
             });
         }
 
-        ctrl.addDefect = function(probj) {
+        ctrl.addDefect = function (probj) {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/addDefect.html',
                 windowClass: 'app-modal-window-defect',
                 controller: addDefectController,
                 controllerAs: 'adc',
                 resolve: {
-                    name: function() {
+                    name: function () {
                         return probj.projectName;
                     },
-                    id: function() {
+                    id: function () {
                         return probj.projectId;
                     }
                 }
             });
         }
 
-        ctrl.editDefect = function(probj) {
+        ctrl.editDefect = function (probj) {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/editDefect.html',
                 windowClass: 'app-modal-window-defect',
                 controller: editDefectController,
                 controllerAs: 'edc',
                 resolve: {
-                    name: function() {
+                    name: function () {
                         return probj.projectName;
                     },
-                    id: function() {
+                    id: function () {
                         return probj.projectId;
                     }
                 }
@@ -402,7 +405,7 @@
 
         function addDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
             var ctrl = this;
-            ctrl.postDefect = function(probj) {
+            ctrl.postDefect = function (probj) {
                 ctrl.payloadDefect = {
                     "projectName": name,
                     "metricsProjectId": id,
@@ -456,10 +459,10 @@
                     "fixedDefectsWithMediumPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithMediumPriorityAndResolutionGreaterThan90,
                     "fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90": ctrl.fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90
                 }
-                projectData.postDefect(ctrl.payloadDefect).then(function(response) {
+                projectData.postDefect(ctrl.payloadDefect).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="addDefect" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>', 
+                        template: '<confirm-popup msg="addDefect" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -475,7 +478,7 @@
                 ctrl.dataEdit = data;
             }
 
-            ctrl.editDefectCall = function() {
+            ctrl.editDefectCall = function () {
                 ctrl.editDefectPayl = {
                     "projectName": name,
                     "metricsProjectId": id,
@@ -530,11 +533,11 @@
                     "fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].Critical)
                 }
 
-                projectData.postDefect(ctrl.editDefectPayl).then(function(response) {
+                projectData.postDefect(ctrl.editDefectPayl).then(function (response) {
                     $rootScope.ttt = true;
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="updateDefect" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>', 
+                        template: '<confirm-popup msg="updateDefect" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -542,17 +545,17 @@
             }
         }
 
-        ctrl.addRelease = function(proje) {
+        ctrl.addRelease = function (proje) {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/addRelease.html',
                 windowClass: 'app-modal-window-defect',
                 controller: addReleaseController,
                 controllerAs: 'arc',
                 resolve: {
-                    name: function() {
+                    name: function () {
                         return proje.projectName;
                     },
-                    id: function() {
+                    id: function () {
                         return proje.projectId;
                     }
                 }
@@ -565,33 +568,30 @@
             ctrl.namerelease = name;
             ctrl.id = id;
             $scope.options = [{
-                value: '',
-                label: 'Choose a value'
-            }, {
                 value: false,
                 label: 'Closed'
             }, {
                 value: true,
                 label: 'Open'
-            }, ];
+            },];
 
             ctrl.prevousText = true;
             ctrl.normalformText = false;
             ctrl.prevHeader = false;
-            ctrl.hideForm = function() {
+            ctrl.hideForm = function () {
                 ctrl.prevousText = true;
                 ctrl.normalformText = false;
                 ctrl.prevHeader = false;
                 ctrl.title = "List of Releases";
             }
-            ctrl.showForm = function() {
+            ctrl.showForm = function () {
                 ctrl.prevousText = false;
                 ctrl.normalformText = true;
                 ctrl.prevHeader = true;
                 ctrl.title = "Add Release";
             }
 
-            ctrl.updateRelease = function(releaseidUpdation) {
+            ctrl.updateRelease = function (releaseidUpdation) {
                 ctrl.nname = releaseidUpdation.releaseId;
                 ctrl.id = id;
                 ctrl.projectId = releaseidUpdation.projectId;
@@ -607,16 +607,16 @@
                     controller: updateReleaseController,
                     controllerAs: 'urc',
                     resolve: {
-                        sprinpayl: function() {
+                        sprinpayl: function () {
                             return ctrl.aaaa;
                         },
-                        names: function() {
+                        names: function () {
                             return ctrl.id;
                         },
-                        ids: function() {
+                        ids: function () {
                             return ctrl.nname;
                         },
-                        projectidsprint: function() {
+                        projectidsprint: function () {
                             return ctrl.projectId;
                         }
                     }
@@ -629,7 +629,7 @@
                 ctrl.releasegraph = data;
             }
 
-            ctrl.postRelease = function(proje) {
+            ctrl.postRelease = function (proje) {
                 ctrl.releasePayload = {
                     "projectName": name,
                     "projectId": id,
@@ -655,7 +655,7 @@
                     "noofStoryCommitted": ctrl.noofStoryCompleted
                 }
 
-                projectData.postRelease(ctrl.releasePayload).then(function(response) {
+                projectData.postRelease(ctrl.releasePayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
                         template: '<confirm-popup msg="addRelease" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
@@ -666,17 +666,17 @@
             }
         }
 
-        ctrl.addSprint = function(proje) {
+        ctrl.addSprint = function (proje) {
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/addSprint.html',
                 windowClass: 'app-modal-window-defect',
                 controller: addSprintController,
                 controllerAs: 'asc',
                 resolve: {
-                    name: function() {
+                    name: function () {
                         return proje.projectName;
                     },
-                    id: function() {
+                    id: function () {
                         return proje.projectId;
                     }
                 }
@@ -692,27 +692,24 @@
             ctrl.projectpathId = $cookies.get('projectIdJira');
             ctrl.projectiddefects = $cookies.get('ProSpId');
             $scope.options = [{
-                value: '',
-                label: 'Choose a value'
-            }, {
                 value: true,
                 label: 'Closed'
             }, {
                 value: false,
                 label: 'Open'
-            }, ];
+            },];
 
             ctrl.prevousText = true;
             ctrl.normalformText = false;
             ctrl.prevHeader = false;
             ctrl.update = false;
-            ctrl.hideForm = function() {
+            ctrl.hideForm = function () {
                 ctrl.prevousText = true;
                 ctrl.normalformText = false;
                 ctrl.prevHeader = false;
                 ctrl.title = "List of Sprints";
             }
-            ctrl.showForm = function() {
+            ctrl.showForm = function () {
                 ctrl.prevousText = false;
                 ctrl.normalformText = true;
                 ctrl.prevHeader = true;
@@ -729,7 +726,7 @@
                 ctrl.spAllDetails = data;
             }
 
-            ctrl.updateSprint = function(sprintidUpdation) {
+            ctrl.updateSprint = function (sprintidUpdation) {
                 ctrl.nname = sprintidUpdation.sid;
                 ctrl.id = id;
                 ctrl.projectId = sprintidUpdation.projectId;
@@ -744,29 +741,29 @@
                     controller: updateSprintController,
                     controllerAs: 'usc',
                     resolve: {
-                        sprinpayl: function() {
+                        sprinpayl: function () {
                             return ctrl.aaaa;
                         },
-                        names: function() {
+                        names: function () {
                             return ctrl.id;
                         },
-                        ids: function() {
+                        ids: function () {
                             return ctrl.nname;
                         },
-                        projectidsprint: function() {
+                        projectidsprint: function () {
                             return ctrl.projectId;
                         }
                     }
                 });
             }
 
-            ctrl.postSprint = function(proje) {
+            ctrl.postSprint = function (proje) {
                 ctrl.sprintPayload.projectName = name;
                 ctrl.sprintPayload.projectId = id;
-                projectData.postSprint(ctrl.sprintPayload).then(function(response) {
+                projectData.postSprint(ctrl.sprintPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="addSprint" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>', 
+                        template: '<confirm-popup msg="addSprint" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -779,21 +776,18 @@
             ctrl.ids = ids;
             ctrl.names = names;
             $scope.options = [{
-                value: '',
-                label: 'Choose a value'
-            }, {
                 value: false,
                 label: 'Closed'
             }, {
                 value: true,
                 label: 'Open'
-            }, ];
+            },];
 
-            featureData.updateReleaseDta(ctrl.ids, ctrl.names).then(function(data) {
+            featureData.updateReleaseDta(ctrl.ids, ctrl.names).then(function (data) {
                 ctrl.fetchReleasedetails = data;
             })
 
-            ctrl.postRelease = function(proje) {
+            ctrl.postRelease = function (proje) {
                 ctrl.releasePayload = {
                     "projectName": ctrl.names,
                     "projectId": ctrl.names,
@@ -819,10 +813,10 @@
                     "noofStoryCommitted": ctrl.fetchReleasedetails.versionData.noofStoryPoints
                 }
 
-               projectData.postRelease(ctrl.releasePayload).then(function(response) {
+                projectData.postRelease(ctrl.releasePayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
-                        template: '<confirm-popup msg="updateRelease" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>', 
+                        template: '<confirm-popup msg="updateRelease" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
@@ -836,22 +830,19 @@
             ctrl.ids = ids;
             ctrl.ppid = projectidsprint;
             $scope.options = [{
-                value: '',
-                label: 'Choose a value'
-            }, {
                 value: true,
                 label: 'Closed'
             }, {
                 value: false,
                 label: 'Open'
-            }, ];
+            },];
             ctrl.fetchdetails = {};
 
-            featureData.updateSprintDta(ctrl.names, ctrl.ids).then(function(data) {
+            featureData.updateSprintDta(ctrl.names, ctrl.ids).then(function (data) {
                 ctrl.fetchdetails = data;
             })
 
-            ctrl.updateSprintCall = function() {
+            ctrl.updateSprintCall = function () {
                 ctrl.sprintEditPayload = {
                     "projectId": projectidsprint,
                     "projectName": ctrl.names,
@@ -863,7 +854,7 @@
                     "committedStoriesCount": ctrl.fetchdetails.sprintData.committedIssueCount,
                     "completedIssueCount": ctrl.fetchdetails.sprintData.completedIssueCount,
 
-                    
+
 
                     "released": ctrl.fetchdetails.closed,
                     "criticalDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[3].value,
@@ -884,15 +875,221 @@
                     "storiesRemoed": ctrl.fetchdetails.sprintData.burndown.issuesRemoved.count
                 }
 
-               projectData.postSprint(ctrl.sprintEditPayload).then(function(response) {
+                projectData.postSprint(ctrl.sprintEditPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
-                   $uibModal.open({
-                        template: '<confirm-popup msg="updateSprint"icon="btn btn-info project-map-add-btn inner-btn-prop"  action="$close()"></confirm-popup>', 
+                    $uibModal.open({
+                        template: '<confirm-popup msg="updateSprint"icon="btn btn-info project-map-add-btn inner-btn-prop"  action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
                 })
             }
         }
+
+        ctrl.heatMap = function (probj) {
+            $uibModal.open({
+                templateUrl: 'app/dashboard/views/heatmap.html',
+                windowClass: 'app-modal-window-defect',
+                controller: heatMapController,
+                controllerAs: 'hmc',
+                resolve: {
+                    name: function () {
+                        return probj.projectName;
+                    },
+                    id: function () {
+                        return probj.projectId;
+                    }
+                }
+            });
+        }
+
+        function heatMapController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
+            var ctrl = this;
+            ctrl.title = "List of HeatMap";
+            ctrl.prevousText = true;
+            ctrl.normalformText = false;
+            ctrl.prevHeader = false;
+            ctrl.update = false;
+            ctrl.title="Add Heat Map";
+            var nextMonth, prevMonth, prevYear, nextYear;
+
+            var monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+            ];  
+            var currentdate = new Date();
+            var currentMonth = Number(currentdate.getMonth());
+            var currentYear = Number(currentdate.getFullYear());
+            var currentMonthLabel = monthNames[currentMonth];
+            debugger;
+                           if(currentMonth == 0){
+                        nextYear =  currentYear;
+                prevYear =  currentYear-1;     
+                prevMonth = monthNames[11];
+                 nextMonth = currentMonth<11 ? monthNames[(currentMonth+1)] : monthNames[0];
+            } else if(currentMonth ==11){
+                prevYear =  currentYear;
+                nextYear =  currentYear+1;
+                nextMonth = monthNames[0];
+                prevMonth = currentMonth>0 ? monthNames[(currentMonth-1)] : monthNames[11];
+            } else {
+                prevYear = currentYear;
+                nextYear = currentYear;
+                prevMonth = currentMonth>0 ? monthNames[(currentMonth-1)] : monthNames[11];
+                nextMonth = currentMonth<11 ? monthNames[(currentMonth+1)] : monthNames[0];
+
+            }
+
+
+            ctrl.monthOptions = [];
+
+            ctrl.monthOptions.push(prevMonth+","+prevYear);
+            ctrl.monthOptions.push(currentMonthLabel+","+currentYear);
+            ctrl.monthOptions.push(nextMonth+","+nextYear);
+
+            $scope.color = [
+                { value: 'Green', name: 'Green' },
+                { value: 'Amber', name: 'Amber' },
+                { value: 'Red', name: 'Red' },
+                { value: 'NA', name: 'NA' }
+            ];
+
+
+            ctrl.hideForm = function () {
+                ctrl.prevousText = true;
+                ctrl.normalformText = false;
+                ctrl.prevHeader = false;
+                ctrl.title = "List of HeatMap";
+            }
+            ctrl.showForm = function () {
+                ctrl.prevousText = false;
+                ctrl.normalformText = true;
+                ctrl.prevHeader = true;
+                ctrl.heatMapPayload = {};
+                $rootScope.action_name = "Add";
+                ctrl.addScreen = true;
+                ctrl.updateScreen = false;
+                ctrl.title = "Add Heat Map";
+            }
+
+            featureData.heatMapData(id).then(heatMapDataProcess);
+
+            function heatMapDataProcess(data) {
+                ctrl.heatMapDetails = data;
+            }
+
+
+            ctrl.updateHeatMap = function (releaseidUpdation) {
+                 $uibModalInstance.dismiss("cancel");
+
+                $uibModal.open({
+                    templateUrl: 'app/dashboard/views/updateHeatMap.html',
+                    windowClass: 'app-modal-window-defect',
+                    controller: updateHeatMapController,
+                    controllerAs: 'uhc',
+                    resolve: {
+                        data: function () {
+                            return releaseidUpdation;
+                        }
+                    }
+                });
+            }
+            
+            function getDate(date){
+                 var year = date.split(",")[1]
+                 var month = date.split(",")[0]
+                 var monthNames = ["January", "February", "March", "April", "May", "June",
+                                    "July", "August", "September", "October", "November", "December"
+                                  ];
+                  for(var i = 0;i<monthNames.length;i++){
+                    if(month == monthNames[i]){
+                        month = i+1;
+                    }
+                  }
+                  if(month < 10){
+                    month = "0"+month;
+                  }
+
+                  return month+"-"+"01-"+year;
+
+
+            }
+
+            ctrl.postHeatMap = function () {
+                //ctrl.heatMapPayload.heatmapId = "75";
+                //console.log(ctrl.heatMapPayload.requirementsStatus)
+                ctrl.heatMapPayload.submissionDate = getDate(ctrl.heatMapPayload.submissionDate);
+                console.log(ctrl.heatMapPayload.submissionDate);
+                ctrl.heatMapPayload.projectId = id;
+                projectData.postHeatMap(ctrl.heatMapPayload).then(function (response) {
+                    $uibModalInstance.dismiss("cancel");
+                    $uibModal.open({
+                        template: '<confirm-popup msg="addHeatMap" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
+                })
+            }
+
+        }
+
+        function updateHeatMapController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, data) {
+            var ctrl = this;
+            ctrl.title="Update Heat Map"
+            $scope.color = [
+                { value: 'Green', name: 'Green' },
+                { value: 'Amber', name: 'Amber' },
+                { value: 'Red', name: 'Red' },
+                { value: 'NA', name: 'NA' }
+            ];
+
+            ctrl.updateHeatmapPayload = {
+
+                "projectId": data.projectId,
+                "submissionDate": data.submissionDate,
+                "customerWSRStatus": data.projectHeatmapData.customerWSR.customerWSRStatus,
+                "architectureFocusStatus": data.projectHeatmapData.architectureFocus.architectureFocusStatus,
+                "automatedUnitTestingStatus": data.projectHeatmapData.automatedUnitTesting.automatedUnitTestingStatus,
+                "codeCoveragePercentage": data.projectHeatmapData.codeCoverage.codeCoveragePercentage,
+                "continuousIntegrationIndex": data.projectHeatmapData.continuousIntegration.continuousIntegrationIndex,
+
+                "domainKnowlwdgeStatus": data.projectHeatmapData.domainKnowledge.domainKnowledgeStatus,
+                "manualCodeReviewStatus": data.projectHeatmapData.manualCodeReview.manualCodeReviewStatus,
+                //"manualCodeReviewCount" : data.projectHeatmapData,
+                "metricsStatus": data.projectHeatmapData.metrics.metricsStatus,
+                //"performanceAssessmentStatus" : data.projectHeatmapData,
+                "performanceAssessmentPercentage": data.projectHeatmapData.performanceAssessment.performanceAssessmentPercentage,
+
+                "requirementsStatus": data.projectHeatmapData.requirements.requirementsStatus,
+                "releaseProcessStatus": data.projectHeatmapData.releaseProcess.releaseProcessStatus,
+                //"securityAssessmentStatus" : data.projectHeatmapData,
+                "securityAssessmentIndex": data.projectHeatmapData.securityAssessment.securityAssessmentIndex,
+                //"staticCodeAnalysisStatus" : data.projectHeatmapData,
+                "staticCodeAnalysisIndex" : data.projectHeatmapData.staticCodeAnalysis.staticCodeAnalysisIndex,
+                "testingProcessStatus": data.projectHeatmapData.testingProcess.testingProcessStatus,
+                //"testAutomationStatus" : data.projectHeatmapData,
+                //"testAutomationTestingPercentage" : data.projectHeatmapData.testAutomation.testAutomationTestingPercentage,
+                "designFocusStatus": data.projectHeatmapData.designFocus.designFocusStatus,
+                "productKnowledgeIndex": data.projectHeatmapData.productKnowledge.productKnowledgeIndex,
+                "development":data.projectHeatmapData.teamSize.development,
+                "testing":data.projectHeatmapData.teamSize.testing
+
+
+
+            }
+
+            ctrl.updateHeatMap = function () {
+                ctrl.objId = data.id;
+                projectData.updateHeatMap(ctrl.updateHeatmapPayload, ctrl.objId).then(function (response) {
+                    $uibModalInstance.dismiss("cancel");
+                    $uibModal.open({
+                        template: '<confirm-popup msg="updateHeatMap" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
+                        controller: 'projectMapController',
+                        controllerAs: 'pm'
+                    });
+                })
+            }
+
+        }
+
     }
 })();

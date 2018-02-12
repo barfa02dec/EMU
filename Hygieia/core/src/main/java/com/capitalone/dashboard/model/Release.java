@@ -111,16 +111,15 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
 		public int hashCode() {
 			return new HashCodeBuilder(17, 37).append(releaseId).toHashCode();
 		}
+		
 		@Override
 		public int compareTo(Release o) {
 			//sort by descending order
-			if(o.releaseId<this.releaseId){
+			if(o.releaseId > this.releaseId){
 				return 1;
-			}else if(o.releaseId==this.releaseId){
+			}else if(o.releaseId == this.releaseId){
 				return 0;
 			}
 			return -1;
 		}
-	    
-	    
 }

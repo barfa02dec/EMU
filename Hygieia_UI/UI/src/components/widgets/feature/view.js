@@ -400,7 +400,7 @@
     featureData.sprintDta(ctrl.projectpathId,ctrl.projectpath).then(sprintdataProcessMain);
 
     function sprintdataProcessMain(data){
-     
+        var data = data.reverse();
         var progress = ['Defect Closure'];
         var comittedStoryPoints = ['committedStoryPoints'];
         var completedStoryPoint = ['completedStoryPoints'];

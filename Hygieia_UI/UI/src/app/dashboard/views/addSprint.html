@@ -7,7 +7,7 @@
     <form name="cdf" class="form" ng-submit="asc.postSprint()" ng-if="asc.normalformText" novalidate>
         <div class="col-md-6">
             <form-group input="sprintid" errors="{required: 'Sprint id is required',maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
-                <input type="number" name="sprintid" class="form-control" placeholder="Sprint id" ng-model="asc.sprintPayload.sprintId" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
+                <input type="text" name="sprintid" class="form-control" placeholder="Sprint id" ng-model="asc.sprintPayload.sprintId" required maxlength="50" numbers-only autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
             </form-group>
             <form-group input="sprintname" errors="{required: 'Sprint name is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
                 <input type="text" name="sprintname" class="form-control" placeholder="Sprint name" ng-model="asc.sprintPayload.sprintName" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
@@ -24,15 +24,15 @@
 
         </form-group> -->
             <form-group input="comittedstorypoints">
-                <input type="number" name="comittedstorypoints" class="form-control" placeholder="Committed story points" ng-model="asc.sprintPayload.committedStoryPoints" />
+                <input type="text" numbers-only name="comittedstorypoints" class="form-control" placeholder="Committed story points" ng-model="asc.sprintPayload.committedStoryPoints" />
             </form-group>
             <form-group input="comittedissuecount">
-                <input type="number" name="comittedissuecount" class="form-control" placeholder="Committed issue count" ng-model="asc.sprintPayload.committedStoriesCount" />
+                <input type="text" numbers-only name="comittedissuecount" class="form-control" placeholder="Committed issue count" ng-model="asc.sprintPayload.committedStoriesCount" />
             </form-group>
             <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Added</label>
             <div class="col-md-8">
                 <form-group input="count">
-                    <input type="number" name="count" class="form-control" placeholder="Count" ng-model="asc.sprintPayload.storiesAdded" />
+                    <input type="text" numbers-only name="count" class="form-control" placeholder="Count" ng-model="asc.sprintPayload.storiesAdded" />
                 </form-group>
             </div>
             <!--  <div class="col-md-4">
@@ -49,7 +49,7 @@
             <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Removed</label>
             <div class="col-md-8">
                 <form-group input="countstoryremoved">
-                    <input type="number" name="countstoryremoved" class="form-control" placeholder="Count" ng-model="asc.sprintPayload.storiesRemoed" />
+                    <input type="text" numbers-only name="countstoryremoved" class="form-control" placeholder="Count" ng-model="asc.sprintPayload.storiesRemoed" />
                 </form-group>
             </div>
             <!--    
@@ -77,75 +77,77 @@
         </div>
         <div class="col-md-6">
             <form-group input="selectedTemplate" errors="{required: 'Status is required'}">
-                <select ng-options="o.value as o.label for o in options" ng-model="asc.sprintPayload.released" class="form-control"></select>
+                <select ng-options="o.value as o.label for o in options" ng-model="asc.sprintPayload.released" class="form-control">
+                     <option value="" disabled selected hidden>Choose a value</option>
+                </select>
             </form-group>
             <form-group input="completedstorypointscol2">
-                <input type="number" name="completedstorypointscol2" class="form-control" placeholder="Completed story points" ng-model="asc.sprintPayload.completedStoryPoints" />
+                <input type="text" numbers-only name="completedstorypointscol2" class="form-control" placeholder="Completed story points" ng-model="asc.sprintPayload.completedStoryPoints" />
             </form-group>
             <form-group input="comittedissuecountcol2">
-                <input type="number" name="comittedissuecountcol2" class="form-control" placeholder="Completed issue count" ng-model="asc.sprintPayload.completedIssueCount" />
+                <input type="text" numbers-only name="comittedissuecountcol2" class="form-control" placeholder="Completed issue count" ng-model="asc.sprintPayload.completedIssueCount" />
             </form-group>
             <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Found</label>
             <div class="col-md-2">
                 <form-group input="criticalone">
-                    <input type="number" name="criticalone" class="form-control" placeholder="Critical" ng-model="asc.sprintPayload.criticalDefectsFound" />
+                    <input type="text" numbers-only name="criticalone" class="form-control" placeholder="Critical" ng-model="asc.sprintPayload.criticalDefectsFound" />
                 </form-group>
             </div>
             <div class="col-md-2">
                 <form-group input="highone">
-                    <input type="number" name="highone" class="form-control" placeholder="High" ng-model="asc.sprintPayload.highDefectsFound" />
+                    <input type="text" numbers-only name="highone" class="form-control" placeholder="High" ng-model="asc.sprintPayload.highDefectsFound" />
                 </form-group>
             </div>
             <div class="col-md-2">
                 <form-group input="mediumone">
-                    <input type="number" name="mediumone" class="form-control" placeholder="Medium" ng-model="asc.sprintPayload.mediumDefectsFound" />
+                    <input type="text" numbers-only name="mediumone" class="form-control" placeholder="Medium" ng-model="asc.sprintPayload.mediumDefectsFound" />
                 </form-group>
             </div>
             <div class="col-md-2">
                 <form-group input="lowone">
-                    <input type="number" name="lowone" class="form-control" placeholder="Low" ng-model="asc.sprintPayload.lowDefectsFound" />
+                    <input type="text" numbers-only name="lowone" class="form-control" placeholder="Low" ng-model="asc.sprintPayload.lowDefectsFound" />
                 </form-group>
             </div>
             <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Resolved</label>
             <div class="col-md-2">
                 <form-group input="Criticaltwo">
-                    <input type="number" name="Criticaltwo" class="form-control" placeholder="Critical" ng-model="asc.sprintPayload.criticalDefectsClosed" />
+                    <input type="text" numbers-only name="Criticaltwo" class="form-control" placeholder="Critical" ng-model="asc.sprintPayload.criticalDefectsClosed" />
                 </form-group>
             </div>
             <div class="col-md-2">
                 <form-group input="Hightwo">
-                    <input type="number" name="Hightwo" class="form-control" placeholder="High" ng-model="asc.sprintPayload.highDefectsClosed" />
+                    <input type="text" numbers-only name="Hightwo" class="form-control" placeholder="High" ng-model="asc.sprintPayload.highDefectsClosed" />
                 </form-group>
             </div>
             <div class="col-md-2">
                 <form-group input="Mediumtwo">
-                    <input type="number" name="Mediumtwo" class="form-control" placeholder="Medium" ng-model="asc.sprintPayload.mediumDefectsClosed" />
+                    <input type="text" numbers-only name="Mediumtwo" class="form-control" placeholder="Medium" ng-model="asc.sprintPayload.mediumDefectsClosed" />
                 </form-group>
             </div>
             <div class="col-md-2">
                 <form-group input="Lowtwo">
-                    <input type="number" name="Lowtwo" class="form-control" placeholder="Low" ng-model="asc.sprintPayload.lowDefectsClosed" />
+                    <input type="text" numbers-only name="Lowtwo" class="form-control" placeholder="Low" ng-model="asc.sprintPayload.lowDefectsClosed" />
                 </form-group>
             </div>
             <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Unresolved</label>
             <div class="col-md-2">
                 <form-group input="Criticalthree">
-                    <input type="number" name="Criticalthree" class="form-control" placeholder="Critical" ng-model="asc.sprintPayload.criticalDefectsUnresolved" />
+                    <input type="text" numbers-only name="Criticalthree" class="form-control" placeholder="Critical" ng-model="asc.sprintPayload.criticalDefectsUnresolved" />
                 </form-group>
             </div>
             <div class="col-md-2">
                 <form-group input="Highthree">
-                    <input type="number" name="Highthree" class="form-control" placeholder="High" ng-model="asc.sprintPayload.highDefectsUnresolved" />
+                    <input type="text" numbers-only name="Highthree" class="form-control" placeholder="High" ng-model="asc.sprintPayload.highDefectsUnresolved" />
                 </form-group>
             </div>
             <div class="col-md-2">
                 <form-group input="Mediumthree">
-                    <input type="number" name="Mediumthree" class="form-control" placeholder="Medium" ng-model="asc.sprintPayload.mediumDefectsUnresolved" />
+                    <input type="text" numbers-only name="Mediumthree" class="form-control" placeholder="Medium" ng-model="asc.sprintPayload.mediumDefectsUnresolved" />
                 </form-group>
             </div>
             <div class="col-md-2">
                 <form-group input="Lowthree">
-                    <input type="number" name="Lowthree" class="form-control" placeholder="Low" ng-model="asc.sprintPayload.lowDefectsUnresolved" />
+                    <input type="text" numbers-only name="Lowthree" class="form-control" placeholder="Low" ng-model="asc.sprintPayload.lowDefectsUnresolved" />
                 </form-group>
             </div>
             <!-- 
