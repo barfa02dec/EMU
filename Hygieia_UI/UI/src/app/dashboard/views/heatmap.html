@@ -1,6 +1,7 @@
 <widget-modal class="border-prop-modals">
+   <div class="widget-modal-heading">{{hmc.title}}</div>
    <form name="cdf" class="form" ng-submit="hmc.postHeatMap()" ng-if="hmc.normalformText" novalidate>
-      <div class="widget-modal-heading">{{hmc.title}}</div>
+     
       <div>
          <div class="col-md-2">
             <label class="control-label createproj-label-props">Submission month:</label>
@@ -10,6 +11,7 @@
                <!-- <input type="text" name="dashboardTitle" class="form-control" ng-model="hmc.heatMapPayload.submissionDate" min=0 maxlength="50"
                   autocomplete="off" minlength="6" />  -->
                <select class="form-control fa" ng-model="hmc.heatMapPayload.submissionDate" ng-options="item for item in hmc.monthOptions">
+                 <option value="" disabled selected hidden>Choose a month</option>
                </select>
             </form-group>
          </div>
@@ -22,7 +24,7 @@
             <label class="control-label createproj-label-props">Development Team Size:</label>
          </div>
          <div class="col-md-3">
-            <form-group input="applicationName">
+            <form-group input="applicationName" >
                <input type="text" numbers-only name="applicationName" class="form-control" ng-model="hmc.heatMapPayload.development" maxlength="50"
                   autocomplete="off" />
             </form-group>
@@ -389,7 +391,7 @@
       <hr>
       <span ng-if="hmc.prevHeader" style="cursor: pointer;">
       <img src="assets/images/arrow_right.png" style="vertical-align: sub"> View list of Heat Map</span>
-      <div class="" ng-if="hmc.prevousText">
+      <div class="scrollbar-processor-allpages heat-map-scroll-height" ng-if="hmc.prevousText">
          <table class="table table-bordered table-striped">
             <thead>
                <tr style="font-weight:400;font-size:11px">
