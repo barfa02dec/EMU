@@ -13,9 +13,9 @@ public interface HeatMapService {
 
 	public List<HeatMap> getHeatmaps(String projectId);
 
-	public HeatMap createProjectHeatmap(HeatMapRequest heatMapRequest);
+	public HeatMap createHeatmap(HeatMapRequest heatMapRequest);
 		
-	public HeatMap updateProjectHeatmap(ObjectId objectId, HeatMapRequest heatMapRequest) ;
+	public HeatMap updateHeatmap(ObjectId objectId, HeatMapRequest heatMapRequest) ;
 
-	public void deletePrjectHeatMap(String heatmapId);
+	public void deleteHeatMap(String heatmapId);
 }

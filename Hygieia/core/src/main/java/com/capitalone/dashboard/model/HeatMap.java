@@ -22,7 +22,7 @@ public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
 
 	private ProjectHeatmapData projectHeatmapData;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	//@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	private Date submissionDate;
 
 	/**
