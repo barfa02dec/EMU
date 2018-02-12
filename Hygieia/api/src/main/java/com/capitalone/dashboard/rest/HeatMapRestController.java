@@ -80,7 +80,7 @@ public class HeatMapRestController {
 	public void createHeatmap(@RequestBody HeatMapRequest heatMapRequest, HttpServletResponse response) {
 		
 		LOGGER.debug("Creating Heat map");
-		heatMapService.createProjectHeatmap(heatMapRequest);
+		heatMapService.createHeatmap(heatMapRequest);
 	}
 
 	/**
@@ -91,10 +91,10 @@ public class HeatMapRestController {
 	 */
 	@RequestMapping(value = "/projectheatmaps/update/{objectId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void updateProjectHeatMap(@PathVariable String objectId, @RequestBody HeatMapRequest heatMapRequest, HttpServletResponse response) {
+	public void updateHeatMap(@PathVariable String objectId, @RequestBody HeatMapRequest heatMapRequest, HttpServletResponse response) {
 		
 		LOGGER.debug("Updating Heat map");
-		heatMapService.updateProjectHeatmap(new ObjectId(objectId), heatMapRequest);
+		heatMapService.updateHeatmap(new ObjectId(objectId), heatMapRequest);
 	} 
 	
 	/**
@@ -106,6 +106,6 @@ public class HeatMapRestController {
 	@ResponseStatus(value = HttpStatus.OK)
 	public void deleteHeatMap(@RequestParam(value = "heatmapId", required = true) String heatmapId) {
 		LOGGER.debug("Deleting Heat map");
-		heatMapService.deletePrjectHeatMap(heatmapId);
+		heatMapService.deleteHeatMap(heatmapId);
 	}
 }
