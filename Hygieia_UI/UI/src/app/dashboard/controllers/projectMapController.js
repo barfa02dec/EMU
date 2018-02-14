@@ -862,6 +862,7 @@
                     "completedStoryPoints": ctrl.fetchdetails.sprintData.completedStoryPoints,
                     "committedStoriesCount": ctrl.fetchdetails.sprintData.committedIssueCount,
                     "completedIssueCount": ctrl.fetchdetails.sprintData.completedIssueCount,
+                    "committedIssueCount": ctrl.fetchdetails.sprintData.committedIssueCount,
 
                     "released": ctrl.fetchdetails.closed,
                     "criticalDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[3].value,

@@ -34,8 +34,8 @@
             </form-group>
         </div>
         <div class="col-md-6">
-            <form-group input="Status1">
-                <select ng-options="o.value as o.label for o in options" ng-model="arc.released" class="form-control">
+            <form-group input="Status1" errors="{required:'Please select the status'}">
+                <select name="Status1" ng-options="o.value as o.label for o in options" ng-model="arc.released" class="form-control" required>
                      <option value="" disabled selected hidden>Choose a value</option>
                 </select>
             </form-group>
