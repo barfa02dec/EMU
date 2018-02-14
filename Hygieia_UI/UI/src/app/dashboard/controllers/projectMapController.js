@@ -840,8 +840,17 @@
 
             featureData.updateSprintDta(ctrl.names, ctrl.ids).then(function (data) {
                 ctrl.fetchdetails = data;
+                /*ctrl.dt = new Date(ctrl.fetchdetails.sprintData.endDate);
+                ctrl.fetchYear = ctrl.dt.getFullYear();
+                ctrl.fetchDate = ctrl.dt.getDate();
+                ctrl.fetchMonth = ctrl.dt.getMonth();
+                ctrl.incrementFetchMonth = ctrl.fetchMonth + 1;
+                ctrl.getFullDate = ctrl.fetchYear+"-"+ctrl.fetchMonth+"-"+ctrl.fetchDate;
+                console.log("hai" +ctrl.getFullDate);*/
             })
 
+            
+            
             ctrl.updateSprintCall = function () {
                 ctrl.sprintEditPayload = {
                     "projectId": projectidsprint,
@@ -853,8 +862,7 @@
                     "completedStoryPoints": ctrl.fetchdetails.sprintData.completedStoryPoints,
                     "committedStoriesCount": ctrl.fetchdetails.sprintData.committedIssueCount,
                     "completedIssueCount": ctrl.fetchdetails.sprintData.completedIssueCount,
-
-
+                    "committedIssueCount": ctrl.fetchdetails.sprintData.committedIssueCount,
 
                     "released": ctrl.fetchdetails.closed,
                     "criticalDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[3].value,
@@ -910,7 +918,7 @@
             ctrl.normalformText = false;
             ctrl.prevHeader = false;
             ctrl.update = false;
-            ctrl.title="Add Heat Map";
+            //ctrl.title="Add Heat Map";
             var nextMonth, prevMonth, prevYear, nextYear;
 
             var monthNames = ["January", "February", "March", "April", "May", "June",
@@ -1067,7 +1075,7 @@
                 "staticCodeAnalysisIndex" : data.projectHeatmapData.staticCodeAnalysis.staticCodeAnalysisIndex,
                 "testingProcessStatus": data.projectHeatmapData.testingProcess.testingProcessStatus,
                 //"testAutomationStatus" : data.projectHeatmapData,
-                //"testAutomationTestingPercentage" : data.projectHeatmapData.testAutomation.testAutomationTestingPercentage,
+                "testAutomationPercentage" : data.projectHeatmapData.testAutomation.testAutomationPercentage,
                 "designFocusStatus": data.projectHeatmapData.designFocus.designFocusStatus,
                 "productKnowledgeIndex": data.projectHeatmapData.productKnowledge.productKnowledgeIndex,
                 "development":data.projectHeatmapData.teamSize.development,

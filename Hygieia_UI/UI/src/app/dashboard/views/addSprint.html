@@ -27,7 +27,7 @@
                 <input type="text" numbers-only name="comittedstorypoints" class="form-control" placeholder="Committed story points" ng-model="asc.sprintPayload.committedStoryPoints" />
             </form-group>
             <form-group input="comittedissuecount">
-                <input type="text" numbers-only name="comittedissuecount" class="form-control" placeholder="Committed issue count" ng-model="asc.sprintPayload.committedStoriesCount" />
+                <input type="text" numbers-only name="comittedissuecount" class="form-control" placeholder="Committed issue count" ng-model="asc.sprintPayload.committedIssueCount" />
             </form-group>
             <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Added</label>
             <div class="col-md-8">
@@ -76,8 +76,8 @@
         </form-group> -->
         </div>
         <div class="col-md-6">
-            <form-group input="selectedTemplate" errors="{required: 'Status is required'}">
-                <select ng-options="o.value as o.label for o in options" ng-model="asc.sprintPayload.released" class="form-control">
+            <form-group input="selectedTemplate" errors="{required: 'Please select the status'}">
+                <select name="selectedTemplate" ng-options="o.value as o.label for o in options" ng-model="asc.sprintPayload.released" class="form-control" required>
                      <option value="" disabled selected hidden>Choose a value</option>
                 </select>
             </form-group>
@@ -200,16 +200,16 @@
         </form-group>  
         </div> -->
             <div class="col-md-6">
-                <form-group input="date1">
+                <form-group input="date1" errors="{pattern:'Please enter date in correct format(yyyy-MM-dd)'}">
                     <datepicker date-format="yyyy-MM-dd" selector="form-control" date-max-limit="{{asc.sprintPayload.endDate}}">
-                        <input class="form-control font-fontawesome font-light" ng-model="asc.sprintPayload.startDate" name="date1" placeholder="  Start date" required/>
+                        <input class="form-control font-fontawesome font-light" ng-model="asc.sprintPayload.startDate" name="date1" placeholder="  Start date" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" required/>
                     </datepicker>
                 </form-group>
             </div>
             <div class="col-md-6">
-                <form-group input="date2">
+                <form-group input="date2" errors="{pattern:'Please enter date in correct format(yyyy-MM-dd)'}">
                     <datepicker date-format="yyyy-MM-dd" selector="form-control" date-min-limit="{{asc.sprintPayload.startDate}}">
-                        <input class="form-control font-fontawesome font-light" ng-model="asc.sprintPayload.endDate" name="date2" placeholder="  End date" required/>
+                        <input class="form-control font-fontawesome font-light" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" ng-model="asc.sprintPayload.endDate" name="date2" placeholder="  End date" required/>
                     </datepicker>
                 </form-group>
             </div>
