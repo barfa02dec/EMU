@@ -844,68 +844,13 @@
 
             featureData.updateSprintDta(ctrl.names, ctrl.ids).then(function (data) {
                 ctrl.fetchdetails = data;
-                //end date formatting
-                ctrl.dt = new Date(ctrl.fetchdetails.sprintData.endDate);
+                /*ctrl.dt = new Date(ctrl.fetchdetails.sprintData.endDate);
                 ctrl.fetchYear = ctrl.dt.getFullYear();
                 ctrl.fetchDate = ctrl.dt.getDate();
                 ctrl.fetchMonth = ctrl.dt.getMonth();
                 ctrl.incrementFetchMonth = ctrl.fetchMonth + 1;
-                //start date formatting
-                 if(ctrl.incrementFetchMonth <= 9) {
-                    ctrl.getFullDate = ctrl.fetchYear+"-0"+ctrl.incrementFetchMonth+"-"+ctrl.fetchDate;
-                    if(ctrl.fetchDate <= 9) {
-                        ctrl.getFullDate = ctrl.fetchYear+"-0"+ctrl.incrementFetchMonth+"-0"+ctrl.fetchDate;
-                    }
-                }
-                else  if(ctrl.fetchDate <= 9){
-                    
-                        ctrl.getFullDate = ctrl.fetchYear+"-"+ctrl.incrementFetchMonth+"-0"+ctrl.fetchDate;
-                        if(ctrl.incrementFetchMonth <= 9) {
-                            ctrl.getFullDate = ctrl.fetchYear+"-0"+ctrl.incrementFetchMonth+"-0"+ctrl.fetchDate;
-                        }
-                    
-
-                } 
-                else{
-                    ctrl.getFullDate = ctrl.fetchYear+"-"+ctrl.incrementFetchMonth+"-"+ctrl.fetchDate;
-                }
-
-                ctrl.startdateFormatter = new Date(ctrl.fetchdetails.sprintData.startDate);
-                ctrl.fetchYearStartdate = ctrl.startdateFormatter.getFullYear();
-                ctrl.fetchDateStartdate = ctrl.startdateFormatter.getDate();
-                ctrl.fetchMonthStartdate = ctrl.startdateFormatter.getMonth();
-                ctrl.incrementFetchMonthStartdate = ctrl.fetchMonthStartdate + 1;
-               /* if(ctrl.fetchMonthStartdate > 9) {
-                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-"+ctrl.incrementFetchMonthStartdate+"-"+ctrl.fetchDateStartdate;
-                }
-                else {
-                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-0"+ctrl.incrementFetchMonthStartdate+"-"+ctrl.fetchDateStartdate;
-                }
-                if(ctrl.fetchDateStartdate > 9) {
-                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-"+ctrl.incrementFetchMonthStartdate+"-"+ctrl.fetchDateStartdate;
-                }
-                else {
-                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-"+ctrl.incrementFetchMonthStartdate+"-0"+ctrl.fetchDateStartdate;
-                }*/
-                if(ctrl.incrementFetchMonthStartdate <= 9) {
-                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-0"+ctrl.incrementFetchMonthStartdate+"-"+ctrl.fetchDateStartdate;
-                    if(ctrl.fetchDateStartdate <= 9) {
-                        ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-0"+ctrl.incrementFetchMonthStartdate+"-0"+ctrl.fetchDateStartdate;
-                    }
-                }
-                else  if(ctrl.fetchDateStartdate <= 9){
-                    
-                        ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-"+ctrl.incrementFetchMonthStartdate+"-0"+ctrl.fetchDateStartdate;
-                        if(ctrl.incrementFetchMonthStartdate <= 9) {
-                            ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-0"+ctrl.incrementFetchMonthStartdate+"-0"+ctrl.fetchDateStartdate;
-                        }
-                    
-
-                } 
-                else{
-                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-"+ctrl.incrementFetchMonthStartdate+"-"+ctrl.fetchDateStartdate;
-                }
-                
+                ctrl.getFullDate = ctrl.fetchYear+"-"+ctrl.fetchMonth+"-"+ctrl.fetchDate;
+                console.log("hai" +ctrl.getFullDate);*/
             })
 
             
@@ -936,8 +881,8 @@
                     "mediumDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[2].value,
                     "lowDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[1].value,
                     "highDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[0].value,
-                    "endDate": ctrl.getFullDate,
-                    "startDate": ctrl.getFullDateStartdate,
+                    "endDate": ctrl.fetchdetails.end,
+                    "startDate": ctrl.fetchdetails.start,
                     "storiesAdded": ctrl.fetchdetails.sprintData.burndown.issuesAdded.count,
                     "storiesRemoed": ctrl.fetchdetails.sprintData.burndown.issuesRemoved.count
                 }
