@@ -3,7 +3,7 @@
    <div
       class="widget-modal-heading">{{hmc.title}}</div>
    <form
-      name="cdf"
+      name="hmc.addHeatmapPage"
       class="form"
       ng-submit="hmc.postHeatMap()"
       ng-if="hmc.normalformText"
@@ -968,7 +968,7 @@
                   <th>Selected Month</th>
                   <th
                      ng-repeat="heatmap in hmc.heatMapDetails">
-                     <span>{{heatmap.submissionDate}}</span>
+                     <span>{{heatmap.submissionDate | date}}</span>
                      <span
                         ng-click="hmc.updateHeatMap(heatmap)">
                         <svg

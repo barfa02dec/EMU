@@ -219,7 +219,6 @@
 
         //Edit Project 
         ctrl.editproject = function (info) {
-            console.log(info);
             ctrl.usernamepro = $cookies.get('username');
             ctrl.editPayload = {
                 "projectId": info.projectId,
@@ -233,7 +232,6 @@
                 "id": info.id
             }
             info.editorEnabled = false;
-            console.log(info);
             var apiHost = ' http://localhost:3000';
             var qahost = 'http://10.20.1.183:3000';
             if ((info.businessUnit) && (info.projectId) && (info.client) && (info.projectOwner)) {
@@ -279,7 +277,6 @@
 
         //Open Delete Project Modal
         ctrl.deleteProjectModel = function (pro) {
-            console.log(pro);
             ctrl.proData = pro;
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/deleteModel.html',
@@ -655,6 +652,7 @@
                     "noofStoryCommitted": ctrl.noofStoryCompleted
                 }
 
+                if (ctrl.createRelease.$valid == true) {
                 projectData.postRelease(ctrl.releasePayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -663,6 +661,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
         }
 
@@ -760,6 +759,7 @@
             ctrl.postSprint = function (proje) {
                 ctrl.sprintPayload.projectName = name;
                 ctrl.sprintPayload.projectId = id;
+                if (ctrl.addSprint.$valid == true) {
                 projectData.postSprint(ctrl.sprintPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -768,6 +768,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
         }
 
@@ -813,6 +814,8 @@
                     "noofStoryCommitted": ctrl.fetchReleasedetails.versionData.noofStoryPoints
                 }
 
+                if (ctrl.updateRelease.$valid == true) {
+
                 projectData.postRelease(ctrl.releasePayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -821,6 +824,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
         }
 
@@ -840,13 +844,68 @@
 
             featureData.updateSprintDta(ctrl.names, ctrl.ids).then(function (data) {
                 ctrl.fetchdetails = data;
-                /*ctrl.dt = new Date(ctrl.fetchdetails.sprintData.endDate);
+                //end date formatting
+                ctrl.dt = new Date(ctrl.fetchdetails.sprintData.endDate);
                 ctrl.fetchYear = ctrl.dt.getFullYear();
                 ctrl.fetchDate = ctrl.dt.getDate();
                 ctrl.fetchMonth = ctrl.dt.getMonth();
                 ctrl.incrementFetchMonth = ctrl.fetchMonth + 1;
-                ctrl.getFullDate = ctrl.fetchYear+"-"+ctrl.fetchMonth+"-"+ctrl.fetchDate;
-                console.log("hai" +ctrl.getFullDate);*/
+                //start date formatting
+                 if(ctrl.incrementFetchMonth <= 9) {
+                    ctrl.getFullDate = ctrl.fetchYear+"-0"+ctrl.incrementFetchMonth+"-"+ctrl.fetchDate;
+                    if(ctrl.fetchDate <= 9) {
+                        ctrl.getFullDate = ctrl.fetchYear+"-0"+ctrl.incrementFetchMonth+"-0"+ctrl.fetchDate;
+                    }
+                }
+                else  if(ctrl.fetchDate <= 9){
+                    
+                        ctrl.getFullDate = ctrl.fetchYear+"-"+ctrl.incrementFetchMonth+"-0"+ctrl.fetchDate;
+                        if(ctrl.incrementFetchMonth <= 9) {
+                            ctrl.getFullDate = ctrl.fetchYear+"-0"+ctrl.incrementFetchMonth+"-0"+ctrl.fetchDate;
+                        }
+                    
+
+                } 
+                else{
+                    ctrl.getFullDate = ctrl.fetchYear+"-"+ctrl.incrementFetchMonth+"-"+ctrl.fetchDate;
+                }
+
+                ctrl.startdateFormatter = new Date(ctrl.fetchdetails.sprintData.startDate);
+                ctrl.fetchYearStartdate = ctrl.startdateFormatter.getFullYear();
+                ctrl.fetchDateStartdate = ctrl.startdateFormatter.getDate();
+                ctrl.fetchMonthStartdate = ctrl.startdateFormatter.getMonth();
+                ctrl.incrementFetchMonthStartdate = ctrl.fetchMonthStartdate + 1;
+               /* if(ctrl.fetchMonthStartdate > 9) {
+                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-"+ctrl.incrementFetchMonthStartdate+"-"+ctrl.fetchDateStartdate;
+                }
+                else {
+                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-0"+ctrl.incrementFetchMonthStartdate+"-"+ctrl.fetchDateStartdate;
+                }
+                if(ctrl.fetchDateStartdate > 9) {
+                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-"+ctrl.incrementFetchMonthStartdate+"-"+ctrl.fetchDateStartdate;
+                }
+                else {
+                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-"+ctrl.incrementFetchMonthStartdate+"-0"+ctrl.fetchDateStartdate;
+                }*/
+                if(ctrl.incrementFetchMonthStartdate <= 9) {
+                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-0"+ctrl.incrementFetchMonthStartdate+"-"+ctrl.fetchDateStartdate;
+                    if(ctrl.fetchDateStartdate <= 9) {
+                        ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-0"+ctrl.incrementFetchMonthStartdate+"-0"+ctrl.fetchDateStartdate;
+                    }
+                }
+                else  if(ctrl.fetchDateStartdate <= 9){
+                    
+                        ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-"+ctrl.incrementFetchMonthStartdate+"-0"+ctrl.fetchDateStartdate;
+                        if(ctrl.incrementFetchMonthStartdate <= 9) {
+                            ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-0"+ctrl.incrementFetchMonthStartdate+"-0"+ctrl.fetchDateStartdate;
+                        }
+                    
+
+                } 
+                else{
+                    ctrl.getFullDateStartdate = ctrl.fetchYearStartdate+"-"+ctrl.incrementFetchMonthStartdate+"-"+ctrl.fetchDateStartdate;
+                }
+                
             })
 
             
@@ -877,12 +936,13 @@
                     "mediumDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[2].value,
                     "lowDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[1].value,
                     "highDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[0].value,
-                    "endDate": ctrl.fetchdetails.end,
-                    "startDate": ctrl.fetchdetails.start,
+                    "endDate": ctrl.getFullDate,
+                    "startDate": ctrl.getFullDateStartdate,
                     "storiesAdded": ctrl.fetchdetails.sprintData.burndown.issuesAdded.count,
                     "storiesRemoed": ctrl.fetchdetails.sprintData.burndown.issuesRemoved.count
                 }
 
+                if (ctrl.updateSprint.$valid == true) {
                 projectData.postSprint(ctrl.sprintEditPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -891,6 +951,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
         }
 
@@ -928,7 +989,6 @@
             var currentMonth = Number(currentdate.getMonth());
             var currentYear = Number(currentdate.getFullYear());
             var currentMonthLabel = monthNames[currentMonth];
-            debugger;
                            if(currentMonth == 0){
                         nextYear =  currentYear;
                 prevYear =  currentYear-1;     
@@ -1023,11 +1083,10 @@
             }
 
             ctrl.postHeatMap = function () {
-                //ctrl.heatMapPayload.heatmapId = "75";
-                //console.log(ctrl.heatMapPayload.requirementsStatus)
                 ctrl.heatMapPayload.submissionDate = getDate(ctrl.heatMapPayload.submissionDate);
-                console.log(ctrl.heatMapPayload.submissionDate);
                 ctrl.heatMapPayload.projectId = id;
+
+                if (ctrl.addHeatmapPage.$valid == true) {
                 projectData.postHeatMap(ctrl.heatMapPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -1036,6 +1095,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
 
         }
@@ -1087,6 +1147,7 @@
 
             ctrl.updateHeatMap = function () {
                 ctrl.objId = data.id;
+                if (ctrl.updateHeatMapPage.$valid == true) {
                 projectData.updateHeatMap(ctrl.updateHeatmapPayload, ctrl.objId).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -1095,6 +1156,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
 
         }
