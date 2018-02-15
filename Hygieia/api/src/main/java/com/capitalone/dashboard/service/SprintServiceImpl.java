@@ -109,8 +109,6 @@ public class SprintServiceImpl implements SprintService {
 		
 		s.setClosed(re.isReleased());
 		
-		//s.setClosed(re.);
-		
 		SprintData sd= new SprintData();
 		sd.setSprintName(re.getSprintName());
 		sd.setSprintId(re.getSprintId());
@@ -118,10 +116,9 @@ public class SprintServiceImpl implements SprintService {
 		sd.setCompletedStoryPoints(re.getCompletedStoryPoints());
 		
 		try {
-			sd.setEndDate(new SimpleDateFormat("dd-MM-yyyy").parse(re.getEndDate()));
-			sd.setStartDate(new SimpleDateFormat("dd-MM-yyyy").parse(re.getStartDate()));
+			sd.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(re.getEndDate()));
+			sd.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(re.getStartDate()));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -129,16 +126,16 @@ public class SprintServiceImpl implements SprintService {
 		DefectCount defectsFound= new DefectCount();
 		List<NameValuePair> list1= new ArrayList<NameValuePair>();
 		NameValuePair np1= new NameValuePair();
-		np1.setName("High");
-		np1.setValue(re.getHighDefectsFound());
+		np1.setName("Low");
+		np1.setValue(re.getLowDefectsFound());
 		
 		NameValuePair np2= new NameValuePair();
-		np2.setName("Low");
-		np2.setValue(re.getLowDefectsFound());
+		np2.setName("Medium");
+		np2.setValue(re.getMediumDefectsFound()); 
 		
 		NameValuePair np3= new NameValuePair();
-		np3.setName("Medium");
-		np3.setValue(re.getMediumDefectsFound());
+		np3.setName("High");
+		np3.setValue(re.getHighDefectsFound());
 		
 		NameValuePair np4= new NameValuePair();
 		np4.setName("Critical");
@@ -159,17 +156,18 @@ public class SprintServiceImpl implements SprintService {
 		//defects resolved
 		DefectCount defectsResolved= new DefectCount();
 		List<NameValuePair> list2= new ArrayList<NameValuePair>();
+		
 		NameValuePair dnp1= new NameValuePair();
-		dnp1.setName("High");
-		dnp1.setValue(re.getHighDefectsClosed());
+		dnp1.setName("Low");
+		dnp1.setValue(re.getLowDefectsClosed());
 		
 		NameValuePair dnp2= new NameValuePair();
-		dnp2.setName("Low");
-		dnp2.setValue(re.getLowDefectsClosed());
+		dnp2.setName("Medium");
+		dnp2.setValue(re.getMediumDefectsClosed());
 		
 		NameValuePair dnp3= new NameValuePair();
-		dnp3.setName("Medium");
-		dnp3.setValue(re.getMediumDefectsClosed());
+		dnp3.setName("High");
+		dnp3.setValue(re.getHighDefectsClosed());
 		
 		NameValuePair dnp4= new NameValuePair();
 		dnp4.setName("Critical");
@@ -191,17 +189,18 @@ public class SprintServiceImpl implements SprintService {
 		//defects unresolved
 		DefectCount defectsUnResolved= new DefectCount();
 		List<NameValuePair> list3= new ArrayList<NameValuePair>();
+		
 		NameValuePair dnpp1= new NameValuePair();
-		dnpp1.setName("High");
-		dnpp1.setValue(re.getHighDefectsUnresolved());
+		dnpp1.setName("Low");
+		dnpp1.setValue(re.getLowDefectsUnresolved());
 		
 		NameValuePair dnpp2= new NameValuePair();
-		dnpp2.setName("Low");
-		dnpp2.setValue(re.getLowDefectsUnresolved());
+		dnpp2.setName("Medium");
+		dnpp2.setValue(re.getMediumDefectsUnresolved());
 		
 		NameValuePair dnpp3= new NameValuePair();
-		dnpp3.setName("Medium");
-		dnpp3.setValue(re.getMediumDefectsUnresolved());
+		dnpp3.setName("High");
+		dnpp3.setValue(re.getHighDefectsUnresolved());
 		
 		NameValuePair dnpp4= new NameValuePair();
 		dnpp4.setName("Critical");
@@ -235,10 +234,13 @@ public class SprintServiceImpl implements SprintService {
 		issuecount.setStoryPoints(0.0d);
 		burndown.setIssuesRemoved(issuecount);
 		// this field is not populated from UI, hence setting zero for future implementation
-		int incompletedissuesount=0;
+		//int incompletedissuesount=0;
 		
-		sd.setCommittedIssueCount(re.getCommittedStoriesCount() + re.getStoriesRemoed() + incompletedissuesount - re.getStoriesAdded());
+		//sd.setCommittedIssueCount(re.getCompletedIssueCount() + re.getStoriesRemoed() + incompletedissuesount - re.getStoriesAdded());
+		//sd.setCommittedIssueCount(re.getCommittedStoriesCount() + re.getStoriesRemoed() + incompletedissuesount - re.getStoriesAdded());
+		
 		sd.setCompletedIssueCount(re.getCompletedIssueCount());
+		sd.setCommittedIssueCount(re.getCommittedIssueCount());
 		issuecount = burndown.new IssueCount();
 		issuecount.setCount(sd.getCommittedIssueCount());	
 		issuecount.setStoryPoints(0.0d);
