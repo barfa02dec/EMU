@@ -13,8 +13,8 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
 	    private String name;
 	    private Boolean archived;
 	    private Boolean released;
-	    private String releaseDate;
-	    private String startDate;
+	    private String dateRelease;
+	    private String dateStart;
 	    private String overdue;
 	    private VersionData versionData;
 	    private String originalreleaseData;
@@ -64,7 +64,33 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
 		public void setReleased(Boolean released) {
 			this.released = released;
 		}
-		public String getReleaseDate() {
+		
+		
+		/**
+		 * @return the dateRelease
+		 */
+		public String getDateRelease() {
+			return dateRelease;
+		}
+		/**
+		 * @param dateRelease the dateRelease to set
+		 */
+		public void setDateRelease(String dateRelease) {
+			this.dateRelease = dateRelease;
+		}
+		/**
+		 * @return the dateStart
+		 */
+		public String getDateStart() {
+			return dateStart;
+		}
+		/**
+		 * @param dateStart the dateStart to set
+		 */
+		public void setDateStart(String dateStart) {
+			this.dateStart = dateStart;
+		}
+		/*public String getReleaseDate() {
 			return releaseDate;
 		}
 		public void setReleaseDate(String releaseDate) {
@@ -75,7 +101,7 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
 		}
 		public void setStartDate(String startDate) {
 			this.startDate = startDate;
-		}
+		}*/
 		public String getOverdue() {
 			return overdue;
 		}

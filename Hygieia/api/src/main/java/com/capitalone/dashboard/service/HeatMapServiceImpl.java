@@ -51,14 +51,8 @@ public class HeatMapServiceImpl implements HeatMapService{
 		if (null == heat) {
 			heat = new HeatMap();
 			heat.setProjectId(hre.getProjectId());
-			//heat.setSubmissionDate(parseDate(hre.getSubmissionDate()));
-			/*try {
-				heat.setSubmissionDate(new SimpleDateFormat("MM-dd-yyyy").parse(hre.getSubmissionDate()));
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}*/
 
-			Date date = null;
+			/*Date date = null;
 			try {
 				SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 				date = sdf.parse(hre.getSubmissionDate());
@@ -66,11 +60,13 @@ public class HeatMapServiceImpl implements HeatMapService{
 				if (!hre.getSubmissionDate().equals(sdf.format(date))) {
 					date = null;
 				}
-				heat.setSubmissionDate(date);
+				heat.setSubmissionDate(hre.getSubmissionDate());
 			} catch (ParseException ex) {
 				ex.printStackTrace();
-			}
+			}*/
+			heat.setSubmissionDate(hre.getSubmissionDate());
 		}
+		
 		ProjectHeatmapData projectHeatmapData = new ProjectHeatmapData();
 
 		mapHeatMapRequest(projectHeatmapData, hre);
@@ -111,7 +107,7 @@ public class HeatMapServiceImpl implements HeatMapService{
 		 * catch (ParseException e) { e.printStackTrace(); }
 		 */
 
-		Date date = null;
+		/*Date date = null;
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 			date = sdf.parse(hre.getSubmissionDate());
@@ -119,10 +115,11 @@ public class HeatMapServiceImpl implements HeatMapService{
 			if (!hre.getSubmissionDate().equals(sdf.format(date))) {
 				date = null;
 			}
-			heat.setSubmissionDate(date);
+			heat.setSubmissionDate(hre.getSubmissionDate());
 		} catch (ParseException ex) {
 			ex.printStackTrace();
-		}
+		}*/
+		heat.setSubmissionDate(hre.getSubmissionDate());
 		ProjectHeatmapData projectHeatmapData = new ProjectHeatmapData();
 
 		mapHeatMapRequest(projectHeatmapData, hre);

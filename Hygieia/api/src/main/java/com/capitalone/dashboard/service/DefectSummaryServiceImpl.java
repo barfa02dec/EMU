@@ -2,6 +2,7 @@ package com.capitalone.dashboard.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -108,69 +109,67 @@ public class DefectSummaryServiceImpl implements DefectSummaryService {
 		}
 		
 		//defects by priority
-		Map<String,Integer> defectsByProirity= new HashMap<String,Integer>();
+		Map<String,Integer> defectsByProirity= new LinkedHashMap<String,Integer>();
 		defectsByProirity.put("Low", re.getLowPriorityDefectsCount());
-		defectsByProirity.put("High", re.getHighPriorityDefectsCount());
 		defectsByProirity.put("Medium", re.getMediumPriorityDefectsCount());
+		defectsByProirity.put("High", re.getHighPriorityDefectsCount());
 		defectsByProirity.put("Critical", re.getCriticalPriorityDefectsCount());
-		
 		da.setDefectsByProirity(defectsByProirity);
 		//defects by environment 
-		Map<String,Integer> defectsByEnvironment=new HashMap<String,Integer>();
+		Map<String,Integer> defectsByEnvironment=new LinkedHashMap<String,Integer>();
 		defectsByEnvironment.put("UAT", re.getUatDefects());
 		defectsByEnvironment.put("QA", re.getQaDefects());
 		defectsByEnvironment.put("PROD", re.getProdDefects());
-		
 		da.setDefectsByEnvironment(defectsByEnvironment);
 		
 		//open defects
-		Map<String, List<Map<String,String>>> openDefectsByAge = new HashMap<String, List<Map<String,String>>>();
+		Map<String, List<Map<String,String>>> openDefectsByAge = new LinkedHashMap<String, List<Map<String,String>>>();
 		
 		List<Map<String,String>> l1=new ArrayList<Map<String,String>>();
 		
-		Map<String,String> m1= new HashMap<String,String>();
-		m1.put("Critical", ""+re.getOpenDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days());
-		m1.put("High", ""+re.getOpenDefectsWithHighPriorityAndAgeLessThanOrEQ15Days());
-		m1.put("Medium", ""+re.getOpenDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days());
+		Map<String,String> m1= new LinkedHashMap<String,String>();
 		m1.put("Low", ""+re.getOpenDefectsWithLowPriorityAndAgeLessThanOrEQ15Days());
+		m1.put("Medium", ""+re.getOpenDefectsWithMediumPriorityAndAgeLessThanOrEQ15Days());
+		m1.put("High", ""+re.getOpenDefectsWithHighPriorityAndAgeLessThanOrEQ15Days());
+		m1.put("Critical", ""+re.getOpenDefectsWithCriticalPriorityAndAgeLessThanOrEQ15Days());
 		m1.put("Defect Age Strategy", "days <15");
 		l1.add(m1);
 		
 		List<Map<String,String>> l2=new ArrayList<Map<String,String>>();
 		
-		Map<String,String> m2= new HashMap<String,String>();
-		m2.put("Critical", ""+re.getOpenDefectsWithCriticalPriorityAndAgeBetween15To30Days());
-		m2.put("High", ""+re.getOpenDefectsWithHighPriorityAndAgeBetween15To30Days());
-		m2.put("Medium", ""+re.getOpenDefectsWithMediumPriorityAndAgeBetween15To30Days());
+		Map<String,String> m2= new LinkedHashMap<String,String>();
 		m2.put("Low", ""+re.getOpenDefectsWithLowPriorityAndAgeBetween15To30Days());
+		m2.put("Medium", ""+re.getOpenDefectsWithMediumPriorityAndAgeBetween15To30Days());
+		m2.put("High", ""+re.getOpenDefectsWithHighPriorityAndAgeBetween15To30Days());
+		m2.put("Critical", ""+re.getOpenDefectsWithCriticalPriorityAndAgeBetween15To30Days());
 		m2.put("Defect Age Strategy", "15< days <30");
 		l2.add(m2);
 		
 		List<Map<String,String>> l3=new ArrayList<Map<String,String>>();
 		
-		Map<String,String> m3= new HashMap<String,String>();
-		m3.put("Critical", ""+re.getOpenDefectsWithCriticalPriorityAndAgeBetween30To60Days());
-		m3.put("High", ""+re.getOpenDefectsWithHighPriorityAndAgeBetween30To60Days());
-		m3.put("Medium", ""+re.getOpenDefectsWithMediumPriorityAndAgeBetween30To60Days());
+		Map<String,String> m3= new LinkedHashMap<String,String>();
 		m3.put("Low", ""+re.getOpenDefectsWithLowPriorityAndAgeBetween30To60Days());
+		m3.put("Medium", ""+re.getOpenDefectsWithMediumPriorityAndAgeBetween30To60Days());
+		m3.put("High", ""+re.getOpenDefectsWithHighPriorityAndAgeBetween30To60Days());
+		m3.put("Critical", ""+re.getOpenDefectsWithCriticalPriorityAndAgeBetween30To60Days());
 		m3.put("Defect Age Strategy", "30< days <60");
 		l3.add(m3);
 		
 		List<Map<String,String>> l4=new ArrayList<Map<String,String>>();
-		Map<String,String> m4= new HashMap<String,String>();
-		m4.put("Critical", ""+re.getOpenDefectsWithCriticalPriorityAndAgeBetween60To90Days());
-		m4.put("High", ""+re.getOpenDefectsWithHighPriorityAndAgeBetween60To90Days());
-		m4.put("Medium", ""+re.getOpenDefectsWithMediumPriorityAndAgeBetween60To90Days());
+		Map<String,String> m4= new LinkedHashMap<String,String>();
 		m4.put("Low", ""+re.getOpenDefectsWithLowPriorityAndAgeBetween60To90Days());
+		m4.put("Medium", ""+re.getOpenDefectsWithMediumPriorityAndAgeBetween60To90Days());
+		m4.put("High", ""+re.getOpenDefectsWithHighPriorityAndAgeBetween60To90Days());
+		m4.put("Critical", ""+re.getOpenDefectsWithCriticalPriorityAndAgeBetween60To90Days());
 		m4.put("Defect Age Strategy", "60< days <90");
 		l4.add(m4);
 		
 		List<Map<String,String>> l5=new ArrayList<Map<String,String>>();
-		Map<String,String> m5= new HashMap<String,String>();
-		m5.put("Critical", ""+re.getOpenDefectsWithCriticalPriorityAndAgeGreaterThan90());
-		m5.put("High", ""+re.getOpenDefectsWithHighPriorityAndAgeGreaterThan90());
-		m5.put("Medium", ""+re.getOpenDefectsWithMediumPriorityAndAgeGreaterThan90());
+		Map<String,String> m5= new LinkedHashMap<String,String>();
 		m5.put("Low", ""+re.getOpenDefectsWithLowPriorityAndAgeGreaterThan90());
+		m5.put("Medium", ""+re.getOpenDefectsWithMediumPriorityAndAgeGreaterThan90());
+		m5.put("High", ""+re.getOpenDefectsWithHighPriorityAndAgeGreaterThan90());
+		m5.put("Critical", ""+re.getOpenDefectsWithCriticalPriorityAndAgeGreaterThan90());
 		m5.put("Defect Age Strategy", "days >90");
 		l5.add(m5);
 		
@@ -184,53 +183,53 @@ public class DefectSummaryServiceImpl implements DefectSummaryService {
 		
 		//fixed defects by resolution
 		
-		Map<String, List<Map<String,String>>> fixeddefectsByResolutions= new HashMap<String, List<Map<String,String>>>();
+		Map<String, List<Map<String,String>>> fixeddefectsByResolutions= new LinkedHashMap<String, List<Map<String,String>>>();
 		
 		List<Map<String,String>> rl1=new ArrayList<Map<String,String>>();
 		
-		Map<String,String> rm1= new HashMap<String,String>();
-		rm1.put("Critical", ""+re.getFixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days());
-		rm1.put("High", ""+re.getFixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days());
-		rm1.put("Medium", ""+re.getFixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days());
+		Map<String,String> rm1= new LinkedHashMap<String,String>();
 		rm1.put("Low", ""+re.getFixedDefectsWithLowPriorityAndResolutionLessThanOrEQ15Days());
+		rm1.put("Medium", ""+re.getFixedDefectsWithMediumPriorityAndResolutionLessThanOrEQ15Days());
+		rm1.put("High", ""+re.getFixedDefectsWithHighPriorityAndResolutionLessThanOrEQ15Days());
+		rm1.put("Critical", ""+re.getFixedDefectsWithCriticalPriorityAndResolutionLessThanOrEQ15Days());
 		rm1.put("Defect Resolution Strategy", "days <15");
 		rl1.add(rm1);
 		
 		List<Map<String,String>> rl2=new ArrayList<Map<String,String>>();
 		
-		Map<String,String> rm2= new HashMap<String,String>();
-		rm2.put("Critical", ""+re.getFixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days());
-		rm2.put("High", ""+re.getFixedDefectsWithHighPriorityAndResolutionBetween15To30Days());
-		rm2.put("Medium", ""+re.getFixedDefectsWithMediumPriorityAndResolutionBetween15To30Days());
+		Map<String,String> rm2= new LinkedHashMap<String,String>();
 		rm2.put("Low", ""+re.getFixedDefectsWithLowPriorityAndResolutionBetween15To30Days());
+		rm2.put("Medium", ""+re.getFixedDefectsWithMediumPriorityAndResolutionBetween15To30Days());
+		rm2.put("High", ""+re.getFixedDefectsWithHighPriorityAndResolutionBetween15To30Days());
+		rm2.put("Critical", ""+re.getFixedDefectsWithCriticalPriorityAndResolutionBetween15To30Days());
 		rm2.put("Defect Resolution Strategy", "15< days <30");
 		rl2.add(rm2);
 		
 		List<Map<String,String>> rl3=new ArrayList<Map<String,String>>();
 		
-		Map<String,String> rm3= new HashMap<String,String>();
-		rm3.put("Critical", ""+re.getFixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days());
-		rm3.put("High", ""+re.getFixedDefectsWithHighPriorityAndResolutionBetween30To60Days());
-		rm3.put("Medium", ""+re.getFixedDefectsWithMediumPriorityAndResolutionBetween30To60Days());
+		Map<String,String> rm3= new LinkedHashMap<String,String>();
 		rm3.put("Low", ""+re.getFixedDefectsWithLowPriorityAndResolutionBetween30To60Days());
+		rm3.put("Medium", ""+re.getFixedDefectsWithMediumPriorityAndResolutionBetween30To60Days());
+		rm3.put("High", ""+re.getFixedDefectsWithHighPriorityAndResolutionBetween30To60Days());
+		rm3.put("Critical", ""+re.getFixedDefectsWithCriticalPriorityAndResolutionBetween30To60Days());
 		rm3.put("Defect Resolution Strategy", "30< days <60");
 		rl3.add(rm3);
 		
 		List<Map<String,String>> rl4=new ArrayList<Map<String,String>>();
-		Map<String,String> rm4= new HashMap<String,String>();
-		rm4.put("Critical", ""+re.getFixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days());
-		rm4.put("High", ""+re.getFixedDefectsWithHighPriorityAndResolutionBetween60To90Days());
-		rm4.put("Medium", ""+re.getFixedDefectsWithMediumPriorityAndResolutionBetween60To90Days());
+		Map<String,String> rm4= new LinkedHashMap<String,String>();
 		rm4.put("Low", ""+re.getFixedDefectsWithLowPriorityAndResolutionBetween60To90Days());
+		rm4.put("Medium", ""+re.getFixedDefectsWithMediumPriorityAndResolutionBetween60To90Days());
+		rm4.put("High", ""+re.getFixedDefectsWithHighPriorityAndResolutionBetween60To90Days());
+		rm4.put("Critical", ""+re.getFixedDefectsWithCriticalPriorityAndResolutionBetween60To90Days());
 		rm4.put("Defect Resolution Strategy", "60< days <90");
 		rl4.add(rm4);
 		
 		List<Map<String,String>> rl5=new ArrayList<Map<String,String>>();
-		Map<String,String> rm5= new HashMap<String,String>();
-		rm5.put("Critical", ""+re.getFixedDefectsWithCriticalPriorityAndResolutionGreaterThan90());
-		rm5.put("High", ""+re.getFixedDefectsWithHighPriorityAndResolutionGreaterThan90());
-		rm5.put("Medium", ""+re.getFixedDefectsWithMediumPriorityAndResolutionGreaterThan90());
+		Map<String,String> rm5= new LinkedHashMap<String,String>();
 		rm5.put("Low", ""+re.getFixedDefectsWithLowPriorityAndResolutionGreaterThan90());
+		rm5.put("Medium", ""+re.getFixedDefectsWithMediumPriorityAndResolutionGreaterThan90());
+		rm5.put("High", ""+re.getFixedDefectsWithHighPriorityAndResolutionGreaterThan90());
+		rm5.put("Critical", ""+re.getFixedDefectsWithCriticalPriorityAndResolutionGreaterThan90());
 		rm5.put("Defect Resolution Strategy", "days >90");
 		rl5.add(rm5);
 		

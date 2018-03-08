@@ -114,6 +114,8 @@ public class SprintServiceImpl implements SprintService {
 		sd.setSprintId(re.getSprintId());
 		sd.setCommittedStoryPoints(re.getCommittedStoryPoints());
 		sd.setCompletedStoryPoints(re.getCompletedStoryPoints());
+		//sd.setEndDate(re.getEndDate());
+		//sd.setStartDate(re.getStartDate());
 		
 		try {
 			sd.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(re.getEndDate()));
