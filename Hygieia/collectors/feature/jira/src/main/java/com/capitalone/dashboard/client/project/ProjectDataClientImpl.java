@@ -87,7 +87,7 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 				
 				if (scope == null && jiraProjectsToShowInDashboard.contains(scopeId)) {
 					scope = new Scope();
-				}else if (scope == null && !jiraProjectsToShowInDashboard.contains(scopeId)){
+				}else if (!jiraProjectsToShowInDashboard.contains(scopeId)){
 					continue;
 				}
 

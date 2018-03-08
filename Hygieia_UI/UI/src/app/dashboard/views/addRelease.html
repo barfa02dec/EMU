@@ -4,15 +4,15 @@
 <script src="assets/images/fld/angular-datepicker.js"></script>
 <widget-modal  class="border-prop-modals" ng-click="arc.hideList()">
     <div class="widget-modal-heading">{{arc.title}}</div> 
-    <form name="cdf" class="form" ng-submit="arc.postRelease()" novalidate ng-if="arc.normalformText">
+    <form name="arc.createRelease" class="form" ng-submit="arc.postRelease()" novalidate ng-if="arc.normalformText">
         <div class="col-md-6">
             <form-group input="dashboardTitle" errors="{required: 'Release id is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
                 <input type="text" name="dashboardTitle" numbers-only class="form-control" placeholder="Release id" ng-model="arc.releaseId" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
             </form-group>
         </div>
         <div class="col-md-6">
-            <form-group input="applicationName" errors="{required: 'Release name is required', maxlength: 'Max length of 50 characters'}">
-                <input type="text" name="applicationName" class="form-control" placeholder="Release name" ng-model="arc.name" maxlength="50" autocomplete="off" required />
+            <form-group input="relesename" errors="{required: 'Release name is required', maxlength: 'Max length of 50 characters'}">
+                <input type="text" name="relesename" class="form-control" placeholder="Release name" ng-model="arc.name" maxlength="50" autocomplete="off" required />
             </form-group>
         </div>
         <div class="col-md-3">

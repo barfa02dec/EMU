@@ -4,7 +4,7 @@
 <script src="assets/images/fld/angular-datepicker.js"></script>
 <widget-modal  class="border-prop-modals">
     <div class="widget-modal-heading">{{asc.title}}</div>
-    <form name="cdf" class="form" ng-submit="asc.postSprint()" ng-if="asc.normalformText" novalidate>
+    <form name="asc.addSprint" class="form" ng-submit="asc.postSprint()" ng-if="asc.normalformText" novalidate>
         <div class="col-md-6">
             <form-group input="sprintid" errors="{required: 'Sprint id is required',maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
                 <input type="text" name="sprintid" class="form-control" placeholder="Sprint id" ng-model="asc.sprintPayload.sprintId" required maxlength="50" numbers-only autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />

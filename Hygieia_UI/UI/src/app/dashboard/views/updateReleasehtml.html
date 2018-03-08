@@ -3,7 +3,7 @@
 <link href="assets/images/fld/angular-datepicker.css" rel="stylesheet" type="text/css" />
 <script src="assets/images/fld/angular-datepicker.js"></script>
 <widget-modal widget-modal-title="Update Release" class="border-prop-modals" >
-   <form name="cdf" class="form" ng-submit="urc.postRelease()" novalidate >
+   <form name="urc.updateRelease" class="form" ng-submit="urc.postRelease()" novalidate >
       <div class="col-md-6">
          <form-group input="dashboardTitle" errors="{required: 'Release id is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
             <input
@@ -44,16 +44,16 @@
                </div>
             </datepicker> -->
 
-              <datepicker date-format="dd-MM-yyyy" selector="form-control">
-                  <input class="form-control font-fontawesome font-light"  ng-model="urc.fetchReleasedetails.startDate" name="date1" placeholder="  Start date" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" required/>
+              <datepicker date-format="yyyy-MM-dd" selector="form-control" date-max-limit="{{urc.releaseEndDate}}">
+                  <input class="form-control font-fontawesome font-light"  ng-model="urc.releaseStartDate" name="date1" placeholder="  Start date" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" required/>
             </datepicker>
 
          </form-group>
       </div>
       <div class="col-md-3">
          <form-group input="date2" errors="{pattern:'Please enter date in correct format(yyyy-MM-dd)'}">
-            <datepicker date-format="dd-MM-yyyy" selector="form-control">
-                  <input class="form-control font-fontawesome font-light" ng-model="urc.fetchReleasedetails.releaseDate" name="date2" placeholder="  End date" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" required/>
+            <datepicker date-format="yyyy-MM-dd" selector="form-control" date-min-limit="{{urc.releaseStartDate}}">
+                  <input class="form-control font-fontawesome font-light" ng-model="urc.releaseEndDate" name="date2" placeholder="  End date" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" required/>
             </datepicker>
          </form-group>
       </div>
@@ -86,7 +86,7 @@
                name="stories1"
                class="form-control"
                placeholder="Number of stories"
-               ng-model="urc.fetchReleasedetails.versionData.noofStoryPoints"
+               ng-model="urc.fetchReleasedetails.versionData.noofStoryCompleted"
                numbers-only
                /> 
             <!-- <div date-picker></div> -->
@@ -102,7 +102,7 @@
                name="story2"
                class="form-control"
                placeholder="Number of story points"
-               ng-model="urc.fetchReleasedetails.versionData.noofStoryCompleted"
+               ng-model="urc.fetchReleasedetails.versionData.noofStoryPoints"
                numbers-only
                />
          </form-group>

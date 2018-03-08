@@ -219,7 +219,6 @@
 
         //Edit Project 
         ctrl.editproject = function (info) {
-            console.log(info);
             ctrl.usernamepro = $cookies.get('username');
             ctrl.editPayload = {
                 "projectId": info.projectId,
@@ -233,7 +232,6 @@
                 "id": info.id
             }
             info.editorEnabled = false;
-            console.log(info);
             var apiHost = ' http://localhost:3000';
             var qahost = 'http://10.20.1.183:3000';
             if ((info.businessUnit) && (info.projectId) && (info.client) && (info.projectOwner)) {
@@ -279,7 +277,6 @@
 
         //Open Delete Project Modal
         ctrl.deleteProjectModel = function (pro) {
-            console.log(pro);
             ctrl.proData = pro;
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/deleteModel.html',
@@ -655,6 +652,7 @@
                     "noofStoryCommitted": ctrl.noofStoryCompleted
                 }
 
+                if (ctrl.createRelease.$valid == true) {
                 projectData.postRelease(ctrl.releasePayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -663,6 +661,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
         }
 
@@ -760,6 +759,7 @@
             ctrl.postSprint = function (proje) {
                 ctrl.sprintPayload.projectName = name;
                 ctrl.sprintPayload.projectId = id;
+                if (ctrl.addSprint.$valid == true) {
                 projectData.postSprint(ctrl.sprintPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -768,6 +768,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
         }
 
@@ -783,9 +784,22 @@
                 label: 'Open'
             },];
 
-            featureData.updateReleaseDta(ctrl.ids, ctrl.names).then(function (data) {
-                ctrl.fetchReleasedetails = data;
-            })
+            featureData.updateReleaseDta(ctrl.ids, ctrl.names).then(function (data) {
+                ctrl.fetchReleasedetails = data;
+                ctrl.releaseStartDate = ctrl.fetchReleasedetails.versionData.startDate;
+                ctrl.releaseEndDate = ctrl.fetchReleasedetails.versionData.releaseDate;
+
+                var releaseStartDateFormat = new Date(ctrl.fetchReleasedetails.versionData.startDate),
+                startDateFormat = releaseStartDateFormat.getDate(),
+                startMonthFormat  = releaseStartDateFormat.getMonth(),
+                startYearFormat = releaseStartDateFormat.getFullYear();
+                ctrl.releaseStartDate = startYearFormat  + '-' + ('0' + (startMonthFormat+1)).slice(-2) + '-' + ('0' + (startDateFormat)).slice(-2); 
+                var releaseEndDateFormat = new Date(ctrl.fetchReleasedetails.versionData.releaseDate),
+                endDateFormat = releaseEndDateFormat.getDate(),
+                endMonthFormat  = releaseEndDateFormat.getMonth(),
+                endYearFormat = releaseEndDateFormat.getFullYear();
+                ctrl.releaseEndDate = endYearFormat  + '-' + ('0' + (endMonthFormat+1)).slice(-2) + '-' + ('0' + (endDateFormat)).slice(-2); 
+                }) 
 
             ctrl.postRelease = function (proje) {
                 ctrl.releasePayload = {
@@ -793,8 +807,8 @@
                     "projectId": ctrl.names,
                     "releaseId": ctrl.fetchReleasedetails.releaseId,
                     "name": ctrl.fetchReleasedetails.name,
-                    "startDate": ctrl.fetchReleasedetails.startDate,
-                    "releaseDate": ctrl.fetchReleasedetails.releaseDate,
+                    "startDate": ctrl.releaseStartDate,
+                    "releaseDate": ctrl.releaseEndDate,
                     "released": ctrl.fetchReleasedetails.released,
                     "description": ctrl.description,
                     "criticalDefectsFound": ctrl.fetchReleasedetails.versionData.defectsFound.severity[3].value,
@@ -813,6 +827,8 @@
                     "noofStoryCommitted": ctrl.fetchReleasedetails.versionData.noofStoryPoints
                 }
 
+                if (ctrl.updateRelease.$valid == true) {
+
                 projectData.postRelease(ctrl.releasePayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -821,6 +837,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
         }
 
@@ -838,16 +855,22 @@
             },];
             ctrl.fetchdetails = {};
 
-            featureData.updateSprintDta(ctrl.names, ctrl.ids).then(function (data) {
-                ctrl.fetchdetails = data;
-                /*ctrl.dt = new Date(ctrl.fetchdetails.sprintData.endDate);
-                ctrl.fetchYear = ctrl.dt.getFullYear();
-                ctrl.fetchDate = ctrl.dt.getDate();
-                ctrl.fetchMonth = ctrl.dt.getMonth();
-                ctrl.incrementFetchMonth = ctrl.fetchMonth + 1;
-                ctrl.getFullDate = ctrl.fetchYear+"-"+ctrl.fetchMonth+"-"+ctrl.fetchDate;
-                console.log("hai" +ctrl.getFullDate);*/
-            })
+            featureData.updateSprintDta(ctrl.names, ctrl.ids).then(function (data) {
+            ctrl.fetchdetails = data;
+            ctrl.startDate = ctrl.fetchdetails.sprintData.startDate;
+            ctrl.endDate = ctrl.fetchdetails.sprintData.endDate;
+
+            var sprintStartDateFormat = new Date(ctrl.fetchdetails.sprintData.startDate),
+            sprintStartDateFormatDate = sprintStartDateFormat.getDate(),
+            sprintStartDateFormatMonth = sprintStartDateFormat.getMonth(),
+            sprintStartDateFormatYear = sprintStartDateFormat.getFullYear();
+            ctrl.startDate = sprintStartDateFormatYear + '-' + ('0' + (sprintStartDateFormatMonth+1)).slice(-2) + '-' + ('0' + (sprintStartDateFormatDate)).slice(-2); 
+            var sprintEndDateFormat = new Date(ctrl.fetchdetails.sprintData.endDate),
+            sprintEndDateFormatDate = sprintEndDateFormat.getDate(),
+            sprintEndDateFormatMonth = sprintEndDateFormat.getMonth(),
+            sprintEndDateFormatYear = sprintEndDateFormat.getFullYear();
+            ctrl.endDate = sprintEndDateFormatYear + '-' + ('0' + (sprintEndDateFormatMonth+1)).slice(-2) + '-' + ('0' + (sprintEndDateFormatDate)).slice(-2);
+            }) 
 
             
             
@@ -877,12 +900,13 @@
                     "mediumDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[2].value,
                     "lowDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[1].value,
                     "highDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[0].value,
-                    "endDate": ctrl.fetchdetails.end,
-                    "startDate": ctrl.fetchdetails.start,
+                    "endDate": ctrl.endDate,
+                    "startDate": ctrl.startDate,
                     "storiesAdded": ctrl.fetchdetails.sprintData.burndown.issuesAdded.count,
                     "storiesRemoed": ctrl.fetchdetails.sprintData.burndown.issuesRemoved.count
                 }
 
+                if (ctrl.updateSprint.$valid == true) {
                 projectData.postSprint(ctrl.sprintEditPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -891,6 +915,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
         }
 
@@ -928,7 +953,6 @@
             var currentMonth = Number(currentdate.getMonth());
             var currentYear = Number(currentdate.getFullYear());
             var currentMonthLabel = monthNames[currentMonth];
-            debugger;
                            if(currentMonth == 0){
                         nextYear =  currentYear;
                 prevYear =  currentYear-1;     
@@ -1023,11 +1047,10 @@
             }
 
             ctrl.postHeatMap = function () {
-                //ctrl.heatMapPayload.heatmapId = "75";
-                //console.log(ctrl.heatMapPayload.requirementsStatus)
                 ctrl.heatMapPayload.submissionDate = getDate(ctrl.heatMapPayload.submissionDate);
-                console.log(ctrl.heatMapPayload.submissionDate);
                 ctrl.heatMapPayload.projectId = id;
+
+                if (ctrl.addHeatmapPage.$valid == true) {
                 projectData.postHeatMap(ctrl.heatMapPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -1036,6 +1059,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
 
         }
@@ -1050,10 +1074,19 @@
                 { value: 'NA', name: 'NA' }
             ];
 
+            var monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            var d1 = new Date(data.submissionDate),
+            //d = d1.getDate(),
+            m = d1.getMonth(),
+            y = d1.getFullYear();
+
+            var dateString = monthName[m] + "," + y; 
+
             ctrl.updateHeatmapPayload = {
 
                 "projectId": data.projectId,
-                "submissionDate": data.submissionDate,
+                "submissionDate":dateString, 
                 "customerWSRStatus": data.projectHeatmapData.customerWSR.customerWSRStatus,
                 "architectureFocusStatus": data.projectHeatmapData.architectureFocus.architectureFocusStatus,
                 "automatedUnitTestingStatus": data.projectHeatmapData.automatedUnitTesting.automatedUnitTestingStatus,
@@ -1087,6 +1120,7 @@
 
             ctrl.updateHeatMap = function () {
                 ctrl.objId = data.id;
+                if (ctrl.updateHeatMapPage.$valid == true) {
                 projectData.updateHeatMap(ctrl.updateHeatmapPayload, ctrl.objId).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
@@ -1095,6 +1129,7 @@
                         controllerAs: 'pm'
                     });
                 })
+            }
             }
 
         }

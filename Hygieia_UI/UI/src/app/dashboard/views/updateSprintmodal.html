@@ -4,7 +4,7 @@
 <script src="assets/images/fld/angular-datepicker.js"></script>
 
 <widget-modal widget-modal-title=" Update Sprint" class="border-prop-modals">
-    <form name="cdf" class="form" ng-submit="usc.updateSprintCall()"  novalidate>
+    <form name="usc.updateSprint" class="form" ng-submit="usc.updateSprintCall()"  novalidate>
       
         <div class="col-md-6">
         <form-group input="sprintid" errors="{required: 'Sprint id is required',maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
@@ -371,16 +371,16 @@
         </div> -->
          <div class="col-md-4">
             <form-group input="date1" errors="{pattern:'Please enter date in correct format(yyyy-MM-dd)'}">
-             <datepicker  date-format="yyyy-MM-dd" selector="form-control" date-max-limit="{{usc.fetchdetails.end}}">
-                  <input class="form-control font-fontawesome font-light" ng-model="usc.fetchdetails.start" name="date1" placeholder="  Start date" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" required/>
+             <datepicker  date-format="yyyy-MM-dd" selector="form-control" date-max-limit="{{usc.endDate}}">
+                  <input class="form-control font-fontawesome font-light" ng-model="usc.startDate" name="date1" placeholder="  Start date" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" required/>
             </datepicker>
          </form-group> 
         </div>
 
           <div class="col-md-4">
              <form-group input="date2" errors="{pattern:'Please enter date in correct format(yyyy-MM-dd)'}">
-            <datepicker date-format="yyyy-MM-dd" selector="form-control" date-min-limit="{{usc.fetchdetails.start}}">
-                  <input class="form-control font-fontawesome font-light" ng-model="usc.fetchdetails.end" name="date2" placeholder="  End date" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" required/>
+            <datepicker date-format="yyyy-MM-dd" selector="form-control" date-min-limit="{{usc.startDate}}">
+                  <input class="form-control font-fontawesome font-light" ng-model="usc.endDate" name="date2" placeholder="  End date" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" required/>
             </datepicker>
          </form-group>  
         </div>
