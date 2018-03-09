@@ -281,10 +281,20 @@
                 if (data[i].sprintData != undefined) {
                     comittedStoryPoints.push(data[i].sprintData.committedStoryPoints);
                     completedStoryPoint.push(data[i].sprintData.completedStoryPoints);
+
                     var percentScore = Math.round((data[i].sprintData.completedStoryPoints / data[i].sprintData.committedStoryPoints) * 100);
-                    progress.push(percentScore);
-                    axisSprintNameclos.push(data[i].name);
-                    axisSprintName.push(data[i].name)
+                     if(isFinite(percentScore)) {
+                        progress.push(percentScore);
+                        axisSprintNameclos.push(data[i].name);
+                        axisSprintName.push(data[i].name);
+                    }
+                    else {
+                        var percentScore = 0;
+                        progress.push(percentScore);
+                        axisSprintNameclos.push(data[i].name);
+                        axisSprintName.push(data[i].name)
+                    }
+                    
                 }
 
             }
@@ -293,8 +303,15 @@
             for (var i = 0; i < data.length; i++) {
                 if (data[i].sprintData != undefined) {
                     var percentScoreVelocity = Math.round((data[i].sprintData.completedStoryPoints / data[i].sprintData.committedStoryPoints) * 100);
+                    if(isFinite(percentScoreVelocity)){
                     progressVelocity.push(percentScoreVelocity);
                     var sprint_chart_Data = [completedStoryPoint, comittedStoryPoints, progressVelocity];
+                }
+                else {
+                    var percentScoreVelocity = 0;
+                    progressVelocity.push(percentScoreVelocity);
+                    var sprint_chart_Data = [completedStoryPoint, comittedStoryPoints, progressVelocity];
+                }
                 }
             }
 
