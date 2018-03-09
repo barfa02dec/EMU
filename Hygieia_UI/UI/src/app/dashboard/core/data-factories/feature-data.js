@@ -72,8 +72,8 @@
 					});
 		}
 		function sprintDataFetch(filterProjectId,projectsname) {  
-			 
-			return $http.get('/api/sprints?projectId=' +filterProjectId + "&projectName=" + projectsname + "&noOfSprintToShow=" + "6")
+			var uri_enc = encodeURIComponent(projectsname);
+			return $http.get('/api/sprints?projectId=' +filterProjectId + "&projectName=" + uri_enc + "&noOfSprintToShow=" + "6")
 					.then(function(response) { 
 						return response.data;
 					});
@@ -96,8 +96,8 @@
 		}
 		
 		function ReleaseDataFetch(filterProjectId,projectsname) {  
-			 
-			return $http.get('/api/releases?projectId=' + filterProjectId + "&projectName=" + projectsname + "&noOfReleaseToShow=" + "6")
+			 var uri_enc = encodeURIComponent(projectsname);
+			return $http.get('/api/releases?projectId=' + filterProjectId + "&projectName=" + uri_enc + "&noOfReleaseToShow=" + "6")
 					.then(function(response) { 
 						return response.data;
 					});

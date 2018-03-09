@@ -110,6 +110,10 @@
                             <td class="custom-td-width-defect">Defects unresolved</td>
                             <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-defect-unresolved-color">{{sprintNames.sprintData.defectsUnresolved.total}}</td>
                         </tr>
+                          <tr>
+                            <td class="custom-td-width-defect">Sprint Defects Resolved</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-defect-unresolved-color">{{sprintNames.sprintData.sprintDefectsResolved.total}}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -156,11 +160,11 @@
             </div>
             <div class="col-md-12 agile-board-row-padding-widgets">
                 <div class="col-md-12">
-                    <div class="col-md-6 agile-board-sub-header">Burndown Chart</div>
+                    <div class="col-md-6 agile-board-sub-header">Story Volatility (Story Point)</div>
                     <div class="col-md-6 agile-board-sub-header agile-board-sub-header-padding">Velocity Chart</div>
                 </div>
                  <div class="col-md-6 agile-board-sprint-chart-padding">
-                    <div id="burnDown" config="burnDown" class="sprint-graphs-prop graph-bg-gradient"></div>
+                    <div id="storyVolatility" config="storyVolatility" class="sprint-graphs-prop graph-bg-gradient"></div>
                 </div>
                 <div class="col-md-6 agile-board-sprint-chart-padding">
                     <div id="sprintdatas" config="sprintdatas" class="sprint-graphs-prop graph-bg-gradient"></div>

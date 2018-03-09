@@ -479,8 +479,15 @@
               //completedStoryPoint.push(data[i].sprintData.completedStoryPoints);
               //comittedStoryPoints.push(data[i].sprintData.committedStoryPoints);
               var percentScoreVelocity =  Math.round((data[i].sprintData.completedStoryPoints/data[i].sprintData.committedStoryPoints)*100);
+              if(isFinite(percentScoreVelocity)) {
                progressVelocity.push(percentScoreVelocity);
                var sprint_chart_Data = [completedStoryPoint, comittedStoryPoints, progressVelocity];
+             }
+             else {
+               var percentScoreVelocity = 0;
+               progressVelocity.push(percentScoreVelocity);
+               var sprint_chart_Data = [completedStoryPoint, comittedStoryPoints, progressVelocity];
+             }
           }
           
        }

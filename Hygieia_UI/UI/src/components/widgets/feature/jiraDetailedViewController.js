@@ -263,15 +263,23 @@
             }
             featureData.sprintId = ctrl.sprintIds;
             ctrl.sprintId = featureData.sprintId;
-            featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
+            //featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
       
             // $cookies.put('sprintId', ctrl.sprintIds);
-            var progress = ['Defect Closure'];
-            var comittedStoryPoints = ['Committed Story Points'];
-            var completedStoryPoint = ['Completed Story Points'];
+            var progress = ['DefectClosure'];
+            var comittedStoryPoints = ['CommittedStoryPoints'];
+            var completedStoryPoint = ['CompletedStoryPoints'];
             var axisSprintName = [];
             var axisSprintNameclos = [];
             var progressVelocity = ["Saydoratio"];
+            var defectsFoundClosure = ["DefectsFound"];
+            var defectsResolvedClosure = ["DefectsResolved"];
+            var defectsUnResolvedClosure = ["DefectsUnResolved"];
+            var sprintDefectsResolvedClosure = ["sprintDefectsResolved"];
+            var issuesAdded = ["issuesAdded"];
+            var issuesRemoved = ["issuesRemoved"];
+            var comittedStoryPointsVolatility = ['CommittedStoryPoints'];
+            var completedStoryPointVolatility = ['CompletedStoryPoints'];
 
             //Processing data for sprint list table
             ctrl.spAllDetails = data;
@@ -281,22 +289,25 @@
                 if (data[i].sprintData != undefined) {
                     comittedStoryPoints.push(data[i].sprintData.committedStoryPoints);
                     completedStoryPoint.push(data[i].sprintData.completedStoryPoints);
-
-                    var percentScore = Math.round((data[i].sprintData.completedStoryPoints / data[i].sprintData.committedStoryPoints) * 100);
+                    defectsFoundClosure.push(data[i].sprintData.defectsFound.total);
+                    defectsResolvedClosure.push(data[i].sprintData.defectsResolved.total);
+                    defectsUnResolvedClosure.push(data[i].sprintData.defectsUnresolved.total);
+                    sprintDefectsResolvedClosure.push(data[i].sprintData.sprintDefectsResolved.total);
+                    var percentScore = Math.round((data[i].sprintData.defectsResolved.total / data[i].sprintData.defectsFound.total) * 100);
                      if(isFinite(percentScore)) {
                         progress.push(percentScore);
+                        var defects_found = [sprintDefectsResolvedClosure, defectsUnResolvedClosure, defectsResolvedClosure, defectsFoundClosure, progress];
                         axisSprintNameclos.push(data[i].name);
                         axisSprintName.push(data[i].name);
                     }
                     else {
                         var percentScore = 0;
                         progress.push(percentScore);
+                        var defects_found = [sprintDefectsResolvedClosure, defectsUnResolvedClosure, defectsResolvedClosure, defectsFoundClosure, progress];
                         axisSprintNameclos.push(data[i].name);
                         axisSprintName.push(data[i].name)
                     }
-                    
                 }
-
             }
 
             //Adding x axis label for both graphs
@@ -312,6 +323,17 @@
                     progressVelocity.push(percentScoreVelocity);
                     var sprint_chart_Data = [completedStoryPoint, comittedStoryPoints, progressVelocity];
                 }
+                }
+            }
+
+            //Data Process for Velocity Chart Graphs
+            for(var i = 0; i < data.length; i++) {
+                if (data[i].sprintData != undefined) {
+                    comittedStoryPointsVolatility.push(data[i].sprintData.committedStoryPoints);
+                    completedStoryPointVolatility.push(data[i].sprintData.completedStoryPoints);
+                    issuesAdded.push(data[i].sprintData.burndown.issuesAdded.storyPoints);
+                    issuesRemoved.push(data[i].sprintData.burndown.issuesRemoved.storyPoints);
+                    var story_volatility = [issuesAdded, issuesRemoved, comittedStoryPointsVolatility, completedStoryPointVolatility];
                 }
             }
 
@@ -358,12 +380,20 @@
 
             $scope.defectClosure = c3.generate({
                 bindto: '#defectClosure',
-
                 data: {
-                    columns: [
-                        progress
-                    ],
-                    type: 'spline'
+                    columns: defects_found,
+                    names: {
+                        DefectClosure: 'Defect Closure',
+                        defectsFoundClosure: 'Defects Found',
+                        defectsResolvedClosure:'Defects Resolved',
+                        defectsUnResolvedClosure:'Defects UnResolved',
+                        sprintDefectsResolvedClosure:'Sprint Defects Resolved'
+
+                    },
+                type: 'bar',
+                    types: {
+                        DefectClosure: 'line',
+                    },
                 },
                 axis: {
                     x: {
@@ -372,8 +402,9 @@
                     }
                 },
                 color: {
-                    pattern: ['#ff4d4d']
+                    pattern: ['#75FD63','#FF4444','#669900','#0099CC','#000']
                 },
+                
                 legend: {
                     position: 'inset',
                     inset: {
@@ -388,61 +419,50 @@
                 }
 
             });
-        }
-        
-        function fetchLatestSprint(data){
-           var burnData = data.sprintData.burnDownHistory;
 
-             var burnDowndata = ['Burn Down'];
-              var xaxisDate = [];
-            /* burnData.forEach(function(burndata){
-                burnDowndata.push(burndata.allIssuesEstimateSum)
-                xaxisDate.push(moment(burndata.date.miliseconds).format('MMM DD'))
-             })*/
-            
-             for (var i = 0; i < burnData.length; i++) {
-                if (burnData[i] != undefined) {
-                    burnDowndata.push(burnData[i].remainingIssues);
-                     xaxisDate.push(burnData[i].date);
-                   // xaxisDate.push(moment(burndata[i].date.miliseconds).format('MMM DD'));
-                }
-            }
+            //story volatility graph
+            $scope.storyVolatility = c3.generate({
+                bindto: '#storyVolatility',
 
-
-             $scope.burnDown = c3.generate({
-                bindto: '#burnDown', 
-                             
                 data: {
-                  columns: [
-                    burnDowndata
-                  ],
-                  type: 'line'
+                    columns: story_volatility,
+                    names: {
+                        issuesAdded:'Issues Added',
+                        issuesRemoved:'Issues Removed',
+                        comittedStoryPointsVolatility:'Committed Story Points',
+                        completedStoryPointVolatility:'Completed Story Points',
+                     },
+
+                    type: 'bar'
                 },
                 axis: {
-                    x:{
+                    x: {
                         type: 'category',
-                        categories: xaxisDate
+                        categories: axisSprintName
                     }
                 },
-                color: {
-                pattern: ['#ff4d4d']
-            },
-           legend: {
-    position: 'inset',
-    inset: {
-        anchor: 'top-left',
-        x: 20,
-        y: -40,
-        step: 1
-    }
-},
-padding: {
-    top: 40
-}
-  
+                 color: {
+                    pattern: ['#FF4444','#FF7F0E','#40B3D9','#669900']
+                },
+                
+                legend: {
+                    position: 'inset',
+                    inset: {
+                        anchor: 'top-left',
+                        x: 20,
+                        y: -40,
+                        step: 1
+                    }
+                },
+                padding: {
+                    top: 40
+                }
+
             });
 
-         }
+        }
+        
+
         //Fetching Release  Data
         featureData.ReleaseData(ctrl.projectpathId, ctrl.projectpath).then(ReleaseDataProcessing);
 
