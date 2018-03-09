@@ -227,9 +227,5 @@ public class SprintMetrcisRequest {
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
-	
-    
-	
-	
 
 }
