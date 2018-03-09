@@ -1,11 +1,8 @@
 package com.capitalone.dashboard.model;
 
-import java.util.Date;
 
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * 
@@ -23,7 +20,7 @@ public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
 	private ProjectHeatmapData projectHeatmapData;
 
 	//@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
-	private Date submissionDate;
+	private String submissionDate;
 
 	/**
 	 * @return the projectId
@@ -56,14 +53,14 @@ public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
 	/**
 	 * @return the submissionDate
 	 */
-	public Date  getSubmissionDate() {
+	public String  getSubmissionDate() {
 		return submissionDate;
 	}
 
 	/**
 	 * @param submissionDate the submissionDate to set
 	 */
-	public void setSubmissionDate(Date  submissionDate) {
+	public void setSubmissionDate(String  submissionDate) {
 		this.submissionDate = submissionDate;
 	}
 
