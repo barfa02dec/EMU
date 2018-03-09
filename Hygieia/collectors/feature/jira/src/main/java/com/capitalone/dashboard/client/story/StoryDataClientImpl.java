@@ -316,7 +316,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 					release.setReleaseId(jiraVersion.getId());
 					release.setProjectId(projectId);
 					release.setName(jiraVersion.getName());
-					release.setStartDate(jiraVersion.getStartDate());
+					release.setDateStart(jiraVersion.getStartDate());
 					release.setReleased(jiraVersion.getReleased());
 					release.setProjectName(projectName);
 				}
@@ -331,7 +331,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				}
 	
 				release.setOverdue(jiraVersion.getOverdue());
-				release.setReleaseDate(jiraVersion.getReleaseDate());
+				release.setDateRelease(jiraVersion.getReleaseDate());
 				releaseList.add(release);
 			}catch(Exception ex){
 				ex.printStackTrace();
