@@ -196,11 +196,12 @@
                     <div class="col-md-6">Resolution Time Report</div>
                 </div>
                 <div class="col-md-6 agile-board-defect-chart-padding">
-                    <div id="restime" config="configresTime" class="sprint-graphs-prop graph-bg-gradient"></div>
-                </div>
-                <div class="col-md-6 agile-board-defect-chart-padding">
                     <div id="openDef" config="configopenDef" class="sprint-graphs-prop graph-bg-gradient"></div>
                 </div>
+                <div class="col-md-6 agile-board-defect-chart-padding">
+                    <div id="restime" config="configresTime" class="sprint-graphs-prop graph-bg-gradient"></div>
+                </div>
+                
                 <div class="col-md-12 agile-board-row-padding-widgets">
                     <div class="col-md-6 agile-board-defect-block-padding">
                         <div class="col-md-12">
@@ -230,11 +231,11 @@
                             <div class="col-md-2"></div>
                         </div>
                         <div class="col-md-12 agile-board-defect-col-padding">
-                            <div class="col-md-2 sprint-def-priorty-response">
-                                <div class="total-builds-text-props defects-by-priority-critical-border" ng-if="jdv.criIssue">{{jdv.criIssue}}</div>
-                                <div class="total-builds-text-props defects-by-priority-critical-border" ng-if="!jdv.criIssue">0</div>
+                            <div class="col-md-2 sprint-def-priorty-response" ng-repeat="data in jdv.defectsByProirity">
+                                <div class="total-builds-text-props defects-by-priority-critical-border">{{data}}</div>
+                                <!-- <div class="total-builds-text-props defects-by-priority-critical-border" ng-if="!jdv.criIssue">0</div> -->
                             </div>
-                            <div class="col-md-2 sprint-def-priorty-response-secnd">
+                           <!--  <div class="col-md-2 sprint-def-priorty-response-secnd">
                                 <div class="total-builds-text-props defects-by-priority-major-border" ng-if="jdv.majorIssue">{{jdv.majorIssue}}</div>
                                 <div class="total-builds-text-props defects-by-priority-major-border" ng-if="!jdv.majorIssue">0</div>
                             </div>
@@ -249,14 +250,14 @@
                             <div class="col-md-2 sprint-def-priorty-response-thrd">
                                 <div class="total-builds-text-props defects-by-priority-lowest-border" ng-if="jdv.lowestIssue">{{jdv.lowestIssue}}</div>
                                 <div class="total-builds-text-props defects-by-priority-lowest-border" ng-if="!jdv.lowestIssue">0</div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-md-12 font-props">
-                            <div class="col-md-2 padding-highest-text">HIGHEST</div>
-                            <div class="col-md-2 padding-high-text">HIGH</div>
+                            <div class="col-md-2 padding-highest-text" ng-repeat="(key, value) in jdv.defectsByProirity">{{key | uppercase}}</div>
+                            <!-- <div class="col-md-2 padding-high-text">HIGH</div>
                             <div class="col-md-2 padding-medium-text">MEDIUM</div>
                             <div class="col-md-2 padding-low-text">LOW</div>
-                            <div class="col-md-2 padding-lowest-text">LOWEST</div>
+                            <div class="col-md-2 padding-lowest-text">LOWEST</div> -->
                         </div>
                     </div>
                 </div>

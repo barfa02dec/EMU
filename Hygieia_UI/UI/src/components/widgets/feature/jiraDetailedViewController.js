@@ -66,157 +66,111 @@
         }
 
         //Retrieving Jira-Defect Response and Processing 
+
+
         featureData.jiraData(ctrl.projectiddefects, ctrl.projectpath).then(jiraDataFetch);
 
-        //Processing Jira-Defect Response
+        var lebels = ['Defect Age Strategy'];
+
         function jiraDataFetch(data) {
-            ctrl.criIssue = data.defectsByProirity.Highest;
-            ctrl.majorIssue = data.defectsByProirity.High;
-            ctrl.mediumIssue = data.defectsByProirity.Medium;
-            ctrl.lowIssue = data.defectsByProirity.Low;
-            ctrl.lowestIssue = data.defectsByProirity.Lowest;
-            ctrl.graphData = data.defectsByResolutionDetails;
-            ctrl.ageOfOpenDefects = data.defectsByAgeDetails;
-            ctrl.medlow = parseInt(ctrl.lowIssue) + (ctrl.mediumIssue);
-            var highArr = [];
-            ctrl.dataEnv = data.defectsByEnvironment;
+            ctrl.defectsByProirity = data.defectsByProirity;
+            var object = data.defectsByAgeDetails;
+            var trackObject = {};
+            var axisObject = {};
+            var objectResoloutionGraph = data.defectsByResolutionDetails;
+            var trackObjectResoloutionGraph = {};
+            var axisObjectResoloutionGraph = {};
 
-            for (var key in ctrl.graphData) {
-                if (ctrl.graphData.hasOwnProperty(key)) {
-                    highArr.push(ctrl.graphData[key]);
-                }
-            }
+            angular.forEach(object, function(value, key) {
+                var localObj = value[0];
+                angular.forEach(localObj, function(value1, key1) {
+                    if (key1 in trackObject) {
+                        if (key1 == 'Defect Age Strategy') {
+                            if (key1 in axisObject) {
+                                axisObject[key1].push(value1);
+                            }
+                            else{
+                                axisObject[key1] = [];
+                                axisObject[key1].push(value1);
+                            }
+                        } else {
+                            trackObject[key1].push(parseInt(value1));
+                        }
+                    } else {
+                        if (key1 == 'Defect Age Strategy') {
+                             if (key1 in axisObject) {
+                                axisObject[key1].push(value1);
+                            }
+                            else{
+                                axisObject[key1] = [];
+                                axisObject[key1].push(value1);
+                            }
+                        } else {
+                            trackObject[key1] = [];
+                            trackObject[key1].push(parseInt(value1));
+                        }
 
-            //Adding Highest values into Array
-            for (var i = 0; i < highArr.length; i++) {
-                if (highArr[i][0].hasOwnProperty("Highest")) {
-                    highest.push(highArr[i][0].Highest);
-                } else {
-                    highest.push(0);
-                }
-            }
+                    }
+                });
+            });
 
-            //Adding Low values into Array
-            for (var i = 0; i < highArr.length; i++) {
-                if (highArr[i][0].hasOwnProperty("Low")) {
-                    Lowvalue.push(highArr[i][0].Low);
-                } else {
-                    Lowvalue.push(0);
-                }
-            }
+            
+            bendDataFormatforChart(trackObject,axisObject);
 
-            //Adding Medium values into Array
-            for (var i = 0; i < highArr.length; i++) {
-                if (highArr[i][0].hasOwnProperty("Medium")) {
-                    Mediumvalue.push(highArr[i][0].Medium);
-                } else {
-                    Mediumvalue.push(0);
-                }
-            }
+            angular.forEach(objectResoloutionGraph, function(value, key) {
+                var localObjResolution = value[0];
+                angular.forEach(localObjResolution, function(value1, key1) {
+                    if (key1 in trackObjectResoloutionGraph) {
+                        if (key1 == 'Resolution Strategy') {
+                            if (key1 in axisObjectResoloutionGraph) {
+                                axisObjectResoloutionGraph[key1].push(value1);
+                            }
+                            else{
+                                axisObjectResoloutionGraph[key1] = [];
+                                axisObjectResoloutionGraph[key1].push(value1);
+                            }
+                        } else {
+                            trackObjectResoloutionGraph[key1].push(parseInt(value1));
+                        }
+                    } else {
+                        if (key1 == 'Resolution Strategy') {
+                             if (key1 in axisObjectResoloutionGraph) {
+                                axisObjectResoloutionGraph[key1].push(value1);
+                            }
+                            else{
+                                axisObjectResoloutionGraph[key1] = [];
+                                axisObjectResoloutionGraph[key1].push(value1);
+                            }
+                        } else {
+                            trackObjectResoloutionGraph[key1] = [];
+                            trackObjectResoloutionGraph[key1].push(parseInt(value1));
+                        }
 
-            //Adding High values into Array            
-            for (var i = 0; i < highArr.length; i++) {
-                if (highArr[i][0].hasOwnProperty("High")) {
-                    high.push(highArr[i][0].High);
-                } else {
-                    high.push(0);
-                }
-            }
+                    }
+                });
+            });
+            ResolutionChartBindData(trackObjectResoloutionGraph,axisObjectResoloutionGraph);
+        }
 
-            //Adding High values into Array            
-            for (var i = 0; i < highArr.length; i++) {
-                if (highArr[i][0].hasOwnProperty("Lowest")) {
-                    Lowestvalue.push(highArr[i][0].Lowest);
-                } else {
-                    Lowestvalue.push(0);
-                }
-            }
-
-            //Adding X axis label values into Array
-            for (var i = 0; i < highArr.length; i++) {
-                if (highArr[i][0].hasOwnProperty("Defect Resolution Strategy")) {
-                    jiraLebels.push(highArr[i][0]['Defect Resolution Strategy']);
-                }
-                if (highArr[i][0].hasOwnProperty("Resolution Strategy")) {
-                    jiraLebels.push(highArr[i][0]['Resolution Strategy']);
-                }
-            }
-
-            //open defects graph
-            var openDef = [];
-            for (var key in ctrl.ageOfOpenDefects) {
-                if (ctrl.ageOfOpenDefects.hasOwnProperty(key)) {
-                    openDef.push(ctrl.ageOfOpenDefects[key]);
-                }
-            }
-
-            //Adding Highest values into Array
-            for (var i = 0; i < openDef.length; i++) {
-                if (openDef[i][0].hasOwnProperty("Highest")) {
-                    opndefhighest.push(openDef[i][0].Highest);
-                } else {
-                    opndefhighest.push(0);
-                }
-            }
-
-            //Adding High values into Array
-            for (var i = 0; i < openDef.length; i++) {
-                if (openDef[i][0].hasOwnProperty("High")) {
-                    opndefhigh.push(openDef[i][0].High);
-                } else {
-                    opndefhigh.push(0);
-                }
-            }
-
-            //Adding Medium values into Array
-            for (var i = 0; i < openDef.length; i++) {
-                if (openDef[i][0].hasOwnProperty("Medium")) {
-                    OpendefectMedium.push(openDef[i][0].Medium);
-                } else {
-                    OpendefectMedium.push(0);
-                }
-            }
-
-            //Adding Low values into Array
-            for (var i = 0; i < openDef.length; i++) {
-                if (openDef[i][0].hasOwnProperty("Low")) {
-                    OpendefectLow.push(openDef[i][0].Low);
-                } else {
-                    OpendefectLow.push(0);
-                }
-            }
-
-            for (var i = 0; i < openDef.length; i++) {
-                if (openDef[i][0].hasOwnProperty("Lowest")) {
-                    OpendefectLowest.push(openDef[i][0].Lowest);
-                } else {
-                    OpendefectLowest.push(0);
-                }
-            }
-
-            //Adding x axis label values into Array
-            for (var i = 0; i < openDef.length; i++) {
-                if (openDef[i][0].hasOwnProperty("Defect Age Strategy")) {
-                    openDefJiraLabel.push(openDef[i][0]['Defect Age Strategy']);
-                } else {
-                    openDefJiraLabel.push(0);
-                }
-            }
-
-            //c3.js graphs
-            //Resolution Time Graph Generation
+        function bendDataFormatforChart(trackObject,axisObject) {
+            var finalObjArray = [];
+            angular.forEach(trackObject, function(value, key) {
+                var collection = [];
+                collection.push(key);
+                collection = collection.concat(value);
+                finalObjArray.push(collection);              
+            });           
             $scope.openDef = c3.generate({
                 bindto: '#openDef',
                 data: {
-                    columns: [
-                        highest, high, Mediumvalue, Lowvalue, Lowestvalue
-                    ],
+                    columns: finalObjArray,
+                    
                     type: 'bar'
                 },
                 axis: {
                     x: {
                         type: 'category',
-                        categories: jiraLebels
+                        categories: axisObject["Defect Age Strategy"]
                     }
                 },
                 color: {
@@ -225,22 +179,29 @@
 
             });
 
-            //Age of Open Defects Graph Generation
-            $scope.restime = c3.generate({
+        }
+
+        function ResolutionChartBindData(trackObjectResoloutionGraph,axisObjectResoloutionGraph) {
+            var finalObjArray = [];
+            angular.forEach(trackObjectResoloutionGraph, function(value, key) {
+                var collection = [];
+                collection.push(key);
+                collection = collection.concat(value);
+                finalObjArray.push(collection);              
+            });           
+           $scope.restime = c3.generate({
                 bindto: "#restime",
 
                 data: {
-                    columns: [
-                        opndefhighest, opndefhigh, OpendefectMedium, OpendefectLow, OpendefectLowest
-
-                    ],
+                    columns: 
+                        finalObjArray,
                     type: 'bar'
 
                 },
                 axis: {
                     x: {
                         type: 'category',
-                        categories: openDefJiraLabel
+                        categories: axisObjectResoloutionGraph["Resolution Strategy"]
                     }
 
                 },
@@ -248,23 +209,25 @@
                     pattern: ['rgb(172,8,4)', 'rgb(222,29,24)', 'rgb(123,123,123)', 'rgb(105,203,143)', 'rgb(5,169,68)']
                 }
             });
+
         }
 
+   
+
         //Fetching Jira-Sprint Data
-        
+
         featureData.sprintDta(ctrl.projectpathId, ctrl.projectpath).then(sprintdataProcess);
 
         //Processing Jira-Sprint Data
         function sprintdataProcess(data) {
             ctrl.jirametricsdatanormal = data;
             ctrl.jirametricsdata = ctrl.jirametricsdatanormal.reverse();
-            if( ctrl.jirametricsdata[5] != undefined ){
-            ctrl.sprintIds = ctrl.jirametricsdata[5].sprintData.sprintId;
+            if (ctrl.jirametricsdata[5] != undefined) {
+                ctrl.sprintIds = ctrl.jirametricsdata[5].sprintData.sprintId;
             }
             featureData.sprintId = ctrl.sprintIds;
             ctrl.sprintId = featureData.sprintId;
             //featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
-      
             // $cookies.put('sprintId', ctrl.sprintIds);
             var progress = ['DefectClosure'];
             var comittedStoryPoints = ['CommittedStoryPoints'];
@@ -278,8 +241,8 @@
             var sprintDefectsResolvedClosure = ["sprintDefectsResolved"];
             var issuesAdded = ["issuesAdded"];
             var issuesRemoved = ["issuesRemoved"];
-            var comittedStoryPointsVolatility = ['CommittedStoryPoints'];
-            var completedStoryPointVolatility = ['CompletedStoryPoints'];
+            var comittedStoryPointsVolatility = ['Committed Story Points'];
+            var completedStoryPointVolatility = ['Completed Story Points'];
 
             //Processing data for sprint list table
             ctrl.spAllDetails = data;
@@ -294,13 +257,12 @@
                     defectsUnResolvedClosure.push(data[i].sprintData.defectsUnresolved.total);
                     sprintDefectsResolvedClosure.push(data[i].sprintData.sprintDefectsResolved.total);
                     var percentScore = Math.round((data[i].sprintData.defectsResolved.total / data[i].sprintData.defectsFound.total) * 100);
-                     if(isFinite(percentScore)) {
+                    if (isFinite(percentScore)) {
                         progress.push(percentScore);
                         var defects_found = [sprintDefectsResolvedClosure, defectsUnResolvedClosure, defectsResolvedClosure, defectsFoundClosure, progress];
                         axisSprintNameclos.push(data[i].name);
                         axisSprintName.push(data[i].name);
-                    }
-                    else {
+                    } else {
                         var percentScore = 0;
                         progress.push(percentScore);
                         var defects_found = [sprintDefectsResolvedClosure, defectsUnResolvedClosure, defectsResolvedClosure, defectsFoundClosure, progress];
@@ -314,20 +276,19 @@
             for (var i = 0; i < data.length; i++) {
                 if (data[i].sprintData != undefined) {
                     var percentScoreVelocity = Math.round((data[i].sprintData.completedStoryPoints / data[i].sprintData.committedStoryPoints) * 100);
-                    if(isFinite(percentScoreVelocity)){
-                    progressVelocity.push(percentScoreVelocity);
-                    var sprint_chart_Data = [completedStoryPoint, comittedStoryPoints, progressVelocity];
-                }
-                else {
-                    var percentScoreVelocity = 0;
-                    progressVelocity.push(percentScoreVelocity);
-                    var sprint_chart_Data = [completedStoryPoint, comittedStoryPoints, progressVelocity];
-                }
+                    if (isFinite(percentScoreVelocity)) {
+                        progressVelocity.push(percentScoreVelocity);
+                        var sprint_chart_Data = [completedStoryPoint, comittedStoryPoints, progressVelocity];
+                    } else {
+                        var percentScoreVelocity = 0;
+                        progressVelocity.push(percentScoreVelocity);
+                        var sprint_chart_Data = [completedStoryPoint, comittedStoryPoints, progressVelocity];
+                    }
                 }
             }
 
             //Data Process for Velocity Chart Graphs
-            for(var i = 0; i < data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 if (data[i].sprintData != undefined) {
                     comittedStoryPointsVolatility.push(data[i].sprintData.committedStoryPoints);
                     completedStoryPointVolatility.push(data[i].sprintData.completedStoryPoints);
@@ -385,12 +346,12 @@
                     names: {
                         DefectClosure: 'Defect Closure',
                         defectsFoundClosure: 'Defects Found',
-                        defectsResolvedClosure:'Defects Resolved',
-                        defectsUnResolvedClosure:'Defects UnResolved',
-                        sprintDefectsResolvedClosure:'Sprint Defects Resolved'
+                        defectsResolvedClosure: 'Defects Resolved',
+                        defectsUnResolvedClosure: 'Defects UnResolved',
+                        sprintDefectsResolvedClosure: 'Sprint Defects Resolved'
 
                     },
-                type: 'bar',
+                    type: 'bar',
                     types: {
                         DefectClosure: 'line',
                     },
@@ -402,9 +363,9 @@
                     }
                 },
                 color: {
-                    pattern: ['#75FD63','#FF4444','#669900','#0099CC','#000']
+                    pattern: ['#75FD63', '#FF4444', '#669900', '#0099CC', '#000']
                 },
-                
+
                 legend: {
                     position: 'inset',
                     inset: {
@@ -427,11 +388,11 @@
                 data: {
                     columns: story_volatility,
                     names: {
-                        issuesAdded:'Issues Added',
-                        issuesRemoved:'Issues Removed',
-                        comittedStoryPointsVolatility:'Committed Story Points',
-                        completedStoryPointVolatility:'Completed Story Points',
-                     },
+                        issuesAdded: 'Issues Added',
+                        issuesRemoved: 'Issues Removed',
+                        comittedStoryPointsVolatility: 'Committed Story Points',
+                        completedStoryPointVolatility: 'Completed Story Points',
+                    },
 
                     type: 'bar'
                 },
@@ -441,10 +402,10 @@
                         categories: axisSprintName
                     }
                 },
-                 color: {
-                    pattern: ['#FF4444','#FF7F0E','#40B3D9','#669900']
+                color: {
+                    pattern: ['#FF4444', '#FF7F0E', '#40B3D9', '#669900']
                 },
-                
+
                 legend: {
                     position: 'inset',
                     inset: {
@@ -461,7 +422,7 @@
             });
 
         }
-        
+
 
         //Fetching Release  Data
         featureData.ReleaseData(ctrl.projectpathId, ctrl.projectpath).then(ReleaseDataProcessing);
