@@ -18,23 +18,7 @@
         ctrl.projectpathId = $cookies.get('projectIdJira');
         ctrl.projectiddefects = $cookies.get('ProSpId');
         ctrl.usernamepro = $cookies.get('username');
-        //Empty array created for Jira Defect Graphs
-        var medium = ['Medium'];
-        var opndefhighest = ['Highest'];
-        var opndefhigh = ['High'];
-        var opndeflow = ['Minor'];
-        var lowval = ['Minor'];
-        var jiraLebels = [];
-        var openDefJiraLabel = [];
-        var highest = ['Highest'];
-        var high = ['High'];
-        var Mediumvalue = ['Medium'];
-        var Lowvalue = ['Low'];
-        var Lowestvalue = ['Lowest'];
-        var OpendefectMedium = ['Medium'];
-        var OpendefectLow = ["Low"];
-        var OpendefectLowest = ["Lowest"];
-
+       
         //Logout Functionality
         ctrl.logout = function() {
             $cookieStore.remove("username");
@@ -65,13 +49,7 @@
             $location.path('/dashboard/' + ctrl.dashId);
         }
 
-        //Retrieving Jira-Defect Response and Processing 
-
-
         featureData.jiraData(ctrl.projectiddefects, ctrl.projectpath).then(jiraDataFetch);
-
-        var lebels = ['Defect Age Strategy'];
-
         function jiraDataFetch(data) {
             ctrl.defectsByProirity = data.defectsByProirity;
             var object = data.defectsByAgeDetails;
@@ -80,7 +58,6 @@
             var objectResoloutionGraph = data.defectsByResolutionDetails;
             var trackObjectResoloutionGraph = {};
             var axisObjectResoloutionGraph = {};
-
             angular.forEach(object, function(value, key) {
                 var localObj = value[0];
                 angular.forEach(localObj, function(value1, key1) {
@@ -114,9 +91,7 @@
                 });
             });
 
-            
             bendDataFormatforChart(trackObject,axisObject);
-
             angular.forEach(objectResoloutionGraph, function(value, key) {
                 var localObjResolution = value[0];
                 angular.forEach(localObjResolution, function(value1, key1) {
@@ -212,13 +187,7 @@
 
         }
 
-   
-
-        //Fetching Jira-Sprint Data
-
         featureData.sprintDta(ctrl.projectpathId, ctrl.projectpath).then(sprintdataProcess);
-
-        //Processing Jira-Sprint Data
         function sprintdataProcess(data) {
             ctrl.jirametricsdatanormal = data;
             ctrl.jirametricsdata = ctrl.jirametricsdatanormal.reverse();
@@ -243,10 +212,8 @@
             var issuesRemoved = ["issuesRemoved"];
             var comittedStoryPointsVolatility = ['Committed Story Points'];
             var completedStoryPointVolatility = ['Completed Story Points'];
-
             //Processing data for sprint list table
             ctrl.spAllDetails = data;
-
             //Data Process for Velocity Chart Graphs
             for (var i = 0; i < data.length; i++) {
                 if (data[i].sprintData != undefined) {
@@ -271,7 +238,6 @@
                     }
                 }
             }
-
             //Adding x axis label for both graphs
             for (var i = 0; i < data.length; i++) {
                 if (data[i].sprintData != undefined) {
@@ -286,7 +252,6 @@
                     }
                 }
             }
-
             //Data Process for Velocity Chart Graphs
             for (var i = 0; i < data.length; i++) {
                 if (data[i].sprintData != undefined) {
@@ -436,13 +401,11 @@
             var totaldefectsFound = ["Defects Found"];
             var releaseName = [];
             var totalDefectsResolved = ["Defects Resolved"];
-
             //Adding No of Story Points Completed to the Array
             for (var i = 0; i < data.length; i++) {
                 if (data[i].versionData != undefined) {
                     noOfStoryCompleted.push(data[i].versionData.noofStoryCompleted)
                 }
-
             }
 
             //Adding No of Story Points to the Array
