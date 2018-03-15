@@ -115,41 +115,17 @@
             </div>
 <div class="widget-body feature-widget-defect-body" fit-text=".build-summary-count > span" fit-text-max="40">
                 <div class="row">
-                    <div class="col-xs-2 custom-width-col feature-widget-body-critical">
+                    <div class="col-xs-2 custom-width-col feature-widget-body-critical" ng-repeat="data in ctrl.defectsByProirity">
                         <div class="total-builds-text-props defects-by-priority-critical-border">
-                            <span ng-if="ctrl.critcissue" style="">{{ctrl.critcissue}}</span>
-                            <span ng-if="!ctrl.critcissue" style="">0</span>
+                            {{data}}
                         </div>
-                        <div class="font-props-main-dashboard" style="">HIGHEST</div>
+                        
                     </div>
-                    <div class="col-xs-2 custom-width-col feature-widget-body-other">
-                        <div class="total-builds-text-props defects-by-priority-major-border feature-widget-body-padding">
-                            <span ng-if="ctrl.majorIssue">{{ctrl.majorIssue}}</span>
-                            <span ng-if="!ctrl.majorIssue">0</span>
-                        </div>
-                        <div class="font-props-main-dashboard">HIGH</div>
-                    </div>
-                    <div
-                     class="col-xs-2 custom-width-col feature-widget-body-other">
-                        <div class="total-builds-text-props defects-by-priority-medium-border feature-widget-body-padding">
-                            <span ng-if="ctrl.mediumIssue">{{ctrl.mediumIssue}}</span>
-                            <span ng-if="!ctrl.mediumIssue">0</span>
-                        </div>
-                        <div class="font-props-main-dashboard">MEDIUM</div>
-                    </div>
-                    <div class="col-xs-2 custom-width-col feature-widget-body-other">
-                        <div class="total-builds-text-props defects-by-priority-low-border feature-widget-body-padding">
-                            <span ng-if="ctrl.lowIssue">{{ctrl.lowIssue}}</span>
-                            <span ng-if="!ctrl.lowIssue">0</span>
-                        </div>
-                        <div class="font-props-main-dashboard">LOW</div>
-                    </div>
-                    <div class="col-xs-2 custom-width-col">
-                        <div class="total-builds-text-props defects-by-priority-lowest-border feature-widget-body-padding">
-                            <span ng-if="ctrl.lowestissue">{{ctrl.lowestissue}}</span>
-                            <span ng-if="!ctrl.lowestissue">0</span>
-                        </div>
-                        <div class="font-props-main-dashboard">LOWEST</div>
+
+                </div>
+                <div class="row" style="text-align: center;margin: auto;width:">
+                    <div class="col-xs-2 font-props-main-dashboard"  ng-repeat="(key, value) in ctrl.defectsByProirity" style="width: 19.6%;">
+                       <span>{{key | uppercase}}</span> 
                     </div>
                 </div>
             </div>
