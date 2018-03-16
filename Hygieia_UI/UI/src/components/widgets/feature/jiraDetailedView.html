@@ -231,8 +231,13 @@
                             <div class="col-md-2"></div>
                         </div>
                         <div class="col-md-12 agile-board-defect-col-padding">
-                            <div class="col-md-2 sprint-def-priorty-response" ng-repeat="data in jdv.defectsByProirity">
-                                <div class="total-builds-text-props defects-by-priority-critical-border">{{data}}</div>
+                            <div class="col-md-2 sprint-def-priorty-response" ng-repeat="(key, value) in jdv.defectsByProirity">
+                                <div class="total-builds-text-props" ng-if="key == 'Major' || key == 'High'" style="border:4px solid #FFAB00;color: #000">{{value}}</div>
+                                <div class="total-builds-text-props" ng-if="key == 'Minor' || key == 'Low'" style="border:4px solid #9467BD;color: #000">{{value}}</div>
+                                <div class="total-builds-text-props" ng-if="key == 'Lowest' || key == 'Cosmetic' || key == 'Trivial'" style="border:4px solid #8DC63F;color: #000">{{value}}</div>
+                                <div class="total-builds-text-props" ng-if="key == 'Medium'" style="border:4px solid #0065FF;color: #000">{{value}}</div>
+                                <div class="total-builds-text-props" ng-if="key == 'Blocker' || key == 'Critical' || key == 'Highest'" style="border:4px solid #36B37E;color: #000">{{value}}</div>
+
                                 <!-- <div class="total-builds-text-props defects-by-priority-critical-border" ng-if="!jdv.criIssue">0</div> -->
                             </div>
                            <!--  <div class="col-md-2 sprint-def-priorty-response-secnd">

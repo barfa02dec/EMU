@@ -18,7 +18,7 @@
         ctrl.projectpathId = $cookies.get('projectIdJira');
         ctrl.projectiddefects = $cookies.get('ProSpId');
         ctrl.usernamepro = $cookies.get('username');
-       
+
         //Logout Functionality
         ctrl.logout = function() {
             $cookieStore.remove("username");
@@ -50,6 +50,7 @@
         }
 
         featureData.jiraData(ctrl.projectiddefects, ctrl.projectpath).then(jiraDataFetch);
+
         function jiraDataFetch(data) {
             ctrl.defectsByProirity = data.defectsByProirity;
             var object = data.defectsByAgeDetails;
@@ -65,8 +66,7 @@
                         if (key1 == 'Defect Age Strategy') {
                             if (key1 in axisObject) {
                                 axisObject[key1].push(value1);
-                            }
-                            else{
+                            } else {
                                 axisObject[key1] = [];
                                 axisObject[key1].push(value1);
                             }
@@ -75,10 +75,9 @@
                         }
                     } else {
                         if (key1 == 'Defect Age Strategy') {
-                             if (key1 in axisObject) {
+                            if (key1 in axisObject) {
                                 axisObject[key1].push(value1);
-                            }
-                            else{
+                            } else {
                                 axisObject[key1] = [];
                                 axisObject[key1].push(value1);
                             }
@@ -91,7 +90,7 @@
                 });
             });
 
-            bendDataFormatforChart(trackObject,axisObject);
+            bendDataFormatforChart(trackObject, axisObject);
             angular.forEach(objectResoloutionGraph, function(value, key) {
                 var localObjResolution = value[0];
                 angular.forEach(localObjResolution, function(value1, key1) {
@@ -99,8 +98,7 @@
                         if (key1 == 'Resolution Strategy') {
                             if (key1 in axisObjectResoloutionGraph) {
                                 axisObjectResoloutionGraph[key1].push(value1);
-                            }
-                            else{
+                            } else {
                                 axisObjectResoloutionGraph[key1] = [];
                                 axisObjectResoloutionGraph[key1].push(value1);
                             }
@@ -109,10 +107,9 @@
                         }
                     } else {
                         if (key1 == 'Resolution Strategy') {
-                             if (key1 in axisObjectResoloutionGraph) {
+                            if (key1 in axisObjectResoloutionGraph) {
                                 axisObjectResoloutionGraph[key1].push(value1);
-                            }
-                            else{
+                            } else {
                                 axisObjectResoloutionGraph[key1] = [];
                                 axisObjectResoloutionGraph[key1].push(value1);
                             }
@@ -124,22 +121,48 @@
                     }
                 });
             });
-            ResolutionChartBindData(trackObjectResoloutionGraph,axisObjectResoloutionGraph);
+            ResolutionChartBindData(trackObjectResoloutionGraph, axisObjectResoloutionGraph);
         }
 
-        function bendDataFormatforChart(trackObject,axisObject) {
-            var finalObjArray = [];
+        function bendDataFormatforChart(trackObject, axisObject) {
+            var finalObjArray1 = [];
+            var arrayWithKeys = [];
             angular.forEach(trackObject, function(value, key) {
                 var collection = [];
+                var tempObj = {}
+                var graphColor;
+                var objectName = key;
+                //key ==  = (key == "High" || key == "Major")? "#FFAB00" : "Green";
+                if (key == "High" || key == "Major") {
+                    graphColor = "#FFAB00";
+                } else if (key == "Blocker" || key == "Critical" || key == "Highest") {
+                    graphColor = "#36B37E";
+                } else if (key == "Minor" || key == "Low") {
+                    graphColor = "#9467BD";
+                } else if (key == "Lowest" || key == "Cosmetic" || key == "Trivial") {
+                    graphColor = "#8DC63F";
+                } else {
+                    graphColor = "#0065FF";
+                }
+
                 collection.push(key);
                 collection = collection.concat(value);
-                finalObjArray.push(collection);              
-            });           
+                tempObj.color = graphColor;
+                tempObj.value = collection;
+                finalObjArray1.push(tempObj);
+            });
+            var plotingColors = [];
+            var plotingData = [];
+            angular.forEach(finalObjArray1, function(item) {
+                plotingColors.push(item.color);
+                plotingData.push(item.value);
+            });
+
             $scope.openDef = c3.generate({
                 bindto: '#openDef',
                 data: {
-                    columns: finalObjArray,
-                    
+                    columns: plotingData,
+
                     type: 'bar'
                 },
                 axis: {
@@ -149,27 +172,51 @@
                     }
                 },
                 color: {
-                    pattern: ['rgb(172,8,4)', 'rgb(222,29,24)', 'rgb(123,123,123)', 'rgb(105,203,143)', 'rgb(5,169,68)']
+                    pattern: plotingColors
                 }
 
             });
 
         }
 
-        function ResolutionChartBindData(trackObjectResoloutionGraph,axisObjectResoloutionGraph) {
+        function ResolutionChartBindData(trackObjectResoloutionGraph, axisObjectResoloutionGraph) {
             var finalObjArray = [];
+            var arrayWithKeys = [];
             angular.forEach(trackObjectResoloutionGraph, function(value, key) {
                 var collection = [];
+                var tempObj = {}
+                var graphColor;
+                var objectName = key;
+                //key ==  = (key == "High" || key == "Major")? "#FFAB00" : "Green";
+                if (key == "High" || key == "Major") {
+                    graphColor = "#FFAB00";
+                } else if (key == "Blocker" || key == "Critical" || key == "Highest") {
+                    graphColor = "#36B37E";
+                } else if (key == "Minor" || key == "Low") {
+                    graphColor = "#9467BD";
+                } else if (key == "Lowest" || key == "Cosmetic" || key == "Trivial") {
+                    graphColor = "#8DC63F";
+                } else {
+                    graphColor = "#0065FF";
+                }
                 collection.push(key);
                 collection = collection.concat(value);
-                finalObjArray.push(collection);              
-            });           
-           $scope.restime = c3.generate({
+                tempObj.color = graphColor;
+                tempObj.value = collection;
+                finalObjArray.push(tempObj);
+                // finalObjArray[key].graphArray.push(collection);              
+            });
+            debugger;
+            var plotingColors = [];
+            var plotingData = [];
+            angular.forEach(finalObjArray, function(item) {
+                plotingColors.push(item.color);
+                plotingData.push(item.value);
+            });
+            $scope.restime = c3.generate({
                 bindto: "#restime",
-
                 data: {
-                    columns: 
-                        finalObjArray,
+                    columns: plotingData,
                     type: 'bar'
 
                 },
@@ -181,13 +228,14 @@
 
                 },
                 color: {
-                    pattern: ['rgb(172,8,4)', 'rgb(222,29,24)', 'rgb(123,123,123)', 'rgb(105,203,143)', 'rgb(5,169,68)']
+                    pattern: plotingColors
                 }
             });
 
         }
 
         featureData.sprintDta(ctrl.projectpathId, ctrl.projectpath).then(sprintdataProcess);
+
         function sprintdataProcess(data) {
             ctrl.jirametricsdatanormal = data;
             ctrl.jirametricsdata = ctrl.jirametricsdatanormal.reverse();
