@@ -1041,7 +1041,8 @@
                     month = "0"+month;
                   }
 
-                  return month+"-"+"01-"+year;
+                    return "01-"+month+"-"+year;
+
 
 
             }
@@ -1074,19 +1075,18 @@
                 { value: 'NA', name: 'NA' }
             ];
 
-            var monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            /*var monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
             var d1 = new Date(data.submissionDate),
-            //d = d1.getDate(),
             m = d1.getMonth(),
             y = d1.getFullYear();
 
-            var dateString = monthName[m] + "," + y; 
+            var dateString = monthName[m] + "," + y; */
 
             ctrl.updateHeatmapPayload = {
 
                 "projectId": data.projectId,
-                "submissionDate":dateString, 
+                "submissionDate":data.submissionDate, 
                 "customerWSRStatus": data.projectHeatmapData.customerWSR.customerWSRStatus,
                 "architectureFocusStatus": data.projectHeatmapData.architectureFocus.architectureFocusStatus,
                 "automatedUnitTestingStatus": data.projectHeatmapData.automatedUnitTesting.automatedUnitTestingStatus,
