@@ -31,6 +31,8 @@ public class JiraCollectorUtil {
 
 	public static final String GET_ISSUE = "/rest/api/2/issue/%1s?fields=%2s";
 
+	public static final String GET_JIRA_PRIORITY =  "/rest/api/2/priority";
+	
 	//Defect related jira queries
 	public static final String GET_OPEN_DEFECTS_SEVERITY =  "/rest/api/2/search?jql=project=%1s and type in (Bug) and  resolution in (Unresolved) &maxResults=100";
 	public static final String GET_ALL_CLOSED_DEFECTS = "/rest/api/2/search?jql=project=%1s AND type in (Bug) and  resolution not in (Unresolved) &maxResults=100";
@@ -334,7 +336,17 @@ public class JiraCollectorUtil {
 	public static List<JiraIssue> getOpenDefectsByProject(NewFeatureSettings featureSettings){
 		return getIssues(String.format(GET_OPEN_DEFECTS_SEVERITY, featureSettings.getJiraProjectIdList()[0]) , featureSettings);
 	}
-			
+
+	public static List<String> getJiraPriority(NewFeatureSettings featureSettings){
+		String json = executeJiraQuery(featureSettings, GET_JIRA_PRIORITY);
+		JsonArray jsonArr = new GsonBuilder().create().fromJson(json, JsonArray.class);
+		
+		ArrayList<String> priorties = new ArrayList<String>();
+		for (int i = 0; i < jsonArr.size(); i++){
+			priorties.add(jsonArr.get(i).getAsJsonObject().get("name").getAsString());
+		}
+		return priorties;
+	}
 		
 	private static List<JiraIssue> getIssues(String query,  NewFeatureSettings featureSettings){
 		int startAt = 0, total = 0;
@@ -342,7 +354,7 @@ public class JiraCollectorUtil {
 		
 		do{
 			String json = executeJiraQuery(featureSettings, String.format((query + "&startAt=%1$d"), startAt));
-			List<JiraIssue> issues = DefectUtil.parseDefectsJson(json);
+			List<JiraIssue> issues = DefectUtil.parseDefectsJson(json, featureSettings);
 			
 			if(issues != null)
 				issuelist.addAll(issues);

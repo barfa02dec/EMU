@@ -16,6 +16,8 @@
 
 package com.capitalone.dashboard.util;
 
+import java.util.List;
+
 /**
  * Bean to hold settings specific to the Feature collector.
  * 
@@ -53,6 +55,8 @@ public class NewFeatureSettings {
 	private int noOfSprintsToShow;
 	private String projectId;
 
+	private List<String> issuePriorities;
+	
 	private String[] resolutionPeriod;
 	
 	private String[] defectAge;
@@ -137,6 +141,8 @@ public class NewFeatureSettings {
 	private String jiraStoryPointsFieldName;
 	
 	private String jiraTeamFieldName;
+	
+	private String environmentFoundInFieldName;
 
 	public String getCron() {
 		return this.cron;
@@ -385,5 +391,20 @@ public class NewFeatureSettings {
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
-	
+
+	public String getEnvironmentFoundInFieldName() {
+		return environmentFoundInFieldName;
+	}
+
+	public void setEnvironmentFoundInFieldName(String environmentFoundInFieldName) {
+		this.environmentFoundInFieldName = environmentFoundInFieldName;
+	}
+
+	public List<String> getIssuePriorities() {
+		return issuePriorities;
+	}
+
+	public void setIssuePriorities(List<String> issuePriorities) {
+		this.issuePriorities = issuePriorities;
+	}
 }

@@ -138,6 +138,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			featureSettings.setProjectId(hmFeatureSettings.getProjectId().get(i));
 			featureSettings.setJiraProjectIdList(hmFeatureSettings.getJiraProjectIdList().get(i));
 			featureSettings.setNoOfSprintsToShow(hmFeatureSettings.getNoOfSprintsToShow());
+			featureSettings.setEnvironmentFoundInFieldName(hmFeatureSettings.getEnvironmentFoundInFieldName());
 			logBanner(featureSettings.getJiraBaseUrl());
 		    int count = 0;
 
@@ -170,14 +171,11 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 				LOGGER.info("DATA COLLECTION FOR PROJECT CODE:: " + project.getProjectId() + 
 						"  AND PROJECT ID:: " + project.getpId() + " AND OPEN DEFECTS COUNT:: " + opendefects.size());
 				
-				storyData.defectMetricsAggregation(featureSettings, opendefects, project);
+				storyData.defectMetricsAggregation(opendefects, project); 
 				
 				//logic to handle sprint and releases
 				storyData.saveDetailedSprintData(project.getpId(),project.getName());
 				storyData.saveDetailedReleaseData(project.getpId(),project.getName());
-				
-				//storyData.activeSprintBurnDown();
-				
 			}
 			log("Story Data", storyDataStart, count);
 		} catch (Exception e) {

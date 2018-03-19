@@ -61,6 +61,7 @@ public class FeatureSettings {
 	private List<String> rapidView;
 	private int noOfSprintsToShow;
 	private List<String> projectId;
+	private String environmentFoundInFieldName;
 		
 	
 	public List<String[]> getJiraProjectIdList() {
@@ -401,5 +402,11 @@ public class FeatureSettings {
 		this.projectId = projectId;
 	}
 	
-	
+	public String getEnvironmentFoundInFieldName() {
+		return environmentFoundInFieldName;
+	}
+
+	public void setEnvironmentFoundInFieldName(String environmentFoundInFieldName) {
+		this.environmentFoundInFieldName = environmentFoundInFieldName;
+	}
 }

@@ -480,7 +480,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	}
 
 	@Override
-	public void defectMetricsAggregation(NewFeatureSettings featureSettings, List<Defect> opendefects,
+	public void defectMetricsAggregation(List<Defect> opendefects,
 			Scope project) {
 		
 		 //For a single project, there is always a single aggregator exists.
@@ -497,6 +497,11 @@ public class StoryDataClientImpl implements StoryDataClient {
 		summary.setProjectName(project.getName());
 		summary.setValuesAsOn(new Date().toString());
 		summary.setMetricsProjectId(project.getProjectId());
+		
+		/*
+		 * Logic to bucket the defects based on priority.
+		 */
+		getJiraPriority(featureSettings);
 		
 		/*
 		 * Logic to bucket the defects based on priority.
@@ -547,9 +552,14 @@ public class StoryDataClientImpl implements StoryDataClient {
 			LOGGER.debug(e.getMessage());
 		}
 	}
-	
+
+	public static void getJiraPriority (NewFeatureSettings featureSettings){
+		featureSettings.setIssuePriorities(JiraCollectorUtil.getJiraPriority(featureSettings));
+		//featureSettings.setIssuePriorities(priorities.toArray(new String[priorities.size()]));
+	}
+
 	public static void processDefectsByPriority(List<Defect> defects,DefectAggregation aggregation,Scope scopeProject){
-		Map<String,Integer> defectsByProirity= new LinkedHashMap<String,Integer>();
+		Map<String,Integer> defectsByProirity = new LinkedHashMap<String,Integer>();
 		
 		for(Defect defect: defects){			
 			if(!defect.getDefectStatus().equals(DONE) && defect.getProjectId().equals(scopeProject.getpId())){
@@ -590,8 +600,10 @@ public class StoryDataClientImpl implements StoryDataClient {
 		
 		boolean firstIndex = true;
 		int rangeCount = resolutionsPeriodRange.size();
-		Set<String> defectPriorities = null != aggregation.getDefectsByProirity()
-				? aggregation.getDefectsByProirity().keySet() : null;
+		/*Set<String> defectPriorities = null != aggregation.getDefectsByProirity()
+				? aggregation.getDefectsByProirity().keySet() : null;*/
+		
+		List<String> defectPriorities = featureSettings.getIssuePriorities();
 	
 		if (null == defectPriorities) {
 			return;
@@ -665,8 +677,10 @@ public class StoryDataClientImpl implements StoryDataClient {
 
 		int rangeCount = defectAgePeriodRanges.size();
 		
-		Set<String> defectPriorities = null != aggregation.getDefectsByProirity()
-				? aggregation.getDefectsByProirity().keySet() : null;
+		/*Set<String> defectPriorities = null != aggregation.getDefectsByProirity()
+				? aggregation.getDefectsByProirity().keySet() : null;*/
+				
+		List<String> defectPriorities = featureSettings.getIssuePriorities();
 
 		// If defect priority set is null, then there are no defects in that
 		// particular project. So no need to show the defects by age.

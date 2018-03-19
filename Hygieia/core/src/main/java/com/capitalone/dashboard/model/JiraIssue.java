@@ -50,38 +50,4 @@ public class JiraIssue {
 	public void setResolutionDate(String resolutionDate) {
 		this.resolutionDate = resolutionDate;
 	}
-	
-	public void parseJson(String json){
-		JsonObject jsonObject = new GsonBuilder().create().fromJson(json, JsonObject.class);
-		
-		id = jsonObject.get("id").getAsString();
-		key = jsonObject.get("key").getAsString();
-		
-		if(!jsonObject.getAsJsonObject("fields").get("priority").isJsonNull()  
-				&& jsonObject.getAsJsonObject("fields").getAsJsonObject("priority").isJsonObject()){
-			severity = jsonObject.getAsJsonObject("fields").getAsJsonObject("priority").get("name").getAsString();
-		}
-		
-		if(!jsonObject.getAsJsonObject("fields").get("environment").isJsonNull() &&
-				jsonObject.getAsJsonObject("fields").get("environment").isJsonObject()){
-				environment = jsonObject.getAsJsonObject("fields").getAsJsonObject("environment").get("name").getAsString();
-		}
-		
-		if(!jsonObject.getAsJsonObject("fields").get("resolutiondate").isJsonNull()){
-			resolutionDate = jsonObject.getAsJsonObject("fields").get("resolutiondate").getAsString();
-		}
-		
-		if(!jsonObject.getAsJsonObject("fields").get("created").isJsonNull()){
-			createDate = jsonObject.getAsJsonObject("fields").get("created").getAsString();
-		}
-	}
-	
-	public void parseJsonForEnvironment(String json){
-		JsonObject jsonObject = new GsonBuilder().create().fromJson(json, JsonObject.class);
-		
-		if(!jsonObject.getAsJsonObject("fields").get("environment").isJsonNull()){
-				environment = jsonObject.getAsJsonObject("fields").get("environment").getAsString();
-		}		
-		
-	}
 }

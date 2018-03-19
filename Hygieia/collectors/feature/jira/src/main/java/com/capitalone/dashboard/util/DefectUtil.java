@@ -20,7 +20,7 @@ import com.google.gson.JsonObject;
 
 public class DefectUtil {
 	
-	public static List<JiraIssue> parseDefectsJson(String json){
+	public static List<JiraIssue> parseDefectsJson(String json , NewFeatureSettings featureSettings){
 		JsonArray jsonArr = new GsonBuilder().create().fromJson(json, JsonObject.class).getAsJsonArray("issues");
 		
 		if(json != null && new GsonBuilder().create().fromJson(json, JsonObject.class).has("issues")){
@@ -32,20 +32,19 @@ public class DefectUtil {
 		List<JiraIssue> issues = new ArrayList<JiraIssue>();
 		for(JsonElement element : jsonArr){
 			JiraIssue issue = new JiraIssue();
-			issue.parseJson(element.toString());
+			parseJson(issue, element.toString(), featureSettings);
 			issues.add(issue);
 		}		
 		return issues;
 	}
 	
-	public static List<JiraIssue> parseDefectsEnvironmentJson(String json){
+	public static List<JiraIssue> parseDefectsEnvironmentJson(String json, NewFeatureSettings featureSettings){
 		JsonArray jsonArr = new GsonBuilder().create().fromJson(json, JsonObject.class).getAsJsonArray("issues");
 		
 		List<JiraIssue> issues = new ArrayList<JiraIssue>();
 		for(JsonElement element : jsonArr){
-		
 			JiraIssue issue = new JiraIssue();
-			issue.parseJsonForEnvironment(element.toString());
+			parseJsonForEnvironment(issue, element.toString(), featureSettings);
 			if(null!=issue.getEnvironment()){
 				issue.getEnvironment().replaceAll(".", "-");
 			}
@@ -83,6 +82,50 @@ public class DefectUtil {
 			}
 		}
 		return defectcount;
+	}
+	
+	private static void parseJson(JiraIssue issue, String json, NewFeatureSettings featureSettings){
+		JsonObject jsonObject = new GsonBuilder().create().fromJson(json, JsonObject.class);
+		
+		issue.setId(jsonObject.get("id").getAsString());
+		issue.setKey(jsonObject.get("key").getAsString());
+		
+		if(!jsonObject.getAsJsonObject("fields").get("priority").isJsonNull()  
+				&& jsonObject.getAsJsonObject("fields").getAsJsonObject("priority").isJsonObject()){
+			issue.setSeverity(jsonObject.getAsJsonObject("fields").getAsJsonObject("priority").get("name").getAsString());
+		}
+		
+		if(featureSettings.getEnvironmentFoundInFieldName() != null){		
+			try{
+				if(!jsonObject.getAsJsonObject("fields").get(featureSettings.getEnvironmentFoundInFieldName()).isJsonNull()){
+					if(jsonObject.getAsJsonObject("fields").get(featureSettings.getEnvironmentFoundInFieldName()).isJsonObject())
+						issue.setEnvironment(jsonObject.getAsJsonObject("fields").getAsJsonObject(featureSettings.getEnvironmentFoundInFieldName()).get("value").getAsString());
+					else
+						issue.setEnvironment(jsonObject.getAsJsonObject("fields").get(featureSettings.getEnvironmentFoundInFieldName()).getAsString());
+				}
+			}catch(Exception ex){
+				ex.getMessage();
+			}
+		} else if(!jsonObject.getAsJsonObject("fields").get("environment").isJsonNull() &&
+				jsonObject.getAsJsonObject("fields").get("environment").isJsonObject()){
+			issue.setEnvironment(jsonObject.getAsJsonObject("fields").getAsJsonObject("environment").get("name").getAsString());
+		}
+
+		if(!jsonObject.getAsJsonObject("fields").get("resolutiondate").isJsonNull()){
+			issue.setResolutionDate(jsonObject.getAsJsonObject("fields").get("resolutiondate").getAsString());
+		}
+		
+		if(!jsonObject.getAsJsonObject("fields").get("created").isJsonNull()){
+			issue.setCreateDate(jsonObject.getAsJsonObject("fields").get("created").getAsString());
+		}
+	}
+	
+	public static void parseJsonForEnvironment(JiraIssue issue, String json, NewFeatureSettings featureSettings){
+		JsonObject jsonObject = new GsonBuilder().create().fromJson(json, JsonObject.class);
+		
+		if(!jsonObject.getAsJsonObject("fields").get("environment").isJsonNull()){
+			issue.setEnvironment(jsonObject.getAsJsonObject("fields").get("environment").getAsString());
+		}		
 	}
 
 }
