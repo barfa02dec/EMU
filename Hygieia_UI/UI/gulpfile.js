@@ -24,6 +24,8 @@ var browserSync = require('browser-sync'),
     runSequence = require('run-sequence'),
     wiredep = require('wiredep'),
     argv = require('yargs').argv,
+	war = require('gulp-war'),
+	zip = require('gulp-zip'),
 
 
     // some gulp config values
@@ -94,6 +96,17 @@ gulp.task('build', function(callback) {
 // run the build task, start up a browser, then
 // watch the different file locations and execute
 // the relevant tasks
+gulp.task('war', function () {
+    gulp.src(['dist/**/*.*'])
+        .pipe(war({
+            welcome: 'index.html',
+            displayName: 'EMU WAR',
+        }))
+        .pipe(zip('EMUWarFile.war'))
+        .pipe(gulp.dest("./dist"));
+ 
+});
+
 function server(ghostMode) {
   ghostMode = typeof ghostMode == 'undefined' ? false : true
   return function () {
