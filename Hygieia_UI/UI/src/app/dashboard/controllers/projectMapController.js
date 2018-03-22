@@ -1041,7 +1041,7 @@
                     month = "0"+month;
                   }
 
-                    return "01-"+month+"-"+year;
+                    return month+"-"+year;
 
 
 
