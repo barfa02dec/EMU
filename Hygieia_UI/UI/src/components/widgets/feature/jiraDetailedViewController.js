@@ -207,7 +207,6 @@
                 finalObjArray.push(tempObj);
                 // finalObjArray[key].graphArray.push(collection);              
             });
-            debugger;
             var plotingColors = [];
             var plotingData = [];
             angular.forEach(finalObjArray, function(item) {
