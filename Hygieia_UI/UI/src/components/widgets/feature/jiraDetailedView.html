@@ -255,7 +255,7 @@
                     
                     <div class="col-md-6 agile-board-defect-block-padding">
                         <div class="col-md-12">
-                            <!-- <div class="col-md-10 agile-board-sub-header sprint-priority-env-head-padding">Open Defects By Priority</div> -->
+                            
                             <div class="col-md-2"></div>
                         </div>
                         <div class="col-md-12 agile-board-defect-col-padding">
@@ -266,37 +266,19 @@
                                 <div class="total-builds-text-props" ng-if="key == 'Medium'" style="border:4px solid #0065FF;color: #000">{{value}}</div>
                                 <div class="total-builds-text-props" ng-if="key == 'Blocker' || key == 'Critical' || key == 'Highest'" style="border:4px solid #36B37E;color: #000">{{value}}</div>
 
-                                <!-- <div class="total-builds-text-props defects-by-priority-critical-border" ng-if="!jdv.criIssue">0</div> -->
+                                
                             </div>
-                           <!--  <div class="col-md-2 sprint-def-priorty-response-secnd">
-                                <div class="total-builds-text-props defects-by-priority-major-border" ng-if="jdv.majorIssue">{{jdv.majorIssue}}</div>
-                                <div class="total-builds-text-props defects-by-priority-major-border" ng-if="!jdv.majorIssue">0</div>
-                            </div>
-                            <div class="col-md-2 sprint-def-priorty-response-thrd">
-                                <div class="total-builds-text-props defects-by-priority-medium-border" ng-if="jdv.mediumIssue">{{jdv.mediumIssue}}</div>
-                                <div class="total-builds-text-props defects-by-priority-medium-border" ng-if="!jdv.mediumIssue">0</div>
-                            </div>
-                            <div class="col-md-2 sprint-def-priorty-response-thrd">
-                                <div class="total-builds-text-props defects-by-priority-low-border" ng-if="jdv.lowIssue">{{jdv.lowIssue}}</div>
-                                <div class="total-builds-text-props defects-by-priority-low-border" ng-if="!jdv.lowIssue">0</div>
-                            </div>
-                            <div class="col-md-2 sprint-def-priorty-response-thrd">
-                                <div class="total-builds-text-props defects-by-priority-lowest-border" ng-if="jdv.lowestIssue">{{jdv.lowestIssue}}</div>
-                                <div class="total-builds-text-props defects-by-priority-lowest-border" ng-if="!jdv.lowestIssue">0</div>
-                            </div> -->
+                          
                         </div>
                         <div class="col-md-12 font-props">
                             <div class="col-md-2 padding-highest-text" ng-repeat="(key, value) in jdv.defectsByProirity">{{key | uppercase}}</div>
-                            <!-- <div class="col-md-2 padding-high-text">HIGH</div>
-                            <div class="col-md-2 padding-medium-text">MEDIUM</div>
-                            <div class="col-md-2 padding-low-text">LOW</div>
-                            <div class="col-md-2 padding-lowest-text">LOWEST</div> -->
+                            
                         </div>
                     </div>
 
                     <div class="col-md-6 agile-board-defect-block-padding">
-                        <div class="col-md-12">
-                            <!-- <div class="col-md-10 agile-board-sub-header sprint-priority-env-head-padding agile-board-sub-header-padding">Open Defects By Environment</div> -->
+                        <!-- <div class="col-md-12">
+                            
                             <div class="col-md-10"></div>
                             <div class="col-md-2">
                                 <select ng-options="value as key for (key , value) in jdv.dataEnv" ng-model='jdv.environmemt'>
@@ -315,6 +297,21 @@
                         <div class="col-md-12 font-props">
                             <div class="col-md-2 padding-highest-text">COUNT</div>
 
+                        </div> -->
+
+                         <div class="col-md-12">
+                            
+                            <div class="col-md-2"></div>
+                        </div>
+                        <div class="col-md-12 agile-board-defect-col-padding">
+                            <div class="col-md-2 sprint-def-priorty-response" ng-repeat="(key, value) in jdv.dataEnv">
+                                <div class="total-builds-text-props" style="border:4px solid #cc3300;color: #000">{{value}}</div>
+                            </div>
+                          
+                        </div>
+                        <div class="col-md-12 font-props">
+                            <div class="col-md-2 padding-highest-text" ng-repeat="(key, value) in jdv.dataEnv" style="padding-left: 20px;">{{key | uppercase}}</div>
+                            
                         </div>
                     </div>
 
