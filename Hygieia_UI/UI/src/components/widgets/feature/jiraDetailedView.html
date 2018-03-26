@@ -67,13 +67,122 @@
         <div class="col-md-12 agile-board-outer-box">
             <div class="col-md-12 agile-board-sprint-header-properties">
                 <div class="agile-board-sub-header">
-                    <div class="col-md-6 agile-board-sub-header-padding">
-                        Issues/Defects
-                    </div>
+                   
                     <div class="col-md-6" style="padding-left: 15px;">Sprint List</div>
+                      <div class="col-md-6 agile-board-sub-header-padding">
+                        Velocity Chart
+                    </div> 
                 </div>
             </div>
-            <div class="col-md-6 agile-board-issue-col">
+
+            <!-- <div class="col-md-6 agile-board-issue-col">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr class="font-props">
+                            <td></td>
+                            <td ng-repeat="sprintName in jdv.jirametricsdata" ng-attr-title="{{sprintName.name}}" class="agile-board-sprint-name">{{sprintName.name}}</td>
+                        </tr>
+                    </thead>
+                    <tbody class="font-props">
+                        <tr>
+                            <td class="custom-td-width-defect">Completed issue count</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-completed-issue-color">{{sprintNames.sprintData.completedIssueCount}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Committed issue count</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-committed-issue-color">{{sprintNames.sprintData.committedIssueCount}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Issues added</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-issue-add-color">{{sprintNames.sprintData.burndown.issuesAdded.count}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Issues removed</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-issue-remove-color">{{sprintNames.sprintData.burndown.issuesRemoved.count}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Defects found</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-defect-found-color">{{sprintNames.sprintData.defectsFound.total}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Defects resolved</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-defect-resolve-color">{{sprintNames.sprintData.defectsResolved.total}}</td>
+                        </tr>
+                        <tr>
+                            <td class="custom-td-width-defect">Defects unresolved</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-defect-unresolved-color">{{sprintNames.sprintData.defectsUnresolved.total}}</td>
+                        </tr>
+                          <tr>
+                            <td class="custom-td-width-defect">Sprint Defects Resolved</td>
+                            <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-defect-unresolved-color">{{sprintNames.sprintData.sprintDefectsResolved.total}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> -->
+            <div class="col-md-6 sprint-list-parent agile-board-sprint-list-col">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr class="agile-board-sprint-list-head">
+                            <th>Sprint ID</th>
+                            <th>Sprint Name</th>
+                            <th>Sprint Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="font-props" ng-repeat="sprintdata in jdv.spAllDetails">
+                            {{sprintdata.sprintData.state}}
+                            <td>{{sprintdata.sprintData.sprintId}}</td>
+                            <td>{{sprintdata.sprintData.sprintName}}</td>
+                            <td ng-if="sprintdata.closed == true"><span>
+                     <img src="assets/images/icon_completed.png">
+                     </span>CLOSED
+                            </td>
+                            <td ng-if="sprintdata.closed == false">
+                                <span>
+                        <svg version="1.1"
+                           x="0px" y="0px" width="22px" height="19px" viewBox="0 0 25 19" style="enable-background:new 0 0 25 19;" xml:space="preserve">
+                           <style type="text/css">
+                              .stopen0{fill:#FF8A22;}
+                           </style>
+                           <defs></defs>
+                           <g>
+                              <path class="stopen0" d="M5.8,15H3l0.8-0.8c0.4-0.4,0.4-0.9,0-1.3c-0.4-0.4-0.9-0.4-1.3,0l-2.3,2.3c-0.4,0.4-0.4,0.9,0,1.3l2.3,2.3
+                                 C2.7,18.9,3,19,3.2,19c0.2,0,0.5-0.1,0.6-0.3c0.4-0.4,0.4-0.9,0-1.3l-0.6-0.6H8L5.8,15z M13.2,0c-1.3,0-2.6,0.3-3.7,0.8h0.2
+                                 c0.5,0,1,0.4,1,1v0.5c0.8-0.3,1.6-0.5,2.5-0.5c3.6,0,6.6,3,6.6,6.6c0,2-0.9,3.8-2.4,5.1H20c1.1-1.4,1.7-3.2,1.7-5.1
+                                 C21.7,3.8,17.9,0,13.2,0z"/>
+                              <path d="M13.2,15c-3.6,0-6.6-3-6.6-6.6c0-1.3,0.4-2.5,1-3.5v1c0,0.5,0.4,0.9,0.9,0.9c0.5,0,0.9-0.4,0.9-0.9V2.7
+                                 c0-0.5-0.4-0.9-0.9-0.9H5.3c-0.5,0-0.9,0.4-0.9,0.9s0.4,0.9,0.9,0.9h1c-1,1.4-1.5,3-1.5,4.8c0,4.7,3.8,8.4,8.4,8.4H25V15H13.2z"/>
+                           </g>
+                        </svg>
+                     </span> OPEN
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6 agile-board-sprint-chart-padding">
+                    <div id="sprintdatas" config="sprintdatas" class="sprint-graphs-prop graph-bg-gradient" style="height: 260px !important"></div>
+                </div>
+            <div class="col-md-12 agile-board-row-padding-widgets">
+                <div class="col-md-12">
+                    <div class="col-md-6 agile-board-sub-header">Story Volatility (Story Point)</div>
+                    <div class="col-md-6 agile-board-sub-header agile-board-sub-header-padding">Defect Closure</div>
+                </div>
+                 <div class="col-md-6 agile-board-sprint-chart-padding">
+                    <div id="storyVolatility" config="storyVolatility" class="sprint-graphs-prop graph-bg-gradient"></div>
+                </div>
+                 <div class="col-md-6 agile-board-sprint-chart-padding">
+                    <div id="defectClosure" config="defectClosure" class="sprint-graphs-prop graph-bg-gradient"></div>
+                </div>
+               
+                <!-- <div class="col-md-12">
+                    <div class="col-md-12 agile-board-sub-header agile-board-sub-header-padding">Defect Closure</div>
+                </div> -->
+               
+            </div>
+
+            <div class="col-md-12 agile-board-issue-col">
+                <div class="col-md-6 agile-board-sub-header">Sprint List</div>
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr class="font-props">
@@ -117,66 +226,6 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-md-6 sprint-list-parent agile-board-sprint-list-col">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr class="agile-board-sprint-list-head">
-                            <th>Sprint ID</th>
-                            <th>Sprint Name</th>
-                            <th>Sprint Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="font-props" ng-repeat="sprintdata in jdv.spAllDetails">
-                            {{sprintdata.sprintData.state}}
-                            <td>{{sprintdata.sprintData.sprintId}}</td>
-                            <td>{{sprintdata.sprintData.sprintName}}</td>
-                            <td ng-if="sprintdata.closed == true"><span>
-                     <img src="assets/images/icon_completed.png">
-                     </span>CLOSED
-                            </td>
-                            <td ng-if="sprintdata.closed == false">
-                                <span>
-                        <svg version="1.1"
-                           x="0px" y="0px" width="22px" height="19px" viewBox="0 0 25 19" style="enable-background:new 0 0 25 19;" xml:space="preserve">
-                           <style type="text/css">
-                              .stopen0{fill:#FF8A22;}
-                           </style>
-                           <defs></defs>
-                           <g>
-                              <path class="stopen0" d="M5.8,15H3l0.8-0.8c0.4-0.4,0.4-0.9,0-1.3c-0.4-0.4-0.9-0.4-1.3,0l-2.3,2.3c-0.4,0.4-0.4,0.9,0,1.3l2.3,2.3
-                                 C2.7,18.9,3,19,3.2,19c0.2,0,0.5-0.1,0.6-0.3c0.4-0.4,0.4-0.9,0-1.3l-0.6-0.6H8L5.8,15z M13.2,0c-1.3,0-2.6,0.3-3.7,0.8h0.2
-                                 c0.5,0,1,0.4,1,1v0.5c0.8-0.3,1.6-0.5,2.5-0.5c3.6,0,6.6,3,6.6,6.6c0,2-0.9,3.8-2.4,5.1H20c1.1-1.4,1.7-3.2,1.7-5.1
-                                 C21.7,3.8,17.9,0,13.2,0z"/>
-                              <path d="M13.2,15c-3.6,0-6.6-3-6.6-6.6c0-1.3,0.4-2.5,1-3.5v1c0,0.5,0.4,0.9,0.9,0.9c0.5,0,0.9-0.4,0.9-0.9V2.7
-                                 c0-0.5-0.4-0.9-0.9-0.9H5.3c-0.5,0-0.9,0.4-0.9,0.9s0.4,0.9,0.9,0.9h1c-1,1.4-1.5,3-1.5,4.8c0,4.7,3.8,8.4,8.4,8.4H25V15H13.2z"/>
-                           </g>
-                        </svg>
-                     </span> OPEN
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-12 agile-board-row-padding-widgets">
-                <div class="col-md-12">
-                    <div class="col-md-6 agile-board-sub-header">Story Volatility (Story Point)</div>
-                    <div class="col-md-6 agile-board-sub-header agile-board-sub-header-padding">Velocity Chart</div>
-                </div>
-                 <div class="col-md-6 agile-board-sprint-chart-padding">
-                    <div id="storyVolatility" config="storyVolatility" class="sprint-graphs-prop graph-bg-gradient"></div>
-                </div>
-                <div class="col-md-6 agile-board-sprint-chart-padding">
-                    <div id="sprintdatas" config="sprintdatas" class="sprint-graphs-prop graph-bg-gradient"></div>
-                </div>
-               
-                <div class="col-md-12">
-                    <div class="col-md-12 agile-board-sub-header agile-board-sub-header-padding">Defect Closure</div>
-                </div>
-                <div class="col-md-12 agile-board-sprint-chart-padding">
-                    <div id="defectClosure" config="defectClosure" class="sprint-graphs-prop graph-bg-gradient"></div>
-                </div>
-            </div>
         </div>
         <div class="col-md-12 agile-board-defect-release-label">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://www.happiestminds.com/" x="0px" y="0px" width="5.1px" height="16px" viewBox="0 0 5.1 16" xml:space="preserve" class="dashboard-purple-block">
@@ -192,42 +241,21 @@
         
             <div class="col-md-12 agile-board-row-padding-widgets agile-board-outer-box">
                 <div class="col-md-12 agile-board-sub-header">
-                    <div class="col-md-6 agile-board-sub-header-padding">Age Of Open Defects</div>
-                    <div class="col-md-6">Resolution Time Report</div>
+                    <div class="col-md-6 agile-board-sub-header-padding">Open Defects by Priority</div>
+                    <div class="col-md-6">Open Defects by Environment</div>
                 </div>
-                <div class="col-md-6 agile-board-defect-chart-padding">
+               <!--  <div class="col-md-6 agile-board-defect-chart-padding">
                     <div id="openDef" config="configopenDef" class="sprint-graphs-prop graph-bg-gradient"></div>
                 </div>
                 <div class="col-md-6 agile-board-defect-chart-padding">
                     <div id="restime" config="configresTime" class="sprint-graphs-prop graph-bg-gradient"></div>
-                </div>
+                </div> -->
                 
                 <div class="col-md-12 agile-board-row-padding-widgets">
+                    
                     <div class="col-md-6 agile-board-defect-block-padding">
                         <div class="col-md-12">
-                            <div class="col-md-10 agile-board-sub-header sprint-priority-env-head-padding agile-board-sub-header-padding">Open Defects By Environment</div>
-                            <div class="col-md-2">
-                                <select ng-options="value as key for (key , value) in jdv.dataEnv" ng-model='jdv.environmemt'>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12 agile-board-defect-col-padding">
-                            <div class="col-md-2">
-                                <div class="total-builds-text-props defects-by-priority-critical-border">
-                                    <span ng-if="jdv.environmemt">{{jdv.environmemt}}</span>
-                                    <span ng-if="!jdv.environmemt">0</span>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="col-md-12 font-props">
-                            <div class="col-md-2 padding-highest-text">COUNT</div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-6 agile-board-defect-block-padding">
-                        <div class="col-md-12">
-                            <div class="col-md-10 agile-board-sub-header sprint-priority-env-head-padding">Open Defects By Priority</div>
+                            <!-- <div class="col-md-10 agile-board-sub-header sprint-priority-env-head-padding">Open Defects By Priority</div> -->
                             <div class="col-md-2"></div>
                         </div>
                         <div class="col-md-12 agile-board-defect-col-padding">
@@ -265,6 +293,43 @@
                             <div class="col-md-2 padding-lowest-text">LOWEST</div> -->
                         </div>
                     </div>
+
+                    <div class="col-md-6 agile-board-defect-block-padding">
+                        <div class="col-md-12">
+                            <!-- <div class="col-md-10 agile-board-sub-header sprint-priority-env-head-padding agile-board-sub-header-padding">Open Defects By Environment</div> -->
+                            <div class="col-md-10"></div>
+                            <div class="col-md-2">
+                                <select ng-options="value as key for (key , value) in jdv.dataEnv" ng-model='jdv.environmemt'>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 agile-board-defect-col-padding" style="padding-top: 0px;">
+                            <div class="col-md-2">
+                                <div class="total-builds-text-props defects-by-priority-critical-border">
+                                    <span ng-if="jdv.environmemt">{{jdv.environmemt}}</span>
+                                    <span ng-if="!jdv.environmemt">0</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 font-props">
+                            <div class="col-md-2 padding-highest-text">COUNT</div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                 <div class="col-md-12 agile-board-sub-header">
+                    <div class="col-md-6 agile-board-sub-header-padding">Age Of Open Defects</div>
+                    <div class="col-md-6">Resolution Time Report</div>
+                </div>
+
+                <div class="col-md-6 agile-board-defect-chart-padding">
+                    <div id="openDef" config="configopenDef" class="sprint-graphs-prop graph-bg-gradient"></div>
+                </div>
+                <div class="col-md-6 agile-board-defect-chart-padding">
+                    <div id="restime" config="configresTime" class="sprint-graphs-prop graph-bg-gradient"></div>
                 </div>
             </div>
         

@@ -59,6 +59,7 @@
             var objectResoloutionGraph = data.defectsByResolutionDetails;
             var trackObjectResoloutionGraph = {};
             var axisObjectResoloutionGraph = {};
+            ctrl.dataEnv = data.defectsByEnvironment;
             angular.forEach(object, function(value, key) {
                 var localObj = value[0];
                 angular.forEach(localObj, function(value1, key1) {
@@ -238,6 +239,7 @@
 
         function sprintdataProcess(data) {
             ctrl.jirametricsdatanormal = data;
+            ctrl.spAllDetails = angular.copy(data);
             ctrl.jirametricsdata = ctrl.jirametricsdatanormal.reverse();
             if (ctrl.jirametricsdata[5] != undefined) {
                 ctrl.sprintIds = ctrl.jirametricsdata[5].sprintData.sprintId;
@@ -247,21 +249,21 @@
             //featureData.getLatestSprint(ctrl.sprintId,ctrl.projectpathId).then(fetchLatestSprint);
             // $cookies.put('sprintId', ctrl.sprintIds);
             var progress = ['DefectClosure'];
-            var comittedStoryPoints = ['CommittedStoryPoints'];
-            var completedStoryPoint = ['CompletedStoryPoints'];
+            var comittedStoryPoints = ['Committed Story Points'];
+            var completedStoryPoint = ['Completed Story Points'];
             var axisSprintName = [];
             var axisSprintNameclos = [];
             var progressVelocity = ["Saydoratio"];
-            var defectsFoundClosure = ["DefectsFound"];
-            var defectsResolvedClosure = ["DefectsResolved"];
-            var defectsUnResolvedClosure = ["DefectsUnResolved"];
-            var sprintDefectsResolvedClosure = ["sprintDefectsResolved"];
+            var defectsFoundClosure = ["Defects Found"];
+            var defectsResolvedClosure = ["Defects Resolved"];
+            var defectsUnResolvedClosure = ["Defects Unresolved"];
+            var sprintDefectsResolvedClosure = ["Sprint Defects Resolved"];
             var issuesAdded = ["issuesAdded"];
             var issuesRemoved = ["issuesRemoved"];
             var comittedStoryPointsVolatility = ['Committed Story Points'];
             var completedStoryPointVolatility = ['Completed Story Points'];
             //Processing data for sprint list table
-            ctrl.spAllDetails = data;
+            
             //Data Process for Velocity Chart Graphs
             for (var i = 0; i < data.length; i++) {
                 if (data[i].sprintData != undefined) {
@@ -343,11 +345,11 @@
                         anchor: 'top-left',
                         x: 20,
                         y: -40,
-                        step: 1
+                        step: 2
                     }
                 },
                 padding: {
-                    top: 40
+                    top: 30
                 }
 
             });
@@ -383,13 +385,13 @@
                     position: 'inset',
                     inset: {
                         anchor: 'top-left',
-                        x: 20,
+                        x: 30,
                         y: -40,
-                        step: 1
+                        step: 2
                     }
                 },
                 padding: {
-                    top: 40
+                    top: 30
                 }
 
             });
@@ -425,11 +427,11 @@
                         anchor: 'top-left',
                         x: 20,
                         y: -40,
-                        step: 1
+                        step: 2
                     }
                 },
                 padding: {
-                    top: 40
+                    top: 30
                 }
 
             });
