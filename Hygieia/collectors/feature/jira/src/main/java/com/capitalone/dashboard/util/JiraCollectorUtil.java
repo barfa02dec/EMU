@@ -256,6 +256,7 @@ public class JiraCollectorUtil {
 			String query = String.format(GET_PROJECT_VERSION, featureSettings.getRapidView(), versionId);
 			return executeJiraQuery(featureSettings, query);
 		}catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}

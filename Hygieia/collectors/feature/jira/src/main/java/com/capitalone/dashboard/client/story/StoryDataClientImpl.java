@@ -325,8 +325,10 @@ public class StoryDataClientImpl implements StoryDataClient {
 				// Get the detailed version metrics for release with status[released] but detailed metrics/versionData is null
 				if ((release.getReleased() && null == release.getVersionData())|| !release.getReleased()) {
 					String versionDetails = JiraCollectorUtil.getVersionDetailsFromJira(jiraVersion.getId(), featureSettings);
-					jiraVersion.setVersionData(JiraCollectorUtil.getReleaseData(versionDetails, projectId, featureSettings));
+					if (versionDetails == null) continue;
+					
 					// setting the detailed metrics to release.
+					jiraVersion.setVersionData(JiraCollectorUtil.getReleaseData(versionDetails, projectId, featureSettings));
 					release.setVersionData(jiraVersion.getVersionData());
 				}
 	
