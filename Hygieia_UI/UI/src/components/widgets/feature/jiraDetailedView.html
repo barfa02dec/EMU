@@ -192,31 +192,31 @@
                     </thead>
                     <tbody class="font-props">
                         <tr>
-                            <td class="custom-td-width-defect">Completed issue count</td>
+                            <td class="custom-td-width-defect">Completed Issue Count</td>
                             <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-completed-issue-color">{{sprintNames.sprintData.completedIssueCount}}</td>
                         </tr>
                         <tr>
-                            <td class="custom-td-width-defect">Committed issue count</td>
+                            <td class="custom-td-width-defect">Committed Issue Count</td>
                             <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-committed-issue-color">{{sprintNames.sprintData.committedIssueCount}}</td>
                         </tr>
                         <tr>
-                            <td class="custom-td-width-defect">Issues added</td>
+                            <td class="custom-td-width-defect">Issues Added</td>
                             <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-issue-add-color">{{sprintNames.sprintData.burndown.issuesAdded.count}}</td>
                         </tr>
                         <tr>
-                            <td class="custom-td-width-defect">Issues removed</td>
+                            <td class="custom-td-width-defect">Issues Removed</td>
                             <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-issue-remove-color">{{sprintNames.sprintData.burndown.issuesRemoved.count}}</td>
                         </tr>
                         <tr>
-                            <td class="custom-td-width-defect">Defects found</td>
+                            <td class="custom-td-width-defect">Defects Found</td>
                             <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-defect-found-color">{{sprintNames.sprintData.defectsFound.total}}</td>
                         </tr>
                         <tr>
-                            <td class="custom-td-width-defect">Defects resolved</td>
+                            <td class="custom-td-width-defect">Defects Resolved</td>
                             <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-defect-resolve-color">{{sprintNames.sprintData.defectsResolved.total}}</td>
                         </tr>
                         <tr>
-                            <td class="custom-td-width-defect">Defects unresolved</td>
+                            <td class="custom-td-width-defect">Defects Unresolved</td>
                             <td ng-repeat="sprintNames in jdv.jirametricsdata" class="agile-board-defect-unresolved-color">{{sprintNames.sprintData.defectsUnresolved.total}}</td>
                         </tr>
                           <tr>
@@ -305,7 +305,7 @@
                         </div>
                         <div class="col-md-12 agile-board-defect-col-padding">
                             <div class="col-md-2 sprint-def-priorty-response" ng-repeat="(key, value) in jdv.dataEnv">
-                                <div class="total-builds-text-props" style="border:4px solid #cc3300;color: #000">{{value}}</div>
+                                <div class="total-builds-text-props" style="border:4px solid #0099cc;color: #000">{{value}}</div>
                             </div>
                           
                         </div>
@@ -318,7 +318,7 @@
                 </div>
 
                  <div class="col-md-12 agile-board-sub-header">
-                    <div class="col-md-6 agile-board-sub-header-padding">Age Of Open Defects</div>
+                    <div class="col-md-6 agile-board-sub-header-padding">Age of Open Defects</div>
                     <div class="col-md-6">Resolution Time Report</div>
                 </div>
 
