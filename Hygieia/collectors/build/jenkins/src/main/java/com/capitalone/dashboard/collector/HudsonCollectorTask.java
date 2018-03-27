@@ -199,7 +199,7 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
                 	
                 	try{
                 		if(!getDomain(buildSummary.getBuildUrl()).equals(getDomain(job.getInstanceUrl()))){
-                    		String modifiedUrl=buildSummary.getBuildUrl().replace(getDomain(buildSummary.getBuildUrl()), getDomain(job.getInstanceUrl()));
+                    		String modifiedUrl = buildSummary.getBuildUrl().replace(getDomain(buildSummary.getBuildUrl()), getDomain(job.getInstanceUrl()));
                     		buildSummary.setBuildUrl(modifiedUrl);
                     	}
                 	}catch (Exception e) {
@@ -316,6 +316,14 @@ public class HudsonCollectorTask extends CollectorTask<HudsonCollector> {
     private String getDomain(String url) throws URISyntaxException {
         URI uri = new URI(url);
         String domain = uri.getHost();
-        return domain;
+        int port = uri.getPort();
+        
+        String domainwithport; 
+        if(port > 0){
+        	domainwithport = domain + ":" + port;
+        }else{
+        	domainwithport = domain;
+        }
+        return domainwithport;
     }
 }
