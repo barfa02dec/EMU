@@ -38,6 +38,7 @@
 		var testTeamsByCollectorId = 'test-data/teams.json';
 		var buildTeamsByCollectorId = '/api/teamcollector/';
 		var sprintId = undefined;
+		//var ProSpId = undefined;
 		return {
 			sprintMetrics : aggregateSprintEstimates,
 			jiraData:jiraDataGer,

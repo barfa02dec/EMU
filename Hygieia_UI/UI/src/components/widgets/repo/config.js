@@ -8,8 +8,8 @@
 			RepoConfigController);
 
 	RepoConfigController.$inject = [ 'modalData', '$uibModalInstance',
-			'collectorData' ];
-	function RepoConfigController(modalData, $uibModalInstance, collectorData) {
+			'collectorData', '$cookies', 'featureData' ];
+	function RepoConfigController(modalData, $uibModalInstance, collectorData, $cookies, featureData) {
 		var ctrl = this;
 		var widgetConfig = modalData.widgetConfig;
 
@@ -123,11 +123,13 @@
 
 		function createCollectorItem() {
 			var item = {};
-
+			ctrl.projectpaths = $cookies.get('ProSpId');
+			//ctrl.ProSpId = featureData.ProSpId;
 			if (ctrl.repoOption.name.indexOf("GitHub") != -1) {
 
 				item = {
 					collectorId: _.findWhere(ctrl.collectors, {name: 'GitHub'}).id,
+					project: ctrl.projectpaths,
 					options: {
 						scm: 'Github',
 						url: ctrl.repoUrl,
