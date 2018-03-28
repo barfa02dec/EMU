@@ -24,7 +24,7 @@
         }
 
         $scope.curPage = 0;
-        ctrl.pageSize = 5;
+        ctrl.pageSize = 10;
 
 
         $scope.adduser = "User created succcessfully";
