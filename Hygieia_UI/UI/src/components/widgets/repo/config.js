@@ -142,6 +142,7 @@
 
 				item = {
 					collectorId: _.findWhere(ctrl.collectors, {name: 'Bitbucket'}).id,
+					project: ctrl.projectpaths,
 					options: {
 						scm: 'Bitbucket',
 						url: ctrl.repoUrl,
@@ -163,6 +164,7 @@
 			} else if (ctrl.repoOption.name.indexOf("Gitlab") != -1) {
 				item = {
 					collectorId : _.findWhere(ctrl.collectors, { name: 'Gitlab' }).id,
+					project: ctrl.projectpaths,
 					options: {
 						scm: 'Gitlab',
 						url: ctrl.repoUrl,
