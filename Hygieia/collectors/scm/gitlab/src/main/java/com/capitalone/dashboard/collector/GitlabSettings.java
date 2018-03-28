@@ -1,5 +1,7 @@
 package com.capitalone.dashboard.collector;
 
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -16,11 +18,13 @@ import org.springframework.stereotype.Component;
 public class GitlabSettings {
     private String cron;
     private String protocol;
-    private String host;
     private String port;
-    private String apiToken;
 	private int firstRunHistoryDays;
 	private boolean selfSignedCertificate;
+
+    private List<String> host;
+    private List<String> apiToken;
+    private List<String> projectId;
 
     public String getCron() {
         return cron;
@@ -38,19 +42,19 @@ public class GitlabSettings {
 		this.protocol = protocol;
 	}
 
-	public String getApiToken() {
+	public List<String> getApiToken() {
         return apiToken;
     }
 
-    public void setApiToken(String apiToken) {
+    public void setApiToken(List<String> apiToken) {
         this.apiToken = apiToken;
     }
 
-	public String getHost() {
+	public List<String> getHost() {
 		return host;
 	}
 
-	public void setHost(String host) {
+	public void setHost(List<String> host) {
 		this.host = host;
 	}
 
@@ -78,4 +82,11 @@ public class GitlabSettings {
 		this.selfSignedCertificate = selfSigned;
 	}
 
+	public List<String> getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(List<String> projectId) {
+		this.projectId = projectId;
+	}
 }

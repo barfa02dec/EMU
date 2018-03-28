@@ -40,7 +40,7 @@ public class GitlabUrlUtility {
 		this.gitlabSettings = gitlabSettings;
 	}
 	
-	public URI buildApiUrl(GitlabGitRepo repo, boolean firstRun, int resultsPerPage) {
+	public URI buildApiUrl(GitlabGitRepo repo, boolean firstRun, int resultsPerPage, String hostName) {
 		String repoUrl = repo.getRepoUrl();
         if (repoUrl.endsWith(GIT_EXTENSION)) {
             repoUrl = StringUtils.removeEnd(repoUrl, GIT_EXTENSION);
@@ -48,7 +48,7 @@ public class GitlabUrlUtility {
         
         String protocol = StringUtils.isBlank(gitlabSettings.getProtocol()) ? DEFAULT_PROTOCOL : gitlabSettings.getProtocol();
 		String repoName = getRepoName(repoUrl);
-		String host = getRepoHost();
+		String host = getRepoHost(hostName);
 		String date = getDateForCommits(repo, firstRun);
 
 		UriComponentsBuilder builder = UriComponentsBuilder.newInstance();
@@ -74,8 +74,8 @@ public class GitlabUrlUtility {
 		return UriComponentsBuilder.fromUri(uri).replaceQueryParam("page", nextPage).build(true).toUri();
 	}
 
-	private String getRepoHost() {
-		String providedGitLabHost = gitlabSettings.getHost();
+	private String getRepoHost(String hostName) {
+		String providedGitLabHost = hostName;
 		String apiHost;
 		if (StringUtils.isBlank(providedGitLabHost)) {
 			apiHost = PUBLIC_GITLAB_HOST_NAME;

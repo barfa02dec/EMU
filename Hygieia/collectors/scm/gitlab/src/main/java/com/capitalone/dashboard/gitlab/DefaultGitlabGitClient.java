@@ -56,12 +56,12 @@ public class DefaultGitlabGitClient implements  GitlabGitClient {
     }
 
     @Override
-	public List<Commit> getCommits(GitlabGitRepo repo, boolean firstRun) {
+	public List<Commit> getCommits(GitlabGitRepo repo, boolean firstRun, String hostName, String token) {
         List<Commit> commits = new ArrayList<>();
 
-		URI apiUrl = gitlabUrlUtility.buildApiUrl(repo, firstRun, RESULTS_PER_PAGE);
+		URI apiUrl = gitlabUrlUtility.buildApiUrl(repo, firstRun, RESULTS_PER_PAGE, hostName);
 		String providedApiToken = repo.getUserId();
-		String apiToken = (StringUtils.isNotBlank(providedApiToken)) ? providedApiToken:gitlabSettings.getApiToken();
+		String apiToken = (StringUtils.isNotBlank(providedApiToken)) ? providedApiToken:token;
 
 		boolean hasMorePages = true;
 		int nextPage = 1;
