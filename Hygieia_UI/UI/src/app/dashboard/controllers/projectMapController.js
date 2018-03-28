@@ -355,6 +355,8 @@
             $cookies.put('ProId', ProId);
             $cookies.put('ProName', ProName);
             $cookies.put('ProSpId', projectspcID);
+            //featureData.ProSpId = projectspcID;
+            //ctrl.ProSpId = featureData.ProSpId;
         }
 
         //Add user Popup which matches the user to the project
