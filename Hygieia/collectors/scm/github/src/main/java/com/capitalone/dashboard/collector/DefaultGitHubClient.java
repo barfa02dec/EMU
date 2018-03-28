@@ -107,7 +107,10 @@ public class DefaultGitHubClient implements GitHubClient {
 		String thisMoment = String.format("%tFT%<tRZ", cal);
 
 		String queryUrl = apiUrl.concat("/commits?sha=" + repo.getBranch()
-				+ "&since=" + thisMoment);
+				+ "&since=" + thisMoment + "&access_token=" + settings.getKey());
+		
+		//String queryUrl = apiUrl.concat("/commits?access_token="+key);
+		
 		/*
 		 * Calendar cal = Calendar.getInstance(); cal.setTime(dateInstance);
 		 * cal.add(Calendar.DATE, -30); Date dateBefore30Days = cal.getTime();
