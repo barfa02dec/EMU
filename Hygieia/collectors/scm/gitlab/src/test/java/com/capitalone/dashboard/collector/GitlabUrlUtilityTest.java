@@ -20,7 +20,7 @@ import com.capitalone.dashboard.model.GitlabGitRepo;
 @RunWith(MockitoJUnitRunner.class)
 public class GitlabUrlUtilityTest {
 	
-	@Mock
+	/*@Mock
 	private GitlabSettings gitlabSettings;
 	
 	@Mock
@@ -147,6 +147,6 @@ public class GitlabUrlUtilityTest {
 		URI result  = gitlabUrlUtility.updatePage(uri, 2);
 		
 		assertTrue(result.getQuery().contains("page=2"));
-	}
+	}*/
 
 }

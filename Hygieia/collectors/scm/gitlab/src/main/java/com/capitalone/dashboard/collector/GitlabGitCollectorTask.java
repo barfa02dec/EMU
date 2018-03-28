@@ -1,9 +1,14 @@
 package com.capitalone.dashboard.collector;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -42,6 +47,7 @@ public class GitlabGitCollectorTask  extends CollectorTask<Collector> {
     private final DefaultGitlabGitClient defaultGitlabGitClient;
     private final ComponentRepository dbComponentRepository;
     private final CommitRepository commitRepository;
+	private final Map<String, GitlabProjectSettings> gitSettingsMap = new HashMap<>();
 
 
     @Autowired
@@ -86,26 +92,42 @@ public class GitlabGitCollectorTask  extends CollectorTask<Collector> {
     public void collect(Collector collector) {
         logBanner("Starting...");
         long start = System.currentTimeMillis();
+        
+        initializeGitSettings();
+        
         int repoCount = 0;
         int commitCount = 0;
 
         clean(collector);
         for (GitlabGitRepo repo : enabledRepos(collector)) {
-			boolean firstRun = false;
-			if (repo.getLastUpdated() == 0)
-				firstRun = true;
-			repo.setLastUpdated(System.currentTimeMillis());
-			repo.removeLastUpdateDate();
-			
+        	
+        	String projectId = repo.getProject();
+			/*String hostUrl = repo.getRepoUrl();
+			String hostName = "";
+
 			try {
-				List<Commit> commits = defaultGitlabGitClient.getCommits(repo, firstRun);
-				commitCount = saveNewCommits(commitCount, repo, commits);
-				gitlabGitCollectorRepository.save(repo);
-			} catch (HttpClientErrorException | ResourceAccessException e) {
-				LOG.info("Failed to retrieve data, the repo or collector is most likey misconfigured: " + repo.getRepoUrl() + ", " + e.getMessage());
-			}
-			
-			repoCount++;
+				hostName = getDomainName(hostUrl);
+			} catch (URISyntaxException urx) {
+				LOG.debug("Syntax Error", urx);
+			}*/
+
+        	if (gitSettingsMap.containsKey(projectId)){
+				boolean firstRun = false;
+				if (repo.getLastUpdated() == 0)
+					firstRun = true;
+				//repo.setLastUpdated(System.currentTimeMillis());
+				//repo.removeLastUpdateDate();
+				repo.setLastUpdated(System.currentTimeMillis()-TimeUnit.DAYS.toMillis(700));
+				
+				try {
+					List<Commit> commits = defaultGitlabGitClient.getCommits(repo, firstRun, gitSettingsMap.get(projectId).getHost(), gitSettingsMap.get(projectId).getApiToken());
+					commitCount = saveNewCommits(commitCount, repo, commits);
+					gitlabGitCollectorRepository.save(repo);
+				} catch (HttpClientErrorException | ResourceAccessException e) {
+					LOG.info("Failed to retrieve data, the repo or collector is most likey misconfigured: " + repo.getRepoUrl() + ", " + e.getMessage());
+				}
+				repoCount++;
+        	}
         }
         log("Repo Count", start, repoCount);
         log("New Commits", start, commitCount);
@@ -163,8 +185,6 @@ public class GitlabGitCollectorTask  extends CollectorTask<Collector> {
 		gitlabGitCollectorRepository.save(repoList);
 	}
 
-
-
     private List<GitlabGitRepo> enabledRepos(Collector collector) {
         return gitlabGitCollectorRepository.findEnabledGitlabRepos(collector.getId());
     }
@@ -172,5 +192,24 @@ public class GitlabGitCollectorTask  extends CollectorTask<Collector> {
 	private boolean isNewCommit(GitlabGitRepo repo, Commit commit) {
 		return commitRepository.findByCollectorItemIdAndScmRevisionNumber(repo.getId(),
 				commit.getScmRevisionNumber()) == null;
+	}
+	
+	private void initializeGitSettings() {
+		for (int i = 0; i < gitlabSettings.getHost().size(); i++) {
+			String projectId = gitlabSettings.getProjectId().get(i);
+			
+			GitlabProjectSettings gitProjectSettings = new GitlabProjectSettings();
+			gitProjectSettings.setHost(gitlabSettings.getHost().get(i));
+			gitProjectSettings.setProjectId(gitlabSettings.getProjectId().get(i));
+			gitProjectSettings.setApiToken(gitlabSettings.getApiToken().get(i));
+			
+			gitSettingsMap.put(projectId, gitProjectSettings);
+		}
+	}
+
+	private String getDomainName(String url) throws URISyntaxException {
+		URI uri = new URI(url);
+		String domain = uri.getHost();
+		return domain.startsWith("www.") ? domain.substring(4) : domain;
 	}
 }

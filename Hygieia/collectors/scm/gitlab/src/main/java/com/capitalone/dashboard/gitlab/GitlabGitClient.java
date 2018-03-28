@@ -21,5 +21,5 @@ public interface GitlabGitClient {
      * @return all commits in repo
      */
 
-	List<Commit> getCommits(GitlabGitRepo repo, boolean firstRun);
+	List<Commit> getCommits(GitlabGitRepo repo, boolean firstRun, String hostName, String token );
 }
