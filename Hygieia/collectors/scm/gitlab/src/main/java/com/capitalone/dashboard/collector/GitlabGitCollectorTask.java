@@ -24,6 +24,7 @@ import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
 import com.capitalone.dashboard.model.Commit;
+import com.capitalone.dashboard.model.GitProjectSettings;
 import com.capitalone.dashboard.model.GitlabGitRepo;
 import com.capitalone.dashboard.repository.BaseCollectorRepository;
 import com.capitalone.dashboard.repository.CommitRepository;
@@ -47,7 +48,7 @@ public class GitlabGitCollectorTask  extends CollectorTask<Collector> {
     private final DefaultGitlabGitClient defaultGitlabGitClient;
     private final ComponentRepository dbComponentRepository;
     private final CommitRepository commitRepository;
-	private final Map<String, GitlabProjectSettings> gitSettingsMap = new HashMap<>();
+	private final Map<String, GitProjectSettings> gitSettingsMap = new HashMap<>();
 
 
     @Autowired
@@ -115,9 +116,10 @@ public class GitlabGitCollectorTask  extends CollectorTask<Collector> {
 				boolean firstRun = false;
 				if (repo.getLastUpdated() == 0)
 					firstRun = true;
+				repo.setLastUpdated(System.currentTimeMillis()-TimeUnit.DAYS.toMillis(90));
 				//repo.setLastUpdated(System.currentTimeMillis());
 				//repo.removeLastUpdateDate();
-				repo.setLastUpdated(System.currentTimeMillis()-TimeUnit.DAYS.toMillis(700));
+
 				
 				try {
 					List<Commit> commits = defaultGitlabGitClient.getCommits(repo, firstRun, gitSettingsMap.get(projectId).getHost(), gitSettingsMap.get(projectId).getApiToken());
@@ -198,7 +200,7 @@ public class GitlabGitCollectorTask  extends CollectorTask<Collector> {
 		for (int i = 0; i < gitlabSettings.getHost().size(); i++) {
 			String projectId = gitlabSettings.getProjectId().get(i);
 			
-			GitlabProjectSettings gitProjectSettings = new GitlabProjectSettings();
+			GitProjectSettings gitProjectSettings = new GitProjectSettings();
 			gitProjectSettings.setHost(gitlabSettings.getHost().get(i));
 			gitProjectSettings.setProjectId(gitlabSettings.getProjectId().get(i));
 			gitProjectSettings.setApiToken(gitlabSettings.getApiToken().get(i));
