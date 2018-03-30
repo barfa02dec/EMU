@@ -12,7 +12,7 @@ public class ApiSettings {
      * encryptionKey to be specific. For now (for backwards compatibility) keeping it as it was.
      */
     private String key;
-    @Value("${corsEnabled:false}")
+    @Value("${corsEnabled:true}")
     private boolean corsEnabled;
     private String corsWhitelist;
     private boolean logRequest;
