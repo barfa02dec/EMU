@@ -1,4 +1,4 @@
-package com.capitalone.dashboard.collector;
+package com.capitalone.dashboard.model;
 
 /**
  * Created by benathmane on 23/06/16.
@@ -9,7 +9,7 @@ package com.capitalone.dashboard.collector;
  */
 
 
-public class GitlabProjectSettings {
+public class GitProjectSettings {
 
 	private String host;
     private String apiToken;

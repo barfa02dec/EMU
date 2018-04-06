@@ -1,6 +1,19 @@
 package com.capitalone.dashboard.collector;
 
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.stereotype.Component;
+
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
@@ -10,17 +23,6 @@ import com.capitalone.dashboard.repository.BaseCollectorRepository;
 import com.capitalone.dashboard.repository.CommitRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.GitHubRepoRepository;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * CollectorTask that fetches Commit information from GitHub
@@ -121,17 +123,25 @@ public class GitHubCollectorTask extends CollectorTask<Collector> {
 
         logBanner("Starting...");
         long start = System.currentTimeMillis();
+        
         int repoCount = 0;
         int commitCount = 0;
 
         clean(collector);
+        
         for (GitHubRepo repo : enabledRepos(collector)) {
         	boolean firstRun = false;
-        	if (repo.getLastUpdated() == 0) firstRun = true;
-        	repo.setLastUpdated(System.currentTimeMillis());
-            repo.removeLastUpdateDate();  //moved last update date to collector item. This is to clean old data.
+        
+        	//if (repo.getLastUpdated() == 0) firstRun = true;
+        	//repo.setLastUpdated(System.currentTimeMillis());
+            //repo.removeLastUpdateDate();  //moved last update date to collector item. This is to clean old data.
+        	
+			if (repo.getLastUpdated() == 0)	firstRun = true;
+			repo.setLastUpdated(System.currentTimeMillis()-TimeUnit.DAYS.toMillis(90));
+            
             gitHubRepoRepository.save(repo);
             LOG.debug(repo.getOptions().toString()+"::"+repo.getBranch());
+            
             for (Commit commit : gitHubClient.getCommits(repo, firstRun)) {
             	LOG.debug(commit.getTimestamp()+":::"+commit.getScmCommitLog());
                 if (isNewCommit(repo, commit)) {
@@ -140,7 +150,6 @@ public class GitHubCollectorTask extends CollectorTask<Collector> {
                     commitCount++;
                 }
             }
-
             repoCount++;
         }
         log("Repo Count", start, repoCount);
@@ -158,6 +167,5 @@ public class GitHubCollectorTask extends CollectorTask<Collector> {
         return commitRepository.findByCollectorItemIdAndScmRevisionNumber(
                 repo.getId(), commit.getScmRevisionNumber()) == null;
     }
-
 
 }

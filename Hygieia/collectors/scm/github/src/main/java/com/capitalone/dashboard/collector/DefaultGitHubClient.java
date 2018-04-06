@@ -1,11 +1,17 @@
 package com.capitalone.dashboard.collector;
 
-import com.capitalone.dashboard.model.Commit;
-import com.capitalone.dashboard.model.CommitType;
-import com.capitalone.dashboard.model.GitHubRepo;
-import com.capitalone.dashboard.util.Encryption;
-import com.capitalone.dashboard.util.EncryptionException;
-import com.capitalone.dashboard.util.Supplier;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.logging.Log;
@@ -24,15 +30,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.TimeZone;
+import com.capitalone.dashboard.model.Commit;
+import com.capitalone.dashboard.model.CommitType;
+import com.capitalone.dashboard.model.GitHubRepo;
+import com.capitalone.dashboard.model.GitProjectSettings;
+import com.capitalone.dashboard.util.Encryption;
+import com.capitalone.dashboard.util.EncryptionException;
+import com.capitalone.dashboard.util.Supplier;
 
 /**
  * GitHubClient implementation that uses SVNKit to fetch information about
@@ -44,6 +48,7 @@ public class DefaultGitHubClient implements GitHubClient {
 	private static final Log LOG = LogFactory.getLog(DefaultGitHubClient.class);
 
 	private final GitHubSettings settings;
+	private final Map<String, GitProjectSettings> gitSettingsMap = new HashMap<String, GitProjectSettings>();
 
 	private final RestOperations restOperations;
 	private static final String SEGMENT_API = "/api/v3/repos/";
@@ -62,6 +67,8 @@ public class DefaultGitHubClient implements GitHubClient {
 	@SuppressWarnings({"PMD.NPathComplexity","PMD.ExcessiveMethodLength"}) // agreed, fixme
 	public List<Commit> getCommits(GitHubRepo repo, boolean firstRun) {
 
+		initializeGitSettings();
+		
 		List<Commit> commits = new ArrayList<>();
 
 		// format URL
@@ -69,6 +76,7 @@ public class DefaultGitHubClient implements GitHubClient {
 		if (repoUrl.endsWith(".git")) {
 			repoUrl = repoUrl.substring(0, repoUrl.lastIndexOf(".git"));
 		}
+		
 		URL url;
 		String hostName = "";
 		String protocol = "";
@@ -77,9 +85,9 @@ public class DefaultGitHubClient implements GitHubClient {
 			hostName = url.getHost();
 			protocol = url.getProtocol();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			LOG.error(e.getMessage());
 		}
+		
 		String hostUrl = protocol + "://" + hostName + "/";
 		String repoName = repoUrl.substring(hostUrl.length(), repoUrl.length());
 		String apiUrl;
@@ -89,6 +97,7 @@ public class DefaultGitHubClient implements GitHubClient {
 			apiUrl = protocol + "://" + hostName + SEGMENT_API + repoName;
 			LOG.debug("API URL IS:"+apiUrl);
 		}
+		
 		Date dt;
 		if (firstRun) {
 			int firstRunDaysHistory = settings.getFirstRunHistoryDays();
@@ -100,6 +109,7 @@ public class DefaultGitHubClient implements GitHubClient {
 		} else {
 			dt = getDate(new Date(repo.getLastUpdated()), 0, -10);
 		}
+		
 		Calendar calendar = new GregorianCalendar();
 		TimeZone timeZone = calendar.getTimeZone();
 		Calendar cal = Calendar.getInstance(timeZone);
@@ -107,7 +117,7 @@ public class DefaultGitHubClient implements GitHubClient {
 		String thisMoment = String.format("%tFT%<tRZ", cal);
 
 		String queryUrl = apiUrl.concat("/commits?sha=" + repo.getBranch()
-				+ "&since=" + thisMoment + "&access_token=" + settings.getKey());
+				+ "&since=" + thisMoment + "&access_token=" + gitSettingsMap.get(repo.getProject()).getApiToken());
 		
 		//String queryUrl = apiUrl.concat("/commits?access_token="+key);
 		
@@ -121,11 +131,12 @@ public class DefaultGitHubClient implements GitHubClient {
 		if (repo.getPassword() != null && !repo.getPassword().isEmpty()) {
 			try {
 				decryptedPassword = Encryption.decryptString(
-						repo.getPassword(), settings.getKey());
+						repo.getPassword(), gitSettingsMap.get(repo.getProject()).getApiToken());
 			} catch (EncryptionException e) {
 				LOG.error(e.getMessage());
 			}
 		}
+		
 		boolean lastPage = false;
 		int pageNumber = 1;
 		String queryUrlPage = queryUrl;
@@ -227,7 +238,6 @@ public class DefaultGitHubClient implements GitHubClient {
 			return restOperations.exchange(url, HttpMethod.GET, null,
 					String.class);
 		}
-
 	}
 
 	private HttpHeaders createHeaders(final String userId, final String password) {
@@ -252,6 +262,19 @@ public class DefaultGitHubClient implements GitHubClient {
 	private String str(JSONObject json, String key) {
 		Object value = json.get(key);
 		return value == null ? null : value.toString();
+	}
+	
+	private void initializeGitSettings() {
+		for (int i = 0; i < settings.getProjectId().size(); i++) {
+			String projectId = settings.getProjectId().get(i);
+			
+			GitProjectSettings gitProjectSettings = new GitProjectSettings();
+			gitProjectSettings.setHost(settings.getHost().get(i));
+			gitProjectSettings.setProjectId(settings.getProjectId().get(i));
+			gitProjectSettings.setApiToken(settings.getKey().get(i));
+			
+			gitSettingsMap.put(projectId, gitProjectSettings);
+		}
 	}
 
 }
