@@ -271,7 +271,9 @@
                     defectsFoundClosure.push(data[i].sprintData.defectsFound.total);
                     defectsResolvedClosure.push(data[i].sprintData.defectsResolved.total);
                     defectsUnResolvedClosure.push(data[i].sprintData.defectsUnresolved.total);
+                    if(data[i].sprintData.sprintDefectsResolved != undefined) {
                     sprintDefectsResolvedClosure.push(data[i].sprintData.sprintDefectsResolved.total);
+                    }
                     var percentScore = Math.round((data[i].sprintData.defectsResolved.total / data[i].sprintData.defectsFound.total) * 100);
                     if (isFinite(percentScore)) {
                         progress.push(percentScore);

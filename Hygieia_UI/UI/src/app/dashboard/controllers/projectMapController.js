@@ -891,21 +891,31 @@
 
                     "released": ctrl.fetchdetails.closed,
                     "criticalDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[3].value,
-                    "mediumDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[2].value,
-                    "lowDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[1].value,
-                    "highDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[0].value,
+                    "mediumDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[1].value,
+                    "lowDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[0].value,
+                    "highDefectsFound": ctrl.fetchdetails.sprintData.defectsFound.severity[2].value,
+
                     "criticalDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[3].value,
-                    "mediumDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[2].value,
-                    "lowDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[1].value,
-                    "highDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[0].value,
+                    "mediumDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[1].value,
+                    "lowDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[0].value,
+                    "highDefectsClosed": ctrl.fetchdetails.sprintData.defectsResolved.severity[2].value,
+
                     "criticalDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[3].value,
-                    "mediumDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[2].value,
-                    "lowDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[1].value,
-                    "highDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[0].value,
+                    "mediumDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[1].value,
+                    "lowDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[0].value,
+                    "highDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[2].value,
+
                     "endDate": ctrl.endDate,
                     "startDate": ctrl.startDate,
                     "storiesAdded": ctrl.fetchdetails.sprintData.burndown.issuesAdded.count,
-                    "storiesRemoed": ctrl.fetchdetails.sprintData.burndown.issuesRemoved.count
+                    "storiesRemoed": ctrl.fetchdetails.sprintData.burndown.issuesRemoved.count,
+                    "storiesAddedPoints": ctrl.fetchdetails.sprintData.burndown.issuesAdded.storyPoints,
+                    "storiesRemovedPoints": ctrl.fetchdetails.sprintData.burndown.issuesRemoved.storyPoints,
+
+                    "sprintCriticalDefectsResolved": ctrl.fetchdetails.sprintData.sprintDefectsResolved.severity[3].value,
+                    "sprintMediumDefectsResolved": ctrl.fetchdetails.sprintData.sprintDefectsResolved.severity[1].value,
+                    "sprintLowDefectsResolved": ctrl.fetchdetails.sprintData.sprintDefectsResolved.severity[0].value,
+                    "sprintHighDefectsResolved": ctrl.fetchdetails.sprintData.sprintDefectsResolved.severity[2].value
                 }
 
                 if (ctrl.updateSprint.$valid == true) {
