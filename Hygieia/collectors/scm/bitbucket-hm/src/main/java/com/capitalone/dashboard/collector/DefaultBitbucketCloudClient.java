@@ -1,9 +1,13 @@
 package com.capitalone.dashboard.collector;
 
-import com.capitalone.dashboard.model.Commit;
-import com.capitalone.dashboard.model.CommitType;
-import com.capitalone.dashboard.model.GitRepo;
-import com.capitalone.dashboard.util.Supplier;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,15 +27,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.TimeZone;
+import com.capitalone.dashboard.model.Commit;
+import com.capitalone.dashboard.model.CommitType;
+import com.capitalone.dashboard.model.GitProjectSettings;
+import com.capitalone.dashboard.model.GitRepo;
+import com.capitalone.dashboard.util.Supplier;
 
 /**
  * Implementation of a git client to connect to an Atlassian Bitbucket <i>Cloud</i> product. 
@@ -53,7 +53,10 @@ import java.util.TimeZone;
 public class DefaultBitbucketCloudClient implements GitClient {
 	private static final Log LOG = LogFactory.getLog(DefaultBitbucketCloudClient.class);
 
-	private static final int FIRST_RUN_HISTORY_DEFAULT = 14;
+	//private static final int FIRST_RUN_HISTORY_DEFAULT = 14;
+	private static final int PAGE_SIZE = 50;
+	private static final int NUMBER_OF_PAGES = 5;
+	private static final int FIRST_RUN_NUMBER_OF_PAGES = 30;
 
 	private final GitSettings settings;
 
@@ -68,7 +71,7 @@ public class DefaultBitbucketCloudClient implements GitClient {
 
 	@Override
 	@SuppressWarnings({"PMD.ExcessiveMethodLength", "PMD.NPathComplexity"}) // agreed, fixme
-	public List<Commit> getCommits(GitRepo repo, boolean firstRun) {
+	public List<Commit> getCommits(GitRepo repo, boolean firstRun, GitProjectSettings bitbucketSetting) {
 
 		List<Commit> commits = new ArrayList<>();
 
@@ -85,9 +88,9 @@ public class DefaultBitbucketCloudClient implements GitClient {
 			hostName = url.getHost();
 			protocol = url.getProtocol();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			LOG.error(e.getMessage());
 		}
+		
 		String hostUrl = protocol + "://" + hostName + "/";
 		String repoName = repoUrl.substring(hostUrl.length(), repoUrl.length());
 		String apiUrl = "";
@@ -97,7 +100,8 @@ public class DefaultBitbucketCloudClient implements GitClient {
 			apiUrl = protocol + "://" + hostName + settings.getApi() + repoName;
 			LOG.debug("API URL IS:"+apiUrl);
 		}
-		Date dt;
+		
+		/*Date dt;
 		if (firstRun) {
 			int firstRunDaysHistory = settings.getFirstRunHistoryDays();
 			if (firstRunDaysHistory > 0) {
@@ -114,7 +118,8 @@ public class DefaultBitbucketCloudClient implements GitClient {
 		cal.setTime(dt);
 		String thisMoment = String.format("%tFT%<tRZ", cal);
 
-		String queryUrl = apiUrl.concat("/changesets?since" + thisMoment);
+		String queryUrl = apiUrl.concat("/changesets?since" + thisMoment); */
+				
 		/*
 		 * Calendar cal = Calendar.getInstance(); cal.setTime(dateInstance);
 		 * cal.add(Calendar.DATE, -30); Date dateBefore30Days = cal.getTime();
@@ -130,18 +135,21 @@ public class DefaultBitbucketCloudClient implements GitClient {
 				LOG.error(e.getMessage());
 			}
 		}*/
+		
+		String queryUrl = apiUrl.concat("/changesets?limit=" + PAGE_SIZE);
+		
 		boolean lastPage = false;
 		int pageNumber = 1;
 		String queryUrlPage = queryUrl;
 		
 		while (!lastPage) {
 			try {
-				ResponseEntity<String> response = makeRestCall(queryUrlPage, settings.getUsername(), settings.getPassword());
+				ResponseEntity<String> response = makeRestCall(queryUrlPage, bitbucketSetting.getUsername(), bitbucketSetting.getPassword());
 				JSONObject jsonParentObject = paresAsObject(response);
 				JSONArray jsonArray = (JSONArray) jsonParentObject.get("changesets");
 
-				for (Object item : jsonArray) {
-					JSONObject jsonObject = (JSONObject) item;
+				for (int i = (jsonArray.size() - 1); i >=0; i--) {
+					JSONObject jsonObject = (JSONObject) jsonArray.get(i);
 					String sha = str(jsonObject, "node");
 					String author =(String) jsonObject.get("raw_author");
 					String message = str(jsonObject, "message");
@@ -170,18 +178,18 @@ public class DefaultBitbucketCloudClient implements GitClient {
 					commit.setType(parentShas.size() > 1 ? CommitType.Merge : CommitType.New);
 					commits.add(commit);
 				}
-				if (jsonArray == null || jsonArray.isEmpty()) {
+				if (jsonArray == null || jsonArray.isEmpty() || jsonArray.size() < PAGE_SIZE) {
 					lastPage = true;
 				} else {
-					lastPage = isThisLastPage(response);
+					queryUrlPage  = queryUrl.concat("&start=" + commits.get(commits.size()-1).getScmRevisionNumber());
+					if(pageNumber >= FIRST_RUN_NUMBER_OF_PAGES && firstRun){lastPage = true;}
+					else if (pageNumber >= NUMBER_OF_PAGES && !firstRun){lastPage = true;}
 					pageNumber++;
-					queryUrlPage = queryUrl + "&page=" + pageNumber;
 				}
 
 			} catch (RestClientException re) {
 				LOG.error(re.getMessage() + ":" + queryUrl);
 				lastPage = true;
-
 			}
 		}
 		return commits;
@@ -205,7 +213,6 @@ public class DefaultBitbucketCloudClient implements GitClient {
 				if (l.contains("rel=\"next\"")) {
 					return false;
 				}
-
 			}
 		}
 		return true;
@@ -223,7 +230,6 @@ public class DefaultBitbucketCloudClient implements GitClient {
 			return restOperations.exchange(url, HttpMethod.GET, null,
 					String.class);
 		}
-
 	}
 
 	private HttpHeaders createHeaders(final String userId, final String password) {
@@ -249,5 +255,4 @@ public class DefaultBitbucketCloudClient implements GitClient {
 		Object value = json.get(key);
 		return value == null ? null : value.toString();
 	}
-
 }

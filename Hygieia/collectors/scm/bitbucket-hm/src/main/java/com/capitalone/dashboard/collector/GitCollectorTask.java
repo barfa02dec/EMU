@@ -1,15 +1,16 @@
 package com.capitalone.dashboard.collector;
 
 
-import com.capitalone.dashboard.model.Collector;
-import com.capitalone.dashboard.model.CollectorItem;
-import com.capitalone.dashboard.model.CollectorType;
-import com.capitalone.dashboard.model.Commit;
-import com.capitalone.dashboard.model.GitRepo;
-import com.capitalone.dashboard.repository.BaseCollectorRepository;
-import com.capitalone.dashboard.repository.CommitRepository;
-import com.capitalone.dashboard.repository.ComponentRepository;
-import com.capitalone.dashboard.repository.GitRepoRepository;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.bson.types.ObjectId;
@@ -17,12 +18,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import com.capitalone.dashboard.model.Collector;
+import com.capitalone.dashboard.model.CollectorItem;
+import com.capitalone.dashboard.model.CollectorType;
+import com.capitalone.dashboard.model.Commit;
+import com.capitalone.dashboard.model.GitProjectSettings;
+import com.capitalone.dashboard.model.GitRepo;
+import com.capitalone.dashboard.repository.BaseCollectorRepository;
+import com.capitalone.dashboard.repository.CommitRepository;
+import com.capitalone.dashboard.repository.ComponentRepository;
+import com.capitalone.dashboard.repository.GitRepoRepository;
 
 /**
  * CollectorTask that fetches Commit information from Git
@@ -37,7 +42,9 @@ public class GitCollectorTask extends CollectorTask<Collector> {
     private final GitClient gitClient;
     private final GitSettings gitSettings;
     private final ComponentRepository dbComponentRepository;
-
+	
+    private final Map<String, GitProjectSettings> gitSettingsMap = new HashMap<>();
+    
     @Autowired
     public GitCollectorTask(TaskScheduler taskScheduler,
                             BaseCollectorRepository<Collector> collectorRepository,
@@ -123,30 +130,35 @@ public class GitCollectorTask extends CollectorTask<Collector> {
         int repoCount = 0;
         int commitCount = 0;
 
+        initializeGitSettings();
         //clean(collector);
         for (GitRepo repo : enabledRepos(collector)) {
             boolean firstRun = false;
             if (repo.getLastUpdateTime() == null) firstRun = true;
             LOG.debug(repo.getOptions().toString() + "::" + repo.getBranch());
             
-            List<Commit> commits = gitClient.getCommits(repo, firstRun);
-            List<Commit> newCommits = new ArrayList<>();
+            List<Commit> commits = new ArrayList<Commit>();            
+            if(gitSettingsMap.get(repo.getProject()) != null)
+            	commits = gitClient.getCommits(repo, firstRun, gitSettingsMap.get(repo.getProject()));
+            else
+            	continue;
+            
+            LinkedHashMap<String,Commit> newCommits = new LinkedHashMap<String,Commit>();            
             for (Commit commit : commits) {
             	if (LOG.isDebugEnabled()) {
             		LOG.debug(commit.getTimestamp() + ":::" + commit.getScmCommitLog());
             	}
             	
-                if (isNewCommit(repo, commit)) {
+                if (isNewCommit(repo, commit) && !newCommits.containsKey(commit.getScmRevisionNumber())) {
                     commit.setCollectorItemId(repo.getId());
-                    newCommits.add(commit);
+                    newCommits.put(commit.getScmRevisionNumber(), commit);
                 }
             }
-            commitRepository.save(newCommits);
+            commitRepository.save(newCommits.values());
             commitCount += newCommits.size();
             
             repo.setLastUpdateTime(Calendar.getInstance().getTime());
             if (!commits.isEmpty()) {
-            	// It appears that the first commit in the list is the HEAD of the branch
             	repo.setLastUpdateCommit(commits.get(0).getScmRevisionNumber());
             }
             
@@ -173,4 +185,17 @@ public class GitCollectorTask extends CollectorTask<Collector> {
         return commitRepository.findByCollectorItemIdAndScmRevisionNumber(
                 repo.getId(), commit.getScmRevisionNumber()) == null;
     }
+    
+	private void initializeGitSettings() {
+		for (int index = 0; index < gitSettings.getProjectId().size(); index++) {
+			String projectId = gitSettings.getProjectId().get(index);
+			
+			GitProjectSettings gitProjectSettings = new GitProjectSettings();
+			gitProjectSettings.setUsername(gitSettings.getUsername().get(index));
+			gitProjectSettings.setPassword(gitSettings.getPassword().get(index));
+			gitProjectSettings.setProjectId(gitSettings.getProjectId().get(index));
+			
+			gitSettingsMap.put(projectId, gitProjectSettings);
+		}
+	}
 }

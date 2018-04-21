@@ -1,9 +1,10 @@
 package com.capitalone.dashboard.collector;
 
-import com.capitalone.dashboard.model.Commit;
-import com.capitalone.dashboard.model.GitRepo;
-
 import java.util.List;
+
+import com.capitalone.dashboard.model.Commit;
+import com.capitalone.dashboard.model.GitProjectSettings;
+import com.capitalone.dashboard.model.GitRepo;
 
 /**
  * Client for fetching commit history from Git
@@ -18,6 +19,6 @@ public interface GitClient {
      * @return all commits in repo
      */
 
-	List<Commit> getCommits(GitRepo repo, boolean firstRun);
+	List<Commit> getCommits(GitRepo repo, boolean firstRun, GitProjectSettings projSetting);
 
 }

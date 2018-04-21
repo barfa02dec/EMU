@@ -1,11 +1,11 @@
 package com.capitalone.dashboard.collector;
 
-import com.capitalone.dashboard.model.Commit;
-import com.capitalone.dashboard.model.CommitType;
-import com.capitalone.dashboard.model.GitRepo;
-import com.capitalone.dashboard.util.Encryption;
-import com.capitalone.dashboard.util.EncryptionException;
-import com.capitalone.dashboard.util.Supplier;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,11 +24,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+import com.capitalone.dashboard.model.Commit;
+import com.capitalone.dashboard.model.CommitType;
+import com.capitalone.dashboard.model.GitProjectSettings;
+import com.capitalone.dashboard.model.GitRepo;
+import com.capitalone.dashboard.util.Encryption;
+import com.capitalone.dashboard.util.EncryptionException;
+import com.capitalone.dashboard.util.Supplier;
 
 /**
  * Implementation of a git client to connect to an Atlassian Bitbucket <i>Server</i> product. 
@@ -63,7 +65,7 @@ public class DefaultBitbucketServerClient implements GitClient {
 
 	@SuppressWarnings("PMD.NPathComplexity")
 	@Override
-	public List<Commit> getCommits(GitRepo repo, boolean firstRun) {
+	public List<Commit> getCommits(GitRepo repo, boolean firstRun, GitProjectSettings bitbucketSetting) {
 		List<Commit> commits = new ArrayList<>();
 		URI queryUriPage = null;
 		
@@ -78,7 +80,7 @@ public class DefaultBitbucketServerClient implements GitClient {
 			String decryptedPassword = "";
 			if (repo.getPassword() != null && !repo.getPassword().isEmpty()) {
 				try {
-					decryptedPassword = Encryption.decryptString(repo.getPassword(), settings.getKey());
+					decryptedPassword = Encryption.decryptString(bitbucketSetting.getPassword(), bitbucketSetting.getKey());
 				} catch (EncryptionException e) {
 					LOG.error(e.getMessage());
 				}
