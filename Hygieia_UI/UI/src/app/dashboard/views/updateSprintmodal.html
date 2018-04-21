@@ -70,7 +70,7 @@
         </form-group>
 
          <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Added</label>
-         <div class="col-md-8">
+         <div class="col-md-4">
          <form-group input="count">
             <input
                 type="text"
@@ -82,20 +82,21 @@
                 />
 
         </form-group></div>
-   <!--      <div class="col-md-4">
-         <form-group input="points" >
+        <div class="col-md-4">
+         <form-group input="points">
             <input
                 type="text"
                 name="points"
                 class="form-control"
                 placeholder="Points"
-              ng-model="asc.sprintPayload.storypointsAdded"
+              ng-model="usc.fetchdetails.sprintData.burndown.issuesAdded.storyPoints"
+              numbers-only
                 />
 
-        </form-group></div> -->
+        </form-group></div>
 
           <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Removed</label>
-         <div class="col-md-8">
+         <div class="col-md-4">
          <form-group input="countstoryremoved">
             <input
                 type="text"
@@ -107,20 +108,20 @@
                />
 
         </form-group></div>
-        
-
-        
-        <!-- <div class="col-md-4">
+        <div class="col-md-4">
          <form-group input="pointstoryremoved">
             <input
                 type="text"
                 name="pointstoryremoved"
                 class="form-control"
                 placeholder="Points"
-               ng-model="asc.sprintPayload.storypointsRemoed"
+               ng-model="usc.fetchdetails.sprintData.burndown.issuesRemoved.storyPoints"
+               numbers-only
                />
 
-        </form-group></div> -->
+        </form-group></div>
+
+
 
         <!--  <form-group input="efforts">
             <input
@@ -183,7 +184,7 @@
                 name="highone"
                 class="form-control"
                 placeholder="High"
-               ng-model="usc.fetchdetails.sprintData.defectsFound.severity[0].value"
+               ng-model="usc.fetchdetails.sprintData.defectsFound.severity[2].value"
                numbers-only
               />
         </form-group>  
@@ -196,7 +197,7 @@
                 name="mediumone"
                 class="form-control"
                 placeholder="Medium"
-           ng-model="usc.fetchdetails.sprintData.defectsFound.severity[2].value"
+           ng-model="usc.fetchdetails.sprintData.defectsFound.severity[1].value"
            numbers-only
                />
         </form-group>  
@@ -209,7 +210,7 @@
                 name="lowone"
                 class="form-control"
                 placeholder="Low"
-             ng-model="usc.fetchdetails.sprintData.defectsFound.severity[1].value"
+             ng-model="usc.fetchdetails.sprintData.defectsFound.severity[0].value"
              numbers-only
                 />
         </form-group>  
@@ -236,7 +237,7 @@
                 name="Hightwo"
                 class="form-control"
                 placeholder="High"
-                   ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[0].value"
+                   ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[2].value"
                    numbers-only
                />
         </form-group>  
@@ -249,7 +250,7 @@
                 name="Mediumtwo"
                 class="form-control"
                 placeholder="Medium"
-                 ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[2].value"
+                 ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[1].value"
                  numbers-only
                />
         </form-group>  
@@ -262,7 +263,7 @@
                 name="Lowtwo"
                 class="form-control"
                 placeholder="Low"
-              ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[1].value"
+              ng-model="usc.fetchdetails.sprintData.defectsResolved.severity[0].value"
               numbers-only
                />
         </form-group>  
@@ -289,7 +290,7 @@
                 name="Highthree"
                 class="form-control"
                 placeholder="High"
-                  ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[0].value"
+                  ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[2].value"
                   numbers-only
                />
         </form-group>  
@@ -302,7 +303,7 @@
                 name="Mediumthree"
                 class="form-control"
                 placeholder="Medium"
-                 ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[2].value"
+                 ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[1].value"
                  numbers-only
                />
         </form-group>  
@@ -315,7 +316,73 @@
                 name="Lowthree"
                 class="form-control"
                 placeholder="Low"
-              ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[1].value"
+              ng-model="usc.fetchdetails.sprintData.defectsUnresolved.severity[0].value"
+              numbers-only
+              />
+        </form-group>  
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Sprint Defects Resolved</label>
+        <div class="col-md-2">
+             <form-group input="Criticalfour">
+            <input
+                type="text"
+                name="Criticalfour"
+                class="form-control"
+                placeholder="Critical"
+                ng-model="usc.fetchdetails.sprintData.sprintDefectsResolved.severity[3].value"
+                numbers-only
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Highfour">
+            <input
+                type="text"
+                name="Highfour"
+                class="form-control"
+                placeholder="High"
+                  ng-model="usc.fetchdetails.sprintData.sprintDefectsResolved.severity[2].value"
+                  numbers-only
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Mediumfour">
+            <input
+                type="text"
+                name="Mediumfour"
+                class="form-control"
+                placeholder="Medium"
+                 ng-model="usc.fetchdetails.sprintData.sprintDefectsResolved.severity[1].value"
+                 numbers-only
+               />
+        </form-group>  
+        </div>
+
+         <div class="col-md-2">
+             <form-group input="Lowfour">
+            <input
+                type="text"
+                name="Lowfour"
+                class="form-control"
+                placeholder="Low"
+              ng-model="usc.fetchdetails.sprintData.sprintDefectsResolved.severity[0].value"
               numbers-only
               />
         </form-group>  

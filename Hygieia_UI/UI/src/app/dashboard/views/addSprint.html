@@ -30,11 +30,17 @@
                 <input type="text" numbers-only name="comittedissuecount" class="form-control" placeholder="Committed issue count" ng-model="asc.sprintPayload.committedIssueCount" />
             </form-group>
             <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Added</label>
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <form-group input="count">
                     <input type="text" numbers-only name="count" class="form-control" placeholder="Count" ng-model="asc.sprintPayload.storiesAdded" />
                 </form-group>
             </div>
+            <div class="col-md-4">
+                <form-group input="points">
+                    <input type="text" numbers-only name="points" class="form-control" placeholder="Points" ng-model="asc.sprintPayload.storiesAddedPoints" />
+                </form-group>
+            </div>
+
             <!--  <div class="col-md-4">
          <form-group input="points" >
             <input
@@ -47,9 +53,14 @@
 
         </form-group> </div> -->
             <label class="control-label col-md-4 createproj-label-props" for="pwd">Stories Removed</label>
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <form-group input="countstoryremoved">
                     <input type="text" numbers-only name="countstoryremoved" class="form-control" placeholder="Count" ng-model="asc.sprintPayload.storiesRemoed" />
+                </form-group>
+            </div>
+            <div class="col-md-4">
+                <form-group input="pointstoryremoved">
+                    <input type="text" numbers-only name="pointstoryremoved" class="form-control" placeholder="Points" ng-model="asc.sprintPayload.storiesRemovedPoints" />
                 </form-group>
             </div>
             <!--    
@@ -148,6 +159,34 @@
             <div class="col-md-2">
                 <form-group input="Lowthree">
                     <input type="text" numbers-only name="Lowthree" class="form-control" placeholder="Low" ng-model="asc.sprintPayload.lowDefectsUnresolved" />
+                </form-group>
+            </div>
+
+
+
+
+
+
+
+              <label class="control-label col-md-4 createproj-label-props" for="pwd">Sprint Defects Resolved</label>
+            <div class="col-md-2">
+                <form-group input="Criticalthree">
+                    <input type="text" numbers-only name="Criticalthree" class="form-control" placeholder="Critical" ng-model="asc.sprintPayload.sprintCriticalDefectsResolved" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="Highthree">
+                    <input type="text" numbers-only name="Highthree" class="form-control" placeholder="High" ng-model="asc.sprintPayload.sprintHighDefectsResolved" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="Mediumthree">
+                    <input type="text" numbers-only name="Mediumthree" class="form-control" placeholder="Medium" ng-model="asc.sprintPayload.sprintMediumDefectsResolved" />
+                </form-group>
+            </div>
+            <div class="col-md-2">
+                <form-group input="Lowthree">
+                    <input type="text" numbers-only name="Lowthree" class="form-control" placeholder="Low" ng-model="asc.sprintPayload.sprintLowDefectsResolved" />
                 </form-group>
             </div>
             <!-- 
