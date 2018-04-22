@@ -1,9 +1,9 @@
 package com.capitalone.dashboard.collector;
 
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Bean to hold settings specific to the Sonar collector.
@@ -12,11 +12,13 @@ import java.util.List;
 @ConfigurationProperties(prefix = "sonar")
 public class SonarSettings {
     private String cron;
-    private String username;
-    private String password;
-    private String metrics;
     private List<String> servers;
-    private List<String> project;
+    private List<String> projects;
+    private List<String> usernames;
+    private List<String> passwords;
+    private List<String> componentUrls;
+    private List<String> componentDetailUrls;
+    private String metrics;
 
     public String getCron() {
         return cron;
@@ -26,28 +28,20 @@ public class SonarSettings {
         this.cron = cron;
     }
 
-    public String getUsername() {
-        return username;
+    public List<String> getUsernames() {
+        return usernames;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsernames(List<String> usernames) {
+        this.usernames = usernames;
     }
 
-    public String getPassword() {
-        return password;
+    public List<String> getPasswords() {
+        return passwords;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getMetrics() {
-        return metrics;
-    }
-
-    public void setMetrics(String metrics) {
-        this.metrics = metrics;
+    public void setPasswords(List<String> passwords) {
+        this.passwords = passwords;
     }
 
     public List<String> getServers() {
@@ -58,12 +52,35 @@ public class SonarSettings {
         this.servers = servers;
     }
 
-	public List<String> getProject() {
-		return project;
+	public List<String> getProjects() {
+		return projects;
 	}
 
-	public void setProject(List<String> project) {
-		this.project = project;
+	public void setProjects(List<String> projects) {
+		this.projects = projects;
 	}
-    
+
+	public List<String> getComponentUrls() {
+		return componentUrls;
+	}
+
+	public void setComponentUrls(List<String> componentUrls) {
+		this.componentUrls = componentUrls;
+	}
+
+	public List<String> getComponentDetailUrls() {
+		return componentDetailUrls;
+	}
+
+	public void setComponentDetailUrls(List<String> componentDetailUrls) {
+		this.componentDetailUrls = componentDetailUrls;
+	}
+
+    public String getMetrics() {
+        return metrics;
+    }
+
+    public void setMetrics(String metrics) {
+        this.metrics = metrics;
+    }
 }

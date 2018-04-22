@@ -35,23 +35,23 @@ import com.capitalone.dashboard.util.Supplier;
 public class DefaultSonarClient implements SonarClient {
     private static final Log LOG = LogFactory.getLog(DefaultSonarClient.class);
 
-    private static final String URL_RESOURCES = "/api/resources?format=json";
-    private static final String URL_RESOURCE_DETAILS = "/api/resources?format=json&resource=%s&metrics=%s&includealerts=true";
+    //private static final String URL_RESOURCES = "/api/resources?format=json";
+    //private static final String URL_RESOURCE_DETAILS = "/api/resources?format=json&resource=%s&metrics=%s&includealerts=true";
 
     private static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssZ";
     private static final String ID = "id";
     private static final String NAME = "name";
-    private static final String KEY = "key";
+    private static final String KEY = "metric";
     private static final String VERSION = "version";
-    private static final String MSR = "msr";
+    private static final String MSR = "measures";
     private static final String ALERT = "alert";
     private static final String ALERT_TEXT = "alert_text";
-    private static final String VALUE = "val";
+    private static final String VALUE = "value";
     private static final String FORMATTED_VALUE = "frmt_val";
     private static final String STATUS_WARN = "WARN";
     private static final String STATUS_ALERT = "ALERT";
     private static final String DATE = "date";
-    private static final String DATA="data";
+    private static final String DATA="value";
     private static final String ERROR="ERROR";
     private static final String FAILED="FAILED";
     private static final String QUALITY_GATE_LEVEL="level";
@@ -61,32 +61,31 @@ public class DefaultSonarClient implements SonarClient {
     private static final String MAINTAINABILITY_GATE_DETAILS="sqale_rating";
     //security_rating , reliability_rating, sqale_rating(maintainability) , 
     private final RestOperations rest;
-    private final HttpEntity<String> httpHeaders;
     private final SonarSettings sonarSettings;
 
     @Autowired
     public DefaultSonarClient(Supplier<RestOperations> restOperationsSupplier, SonarSettings settings) {
-        this.httpHeaders = new HttpEntity<String>(
-                this.createHeaders(settings.getUsername(), settings.getPassword())
-            );
         this.rest = restOperationsSupplier.get();
         this.sonarSettings = settings;
     }
 
     @Override
-    public List<SonarProject> getProjects(String instanceUrl) {
+    public List<SonarProject> getProjects(int index) {
         List<SonarProject> projects = new ArrayList<>();
-        String url = instanceUrl + URL_RESOURCES;
+        String url = sonarSettings.getServers().get(index) + sonarSettings.getComponentUrls().get(index);
 
         try {
 
-            for (Object obj : parseAsArray(url)) {
+            for (Object obj : parseAsArray(url, index)) {
                 JSONObject prjData = (JSONObject) obj;
 
                 SonarProject project = new SonarProject();
-                project.setInstanceUrl(instanceUrl);
+                project.setInstanceUrl(sonarSettings.getServers().get(index));
                 project.setProjectId(str(prjData, ID));
                 project.setProjectName(str(prjData, NAME));
+                
+                project.setProject(sonarSettings.getProjects().get(index));
+                
                 projects.add(project);
             }
 
@@ -100,17 +99,15 @@ public class DefaultSonarClient implements SonarClient {
     }
 
     @Override
-    public CodeQuality currentCodeQuality(SonarProject project) {
+    public CodeQuality currentCodeQuality(SonarProject project, int index) {
         String url = String.format(
-                project.getInstanceUrl() + URL_RESOURCE_DETAILS, project.getProjectId(), sonarSettings.getMetrics());
+                project.getInstanceUrl() + sonarSettings.getComponentDetailUrls().get(index), project.getProjectId(), sonarSettings.getMetrics());
 
         try {
-            JSONArray jsonArray = parseAsArray(url);
+        	JSONObject prjData = parseMeasuresJson(url,index);
 
-            if (!jsonArray.isEmpty()) {
-                JSONObject prjData = (JSONObject) jsonArray.get(0);
-
-                CodeQuality codeQuality = new CodeQuality();
+            if (prjData != null) {
+            	CodeQuality codeQuality = new CodeQuality();
                 codeQuality.setName(str(prjData, NAME));
                 codeQuality.setUrl(new SonarDashboardUrl(project.getInstanceUrl(), project.getProjectId()).toString());
                 codeQuality.setType(CodeQualityType.StaticAnalysis);
@@ -134,37 +131,36 @@ public class DefaultSonarClient implements SonarClient {
                         	 metric.setFormattedValue(FAILED);
                          }
                     }
-                    if(metric.getName().equals(SECURITY_GATE_DETAILS)){
-                    	switch(metric.getFormattedValue()){
-                    	case "A" : metric.setStatusMessage("0 vulnerability");
-                    	case "B": metric.setStatusMessage("At least 1 minor vulnerability");
-                    	case "C": metric.setStatusMessage("At least 1 major vulnerability");
-                    	case "D": metric.setStatusMessage("At least 1 critical vulnerability");
-                    	case "E": metric.setStatusMessage("At least 1 blocker vulnerability");
+                    if(metric.getName().equals(SECURITY_GATE_DETAILS) && metric.getValue() != null){
+                    	switch(new Double(metric.getValue().toString()).intValue()){
+                    	case 1 : metric.setStatusMessage("0 vulnerability");
+                    	case 2: metric.setStatusMessage("At least 1 minor vulnerability");
+                    	case 3: metric.setStatusMessage("At least 1 major vulnerability");
+                    	case 4: metric.setStatusMessage("At least 1 critical vulnerability");
+                    	case 5: metric.setStatusMessage("At least 1 blocker vulnerability");
                     	}
                     }
-                    if(metric.getName().equals(RELIABILITY_GATE_DETAILS)){
-                    	switch(metric.getFormattedValue()){
-                    	case "A" : metric.setStatusMessage("0 bug");
-                    	case "B": metric.setStatusMessage("At least 1 minor bug");
-                    	case "C": metric.setStatusMessage("At least 1 major bug");
-                    	case "D": metric.setStatusMessage("At least 1 critical bug");
-                    	case "E": metric.setStatusMessage("At least 1 blocker bug");
+                    if(metric.getName().equals(RELIABILITY_GATE_DETAILS) && metric.getValue() != null){
+                    	switch(new Double(metric.getValue().toString()).intValue()){
+                    	case 1 : metric.setStatusMessage("0 bug");
+                    	case 2: metric.setStatusMessage("At least 1 minor bug");
+                    	case 3: metric.setStatusMessage("At least 1 major bug");
+                    	case 4: metric.setStatusMessage("At least 1 critical bug");
+                    	case 5: metric.setStatusMessage("At least 1 blocker bug");
                     	}
                     }
                     
-                    if(metric.getName().equals(MAINTAINABILITY_GATE_DETAILS)){
-                    	switch(metric.getFormattedValue()){
-                    	case "A" : metric.setStatusMessage("<=5%");
-                    	case "B": metric.setStatusMessage("between 6 to 10% ");
-                    	case "C": metric.setStatusMessage("between 11 to 20% ");
-                    	case "D": metric.setStatusMessage("between 21 to 50% ");
-                    	case "E": metric.setStatusMessage(">= 50% ");
+                    if(metric.getName().equals(MAINTAINABILITY_GATE_DETAILS) && metric.getValue() != null ){
+                    	switch(new Double(metric.getValue().toString()).intValue()){
+                    	case 1 : metric.setStatusMessage("<=5%");
+                    	case 2: metric.setStatusMessage("between 6 to 10% ");
+                    	case 3: metric.setStatusMessage("between 11 to 20% ");
+                    	case 4: metric.setStatusMessage("between 21 to 50% ");
+                    	case 5: metric.setStatusMessage(">= 50% ");
                     	}
                     }
                     codeQuality.getMetrics().add(metric);
                 }
-
                 return codeQuality;
             }
 
@@ -177,10 +173,22 @@ public class DefaultSonarClient implements SonarClient {
         return null;
     }
 
-    private JSONArray parseAsArray(String url) throws ParseException {
-        ResponseEntity<String> response = rest.exchange(url, HttpMethod.GET, this.httpHeaders, String.class);
-        return (JSONArray) new JSONParser().parse(response.getBody());
+    private JSONArray parseAsArray(String url, int index) throws ParseException {
+        HttpEntity<String> httpHeaders = new HttpEntity<String>(
+                createHeaders(sonarSettings.getUsernames().get(index), sonarSettings.getPasswords().get(index)));
+
+        ResponseEntity<String> response = rest.exchange(url, HttpMethod.GET, httpHeaders, String.class);
+        return (JSONArray) new JSONParser().parse(str((JSONObject)new JSONParser().parse(response.getBody()), "components"));
     }
+
+    @SuppressWarnings("unused")
+	private JSONObject parseMeasuresJson(String url, int index) throws ParseException {
+        HttpEntity<String> httpHeaders = new HttpEntity<String>(
+                createHeaders(sonarSettings.getUsernames().get(index), sonarSettings.getPasswords().get(index)));
+        ResponseEntity<String> response = rest.exchange(url, HttpMethod.GET, httpHeaders, String.class);
+        return (JSONObject)((JSONObject)new JSONParser().parse(response.getBody())).get("component");
+    }
+
 
     private long timestamp(JSONObject json, String key) {
         Object obj = json.get(key);
