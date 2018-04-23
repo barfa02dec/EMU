@@ -5,10 +5,10 @@
         .module(HygieiaConfig.module)
         .controller('RepoViewController', RepoViewController);
 
-    RepoViewController.$inject = ['$q', '$scope','codeRepoData', '$uibModal'];
-    function RepoViewController($q, $scope, codeRepoData, $uibModal) {
+    RepoViewController.$inject = ['$q', '$scope','codeRepoData', '$uibModal', 'dashboardData', '$cookies'];
+    function RepoViewController($q, $scope, codeRepoData, $uibModal, dashboardData, $cookies) {
         var ctrl = this;
-
+        ctrl.projectspcID = $cookies.get('ProSpId');
         ctrl.commitChartOptions = {
             plugins: [
                 Chartist.plugins.gridBoundaries(),
@@ -56,6 +56,23 @@
             });
             return deferred.promise;
         };
+        ctrl.loadRepo = function() {
+            dashboardData.getCollectorItemRepo(ctrl.projectspcID).then(function(data) {
+                $scope.collectorDetailsRepo = data;
+            });
+
+            var deferred = $q.defer();
+            var params = {
+                componentId: $scope.widgetConfig.componentId,
+                numberOfDays: 14
+            };
+            codeRepoData.details(params).then(function(data) {
+                processResponse(data.result, params.numberOfDays);
+                deferred.resolve(data.lastUpdated);
+            });
+            return deferred.promise;
+        };
+
 
         function showDetail(evt) {
             var target = evt.target,

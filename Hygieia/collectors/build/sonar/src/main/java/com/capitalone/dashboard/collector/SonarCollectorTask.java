@@ -1,5 +1,18 @@
 package com.capitalone.dashboard.collector;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.TaskScheduler;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
 import com.capitalone.dashboard.model.CodeQuality;
 import com.capitalone.dashboard.model.CollectorItem;
 import com.capitalone.dashboard.model.CollectorType;
@@ -10,18 +23,6 @@ import com.capitalone.dashboard.repository.CodeQualityRepository;
 import com.capitalone.dashboard.repository.ComponentRepository;
 import com.capitalone.dashboard.repository.SonarCollectorRepository;
 import com.capitalone.dashboard.repository.SonarProjectRepository;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.TaskScheduler;
-import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Component
 public class SonarCollectorTask extends CollectorTask<SonarCollector> {
@@ -69,33 +70,29 @@ public class SonarCollectorTask extends CollectorTask<SonarCollector> {
 
     @Override
     public void collect(SonarCollector collector) {
-        long start = System.currentTimeMillis();
+        log("Start", System.currentTimeMillis());
 
         Set<ObjectId> udId = new HashSet<>();
         udId.add(collector.getId());
         List<SonarProject> existingProjects = sonarProjectRepository.findByCollectorIdIn(udId);
-        List<SonarProject> latestProjects = new ArrayList<>();
-        clean(collector, existingProjects);
+        
+        //clean(collector, existingProjects);
 
-        //for (String instanceUrl : collector.getSonarServers()) {
-            for(int i=0;i<collector.getSonarServers().size();i++)
-            {
-            logBanner(collector.getSonarServers().get(i));
+        for(int index = 0; index <collector.getSonarServers().size(); index++)
+        {
+            logBanner(collector.getSonarServers().get(index));
 
-            List<SonarProject> projects = sonarClient.getProjects(collector.getSonarServers().get(i));
-            List<SonarProject> updatedProjects = addProjects(projects, sonarSettings.getProject().get(i));
-            latestProjects.addAll(updatedProjects);
+            List<SonarProject> projects = sonarClient.getProjects(index);
 
             int projSize = ((projects != null) ? projects.size() : 0);
-            log("Fetched projects   " + projSize, start);
+            log("Fetched projects  : " + projSize);
 
-            addNewProjects(updatedProjects, existingProjects, collector);
+            saveNewProjects(projects, existingProjects, collector);
 
-            refreshData(enabledProjects(collector, collector.getSonarServers().get(i)));
-
-            log("Finished", start);
+            refreshData(enabledProjects(collector, index), index);
         }
-        deleteUnwantedJobs(latestProjects, existingProjects, collector);
+        //deleteUnwantedJobs(latestProjects, existingProjects, collector);
+        log("Finished", System.currentTimeMillis());
     }
 
 
@@ -157,26 +154,33 @@ public class SonarCollectorTask extends CollectorTask<SonarCollector> {
         }
     }
 
-    private void refreshData(List<SonarProject> sonarProjects) {
+    private void refreshData(List<SonarProject> sonarProjects, int index) {
         long start = System.currentTimeMillis();
         int count = 0;
 
         for (SonarProject project : sonarProjects) {
-            CodeQuality codeQuality = sonarClient.currentCodeQuality(project);
-            if (codeQuality != null && isNewQualityData(project, codeQuality)) {
-                codeQuality.setCollectorItemId(project.getId());
-                codeQualityRepository.save(codeQuality);
+            CodeQuality existingCodeQuality = codeQualityRepository.findByCollectorItemId(project.getId());
+            CodeQuality newCodeQuality = sonarClient.currentCodeQuality(project, index);
+            		
+            if (newCodeQuality != null && existingCodeQuality == null) {// && isNewQualityData(project, codeQuality)) {
+            	newCodeQuality.setCollectorItemId(project.getId());
+                codeQualityRepository.save(newCodeQuality);
+                count++;
+            }else if (newCodeQuality != null && existingCodeQuality != null){
+            	existingCodeQuality.getMetrics().clear();
+            	existingCodeQuality.getMetrics().addAll(newCodeQuality.getMetrics());
+                codeQualityRepository.save(existingCodeQuality);
                 count++;
             }
         }
         log("Updated", start, count);
     }
 
-    private List<SonarProject> enabledProjects(SonarCollector collector, String instanceUrl) {
-        return sonarProjectRepository.findEnabledProjects(collector.getId(), instanceUrl);
+    private List<SonarProject> enabledProjects(SonarCollector collector, int index) {
+        return sonarProjectRepository.findEnabledProjects(collector.getId(), sonarSettings.getServers().get(index));
     }
 
-    private void addNewProjects(List<SonarProject> projects, List<SonarProject> existingProjects, SonarCollector collector) {
+    private void saveNewProjects(List<SonarProject> projects, List<SonarProject> existingProjects, SonarCollector collector) {
         long start = System.currentTimeMillis();
         int count = 0;
         List<SonarProject> newProjects = new ArrayList<>();
@@ -205,18 +209,5 @@ public class SonarCollectorTask extends CollectorTask<SonarCollector> {
     private boolean isNewQualityData(SonarProject project, CodeQuality codeQuality) {
         return codeQualityRepository.findByCollectorItemIdAndTimestamp(
                 project.getId(), codeQuality.getTimestamp()) == null;
-    }
-    
-    private List<SonarProject> addProjects(List<SonarProject> sonarProjects, String project)
-    {
-    	List<SonarProject> updatedProject = new ArrayList<>();
-    	
-    	for(SonarProject sonarProject: sonarProjects)
-    	{
-    		sonarProject.setProject(project);
-    		updatedProject.add(sonarProject);
-    	}
-    	
-    	return updatedProject;
     }
 }

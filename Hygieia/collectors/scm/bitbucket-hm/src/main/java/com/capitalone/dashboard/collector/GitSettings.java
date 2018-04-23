@@ -1,5 +1,7 @@
 package com.capitalone.dashboard.collector;
 
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -11,29 +13,28 @@ import org.springframework.stereotype.Component;
 public class GitSettings {
     private String cron;
     private String host;
-    private String key;
-    private int firstRunHistoryDays;
     private String api;
+    private int firstRunHistoryDays;
     private int pageSize;
-    private String username;
-    private String password;
+    private String key;
+
+    private List<String> username;
+    private List<String> password;
+    private List<String> projectId;
     
-    
-    
-    
-	public String getUsername() {
+	public List<String> getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
+	public void setUsername(List<String> username) {
 		this.username = username;
 	}
 
-	public String getPassword() {
+	public List<String> getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(List<String> password) {
 		this.password = password;
 	}
 
@@ -83,5 +84,13 @@ public class GitSettings {
 	
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public List<String> getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(List<String> projectId) {
+		this.projectId = projectId;
 	}
 }

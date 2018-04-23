@@ -46,6 +46,12 @@
 
            </span>
 
+        <span ng-show=" {{(title == 'Code Repo')}}"  ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
+                <select ng-model="selectedNameRepo" class="widget-page-dropdownprops" ng-change="checkRepo(selectedNameRepo)">
+                <option ng-repeat="eachselectedNameRepo in collectorDetailsRepo" value={{eachselectedNameRepo.id}}>{{eachselectedNameRepo.options.branch}}</option>
+                </select>
+        </span>
+
         </div>
 
         <div class="widget-body">
