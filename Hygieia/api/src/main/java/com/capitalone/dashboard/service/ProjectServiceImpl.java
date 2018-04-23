@@ -12,30 +12,56 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capitalone.dashboard.model.Customer;
 import com.capitalone.dashboard.model.Dashboard;
+import com.capitalone.dashboard.model.HeatMap;
 import com.capitalone.dashboard.model.Project;
 import com.capitalone.dashboard.model.ProjectRoles;
 import com.capitalone.dashboard.model.UserGroup;
 import com.capitalone.dashboard.model.UserRole;
+import com.capitalone.dashboard.repository.CustomerRepository;
 import com.capitalone.dashboard.repository.DashboardRepository;
 import com.capitalone.dashboard.repository.ProjectRepository;
 import com.capitalone.dashboard.repository.UserRoleRepository;
+import com.capitalone.dashboard.request.CustomerRequest;
 import com.capitalone.dashboard.request.ProjectRequest;
 import com.capitalone.dashboard.request.ProjectUserRoleRequest;
+import com.google.common.base.Function;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
+
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
 
 	private final ProjectRepository projectRepository;
+	private final CustomerRepository customerRepository;
 	private final UserRoleRepository userRoleRepository;
 	private final DashboardRepository  dashboardRepository;
 	private static final String SYS_ADMIN="SYS_ADMIN";
 	private static final String TEAM_MEMBER="TEAM_MEMBER";
 	@Autowired
-	public ProjectServiceImpl(ProjectRepository projectRepository,UserRoleRepository userRoleRepository,DashboardRepository  dashboardRepository) {
+	public ProjectServiceImpl(ProjectRepository projectRepository,UserRoleRepository userRoleRepository,DashboardRepository  dashboardRepository,
+			CustomerRepository customerRepository) {
 		this.projectRepository = projectRepository;
 		this.userRoleRepository=userRoleRepository;
 		this.dashboardRepository=dashboardRepository;
+		this.customerRepository=customerRepository;
 	}
 
 	/*@Override
@@ -49,44 +75,44 @@ public class ProjectServiceImpl implements ProjectService {
 		Project project=new Project();
 		mapProjectRequestToPojectForCreateProject(projectRequest, project);
 		return projectRepository.save(project);
-		
+
 	}
 
 	@Override
 	public Project deactivateProject(ObjectId id) {
-			
-			Project project = projectRepository.findOne(id);
-			if (project != null) {
-				project.setProjectStatus(false);
-				return projectRepository.save(project);
-				
-			}else
-			{
-				return null;
-			}
+
+		Project project = projectRepository.findOne(id);
+		if (project != null) {
+			project.setProjectStatus(false);
+			return projectRepository.save(project);
+
+		}else
+		{
+			return null;
+		}
 
 	}
 
 	@Override
 	public Project updateProject(ProjectRequest projectRequest) {
 
-			try{
-				
-				Project project=projectRepository.findOne(new ObjectId(projectRequest.getId()));
-				if(null!=project)
-				{
-					mapProjectRequestToPojectForUpdateProject(projectRequest, project);
-					return projectRepository.save(project);
+		try{
 
-				}
-				
-			}catch (Exception e) {
-				return null;
+			Project project=projectRepository.findOne(new ObjectId(projectRequest.getId()));
+			if(null!=project)
+			{
+				mapProjectRequestToPojectForUpdateProject(projectRequest, project);
+				return projectRepository.save(project);
+
 			}
+
+		}catch (Exception e) {
 			return null;
-		
+		}
+		return null;
+
 	}
-	
+
 	private Project mapProjectRequestToPojectForCreateProject(ProjectRequest request, Project project ){
 		project.setProjectId(request.getProjectId());
 		project.setProjectName(request.getProjectName());
@@ -96,12 +122,16 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setBusinessUnit(request.getBusinessUnit());
 		project.setProgram(request.getProgram());
 		project.setCreatedBy(request.getUser());
+		
+		project.setCustomerName(request.getCustomerName());
+		project.setCustomerCode(request.getCustomerCode());
+		
 		project.setCreatedOn(new Date().toString());
 		//setting the SYS_ADMIN role for the user who created the project.
 		UserGroup defaultProjectAdmin= new UserGroup(request.getUser());
 		ProjectRoles projRole= new ProjectRoles();
 		projRole.setRole(SYS_ADMIN);
-	
+
 		if(userRoleRepository.findByRoleKey(projRole.getRole())!=null){
 			projRole.setPermissions(userRoleRepository.findByRoleKey(projRole.getRole()).getPermissions().keySet());
 			Set<ProjectRoles> projRoles = new HashSet<ProjectRoles>();
@@ -114,7 +144,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 		return project;
 	}
-	
+
 	private Project mapProjectRequestToPojectForUpdateProject(ProjectRequest request, Project project ){
 		project.setProjectName(request.getProjectName());
 		project.setProjectOwner(request.getProjectOwner());
@@ -123,12 +153,14 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setProgram(request.getProgram());
 		project.setUpdatedBy(request.getUser());
 		project.setUpdatedOn(new Date().toString());
+		project.setCustomerName(request.getCustomerName());
+		project.setCustomerCode(request.getCustomerCode());
 		return project;
 	}
-	
+
 	@Override
 	public Project getProject(ObjectId id) {
-		
+
 		return projectRepository.findOne(id);
 	}
 
@@ -165,20 +197,20 @@ public class ProjectServiceImpl implements ProjectService {
 					usergrpToCreate.setUserRoles(projRoles);
 					project.getUsersGroup().add(usergrpToCreate);
 				}
-					
+
 			}else{
 				Set<UserGroup> userGroupSet= new HashSet<UserGroup>();
 				usergrpToCreate.setUserRoles(projRoles);
 				userGroupSet.add(usergrpToCreate);
 				project.setUsersGroup(userGroupSet);
 			}
-			
+
 			Set<Dashboard> dashboardsListToPersist=new HashSet<Dashboard>();
 			Set<Dashboard> dashboardsListToRemove=new HashSet<Dashboard>();
 			//edit existing dashboards if it is deferenced.
 			List<Dashboard> existingProjectDashboards=dashboardRepository.findByProjectId(project.getId());
 			List<Dashboard> dashboardsToAssignToTheUser=new ArrayList<Dashboard>(projectUserRoleRequest.getDashboardsToAssign());
-			
+
 			for(Dashboard dbDashboard: existingProjectDashboards){
 				if(dashboardsToAssignToTheUser.contains(dbDashboard))
 				{
@@ -188,13 +220,13 @@ public class ProjectServiceImpl implements ProjectService {
 					dashboardsListToRemove.add(dbDashboard);
 				}
 			}
-			
+
 			for(Dashboard dbDashboard: dashboardsListToRemove)
 			{
 				dbDashboard.getUsersList().remove(projectUserRoleRequest.getUser());
 				dashboardsListToPersist.add(dbDashboard);
 			}
-			
+
 			dashboardRepository.save(dashboardsListToPersist);
 			return projectRepository.save(project);
 		}
@@ -208,7 +240,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Iterable<UserRole> getActiveprojectRolesOfUser( String projectId ,String user) {
-		
+
 		Set <String> userRoleKeys= new HashSet<String>();
 		Set<UserRole> existingRoles= new HashSet<UserRole>();
 		Project dbProject=projectRepository.getProject(projectId,user);
@@ -225,7 +257,7 @@ public class ProjectServiceImpl implements ProjectService {
 		for(String key: userRoleKeys){
 			existingRoles.add(userRoleRepository.findByRoleKey(key));
 		}
-		
+
 		return existingRoles;
 	}
 
@@ -265,12 +297,12 @@ public class ProjectServiceImpl implements ProjectService {
 			}
 			counter++;
 		}
-		
+
 		projectRepository.save(dbProjectsList);
 		dashboardRepository.save(dashboardsToSave);
 		return "Access Granted for "+counter+" Projects";
 	}
-	
+
 	@Override
 	public String createAdditionalSysAdmins(String user) {
 		List<Project> dbProjectsList=(List<Project>) projectRepository.getAllActiveProjects(true);
@@ -293,7 +325,7 @@ public class ProjectServiceImpl implements ProjectService {
 			}
 			counter++;
 		}
-		
+
 		projectRepository.save(dbProjectsList);
 		dashboardRepository.save(dashboardsToSave);
 		return "Access Granted for "+counter+" Projects";
@@ -326,4 +358,79 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 	}
 
+	@Override
+	public void createCustomer() {
+		List<Customer> customers = mapToCSV();
+		for(Customer customer : customers){
+			customerRepository.save(customer);
+		}
+	}
+
+
+	private List<Customer> mapToCSV() {
+		String path = "E:\\CSV\\custom.csv";
+
+		List<Customer> customers = new ArrayList<>();
+		try {
+
+			path = path.replace("\\", "/");
+
+			BufferedReader br = new BufferedReader(new FileReader(path));
+
+			String line;
+			while ((line = br.readLine()) != null) {
+
+				String[] entries = line.split(",");
+
+				Customer customer = createCustomer(entries);
+
+				customers.add(customer);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return customers;
+	}
+
+	private  Customer createCustomer(String[] metadata){
+		String cName = metadata[0];
+		String customerCode = metadata[1];
+		String activate = metadata[2];
+		String deactivate = metadata[3];
+
+		Customer customer = customerRepository.findByCustomerCode(customerCode);
+		if (null == customer) {
+			customer = new Customer();
+			customer.setCustomerCode(customerCode);
+		}
+		customer.setCustomerName(cName);
+		customer.setActivate(activate);
+		customer.setDeactivate(deactivate);
+		return customer;
+	}
+
+	@Override
+	public List<Customer> getCustomer() {
+		List<Customer> customers = (List<Customer>) customerRepository.findAll();
+		return customers;
+	}
+
+	@Override
+	public Customer createCustomers(CustomerRequest customerRequest) {
+		return customerRepository.save(mapCustomer(customerRequest));
+	}
+
+	private Customer mapCustomer(CustomerRequest customerRequest) {
+		Customer customer = customerRepository
+				.findByCustomerCode(customerRequest.getCustomerCode());
+		if (null == customer) {
+			customer = new Customer();
+			customer.setCustomerCode(customerRequest.getCustomerCode());
+		}
+		customer.setCustomerName(customerRequest.getCustomerName());
+		customer.setActivate(customerRequest.getActivate());
+		customer.setDeactivate(customerRequest.getDeactivate());
+		return customer;
+	}
 }
