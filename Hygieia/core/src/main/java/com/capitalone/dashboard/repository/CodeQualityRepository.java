@@ -19,4 +19,6 @@ public interface CodeQualityRepository extends CrudRepository<CodeQuality, Objec
      * @return a {@link CodeQuality}
      */
     CodeQuality findByCollectorItemIdAndTimestamp(ObjectId collectorItemId, long timestamp);
+    
+    CodeQuality findByCollectorItemId(ObjectId collectorItemId);
 }

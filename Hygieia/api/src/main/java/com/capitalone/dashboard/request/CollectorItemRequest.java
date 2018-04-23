@@ -51,6 +51,7 @@ public class CollectorItemRequest {
         CollectorItem item = new CollectorItem();
         item.setCollectorId(collectorId);
         item.setProject(project);
+        item.setDescription(description);
         item.setEnabled(true);
         item.getOptions().putAll(options);
         return item;
