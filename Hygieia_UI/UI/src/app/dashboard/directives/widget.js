@@ -25,9 +25,9 @@
         })
         .directive('widget', widgetDirective);
 
-    widgetDirective.$inject = ['$route', '$controller', '$http', '$templateCache', '$compile', 'widgetManager', '$uibModal', 'WidgetState', 'DisplayState', '$interval', 'dashboardData', '$cookies', '$rootScope'];
+    widgetDirective.$inject = ['$route', '$controller', '$http', '$templateCache', '$compile', 'widgetManager', '$uibModal', 'WidgetState', 'DisplayState', '$interval', 'dashboardData', '$cookies', '$rootScope', 'projectData'];
 
-    function widgetDirective($route, $controller, $http, $templateCache, $compile, widgetManager, $uibModal, WidgetState, DisplayState, $interval, dashboardData, $cookies, $rootScope) {
+    function widgetDirective($route, $controller, $http, $templateCache, $compile, widgetManager, $uibModal, WidgetState, DisplayState, $interval, dashboardData, $cookies, $rootScope, projectData) {
 
         return {
             templateUrl: 'app/dashboard/views/widget.html',
@@ -88,11 +88,10 @@
             //     $scope.selectedName = $cookies.putObject($routeParams.id).selectedName;
              $scope.selectedNameSonar = $cookies.get('selectedNameSonar');
              $scope.selectedName = $cookies.get('selectedName');
+
+             $scope.selectedNameRepo = $cookies.get('selectedNameRepo');
            /* if($cookies.get('"'+$routeParams.id+'"') && JSON.parse($cookies.get('"'+$routeParams.id+'"')) && JSON.parse($cookies.get('"'+$routeParams.id+'"')).selectedName)
                 $scope.selectedName = JSON.parse($cookies.get('"'+$routeParams.id+'"')).selectedName;*/
-           
-            
-            //debugger;
             $scope.widget_state = WidgetState;
             $scope.display_state = DisplayState;
 
@@ -139,9 +138,10 @@
                 /*$scope.displayViewAll = true;
                 dashboardData.myowner($scope.dashboard.title).then(processmyownerresponse);*/
                 $scope.projID = $cookies.get('ProId');
-                $http.get("/api/getProjectsByUser/?username=" + $scope.usernamepro)
-            .then(function(response) {
-                $scope.getAllProjects = response.data;
+                projectData.fetchallprojects($scope.usernamepro).then(function (response) {
+                //$http.get("/api/getProjectsByUser/?username=" + $scope.usernamepro)
+                //.then(function(response) {
+                $scope.getAllProjects = response;
 
                 for (var i = 0; i < $scope.getAllProjects.length; i++) {
                     for (var j = 0; j < $scope.getAllProjects[i].usersGroup.length; j++) {
@@ -161,9 +161,10 @@
 
             //Get All Projects
             $scope.projID = $cookies.get('ProId');
-        $http.get("/api/getProjectsByUser/?username=" + $scope.usernamepro)
-            .then(function(response) {
-                $scope.getAllProjects = response.data;
+            projectData.fetchallprojects($scope.usernamepro).then(function (response) {
+            //$http.get("/api/getProjectsByUser/?username=" + $scope.usernamepro)
+            //.then(function(response) {
+                $scope.getAllProjects = response;
 
                 for (var i = 0; i < $scope.getAllProjects.length; i++) {
                     for (var j = 0; j < $scope.getAllProjects[i].usersGroup.length; j++) {
@@ -196,6 +197,13 @@
                 $scope.collectorDetailsSonar = data;
                 
             });
+
+             dashboardData.getCollectorItemRepo($scope.projectspcID).then(function(data) {
+                $scope.collectorDetailsRepo = data;
+                
+            });
+
+           
             
 
             if(!$cookies.setCookieSelectedName || $cookies.setCookieSelectedName.length == 0)
@@ -227,11 +235,15 @@
                     componentId: $scope.colll,
                     collectorItemIds: [selectedName]
                 }
-              
-                $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/build" , ($scope.postPayload)).then(function(response) {
+                
+                //projectData.fetchallprojects(ctrl.usernamepro).then(function (response) {
+                dashboardData.addDropdownData($scope.dashBoardIds,$scope.postPayload).then(function(response) {
+                    refreshJenkins();
+                });
+                /*$http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/build" , ($scope.postPayload)).then(function(response) {
 
                     refreshJenkins();
-                 }) 
+                 })*/ 
                 
 
 
@@ -253,14 +265,37 @@
                     componentId: $scope.idComp,
                     collectorItemIds: [selectedNameSonar]
                 };
-                //asd43343434-dashboard name
-                //1234asd1234asd-projectname
-                //username-was1234
-               $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/codeanalysis", ($scope.postObjsonar)).then(function(response) {
-                    refreshSonar();
-				 }) 
-            }
 
+                dashboardData.addDropdownDataSonar($scope.dashBoardIds,$scope.postObjsonar).then(function(response){
+                    refreshSonar();
+                });
+                
+                
+
+              /* $http.put("/api/dashboard/" + $scope.dashBoardIds + "/widgetType/codeanalysis", ($scope.postObjsonar)).then(function(response) {
+                    refreshSonar();
+				 }) */
+            }
+            $scope.checkRepo = function(selectedNameRepo) {
+                $scope.dashBoardIds = $routeParams.id;
+                $scope.repoIdComp = $cookies.get('compIdRepo');
+                $scope.selectedNameRepo = selectedNameRepo;
+                $cookies.put('selectedNameRepo', selectedNameRepo);
+                $scope.postObjRepo = {
+                    name: 'repo',
+                    options: {
+                        id: 'repo0',
+                        testJobNames: []
+                    },
+                    componentId: $scope.repoIdComp,
+                    collectorItemIds: [selectedNameRepo]
+                };
+                dashboardData.addDropdownDataRepo($scope.dashBoardIds,$scope.postObjRepo).then(function(response){
+                    refreshRepo();
+                });
+                $scope.repoUrl = $cookies.get('repourl');
+                $scope.dashBoardIds = $routeParams.id;
+            }
             function processmyownerresponse(data) {
                 $scope.owner = data;
                 if ($scope.owner == $cookies.get('username') || $cookies.get('username') == 'admin') {
@@ -293,7 +328,10 @@
                         },
                         selectedName: function() {
                             return $scope.selectedName;
-                        }
+                        },
+                        selectedNameRepo: function() {
+                            return $scope.selectedNameRepo;
+                        },
                     }
                 }, $scope.widgetDefinition.config);
 
@@ -433,6 +471,17 @@
 
             function refreshSonar() {
                 var load = $scope.widgetViewController.loadSonar();
+                if (load && load.then) {
+                    load.then(function(result) {
+                        var lastUpdated = angular.isArray(result) ? _.max(result) : result;
+                        //$scope.lastUpdatedDisplay = moment(lastUpdated).dash('ago');
+                        $scope.lastUpdatedDisplay = moment(lastUpdated).format("DD MMM YYYY  HH:mm:ss");
+                    });
+                }
+            }
+
+            function refreshRepo() {
+                var load = $scope.widgetViewController.loadRepo();
                 if (load && load.then) {
                     load.then(function(result) {
                         var lastUpdated = angular.isArray(result) ? _.max(result) : result;

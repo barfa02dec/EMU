@@ -33,7 +33,11 @@
             upsertWidget: upsertWidget,
             types: types,
             getCollectorItem:getCollectorItem,
-            getCollectorItemSonar:getCollectorItemSonar
+            getCollectorItemSonar:getCollectorItemSonar,
+            addDropdownData:addDropdownData,
+            addDropdownDataSonar:addDropdownDataSonar,
+            getCollectorItemRepo:getCollectorItemRepo,
+            addDropdownDataRepo:addDropdownDataRepo
         };
 
         // reusable helper
@@ -75,6 +79,15 @@
                                 return response.data;
                             });
                         }
+                    });
+
+            
+        }
+        function getCollectorItemRepo(projectspecificid){
+
+            return   $http.get('/api/collector/item/type/scm/'+projectspecificid)
+                    .then(function(response) {
+                       return response.data;
                     });
 
             
@@ -170,5 +183,26 @@
                 return response.data;
             });
         }
+
+        function addDropdownData(dashboardIds,payload){
+            return   $http.put("/api/dashboard/" + dashboardIds + "/widgetType/build", (payload))
+                    .then(function(response) {
+                       return response;
+                    });
+        }
+
+        function addDropdownDataSonar(dashboardIds,payload){
+            return   $http.put("/api/dashboard/" + dashboardIds + "/widgetType/codeanalysis", (payload))
+                    .then(function(response) {
+                       return response;
+                    });
+                }
+
+        function addDropdownDataRepo(dashboardIds,payload){
+            return   $http.put("/api/dashboard/" + dashboardIds + "/widgetType/repo", (payload))
+                    .then(function(response) {
+                       return response;
+                    });
+                }
     }
 })();

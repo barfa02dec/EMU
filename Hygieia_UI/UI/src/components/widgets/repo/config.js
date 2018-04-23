@@ -49,7 +49,7 @@
 		ctrl.gitBranch = widgetConfig.options.branch;
 		ctrl.repouser = widgetConfig.options.userID;
 		ctrl.repopass = widgetConfig.options.password;
-
+		$cookies.put('repourl', ctrl.repoUrl);
 		// public variables
 		ctrl.submitted = false;
 		ctrl.collectors = [];
@@ -130,6 +130,7 @@
 				item = {
 					collectorId: _.findWhere(ctrl.collectors, {name: 'GitHub'}).id,
 					project: ctrl.projectpaths,
+					description: " ",
 					options: {
 						scm: 'Github',
 						url: ctrl.repoUrl,
@@ -143,6 +144,7 @@
 				item = {
 					collectorId: _.findWhere(ctrl.collectors, {name: 'Bitbucket'}).id,
 					project: ctrl.projectpaths,
+					description: " ",
 					options: {
 						scm: 'Bitbucket',
 						url: ctrl.repoUrl,
@@ -165,6 +167,7 @@
 				item = {
 					collectorId : _.findWhere(ctrl.collectors, { name: 'Gitlab' }).id,
 					project: ctrl.projectpaths,
+					description: " ",
 					options: {
 						scm: 'Gitlab',
 						url: ctrl.repoUrl,
@@ -191,7 +194,7 @@
 				componentId : modalData.dashboard.application.components[0].id,
 				collectorItemId : response.data.id
 			};
-
+			$cookies.put('compIdRepo', modalData.dashboard.application.components[0].id);
 			// pass this new config to the modal closing so it's saved
 			$uibModalInstance.close(postObj);
 		}
