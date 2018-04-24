@@ -6,35 +6,28 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "customer")
 public class Customer extends BaseModel implements Comparable<Customer>{
 
-	private String customerName;
+	private String customer_name;
 	@Indexed(name="index_customer_code")
 	private String customerCode;
-	private String activate;
-	private String deactivate;
-	
-	public String getCustomerName() {
-		return customerName;
+	private String deactivated;
+
+	public String getCustomer_name() {
+		return customer_name;
 	}
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
+	public void setCustomer_name(String customer_name) {
+		this.customer_name = customer_name;
+	}
+	public String getDeactivated() {
+		return deactivated;
+	}
+	public void setDeactivated(String deactivated) {
+		this.deactivated = deactivated;
 	}
 	public String getCustomerCode() {
 		return customerCode;
 	}
 	public void setCustomerCode(String customerCode) {
 		this.customerCode = customerCode;
-	}
-	public String getActivate() {
-		return activate;
-	}
-	public void setActivate(String activate) {
-		this.activate = activate;
-	}
-	public String getDeactivate() {
-		return deactivate;
-	}
-	public void setDeactivate(String deactivate) {
-		this.deactivate = deactivate;
 	}
 	
 	@Override
