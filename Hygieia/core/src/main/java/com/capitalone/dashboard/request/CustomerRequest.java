@@ -2,15 +2,15 @@ package com.capitalone.dashboard.request;
 
 public class CustomerRequest {
 
-	private String customerName;
+	private String customer_name;
 	private String customerCode;
-	private String activate;
-	private String deactivate;
+	private String deactivated;
+	
 	public String getCustomerName() {
-		return customerName;
+		return customer_name;
 	}
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
+	public void setCustomerName(String customer_name) {
+		this.customer_name = customer_name;
 	}
 	public String getCustomerCode() {
 		return customerCode;
@@ -18,19 +18,11 @@ public class CustomerRequest {
 	public void setCustomerCode(String customerCode) {
 		this.customerCode = customerCode;
 	}
-	public String getActivate() {
-		return activate;
-	}
-	public void setActivate(String activate) {
-		this.activate = activate;
-	}
 	public String getDeactivate() {
-		return deactivate;
+		return deactivated;
 	}
-	public void setDeactivate(String deactivate) {
-		this.deactivate = deactivate;
+	public void setDeactivate(String deactivated) {
+		this.deactivated = deactivated;
 	}
-	
-	
 	
 }
