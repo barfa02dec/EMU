@@ -31,16 +31,6 @@ public class SprintData {
     
     private Burndown burndown;
     
-    private Set<BurnDownHistory> burnDownHistory = new HashSet<BurnDownHistory>();
-    
-	public Set<BurnDownHistory> getBurnDownHistory() {
-		return burnDownHistory;
-	}
-
-	public void setBurnDownHistory(Set<BurnDownHistory> burnDownHistory) {
-		this.burnDownHistory = burnDownHistory;
-	}
-
 	public Long getSprintId() {
 		return sprintId;
 	}

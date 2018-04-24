@@ -92,11 +92,11 @@ public class JiraCollectorUtil {
 		
 		String json = null;
 		List<String> issuesAdded = ClientUtil.getIssuesAddedDuringSprint(originalSprintData);
-		if(issuesAdded != null && issuesAdded.size() > 0){
+		if(!StringUtils.isEmpty(issuesAdded)){
 		   Double addedstorypoints = 0.0;
 		   for( String issueAdded : issuesAdded){
-			   json = getIssue(issueAdded,featureSettings,featureSettings.getJiraSprintDataFieldName());
-			   addedstorypoints += getEstimate(json, featureSettings.getJiraSprintDataFieldName());
+			   json = getIssue(issueAdded,featureSettings,featureSettings.getJiraStoryPointsFieldName());
+			   addedstorypoints += getEstimate(json, featureSettings.getJiraStoryPointsFieldName());
 		   }   
 		   sprintdata.getBurndown().getIssuesAdded().setStoryPoints(addedstorypoints);
 		   sprintdata.getBurndown().getInitialIssueCount().setStoryPoints(sprintdata.getBurndown().getInitialIssueCount().getStoryPoints() - addedstorypoints);
