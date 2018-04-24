@@ -25,6 +25,22 @@ public class ProjectRequest {
 	private String id;
 	private boolean editorEnabled;
 	private String user;
+	
+	private String customerName;
+	private String customerCode;
+	
+	public String getCustomerName() {
+		return customerName;
+	}
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public String getCustomerCode() {
+		return customerCode;
+	}
+	public void setCustomerCode(String customerCode) {
+		this.customerCode = customerCode;
+	}
 	public boolean isEditorEnabled() {
 		return editorEnabled;
 	}
