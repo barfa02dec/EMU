@@ -36,9 +36,18 @@ public class SprintMetrcisRequest {
 	private String projectId;
 	private String projectName;
 	
-	//Sprint Isue count
+	//Sprint Issue count
 	private Integer completedIssueCount;
 	private Integer committedIssueCount;
+		
+	private Double storiesAddedPoints;
+	private Double storiesRemovedPoints;
+
+    //Sprint Defects Resolved
+    private int sprintCriticalDefectsResolved;
+    private int sprintMediumDefectsResolved;
+    private int sprintLowDefectsResolved;
+    private int sprintHighDefectsResolved;
 	
 	
 	public Integer getCompletedIssueCount() {
@@ -226,6 +235,42 @@ public class SprintMetrcisRequest {
 	}
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
+	}
+	public Double getStoriesAddedPoints() {
+		return storiesAddedPoints;
+	}
+	public void setStoriesAddedPoints(Double storiesAddedPoints) {
+		this.storiesAddedPoints = storiesAddedPoints;
+	}
+	public Double getStoriesRemovedPoints() {
+		return storiesRemovedPoints;
+	}
+	public void setStoriesRemovedPoints(Double storiesRemovedPoints) {
+		this.storiesRemovedPoints = storiesRemovedPoints;
+	}
+	public int getSprintCriticalDefectsResolved() {
+		return sprintCriticalDefectsResolved;
+	}
+	public void setSprintCriticalDefectsResolved(int sprintCriticalDefectsResolved) {
+		this.sprintCriticalDefectsResolved = sprintCriticalDefectsResolved;
+	}
+	public int getSprintMediumDefectsResolved() {
+		return sprintMediumDefectsResolved;
+	}
+	public void setSprintMediumDefectsResolved(int sprintMediumDefectsResolved) {
+		this.sprintMediumDefectsResolved = sprintMediumDefectsResolved;
+	}
+	public int getSprintLowDefectsResolved() {
+		return sprintLowDefectsResolved;
+	}
+	public void setSprintLowDefectsResolved(int sprintLowDefectsResolved) {
+		this.sprintLowDefectsResolved = sprintLowDefectsResolved;
+	}
+	public int getSprintHighDefectsResolved() {
+		return sprintHighDefectsResolved;
+	}
+	public void setSprintHighDefectsResolved(int sprintHighDefectsResolved) {
+		this.sprintHighDefectsResolved = sprintHighDefectsResolved;
 	}
 
 }

@@ -501,7 +501,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		summary.setMetricsProjectId(project.getProjectId());
 		
 		/*
-		 * Logic to bucket the defects based on priority.
+		 * Logic to priorities used in Jira
 		 */
 		getJiraPriority(featureSettings);
 		
@@ -525,7 +525,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 		 * Logic for bucketing the defects based on age of open defects.
 		 */
 		ageOfOpenDefects(summary, project);
-
 
 		defectAggregationRepository.save(summary);
 		
@@ -557,10 +556,9 @@ public class StoryDataClientImpl implements StoryDataClient {
 
 	public static void getJiraPriority (NewFeatureSettings featureSettings){
 		featureSettings.setIssuePriorities(JiraCollectorUtil.getJiraPriority(featureSettings));
-		//featureSettings.setIssuePriorities(priorities.toArray(new String[priorities.size()]));
 	}
 
-	public static void processDefectsByPriority(List<Defect> defects,DefectAggregation aggregation,Scope scopeProject){
+	public static void processDefectsByPriority(List<Defect> defects, DefectAggregation aggregation, Scope scopeProject){
 		Map<String,Integer> defectsByProirity = new LinkedHashMap<String,Integer>();
 		
 		for(Defect defect: defects){			
@@ -581,7 +579,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 	
 	
 	private void resolutionTimeForClosedDefects(DefectAggregation aggregation, Scope scopeProject) {
-		
 		List<JiraIssue> issues = JiraCollectorUtil.getClosedDefectsByProject(featureSettings);
 		
 		if(CollectionUtils.isEmpty(issues)) 
@@ -602,8 +599,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 		
 		boolean firstIndex = true;
 		int rangeCount = resolutionsPeriodRange.size();
-		/*Set<String> defectPriorities = null != aggregation.getDefectsByProirity()
-				? aggregation.getDefectsByProirity().keySet() : null;*/
 		
 		List<String> defectPriorities = featureSettings.getIssuePriorities();
 	
@@ -679,9 +674,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 
 		int rangeCount = defectAgePeriodRanges.size();
 		
-		/*Set<String> defectPriorities = null != aggregation.getDefectsByProirity()
-				? aggregation.getDefectsByProirity().keySet() : null;*/
-				
 		List<String> defectPriorities = featureSettings.getIssuePriorities();
 
 		// If defect priority set is null, then there are no defects in that
@@ -722,7 +714,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 
 				openDefectsByAge.put("Range" + (i + 1), defectsByAge);
 			}
-
 		}
 		
 		String keyAfterUpperLimit = "days >" + defectAgePeriodRanges.get(rangeCount - 1);
@@ -741,9 +732,5 @@ public class StoryDataClientImpl implements StoryDataClient {
 		if (!openDefectsByAge.isEmpty()) {
 			aggregation.setDefectsByAgeDetails(openDefectsByAge);
 		}
-	}
-	
-	public static void activeSprintBurnDown(){
-		
 	}
 }

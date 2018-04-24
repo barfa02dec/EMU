@@ -139,6 +139,16 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			featureSettings.setJiraProjectIdList(hmFeatureSettings.getJiraProjectIdList().get(i));
 			featureSettings.setNoOfSprintsToShow(hmFeatureSettings.getNoOfSprintsToShow());
 			featureSettings.setEnvironmentFoundInFieldName(hmFeatureSettings.getEnvironmentFoundInFieldName());
+			featureSettings.setOpenDefectsQuery(hmFeatureSettings.getOpenDefectsQuery());
+			featureSettings.setClosedDefectsQuery(hmFeatureSettings.getClosedDefectsQuery());
+			featureSettings.setDefectsCreatedQuery(hmFeatureSettings.getDefectsCreatedQuery());
+			
+			featureSettings.setSprintDefectsResolvedQuery(hmFeatureSettings.getSprintDefectsResolvedQuery());
+			featureSettings.setSprintAllDefectsResolvedQuery(hmFeatureSettings.getSprintAllDefectsResolvedQuery());
+			featureSettings.setSprintDefectsUnresolvedQuery(hmFeatureSettings.getSprintDefectsUnresolvedQuery());
+			featureSettings.setVersionDefectsCreatedQuery(hmFeatureSettings.getVersionDefectsCreatedQuery());
+			featureSettings.setVersionDefectsResolvedQuery(hmFeatureSettings.getVersionDefectsResolvedQuery());
+			
 			logBanner(featureSettings.getJiraBaseUrl());
 		    int count = 0;
 
@@ -171,7 +181,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 				LOGGER.info("DATA COLLECTION FOR PROJECT CODE:: " + project.getProjectId() + 
 						"  AND PROJECT ID:: " + project.getpId() + " AND OPEN DEFECTS COUNT:: " + opendefects.size());
 				
-				storyData.defectMetricsAggregation(opendefects, project); 
+				storyData.defectMetricsAggregation(opendefects, project);
 				
 				//logic to handle sprint and releases
 				storyData.saveDetailedSprintData(project.getpId(),project.getName());

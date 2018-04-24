@@ -165,7 +165,4 @@ public class Scope extends BaseModel {
 	public void setToShowInEMUDashboard(boolean toShowInEMUDashboard) {
 		this.toShowInEMUDashboard = toShowInEMUDashboard;
 	}
-	
-	
-
 }
