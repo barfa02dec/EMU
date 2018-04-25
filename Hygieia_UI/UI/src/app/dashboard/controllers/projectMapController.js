@@ -312,6 +312,10 @@
         function postProjetController($uibModalInstance, $http, $route, $timeout, $scope, $cookies) {
             var dpmObjpos = this;
             dpmObjpos.usernamepro = $cookies.get('username');
+            $scope.names = ["PES", "DBS", "IMSS", "CROSS BU"];
+            projectData.fetchallCustomers().then(function (data) {
+                dpmObjpos.getCustomers = data;
+            });
             dpmObjpos.payl = {
                 "projectId": ctrl.projectId,
                 "projectName": ctrl.projectName,
@@ -319,7 +323,12 @@
                 "client": ctrl.client,
                 "businessUnit": ctrl.businessUnit,
                 "program": ctrl.program,
-                "user": dpmObjpos.usernamepro
+                "user": dpmObjpos.usernamepro,
+                //"id": "5addb5d20a78cb24c049ed5f",
+                "customerName": ctrl.client,
+                "customerCode": "87779",
+                //"activate": "1",
+                //"deactivate": "1"
             }
             dpmObjpos.postProject = function () {
                 var apiHost = 'http://localhost:3000';

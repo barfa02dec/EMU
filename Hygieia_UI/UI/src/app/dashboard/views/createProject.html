@@ -27,7 +27,7 @@
             required />
       </form-group>
       <label class="control-label col-sm-3 createproj-label-props" for="pwd">BU<span class="maanditory-red-key">*</span></label>
-      <form-group input="projBU" errors="{required: 'BU is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+     <!--  <form-group input="projBU" errors="{required: 'BU is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
          <input
             type="text"
             name="projBU"
@@ -38,7 +38,12 @@
             autocomplete="off"
             minlength="3"
             required />
-      </form-group>
+      </form-group> -->
+      <form-group input="projBU" errors="{required: 'Please select the BU'}">
+                <select name="projBU" ng-options="item for item in names" ng-model="cpr.payl.businessUnit" class="form-control create-project-inputboxes" required>
+                     <option value="" disabled selected hidden>Choose a BU</option>
+                </select>
+            </form-group>
       <label class="control-label col-sm-3 createproj-label-props" for="pwd">Owner<span class="maanditory-red-key">*</span></label>
       <form-group input="projowner" errors="{required: 'Owner is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
          <input
@@ -64,7 +69,7 @@
             />
       </form-group>
       <label class="control-label col-sm-3 createproj-label-props" for="pwd">Customer Name<span class="maanditory-red-key">*</span></label>
-      <form-group input="projcusname" errors="{required: 'Customer name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
+      <!-- <form-group input="projcusname" errors="{required: 'Customer name is required', minlength: 'Min length of 3 characters', maxlength: 'Max length of 40 characters'}">
          <input
             type="text"
             name="projcusname"
@@ -75,7 +80,28 @@
             autocomplete="off"
             minlength="3"
             required />
-      </form-group>
+      </form-group> -->
+      <!--  <form-group input="projcusname">
+         <input ng-model="cpr.payl.client"  uib-typeahead="country for country in collection | filter:$viewValue"
+            type="text"
+            name="projcusname"
+            class="form-control create-project-inputboxes"
+            placeholder="Choose a customer"
+            maxlength="40"
+            autocomplete="off"
+            minlength="3"
+             />
+      </form-group> -->
+      <!-- <select ng-model="cpr.payl.client" class="widget-page-dropdownprops">
+                <option ng-repeat="data in cpr.getCustomers" value={{data.id}}>{{data.customerName}}</option>
+                </select> -->
+
+      <form-group input="projcusnamep" errors="{required: 'Please select the Customer'}">
+                <select ng-model="cpr.payl.client" class="form-control create-project-inputboxes" name="projcusnamep">
+                  <option value="" disabled selected>Choose Customer Name</option>
+                <option ng-repeat="data in cpr.getCustomers">{{data.customer_name}}</option>
+                </select>            </form-group> 
+
       <div class="form-group" style="padding-top: 3%;padding-left: 3%;">
          <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" name=""  style="margin-top: 0px;" >Add</button>
          <input type="button" name="" class="btn btn-default white-cancel-btn" value="Cancel"  ng-click="$close()" style="margin-left: 20px;">

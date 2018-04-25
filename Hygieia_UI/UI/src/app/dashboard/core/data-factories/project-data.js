@@ -27,7 +27,8 @@
             postSprint:postSprint,
             postRelease:postRelease,
             postHeatMap:postHeatMap,
-            updateHeatMap:updateHeatMap
+            updateHeatMap:updateHeatMap,
+            fetchallCustomers:fetchallCustomers
            
         };
 
@@ -130,7 +131,11 @@
                     });
         }
 
-       
-
-}
+        function fetchallCustomers(){
+            return   $http.get('/api/getCustomer')
+                    .then(function(response) {
+                       return response.data;
+                    });
+                }
+        }
 })();

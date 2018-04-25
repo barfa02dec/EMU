@@ -453,11 +453,11 @@
                      </div>
                   </div>
                   <div class="" ng-repeat="componentiss in detailess.component_list ">
-                     <div class="row">
+                     <div class="row" >
                         <div class="" ng-repeat="componentiss in componentiss.issueNewArray track by $index">
                            <span ng-if="$index == 0" class="styling-values col-md-2"></span>
-                           <span ng-if="$index == 3" class="col-md-8 widget-value-pro-small">{{componentiss.value | number}}</span>
-                           <span ng-if="$index == 4" class="col-md-2 widget-value-pro-small">{{componentiss.value | number}}</span>
+                           <span ng-if="$index == 3" class="col-md-8 widget-value-pro-small" style="margin-top: 30px;">{{componentiss.value | number}}</span>
+                           <span ng-if="$index == 4" class="col-md-2 widget-value-pro-small" style="margin-top: 30px;">{{componentiss.value | number}}</span>
                         </div>
                      </div>
                   </div>
