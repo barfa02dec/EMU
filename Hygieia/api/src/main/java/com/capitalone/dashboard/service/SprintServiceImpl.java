@@ -221,6 +221,39 @@ public class SprintServiceImpl implements SprintService {
 		
 		sd.setDefectsUnresolved(defectsUnResolved);
 		
+		// Sprint defects resolved
+		DefectCount sprintDefectsResolved = new DefectCount();
+		List<NameValuePair> list4 = new ArrayList<NameValuePair>();
+
+		NameValuePair dnppp1 = new NameValuePair();
+		dnppp1.setName("Low");
+		dnppp1.setValue(re.getSprintLowDefectsResolved());
+
+		NameValuePair dnppp2 = new NameValuePair();
+		dnppp2.setName("Medium");
+		dnppp2.setValue(re.getSprintMediumDefectsResolved());
+
+		NameValuePair dnppp3 = new NameValuePair();
+		dnppp3.setName("High");
+		dnppp3.setValue(re.getSprintHighDefectsResolved());
+
+		NameValuePair dnppp4 = new NameValuePair();
+		dnppp4.setName("Critical");
+		dnppp4.setValue(re.getSprintCriticalDefectsResolved());
+
+		list4.add(dnppp1);
+		list4.add(dnppp2);
+		list4.add(dnppp3);
+		list4.add(dnppp4);
+		
+		Long total4 =  0L;
+		total4=(long) (re.getSprintCriticalDefectsResolved()+re.getSprintHighDefectsResolved()+re.getSprintLowDefectsResolved()+re.getSprintMediumDefectsResolved());
+		
+		sprintDefectsResolved.setTotal(total4);
+		sprintDefectsResolved.setSeverity(list4);
+		
+		sd.setSprintDefectsResolved(sprintDefectsResolved);
+		
 		//burndown
 		
 		Burndown burndown = new Burndown();
@@ -228,12 +261,12 @@ public class SprintServiceImpl implements SprintService {
 		Burndown.IssueCount issuecount = burndown.new IssueCount();
 		
 		issuecount.setCount(re.getStoriesAdded());
-		issuecount.setStoryPoints(0.0d);
+		issuecount.setStoryPoints(re.getStoriesAddedPoints());
 		burndown.setIssuesAdded(issuecount);
 		
 		issuecount = burndown.new IssueCount();
 		issuecount.setCount(re.getStoriesRemoed());
-		issuecount.setStoryPoints(0.0d);
+		issuecount.setStoryPoints(re.getStoriesRemovedPoints());
 		burndown.setIssuesRemoved(issuecount);
 		// this field is not populated from UI, hence setting zero for future implementation
 		//int incompletedissuesount=0;

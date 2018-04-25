@@ -41,6 +41,7 @@ public class NewFeatureSettings {
 	private int sprintDays;
 	private int sprintEndPrior;
 	private int scheduledPriorMin;
+
 	// Jira-connection details
 	private String jiraBaseUrl;
 	private String jiraQueryEndpoint;
@@ -51,6 +52,7 @@ public class NewFeatureSettings {
 	private String jiraOauthExpiretime;
 	private String jiraProxyUrl;
 	private String jiraProxyPort;
+	
 	private String rapidView;
 	private int noOfSprintsToShow;
 	private String projectId;
@@ -63,12 +65,21 @@ public class NewFeatureSettings {
 	
 	private String[] jiraProjectIdList;
 	
-	public String[] getJiraProjectIdList() {
-		return jiraProjectIdList;
+	private String openDefectsQuery;
+	private String closedDefectsQuery;
+	private String defectsCreatedQuery;
+	private String sprintDefectsResolvedQuery;
+	private String sprintAllDefectsResolvedQuery;
+	private String sprintDefectsUnresolvedQuery;
+	private String versionDefectsCreatedQuery;
+	private String versionDefectsResolvedQuery;
+
+	public String getDefectsCreatedQuery() {
+		return defectsCreatedQuery;
 	}
 
-	public void setJiraProjectIdList(String[] jiraProjectIdList) {
-		this.jiraProjectIdList = jiraProjectIdList;
+	public void setDefectsCreatedQuery(String defectsCreatedQuery) {
+		this.defectsCreatedQuery = defectsCreatedQuery;
 	}
 
 	public int getNoOfSprintsToShow() {
@@ -407,4 +418,69 @@ public class NewFeatureSettings {
 	public void setIssuePriorities(List<String> issuePriorities) {
 		this.issuePriorities = issuePriorities;
 	}
+
+	public String[] getJiraProjectIdList() {
+		return jiraProjectIdList;
+	}
+
+	public void setJiraProjectIdList(String[] jiraProjectIdList) {
+		this.jiraProjectIdList = jiraProjectIdList;
+	}
+
+	public String getOpenDefectsQuery() {
+		return openDefectsQuery;
+	}
+
+	public void setOpenDefectsQuery(String openDefectsQuery) {
+		this.openDefectsQuery = openDefectsQuery;
+	}
+
+	public String getClosedDefectsQuery() {
+		return closedDefectsQuery;
+	}
+
+	public void setClosedDefectsQuery(String closedDefectsQuery) {
+		this.closedDefectsQuery = closedDefectsQuery;
+	}
+
+	public String getSprintDefectsResolvedQuery() {
+		return sprintDefectsResolvedQuery;
+	}
+
+	public void setSprintDefectsResolvedQuery(String sprintDefectsResolvedQuery) {
+		this.sprintDefectsResolvedQuery = sprintDefectsResolvedQuery;
+	}
+
+	public String getSprintAllDefectsResolvedQuery() {
+		return sprintAllDefectsResolvedQuery;
+	}
+
+	public void setSprintAllDefectsResolvedQuery(String sprintAllDefectsResolvedQuery) {
+		this.sprintAllDefectsResolvedQuery = sprintAllDefectsResolvedQuery;
+	}
+
+	public String getSprintDefectsUnresolvedQuery() {
+		return sprintDefectsUnresolvedQuery;
+	}
+
+	public void setSprintDefectsUnresolvedQuery(String sprintDefectsUnresolvedQuery) {
+		this.sprintDefectsUnresolvedQuery = sprintDefectsUnresolvedQuery;
+	}
+
+	public String getVersionDefectsCreatedQuery() {
+		return versionDefectsCreatedQuery;
+	}
+
+	public void setVersionDefectsCreatedQuery(String versionDefectsCreatedQuery) {
+		this.versionDefectsCreatedQuery = versionDefectsCreatedQuery;
+	}
+
+	public String getVersionDefectsResolvedQuery() {
+		return versionDefectsResolvedQuery;
+	}
+
+	public void setVersionDefectsResolvedQuery(String versionDefectsResolvedQuery) {
+		this.versionDefectsResolvedQuery = versionDefectsResolvedQuery;
+	}
+
 }

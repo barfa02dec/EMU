@@ -379,19 +379,17 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	private  Customer createCustomer(String[] metadata){
-		String cName = metadata[0];
+		String customer_name = metadata[0];
 		String customerCode = metadata[1];
-		String activate = metadata[2];
-		String deactivate = metadata[3];
+		String deactivated = metadata[2];
 
 		Customer customer = customerRepository.findByCustomerCode(customerCode);
 		if (null == customer) {
 			customer = new Customer();
 			customer.setCustomerCode(customerCode);
 		}
-		customer.setCustomerName(cName);
-		customer.setActivate(activate);
-		customer.setDeactivate(deactivate);
+		customer.setCustomer_name(customer_name);
+		customer.setDeactivated(deactivated);
 		return customer;
 	}
 
@@ -413,9 +411,8 @@ public class ProjectServiceImpl implements ProjectService {
 			customer = new Customer();
 			customer.setCustomerCode(customerRequest.getCustomerCode());
 		}
-		customer.setCustomerName(customerRequest.getCustomerName());
-		customer.setActivate(customerRequest.getActivate());
-		customer.setDeactivate(customerRequest.getDeactivate());
+		customer.setCustomer_name(customerRequest.getCustomerName());
+		customer.setDeactivated(customerRequest.getDeactivate());
 		return customer;
 	}
 }

@@ -67,7 +67,7 @@ public class DefaultJiraClient implements JiraClient {
 	
 	private final DateFormat QUERY_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	//private static final String GET_OPEN_DEFECTS_SEVERITY =  "type in (Bug) and  resolution in (Unresolved)";
-	private static final String GET_OPEN_DEFECTS_SEVERITY =  "project=%1s and type in (Bug) and  resolution in (Unresolved)";
+	//private static final String GET_OPEN_DEFECTS_SEVERITY =  "project=%1s and type in (Bug) and  resolution in (Unresolved)";
 	private static final Set<String> DEFAULT_FIELDS = new HashSet<>();
 	static {
 		DEFAULT_FIELDS.add("*all,-comment,-watches,-worklog,-votes,-reporter,-creator,-attachment");
@@ -411,7 +411,7 @@ public class DefaultJiraClient implements JiraClient {
 		if (client != null) {
 			try {
 				Promise<SearchResult> promisedRs = client.getSearchClient().searchJql(
-						String.format(GET_OPEN_DEFECTS_SEVERITY, featureSettings.getJiraProjectIdList()[0]), featureSettings.getPageSize(), pageStart, DEFAULT_FIELDS);
+						String.format(featureSettings.getOpenDefectsQuery(), String.join(",", featureSettings.getJiraProjectIdList())), featureSettings.getPageSize(), pageStart, DEFAULT_FIELDS);
 				SearchResult sr = promisedRs.claim();
 
 				Iterable<Issue> jiraRawRs = sr.getIssues();
