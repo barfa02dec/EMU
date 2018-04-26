@@ -159,6 +159,23 @@
                     ctrl.newObj.newArr.push(ctrl.third);
                     ctrl.newObj.newArr.push(ctrl.second);
 
+                    for(var i=0;i<ctrl.newObj.newArr.length;i++) {
+                        if(ctrl.newObj.newArr[2].value > 480) {
+                        var hours = (ctrl.newObj.newArr[2].value / 480);
+                        var rhours = Math.floor(hours);
+                        var hrconversion = (ctrl.newObj.newArr[2].value % 480);
+                        var tohrs = (hrconversion/60);
+                        var rhrs = Math.floor(tohrs);
+                        ctrl.newObj.newArr[2].value = rhours +"d" + " " + rhrs + "h";
+                    }
+                    else if(ctrl.newObj.newArr[2].value < 480){
+                        var hours = (ctrl.newObj.newArr[2].value / 60);
+                        var rhours = Math.floor(hours);
+                        var minutes = (hours - rhours) * 60;
+                        var rminutes = Math.round(minutes);
+                        ctrl.newObj.newArr[2].value = rhours + "h" + " " + rminutes +"m";
+                    }
+                }
                     ctrl.securityNewObj = {
                         name: "securityWidget",
                         securityNewArray: []
@@ -171,6 +188,23 @@
                     ctrl.securityNewObj.securityNewArray.push(ctrl.securityprop2);
                     ctrl.securityNewObj.securityNewArray.push(ctrl.securityprop1);
 
+                     for(var i=0;i<ctrl.securityNewObj.securityNewArray.length;i++) {
+                        if(ctrl.securityNewObj.securityNewArray[2].value < 480) {
+                        var hours = (ctrl.securityNewObj.securityNewArray[2].value / 60);
+                        var rhours = Math.floor(hours);
+                        var minutes = (hours - rhours) * 60;
+                        var rminutes = Math.round(minutes);
+                        ctrl.securityNewObj.securityNewArray[2].value = rhours + "h" + " " + rminutes +"m";
+                    }
+                    else if (ctrl.securityNewObj.securityNewArray[2].value > 480) {
+                        var hours = (ctrl.securityNewObj.securityNewArray[2].value / 480);
+                        var rhours = Math.floor(hours);
+                        var hrconversion = (ctrl.securityNewObj.securityNewArray[2].value % 480);
+                        var tohrs = (hrconversion/60);
+                        var rhrs = Math.floor(tohrs);
+                        ctrl.securityNewObj.securityNewArray[2].value = rhours +"d" + " " + rhrs + "h";
+                    }
+                }
                     ctrl.maintainabilityNewObj = {
                         name: "maintainabilityWidget",
                         maintainabilityNewArray: []
@@ -183,6 +217,25 @@
                     ctrl.maintainabilityNewObj.maintainabilityNewArray.push(ctrl.maintainabilityprop3);
                     ctrl.maintainabilityNewObj.maintainabilityNewArray.push(ctrl.maintainabilityprop1);
                     ctrl.maintainabilityNewObj.maintainabilityNewArray.push(ctrl.maintainabilityprop2);
+
+                    for(var i=0;i<ctrl.maintainabilityNewObj.maintainabilityNewArray.length;i++) {
+                        if(ctrl.maintainabilityNewObj.maintainabilityNewArray[2].value > 480) {
+                        var hours = (ctrl.maintainabilityNewObj.maintainabilityNewArray[2].value / 480);
+                        var rhours = Math.floor(hours);
+                        var hrconversion = (ctrl.maintainabilityNewObj.maintainabilityNewArray[2].value % 480);
+                        var tohrs = (hrconversion/60);
+                        var rhrs = Math.floor(tohrs);
+                        ctrl.maintainabilityNewObj.maintainabilityNewArray[2].value = rhours +"d" + " " + rhrs + "h";
+                    }
+                    else if (ctrl.maintainabilityNewObj.maintainabilityNewArray[2].value < 480) {
+                        var hours = (ctrl.maintainabilityNewObj.maintainabilityNewArray[2].value / 60);
+                        var rhours = Math.floor(hours);
+                        var minutes = (hours - rhours) * 60;
+                        var rminutes = Math.round(minutes);
+                        ctrl.maintainabilityNewObj.maintainabilityNewArray[2].value = rhours + "h" + " " + rminutes +"m";
+                    }
+                }
+                    
 
                     ctrl.duplicationsNewObj = {
                         name: "duplicationWidget",

@@ -322,23 +322,23 @@
                   <div class="row " style="margin-left:2%;">
                      <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
                         <span ng-if="$index == 0" class="styling-values col-md-4 " style=""></span>
-                        <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 12px;">Comments (%)</span>
-                        <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" style="padding-left: 30px;" ng-show="componentdoc.value">{{componentdoc.value}}%</span>
-                        <span class="widget-value-pro-small col-md-3" ng-if="$index == 1" style="padding-left: 30px;" ng-show="!componentdoc.value">0</span>
+                        <span ng-if="$index == 0" class="label-props col-md-3" style="padding-left: 12px;">Comment Lines</span>
+                        <span class="widget-value-pro-small col-md-3" ng-if="$index == 0" style="padding-left: 30px;" ng-show="componentdoc.value">{{componentdoc.value | number}}</span>
+                        <span class="widget-value-pro-small col-md-3" ng-if="$index == 0" style="padding-left: 30px;" ng-show="!componentdoc.value">0</span>
                      </div>
                   </div>
                   <div class="row " style="margin-left:2%;">
                      <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
-                        <span ng-if="$index == 0" class="styling-values col-md-4 round-props" ng-show="componentdoc.value" style="padding-left: 2px;">{{componentdoc.value | number}}</span>
-                        <span ng-if="$index == 0" class="styling-values col-md-4 round-props" ng-show="!componentdoc.value" style="padding-left: 2px;">0</span>
+                        <span ng-if="$index == 1" class="styling-values col-md-4 round-props" ng-show="componentdoc.value" style="padding-left: 2px;">{{componentdoc.value}}%</span>
+                        <span ng-if="$index == 1" class="styling-values col-md-4 round-props" ng-show="!componentdoc.value" style="padding-left: 2px;">0</span>
                         <span ng-if="$index == 1" class="label-props col-md-3 " style="padding-top: 25px;padding-left: 19%;width: 163px;">Undoc api</span>
-                        <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 24px;padding-left: 9%;" ng-show="componentdoc.value">{{componentdoc.value | number}}</span>
+                        <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 24px;padding-left: 9%;" ng-show="componentdoc.value">{{componentdoc.value}}</span>
                         <span ng-if="$index == 2" class="widget-value-pro-small col-md-3 " style="padding-top: 8px;padding-left: 9%;" ng-show="!componentdoc.value">0</span>
                      </div>
                   </div>
                   <div class="row " style="margin-left:2%;">
                      <div class="" ng-repeat="componentdoc in componentdoc.docuNewArray track by $index">
-                        <span ng-if="$index == 0" class="label-props col-md-4 " style="padding-left: 0px;">Comment lines</span>
+                        <span ng-if="$index == 0" class="label-props col-md-4 " style="padding-left: 0px;">Comments(%)</span>
                         <span ng-if="$index == 1" class="label-props col-md-3" style="padding-left: 12px;">Doc api (%)</span>
                         <span class="widget-value-pro-small col-md-3" ng-if="$index == 3" style="margin-top: -3px;padding-left: 30px;" ng-show="componentdoc.value">{{componentdoc.value}}%</span>
                         <span class="widget-value-pro-small col-md-3" ng-if="$index == 3" style="margin-top: -3px;padding-left: 30px;" ng-show="!componentdoc.value">0</span>
