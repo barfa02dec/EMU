@@ -638,13 +638,15 @@
             }
 
             ctrl.postRelease = function (proje) {
+               var endDateMilli = Date.parse(ctrl.releaseDate);
+               var startDateMilli = Date.parse(ctrl.startDate);
                 ctrl.releasePayload = {
                     "projectName": name,
                     "projectId": id,
                     "releaseId": ctrl.releaseId,
                     "name": ctrl.name,
-                    "startDate": ctrl.startDate,
-                    "releaseDate": ctrl.releaseDate,
+                    "startDate": startDateMilli,
+                    "releaseDate": endDateMilli,
                     "released": ctrl.released,
                     "description": ctrl.description,
                     "criticalDefectsFound": ctrl.criticalDefectsFound,
@@ -813,13 +815,16 @@
                 }) 
 
             ctrl.postRelease = function (proje) {
+                var startDateMilliRel = Date.parse(ctrl.releaseStartDate);
+                var endDateMilliRel = Date.parse(ctrl.releaseEndDate);
+
                 ctrl.releasePayload = {
                     "projectName": ctrl.names,
                     "projectId": ctrl.names,
                     "releaseId": ctrl.fetchReleasedetails.releaseId,
                     "name": ctrl.fetchReleasedetails.name,
-                    "startDate": ctrl.releaseStartDate,
-                    "releaseDate": ctrl.releaseEndDate,
+                    "startDate": startDateMilliRel,
+                    "releaseDate": endDateMilliRel,
                     "released": ctrl.fetchReleasedetails.released,
                     "description": ctrl.description,
                     "criticalDefectsFound": ctrl.fetchReleasedetails.versionData.defectsFound.severity[3].value,
