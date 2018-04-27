@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-md-8">
                     <form-group input="dashboardTitle" errors="{required: 'Release id is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
-                        <input type="text" name="dashboardTitle" numbers-only class="form-control" placeholder="Release id" ng-model="arc.releaseId" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
+                        <input type="text" autofocus name="dashboardTitle" numbers-only class="form-control" placeholder="Release id" ng-model="arc.releaseId" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
                     </form-group>
                 </div>
             </div>

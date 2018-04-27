@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-md-8">
                     <form-group input="sprintid" errors="{required: 'Sprint id is required',maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
-                        <input type="text" name="sprintid" class="form-control" placeholder="Sprint id" ng-model="usc.fetchdetails.sid" required maxlength="50" autocomplete="off" numbers-only ng-pattern="/^[a-zA-Z0-9 ]*$/" disabled/>
+                        <input type="text" name="sprintid" class="form-control" placeholder="Sprint id" ng-model="usc.fetchdetails.sid" required maxlength="50" autocomplete="off" numbers-only ng-pattern="/^[a-zA-Z0-9 ]*$/" />
                     </form-group>
                 </div>
             </div>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-md-8">
                     <form-group input="sprintname" errors="{required: 'Sprint name is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
-                        <input type="text" name="sprintname" class="form-control" placeholder="Sprint name" ng-model="usc.fetchdetails.sprintData.sprintName" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" disabled/>
+                        <input type="text" name="sprintname" class="form-control" placeholder="Sprint name" ng-model="usc.fetchdetails.sprintData.sprintName" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
                     </form-group>
                 </div>
             </div>

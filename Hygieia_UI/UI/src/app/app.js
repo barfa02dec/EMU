@@ -136,6 +136,11 @@ var localStorageSupported = (function () {
                   controller: 'userManagementController',
                   controllerAs: 'umc'
                 })
+                  .when('/changePassword',{
+                  templateUrl:'app/dashboard/views/changePassword.html',
+                  controller: 'changePasswordController',
+                  controllerAs: 'cpc'
+                })
                 .otherwise({
                     redirectTo: '/'
                 });

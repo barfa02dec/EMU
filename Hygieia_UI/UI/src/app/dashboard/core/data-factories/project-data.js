@@ -28,7 +28,8 @@
             postRelease:postRelease,
             postHeatMap:postHeatMap,
             updateHeatMap:updateHeatMap,
-            fetchallCustomers:fetchallCustomers
+            fetchallCustomers:fetchallCustomers,
+            changePasswordFn:changePasswordFn
            
         };
 
@@ -137,5 +138,13 @@
                        return response.data;
                     });
                 }
+        function changePasswordFn(payload){
+            return   $http.post('/api/changePassword', (payload))
+                    .then(function(response) {
+                       
+                            return response.data;
+                    });
+
+        }
         }
 })();

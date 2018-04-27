@@ -772,6 +772,9 @@
             ctrl.postSprint = function (proje) {
                 ctrl.sprintPayload.projectName = name;
                 ctrl.sprintPayload.projectId = id;
+                ctrl.sprintPayload.startDate = Date.parse(ctrl.sprintPayload.startDate);
+                ctrl.sprintPayload.endDate = Date.parse(ctrl.sprintPayload.endDate);
+                
                 if (ctrl.addSprint.$valid == true) {
                 projectData.postSprint(ctrl.sprintPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
@@ -891,6 +894,9 @@
             
             
             ctrl.updateSprintCall = function () {
+                var startDateMilliSprint = Date.parse(ctrl.startDate);
+                var endDateMilliSprint = Date.parse(ctrl.endDate);
+
                 ctrl.sprintEditPayload = {
                     "projectId": projectidsprint,
                     "projectName": ctrl.names,
@@ -919,8 +925,8 @@
                     "lowDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[0].value,
                     "highDefectsUnresolved": ctrl.fetchdetails.sprintData.defectsUnresolved.severity[2].value,
 
-                    "endDate": ctrl.endDate,
-                    "startDate": ctrl.startDate,
+                    "endDate": endDateMilliSprint,
+                    "startDate": startDateMilliSprint,
                     "storiesAdded": ctrl.fetchdetails.sprintData.burndown.issuesAdded.count,
                     "storiesRemoed": ctrl.fetchdetails.sprintData.burndown.issuesRemoved.count,
                     "storiesAddedPoints": ctrl.fetchdetails.sprintData.burndown.issuesAdded.storyPoints,
