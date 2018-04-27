@@ -63,4 +63,12 @@ public interface AuthenticationService {
 	 * @return
 	 */
 	AuthenticationResponse authenticate(String username, String password);
+	
+	/**
+	 * change password 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	String changePassword(String username, String password, String newPassword);
 }

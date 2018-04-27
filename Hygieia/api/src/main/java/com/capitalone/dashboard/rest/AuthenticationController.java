@@ -54,6 +54,15 @@ public class AuthenticationController {
         // TODO: should validate revalidate current password before allowing changes?
         return ResponseEntity.status(HttpStatus.OK).body(authenticationService.update(request.getUsername(), request.getPassword()));
     }
+    
+    @RequestMapping(value = "/changePassword", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> changePassword(@Valid @RequestBody AuthenticationRequest request) {
+        // TODO: should return proper HTTP codes for not found users
+        // TODO: should validate revalidate current password before allowing changes?
+        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.changePassword(request.getUsername(), 
+        		request.getPassword(), request.getNewPassword()));
+    }
+    
 	@RequestMapping(value = "/getApplicationUsers", method = GET, produces = APPLICATION_JSON_VALUE)
     public List<String> getAllUsers(){
     	List<String> appUsers= new ArrayList<String>();
