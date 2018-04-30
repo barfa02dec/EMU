@@ -16,6 +16,8 @@
 
 package com.capitalone.dashboard.model;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -32,14 +34,15 @@ public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 	    private Long sprintId;
 	    @Indexed(name="index_Sprint_projectId")
 		private String projectId;
-	    private String start;
-	    private String end;
+	    private Date startDate;
+	    private Date endDate;
 	    private String name;
 	    private Boolean closed;
 	    private Boolean editable;
 	    private String viewBoardsUrl;
 	    private SprintData sprintData;
 	    private String projectName;
+	    private int automated;
 		
 		public String getProjectName() {
 			return projectName;
@@ -47,6 +50,7 @@ public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 		public void setProjectName(String projectName) {
 			this.projectName = projectName;
 		}
+		
 		public String getProjectId() {
 			return projectId;
 		}
@@ -60,47 +64,61 @@ public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 		public void setSid(Long sid) {
 			this.sprintId = sid;
 		}
-		public String getStart() {
-			return start;
+		
+		public Date getStartDate() {
+			return startDate;
 		}
-		public void setStart(String start) {
-			this.start = start;
+		public void setStartDate(Date startDate) {
+			this.startDate = startDate;
 		}
-		public String getEnd() {
-			return end;
+		
+		public Date getEndDate() {
+			return endDate;
 		}
-		public void setEnd(String end) {
-			this.end = end;
+		public void setEndDate(Date endDate) {
+			this.endDate = endDate;
 		}
+		
 		public String getName() {
 			return name;
 		}
 		public void setName(String name) {
 			this.name = name;
 		}
+		
 		public Boolean getClosed() {
 			return closed;
 		}
 		public void setClosed(Boolean closed) {
 			this.closed = closed;
 		}
+		
 		public Boolean getEditable() {
 			return editable;
 		}
 		public void setEditable(Boolean editable) {
 			this.editable = editable;
 		}
+		
 		public String getViewBoardsUrl() {
 			return viewBoardsUrl;
 		}
 		public void setViewBoardsUrl(String viewBoardsUrl) {
 			this.viewBoardsUrl = viewBoardsUrl;
 		}
+		
 		public SprintData getSprintData() {
 			return sprintData;
 		}
 		public void setSprintData(SprintData sprintData) {
 			this.sprintData = sprintData;
+		}
+
+		public int getAutomated() {
+			return automated;
+		}
+		public void setAutomated(int automated) {
+			this.automated = automated;
 		}
 
 		@Override

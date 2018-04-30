@@ -1,13 +1,13 @@
 package com.capitalone.dashboard.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.capitalone.dashboard.model.Burndown;
 import com.capitalone.dashboard.model.Collector;
@@ -20,7 +20,7 @@ import com.capitalone.dashboard.model.SprintData;
 import com.capitalone.dashboard.repository.CollectorRepository;
 import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.repository.SprintRepository;
-import com.capitalone.dashboard.request.SprintMetrcisRequest;
+import com.capitalone.dashboard.request.SprintMetricsRequest;
 @Service
 public class SprintServiceImpl implements SprintService {
 
@@ -37,22 +37,35 @@ public class SprintServiceImpl implements SprintService {
 	}
 
 	@Override
-	public List<Sprint> getSprints(String projectId, String projectName) {
-		return (List<Sprint>) repository.findByProjectId(projectId,projectName);
+	public List<Sprint> getSprints(String projectId) {
+		return (List<Sprint>) repository.findByProjectId(projectId);
 	}
 
 	@Override
-	public Sprint getSprintDetails(Long sprintId,String projectId) {
-		return repository.findBySprintId(sprintId,projectId);
+	public Sprint getSprintDetails(String projectId, Long sprintId) {
+		return repository.findBySprintId(projectId, sprintId);
 	}
 
 	@Override
-	public Sprint create(SprintMetrcisRequest re) {
-		createScope(re);
-		return repository.save(mapSprintRequestToSprintModel(re));
+	public Sprint create(SprintMetricsRequest sprintreq) {
+		createScope(sprintreq);
+		
+		Sprint existingsprint = repository.findBySprintId(sprintreq.getProjectId(), sprintreq.getSprintId());
+		
+		if(existingsprint != null){
+			throw new IllegalStateException("The sprint with sprint id " + sprintreq.getSprintId() + " already exists.");
+		}
+		
+		return repository.save(convertSprintRequestToSprintModel(existingsprint, sprintreq));
 	}
-	
-	private void createScope(SprintMetrcisRequest rq) {
+
+	@Override
+	public Sprint update(SprintMetricsRequest sprintreq) {
+		Sprint existingsprint = repository.findOne(new ObjectId(sprintreq.getObjectId()));
+		return repository.save(convertSprintRequestToSprintModel(existingsprint, sprintreq));
+	}
+
+	private void createScope(SprintMetricsRequest rq) {
 		Scope scope = scopeRepository.getScopeByIdAndProjectName(
 				rq.getProjectId(), rq.getProjectName());
 
@@ -60,9 +73,7 @@ public class SprintServiceImpl implements SprintService {
 			scope = new Scope();
 			scope.setCollectorId(getJiraCollectorId());
 
-			// ID;
 			scope.setpId(rq.getProjectId());
-			// project ID
 
 			scope.setProjectId(rq.getProjectId());
 			scope.setName(rq.getProjectName());
@@ -95,34 +106,29 @@ public class SprintServiceImpl implements SprintService {
 		}
 		return collector.getId();
 	}
-	private Sprint mapSprintRequestToSprintModel(SprintMetrcisRequest re){
-		Sprint s= repository.findBySprintId(re.getSprintId(),re.getProjectId());
-		if(null==s){
-			s= new Sprint();
-			s.setSid(re.getSprintId());
-			s.setName(re.getSprintName());
-			s.setProjectId(re.getProjectId());
-			s.setProjectName(re.getProjectName());
-			s.setStart(re.getStartDate());
-			s.setEnd(re.getEndDate());
+	private Sprint convertSprintRequestToSprintModel( Sprint existingsprint, SprintMetricsRequest re){
+		
+		if(null == existingsprint){
+			existingsprint = new Sprint();
+			existingsprint.setSid(re.getSprintId());
+			existingsprint.setName(re.getSprintName());
+			existingsprint.setProjectId(re.getProjectId());
+			existingsprint.setProjectName(re.getProjectName());
+			existingsprint.setStartDate(StringUtils.isEmpty(re.getStartDate()) ? null : new Date(Long.parseLong(re.getStartDate())));
+			existingsprint.setEndDate(StringUtils.isEmpty(re.getEndDate()) ? null : new Date(Long.parseLong(re.getEndDate())));
+			existingsprint.setAutomated(0);
 		}
 		
-		s.setClosed(re.isReleased());
+		existingsprint.setClosed(re.isReleased());
 		
 		SprintData sd= new SprintData();
 		sd.setSprintName(re.getSprintName());
 		sd.setSprintId(re.getSprintId());
 		sd.setCommittedStoryPoints(re.getCommittedStoryPoints());
 		sd.setCompletedStoryPoints(re.getCompletedStoryPoints());
-		//sd.setEndDate(re.getEndDate());
-		//sd.setStartDate(re.getStartDate());
-		
-		try {
-			sd.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(re.getEndDate()));
-			sd.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(re.getStartDate()));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		sd.setStartDate(StringUtils.isEmpty(re.getStartDate()) ? null : new Date(Long.parseLong(re.getStartDate())));
+		sd.setEndDate(StringUtils.isEmpty(re.getEndDate()) ? null : new Date(Long.parseLong(re.getEndDate())));
+		sd.setCompleteDate(StringUtils.isEmpty(re.getEndDate()) ? null : new Date(Long.parseLong(re.getEndDate())));
 		
 		//defects found
 		DefectCount defectsFound= new DefectCount();
@@ -268,11 +274,6 @@ public class SprintServiceImpl implements SprintService {
 		issuecount.setCount(re.getStoriesRemoed());
 		issuecount.setStoryPoints(re.getStoriesRemovedPoints());
 		burndown.setIssuesRemoved(issuecount);
-		// this field is not populated from UI, hence setting zero for future implementation
-		//int incompletedissuesount=0;
-		
-		//sd.setCommittedIssueCount(re.getCompletedIssueCount() + re.getStoriesRemoed() + incompletedissuesount - re.getStoriesAdded());
-		//sd.setCommittedIssueCount(re.getCommittedStoriesCount() + re.getStoriesRemoed() + incompletedissuesount - re.getStoriesAdded());
 		
 		sd.setCompletedIssueCount(re.getCompletedIssueCount());
 		sd.setCommittedIssueCount(re.getCommittedIssueCount());
@@ -283,9 +284,8 @@ public class SprintServiceImpl implements SprintService {
 
 		sd.setBurndown(burndown);
 		
-		s.setSprintData(sd);
+		existingsprint.setSprintData(sd);
 
-		return s;
+		return existingsprint;
 	}
-	
 }

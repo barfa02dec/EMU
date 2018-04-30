@@ -17,5 +17,5 @@ public interface HeatMapService {
 		
 	public HeatMap updateHeatmap(ObjectId objectId, HeatMapRequest heatMapRequest) ;
 
-	public void deleteHeatMap(String heatmapId);
+	public void deleteHeatmap(String heatmapId);
 }

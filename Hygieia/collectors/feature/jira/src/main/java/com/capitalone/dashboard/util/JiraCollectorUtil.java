@@ -158,16 +158,16 @@ public class JiraCollectorUtil {
 
 		List<JiraIssue> issues = new ArrayList<JiraIssue>();
 	
-		if(null != versionData && versionData.getStartDate() != null && versionData.getReleaseDate() != null){
+		if(null != versionData){
 			
 			//Get created defects
 			String query = String.format(featureSettings.getVersionDefectsCreatedQuery(), projectId, versionData.getReleaseId());
 			issues = getIssues(query, featureSettings);
 			 
-			if(CollectionUtils.isEmpty(issues)) {
+			/*if(CollectionUtils.isEmpty(issues) && versionData.getStartDate() != null && versionData.getReleaseDate() != null) {
 				query = String.format(featureSettings.getDefectsCreatedQuery(), projectId, DateUtil.format(versionData.getStartDate(), "yyyy/MM/dd HH:mm"),DateUtil.format(versionData.getReleaseDate(), "yyyy/MM/dd HH:mm"));
 				issues = getIssues(query, featureSettings);
-			}
+			}*/
 			
 			if(!CollectionUtils.isEmpty(issues)) {
 		    	versionData.setDefectsFound(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));

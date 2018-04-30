@@ -5,6 +5,8 @@ import javax.validation.constraints.Size;
 
 public class HeatMapRequest {
 	
+	private String objectId;
+	
 	@NotNull
     @Size(min=3,max=40, message="projectId should be min=3,max=40 characters")
 	private String projectId;
@@ -71,6 +73,13 @@ public class HeatMapRequest {
 	
 	private String development;
 
+	public String getObjectId() {
+		return objectId;
+	}
+
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
 
 	/**
 	 * @return the projectId
