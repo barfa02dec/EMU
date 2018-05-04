@@ -1,13 +1,13 @@
 package com.capitalone.dashboard.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.DefectCount;
@@ -34,28 +34,34 @@ public class ReleaseServiceImpl implements ReleaseService {
 	}
 
 	@Override
-	public Iterable<Release> getReleases(String projectId, String projectName) {
-		return releaseRepository.findByProjectId(projectId,projectName);
+	public Iterable<Release> getReleases(String projectId) {
+		return releaseRepository.findByProjectId(projectId);
 	}
 
 	@Override
-	public Release getReleaseDetails(Long releaseId,String projectId) {
-		return releaseRepository.findByReleaseId(releaseId,projectId);
+	public Release getReleaseDetails(String projectId, Long releaseId) {
+		return releaseRepository.findByReleaseId(projectId, releaseId);
 	}
 
 	@Override
-	public Release create(ReleaseMetricsRequest re) {
-		// TODO Auto-generated method stub
-		try {
-			createScope(re);
-			return releaseRepository.save(mapReleaseRequestToReleaseModel(re));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public Release create(ReleaseMetricsRequest releasereq) {
+		createScope(releasereq);
+		
+		Release existingrelease = releaseRepository.findByReleaseId(releasereq.getProjectId(), releasereq.getReleaseId());
+		
+		if(existingrelease != null){
+			throw new IllegalStateException("The release with release id " + releasereq.getReleaseId() + " already exists.");
 		}
-		return null;
+
+		return releaseRepository.save(convertReleaseRequestToReleaseModel(existingrelease, releasereq));
 	}
-	
+
+	@Override
+	public Release update(ReleaseMetricsRequest releasereq) {
+		Release existingsprint = releaseRepository.findOne(new ObjectId(releasereq.getObjectId()));
+		return releaseRepository.save(convertReleaseRequestToReleaseModel(existingsprint, releasereq));
+	}
+
 	private void createScope(ReleaseMetricsRequest rq) {
 		Scope scope = scopeRepository.getScopeByIdAndProjectName(
 				rq.getProjectId(), rq.getProjectName());
@@ -80,52 +86,51 @@ public class ReleaseServiceImpl implements ReleaseService {
 		Collector collector = collectorRepository.findByName("Jira");
 		return collector.getId();
 	}
-	private Release mapReleaseRequestToReleaseModel(ReleaseMetricsRequest re) throws ParseException{
-		Release release=releaseRepository.findByReleaseId(re.getReleaseId(),re.getProjectId());
+	
+	private Release convertReleaseRequestToReleaseModel(Release release, ReleaseMetricsRequest releasereq) {
+		
 		if(null == release){
 			release= new Release();
-			release.setReleaseId(re.getReleaseId());
-			release.setProjectId(re.getProjectId());
-			release.setProjectName(re.getProjectName());
-			release.setName(re.getName());
-			release.setDescription(re.getDescription());
-			//release.setReleaseDate(re.getReleaseDate());
-			//release.setStartDate(re.getStartDate());
+			release.setReleaseId(releasereq.getReleaseId());
+			release.setProjectId(releasereq.getProjectId());
+			release.setProjectName(releasereq.getProjectName());
+			release.setName(releasereq.getName());
+			release.setDescription(releasereq.getDescription());
+			release.setAutomated(1);
 			
-			release.setDateRelease(re.getReleaseDate());
-			release.setDateStart(re.getStartDate());
+			release.setReleaseDate(StringUtils.isEmpty(releasereq.getReleaseDate()) ? null : new Date(Long.parseLong(releasereq.getReleaseDate())));
+			release.setStartDate(StringUtils.isEmpty(releasereq.getStartDate()) ? null : new Date(Long.parseLong(releasereq.getStartDate())));
 		}
-		release.setReleased(re.isReleased());
+		release.setReleased(releasereq.isReleased());
 		
-		VersionData data=new VersionData();
+		VersionData data=new VersionData();		
+		data.setNoofStoryPoints(releasereq.getNoofStoryCommitted());
+		data.setNoofStoryCompleted(releasereq.getNoofStoryCompleted());
+		data.setReleased(releasereq.isReleased());
+		data.setReleaseId(releasereq.getReleaseId());
+		data.setReleaseName(releasereq.getName());
 		
-		data.setNoofStoryPoints(re.getNoofStoryCommitted());
-		data.setNoofStoryCompleted(re.getNoofStoryCompleted());
-		data.setReleased(re.isReleased());
-		data.setReleaseId(re.getReleaseId());
-		data.setReleaseName(re.getName());
-		
-		data.setReleaseDate(new SimpleDateFormat("yyyy-MM-dd").parse(re.getReleaseDate()));
-		data.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(re.getStartDate()));
+		data.setReleaseDate(StringUtils.isEmpty(releasereq.getReleaseDate()) ? null : new Date(Long.parseLong(releasereq.getReleaseDate())));
+		data.setStartDate(StringUtils.isEmpty(releasereq.getStartDate()) ? null : new Date(Long.parseLong(releasereq.getStartDate())));
 		
 		//defects found
 		DefectCount defectsFound= new DefectCount();
 		List<NameValuePair> list1= new ArrayList<NameValuePair>();
 		NameValuePair np1= new NameValuePair();
 		np1.setName("High");
-		np1.setValue(re.getHighDefectsFound());
+		np1.setValue(releasereq.getHighDefectsFound());
 		
 		NameValuePair np2= new NameValuePair();
 		np2.setName("Low");
-		np2.setValue(re.getLowDefectsFound());
+		np2.setValue(releasereq.getLowDefectsFound());
 		
 		NameValuePair np3= new NameValuePair();
 		np3.setName("Medium");
-		np3.setValue(re.getMediumDefectsFound());
+		np3.setValue(releasereq.getMediumDefectsFound());
 		
 		NameValuePair np4= new NameValuePair();
 		np4.setName("Critical");
-		np4.setValue(re.getCriticalDefectsFound());
+		np4.setValue(releasereq.getCriticalDefectsFound());
 		
 		list1.add(np1);
 		list1.add(np2);
@@ -133,7 +138,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 		list1.add(np4);
 
 		Long total1 =  0L;
-		total1=(long) (re.getHighDefectsFound()+re.getLowDefectsFound()+re.getMediumDefectsFound()+re.getCriticalDefectsFound());
+		total1=(long) (releasereq.getHighDefectsFound()+releasereq.getLowDefectsFound()+releasereq.getMediumDefectsFound()+releasereq.getCriticalDefectsFound());
 		defectsFound.setTotal(total1);
 		defectsFound.setSeverity(list1);
 		data.setDefectsFound(defectsFound);
@@ -142,19 +147,19 @@ public class ReleaseServiceImpl implements ReleaseService {
 		List<NameValuePair> list2= new ArrayList<NameValuePair>();
 		NameValuePair dnp1= new NameValuePair();
 		dnp1.setName("High");
-		dnp1.setValue(re.getHighDefectsClosed());
+		dnp1.setValue(releasereq.getHighDefectsClosed());
 		
 		NameValuePair dnp2= new NameValuePair();
 		dnp2.setName("Low");
-		dnp2.setValue(re.getLowDefectsClosed());
+		dnp2.setValue(releasereq.getLowDefectsClosed());
 		
 		NameValuePair dnp3= new NameValuePair();
 		dnp3.setName("Medium");
-		dnp3.setValue(re.getMediumDefectsClosed());
+		dnp3.setValue(releasereq.getMediumDefectsClosed());
 		
 		NameValuePair dnp4= new NameValuePair();
 		dnp4.setName("Critical");
-		dnp4.setValue(re.getCriticalDefectsClosed());
+		dnp4.setValue(releasereq.getCriticalDefectsClosed());
 		
 		list2.add(dnp1);
 		list2.add(dnp2);
@@ -162,7 +167,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 		list2.add(dnp4);
 		
 		Long total2 =  0L;
-		total2=(long) (re.getHighDefectsClosed()+re.getLowDefectsClosed()+re.getMediumDefectsClosed()+re.getCriticalDefectsClosed());
+		total2=(long) (releasereq.getHighDefectsClosed()+releasereq.getLowDefectsClosed()+releasereq.getMediumDefectsClosed()+releasereq.getCriticalDefectsClosed());
 		
 		defectsResolved.setTotal(total2);
 		defectsResolved.setSeverity(list2);
@@ -173,19 +178,19 @@ public class ReleaseServiceImpl implements ReleaseService {
 		List<NameValuePair> list3= new ArrayList<NameValuePair>();
 		NameValuePair dnpp1= new NameValuePair();
 		dnpp1.setName("High");
-		dnpp1.setValue(re.getHighDefectsUnresolved());
+		dnpp1.setValue(releasereq.getHighDefectsUnresolved());
 		
 		NameValuePair dnpp2= new NameValuePair();
 		dnpp2.setName("Low");
-		dnpp2.setValue(re.getLowDefectsUnresolved());
+		dnpp2.setValue(releasereq.getLowDefectsUnresolved());
 		
 		NameValuePair dnpp3= new NameValuePair();
 		dnpp3.setName("Medium");
-		dnpp3.setValue(re.getMediumDefectsUnresolved());
+		dnpp3.setValue(releasereq.getMediumDefectsUnresolved());
 		
 		NameValuePair dnpp4= new NameValuePair();
 		dnpp4.setName("Critical");
-		dnpp4.setValue(re.getCriticalDefectsUnresolved());
+		dnpp4.setValue(releasereq.getCriticalDefectsUnresolved());
 		
 		list3.add(dnpp1);
 		list3.add(dnpp2);
@@ -193,7 +198,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 		list3.add(dnpp4);
 		
 		Long total3 =  0L;
-		total3=(long) (re.getHighDefectsUnresolved()+re.getLowDefectsUnresolved()+re.getMediumDefectsUnresolved()+re.getCriticalDefectsUnresolved());
+		total3=(long) (releasereq.getHighDefectsUnresolved()+releasereq.getLowDefectsUnresolved()+releasereq.getMediumDefectsUnresolved()+releasereq.getCriticalDefectsUnresolved());
 		
 		defectsUnResolved.setTotal(total3);
 		defectsUnResolved.setSeverity(list3);

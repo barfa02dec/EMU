@@ -1,5 +1,8 @@
 package com.capitalone.dashboard.service;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import com.capitalone.dashboard.model.Customer;
 import com.capitalone.dashboard.model.Dashboard;
-import com.capitalone.dashboard.model.HeatMap;
 import com.capitalone.dashboard.model.Project;
 import com.capitalone.dashboard.model.ProjectRoles;
 import com.capitalone.dashboard.model.UserGroup;
@@ -26,10 +28,6 @@ import com.capitalone.dashboard.repository.UserRoleRepository;
 import com.capitalone.dashboard.request.CustomerRequest;
 import com.capitalone.dashboard.request.ProjectRequest;
 import com.capitalone.dashboard.request.ProjectUserRoleRequest;
-
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {

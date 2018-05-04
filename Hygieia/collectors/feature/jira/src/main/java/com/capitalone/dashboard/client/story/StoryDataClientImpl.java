@@ -34,6 +34,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.atlassian.jira.rest.client.api.domain.Issue;
 import com.atlassian.jira.rest.client.api.domain.IssueField;
@@ -278,9 +279,13 @@ public class StoryDataClientImpl implements StoryDataClient {
 					sprint.setName(jiraSprint.getName());
 					sprint.setViewBoardsUrl(jiraSprint.getViewBoardsUrl());
 					sprint.setProjectId(projectId);
-					sprint.setStart(jiraSprint.getStart());
+					sprint.setStartDate(StringUtils.isEmpty(jiraSprint.getStart()) ? null : new Date(Long.parseLong(jiraSprint.getStart())));
+					sprint.setEndDate(StringUtils.isEmpty(jiraSprint.getEnd()) ? null : new Date(Long.parseLong(jiraSprint.getEnd())));
 					sprint.setClosed(jiraSprint.getClosed());
 					sprint.setProjectName(projectName);
+				}else{
+					sprint.setEditable(jiraSprint.getEditable());
+					sprint.setEndDate(StringUtils.isEmpty(jiraSprint.getEnd()) ? null : new Date(Long.parseLong(jiraSprint.getEnd())));
 				}
 				
 				// Get the detailed metrics for sprint with status [open] 
@@ -289,8 +294,12 @@ public class StoryDataClientImpl implements StoryDataClient {
 					JiraCollectorUtil.getSprintMetrics(jiraSprint, projectId, featureSettings);
 					sprint.setSprintData(jiraSprint.getSprintData());
 				}
-				sprint.setEditable(jiraSprint.getEditable());
-				sprint.setEnd(jiraSprint.getEnd());
+				
+				if(sprint.getSprintData() != null){
+					sprint.setStartDate(sprint.getSprintData().getStartDate());
+					sprint.setEndDate(sprint.getSprintData().getCompleteDate());
+				}
+				
 				list.add(sprint);
 			}catch(Exception ex){
 				ex.printStackTrace();
@@ -316,11 +325,16 @@ public class StoryDataClientImpl implements StoryDataClient {
 					release.setReleaseId(jiraVersion.getId());
 					release.setProjectId(projectId);
 					release.setName(jiraVersion.getName());
-					release.setDateStart(jiraVersion.getStartDate());
+					release.setStartDate(StringUtils.isEmpty(jiraVersion.getStartDate()) ? null : new SimpleDateFormat("yyyy-MM-dd").parse(jiraVersion.getStartDate()));
+					release.setReleaseDate(StringUtils.isEmpty(jiraVersion.getReleaseDate()) ? null : new SimpleDateFormat("yyyy-MM-dd").parse(jiraVersion.getReleaseDate()));
 					release.setReleased(jiraVersion.getReleased());
 					release.setProjectName(projectName);
+				}else{
+					release.setOverdue(jiraVersion.getOverdue());
+					release.setReleaseDate(StringUtils.isEmpty(jiraVersion.getReleaseDate()) ? null : new SimpleDateFormat("yyyy-MM-dd").parse(jiraVersion.getReleaseDate()));
 				}
 				
+
 				// Get the detailed version metrics for release with status [not release] 
 				// Get the detailed version metrics for release with status[released] but detailed metrics/versionData is null
 				if ((release.getReleased() && null == release.getVersionData())|| !release.getReleased()) {
@@ -332,8 +346,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 					release.setVersionData(jiraVersion.getVersionData());
 				}
 	
-				release.setOverdue(jiraVersion.getOverdue());
-				release.setDateRelease(jiraVersion.getReleaseDate());
 				releaseList.add(release);
 			}catch(Exception ex){
 				ex.printStackTrace();

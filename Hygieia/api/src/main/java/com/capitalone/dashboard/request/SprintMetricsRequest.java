@@ -1,7 +1,8 @@
 package com.capitalone.dashboard.request;
 
-public class SprintMetrcisRequest {
+public class SprintMetricsRequest {
 	
+	private String objectId; //mongodb id
 	private Long sprintId;
 	private String sprintName;
 	private String desc;
@@ -48,8 +49,15 @@ public class SprintMetrcisRequest {
     private int sprintMediumDefectsResolved;
     private int sprintLowDefectsResolved;
     private int sprintHighDefectsResolved;
-	
-	
+    
+    
+	public String getObjectId() {
+		return objectId;
+	}
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
+
 	public Integer getCompletedIssueCount() {
 		return completedIssueCount;
 	}
@@ -272,5 +280,4 @@ public class SprintMetrcisRequest {
 	public void setSprintHighDefectsResolved(int sprintHighDefectsResolved) {
 		this.sprintHighDefectsResolved = sprintHighDefectsResolved;
 	}
-
 }

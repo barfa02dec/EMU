@@ -1,5 +1,7 @@
 package com.capitalone.dashboard.model;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -13,13 +15,14 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
 	    private String name;
 	    private Boolean archived;
 	    private Boolean released;
-	    private String dateRelease;
-	    private String dateStart;
+	    private Date releaseDate;
+	    private Date startDate;
 	    private String overdue;
 	    private VersionData versionData;
 	    private String originalreleaseData;
 	    private String projectId;
 	    private String projectName;
+	    private int automated;
 	    	    
 		public String getProjectName() {
 			return projectName;
@@ -69,26 +72,26 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
 		/**
 		 * @return the dateRelease
 		 */
-		public String getDateRelease() {
-			return dateRelease;
+		public Date getReleaseDate() {
+			return releaseDate;
 		}
 		/**
 		 * @param dateRelease the dateRelease to set
 		 */
-		public void setDateRelease(String dateRelease) {
-			this.dateRelease = dateRelease;
+		public void setReleaseDate(Date releaseDate) {
+			this.releaseDate = releaseDate;
 		}
 		/**
 		 * @return the dateStart
 		 */
-		public String getDateStart() {
-			return dateStart;
+		public Date getStartDate() {
+			return startDate;
 		}
 		/**
 		 * @param dateStart the dateStart to set
 		 */
-		public void setDateStart(String dateStart) {
-			this.dateStart = dateStart;
+		public void setStartDate(Date startDate) {
+			this.startDate = startDate;
 		}
 		/*public String getReleaseDate() {
 			return releaseDate;
@@ -121,6 +124,12 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
 			this.originalreleaseData = originalreleaseData;
 		}
 		
+		public int getAutomated() {
+			return automated;
+		}
+		public void setAutomated(int automated) {
+			this.automated = automated;
+		}
 		@Override
 		public boolean equals(Object o) {
 			if (this == o)

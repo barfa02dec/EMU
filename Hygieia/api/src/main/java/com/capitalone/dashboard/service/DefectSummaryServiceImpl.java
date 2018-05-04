@@ -1,7 +1,6 @@
 package com.capitalone.dashboard.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,28 +31,20 @@ public class DefectSummaryServiceImpl implements DefectSummaryService {
 		this.aggregationRepository = aggregationRepository;
 	}
 
-
-
 	@Override
 	public Iterable<DefectAggregation> getAllDefectDetails() {
 			return aggregationRepository.findAll();
 	}
-
-
 
 	@Override
 	public DefectAggregation findByProjectId(String id, String projectName) {
 		return aggregationRepository.findByProjectIdAndName(id,projectName);
 	}
 
-
-
 	@Override
 	public DefectAggregation findByMetricsProjectId(String metricsProjectId) {
 		return aggregationRepository.findByMetricsProjectId(metricsProjectId);
 	}
-
-
 
 	@Override
 	public DefectAggregation create(DefectSummaryRequest request) {
@@ -243,5 +234,4 @@ public class DefectSummaryServiceImpl implements DefectSummaryService {
 		
 		return da;
 	}
-
 }

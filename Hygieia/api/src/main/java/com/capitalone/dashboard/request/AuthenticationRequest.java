@@ -11,6 +11,8 @@ public class AuthenticationRequest {
 
     @NotNull
     private String password;
+    
+    private String newPassword;
 
     private boolean isSysAdmin=false;
     
@@ -42,7 +44,15 @@ public class AuthenticationRequest {
         return new Authentication(username, password,isSysAdmin);
     }
 
-    public Authentication copyTo(Authentication authentication) {
+    public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public Authentication copyTo(Authentication authentication) {
         Authentication updated = toAuthentication();
         updated.setId(authentication.getId());
         return updated;

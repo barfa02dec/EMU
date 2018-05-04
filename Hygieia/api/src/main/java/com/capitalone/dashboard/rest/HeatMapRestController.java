@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -75,7 +74,7 @@ public class HeatMapRestController {
 	 * @param heatMapRequest
 	 * @param response
 	 */
-	@RequestMapping(value = "/projectheatmaps/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/projectheatmaps", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void createHeatmap(@RequestBody HeatMapRequest heatMapRequest, HttpServletResponse response) {
 		
@@ -89,12 +88,12 @@ public class HeatMapRestController {
 	 * @param heatMapRequest
 	 * @param response
 	 */
-	@RequestMapping(value = "/projectheatmaps/update/{objectId}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/projectheatmaps", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void updateHeatMap(@PathVariable String objectId, @RequestBody HeatMapRequest heatMapRequest, HttpServletResponse response) {
+	public void updateHeatMap(@RequestBody HeatMapRequest heatmapRequest, HttpServletResponse response) {
 		
 		LOGGER.debug("Updating Heat map");
-		heatMapService.updateHeatmap(new ObjectId(objectId), heatMapRequest);
+		heatMapService.updateHeatmap(new ObjectId(heatmapRequest.getObjectId()), heatmapRequest);
 	} 
 	
 	/**
@@ -102,10 +101,10 @@ public class HeatMapRestController {
 	 * 
 	 * @param projectId
 	 */
-	@RequestMapping(value = "/projectheatmaps/delete", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/projectheatmaps", method = RequestMethod.DELETE)
 	@ResponseStatus(value = HttpStatus.OK)
-	public void deleteHeatMap(@RequestParam(value = "heatmapId", required = true) String heatmapId) {
+	public void deleteHeatmap(@RequestParam(value = "heatmapId", required = true) String heatmapId) {
 		LOGGER.debug("Deleting Heat map");
-		heatMapService.deleteHeatMap(heatmapId);
+		heatMapService.deleteHeatmap(heatmapId);
 	}
 }

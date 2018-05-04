@@ -23,29 +23,33 @@ public class ReleaseController {
 		this.releaseService = releaseService;
 	}
 	@RequestMapping(method=RequestMethod.GET,value="/releases")
-	public List<Release> getReleasesForProject(
+	public List<Release> getReleases(
 			@RequestParam(name="projectId") String projectId, 
-			@RequestParam(name="projectName") String projectName,
 			@RequestParam(value = "noOfReleaseToShow", required = true) int noOfReleaseToShow){
 		
-		List<Release> releases = new ArrayList<Release>();
-		List <Release> releasesfromDB = (List<Release>) releaseService.getReleases(projectId, projectName);
+		List <Release> releasesfromDB = (List<Release>) releaseService.getReleases(projectId);
 		Collections.sort(releasesfromDB);
-		
+
+		List<Release> releases = new ArrayList<Release>();
 		releasesfromDB.stream().limit(noOfReleaseToShow).forEach(release -> releases.add(release));
 		
 		return releases;
 	}
 	
 	@RequestMapping(method=RequestMethod.GET,value="/releases/details")
-	public Release getReleaseDetailsWithID(@RequestParam(name="releaseId") Long releaseId,
+	public Release getReleaseDetail(@RequestParam(name="releaseId") Long releaseId,
 			@RequestParam(name="projectId") String projectId)
 	{
-		return releaseService.getReleaseDetails(releaseId, projectId);
+		return releaseService.getReleaseDetails(projectId, releaseId);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/releases")
 	public Release createReleaseMetrics(@RequestBody ReleaseMetricsRequest req){
 		return releaseService.create(req);
+	}
+	
+	@RequestMapping(method=RequestMethod.PUT, value="/releases")
+	public Release updateReleaseMetrics(@RequestBody ReleaseMetricsRequest req){
+		return releaseService.update(req);
 	}
 }

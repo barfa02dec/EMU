@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capitalone.dashboard.model.Sprint;
-import com.capitalone.dashboard.request.SprintMetrcisRequest;
+import com.capitalone.dashboard.request.SprintMetricsRequest;
 import com.capitalone.dashboard.service.SprintService;
 
 @RestController
@@ -27,13 +27,12 @@ public class SprintController {
 	}
 
 	@RequestMapping(value = "/sprints", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Sprint> getAllDefects(
+	public List<Sprint> getSprints(
 			@RequestParam(value = "projectId", required = true) String projectId,
 			@RequestParam(value = "projectName", required = true) String projectName,
 			@RequestParam(value = "noOfSprintToShow", required = true) int noOfsprintsToShow) {
 
-		List<Sprint> sprintsInDB = sprintService.getSprints(projectId,
-				projectName);
+		List<Sprint> sprintsInDB = sprintService.getSprints(projectId);
 		Collections.sort(sprintsInDB);
 
 		List<Sprint> sprints = new ArrayList<Sprint>();
@@ -44,13 +43,19 @@ public class SprintController {
 	}
 	
 	@RequestMapping(value = "/sprints/details", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Sprint getAllDefects(@RequestParam(value = "sid", required = true) Long sid,@RequestParam(value = "projectId", required = true) String projectId) {
-		return sprintService.getSprintDetails(sid,projectId);
+	public Sprint getSprintDetails(@RequestParam(value = "sid", required = true) Long sprintId, 
+			@RequestParam(value = "projectId", required = true) String projectId) {
+		return sprintService.getSprintDetails(projectId, sprintId);
 	}
 	
 	@RequestMapping(value = "/sprints", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Sprint createSprintMetrics(@RequestBody SprintMetrcisRequest re){
+	public Sprint createSprintMetrics(@RequestBody SprintMetricsRequest re){
 		return sprintService.create(re);
+	}
+	
+	@RequestMapping(value = "/sprints", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Sprint updateSprintMetrics(@RequestBody SprintMetricsRequest re){
+		return sprintService.update(re);
 	}
 	
 }

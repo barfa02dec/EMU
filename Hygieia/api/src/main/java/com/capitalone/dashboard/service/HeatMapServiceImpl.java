@@ -1,8 +1,5 @@
 package com.capitalone.dashboard.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -38,42 +35,29 @@ public class HeatMapServiceImpl implements HeatMapService{
 
 	@Override
 	public HeatMap createHeatmap(HeatMapRequest heatMapRequest){
-		LOGGER.debug("Adding heatmap fields");
-		return heatMaprepository.save(mapHeatMapRequestToCreateHeatMap(heatMapRequest));
+		LOGGER.debug("Adding heatmap");
+		return heatMaprepository.save(convertHeatmapRequestToHeatmapModel(heatMapRequest));
 	}
 
-	private HeatMap mapHeatMapRequestToCreateHeatMap(HeatMapRequest hre) {
+	private HeatMap convertHeatmapRequestToHeatmapModel(HeatMapRequest hre) {
 
 		LOGGER.debug("Find heatmap for" , hre.getProjectId());
 
 		HeatMap heat = heatMaprepository.findByOneProjectId(hre.getProjectId(),
 				hre.getSubmissionDate());
+		
 		if (null == heat) {
 			heat = new HeatMap();
 			heat.setProjectId(hre.getProjectId());
-
-			/*Date date = null;
-			try {
-				SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
-				date = sdf.parse(hre.getSubmissionDate());
-				
-				if (!hre.getSubmissionDate().equals(sdf.format(date))) {
-					date = null;
-				}
-				heat.setSubmissionDate(hre.getSubmissionDate());
-			} catch (ParseException ex) {
-				ex.printStackTrace();
-			}*/
 			heat.setSubmissionDate(hre.getSubmissionDate());
 		}
 		
 		ProjectHeatmapData projectHeatmapData = new ProjectHeatmapData();
 
-		mapHeatMapRequest(projectHeatmapData, hre);
+		convertHeatmapRequest(projectHeatmapData, hre);
 
 		heat.setProjectHeatmapData(projectHeatmapData);
 		return heat;
-
 	}
 
 	@Override
@@ -81,55 +65,32 @@ public class HeatMapServiceImpl implements HeatMapService{
 
 		LOGGER.info("Update heatmap for ", hre.getProjectId());
 
-		try{
-			HeatMap heat = heatMaprepository.findOne(objectId);
+		HeatMap heat = heatMaprepository.findOne(objectId);
 
-			if(heat!=null) {
-				mapHeatMapRequestToUpdateHeatMap(hre, heat);
-				return heatMaprepository.save(heat);
-			}
-
-		}catch (Exception e) {
+		if(heat != null) {
+			convertHeatmapRequestToHeatMapModel(hre, heat);
+			return heatMaprepository.save(heat);
+		}else{
 			return null;
 		}
-		return null;
+			
 	}
 
-	private HeatMap mapHeatMapRequestToUpdateHeatMap(HeatMapRequest hre,
+	private HeatMap convertHeatmapRequestToHeatMapModel(HeatMapRequest hre,
 			HeatMap heat) {
 
 		heat.setProjectId(hre.getProjectId());
-		// heat.setSubmissionDate(parseDate(hre.getSubmissionDate()));
-
-		/*
-		 * try { heat.setSubmissionDate(new
-		 * SimpleDateFormat("MM-dd-yyyy").parse(hre.getSubmissionDate())); }
-		 * catch (ParseException e) { e.printStackTrace(); }
-		 */
-
-		/*Date date = null;
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
-			date = sdf.parse(hre.getSubmissionDate());
-			
-			if (!hre.getSubmissionDate().equals(sdf.format(date))) {
-				date = null;
-			}
-			heat.setSubmissionDate(hre.getSubmissionDate());
-		} catch (ParseException ex) {
-			ex.printStackTrace();
-		}*/
 		heat.setSubmissionDate(hre.getSubmissionDate());
 		ProjectHeatmapData projectHeatmapData = new ProjectHeatmapData();
 
-		mapHeatMapRequest(projectHeatmapData, hre);
+		convertHeatmapRequest(projectHeatmapData, hre);
 
 		heat.setProjectHeatmapData(projectHeatmapData);
 		return heat;
-
 	}
 
-	private void mapHeatMapRequest(ProjectHeatmapData projectHeatmapData, HeatMapRequest hre) {
+	private void convertHeatmapRequest(ProjectHeatmapData projectHeatmapData, HeatMapRequest hre) {
+		
 		ProjectHeatmapData.CustomerWSR customerWSR = projectHeatmapData.new CustomerWSR();
 		customerWSR.setCustomerWSRStatus(hre.getCustomerWSRStatus());
 		projectHeatmapData.setCustomerWSR(customerWSR);
@@ -214,7 +175,7 @@ public class HeatMapServiceImpl implements HeatMapService{
 	}
 
 	@Override
-	public void deleteHeatMap(String projectId) {
+	public void deleteHeatmap(String projectId) {
 
 		LOGGER.info("Delate Heatmap for" , projectId);
 		HeatMap heatMap = (HeatMap) heatMaprepository.getByProjectId(projectId);
