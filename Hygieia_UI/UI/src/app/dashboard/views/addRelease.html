@@ -8,11 +8,11 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Release Id:</label>
+                    <label class="control-label createproj-label-props">Release id<span style="color:red">*</span></label>
                 </div>
                 <div class="col-md-8">
                     <form-group input="dashboardTitle" errors="{required: 'Release id is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
-                        <input type="text" autofocus name="dashboardTitle" numbers-only class="form-control" placeholder="Release id" ng-model="arc.releaseId" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
+                        <input autofocus type="text" name="dashboardTitle" numbers-only class="form-control" placeholder="Release id" ng-model="arc.releaseId" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
                     </form-group>
                 </div>
             </div>
@@ -20,7 +20,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Release Name:</label>
+                    <label class="control-label createproj-label-props">Release name<span style="color:red">*</span></label>
                 </div>
                 <div class="col-md-8">
                     <form-group input="relesename" errors="{required: 'Release name is required', maxlength: 'Max length of 50 characters'}">
@@ -32,7 +32,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Release Status:</label>
+                    <label class="control-label createproj-label-props">Release status<span style="color:red">*</span></label>
                 </div>
                 <div class="col-md-8">
                     <form-group input="Status1" errors="{required:'Please select the status'}">
@@ -46,10 +46,10 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Release Date:</label>
+                    <label class="control-label createproj-label-props">Release date<span style="color:red">*</span></label>
                 </div>
                 <div class="col-md-4" style="height:45px;">
-                    <form-group input="date1" errors="{pattern:'Please enter date in correct format(yyyy-MM-dd)'}">
+                    <form-group input="date1" errors="{pattern:'Please enter date in correct format(yyyy-MM-dd)',required:'Please enter start date'}">
                         <datepicker date-format="yyyy-MM-dd" selector="form-control" date-max-limit="{{arc.releaseDate}}">
                             <div class="input-group">
                                 <input class="form-control font-fontawesome font-light" datepicker-validation ng-model="arc.startDate" name="date1" placeholder="  Start date" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" required/>
@@ -58,7 +58,7 @@
                     </form-group>
                 </div>
                 <div class="col-md-4">
-                    <form-group input="date2" errors="{pattern:'Please enter date in correct format(yyyy-MM-dd)'}">
+                    <form-group input="date2" errors="{pattern:'Please enter date in correct format(yyyy-MM-dd)',required:'Please enter end date'}">
                         <datepicker date-format="yyyy-MM-dd" selector="form-control" date-min-limit="{{arc.startDate}}">
                             <div class="input-group">
                                 <input class="form-control font-fontawesome font-light" datepicker-validation ng-model="arc.releaseDate" name="date2" ng-pattern="/([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/" placeholder="  Release date" required/>
@@ -71,7 +71,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Number Of Stories</label>
+                    <label class="control-label createproj-label-props">Number of stories</label>
                 </div>
                 <div class="col-md-8">
                     <form-group input="stories1">
@@ -83,7 +83,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Number Of Story Points</label>
+                    <label class="control-label createproj-label-props">Number of story points</label>
                 </div>
                 <div class="col-md-8">
                     <form-group input="story2">
@@ -108,7 +108,7 @@
             <label class="control-label createproj-label-props">Critical</label>
         </div>
         <div class="col-md-4">
-            <label class="control-label createproj-label-props" for="pwd">Defects Found</label>
+            <label class="control-label createproj-label-props" for="pwd">Defects found</label>
         </div>
         <div class="col-md-2">
             <form-group input="Low1">
@@ -130,15 +130,10 @@
                 <input type="text" numbers-only name="Critical1" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsFound" />
             </form-group>
         </div>
-        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Closed</label>
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects closed</label>
         <div class="col-md-2">
-            <form-group input="Critical2">
-                <input type="text" numbers-only name="Critical2" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsClosed" />
-            </form-group>
-        </div>
-        <div class="col-md-2">
-            <form-group input="High2">
-                <input type="text" numbers-only name="High2" class="form-control" placeholder="High" ng-model="arc.highDefectsClosed" />
+            <form-group input="Low2">
+                <input type="text" numbers-only name="Low2" class="form-control" placeholder="Low" ng-model="arc.lowDefectsClosed" />
             </form-group>
         </div>
         <div class="col-md-2">
@@ -147,11 +142,16 @@
             </form-group>
         </div>
         <div class="col-md-2">
-            <form-group input="Low2">
-                <input type="text" numbers-only name="Low2" class="form-control" placeholder="Low" ng-model="arc.lowDefectsClosed" />
+            <form-group input="High2">
+                <input type="text" numbers-only name="High2" class="form-control" placeholder="High" ng-model="arc.highDefectsClosed" />
             </form-group>
         </div>
-        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Unresolved</label>
+        <div class="col-md-2">
+            <form-group input="Critical2">
+                <input type="text" numbers-only name="Critical2" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsClosed" />
+            </form-group>
+        </div>
+        <!-- <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects unresolved</label>
         <div class="col-md-2">
             <form-group input="Critical3">
                 <input type="text" numbers-only name="Critical3" class="form-control" placeholder="Critical" ng-model="arc.criticalDefectsUnresolved" />
@@ -171,7 +171,7 @@
             <form-group input="Low3">
                 <input type="text" numbers-only name="Low3" class="form-control" placeholder="Low" ng-model="arc.lowDefectsUnresolved" />
             </form-group>
-        </div>
+        </div> -->
         <div class="button-row row" style="padding-left: 12px;">
             <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Create</button>
             <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>

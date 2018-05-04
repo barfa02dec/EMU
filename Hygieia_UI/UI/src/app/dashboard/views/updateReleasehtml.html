@@ -7,7 +7,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Release Id:</label>
+                    <label class="control-label createproj-label-props">Release id<span style="color:red">*</span></label>
                 </div>
                 <div class="col-md-8">
                     <form-group input="dashboardTitle" errors="{required: 'Release id is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
@@ -19,11 +19,11 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Release Name:</label>
+                    <label class="control-label createproj-label-props">Release name<span style="color:red">*</span></label>
                 </div>
                 <div class="col-md-8">
                     <form-group input="applicationName" errors="{required: 'Release name is required', maxlength: 'Max length of 50 characters'}">
-                        <input type="text" name="applicationName" class="form-control" placeholder="Release name" ng-model="urc.fetchReleasedetails.name" maxlength="50" autocomplete="off" required  />
+                        <input type="text" name="applicationName" class="form-control" placeholder="Release name" ng-model="urc.fetchReleasedetails.name" maxlength="50" autocomplete="off" required/>
                     </form-group>
                 </div>
             </div>
@@ -31,7 +31,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Release Status:</label>
+                    <label class="control-label createproj-label-props">Release status<span style="color:red">*</span></label>
                 </div>
                 <div class="col-md-8">
                     <form-group input="selectedTemplate" errors="{required: 'Status is required'}">
@@ -43,7 +43,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Release Date:</label>
+                    <label class="control-label createproj-label-props">Release date<span style="color:red">*</span></label>
                 </div>
                 <div class="col-md-4" style="height:45px;">
                     <form-group input="date1" errors="{pattern:'Please enter date in correct format(yyyy-MM-dd)'}">
@@ -64,7 +64,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Number Of Stories</label>
+                    <label class="control-label createproj-label-props">Number of stories</label>
                 </div>
                 <div class="col-md-8">
                     <form-group input="stories1">
@@ -76,7 +76,7 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label createproj-label-props">Number Of Story Points</label>
+                    <label class="control-label createproj-label-props">Number of story points</label>
                 </div>
                 <div class="col-md-8">
                     <form-group input="story2">
@@ -100,7 +100,7 @@
         <div class="col-md-2">
             <label class="control-label createproj-label-props">Critical</label>
         </div>
-        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Found</label>
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects found</label>
         <div class="col-md-2">
             <form-group input="Low1">
                 <input type="text" name="Low1" class="form-control" placeholder="Low" ng-model="urc.fetchReleasedetails.versionData.defectsFound.severity[1].value" numbers-only />
@@ -121,7 +121,7 @@
                 <input type="text" name="Critical1" class="form-control" placeholder="Critical" ng-model="urc.fetchReleasedetails.versionData.defectsFound.severity[3].value" numbers-only />
             </form-group>
         </div>
-        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Closed</label>
+        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects closed</label>
         <div class="col-md-2">
             <form-group input="Low2">
                 <input type="text" name="Low2" class="form-control" placeholder="Low" ng-model="urc.fetchReleasedetails.versionData.defectsResolved.severity[1].value" numbers-only />
@@ -142,7 +142,7 @@
                 <input type="text" name="Critical2" class="form-control" placeholder="Critical" ng-model="urc.fetchReleasedetails.versionData.defectsResolved.severity[3].value" numbers-only />
             </form-group>
         </div>
-        <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects Unresolved</label>
+        <!-- <label class="control-label col-md-4 createproj-label-props" for="pwd">Defects unresolved</label>
         <div class="col-md-2">
             <form-group input="Low3">
                 <input type="text" name="Low3" class="form-control" placeholder="Low" ng-model="urc.fetchReleasedetails.versionData.defectsUnresolved.severity[1].value" numbers-only />
@@ -162,7 +162,7 @@
             <form-group input="Critical3">
                 <input type="text" name="Critical3" class="form-control" placeholder="Critical" ng-model="urc.fetchReleasedetails.versionData.defectsUnresolved.severity[3].value" numbers-only />
             </form-group>
-        </div>
+        </div> -->
         <div class="button-row row" style="padding-left: 12px;">
             <button type="submit" class="btn btn-info green-btn-props project-map-add-btn" style="padding-top: 5px;margin-top: 0px;">Update</button>
             <button type="button" class="btn btn-default white-cancel-btn" style="padding-top: 3px;margin-left: 20px;" ng-click="$close()">Cancel</button>
