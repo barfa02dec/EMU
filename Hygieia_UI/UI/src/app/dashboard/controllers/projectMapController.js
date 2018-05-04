@@ -777,12 +777,16 @@
                 
                 if (ctrl.addSprint.$valid == true) {
                 projectData.postSprint(ctrl.sprintPayload).then(function (response) {
-                    $uibModalInstance.dismiss("cancel");
-                    $uibModal.open({
+                    ctrl.hideForm();
+                    featureData.sprintDta(ctrl.id, ctrl.name).then(sprintdataProcess);
+                    function sprintdataProcess(data) {
+                        ctrl.spAllDetails = data;
+            }           
+                    /*$uibModal.open({
                         template: '<confirm-popup msg="addSprint" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
-                    });
+                    });*/
                 })
             }
             }
@@ -1073,17 +1077,18 @@
                     month = "0"+month;
                   }
 
-                    return month+year;
-
-
-
-            }
+                    return month+"-"+"01-"+year;
+                }
 
             ctrl.postHeatMap = function () {
-                ctrl.heatMapPayload.submissionDate = getDate(ctrl.heatMapPayload.submissionDate);
-                ctrl.heatMapPayload.projectId = id;
+                
 
                 if (ctrl.addHeatmapPage.$valid == true) {
+
+                ctrl.subdta = getDate(ctrl.heatMapPayload.submissionDate);
+                ctrl.heatMapPayload.submissionDate = Date.parse(ctrl.subdta);
+                ctrl.heatMapPayload.projectId = id;
+
                 projectData.postHeatMap(ctrl.heatMapPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
