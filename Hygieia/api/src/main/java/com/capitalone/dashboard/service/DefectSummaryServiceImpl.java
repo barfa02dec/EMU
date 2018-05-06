@@ -8,6 +8,7 @@ import java.util.Map;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.capitalone.dashboard.model.Collector;
 import com.capitalone.dashboard.model.DefectAggregation;
@@ -48,39 +49,28 @@ public class DefectSummaryServiceImpl implements DefectSummaryService {
 
 	@Override
 	public DefectAggregation create(DefectSummaryRequest request) {
-		// TODO Auto-generated method stub
 		createScope(request);
-		DefectAggregation dag = mapDefectSummaryReqToModel(request);
+		DefectAggregation dag = convertDefectSummaryReqToModel(request);
 		return aggregationRepository.save(dag);
 	}
 	
 	private void createScope(DefectSummaryRequest rq) {
-		Scope scope = scopeRepository.getScopeByIdAndProjectName(
-				rq.getProjectId(), rq.getProjectName());
+		List<Scope> scopes = scopeRepository.getScopeById(rq.getProjectId());
 
-		if (scope == null) {
-			scope = new Scope();
+		if (CollectionUtils.isEmpty(scopes)) {
+			Scope scope = new Scope();
 			scope.setCollectorId(getJiraCollectorId());
 
-			// ID;
 			scope.setpId(rq.getProjectId());
-			// project ID
-
 			scope.setProjectId(rq.getProjectId());
-
 			scope.setName(rq.getProjectName());
-
 			scope.setIsDeleted("False");
-
 			scope.setAssetState("Active");
-			
 			scope.setProjectPath(rq.getProjectName());
 			scope.setToShowInEMUDashboard(Boolean.TRUE);
 			
 			scopeRepository.save(scope);
-
 		}
-
 	}
 	
 	private ObjectId getJiraCollectorId(){
@@ -88,15 +78,14 @@ public class DefectSummaryServiceImpl implements DefectSummaryService {
 		return collector.getId();
 	}
 	
-	private DefectAggregation mapDefectSummaryReqToModel(DefectSummaryRequest re){
+	private DefectAggregation convertDefectSummaryReqToModel(DefectSummaryRequest re){
+		DefectAggregation da=aggregationRepository.findByProjectId(re.getMetricsProjectId());
 		
-		DefectAggregation da=aggregationRepository.findByProjectIdAndName(re.getMetricsProjectId(),re.getProjectName());
 		if(null==da){
 			da= new DefectAggregation();
 			da.setProjectId(re.getProjectId());
 			da.setMetricsProjectId(re.getMetricsProjectId());
 			da.setProjectName(re.getProjectName());
-		
 		}
 		
 		//defects by priority
@@ -106,6 +95,7 @@ public class DefectSummaryServiceImpl implements DefectSummaryService {
 		defectsByProirity.put("High", re.getHighPriorityDefectsCount());
 		defectsByProirity.put("Critical", re.getCriticalPriorityDefectsCount());
 		da.setDefectsByProirity(defectsByProirity);
+
 		//defects by environment 
 		Map<String,Integer> defectsByEnvironment=new LinkedHashMap<String,Integer>();
 		defectsByEnvironment.put("UAT", re.getUatDefects());
@@ -169,7 +159,6 @@ public class DefectSummaryServiceImpl implements DefectSummaryService {
 		openDefectsByAge.put("Range3", l3);
 		openDefectsByAge.put("Range4", l4);
 		openDefectsByAge.put("Range5", l5);
-		
 		da.setOpenDefectsByAge(openDefectsByAge);
 		
 		//fixed defects by resolution
