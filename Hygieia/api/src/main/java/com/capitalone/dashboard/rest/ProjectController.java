@@ -48,7 +48,7 @@ public class ProjectController {
 		this.authService=authService;
 	}
 
-	@RequestMapping(value = "/createProject", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/projects", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createProject(@Valid @RequestBody ProjectRequest request) {
 		try{
 			Project project=projectService.create(request);
@@ -65,7 +65,7 @@ public class ProjectController {
 		}
 	}
 
-	@RequestMapping(value = "/deleteProject/{id}", method = DELETE)
+	@RequestMapping(value = "/projects/{id}", method = DELETE)
 	public ResponseEntity<String> deleteProject(@PathVariable String id) {
 		try{
 			ObjectId projectUniqueId=new ObjectId(id);
@@ -104,7 +104,7 @@ public class ProjectController {
 		}
 	}
 
-	@RequestMapping(value = "/getProjects", method = GET, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/projects", method = GET, produces = APPLICATION_JSON_VALUE)
 	public Iterable<Project> getProjects() {
 		Iterable<Project> projects = projectService.getActiveprojects();
 		return projects;
@@ -190,7 +190,7 @@ public class ProjectController {
 	 * @param customerRequest
 	 * @param response
 	 */
-	@RequestMapping(value = "/createCustomers", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customers", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void createCustomer(@RequestBody CustomerRequest customerRequest, HttpServletResponse response) {
 		projectService.createCustomers(customerRequest);
@@ -209,7 +209,7 @@ public class ProjectController {
 		return customerList;
 	}*/
 	
-	@RequestMapping(value = "/getCustomer", method = GET, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customers", method = GET, produces = APPLICATION_JSON_VALUE)
 	public @ResponseBody List<Customer> getCustomers()  {
 		List<Customer> customerList = projectService.getCustomer();
 		return customerList;

@@ -26,5 +26,4 @@ public class CustomerRequest {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
 }

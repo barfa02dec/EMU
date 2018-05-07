@@ -76,7 +76,6 @@ public class HeatMapRestController {
 	@RequestMapping(value = "/projectheatmaps", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void createHeatmap(@RequestBody HeatMapRequest heatMapRequest, HttpServletResponse response) {
-		
 		LOGGER.debug("Creating Heat map");
 		heatMapService.createHeatmap(heatMapRequest);
 	}
@@ -90,7 +89,6 @@ public class HeatMapRestController {
 	@RequestMapping(value = "/projectheatmaps", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void updateHeatMap(@RequestBody HeatMapRequest heatmapRequest, HttpServletResponse response) {
-		
 		LOGGER.debug("Updating Heat map");
 		heatMapService.updateHeatmap(heatmapRequest);
 	} 
