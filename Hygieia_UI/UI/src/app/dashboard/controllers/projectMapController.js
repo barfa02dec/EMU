@@ -667,12 +667,11 @@
 
                 if (ctrl.createRelease.$valid == true) {
                 projectData.postRelease(ctrl.releasePayload).then(function (response) {
-                    $uibModalInstance.dismiss("cancel");
-                    $uibModal.open({
-                        template: '<confirm-popup msg="addRelease" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
-                        controller: 'projectMapController',
-                        controllerAs: 'pm'
-                    });
+                    ctrl.hideForm();
+                    featureData.ReleaseData(ctrl.id, ctrl.namerelease).then(ReleaseDataProcessing);
+                        function ReleaseDataProcessing(data) {
+                            ctrl.releasegraph = data;
+                    }
                 })
             }
             }
@@ -770,12 +769,13 @@
             }
 
             ctrl.postSprint = function (proje) {
+                
+                
+                if (ctrl.addSprint.$valid == true) {
                 ctrl.sprintPayload.projectName = name;
                 ctrl.sprintPayload.projectId = id;
                 ctrl.sprintPayload.startDate = Date.parse(ctrl.sprintPayload.startDate);
                 ctrl.sprintPayload.endDate = Date.parse(ctrl.sprintPayload.endDate);
-                
-                if (ctrl.addSprint.$valid == true) {
                 projectData.postSprint(ctrl.sprintPayload).then(function (response) {
                     ctrl.hideForm();
                     featureData.sprintDta(ctrl.id, ctrl.name).then(sprintdataProcess);
@@ -826,6 +826,7 @@
                 var endDateMilliRel = Date.parse(ctrl.releaseEndDate);
 
                 ctrl.releasePayload = {
+                    "objectId":ctrl.fetchReleasedetails.id,
                     "projectName": ctrl.names,
                     "projectId": ctrl.names,
                     "releaseId": ctrl.fetchReleasedetails.releaseId,
@@ -852,7 +853,7 @@
 
                 if (ctrl.updateRelease.$valid == true) {
 
-                projectData.postRelease(ctrl.releasePayload).then(function (response) {
+                projectData.updateRelease(ctrl.releasePayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
                         template: '<confirm-popup msg="updateRelease" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
@@ -902,6 +903,7 @@
                 var endDateMilliSprint = Date.parse(ctrl.endDate);
 
                 ctrl.sprintEditPayload = {
+                    "objectId": ctrl.fetchdetails.id,
                     "projectId": projectidsprint,
                     "projectName": ctrl.names,
                     "sprintId": ctrl.fetchdetails.sid,
@@ -943,7 +945,7 @@
                 }
 
                 if (ctrl.updateSprint.$valid == true) {
-                projectData.postSprint(ctrl.sprintEditPayload).then(function (response) {
+                projectData.updateSprint(ctrl.sprintEditPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
                         template: '<confirm-popup msg="updateSprint"icon="btn btn-info project-map-add-btn inner-btn-prop"  action="$close()"></confirm-popup>',
@@ -1085,8 +1087,8 @@
 
                 if (ctrl.addHeatmapPage.$valid == true) {
 
-                ctrl.subdta = getDate(ctrl.heatMapPayload.submissionDate);
-                ctrl.heatMapPayload.submissionDate = Date.parse(ctrl.subdta);
+                ctrl.heatMapPayload.submissionDate = getDate(ctrl.heatMapPayload.submissionDate);
+                //ctrl.heatMapPayload.submissionDate = Date.parse(ctrl.subdta);
                 ctrl.heatMapPayload.projectId = id;
 
                 projectData.postHeatMap(ctrl.heatMapPayload).then(function (response) {
@@ -1122,6 +1124,7 @@
 
             ctrl.updateHeatmapPayload = {
 
+                "objectId":data.id,
                 "projectId": data.projectId,
                 "submissionDate":data.submissionDate, 
                 "customerWSRStatus": data.projectHeatmapData.customerWSR.customerWSRStatus,
@@ -1156,9 +1159,8 @@
             }
 
             ctrl.updateHeatMap = function () {
-                ctrl.objId = data.id;
                 if (ctrl.updateHeatMapPage.$valid == true) {
-                projectData.updateHeatMap(ctrl.updateHeatmapPayload, ctrl.objId).then(function (response) {
+                projectData.updateHeatMap(ctrl.updateHeatmapPayload).then(function (response) {
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
                         template: '<confirm-popup msg="updateHeatMap" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',

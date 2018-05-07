@@ -29,13 +29,15 @@
             postHeatMap:postHeatMap,
             updateHeatMap:updateHeatMap,
             fetchallCustomers:fetchallCustomers,
-            changePasswordFn:changePasswordFn
+            changePasswordFn:changePasswordFn,
+            updateSprint:updateSprint,
+            updateRelease:updateRelease
            
         };
 
          function fetchallprojects(usrnam){
 
-            return   $http.get("/api/getProjectsByUser/?username=" + usrnam)
+            return   $http.get("/api/projects/?username=" + usrnam)
                     .then(function(response) {
                        return response.data;
             });
@@ -44,7 +46,7 @@
         }
        function deleteProjectsfn(pid){
 
-            return   $http.delete('/api//deleteProject/' + pid)
+            return   $http.delete('/api//projects/' + pid)
                     .then(function(response) {
                        
                             return response.data;
@@ -54,7 +56,7 @@
         }
 
         function postProjectfn(payload){
-            return   $http.post('/api/createProject ', (payload))
+            return   $http.post('/api/projects', (payload))
                     .then(function(response) {
                        
                             return response.data;
@@ -63,7 +65,7 @@
         }
 
         function editprojectfn(payload){
-            return   $http.post('/api/updateProject', (payload))
+            return   $http.put('/api/projects', (payload))
                     .then(function(response) {
                        
                             return response.data;
@@ -110,30 +112,44 @@
                     });
         }
 
+        function updateSprint(payload){
+            return   $http.put('/api/sprints', (payload))
+                    .then(function(response) {
+                       return response.data;
+                    });
+        }
+
         function postRelease(payload){
             return   $http.post('/api/releases', (payload))
                     .then(function(response) {
                        return response.data;
                     });
         }
+
+        function updateRelease(payload){
+            return   $http.put('/api/releases', (payload))
+                    .then(function(response) {
+                       return response.data;
+                    });
+        }
         
         function postHeatMap(payload) {
-            return   $http.post('/api/projectheatmaps/create', (payload))
+            return   $http.post('/api/heatmaps', (payload))
                     .then(function(response) {
                        return response.data;
                     });
         }
 
-        function updateHeatMap(payload,objId) {
+        function updateHeatMap(payload) {
             http://localhost:3001/api/projectheatmaps/update/{objectId}
-            return   $http.put('/api/projectheatmaps/update/' + objId, (payload))
+            return   $http.put('/api/heatmaps', (payload))
                     .then(function(response) {
                        return response.data;
                     });
         }
 
         function fetchallCustomers(){
-            return   $http.get('/api/getCustomer')
+            return   $http.get('/api/customers')
                     .then(function(response) {
                        return response.data;
                     });

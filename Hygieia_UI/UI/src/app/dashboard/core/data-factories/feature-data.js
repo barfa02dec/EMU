@@ -187,7 +187,7 @@
 
 		 function heatMapData(projectid) {
             
-             return   $http.get("/api/getheatmaps/?projectId=" + projectid + '&noOfHeatMapToShow=' + 3)
+             return   $http.get("/api/heatmaps/?projectId=" + projectid + '&noOfHeatMapToShow=' + 3)
                     .then(function(response) {
                        return response.data;
                     });
