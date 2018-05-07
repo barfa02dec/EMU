@@ -65,9 +65,9 @@
 					});
 		}
 
-		function jiraDataGer(filterProjectId,projectsname) { 
+		function jiraDataGer(filterProjectId) { 
 			 
-			return $http.get('/api/defectSummary/' +filterProjectId + "/" + projectsname)
+			return $http.get('/api/defectSummary/' +filterProjectId)
 					.then(function(response) {
 						return response.data;
 					});

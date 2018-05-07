@@ -31,7 +31,8 @@
             fetchallCustomers:fetchallCustomers,
             changePasswordFn:changePasswordFn,
             updateSprint:updateSprint,
-            updateRelease:updateRelease
+            updateRelease:updateRelease,
+            updateDefect:updateDefect
            
         };
 
@@ -100,6 +101,13 @@
 
         function postDefect(payload){
             return   $http.post('/api/defectSummary', (payload))
+                    .then(function(response) {
+                       return response.data;
+                    });
+        }
+
+        function updateDefect(payload){
+            return   $http.put('/api/defectSummary', (payload))
                     .then(function(response) {
                        return response.data;
                     });

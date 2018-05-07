@@ -480,7 +480,7 @@
 
         function editDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
             ctrl = this;
-            featureData.jiraData(id, name).then(jiraDataFetch);
+            featureData.jiraData(id).then(jiraDataFetch);
 
             function jiraDataFetch(data) {
                 ctrl.dataEdit = data;
@@ -488,6 +488,7 @@
 
             ctrl.editDefectCall = function () {
                 ctrl.editDefectPayl = {
+                    "objectId": ctrl.dataEdit.id,
                     "projectName": name,
                     "metricsProjectId": id,
                     "projectId": id,
@@ -541,7 +542,7 @@
                     "fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90": Number(ctrl.dataEdit.fixeddefectsByResolutions.Range5[0].Critical)
                 }
 
-                projectData.postDefect(ctrl.editDefectPayl).then(function (response) {
+                projectData.updateDefect(ctrl.editDefectPayl).then(function (response) {
                     $rootScope.ttt = true;
                     $uibModalInstance.dismiss("cancel");
                     $uibModal.open({
