@@ -598,6 +598,7 @@
                 ctrl.normalformText = true;
                 ctrl.prevHeader = true;
                 ctrl.title = "Add Release";
+                ctrl.releasePayload = {};
             }
 
             ctrl.updateRelease = function (releaseidUpdation) {
@@ -638,6 +639,14 @@
                 ctrl.releasegraph = data;
             }
 
+            ctrl.cancelPopUp =function() {
+                ctrl.hideForm();
+               featureData.ReleaseData(ctrl.id, ctrl.namerelease).then(ReleaseDataProcessing);
+                function ReleaseDataProcessing(data) {
+                    ctrl.releasegraph = data;
+            } 
+
+            }
             ctrl.postRelease = function (proje) {
                var endDateMilli = Date.parse(ctrl.releaseDate);
                var startDateMilli = Date.parse(ctrl.startDate);
@@ -732,10 +741,20 @@
                 ctrl.title = "Add Sprint";
             }
 
+
+
             featureData.sprintDta(ctrl.id, ctrl.name).then(sprintdataProcess);
 
             function sprintdataProcess(data) {
                 ctrl.spAllDetails = data;
+            }
+
+            ctrl.closePopUp = function() {
+                ctrl.hideForm();
+                featureData.sprintDta(ctrl.id, ctrl.name).then(sprintdataProcess);
+                    function sprintdataProcess(data) {
+                        ctrl.spAllDetails = data;
+                }
             }
 
             ctrl.updateSprint = function (sprintidUpdation) {
@@ -1048,7 +1067,13 @@
                 ctrl.heatMapDetails = data;
             }
 
-
+            ctrl.closePopup = function() {
+                ctrl.hideForm();
+                featureData.heatMapData(id).then(heatMapDataProcess);
+                    function heatMapDataProcess(data) {
+                    ctrl.heatMapDetails = data;
+                }
+            }
             ctrl.updateHeatMap = function (releaseidUpdation) {
                  $uibModalInstance.dismiss("cancel");
 
@@ -1093,12 +1118,17 @@
                 ctrl.heatMapPayload.projectId = id;
 
                 projectData.postHeatMap(ctrl.heatMapPayload).then(function (response) {
-                    $uibModalInstance.dismiss("cancel");
+                    ctrl.hideForm();
+                    featureData.heatMapData(id).then(heatMapDataProcess);
+                    function heatMapDataProcess(data) {
+                        ctrl.heatMapDetails = data;
+            }
+                    /*$uibModalInstance.dismiss("cancel");
                     $uibModal.open({
                         template: '<confirm-popup msg="addHeatMap" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
                         controller: 'projectMapController',
                         controllerAs: 'pm'
-                    });
+                    });*/
                 })
             }
             }
