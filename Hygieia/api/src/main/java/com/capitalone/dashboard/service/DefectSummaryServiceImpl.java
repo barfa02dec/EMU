@@ -1,6 +1,7 @@
 package com.capitalone.dashboard.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,17 +44,24 @@ public class DefectSummaryServiceImpl implements DefectSummaryService {
 	}
 
 	@Override
-	public DefectAggregation findByMetricsProjectId(String metricsProjectId) {
+	public List<DefectAggregation> findByMetricsProjectId(String metricsProjectId) {
 		return aggregationRepository.findByMetricsProjectId(metricsProjectId);
 	}
 
 	@Override
 	public DefectAggregation create(DefectSummaryRequest request) {
 		createScope(request);
-		DefectAggregation dag = convertDefectSummaryReqToModel(request);
+		DefectAggregation dag = convertDefectSummaryReqToModel(request, null);
 		return aggregationRepository.save(dag);
 	}
-	
+
+	@Override
+	public DefectAggregation update(DefectSummaryRequest request) {
+		DefectAggregation existingRecord = aggregationRepository.findOne(new ObjectId(request.getObjectId()));
+		DefectAggregation dag = convertDefectSummaryReqToModel(request, existingRecord);
+		return aggregationRepository.save(dag);
+	}
+
 	private void createScope(DefectSummaryRequest rq) {
 		List<Scope> scopes = scopeRepository.getScopeById(rq.getProjectId());
 
@@ -78,15 +86,19 @@ public class DefectSummaryServiceImpl implements DefectSummaryService {
 		return collector.getId();
 	}
 	
-	private DefectAggregation convertDefectSummaryReqToModel(DefectSummaryRequest re){
-		DefectAggregation da=aggregationRepository.findByProjectId(re.getMetricsProjectId());
+	private DefectAggregation convertDefectSummaryReqToModel(DefectSummaryRequest re, DefectAggregation da){
 		
-		if(null==da){
+		if(null == da){
 			da= new DefectAggregation();
 			da.setProjectId(re.getProjectId());
 			da.setMetricsProjectId(re.getMetricsProjectId());
 			da.setProjectName(re.getProjectName());
+			da.setCreatedOn(new Date());
+			da.setCreatedBy(re.getUser());
 		}
+		
+		da.setUpdatedOn(new Date());
+		da.setUpdatedBy(re.getUser());
 		
 		//defects by priority
 		Map<String,Integer> defectsByProirity= new LinkedHashMap<String,Integer>();

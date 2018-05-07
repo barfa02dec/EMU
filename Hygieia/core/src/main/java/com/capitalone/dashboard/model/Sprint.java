@@ -31,9 +31,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "sprint")
 public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 
-	    @Indexed(name="index_Sprint_projectId")
+	    @Indexed(name="index_Sprint_projectId", unique=true)
 		private String projectId;
-
+	    @Indexed(name="index_Sprint_sprintId", unique=true)
 	    private Long sprintId;
 	    
 	    private Date startDate;

@@ -1,5 +1,6 @@
 package com.capitalone.dashboard.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -35,21 +36,23 @@ public class HeatMapServiceImpl implements HeatMapService{
 	@Override
 	public HeatMap createHeatmap(HeatMapRequest heatMapRequest){
 		LOGGER.debug("Adding heatmap");
-		return heatMaprepository.save(convertHeatmapRequestToHeatmapModel(heatMapRequest));
+		return heatMaprepository.save(convertHeatmapRequestToHeatmapModel(heatMapRequest, null));
 	}
 
-	private HeatMap convertHeatmapRequestToHeatmapModel(HeatMapRequest hre) {
-
+	private HeatMap convertHeatmapRequestToHeatmapModel(HeatMapRequest hre, HeatMap heat) {
 		LOGGER.debug("Find heatmap for" , hre.getProjectId());
-
-		HeatMap heat = heatMaprepository.findByOneProjectId(hre.getProjectId(),
-				hre.getSubmissionDate());
 		
 		if (null == heat) {
 			heat = new HeatMap();
 			heat.setProjectId(hre.getProjectId());
 			heat.setSubmissionDate(hre.getSubmissionDate());
+			heat.setCreatedOn(new Date());
+			heat.setCreatedBy(hre.getUser());
 		}
+		
+		heat.setSubmissionDate(hre.getSubmissionDate());
+		heat.setUpdatedOn(new Date());
+		heat.setUpdatedBy(hre.getUser());
 		
 		ProjectHeatmapData projectHeatmapData = new ProjectHeatmapData();
 
@@ -61,31 +64,15 @@ public class HeatMapServiceImpl implements HeatMapService{
 
 	@Override
 	public HeatMap updateHeatmap(HeatMapRequest hre) {
-
 		LOGGER.info("Update heatmap for ", hre.getProjectId());
 
 		HeatMap heat = heatMaprepository.findOne(new ObjectId(hre.getObjectId()));
 
 		if(heat != null) {
-			convertHeatmapRequestToHeatMapModel(hre, heat);
+			convertHeatmapRequestToHeatmapModel(hre, heat);
 			return heatMaprepository.save(heat);
-		}else{
-			return null;
 		}
-			
-	}
-
-	private HeatMap convertHeatmapRequestToHeatMapModel(HeatMapRequest hre,
-			HeatMap heat) {
-
-		heat.setProjectId(hre.getProjectId());
-		heat.setSubmissionDate(hre.getSubmissionDate());
-		ProjectHeatmapData projectHeatmapData = new ProjectHeatmapData();
-
-		convertHeatmapRequest(projectHeatmapData, hre);
-
-		heat.setProjectHeatmapData(projectHeatmapData);
-		return heat;
+		return null;
 	}
 
 	private void convertHeatmapRequest(ProjectHeatmapData projectHeatmapData, HeatMapRequest hre) {

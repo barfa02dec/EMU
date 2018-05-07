@@ -42,7 +42,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 		UserRole userRole=new UserRole();
 		userRole.setRoleKey(role.getRoleKey());
 		userRole.setCreatedBy(role.getCreatedBy());
-		userRole.setCreatedOn(new Date().toString());
+		userRole.setCreatedOn(new Date());
 		userRole.setEnabled(role.isEnabled());
 		userRole.setDescription(role.getDescription());
 		userRole.setExposetoApi(role.isExposetoApi());
@@ -66,7 +66,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 			userRole.setEnabled(role.isEnabled());
 			userRole.setExposetoApi(role.isExposetoApi());
 			userRole.setCreatedBy(role.getCreatedBy());
-			userRole.setCreatedOn(new Date().toString());
+			userRole.setCreatedOn(new Date());
 
 			Map<String , Boolean> permissions = new HashMap<String , Boolean>();
 			List<String> permissionKeysInDB = getpermissionKeysInDB();
@@ -141,7 +141,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 			roleInDb.setPermissions(permissions);
 			roleInDb.setDescription(role.getDescription());
 			roleInDb.setUpdatedBy(role.getUpdatedBy());
-			roleInDb.setUpdatedOn(new Date().toString());
+			roleInDb.setUpdatedOn(new Date());
 			
 			List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true);
 			//update the roles for all associated project roles
@@ -154,7 +154,6 @@ public class UserRoleServiceImpl implements UserRoleService {
 								}
 							}
 					}
-				
 			}
 			projectRepository.save(dbActiveProjects);
 		}

@@ -92,6 +92,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 		if(null == release){
 			release= new Release();
 			release.setReleaseId(releasereq.getReleaseId());
+			release.setCreatedOn(new Date());
+			release.setCreatedBy(releasereq.getUser());
 		}
 
 		release.setProjectId(releasereq.getProjectId());
@@ -100,10 +102,10 @@ public class ReleaseServiceImpl implements ReleaseService {
 		release.setDescription(releasereq.getDescription());
 		release.setReleased(releasereq.isReleased());
 		release.setAutomated(0);
-		
 		release.setReleaseDate(StringUtils.isEmpty(releasereq.getReleaseDate()) ? null : new Date(Long.parseLong(releasereq.getReleaseDate())));
 		release.setStartDate(StringUtils.isEmpty(releasereq.getStartDate()) ? null : new Date(Long.parseLong(releasereq.getStartDate())));
-		
+		release.setUpdatedOn(new Date());
+		release.setUpdatedBy(releasereq.getUser());
 		
 		VersionData data=new VersionData();		
 		data.setReleaseName(releasereq.getName());

@@ -60,7 +60,7 @@ public class DashboardController {
     	Set<String> defaultDashboardUsers= new HashSet<String>();
     	defaultDashboardUsers.add(request.getOwner());
     	dashboardToCreate.setUsersList(defaultDashboardUsers);
-    	dashboardToCreate.setCreatedOn(new Date().toString());
+    	dashboardToCreate.setCreatedOn(new Date());
         try {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
@@ -117,7 +117,7 @@ public class DashboardController {
         if (!titleExist) {
             try {
                 dashboard.setTitle(request.getTitle());
-                dashboard.setUpdatedOn(new Date().toString());
+                dashboard.setUpdatedOn(new Date());
                 dashboardService.update(dashboard);
                 return ResponseEntity.ok("Renamed");
             } catch (HygieiaException he) {

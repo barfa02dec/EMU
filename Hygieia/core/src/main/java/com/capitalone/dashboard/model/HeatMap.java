@@ -13,60 +13,38 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "heatmap")
 public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
-
-	@Indexed(name="index_heatmap_projectId")
+	
+	@Indexed(name="index_heatmap_projectId", unique=true)
 	private String projectId;
 
+	//@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+	@Indexed(name="index_heatmap_submissionDate", unique=true)
+	private String submissionDate;
+	
 	private ProjectHeatmapData projectHeatmapData;
 
-	//@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
-	private String submissionDate;
 
-	/**
-	 * @return the projectId
-	 */
 	public String getProjectId() {
 		return projectId;
 	}
-
-	/**
-	 * @param projectId the projectId to set
-	 */
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
 
-	/**
-	 * @return the projectHeatmapData
-	 */
 	public ProjectHeatmapData getProjectHeatmapData() {
 		return projectHeatmapData;
 	}
-
-	/**
-	 * @param projectHeatmapData the projectHeatmapData to set
-	 */
 	public void setProjectHeatmapData(ProjectHeatmapData projectHeatmapData) {
 		this.projectHeatmapData = projectHeatmapData;
 	}
 
-	/**
-	 * @return the submissionDate
-	 */
 	public String  getSubmissionDate() {
 		return submissionDate;
 	}
-
-	/**
-	 * @param submissionDate the submissionDate to set
-	 */
 	public void setSubmissionDate(String  submissionDate) {
 		this.submissionDate = submissionDate;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -106,5 +84,4 @@ public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
 		}
 		return -1;
 	}
-	
 }

@@ -72,6 +72,8 @@ public class HeatMapRequest {
 	private String testing;
 	
 	private String development;
+	
+	private String user;
 
 	public String getObjectId() {
 		return objectId;
@@ -515,6 +517,14 @@ public class HeatMapRequest {
 	 */
 	public void setDevelopment(String development) {
 		this.development = development;
+	}
+
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
 	}
 	
 	
