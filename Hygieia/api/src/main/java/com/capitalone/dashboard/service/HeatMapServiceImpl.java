@@ -16,7 +16,6 @@ import com.capitalone.dashboard.request.HeatMapRequest;
 @Service
 public class HeatMapServiceImpl implements HeatMapService{
 
-
 	private static final Logger LOGGER = LoggerFactory.getLogger(HeatMapServiceImpl.class);
 
 	private final HeatMapRepository heatMaprepository;
@@ -176,7 +175,6 @@ public class HeatMapServiceImpl implements HeatMapService{
 
 	@Override
 	public void deleteHeatmap(String projectId) {
-
 		LOGGER.info("Delate Heatmap for" , projectId);
 		HeatMap heatMap = (HeatMap) heatMaprepository.getByProjectId(projectId);
 

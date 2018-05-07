@@ -61,32 +61,23 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project deactivateProject(ObjectId id) {
 		Project project = projectRepository.findOne(id);
+		
 		if (project != null) {
 			project.setProjectStatus(false);
 			return projectRepository.save(project);
-
-		}else
-		{
-			return null;
 		}
+			return null;
 	}
 
 	@Override
 	public Project updateProject(ProjectRequest projectRequest) {
-		try{
-
-			Project project=projectRepository.findOne(new ObjectId(projectRequest.getId()));
-			if(null!=project)
-			{
-				convertProjectRequestToPojectForUpdate(projectRequest, project);
-				return projectRepository.save(project);
-			}
-
-		}catch (Exception e) {
-			return null;
+		Project project = projectRepository.findOne(new ObjectId(projectRequest.getId()));
+		if(null != project)
+		{
+			convertProjectRequestToPojectForUpdate(projectRequest, project);
+			return projectRepository.save(project);
 		}
 		return null;
-
 	}
 
 	private Project convertProjectRequestToPojectModel(ProjectRequest request, Project project ){
@@ -209,7 +200,7 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Iterable<Project> getActiveprojects() {
+	public Iterable<Project> getActiveProjects() {
 		return projectRepository.getAllActiveProjects(true);
 	}
 

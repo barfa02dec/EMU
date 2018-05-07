@@ -23,7 +23,7 @@ public interface ProjectService {
 	
 	Project deactivateProject(ObjectId id);
 
-	Iterable<Project> getActiveprojects();
+	Iterable<Project> getActiveProjects();
 	
 	Project getProject(ObjectId id);
 	

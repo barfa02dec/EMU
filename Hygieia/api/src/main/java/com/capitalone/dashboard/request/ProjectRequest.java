@@ -6,26 +6,30 @@ import javax.validation.constraints.Size;
 public class ProjectRequest {
 	
 	@NotNull
-    @Size(min=3,max=40, message="projectName should be min=3,max=40 characters")
+    @Size(min=3,max=40, message="Project Name should be min=3 & max=50 characters")
 	private String projectName;
+	
 	@NotNull
-    @Size(min=3,max=40, message="projectId should be min=3,max=40 characters")
+    @Size(min=3,max=40, message="Project Id should be min=3 & max=40 characters")
 	private String projectId;
-	private boolean projectStatus;
+	
 	@NotNull
-    @Size(min=3,max=40, message="businessUnit should be min=3,max=40 characters")
+    @Size(min=3,max=40, message="Business Unit should be min=3 & max=20 characters")
 	private String businessUnit;
+	
 	@NotNull
-    @Size(min=3,max=40, message="projectOwner should be min=3,max=40 characters")
+    @Size(min=3,max=40, message="Project Owner should be min=3 & max=50 characters")
 	private String projectOwner;
-	private String program;
+
 	@NotNull
-    @Size(min=3,max=40, message="client details should be min=3,max=40 characters")
+    @Size(min=3,max=40, message="Client should be min=3 & max=40 characters")
 	private String client;
+
 	private String id;
+	private boolean projectStatus;
+	private String program;
 	private boolean editorEnabled;
 	private String user;
-	
 	private String customerName;
 	private String customerCode;
 	
@@ -103,5 +107,4 @@ public class ProjectRequest {
 	public void setUser(String user) {
 		this.user = user;
 	}
-	
 }

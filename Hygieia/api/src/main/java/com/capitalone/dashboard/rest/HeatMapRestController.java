@@ -51,7 +51,7 @@ public class HeatMapRestController {
 	 * @param heatmapId
 	 * @return
 	 */
-	@RequestMapping(value = "/getheatmaps", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/heatmaps", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody List<HeatMap> getHeatmaps(
 			@RequestParam(value = "projectId", required = true)  String projectId,
 			@RequestParam(value = "noOfHeatMapToShow", required = true) int noOfHeatMapToShow) {
@@ -73,7 +73,7 @@ public class HeatMapRestController {
 	 * @param heatMapRequest
 	 * @param response
 	 */
-	@RequestMapping(value = "/projectheatmaps", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/heatmaps", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void createHeatmap(@RequestBody HeatMapRequest heatMapRequest, HttpServletResponse response) {
 		LOGGER.debug("Creating Heat map");
@@ -86,7 +86,7 @@ public class HeatMapRestController {
 	 * @param heatMapRequest
 	 * @param response
 	 */
-	@RequestMapping(value = "/projectheatmaps", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/heatmaps", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void updateHeatMap(@RequestBody HeatMapRequest heatmapRequest, HttpServletResponse response) {
 		LOGGER.debug("Updating Heat map");
@@ -98,7 +98,7 @@ public class HeatMapRestController {
 	 * 
 	 * @param projectId
 	 */
-	@RequestMapping(value = "/projectheatmaps", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/heatmaps", method = RequestMethod.DELETE)
 	@ResponseStatus(value = HttpStatus.OK)
 	public void deleteHeatmap(@RequestParam(value = "heatmapId", required = true) String heatmapId) {
 		LOGGER.debug("Deleting Heat map");
