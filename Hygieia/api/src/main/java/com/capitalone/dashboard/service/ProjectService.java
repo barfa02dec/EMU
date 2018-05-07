@@ -37,7 +37,7 @@ public interface ProjectService {
 	
 	String purgeUser(String user);
 	
-	void createCustomer();
+	//void createCustomer();
 
 	Customer createCustomers(CustomerRequest customerRequest);
 	

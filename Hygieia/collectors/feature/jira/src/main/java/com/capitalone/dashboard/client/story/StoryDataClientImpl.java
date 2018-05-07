@@ -459,7 +459,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		defect.setDefectStatus(this.toCanonicalFeatureStatus(issue.getStatus().getName()));
 		defect.setDefectDescription(issue.getSummary());
 		defect.setDefectPriority(null != issue.getPriority() ? issue.getPriority().getName() : null);
-		defect.setCreationDate(issue.getCreationDate().toString());
+		//defect.setCreationDate(issue.getCreationDate().toString());
 		defect.setCreatedBy(null != issue.getReporter() ? issue.getReporter().getName() : null);
 		
 		int originalEstimate = 0;
@@ -474,7 +474,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		defect.setOriginalEstimate(originalEstimate);
 		defect.setDefectResolutionStatus(null != issue.getResolution() ? issue.getResolution().getName() : null);
 		defect.setReporter(null != issue.getReporter() ? issue.getReporter().toString() : null);
-		defect.setUpdateDate(null != issue.getUpdateDate() ? issue.getUpdateDate().toString() : null);
+		//defect.setUpdateDate(null != issue.getUpdateDate() ? issue.getUpdateDate().toString() : null);
 		defect.setAssignee(null != issue.getAssignee() ? issue.getAssignee().getName().toString() : null);
 		
 		// calculate the defect age in days

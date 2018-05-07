@@ -47,10 +47,6 @@ public class Defect extends BaseModel {
 	private String defectResolutionStatus;
 	private Integer defectResolutionInDays;
 	private Integer estimatedTime;
-	private String createdBy;
-	private String creationDate;
-	private String updatedBy;
-	private String updateDate;
 	private String environment;
 	private int originalEstimate;
 	private String assignee;
@@ -185,34 +181,6 @@ public class Defect extends BaseModel {
 		this.estimatedTime = estimatedTime;
 	}
 
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public String getCreationDate() {
-		return creationDate;
-	}
-
-	public void setCreationDate(String creationDate) {
-		this.creationDate = creationDate;
-	}
-
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-
-	public String getUpdateDate() {
-		return updateDate;
-	}
-
 	public String getAssignee() {
 		return assignee;
 	}
@@ -227,10 +195,6 @@ public class Defect extends BaseModel {
 
 	public void setReporter(String reporter) {
 		this.reporter = reporter;
-	}
-
-	public void setUpdateDate(String updateDate) {
-		this.updateDate = updateDate;
 	}
 
 	public Integer getDefectResolutionInDays() {

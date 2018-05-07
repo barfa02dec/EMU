@@ -1,8 +1,5 @@
 package com.capitalone.dashboard.service;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -38,6 +35,7 @@ public class ProjectServiceImpl implements ProjectService {
 	private final DashboardRepository  dashboardRepository;
 	private static final String SYS_ADMIN="SYS_ADMIN";
 	private static final String TEAM_MEMBER="TEAM_MEMBER";
+	
 	@Autowired
 	public ProjectServiceImpl(ProjectRepository projectRepository,UserRoleRepository userRoleRepository,DashboardRepository  dashboardRepository,
 			CustomerRepository customerRepository) {
@@ -56,14 +54,12 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project create(ProjectRequest projectRequest) {
 		Project project=new Project();
-		mapProjectRequestToPojectForCreateProject(projectRequest, project);
+		convertProjectRequestToPojectModel(projectRequest, project);
 		return projectRepository.save(project);
-
 	}
 
 	@Override
 	public Project deactivateProject(ObjectId id) {
-
 		Project project = projectRepository.findOne(id);
 		if (project != null) {
 			project.setProjectStatus(false);
@@ -73,20 +69,17 @@ public class ProjectServiceImpl implements ProjectService {
 		{
 			return null;
 		}
-
 	}
 
 	@Override
 	public Project updateProject(ProjectRequest projectRequest) {
-
 		try{
 
 			Project project=projectRepository.findOne(new ObjectId(projectRequest.getId()));
 			if(null!=project)
 			{
-				mapProjectRequestToPojectForUpdateProject(projectRequest, project);
+				convertProjectRequestToPojectForUpdate(projectRequest, project);
 				return projectRepository.save(project);
-
 			}
 
 		}catch (Exception e) {
@@ -96,7 +89,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	}
 
-	private Project mapProjectRequestToPojectForCreateProject(ProjectRequest request, Project project ){
+	private Project convertProjectRequestToPojectModel(ProjectRequest request, Project project ){
 		project.setProjectId(request.getProjectId());
 		project.setProjectName(request.getProjectName());
 		project.setProjectOwner(request.getProjectOwner());
@@ -104,12 +97,11 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setClient(request.getClient());
 		project.setBusinessUnit(request.getBusinessUnit());
 		project.setProgram(request.getProgram());
-		project.setCreatedBy(request.getUser());
-		
 		project.setCustomerName(request.getCustomerName());
 		project.setCustomerCode(request.getCustomerCode());
-		
+		project.setCreatedBy(request.getUser());
 		project.setCreatedOn(new Date().toString());
+
 		//setting the SYS_ADMIN role for the user who created the project.
 		UserGroup defaultProjectAdmin= new UserGroup(request.getUser());
 		ProjectRoles projRole= new ProjectRoles();
@@ -128,22 +120,21 @@ public class ProjectServiceImpl implements ProjectService {
 		return project;
 	}
 
-	private Project mapProjectRequestToPojectForUpdateProject(ProjectRequest request, Project project ){
+	private Project convertProjectRequestToPojectForUpdate(ProjectRequest request, Project project ){
 		project.setProjectName(request.getProjectName());
 		project.setProjectOwner(request.getProjectOwner());
 		project.setClient(request.getClient());
 		project.setBusinessUnit(request.getBusinessUnit());
 		project.setProgram(request.getProgram());
-		project.setUpdatedBy(request.getUser());
-		project.setUpdatedOn(new Date().toString());
 		project.setCustomerName(request.getCustomerName());
 		project.setCustomerCode(request.getCustomerCode());
+		project.setUpdatedBy(request.getUser());
+		project.setUpdatedOn(new Date().toString());
 		return project;
 	}
 
 	@Override
 	public Project getProject(ObjectId id) {
-
 		return projectRepository.findOne(id);
 	}
 
@@ -154,11 +145,12 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Project createProjectUserRoleMapping(ProjectUserRoleRequest projectUserRoleRequest) {
-		Project project=projectRepository.findByProjectId(projectUserRoleRequest.getProjectId());
-		if(null!=project){
+		Project project = projectRepository.findByProjectId(projectUserRoleRequest.getProjectId());
+		
+		if(null != project){
 			UserGroup usergrpToCreate= new UserGroup(projectUserRoleRequest.getUser());
-			//prepare roles 
 			Set<ProjectRoles> projRoles = new HashSet<ProjectRoles>();
+			
 			for(UserRole role: projectUserRoleRequest.getUserRoles()){
 				ProjectRoles projRole= new ProjectRoles();
 				projRole.setRole(role.getRoleKey());
@@ -341,14 +333,13 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 	}
 
-	@Override
+	/*@Override
 	public void createCustomer() {
 		List<Customer> customers = mapToCSV();
 		for(Customer customer : customers){
 			customerRepository.save(customer);
 		}
 	}
-
 
 	private List<Customer> mapToCSV() {
 		String path = "E:\\CSV\\custom.csv";
@@ -377,7 +368,7 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	private  Customer createCustomer(String[] metadata){
-		String customer_name = metadata[0];
+		String customerName = metadata[0];
 		String customerCode = metadata[1];
 		String deactivated = metadata[2];
 
@@ -386,10 +377,10 @@ public class ProjectServiceImpl implements ProjectService {
 			customer = new Customer();
 			customer.setCustomerCode(customerCode);
 		}
-		customer.setCustomer_name(customer_name);
-		customer.setDeactivated(deactivated);
+		customer.setCustomerName(customerName);
+		customer.setEnabled(deactivated);
 		return customer;
-	}
+	}*/
 
 	@Override
 	public List<Customer> getCustomer() {
@@ -409,8 +400,8 @@ public class ProjectServiceImpl implements ProjectService {
 			customer = new Customer();
 			customer.setCustomerCode(customerRequest.getCustomerCode());
 		}
-		customer.setCustomer_name(customerRequest.getCustomerName());
-		customer.setDeactivated(customerRequest.getDeactivate());
+		customer.setCustomerName(customerRequest.getCustomerName());
+		customer.setEnabled(customerRequest.getEnabled());
 		return customer;
 	}
 }

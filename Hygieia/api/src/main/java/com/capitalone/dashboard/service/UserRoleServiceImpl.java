@@ -35,7 +35,6 @@ public class UserRoleServiceImpl implements UserRoleService {
 	
 	@Override
 	public UserRole createUserRole(UserRoleRequest role) {
-		// TODO Auto-generated method stub
 		return roleRepository.save(mapUserRoleRequestToUserRoleModel(role));
 	}
 	
@@ -58,18 +57,19 @@ public class UserRoleServiceImpl implements UserRoleService {
 		userRole.setPermissions(permissions);
 		return userRole;
 	}
-	private Iterable<UserRole> mapMultipleUserRoleRequestToUserRoleModel(Iterable<UserRoleRequest> roles){
+	private Iterable<UserRole> convertMultipleUserRoleRequestToUserRoleModel(Iterable<UserRoleRequest> roles){
 		Set <UserRole> roleset = new HashSet<UserRole>();
 		for(UserRoleRequest role:roles)
 		{
 			UserRole userRole=new UserRole();
 			userRole.setRoleKey(role.getRoleKey());
-			userRole.setCreatedBy(role.getCreatedBy());
-			userRole.setCreatedOn(new Date().toString());
 			userRole.setEnabled(role.isEnabled());
 			userRole.setExposetoApi(role.isExposetoApi());
-			Map<String , Boolean> permissions= new HashMap<String , Boolean>();
-			List<String> permissionKeysInDB=getpermissionKeysInDB();
+			userRole.setCreatedBy(role.getCreatedBy());
+			userRole.setCreatedOn(new Date().toString());
+
+			Map<String , Boolean> permissions = new HashMap<String , Boolean>();
+			List<String> permissionKeysInDB = getpermissionKeysInDB();
 
 			for(String permit:role.getPermissions()){
 				if(permissionKeysInDB.contains(permit))
@@ -84,19 +84,17 @@ public class UserRoleServiceImpl implements UserRoleService {
 	}
 	@Override
 	public Iterable<UserRole> getAllActiveUserRoles() {
-		//param1: active/not param2: exposetoAPI/not
 		return roleRepository.findByStatus(true,true);
 	}
 
 	@Override
 	public Iterable<UserRole> getAllInactiveUserRoles() {
-		//param1: active/not param2: exposetoAPI/not
 		return roleRepository.findByStatus(false,true);
 	}
 
 	@Override
 	public Iterable<UserRole> createBulkUserRole(Iterable<UserRoleRequest> roles) {
-		return roleRepository.save(mapMultipleUserRoleRequestToUserRoleModel(roles));
+		return roleRepository.save(convertMultipleUserRoleRequestToUserRoleModel(roles));
 	}
 
 	@Override
@@ -108,18 +106,13 @@ public class UserRoleServiceImpl implements UserRoleService {
 			List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true);
 			//remove the role from all associated project roles
 			for(Project proj: dbActiveProjects){
-				
-					for(UserGroup group:proj.getUsersGroup()){
-						group.getUserRoles().remove(mapUserRoleToProjectRole(roleInDb));
-					}
-				
+				for(UserGroup group:proj.getUsersGroup()){
+					group.getUserRoles().remove(mapUserRoleToProjectRole(roleInDb));
+				}
 			}
-			
 			projectRepository.save(dbActiveProjects);
-		
 			return roleRepository.save(roleInDb);
-			
-			}
+		}
 		return null;
 	}
 
@@ -148,7 +141,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 			roleInDb.setPermissions(permissions);
 			roleInDb.setDescription(role.getDescription());
 			roleInDb.setUpdatedBy(role.getUpdatedBy());
-			roleInDb.setLastUpdatedOn(new Date().toString());
+			roleInDb.setUpdatedOn(new Date().toString());
 			
 			List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true);
 			//update the roles for all associated project roles
