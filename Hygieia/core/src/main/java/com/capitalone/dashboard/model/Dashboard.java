@@ -27,8 +27,6 @@ public class Dashboard extends BaseModel {
     private String owner;
     private Set<String> usersList;
     private DashboardType type;
-    private String createdOn;
-    private String updatedOn;
     private Application application;
     
     private ObjectId projectId;
@@ -108,26 +106,6 @@ public class Dashboard extends BaseModel {
 		this.usersList = usersList;
 	}
 
-	public String getCreatedOn() {
-		return createdOn;
-	}
-
-	public void setCreatedOn(String createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public void setWidgets(List<Widget> widgets) {
-		this.widgets = widgets;
-	}
-
-	public String getUpdatedOn() {
-		return updatedOn;
-	}
-
-	public void setUpdatedOn(String updatedOn) {
-		this.updatedOn = updatedOn;
-	}
-    
 	@Override
 	public boolean equals(Object o) {
 		Dashboard that = (Dashboard) o;
@@ -139,6 +117,4 @@ public class Dashboard extends BaseModel {
 	public int hashCode() {
 		return new HashCodeBuilder(17, 37).append(this.getId()).toHashCode();
 	}
-    
-
 }

@@ -2,27 +2,28 @@ package com.capitalone.dashboard.request;
 
 public class CustomerRequest {
 
-	private String customer_name;
+	private String customerName;
 	private String customerCode;
-	private String deactivated;
+	private boolean enabled;
 	
 	public String getCustomerName() {
-		return customer_name;
+		return customerName;
 	}
-	public void setCustomerName(String customer_name) {
-		this.customer_name = customer_name;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
+	
 	public String getCustomerCode() {
 		return customerCode;
 	}
 	public void setCustomerCode(String customerCode) {
 		this.customerCode = customerCode;
 	}
-	public String getDeactivate() {
-		return deactivated;
-	}
-	public void setDeactivate(String deactivated) {
-		this.deactivated = deactivated;
-	}
 	
+	public boolean getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 }

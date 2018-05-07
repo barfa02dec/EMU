@@ -28,7 +28,10 @@ import com.capitalone.dashboard.model.DefectAggregation;
  */
 public interface DefectAggregationRepository extends CrudRepository<DefectAggregation, ObjectId>,
 		QueryDslPredicateExecutor<DefectAggregation>, DefectAggregationCustom {
-	
+
+	@Query(value = "{'metricsProjectId' : ?0}")
+	DefectAggregation findByProjectId(String metricsProjectId);
+
 	@Query(value = "{'metricsProjectId' : ?0, 'projectName': ?1}")
 	DefectAggregation findByProjectIdAndName(String metricsProjectId, String projectName);
 	
@@ -37,6 +40,4 @@ public interface DefectAggregationRepository extends CrudRepository<DefectAggreg
 	
 	@Query(value = "{'metricsProjectId' : ?0}")
 	DefectAggregation findByMetricsProjectId(String metricsProjectId);
-	
-		
 }

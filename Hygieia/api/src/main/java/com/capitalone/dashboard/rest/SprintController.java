@@ -57,5 +57,4 @@ public class SprintController {
 	public Sprint updateSprintMetrics(@RequestBody SprintMetricsRequest re){
 		return sprintService.update(re);
 	}
-	
 }

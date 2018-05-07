@@ -7,19 +7,17 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "project")
 public class Project extends BaseModel {
-	private String projectName;
+
 	@Indexed(unique = true, name="index_Project_projectId")
 	private String projectId;
+	
+	private String projectName;
 	private boolean projectStatus;
 	private String businessUnit;
 	private String projectOwner;
 	private String program;
 	private String client;
 	private Set<UserGroup> usersGroup;
-	private String createdBy;
-	private String updatedBy;
-	private String createdOn;
-	private String updatedOn;
 	
 	private String customerName;
 	private String customerCode;
@@ -83,29 +81,5 @@ public class Project extends BaseModel {
 	}
 	public void setUsersGroup(Set<UserGroup> usersGroup) {
 		this.usersGroup = usersGroup;
-	}
-	public String getCreatedBy() {
-		return createdBy;
-	}
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-	public String getUpdatedBy() {
-		return updatedBy;
-	}
-	public void setUpdatedBy(String updatedBy) {
-		this.updatedBy = updatedBy;
-	}
-	public String getCreatedOn() {
-		return createdOn;
-	}
-	public void setCreatedOn(String createdOn) {
-		this.createdOn = createdOn;
-	}
-	public String getUpdatedOn() {
-		return updatedOn;
-	}
-	public void setUpdatedOn(String updatedOn) {
-		this.updatedOn = updatedOn;
 	}
 }

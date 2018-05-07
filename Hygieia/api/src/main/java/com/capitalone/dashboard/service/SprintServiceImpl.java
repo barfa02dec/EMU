@@ -7,6 +7,7 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import com.capitalone.dashboard.model.Burndown;
@@ -33,7 +34,6 @@ public class SprintServiceImpl implements SprintService {
 		this.repository = repository;
 		this.scopeRepository = scopeRepository;
 		this.collectorRepository = collectorRepository;
-		
 	}
 
 	@Override
@@ -66,11 +66,10 @@ public class SprintServiceImpl implements SprintService {
 	}
 
 	private void createScope(SprintMetricsRequest rq) {
-		Scope scope = scopeRepository.getScopeByIdAndProjectName(
-				rq.getProjectId(), rq.getProjectName());
+		List<Scope> scopes = scopeRepository.getScopeById(rq.getProjectId());
 
-		if (scope == null) {
-			scope = new Scope();
+		if (CollectionUtils.isEmpty(scopes)) {
+			Scope scope = new Scope();
 			scope.setCollectorId(getJiraCollectorId());
 
 			scope.setpId(rq.getProjectId());
@@ -111,14 +110,14 @@ public class SprintServiceImpl implements SprintService {
 		if(null == existingsprint){
 			existingsprint = new Sprint();
 			existingsprint.setSid(re.getSprintId());
-			existingsprint.setName(re.getSprintName());
-			existingsprint.setProjectId(re.getProjectId());
-			existingsprint.setProjectName(re.getProjectName());
-			existingsprint.setStartDate(StringUtils.isEmpty(re.getStartDate()) ? null : new Date(Long.parseLong(re.getStartDate())));
-			existingsprint.setEndDate(StringUtils.isEmpty(re.getEndDate()) ? null : new Date(Long.parseLong(re.getEndDate())));
-			existingsprint.setAutomated(0);
 		}
-		
+
+		existingsprint.setName(re.getSprintName());
+		existingsprint.setProjectId(re.getProjectId());
+		existingsprint.setProjectName(re.getProjectName());
+		existingsprint.setStartDate(StringUtils.isEmpty(re.getStartDate()) ? null : new Date(Long.parseLong(re.getStartDate())));
+		existingsprint.setEndDate(StringUtils.isEmpty(re.getEndDate()) ? null : new Date(Long.parseLong(re.getEndDate())));
+		existingsprint.setAutomated(0);
 		existingsprint.setClosed(re.isReleased());
 		
 		SprintData sd= new SprintData();

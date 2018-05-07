@@ -3,10 +3,7 @@ package com.capitalone.dashboard.rest;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,12 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capitalone.dashboard.model.Authentication;
 import com.capitalone.dashboard.model.Customer;
-import com.capitalone.dashboard.model.HeatMap;
 import com.capitalone.dashboard.model.Project;
 import com.capitalone.dashboard.model.UserGroup;
 import com.capitalone.dashboard.model.UserRole;
 import com.capitalone.dashboard.request.CustomerRequest;
-import com.capitalone.dashboard.request.HeatMapRequest;
 import com.capitalone.dashboard.request.ProjectRequest;
 import com.capitalone.dashboard.request.ProjectUserRoleRequest;
 import com.capitalone.dashboard.service.AuthenticationService;
@@ -45,17 +40,25 @@ public class ProjectController {
 
 	private final ProjectService projectService;
 	private final AuthenticationService authService;
+	
 	@Autowired
 	public ProjectController(ProjectService projectService,AuthenticationService authService) {
 		this.projectService = projectService;
 		this.authService=authService;
 	}
 
-	@RequestMapping(value = "/createProject", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/projects", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
+	public Iterable<Project> getProjects() {
+		Iterable<Project> projects = projectService.getActiveProjects();
+		return projects;
+	}
+
+	@RequestMapping(value = "/projects", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createProject(@Valid @RequestBody ProjectRequest request) {
 		try{
-			Project project=projectService.create(request);
-			if(project!=null){
+			Project project = projectService.create(request);
+			
+			if(project != null){
 				return ResponseEntity.status(HttpStatus.CREATED).body("project created successfully with ID::"+project.getId());
 			}else{
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project creation failed"); 
@@ -65,23 +68,37 @@ public class ProjectController {
 		}
 		catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project creation failed"); 
-
 		}
-
 	}
 
-	@RequestMapping(value = "/deleteProject/{id}", method = DELETE)
-	public ResponseEntity<String> deleteProject(@PathVariable String id) {
+	@RequestMapping(value = "/projects", method = RequestMethod.PUT, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateProject(@Valid @RequestBody ProjectRequest request) {
 		try{
-			ObjectId projectUniqueId=new ObjectId(id);
-			Project project=projectService.deactivateProject(projectUniqueId);
-			if(null!=project && !project.isProjectStatus()){
-				return ResponseEntity.status(HttpStatus.OK).body("Project With Id::"+id+" is deactivated successfully");
+			Project project = projectService.updateProject(request);
+			
+			if(project != null){
+				return ResponseEntity.status(HttpStatus.OK).body("project updated successfully");
 			}else{
-				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Project details not found");
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("project does not Exists/Invalid Project ID");
 			}
 		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Invalid Project ID");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project creation failed"); 
+		}
+	}
+
+	@RequestMapping(value = "/projects/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<String> deleteProject(@PathVariable String id) {
+		try{
+			ObjectId projectUniqueId = new ObjectId(id);
+			Project project = projectService.deactivateProject(projectUniqueId);
+			
+			if(null != project && !project.isProjectStatus()){
+				return ResponseEntity.status(HttpStatus.OK).body("project with id::"+id+" is deactivated successfully");
+			}else{
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("project not found");
+			}
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("invalid project id");
 		}
 	}
 
@@ -95,31 +112,7 @@ public class ProjectController {
 		}
 	}
 
-	@RequestMapping(value = "/updateProject", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateProject(@Valid @RequestBody ProjectRequest request) {
-		try{
-			Project project=projectService.updateProject(request);
-			if(project!=null){
-				return ResponseEntity.status(HttpStatus.OK).body("project updated successfully ");
-			}else{
-				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("project does not Exists/Invalid Project ID");
-
-			}
-		}catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("project creation failed"); 
-
-		}
-
-	}
-
-	@RequestMapping(value = "/getProjects", method = GET, produces = APPLICATION_JSON_VALUE)
-	public Iterable<Project> getProjects() {
-		Iterable<Project> projects = projectService.getActiveprojects();
-		return projects;
-
-	}
-
-	@RequestMapping(value = "/getApplicationUsers/{id}", method = GET, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getApplicationUsers/{id}", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
 	public List<String> getAllUsers(@PathVariable String id){
 		List<String> dbAppUsers=projectService.getProject(new ObjectId(id)).getUsersGroup().stream().map(UserGroup::getUser).collect(Collectors.toList());
 		List<Authentication> authUsers=(List<Authentication>) authService.all();
@@ -128,17 +121,15 @@ public class ProjectController {
 	}
 
 
-	@RequestMapping(value = "/getProjectsByUser", method = GET, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getProjectsByUser", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
 	public Iterable<Project> getProjectsOwnedByUser(@RequestParam String username) {
-
 		return projectService.getProjectsOwnedByUser(username);
-
 	}
 
-	@RequestMapping(value = "/projectUsersMapping", method = POST, consumes = APPLICATION_JSON_VALUE,produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/projectUsersMapping", method = RequestMethod.POST, consumes = APPLICATION_JSON_VALUE,produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Project> createProjectUserMappingWithRoles(@Valid @RequestBody ProjectUserRoleRequest projectUserRoleRequest) {
 		try{
-			Project response=projectService.createProjectUserRoleMapping(projectUserRoleRequest);
+			Project response = projectService.createProjectUserRoleMapping(projectUserRoleRequest);
 			if(null!=response){
 				return ResponseEntity.status(HttpStatus.OK).body(response);
 			}else{
@@ -147,11 +138,10 @@ public class ProjectController {
 
 		}catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); 
-
 		}
 	}
 
-	@RequestMapping(value = "/getProject/{id}", method = GET, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/getProject/{id}", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<Project> getProject(@PathVariable String id) {
 		try{
 			ObjectId projectUniqueId=new ObjectId(id);
@@ -161,9 +151,8 @@ public class ProjectController {
 		}catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); 
 		}
-
-
 	}
+
 	@RequestMapping(value = "/getProjectRoles/{projectId}/{user}", method = GET, produces = APPLICATION_JSON_VALUE)
 	public Iterable<UserRole> getAllActiveProjectRolesOfUser(@PathVariable String projectId , @PathVariable String user){
 		try{
@@ -171,21 +160,17 @@ public class ProjectController {
 		}catch (Exception e) {
 			return null;
 		}
-
 	}
 
-	@RequestMapping(value = "/createGlobalDeliveryUser", method = POST, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/createGlobalDeliveryUser", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createGlobalDeliveryUser(@RequestParam String username) {
-
 		return ResponseEntity.status(HttpStatus.OK).body(projectService.createGlobalDeliveryUser(username));
-
 	}
 
-	@RequestMapping(value = "/createGlobalDeliverySysAdmin", method = POST, produces = APPLICATION_JSON_VALUE)
+	
+	@RequestMapping(value = "/createGlobalDeliverySysAdmin", method = RequestMethod.POST, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> createGlobalDeliverySysAdmin(@RequestParam String username) {
-
 		return ResponseEntity.status(HttpStatus.OK).body(projectService.createAdditionalSysAdmins(username));
-
 	}
 
 	@RequestMapping(value = "/purgeAppUser", method = DELETE, produces = APPLICATION_JSON_VALUE)
@@ -193,25 +178,13 @@ public class ProjectController {
 		//purge the user from auth
 		authService.delete(username);
 		//purge the user from projects && purge the user from dashboards
-
 		return ResponseEntity.status(HttpStatus.OK).body(projectService.purgeUser(username));
-
 	}
 
-	@RequestMapping(value = "/RevokeAppUserAccess", method = DELETE, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/RevokeAppUserAccess", method = RequestMethod.DELETE, produces = APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> revokeAppUserAccess(@RequestParam String username) {
 		//purge the user from projects && purge the user from dashboards
 		return ResponseEntity.status(HttpStatus.OK).body(projectService.purgeUser(username));
-
-	}
-
-	/**
-	 * create customer using csv file. 
-	 */
-	@RequestMapping(value = "/createCustomer", method = RequestMethod.GET, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public void createCustomerFromCSV() {
-		projectService.createCustomer();
 	}
 
 	/**
@@ -219,7 +192,7 @@ public class ProjectController {
 	 * @param customerRequest
 	 * @param response
 	 */
-	@RequestMapping(value = "/createCustomers", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customers", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
 	public void createCustomer(@RequestBody CustomerRequest customerRequest, HttpServletResponse response) {
 		projectService.createCustomers(customerRequest);
@@ -238,9 +211,8 @@ public class ProjectController {
 		return customerList;
 	}*/
 	
-	@RequestMapping(value = "/getCustomer", method = GET, produces = APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/customers", method = RequestMethod.GET, produces = APPLICATION_JSON_VALUE)
 	public @ResponseBody List<Customer> getCustomers()  {
-
 		List<Customer> customerList = projectService.getCustomer();
 		return customerList;
 	}

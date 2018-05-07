@@ -166,14 +166,8 @@ public class PermissionServiceImpl implements PermissionService {
 	
 	private Permission mapPermissionRequestToPermissionModelForUpdatePermission(PermissionRequest request, Permission permission){
 		permission.setUpdatedBy(request.getUpdatedBy());
-		permission.setLastUpdatedOn(new Date().toString());
+		permission.setUpdatedOn(new Date().toString());
 		permission.setDescription(request.getDescription());
 		return permission;
 	}
-
-	
-
-	
-
-	
 }

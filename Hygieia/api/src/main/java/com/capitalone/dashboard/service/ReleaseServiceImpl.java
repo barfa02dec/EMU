@@ -7,6 +7,7 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import com.capitalone.dashboard.model.Collector;
@@ -63,11 +64,10 @@ public class ReleaseServiceImpl implements ReleaseService {
 	}
 
 	private void createScope(ReleaseMetricsRequest rq) {
-		Scope scope = scopeRepository.getScopeByIdAndProjectName(
-				rq.getProjectId(), rq.getProjectName());
+		List<Scope> scopes = scopeRepository.getScopeById(rq.getProjectId());
 
-		if (scope == null) {
-			scope = new Scope();
+		if (CollectionUtils.isEmpty(scopes)) {
+			Scope scope = new Scope();
 			scope.setCollectorId(getJiraCollectorId());
 
 			scope.setpId(rq.getProjectId());
@@ -92,23 +92,24 @@ public class ReleaseServiceImpl implements ReleaseService {
 		if(null == release){
 			release= new Release();
 			release.setReleaseId(releasereq.getReleaseId());
-			release.setProjectId(releasereq.getProjectId());
-			release.setProjectName(releasereq.getProjectName());
-			release.setName(releasereq.getName());
-			release.setDescription(releasereq.getDescription());
-			release.setAutomated(1);
-			
-			release.setReleaseDate(StringUtils.isEmpty(releasereq.getReleaseDate()) ? null : new Date(Long.parseLong(releasereq.getReleaseDate())));
-			release.setStartDate(StringUtils.isEmpty(releasereq.getStartDate()) ? null : new Date(Long.parseLong(releasereq.getStartDate())));
 		}
+
+		release.setProjectId(releasereq.getProjectId());
+		release.setProjectName(releasereq.getProjectName());
+		release.setName(releasereq.getName());
+		release.setDescription(releasereq.getDescription());
 		release.setReleased(releasereq.isReleased());
+		release.setAutomated(0);
+		
+		release.setReleaseDate(StringUtils.isEmpty(releasereq.getReleaseDate()) ? null : new Date(Long.parseLong(releasereq.getReleaseDate())));
+		release.setStartDate(StringUtils.isEmpty(releasereq.getStartDate()) ? null : new Date(Long.parseLong(releasereq.getStartDate())));
+		
 		
 		VersionData data=new VersionData();		
+		data.setReleaseName(releasereq.getName());
+		data.setReleased(releasereq.isReleased());
 		data.setNoofStoryPoints(releasereq.getNoofStoryCommitted());
 		data.setNoofStoryCompleted(releasereq.getNoofStoryCompleted());
-		data.setReleased(releasereq.isReleased());
-		data.setReleaseId(releasereq.getReleaseId());
-		data.setReleaseName(releasereq.getName());
 		
 		data.setReleaseDate(StringUtils.isEmpty(releasereq.getReleaseDate()) ? null : new Date(Long.parseLong(releasereq.getReleaseDate())));
 		data.setStartDate(StringUtils.isEmpty(releasereq.getStartDate()) ? null : new Date(Long.parseLong(releasereq.getStartDate())));
