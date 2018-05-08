@@ -4,28 +4,38 @@
         <div class="col-md-12">
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Submission month<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Submission month
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="dashboardTitle" errors="{required: 'Month is required'}">
-                        <input type="text" name="dashboardTitle" class="form-control" ng-model="uhc.updateHeatmapPayload.submissionDate" maxlength="50" autocomplete="off" minlength="6" disabled required/>
+                        <input type="text" name="dashboardTitle" class="form-control" ng-model="uhc.updateHeatmapPayload.submissionDate" maxlength="50"
+                            autocomplete="off" minlength="6" disabled required/>
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Date of Submission month" data-toggle="tooltip">
+                    <span alt="Date of Submission month">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Development team size<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Development team size
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="dts" errors="{required: 'Development team size is required'}">
-                        <input type="number" string-to-number oninput="validity.valid||(value='');" name="dts" class="form-control" ng-model="uhc.updateHeatmapPayload.development" maxlength="50" autocomplete="off" min=0 max=9999 required/>
+                        <input type="number" string-to-number oninput="validity.valid||(value='');" name="dts" class="form-control" ng-model="uhc.updateHeatmapPayload.development"
+                            maxlength="50" autocomplete="off" min=0 max=9999 required/>
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Development Team Size" data-toggle="tooltip">
+                    <span alt="Development Team Size">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
         </div>
@@ -36,32 +46,41 @@
                 </div>
                 <div class="col-md-3">
                     <form-group input="pk" errors="{required: 'product knowledge is required',pattern : 'please enter value between [0-3]'}">
-                        <input type="number" string-to-number step="0.01" oninput="validity.valid||(value='');" name="pk" class="form-control" ng-model="uhc.updateHeatmapPayload.productKnowledgeIndex" maxlength="50" placeholder="Enter value [0-3]" min=0 max=3 autocomplete="off" />
+                        <input type="number" string-to-number step="0.01" oninput="validity.valid||(value='');" name="pk" class="form-control" ng-model="uhc.updateHeatmapPayload.productKnowledgeIndex"
+                            maxlength="50" placeholder="Enter value [0-3]" min=0 max=3 autocomplete="off" />
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Use Product Knowledge assessment&#013;worksheet to assess the Team Product&#013;Knowledge">
+                    <span alt="Use Product Knowledge assessment worksheet to assess the Team Product Knowledge">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Testing team size<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Testing team size
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="tts" errors="{required: 'Testing team size is required'}">
-                        <input type="number" string-to-number oninput="validity.valid||(value='');" name="tts" class="form-control" ng-model="uhc.updateHeatmapPayload.testing" maxlength="50" autocomplete="off" min=0 max=9999 required/>
+                        <input type="number" string-to-number oninput="validity.valid||(value='');" name="tts" class="form-control" ng-model="uhc.updateHeatmapPayload.testing"
+                            maxlength="50" autocomplete="off" min=0 max=9999 required/>
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Testing Team Size" data-toggle="tooltip">
+                    <span alt="Testing Team Size">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
         </div>
         <div class="col-md-12">
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Requirments<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Requirments
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="req" errors="{required: 'Requirments is required'}">
@@ -83,13 +102,16 @@
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Is there clarity on requirements of&#013;the project? Are the requirements&#013;captured documented,reviewed and&#013;signed off by the customer? Do we&#013;have clear understanding of the&#013;acceptance criteria(FR/NFR)&#013;for the project." data-toggle="tooltip">
+                    <span alt="Is there clarity on requirements of the project? Are the requirements captured documented,reviewed and signed off by the customer? Do we have clear understanding of the acceptance criteria(FR/NFR) for the project.">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Domain knowledge<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Domain knowledge
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="dk" errors="{required: 'Domain knowledge is required'}">
@@ -111,15 +133,18 @@
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                     title="Does the team have required Domain Knowledge/&#013;Customer Business Knowledge? Are Gaps identified&#013;and Training Plan in place to fill the Gaps?" data-toggle="tooltip">
+                    <span alt="Does the team have required Domain Knowledge/Customer Business Knowledge? Are Gaps identified and Training Plan in place to fill the Gaps?">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
         </div>
         <div class="col-md-12">
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Arcitecture focus<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Arcitecture focus
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="af" errors="{required: 'Arcitecture focus is required'}">
@@ -141,13 +166,16 @@
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Is the project getting required&#013;Architectural review or support?&#013;Is the architecture documented?" data-toggle="tooltip">
+                    <span alt="Is the project getting required Architectural review or support? Is the architecture documented?">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Design focus<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Design focus
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="df" errors="{required: 'Design focus is required'}">
@@ -169,8 +197,9 @@
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                     title="Is design activity carried out separately and documented?&#013;Is the design reviewed and review comments tracked to closure?" data-toggle="tooltip">
+                    <span alt="Is design activity carried out separately and documented? Is the design reviewed and review comments tracked to closure?">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
         </div>
@@ -181,16 +210,21 @@
                 </div>
                 <div class="col-md-3">
                     <form-group input="sca" errors="{pattern : 'please enter value between [0-5]'}">
-                        <input type="number" string-to-number oninput="validity.valid||(value='');" step=0.01 name="sca" ng-model="uhc.updateHeatmapPayload.staticCodeAnalysisIndex" class="form-control" min=0 max=5 maxlength="50" autocomplete="off" />
+                        <input type="number" string-to-number oninput="validity.valid||(value='');" step=0.01 name="sca" ng-model="uhc.updateHeatmapPayload.staticCodeAnalysisIndex"
+                            class="form-control" min=0 max=5 maxlength="50" autocomplete="off" />
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Index= 5*(# of Blocker)+3*&#013; (Critical)+2* (Major)+ 1* (Minor)+ 0.5*&#013;For inherited code we need to make sure &#013; that we baseline the code. Index&#013; would be calculated for new Defects. &#013; Also there needs to be plan in &#013; place to fix the old defects" data-toggle="tooltip">
+                    <span alt="Index= 5*(# of Blocker)+3*(Critical)+2* (Major)+ 1* (Minor)+ 0.5*For inherited code we need to make sure that we baseline the code. Index would be calculated for new Defects.Also there needs to be plan in place to fix the old defects">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Manual code review<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Manual code review
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="mcr" errors="{required: 'Manual code review is required'}">
@@ -212,15 +246,18 @@
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Is Manual code review done and review defects captured&#013;and tracked to closure?" data-toggle="tooltip">
+                    <span alt="Is Manual code review done and review defects captured and tracked to closure?">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
         </div>
         <div class="col-md-12">
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Automated unit testing<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Automated unit testing
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="aut" errors="{required: 'Automated unit testing is required'}">
@@ -242,8 +279,9 @@
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Is Unit Testing being&#013;done in a Formal manner.&#013;If yes are the Test cases&#013;and results recorded?" data-toggle="tooltip">
+                    <span alt="Is Unit Testing being done in a Formal manner.If yes are the Test cases and results recorded?">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div>
@@ -252,11 +290,14 @@
                 </div>
                 <div class="col-md-3">
                     <form-group input="cc">
-                        <input type="number" string-to-number name="cc" oninput="validity.valid||(value='');" class="form-control" ng-model="uhc.updateHeatmapPayload.codeCoveragePercentage" maxlength="50" autocomplete="off" min=0 max=100 />
+                        <input type="number" string-to-number name="cc" oninput="validity.valid||(value='');" class="form-control" ng-model="uhc.updateHeatmapPayload.codeCoveragePercentage"
+                            maxlength="50" autocomplete="off" min=0 max=100 />
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Percentage Code Coverage" data-toggle="tooltip">
+                    <span alt="Percentage Code Coverage">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
         </div>
@@ -267,17 +308,21 @@
                 </div>
                 <div class="col-md-3">
                     <form-group input="ci" errors="{pattern: 'please enter value between [0-5]'}">
-                        <input type="number" string-to-number name="ci" step=0.01 oninput="validity.valid||(value='');" class="form-control" ng-model="uhc.updateHeatmapPayload.continuousIntegrationIndex" placeholder="Enter value [0-5]" min=0 max=5 maxlength="50" autocomplete="off" />
+                        <input type="number" string-to-number name="ci" step=0.01 oninput="validity.valid||(value='');" class="form-control" ng-model="uhc.updateHeatmapPayload.continuousIntegrationIndex"
+                            placeholder="Enter value [0-5]" min=0 max=5 maxlength="50" autocomplete="off" />
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="5|If there Primary build for&#013;every check in and Build Failure&#013;are monitored.QA takes build generated&#013;by CI 3|If there is Daily Build and&#013;Build Failure is monitored.QA takes build&#013;generated by CI 2|Build is triggered&#013;Manually on Need Basis. QA takes build&#013;generated  by CI 1|Devops setup is&#013;done and not used.0|Manual Build5:&#013;If there Primary build for every check&#013;in and Build Failure are monitored.&#013;QA takes build generated by CI" data-toggle="tooltip">
+                    <span alt="5|If there Primary build for every check in and Build Failure are monitored.QA takes build generated by CI 3|If there is Daily Build and Build Failure is monitored.QA takes build generated by CI 2|Build is triggered Manually on Need Basis. QA takes build generated  by CI 1|Devops setup is done and not used.0|Manual Build5: If there Primary build for every check in and Build Failure are monitored.QA takes build generated by CI">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Testing process<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Testing process
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="tp" errors="{required: 'Testing process is required'}">
@@ -299,8 +344,9 @@
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Are test cases captured and linked to requirements?&#013;Are test results formally documented?&#013;Are we using defect management system effectively?" data-toggle="tooltip">
+                    <span alt="Are test cases captured and linked to requirements? Are test results formally documented? Are we using defect management system effectively?">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
         </div>
@@ -311,11 +357,14 @@
                 </div>
                 <div class="col-md-3">
                     <form-group input="pa">
-                        <input oninput="validity.valid||(value='');" string-to-number type="number" name="pa" class="form-control" ng-model="uhc.updateHeatmapPayload.performanceAssessmentPercentage" maxlength="50" autocomplete="off" min=0 max=100 />
+                        <input oninput="validity.valid||(value='');" string-to-number type="number" name="pa" class="form-control" ng-model="uhc.updateHeatmapPayload.performanceAssessmentPercentage"
+                            maxlength="50" autocomplete="off" min=0 max=100 />
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" title="Number of Performance Goals&#013;Compliant/Total Number of&#013;Performance Goals" data-toggle="tooltip">
+                    <span alt="Number of Performance Goals Compliant/Total Number of Performance Goals">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div>
@@ -324,12 +373,14 @@
                 </div>
                 <div class="col-md-3">
                     <form-group input="sa">
-                        <input type="number" string-to-number name="sa" oninput="validity.valid||(value='');" step=0.01 class="form-control" ng-model="uhc.updateHeatmapPayload.securityAssessmentIndex" maxlength="50" placeholder="Enter value [0-5]" min=0 max=5 autocomplete="off" />
+                        <input type="number" string-to-number name="sa" oninput="validity.valid||(value='');" step=0.01 class="form-control" ng-model="uhc.updateHeatmapPayload.securityAssessmentIndex"
+                            maxlength="50" placeholder="Enter value [0-5]" min=0 max=5 autocomplete="off" />
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Index=5*(# of Blocker)+3*(Critical)+2*(Major)+1*(Minor)+&#013;0.5*(Trivial)/(#of defects).Note: For inherited code&#013;we need to make sure that we baseline the code.Index&#013;would be calculated for new Defects.Also there needs to&#013;be plan in place to fix the old defects." data-toggle="tooltip">
+                    <span alt="Index=5*(# of Blocker)+3*(Critical)+2*(Major)+1*(Minor)+0.5*(Trivial)/(#of defects).Note: For inherited code we need to make sure that we baseline the code.Index would be calculated for new Defects.Also there needs to be plan in place to fix the old defects.">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
         </div>
@@ -340,17 +391,21 @@
                 </div>
                 <div class="col-md-3">
                     <form-group input="ta">
-                        <input oninput="validity.valid||(value='');" string-to-number type="number" name="ta" class="form-control" ng-model="uhc.updateHeatmapPayload.testAutomationPercentage" maxlength="50" autocomplete="off" min=0 max=100 />
+                        <input oninput="validity.valid||(value='');" string-to-number type="number" name="ta" class="form-control" ng-model="uhc.updateHeatmapPayload.testAutomationPercentage"
+                            maxlength="50" autocomplete="off" min=0 max=100 />
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Is Unit Testing being done&#013;in a Formal manner. If&#013;yes are the Test cases and&#013;results recorded?" data-toggle="tooltip">
+                    <span alt="Is Unit Testing being done in a Formal manner. If yes are the Test cases and results recorded?">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Release process<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Release process
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="rp" errors="{required: 'Release process is required'}">
@@ -372,15 +427,18 @@
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Is formal Release process being followed?" data-toggle="tooltip">
-                 </div>
+                    <span alt="Is formal Release process being followed?">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
+                </div>
             </div>
         </div>
         <div class="col-md-12">
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Metrics<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Metrics
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="metrics" errors="{required: 'Metrics is required'}">
@@ -402,13 +460,16 @@
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Are adequate metrics being&#013;captured for the project?&#013;Do we review the metrics&#013;with customer?" data-toggle="tooltip">
+                    <span alt="Are adequate metrics being captured for the project? Do we review the metrics with customer?">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div>
                 <div class="col-md-2">
-                    <label class="control-label createproj-label-props">Customer WSR<span style="color:red">*</span></label>
+                    <label class="control-label createproj-label-props">Customer WSR
+                        <span style="color:red">*</span>
+                    </label>
                 </div>
                 <div class="col-md-3">
                     <form-group input="cwsr" errors="{required: 'Customer WSR is required'}">
@@ -430,8 +491,9 @@
                     </form-group>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Are Customer weekly status report shared&#013;with the customer on weekly basis?" data-toggle="tooltip">
+                    <span alt="Are Customer weekly status report shared with the customer on weekly basis?">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
         </div>
@@ -443,8 +505,10 @@
                     </div>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Green-Done | Is the process&#013;carried out on a regular basis? |&#013;Sufficient artifacts are available |&#013;Process has been reviewed" data-toggle="tooltip">
+                    <span alt="Green-Done|Is the process carried out on a regular basis?|Sufficient
+                        artifacts are available|Process has been reviewed">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div class="col-md-2">
@@ -454,8 +518,10 @@
                     </div>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Amber-WIP | Process is carried&#013;out on sporadic basis.&#013;Implementation is not uniform&#013;across the team | Required&#013;artifacts are absent or not&#013;updated on a regular basis |&#013;There are known weaknesses in&#013;the process and needs to be improved" data-toggle="tooltip">
+                    <span alt="Amber-WIP|Process is carried out on sporadic basis.Implementation
+                        is not uniform across the team | Required artifacts are absent or not updated on a regular basis|There are known weaknesses in the process and needs to be improved">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
             <div class="col-md-2">
@@ -465,8 +531,9 @@
                     </div>
                 </div>
                 <div class="col-md-1">
-                    <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon" 
-                    title="Not implemented-Not Done&#013;| Process is not initiated in the&#013;project|Required artifacts are not&#013;captured or saved| No other evidence&#013;to support the implementation" data-toggle="tooltip">
+                    <span alt="Not implemented-Not Done|Process is not initiated in the project|Required artifacts are not captured or saved| No other evidence to support the implementation">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
                 </div>
             </div>
         </div>
@@ -480,9 +547,7 @@
     <div class="" ng-click="hmc.hideForm()">
         <hr>
         <span ng-if="hmc.prevHeader" style="cursor: pointer;">
-      <img
-         src="assets/images/arrow_right.png"
-         style="vertical-align: sub"> View list of Heat Map</span>
+            <img src="assets/images/arrow_right.png" style="vertical-align: sub"> View list of Heat Map</span>
         <div class="" ng-if="hmc.prevousText">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -579,8 +644,6 @@
     </div>
     <div ng-click="hmc.showForm()">
         <span ng-if="!hmc.prevHeader" style="cursor: pointer;">
-      <img
-         src="assets/images/arrow_right.png"
-         style="vertical-align: sub"> Add Heat Map</span>
+            <img src="assets/images/arrow_right.png" style="vertical-align: sub"> Add Heat Map</span>
     </div>
 </widget-modal>

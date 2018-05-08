@@ -75,7 +75,7 @@
         }
         ctrl.projID = $cookies.get('ProId');
         
-        $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
+        $http.get("/api/projects/?username=" + ctrl.usernamepro)
             .then(function(response) {
                 ctrl.getAllProjects = response.data;
 

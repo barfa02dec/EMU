@@ -708,7 +708,7 @@
                     function (response) {
                         if (response.status == 409) {
                             $uibModal.open({
-                                templateUrl: 'app/dashboard/views/ConfirmationModals/errormodelDuplicate.html',
+                                templateUrl: 'app/dashboard/views/ConfirmationModals/errorDuplicateRelease.html',
                                 controller: 'projectMapController',
                                 controllerAs: 'pm'
                             });

@@ -836,9 +836,29 @@ input.middle:focus {
     padding: 4px 18px;
     height: 0px;
 }
+
+.NA-color:before {
+content:"NA";
+} 
+
 .tab-display-none {
     display:none !important;
 }
 .change-password-inputboxes{
     width:30%;
 }
+
+span[alt]:hover:after {
+    content: attr(alt);
+    position: absolute;
+    font-size:11px;
+    left: -150%;
+    z-index: 1;
+    text-align: left;
+    background-color: black;
+    color: #fff;
+    border-radius: 6px;
+    padding: 5px;
+}
+
+

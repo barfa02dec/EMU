@@ -26,7 +26,7 @@
             $location.path('/');
         };
 
-        $http.get("/api/getProjectsByUser/?username=" + ctrl.usernamepro)
+        $http.get("/api/projects/?username=" + ctrl.usernamepro)
             .then(function(response) {
                 ctrl.getAllProjects = response.data;
                 for (var i = 0; i < ctrl.getAllProjects.length; i++) {
