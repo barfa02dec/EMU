@@ -91,7 +91,7 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setCustomerName(request.getCustomerName());
 		project.setCustomerCode(request.getCustomerCode());
 		project.setCreatedBy(request.getUser());
-		project.setCreatedOn(new Date().toString());
+		project.setCreatedOn(new Date());
 
 		//setting the SYS_ADMIN role for the user who created the project.
 		UserGroup defaultProjectAdmin= new UserGroup(request.getUser());
@@ -120,7 +120,7 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setCustomerName(request.getCustomerName());
 		project.setCustomerCode(request.getCustomerCode());
 		project.setUpdatedBy(request.getUser());
-		project.setUpdatedOn(new Date().toString());
+		project.setUpdatedOn(new Date());
 		return project;
 	}
 

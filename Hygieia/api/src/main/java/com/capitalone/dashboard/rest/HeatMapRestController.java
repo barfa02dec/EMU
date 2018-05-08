@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -74,10 +75,17 @@ public class HeatMapRestController {
 	 * @param response
 	 */
 	@RequestMapping(value = "/heatmaps", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.CREATED)
-	public void createHeatmap(@RequestBody HeatMapRequest heatMapRequest, HttpServletResponse response) {
+	//@ResponseStatus(value = HttpStatus.CREATED)
+	public ResponseEntity<String> createHeatmap(@RequestBody HeatMapRequest heatMapRequest, HttpServletResponse response) {
 		LOGGER.debug("Creating Heat map");
-		heatMapService.createHeatmap(heatMapRequest);
+		try{
+			heatMapService.createHeatmap(heatMapRequest);
+			return ResponseEntity.status(HttpStatus.CREATED).body("heatmap successfully created for submission date ::"+heatMapRequest.getSubmissionDate());
+		}catch (org.springframework.dao.DuplicateKeyException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("heatmap already exists for the submission date ::"+heatMapRequest.getSubmissionDate());
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("heatmap create failed"); 
+		}
 	}
 
 	/**
@@ -87,10 +95,17 @@ public class HeatMapRestController {
 	 * @param response
 	 */
 	@RequestMapping(value = "/heatmaps", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseStatus(value = HttpStatus.OK)
-	public void updateHeatMap(@RequestBody HeatMapRequest heatmapRequest, HttpServletResponse response) {
+	//@ResponseStatus(value = HttpStatus.OK)
+	public ResponseEntity<String> updateHeatMap(@RequestBody HeatMapRequest heatmapRequest, HttpServletResponse response) {
 		LOGGER.debug("Updating Heat map");
-		heatMapService.updateHeatmap(heatmapRequest);
+		try{
+			heatMapService.updateHeatmap(heatmapRequest);
+			return ResponseEntity.status(HttpStatus.OK).body("heatmap updated successfully");
+		}catch (org.springframework.dao.DuplicateKeyException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("heatmap already exists for the submission date ::" + heatmapRequest.getSubmissionDate());
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("heatmap update failed"); 
+		}
 	} 
 	
 	/**

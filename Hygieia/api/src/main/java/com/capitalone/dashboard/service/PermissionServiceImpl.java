@@ -144,7 +144,7 @@ public class PermissionServiceImpl implements PermissionService {
 		permission.setName(request.getName());
 		permission.setCreatedBy(request.getCreatedBy());
 		permission.setDescription(request.getDescription());
-		permission.setCreatedOn(new Date().toString());
+		permission.setCreatedOn(new Date());
 		permission.setStatus(request.isStatus());
 		return permission;
 	}
@@ -158,7 +158,7 @@ public class PermissionServiceImpl implements PermissionService {
 			permission.setCreatedBy(request.getCreatedBy());
 			permission.setDescription(request.getDescription());
 			permission.setStatus(request.isStatus());
-			permission.setCreatedOn(new Date().toString());
+			permission.setCreatedOn(new Date());
 			permissionSet.add(permission);
 		}
 		return permissionSet;
@@ -166,7 +166,7 @@ public class PermissionServiceImpl implements PermissionService {
 	
 	private Permission mapPermissionRequestToPermissionModelForUpdatePermission(PermissionRequest request, Permission permission){
 		permission.setUpdatedBy(request.getUpdatedBy());
-		permission.setUpdatedOn(new Date().toString());
+		permission.setUpdatedOn(new Date());
 		permission.setDescription(request.getDescription());
 		return permission;
 	}

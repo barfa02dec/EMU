@@ -16,6 +16,8 @@
 
 package com.capitalone.dashboard.repository;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
@@ -39,5 +41,5 @@ public interface DefectAggregationRepository extends CrudRepository<DefectAggreg
 	DefectAggregation findByProjectName(String projectName);
 	
 	@Query(value = "{'metricsProjectId' : ?0}")
-	DefectAggregation findByMetricsProjectId(String metricsProjectId);
+	List<DefectAggregation> findByMetricsProjectId(String metricsProjectId);
 }

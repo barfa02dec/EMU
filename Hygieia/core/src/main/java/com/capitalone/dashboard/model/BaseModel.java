@@ -1,5 +1,7 @@
 package com.capitalone.dashboard.model;
 
+import java.util.Date;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 
@@ -9,8 +11,8 @@ import org.springframework.data.annotation.Id;
 public class BaseModel {
     @Id
     private ObjectId id;
-	private String createdOn;
-	private String updatedOn;
+	private Date createdOn;
+	private Date updatedOn;
 	private String createdBy;
 	private String updatedBy;
 
@@ -21,17 +23,17 @@ public class BaseModel {
         this.id = id;
     }
 
-	public String getCreatedOn() {
+	public Date getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(String createdOn) {
+	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
 
-	public String getUpdatedOn() {
+	public Date getUpdatedOn() {
 		return updatedOn;
 	}
-	public void setUpdatedOn(String updatedOn) {
+	public void setUpdatedOn(Date updatedOn) {
 		this.updatedOn = updatedOn;
 	}
 

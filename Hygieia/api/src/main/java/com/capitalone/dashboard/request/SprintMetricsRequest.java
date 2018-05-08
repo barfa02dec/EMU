@@ -50,6 +50,7 @@ public class SprintMetricsRequest {
     private int sprintLowDefectsResolved;
     private int sprintHighDefectsResolved;
     
+    private String user;
     
 	public String getObjectId() {
 		return objectId;
@@ -279,5 +280,11 @@ public class SprintMetricsRequest {
 	}
 	public void setSprintHighDefectsResolved(int sprintHighDefectsResolved) {
 		this.sprintHighDefectsResolved = sprintHighDefectsResolved;
+	}
+	public String getUser() {
+		return user;
+	}
+	public void setUser(String user) {
+		this.user = user;
 	}
 }

@@ -4,15 +4,17 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class DefectSummaryRequest {
+
+	private String objectId;
 	
+	@NotNull
+	private String projectId;
+
 	@NotNull
 	private String projectName;
 	
 	@NotNull
 	private String metricsProjectId;
-	
-	@NotNull
-	private String projectId;
 	
 	@NotNull
 	private String valueAsOn;
@@ -166,7 +168,14 @@ public class DefectSummaryRequest {
 	@Min(value=0, message = "value must be greater than or equal to zero" )
 	private int fixedDefectsWithCriticalPriorityAndResolutionGreaterThan90;
 	
+	private String user;
 	
+	public String getObjectId() {
+		return objectId;
+	}
+	public void setObjectId(String objectId) {
+		this.objectId = objectId;
+	}
 	public int getLowPriorityDefectsCount() {
 		return lowPriorityDefectsCount;
 	}
@@ -511,8 +520,10 @@ public class DefectSummaryRequest {
 	public void setValueAsOn(String valueAsOn) {
 		this.valueAsOn = valueAsOn;
 	}
-	
-	
-	
-	
+	public String getUser() {
+		return user;
+	}
+	public void setUser(String user) {
+		this.user = user;
+	}
 }

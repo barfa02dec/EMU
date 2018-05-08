@@ -31,6 +31,8 @@ public class ReleaseMetricsRequest {
     private int noofStoryCommitted;
     private int noOfStories;
     
+    private String User;
+    
 	public String getObjectId() {
 		return objectId;
 	}
@@ -197,5 +199,11 @@ public class ReleaseMetricsRequest {
 	}
 	public void setNoOfStories(int noOfStories) {
 		this.noOfStories = noOfStories;
+	}
+	public String getUser() {
+		return User;
+	}
+	public void setUser(String user) {
+		User = user;
 	}
 }

@@ -20,7 +20,7 @@ import java.util.Date;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -29,11 +29,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * 
  */
 @Document(collection = "sprint")
+@CompoundIndex(def = "{'projectId':1, 'sprintId':1}", name = "index_Sprint_projectId_sprintId", unique=true)
 public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 
-	    @Indexed(name="index_Sprint_projectId")
 		private String projectId;
-
 	    private Long sprintId;
 	    
 	    private Date startDate;

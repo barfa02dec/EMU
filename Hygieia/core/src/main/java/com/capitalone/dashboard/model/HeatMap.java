@@ -1,7 +1,7 @@
 package com.capitalone.dashboard.model;
 
 
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -12,61 +12,36 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 
 @Document(collection = "heatmap")
+@CompoundIndex(def = "{'projectId':1, 'submissionDate':1}", name = "index_heatmap_projectId_submissionDate", unique=true)
 public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
-
-	@Indexed(name="index_heatmap_projectId")
+	
 	private String projectId;
-
-	private ProjectHeatmapData projectHeatmapData;
-
 	//@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
 	private String submissionDate;
+	
+	private ProjectHeatmapData projectHeatmapData;
 
-	/**
-	 * @return the projectId
-	 */
 	public String getProjectId() {
 		return projectId;
 	}
-
-	/**
-	 * @param projectId the projectId to set
-	 */
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
 
-	/**
-	 * @return the projectHeatmapData
-	 */
 	public ProjectHeatmapData getProjectHeatmapData() {
 		return projectHeatmapData;
 	}
-
-	/**
-	 * @param projectHeatmapData the projectHeatmapData to set
-	 */
 	public void setProjectHeatmapData(ProjectHeatmapData projectHeatmapData) {
 		this.projectHeatmapData = projectHeatmapData;
 	}
 
-	/**
-	 * @return the submissionDate
-	 */
 	public String  getSubmissionDate() {
 		return submissionDate;
 	}
-
-	/**
-	 * @param submissionDate the submissionDate to set
-	 */
 	public void setSubmissionDate(String  submissionDate) {
 		this.submissionDate = submissionDate;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -106,5 +81,4 @@ public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
 		}
 		return -1;
 	}
-	
 }

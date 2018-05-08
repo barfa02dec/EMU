@@ -13,13 +13,8 @@ public interface HeatMapRepository extends CrudRepository<HeatMap, ObjectId>,
     QueryDslPredicateExecutor<HeatMap>, HeatMapRepositoryCustom {
 	
 	@Query(value = "{'projectId' : ?0, 'submissionDate':?1}")
-	List<HeatMap> findByProjectId(String projectId, String submissionDate);
+	HeatMap findByProjectId(String projectId, String submissionDate);
 
-	@Query(value = "{'projectId' : ?0, 'submissionDate':?1 }")
-	HeatMap findByOneProjectId(String projectId, String submissionDate);
-	
-	
 	@Query(value = " {'projectId' : ?0 }")
 	List<HeatMap> getByProjectId(String projectId);
-
 }

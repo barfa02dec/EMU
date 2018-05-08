@@ -47,14 +47,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 	@Override
 	public Release create(ReleaseMetricsRequest releasereq) {
 		createScope(releasereq);
-		
-		Release existingrelease = releaseRepository.findByReleaseId(releasereq.getProjectId(), releasereq.getReleaseId());
-		
-		if(existingrelease != null){
-			throw new IllegalStateException("The release with release id " + releasereq.getReleaseId() + " already exists.");
-		}
-
-		return releaseRepository.save(convertReleaseRequestToReleaseModel(existingrelease, releasereq));
+		//Release existingrelease = releaseRepository.findByReleaseId(releasereq.getProjectId(), releasereq.getReleaseId());
+		return releaseRepository.save(convertReleaseRequestToReleaseModel(null, releasereq));
 	}
 
 	@Override
@@ -92,6 +86,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 		if(null == release){
 			release= new Release();
 			release.setReleaseId(releasereq.getReleaseId());
+			release.setCreatedOn(new Date());
+			release.setCreatedBy(releasereq.getUser());
 		}
 
 		release.setProjectId(releasereq.getProjectId());
@@ -100,10 +96,10 @@ public class ReleaseServiceImpl implements ReleaseService {
 		release.setDescription(releasereq.getDescription());
 		release.setReleased(releasereq.isReleased());
 		release.setAutomated(0);
-		
 		release.setReleaseDate(StringUtils.isEmpty(releasereq.getReleaseDate()) ? null : new Date(Long.parseLong(releasereq.getReleaseDate())));
 		release.setStartDate(StringUtils.isEmpty(releasereq.getStartDate()) ? null : new Date(Long.parseLong(releasereq.getStartDate())));
-		
+		release.setUpdatedOn(new Date());
+		release.setUpdatedBy(releasereq.getUser());
 		
 		VersionData data=new VersionData();		
 		data.setReleaseName(releasereq.getName());

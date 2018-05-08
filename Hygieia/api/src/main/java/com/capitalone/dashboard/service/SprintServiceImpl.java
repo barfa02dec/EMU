@@ -49,14 +49,8 @@ public class SprintServiceImpl implements SprintService {
 	@Override
 	public Sprint create(SprintMetricsRequest sprintreq) {
 		createScope(sprintreq);
-		
-		Sprint existingsprint = repository.findBySprintId(sprintreq.getProjectId(), sprintreq.getSprintId());
-		
-		if(existingsprint != null){
-			throw new IllegalStateException("The sprint with sprint id " + sprintreq.getSprintId() + " already exists.");
-		}
-		
-		return repository.save(convertSprintRequestToSprintModel(existingsprint, sprintreq));
+		//Sprint existingsprint = repository.findBySprintId(sprintreq.getProjectId(), sprintreq.getSprintId());
+		return repository.save(convertSprintRequestToSprintModel(null, sprintreq));
 	}
 
 	@Override
@@ -110,6 +104,8 @@ public class SprintServiceImpl implements SprintService {
 		if(null == existingsprint){
 			existingsprint = new Sprint();
 			existingsprint.setSid(re.getSprintId());
+			existingsprint.setCreatedOn(new Date());
+			existingsprint.setCreatedBy(re.getUser());
 		}
 
 		existingsprint.setName(re.getSprintName());
@@ -119,6 +115,8 @@ public class SprintServiceImpl implements SprintService {
 		existingsprint.setEndDate(StringUtils.isEmpty(re.getEndDate()) ? null : new Date(Long.parseLong(re.getEndDate())));
 		existingsprint.setAutomated(0);
 		existingsprint.setClosed(re.isReleased());
+		existingsprint.setUpdatedOn(new Date());
+		existingsprint.setUpdatedBy(re.getUser());
 		
 		SprintData sd= new SprintData();
 		sd.setSprintName(re.getSprintName());
