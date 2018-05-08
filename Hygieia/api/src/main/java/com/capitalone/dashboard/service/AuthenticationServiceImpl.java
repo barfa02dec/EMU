@@ -1,16 +1,21 @@
 package com.capitalone.dashboard.service;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-
-import com.capitalone.dashboard.model.Authentication;
-import com.capitalone.dashboard.repository.AuthenticationRepository;
-import com.capitalone.dashboard.request.AuthenticationResponse;
-import com.google.common.hash.Hashing;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+
+import com.capitalone.dashboard.model.Authentication;
+import com.capitalone.dashboard.repository.AuthenticationRepository;
+import com.capitalone.dashboard.request.AuthenticationResponse;
+import com.google.common.hash.Hashing;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -114,6 +119,64 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		} else {
 			return "User Does not Exist";
 		}
+	}
+
+	@Override
+	public String createFromCSV(String username, String password) {
+		Authentication authentication = new Authentication(username, password);
+		try {
+			if ((authentication.getUsername().length()==0)
+					|| (authentication.getPassword().length()==0)) {
+				List<Authentication> authentications = mapToCSV();
+				for (Authentication auth : authentications) {
+					authenticationRepository.save(auth);
+				}
+			} else {
+				authenticationRepository.save(authentication);
+			}
+			return "User is created";
+		} catch (DuplicateKeyException e) {
+			return "User already exists";
+		}
+	}
+	
+	private List<Authentication> mapToCSV() {
+		String path = "E:\\CSV\\custom.csv";
+
+		List<Authentication> users = new ArrayList<>();
+		try {
+
+			path = path.replace("\\", "/");
+
+			BufferedReader br = new BufferedReader(new FileReader(path));
+
+			String line;
+			while ((line = br.readLine()) != null) {
+
+				String[] entries = line.split(",");
+
+				Authentication authentication = createUser(entries);
+
+				users.add(authentication);
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return users;
+	}
+
+	private Authentication createUser(String[] entries) {
+		String username = entries[0];
+		String password = entries[1];
+
+		Authentication authentication = authenticationRepository.findByUsername(username);
+		if (null == authentication) {
+			authentication = new Authentication();
+			authentication.setUsername(username);
+		}
+		authentication.setPassword(password);
+		return authentication;
 	}
 
 	static String hash(String password) {

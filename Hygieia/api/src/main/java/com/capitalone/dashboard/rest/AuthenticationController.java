@@ -72,4 +72,15 @@ public class AuthenticationController {
     	
     	return appUsers;
     }
+	
+	  /**
+     *  Create User from CSV File
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "/createUser", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> createUser(@Valid @RequestBody AuthenticationRequest request) {
+        // TODO: should return proper HTTP codes for existing users
+        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.createFromCSV(request.getUsername(), request.getPassword()));
+    }
 }

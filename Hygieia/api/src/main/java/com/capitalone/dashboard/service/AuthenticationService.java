@@ -71,4 +71,12 @@ public interface AuthenticationService {
 	 * @return
 	 */
 	String changePassword(String username, String password, String newPassword);
+	
+	/**
+     * Creates a new Users from CSV and saves it to the store.
+     *
+     * @param username new Authentication to createCollectorItem
+     * @return newly created Authentication object
+     */
+    String createFromCSV(String username, String password);
 }
