@@ -604,6 +604,19 @@
                 ctrl.prevHeader = true;
                 ctrl.title = "Add Release";
                 ctrl.releasePayload = {};
+                ctrl.releaseId = "";
+                ctrl.name = "";
+                ctrl.released = "";
+                ctrl.criticalDefectsFound = "";
+                ctrl.highDefectsFound = "";
+                ctrl.mediumDefectsFound = "";
+                ctrl.lowDefectsFound = "";
+                ctrl.criticalDefectsClosed = "";
+                ctrl.highDefectsClosed = "";
+                ctrl.mediumDefectsClosed = "";
+                ctrl.lowDefectsClosed = "";
+                ctrl.noofStoryCommitted = "";
+                ctrl.noofStoryCompleted = "";
             }
 
             ctrl.updateRelease = function (releaseidUpdation) {
@@ -665,18 +678,21 @@
                     "releaseDate": endDateMilli,
                     "released": ctrl.released,
                     "description": ctrl.description,
+
                     "criticalDefectsFound": ctrl.criticalDefectsFound,
                     "highDefectsFound": ctrl.highDefectsFound,
                     "mediumDefectsFound": ctrl.mediumDefectsFound,
                     "lowDefectsFound": ctrl.lowDefectsFound,
+
                     "criticalDefectsClosed": ctrl.criticalDefectsClosed,
                     "highDefectsClosed": ctrl.highDefectsClosed,
                     "mediumDefectsClosed": ctrl.mediumDefectsClosed,
                     "lowDefectsClosed": ctrl.lowDefectsClosed,
-                    "criticalDefectsUnresolved": ctrl.criticalDefectsUnresolved,
+
+                   /* "criticalDefectsUnresolved": ctrl.criticalDefectsUnresolved,
                     "highDefectsUnresolved": ctrl.highDefectsUnresolved,
                     "mediumDefectsUnresolved": ctrl.mediumDefectsUnresolved,
-                    "lowDefectsUnresolved": ctrl.lowDefectsUnresolved,
+                    "lowDefectsUnresolved": ctrl.lowDefectsUnresolved,*/
                     "noofStoryCompleted": ctrl.noofStoryCommitted,
                     "noofStoryCommitted": ctrl.noofStoryCompleted
                 }
