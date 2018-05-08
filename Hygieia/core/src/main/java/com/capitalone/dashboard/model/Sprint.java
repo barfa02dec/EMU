@@ -43,7 +43,7 @@ public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 	    private String viewBoardsUrl;
 	    private SprintData sprintData;
 	    private String projectName;
-	    private int automated;
+	    private boolean automated;
 		
 		public String getProjectName() {
 			return projectName;
@@ -115,10 +115,10 @@ public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 			this.sprintData = sprintData;
 		}
 
-		public int getAutomated() {
+		public boolean getAutomated() {
 			return automated;
 		}
-		public void setAutomated(int automated) {
+		public void setAutomated(boolean automated) {
 			this.automated = automated;
 		}
 

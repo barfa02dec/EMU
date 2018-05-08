@@ -283,9 +283,12 @@ public class StoryDataClientImpl implements StoryDataClient {
 					sprint.setEndDate(StringUtils.isEmpty(jiraSprint.getEnd()) ? null : new Date(Long.parseLong(jiraSprint.getEnd())));
 					sprint.setClosed(jiraSprint.getClosed());
 					sprint.setProjectName(projectName);
+					sprint.setCreatedOn(new Date());
+					sprint.setAutomated(true);
 				}else{
 					sprint.setEditable(jiraSprint.getEditable());
 					sprint.setEndDate(StringUtils.isEmpty(jiraSprint.getEnd()) ? null : new Date(Long.parseLong(jiraSprint.getEnd())));
+					sprint.setUpdatedOn(new Date());
 				}
 				
 				// Get the detailed metrics for sprint with status [open] 
@@ -329,9 +332,12 @@ public class StoryDataClientImpl implements StoryDataClient {
 					release.setReleaseDate(StringUtils.isEmpty(jiraVersion.getReleaseDate()) ? null : new SimpleDateFormat("yyyy-MM-dd").parse(jiraVersion.getReleaseDate()));
 					release.setReleased(jiraVersion.getReleased());
 					release.setProjectName(projectName);
+					release.setCreatedOn(new Date());
+					release.setAutomated(true);
 				}else{
 					release.setOverdue(jiraVersion.getOverdue());
 					release.setReleaseDate(StringUtils.isEmpty(jiraVersion.getReleaseDate()) ? null : new SimpleDateFormat("yyyy-MM-dd").parse(jiraVersion.getReleaseDate()));
+					release.setUpdatedOn(new Date());
 				}
 				
 
@@ -510,6 +516,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 		summary.setProjectId(project.getpId());
 		summary.setProjectName(project.getName());
 		summary.setValuesAsOn(new Date().toString());
+		summary.setCreatedOn(new Date());
+		summary.setAutomated(true);
 		summary.setMetricsProjectId(project.getProjectId());
 		
 		/*

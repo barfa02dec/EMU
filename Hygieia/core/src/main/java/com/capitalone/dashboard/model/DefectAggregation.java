@@ -40,6 +40,7 @@ public class DefectAggregation extends BaseModel{
 	private String projectName;
 	private String projectId;
 	private String metricsProjectId;
+	private boolean automated;
 	
 	public Map<String, List<Map<String, String>>> getFixeddefectsByResolutions() {
 		return fixeddefectsByResolutions;
@@ -101,5 +102,11 @@ public class DefectAggregation extends BaseModel{
 	}
 	public void setValuesAsOn(String valuesAsOn) {
 		this.valuesAsOn = valuesAsOn;
+	}
+	public boolean isAutomated() {
+		return automated;
+	}
+	public void setAutomated(boolean automated) {
+		this.automated = automated;
 	}
 }

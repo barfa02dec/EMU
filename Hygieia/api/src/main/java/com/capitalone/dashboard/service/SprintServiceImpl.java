@@ -113,7 +113,7 @@ public class SprintServiceImpl implements SprintService {
 		existingsprint.setProjectName(re.getProjectName());
 		existingsprint.setStartDate(StringUtils.isEmpty(re.getStartDate()) ? null : new Date(Long.parseLong(re.getStartDate())));
 		existingsprint.setEndDate(StringUtils.isEmpty(re.getEndDate()) ? null : new Date(Long.parseLong(re.getEndDate())));
-		existingsprint.setAutomated(0);
+		existingsprint.setAutomated(false);
 		existingsprint.setClosed(re.isReleased());
 		existingsprint.setUpdatedOn(new Date());
 		existingsprint.setUpdatedBy(re.getUser());

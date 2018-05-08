@@ -95,6 +95,7 @@ public class DefectSummaryServiceImpl implements DefectSummaryService {
 			da.setProjectName(re.getProjectName());
 			da.setCreatedOn(new Date());
 			da.setCreatedBy(re.getUser());
+			da.setAutomated(false);
 		}
 		
 		da.setUpdatedOn(new Date());
