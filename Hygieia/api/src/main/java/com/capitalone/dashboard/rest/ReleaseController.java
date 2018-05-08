@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,12 +46,26 @@ public class ReleaseController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/releases")
-	public Release createReleaseMetrics(@RequestBody ReleaseMetricsRequest req){
-		return releaseService.create(req);
+	public ResponseEntity<String> createReleaseMetrics(@RequestBody ReleaseMetricsRequest req){
+		try{
+			releaseService.create(req);
+			return ResponseEntity.status(HttpStatus.OK).body("release created successfully");
+		}catch (org.springframework.dao.DuplicateKeyException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("release already exists");
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("heatmap create failed"); 
+		}
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT, value="/releases")
-	public Release updateReleaseMetrics(@RequestBody ReleaseMetricsRequest req){
-		return releaseService.update(req);
+	public ResponseEntity<String> updateReleaseMetrics(@RequestBody ReleaseMetricsRequest req){
+		try{
+			releaseService.update(req);
+			return ResponseEntity.status(HttpStatus.OK).body("release updated successfully");
+		}catch (org.springframework.dao.DuplicateKeyException e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body("release already exists");
+		}catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("heatmap update failed"); 
+		}
 	}
 }

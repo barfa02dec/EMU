@@ -4,15 +4,13 @@ import java.util.Date;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="release")
+@CompoundIndex(def = "{'projectId':1, 'releaseId':1}", name = "index_Release_projectId_releaseId", unique=true)
 public class Release extends BaseModel implements java.lang.Comparable<Release>{
-		
-	@Indexed(name="index_Release_releaseId")
 	private Long releaseId;
-	@Indexed(name="index_Release_projectId", unique=true)
     private String projectId;
 	
     private String description;

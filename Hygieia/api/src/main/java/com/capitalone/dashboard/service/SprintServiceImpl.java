@@ -49,10 +49,8 @@ public class SprintServiceImpl implements SprintService {
 	@Override
 	public Sprint create(SprintMetricsRequest sprintreq) {
 		createScope(sprintreq);
-		
-		Sprint existingsprint = repository.findBySprintId(sprintreq.getProjectId(), sprintreq.getSprintId());
-		
-		return repository.save(convertSprintRequestToSprintModel(existingsprint, sprintreq));
+		//Sprint existingsprint = repository.findBySprintId(sprintreq.getProjectId(), sprintreq.getSprintId());
+		return repository.save(convertSprintRequestToSprintModel(null, sprintreq));
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package com.capitalone.dashboard.model;
 
 
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -12,17 +12,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 
 @Document(collection = "heatmap")
+@CompoundIndex(def = "{'projectId':1, 'submissionDate':1}", name = "index_heatmap_projectId_submissionDate", unique=true)
 public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
 	
-	@Indexed(name="index_heatmap_projectId", unique=true)
 	private String projectId;
-
 	//@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
-	@Indexed(name="index_heatmap_submissionDate", unique=true)
 	private String submissionDate;
 	
 	private ProjectHeatmapData projectHeatmapData;
-
 
 	public String getProjectId() {
 		return projectId;

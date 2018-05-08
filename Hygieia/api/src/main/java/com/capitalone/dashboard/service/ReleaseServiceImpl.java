@@ -47,14 +47,8 @@ public class ReleaseServiceImpl implements ReleaseService {
 	@Override
 	public Release create(ReleaseMetricsRequest releasereq) {
 		createScope(releasereq);
-		
-		Release existingrelease = releaseRepository.findByReleaseId(releasereq.getProjectId(), releasereq.getReleaseId());
-		
-		if(existingrelease != null){
-			throw new IllegalStateException("The release with release id " + releasereq.getReleaseId() + " already exists.");
-		}
-
-		return releaseRepository.save(convertReleaseRequestToReleaseModel(existingrelease, releasereq));
+		//Release existingrelease = releaseRepository.findByReleaseId(releasereq.getProjectId(), releasereq.getReleaseId());
+		return releaseRepository.save(convertReleaseRequestToReleaseModel(null, releasereq));
 	}
 
 	@Override
