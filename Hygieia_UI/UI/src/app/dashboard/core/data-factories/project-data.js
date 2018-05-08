@@ -114,7 +114,10 @@
         }
 
          function postSprint(payload){
-            return   $http.post('/api/sprints', (payload))
+               var formattedPayload = angular.copy(payload);
+                formattedPayload.startDate = Date.parse(formattedPayload.startDate);
+                formattedPayload.endDate = Date.parse(formattedPayload.endDate);
+            return   $http.post('/api/sprints', (formattedPayload))
                     .then(function(response) {
                        return response.data;
                     });

@@ -413,8 +413,10 @@
 
         function addDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
             var ctrl = this;
+            ctrl.usernamepro = $cookies.get('username');
             ctrl.postDefect = function (probj) {
                 ctrl.payloadDefect = {
+                    "user": ctrl.usernamepro,
                     "projectName": name,
                     "metricsProjectId": id,
                     "projectId": id,
@@ -480,6 +482,7 @@
 
         function editDefectController($uibModalInstance, $http, $route, $timeout, $scope, $cookies, name, id) {
             ctrl = this;
+            ctrl.usernamepro = $cookies.get('username');
             featureData.jiraData(id).then(jiraDataFetch);
 
             function jiraDataFetch(data) {
@@ -488,6 +491,7 @@
 
             ctrl.editDefectCall = function () {
                 ctrl.editDefectPayl = {
+                    "user": ctrl.usernamepro,
                     "objectId": ctrl.dataEdit.id,
                     "projectName": name,
                     "metricsProjectId": id,
@@ -576,6 +580,7 @@
             ctrl.title = "List of Releases";
             ctrl.namerelease = name;
             ctrl.id = id;
+            ctrl.usernamepro = $cookies.get('username');
             $scope.options = [{
                 value: false,
                 label: 'Closed'
@@ -651,6 +656,7 @@
                var endDateMilli = Date.parse(ctrl.releaseDate);
                var startDateMilli = Date.parse(ctrl.startDate);
                 ctrl.releasePayload = {
+                    "user": ctrl.usernamepro,
                     "projectName": name,
                     "projectId": id,
                     "releaseId": ctrl.releaseId,
@@ -682,7 +688,16 @@
                         function ReleaseDataProcessing(data) {
                             ctrl.releasegraph = data;
                     }
-                })
+                },
+                    function (response) {
+                        if (response.status == 409) {
+                            $uibModal.open({
+                                templateUrl: 'app/dashboard/views/ConfirmationModals/errormodelDuplicate.html',
+                                controller: 'projectMapController',
+                                controllerAs: 'pm'
+                            });
+                        }
+                    })
             }
             }
         }
@@ -712,6 +727,7 @@
             ctrl.projectpath = $cookies.get('projectNameJira');
             ctrl.projectpathId = $cookies.get('projectIdJira');
             ctrl.projectiddefects = $cookies.get('ProSpId');
+            ctrl.usernamepro = $cookies.get('username');
             $scope.options = [{
                 value: true,
                 label: 'Closed'
@@ -794,21 +810,24 @@
                 if (ctrl.addSprint.$valid == true) {
                 ctrl.sprintPayload.projectName = name;
                 ctrl.sprintPayload.projectId = id;
-                ctrl.sprintPayload.startDate = Date.parse(ctrl.sprintPayload.startDate);
-                ctrl.sprintPayload.endDate = Date.parse(ctrl.sprintPayload.endDate);
+                ctrl.sprintPayload.user = ctrl.usernamepro;
                 projectData.postSprint(ctrl.sprintPayload).then(function (response) {
                     ctrl.hideForm();
                     featureData.sprintDta(ctrl.id, ctrl.name).then(sprintdataProcess);
                     function sprintdataProcess(data) {
                         ctrl.spAllDetails = data;
-            }           
-                    /*$uibModal.open({
-                        template: '<confirm-popup msg="addSprint" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
-                        controller: 'projectMapController',
-                        controllerAs: 'pm'
-                    });*/
-                })
-            }
+                    }           
+                },
+                    function (response) {
+                        if (response.status == 409) {
+                            $uibModal.open({
+                                templateUrl: 'app/dashboard/views/ConfirmationModals/errormodelDuplicate.html',
+                                controller: 'projectMapController',
+                                controllerAs: 'pm'
+                            });
+                        }
+                    })
+                }
             }
         }
 
@@ -816,6 +835,7 @@
             var ctrl = this;
             ctrl.ids = ids;
             ctrl.names = names;
+            ctrl.usernamepro = $cookies.get('username');
             $scope.options = [{
                 value: false,
                 label: 'Closed'
@@ -846,6 +866,7 @@
                 var endDateMilliRel = Date.parse(ctrl.releaseEndDate);
 
                 ctrl.releasePayload = {
+                    "user": ctrl.usernamepro,
                     "objectId":ctrl.fetchReleasedetails.id,
                     "projectName": ctrl.names,
                     "projectId": ctrl.names,
@@ -890,6 +911,7 @@
             ctrl.names = names;
             ctrl.ids = ids;
             ctrl.ppid = projectidsprint;
+            ctrl.usernamepro = $cookies.get('username');
             $scope.options = [{
                 value: true,
                 label: 'Closed'
@@ -923,6 +945,7 @@
                 var endDateMilliSprint = Date.parse(ctrl.endDate);
 
                 ctrl.sprintEditPayload = {
+                    "user": ctrl.usernamepro,
                     "objectId": ctrl.fetchdetails.id,
                     "projectId": projectidsprint,
                     "projectName": ctrl.names,
@@ -1001,6 +1024,7 @@
             ctrl.normalformText = false;
             ctrl.prevHeader = false;
             ctrl.update = false;
+            ctrl.usernamepro = $cookies.get('username');
             //ctrl.title="Add Heat Map";
             var nextMonth, prevMonth, prevYear, nextYear;
 
@@ -1116,7 +1140,7 @@
                 ctrl.heatMapPayload.submissionDate = getDate(ctrl.heatMapPayload.submissionDate);
                 //ctrl.heatMapPayload.submissionDate = Date.parse(ctrl.subdta);
                 ctrl.heatMapPayload.projectId = id;
-
+                ctrl.heatMapPayload.user = ctrl.usernamepro;
                 projectData.postHeatMap(ctrl.heatMapPayload).then(function (response) {
                     ctrl.hideForm();
                     featureData.heatMapData(id).then(heatMapDataProcess);
@@ -1144,6 +1168,7 @@
                 { value: 'Red', name: 'Red' },
                 { value: 'NA', name: 'NA' }
             ];
+            ctrl.usernamepro = $cookies.get('username');
 
             /*var monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -1154,7 +1179,7 @@
             var dateString = monthName[m] + "," + y; */
 
             ctrl.updateHeatmapPayload = {
-
+                "user": ctrl.usernamepro,
                 "objectId":data.id,
                 "projectId": data.projectId,
                 "submissionDate":data.submissionDate, 
