@@ -617,6 +617,8 @@
                 ctrl.lowDefectsClosed = "";
                 ctrl.noofStoryCommitted = "";
                 ctrl.noofStoryCompleted = "";
+                ctrl.releaseDate = "";
+                ctrl.startDate = "";
             }
 
             ctrl.updateRelease = function (releaseidUpdation) {
