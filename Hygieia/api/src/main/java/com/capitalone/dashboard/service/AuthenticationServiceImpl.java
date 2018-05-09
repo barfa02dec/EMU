@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,8 @@ import com.google.common.hash.Hashing;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
 	private final AuthenticationRepository authenticationRepository;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
 	@Autowired
 	public AuthenticationServiceImpl(
@@ -109,15 +113,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public String changePassword(String username, String password, String newPassword) {
 		Authentication authentication = authenticationRepository.findByUsername(username);
-		if (null != authentication) {
+		if (null != authentication && (hash(password).equals(authentication.getPassword()))) {
+			
 			if(!hash(newPassword).equals(authentication.getPassword())){
 				authentication.setPassword(newPassword);
 			}else {
-				return "Same Password, Please insert new Password.";
+				return "Existing and new password both are same, Please insert new Password.";
 			}
 			authenticationRepository.save(authentication);
 			return "Password is updated";
 		} else {
+			LOGGER.info("Does not Exist or password is not matching with existing password.");
 			return "User Does not Exist";
 		}
 	}
