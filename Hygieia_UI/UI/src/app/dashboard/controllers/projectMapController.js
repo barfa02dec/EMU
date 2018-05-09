@@ -1147,7 +1147,7 @@
                     month = "0"+month;
                   }
 
-                    return month+"-"+"01-"+year;
+                    return month+"-"+year;
                 }
 
             ctrl.postHeatMap = function () {
