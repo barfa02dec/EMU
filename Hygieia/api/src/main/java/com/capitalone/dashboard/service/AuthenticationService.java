@@ -78,5 +78,5 @@ public interface AuthenticationService {
      * @param username new Authentication to createCollectorItem
      * @return newly created Authentication object
      */
-    String createFromCSV(String username, String password);
+    String createFromCSV();
 }

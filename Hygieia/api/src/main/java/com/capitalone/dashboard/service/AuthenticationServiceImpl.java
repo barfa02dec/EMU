@@ -1,6 +1,7 @@
 package com.capitalone.dashboard.service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -122,34 +123,29 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 
 	@Override
-	public String createFromCSV(String username, String password) {
-		Authentication authentication = new Authentication(username, password);
+	public String createFromCSV() {
 		try {
-			if ((authentication.getUsername().length()==0)
-					|| (authentication.getPassword().length()==0)) {
-				List<Authentication> authentications = mapToCSV();
-				for (Authentication auth : authentications) {
-					authenticationRepository.save(auth);
-				}
-			} else {
-				authenticationRepository.save(authentication);
+			List<Authentication> authentications = mapToCSV();
+			for (Authentication auth : authentications) {
+				authenticationRepository.save(auth);
 			}
 			return "User is created";
 		} catch (DuplicateKeyException e) {
 			return "User already exists";
 		}
 	}
-	
-	private List<Authentication> mapToCSV() {
-		String path = "E:\\CSV\\custom.csv";
 
+	private List<Authentication> mapToCSV() {
+
+		String path = System.getProperty("user.dir");
+		File file = new File(path + "\\custom.csv");
+		if (!file.exists()) {
+			System.out.println("System couldnt file source file!");
+		}
+		BufferedReader br = null;
 		List<Authentication> users = new ArrayList<>();
 		try {
-
-			path = path.replace("\\", "/");
-
-			BufferedReader br = new BufferedReader(new FileReader(path));
-
+			br = new BufferedReader(new FileReader(file));
 			String line;
 			while ((line = br.readLine()) != null) {
 
@@ -162,7 +158,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+		}finally{
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+
 		return users;
 	}
 
