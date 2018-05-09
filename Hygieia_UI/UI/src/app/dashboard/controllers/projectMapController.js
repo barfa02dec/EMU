@@ -617,6 +617,8 @@
                 ctrl.lowDefectsClosed = "";
                 ctrl.noofStoryCommitted = "";
                 ctrl.noofStoryCompleted = "";
+                ctrl.releaseDate = "";
+                ctrl.startDate = "";
             }
 
             ctrl.updateRelease = function (releaseidUpdation) {
@@ -1145,7 +1147,7 @@
                     month = "0"+month;
                   }
 
-                    return month+"-"+"01-"+year;
+                    return month+"-"+year;
                 }
 
             ctrl.postHeatMap = function () {

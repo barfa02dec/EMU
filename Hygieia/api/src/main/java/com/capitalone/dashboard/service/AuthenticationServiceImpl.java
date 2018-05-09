@@ -1,6 +1,7 @@
 package com.capitalone.dashboard.service;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -8,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,8 @@ import com.google.common.hash.Hashing;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
 	private final AuthenticationRepository authenticationRepository;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
 	@Autowired
 	public AuthenticationServiceImpl(
@@ -108,48 +113,45 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public String changePassword(String username, String password, String newPassword) {
 		Authentication authentication = authenticationRepository.findByUsername(username);
-		if (null != authentication) {
+		if (null != authentication && (hash(password).equals(authentication.getPassword()))) {
+			
 			if(!hash(newPassword).equals(authentication.getPassword())){
 				authentication.setPassword(newPassword);
 			}else {
-				return "Same Password, Please insert new Password.";
+				return "Existing and new password both are same, Please insert new Password.";
 			}
 			authenticationRepository.save(authentication);
 			return "Password is updated";
 		} else {
+			LOGGER.info("Does not Exist or password is not matching with existing password.");
 			return "User Does not Exist";
 		}
 	}
 
 	@Override
-	public String createFromCSV(String username, String password) {
-		Authentication authentication = new Authentication(username, password);
+	public String createFromCSV() {
 		try {
-			if ((authentication.getUsername().length()==0)
-					|| (authentication.getPassword().length()==0)) {
-				List<Authentication> authentications = mapToCSV();
-				for (Authentication auth : authentications) {
-					authenticationRepository.save(auth);
-				}
-			} else {
-				authenticationRepository.save(authentication);
+			List<Authentication> authentications = mapToCSV();
+			for (Authentication auth : authentications) {
+				authenticationRepository.save(auth);
 			}
 			return "User is created";
 		} catch (DuplicateKeyException e) {
 			return "User already exists";
 		}
 	}
-	
-	private List<Authentication> mapToCSV() {
-		String path = "E:\\CSV\\custom.csv";
 
+	private List<Authentication> mapToCSV() {
+
+		String path = System.getProperty("user.dir");
+		File file = new File(path + "\\custom.csv");
+		if (!file.exists()) {
+			System.out.println("System couldnt file source file!");
+		}
+		BufferedReader br = null;
 		List<Authentication> users = new ArrayList<>();
 		try {
-
-			path = path.replace("\\", "/");
-
-			BufferedReader br = new BufferedReader(new FileReader(path));
-
+			br = new BufferedReader(new FileReader(file));
 			String line;
 			while ((line = br.readLine()) != null) {
 
@@ -162,7 +164,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 		} catch (IOException e) {
 			e.printStackTrace();
+		}finally{
+			try {
+				br.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
+
 		return users;
 	}
 

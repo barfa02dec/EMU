@@ -73,14 +73,17 @@ public class AuthenticationController {
     	return appUsers;
     }
 	
-	  /**
+	 /**
      *  Create User from CSV File
+     *  
+     *  put the file on below location:
+     *  your-dir\intedd01\Hygieia\api
+     *  
      * @param request
      * @return
      */
-    @RequestMapping(value = "/createUser", method = POST, consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> createUser(@Valid @RequestBody AuthenticationRequest request) {
-        // TODO: should return proper HTTP codes for existing users
-        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.createFromCSV(request.getUsername(), request.getPassword()));
+    @RequestMapping(value = "/createUser", method = GET, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> createUser() {
+        return ResponseEntity.status(HttpStatus.OK).body(authenticationService.createFromCSV());
     }
 }
