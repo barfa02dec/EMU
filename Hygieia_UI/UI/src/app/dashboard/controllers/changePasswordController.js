@@ -18,10 +18,35 @@
             $cookieStore.remove("authenticated");
             $location.path('/');
         };
+        vm.cancel = function() {
+            $location.path('/projects');
+        }
         vm.changePassword = function() {
             //vm.changePasswordPayload = {};
+            vm.changePasswordPayload.username = vm.usernamepro;
             projectData.changePasswordFn(vm.changePasswordPayload).then(function (response) {
-                    alert("Password changed successfully");
+                    if(response == "User Does not Exist"){
+                         $uibModal.open({
+                                templateUrl: 'app/dashboard/views/ConfirmationModals/validationExistingPassword.html',
+                                controller: 'changePasswordController',
+                                controllerAs: 'cpc'
+                            });
+                    }
+                    else if(response == "Existing and new password both are same, Please insert new Password."){
+                        $uibModal.open({
+                                templateUrl: 'app/dashboard/views/ConfirmationModals/validationNewPassword.html',
+                                controller: 'changePasswordController',
+                                controllerAs: 'cpc'
+                            });
+                    }
+                    else{
+                         $uibModal.open({
+                                templateUrl: 'app/dashboard/views/ConfirmationModals/confirmationChangePassword.html',
+                                controller: 'changePasswordController',
+                                controllerAs: 'cpc'
+                            });
+                    }
+                    
                 })
         }
     }
