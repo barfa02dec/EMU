@@ -23,7 +23,7 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
     private VersionData versionData;
     private String originalreleaseData;
     private String projectName;
-    private int automated;
+    private boolean automated;
     	    
 	public String getProjectName() {
 		return projectName;
@@ -104,10 +104,10 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
 		this.originalreleaseData = originalreleaseData;
 	}
 	
-	public int getAutomated() {
+	public boolean getAutomated() {
 		return automated;
 	}
-	public void setAutomated(int automated) {
+	public void setAutomated(boolean automated) {
 		this.automated = automated;
 	}
 	

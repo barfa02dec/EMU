@@ -95,7 +95,7 @@ public class ReleaseServiceImpl implements ReleaseService {
 		release.setName(releasereq.getName());
 		release.setDescription(releasereq.getDescription());
 		release.setReleased(releasereq.isReleased());
-		release.setAutomated(0);
+		release.setAutomated(false);
 		release.setReleaseDate(StringUtils.isEmpty(releasereq.getReleaseDate()) ? null : new Date(Long.parseLong(releasereq.getReleaseDate())));
 		release.setStartDate(StringUtils.isEmpty(releasereq.getStartDate()) ? null : new Date(Long.parseLong(releasereq.getStartDate())));
 		release.setUpdatedOn(new Date());
