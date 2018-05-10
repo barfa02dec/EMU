@@ -16,7 +16,6 @@ public class Project extends BaseModel {
 	private String businessUnit;
 	private String projectOwner;
 	private String program;
-	private String client;
 	private Set<UserGroup> usersGroup;
 	
 	private String customerName;
@@ -71,12 +70,7 @@ public class Project extends BaseModel {
 	public void setProgram(String program) {
 		this.program = program;
 	}
-	public String getClient() {
-		return client;
-	}
-	public void setClient(String client) {
-		this.client = client;
-	}
+
 	public Set<UserGroup> getUsersGroup() {
 		return usersGroup;
 	}
