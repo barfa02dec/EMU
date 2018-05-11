@@ -97,7 +97,7 @@
                 </select> -->
 
       <form-group input="projcusnamep" errors="{required: 'Please select the Customer'}">
-                <select ng-model="cpr.payl.client" class="form-control create-project-inputboxes" name="projcusnamep">
+                <select ng-model="cpr.payl.customerName" class="form-control create-project-inputboxes" name="projcusnamep">
                   <option value="" disabled selected>Choose Customer Name</option>
                 <option ng-repeat="data in cpr.getCustomers">{{data.customerName}}</option>
                 </select>            </form-group> 

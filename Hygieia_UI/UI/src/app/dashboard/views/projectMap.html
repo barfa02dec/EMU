@@ -1,3 +1,34 @@
+<style type="text/css">
+    .onclick-menu {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.onclick-menu:focus .onclick-menu-content {
+    display: block;
+    
+
+}
+.onclick-menu-content {
+    position: absolute;
+    z-index: 1;
+    display: none;
+    background: #f1f1f1;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,.2);
+    width: 160px;
+    line-height: 3em;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.newclas:focus .onclick-menu-content{
+    display: none;
+}
+</style>
+
+
 <div class="main-container project-map-container" style="background: #fff !important;">
     <div class="container-fluid" style="
    background: #1766A4;
@@ -76,26 +107,26 @@
                 <tr ng-repeat="proj in pm.getAllProjects | filter:pm.searchText |
             pagination: curPage * pm.pageSize | limitTo: pm.pageSize">
                     <td ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" style="cursor: pointer;max-width: 96px;" class="project-map-list-data" ng-attr-title="{{proj.projectId}}">{{proj.projectId}}</td>
-                    <td ng-show="proj.editorEnabled">
+                    <td ng-show="proj.editable">
                         <input type="" name="" ng-model="proj.projectName" class="set-width-input edit-inputbox-props middle">
                     </td>
-                    <td ng-show="!proj.editorEnabled" style="" class="project-map-list-data" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.projectName}}">{{proj.projectName}}</td>
-                    <td ng-show="proj.editorEnabled">
-                        <input type="" name="" ng-model="proj.client" class="set-width-input edit-inputbox-props middle">
+                    <td ng-show="!proj.editable" style="" class="project-map-list-data" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.projectName}}">{{proj.projectName}}</td>
+                    <td ng-show="proj.editable">
+                        <input type="" name="" ng-model="proj.customerName" class="set-width-input edit-inputbox-props middle">
                     </td>
-                    <td ng-show="!proj.editorEnabled" style="" class="project-map-list-data" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.client}}">{{proj.client}}</td>
-                    <td ng-show="proj.editorEnabled">
+                    <td ng-show="!proj.editable" style="" class="project-map-list-data" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.customerName}}">{{proj.customerName}}</td>
+                    <td ng-show="proj.editable">
                         <input type="" name="" ng-model="proj.projectOwner" class="set-width-input edit-inputbox-props middle">
                     </td>
-                    <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.projectOwner}}">{{proj.projectOwner}}</td>
-                    <td ng-show="proj.editorEnabled">
+                    <td ng-show="!proj.editable" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.projectOwner}}">{{proj.projectOwner}}</td>
+                    <td ng-show="proj.editable">
                         <input type="" name="" ng-model="proj.businessUnit" class="set-width-input edit-inputbox-props middle">
                     </td>
-                    <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.businessUnit}}">{{proj.businessUnit}}</td>
-                    <td ng-show="proj.editorEnabled">
+                    <td ng-show="!proj.editable" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.businessUnit}}">{{proj.businessUnit}}</td>
+                    <td ng-show="proj.editable">
                         <input type="" name="" ng-model="proj.program" class="set-width-input edit-inputbox-props middle">
                     </td>
-                    <td ng-show="!proj.editorEnabled" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.program}}">{{proj.program}}</td>
+                    <td ng-show="!proj.editable" class="project-map-list-data coloumn-width-customized" ng-click="showDahboardPage(proj.id,proj.projectName,proj.projectId);" ng-attr-title="{{proj.program}}">{{proj.program}}</td>
                     <td>
                         <span class="" ng-repeat="innerItem in proj.usersGroup">
                <span class="" ng-repeat="childItem in innerItem.userRoles">
@@ -106,11 +137,11 @@
                         </span>
                         <span class="" ng-repeat="innerItem in proj.usersGroup">
                <span class="" ng-repeat="childItem in innerItem.userRoles">
-               <span class="" ng-show="!proj.editorEnabled && childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)">
+               <span class="" ng-show="!proj.editable && childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)">
                <img src="assets/images/icon_edit.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  ng-click="pm.enableEditor(proj.id)" title="Edit">
                </span></span>
                         </span>
-                        <span ng-click="pm.editproject(proj)" ng-show="proj.editorEnabled">
+                        <span ng-click="pm.editproject(proj)" ng-show="proj.editable">
                <img src="assets/images/savNew.png " class="ed-image-props project-map-crud-icons project-map-padding-icons"  title="Save">
                </span>
                         <span class="" ng-repeat="innerItem in proj.usersGroup" ng-init="inner.innerVariable=innerItem.user">
@@ -126,7 +157,7 @@
                      <span ng-click="pm.addSprint(proj)" style="cursor: pointer;"  ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)"><i class="fa fa-plus" aria-hidden="true" title="Add sprint" style="color: grey"></i></span> -->
                         
                         <span ng-show="childItem.permissions.indexOf('EDIT_PROJECT') !== -1 && innerItem.user.includes(pm.usernamepro)" style="vertical-align: sub">
-                        <div class="dropdown" style="cursor: pointer;">
+                       <!--  <div class="dropdown" style="cursor: pointer;">
                            <svg version="1.1"
                               x="0px" y="0px" width="15px" height="15px" viewBox="0 0 19 19" style="enable-background:new 0 0 19 19;" xml:space="preserve">
                               <style type="text/css">
@@ -144,7 +175,26 @@
                               <a ng-click="pm.editDefect(proj)">Update Defects</a>
                                <a ng-click="pm.heatMap(proj)">Heat Map</a>
                            </div>
-                        </div>
+                        </div> -->
+                        <div tabindex="0" class="onclick-menu">
+                             <svg version="1.1"
+                              x="0px" y="0px" width="15px" height="15px" viewBox="0 0 19 19" style="enable-background:new 0 0 19 19;" xml:space="preserve">
+                              <style type="text/css">
+                                 .stadditems0{fill:#404041;}
+                              </style>
+                              <defs></defs>
+                              <path class="stadditems0" d="M9.5,0C4.3,0,0,4.3,0,9.5C0,14.7,4.3,19,9.5,19S19,14.7,19,9.5C19,4.3,14.7,0,9.5,0z M9.5,18
+                                 C4.8,18,1,14.2,1,9.5C1,4.8,4.8,1,9.5,1C14.2,1,18,4.8,18,9.5C18,14.2,14.2,18,9.5,18z M10,5.2H9V9H5.2v1H9v3.8h1V10h3.8V9H10V5.2z"
+                                 />
+                           </svg>
+    <ul class="onclick-menu-content" style="cursor: pointer;">
+                                <div class="newclas"><a ng-click="pm.addSprint(proj)">Sprints</a></div>
+                              <div><a ng-click="pm.addRelease(proj)">Releases</a></div>
+                              <div><a ng-click="pm.addDefect(proj)">Defects</a></div>
+                              <div><a ng-click="pm.editDefect(proj)">Update Defects</a></div>
+                               <div><a ng-click="pm.heatMap(proj)">Heat Map</a></div>
+    </ul>
+</div>
                      </span> 
                         </span>
                         </span>

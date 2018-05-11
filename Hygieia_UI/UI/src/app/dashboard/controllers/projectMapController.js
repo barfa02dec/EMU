@@ -11,7 +11,7 @@
         var ctrl = this;
         ctrl.usernamepro = $cookies.get('username');
         ctrl.showAddPopUpBox = false;
-        ctrl.editorEnabled = false;
+        ctrl.editable = false;
         ctrl.title = "THB";
         $scope.selected = '';
         ctrl.payl = {
@@ -207,14 +207,14 @@
         ctrl.enableEditor = function (vall) {
             angular.forEach(ctrl.getAllProjects, function (value, key) {
                 if (value.id === vall) {
-                    value.editorEnabled = true;
+                    value.editable = true;
                 }
             });
         };
 
         //Disable Edit
         ctrl.disableEditor = function () {
-            ctrl.editorEnabled = false;
+            ctrl.editable = false;
         };
 
         //Edit Project 
@@ -224,18 +224,19 @@
                 "projectId": info.projectId,
                 "projectName": info.projectName,
                 "projectOwner": info.projectOwner,
-                "client": info.client,
+                "customerName": info.customerName,
                 "businessUnit": info.businessUnit,
                 "program": info.program,
                 "user": ctrl.usernamepro,
-                "editorEnabled": info.editorEnabled,
-                "id": info.id
+                "editable": info.editable,
+                "id": info.id,
+                "customerCode": "87779",
             }
-            info.editorEnabled = false;
+            info.editable = false;
             var apiHost = ' http://localhost:3000';
             var qahost = 'http://10.20.1.183:3000';
-            if ((info.businessUnit) && (info.projectId) && (info.client) && (info.projectOwner)) {
-                if ((info.businessUnit.length >= 3) && (info.projectId.length >= 3) && (info.client.length >= 3) && (info.projectOwner.length >= 3) && (info.program.length >= 3)) {
+            if ((info.businessUnit) && (info.projectId) && (info.customerName) && (info.projectOwner)) {
+                if ((info.businessUnit.length >= 3) && (info.projectId.length >= 3) && (info.customerName.length >= 3) && (info.projectOwner.length >= 3) && (info.program.length >= 3)) {
                     projectData.editprojectfn(ctrl.editPayload).then(function (response) {
                         $uibModal.open({
                             template: '<confirm-popup msg="editConfirm" icon="btn btn-info project-map-add-btn inner-btn-prop" action="$close()"></confirm-popup>',
@@ -245,7 +246,7 @@
 
                     }, function (response) {
                         if (response.status > 204 && response.status <= 500) {
-                            info.editorEnabled = true;
+                            info.editable = true;
                             alert("Server Error");
                         }
                     })
@@ -256,7 +257,7 @@
                         controller: 'projectMapController',
                         controllerAs: 'pm'
                     });
-                    info.editorEnabled = true;
+                    info.editable = true;
                 }
             } else {
                 $uibModal.open({
@@ -264,7 +265,7 @@
                     controller: 'projectMapController',
                     controllerAs: 'pm'
                 });
-                info.editorEnabled = true;
+                info.editable = true;
             }
         }
 
@@ -320,12 +321,12 @@
                 "projectId": ctrl.projectId,
                 "projectName": ctrl.projectName,
                 "projectOwner": ctrl.projectOwner,
-                "client": ctrl.client,
+                //"client": ctrl.client,
                 "businessUnit": ctrl.businessUnit,
                 "program": ctrl.program,
                 "user": dpmObjpos.usernamepro,
                 //"id": "5addb5d20a78cb24c049ed5f",
-                "customerName": ctrl.client,
+                "customerName": ctrl.customerName,
                 "customerCode": "87779",
                 //"activate": "1",
                 //"deactivate": "1"
@@ -721,6 +722,7 @@
         }
 
         ctrl.addSprint = function (proje) {
+            ctrl.hideDropdown = true;
             $uibModal.open({
                 templateUrl: 'app/dashboard/views/addSprint.html',
                 windowClass: 'app-modal-window-defect',
@@ -1147,7 +1149,7 @@
                     month = "0"+month;
                   }
 
-                    return month+"-"+year;
+                    return month+year;
                 }
 
             ctrl.postHeatMap = function () {
