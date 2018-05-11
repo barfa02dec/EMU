@@ -85,7 +85,6 @@ public class ProjectServiceImpl implements ProjectService {
 		project.setProjectName(request.getProjectName());
 		project.setProjectOwner(request.getProjectOwner());
 		project.setProjectStatus(true);
-		project.setClient(request.getClient());
 		project.setBusinessUnit(request.getBusinessUnit());
 		project.setProgram(request.getProgram());
 		project.setCustomerName(request.getCustomerName());
@@ -114,7 +113,6 @@ public class ProjectServiceImpl implements ProjectService {
 	private Project convertProjectRequestToPojectForUpdate(ProjectRequest request, Project project ){
 		project.setProjectName(request.getProjectName());
 		project.setProjectOwner(request.getProjectOwner());
-		project.setClient(request.getClient());
 		project.setBusinessUnit(request.getBusinessUnit());
 		project.setProgram(request.getProgram());
 		project.setCustomerName(request.getCustomerName());

@@ -20,17 +20,15 @@ public class ProjectRequest {
 	@NotNull
     @Size(min=3,max=40, message="Project Owner should be min=3 & max=50 characters")
 	private String projectOwner;
-
-	@NotNull
-    @Size(min=3,max=40, message="Client should be min=3 & max=40 characters")
-	private String client;
-
 	private String id;
 	private boolean projectStatus;
 	private String program;
-	private boolean editorEnabled;
+	private boolean editable;
 	private String user;
 	private String customerName;
+	
+	@NotNull
+    @Size(min=3,max=40, message="Client should be min=3 & max=40 characters")
 	private String customerCode;
 	
 	public String getCustomerName() {
@@ -39,18 +37,21 @@ public class ProjectRequest {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
+	
 	public String getCustomerCode() {
 		return customerCode;
 	}
 	public void setCustomerCode(String customerCode) {
 		this.customerCode = customerCode;
 	}
-	public boolean isEditorEnabled() {
-		return editorEnabled;
+	
+	public boolean isEditable() {
+		return editable;
 	}
-	public void setEditorEnabled(boolean editorEnabled) {
-		this.editorEnabled = editorEnabled;
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
+	
 	public String getId() {
 		return id;
 	}
@@ -83,24 +84,21 @@ public class ProjectRequest {
 	public void setProgram(String program) {
 		this.program = program;
 	}
-	public String getClient() {
-		return client;
-	}
-	public void setClient(String client) {
-		this.client = client;
-	}
+
 	public String getBusinessUnit() {
 		return businessUnit;
 	}
 	public void setBusinessUnit(String businessUnit) {
 		this.businessUnit = businessUnit;
 	}
+	
 	public String getProjectOwner() {
 		return projectOwner;
 	}
 	public void setProjectOwner(String projectOwner) {
 		this.projectOwner = projectOwner;
 	}
+	
 	public String getUser() {
 		return user;
 	}

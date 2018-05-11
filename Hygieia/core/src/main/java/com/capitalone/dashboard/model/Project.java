@@ -16,12 +16,12 @@ public class Project extends BaseModel {
 	private String businessUnit;
 	private String projectOwner;
 	private String program;
-	private String client;
 	private Set<UserGroup> usersGroup;
 	
 	private String customerName;
 	private String customerCode;
-	
+	private boolean automated;
+		
 	public String getCustomerName() {
 		return customerName;
 	}
@@ -70,16 +70,17 @@ public class Project extends BaseModel {
 	public void setProgram(String program) {
 		this.program = program;
 	}
-	public String getClient() {
-		return client;
-	}
-	public void setClient(String client) {
-		this.client = client;
-	}
+
 	public Set<UserGroup> getUsersGroup() {
 		return usersGroup;
 	}
 	public void setUsersGroup(Set<UserGroup> usersGroup) {
 		this.usersGroup = usersGroup;
+	}
+	public boolean isAutomated() {
+		return automated;
+	}
+	public void setAutomated(boolean automated) {
+		this.automated = automated;
 	}
 }
