@@ -31,7 +31,6 @@ public class SprintController {
 	@RequestMapping(value = "/sprints", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Sprint> getSprints(
 			@RequestParam(value = "projectId", required = true) String projectId,
-			@RequestParam(value = "projectName", required = true) String projectName,
 			@RequestParam(value = "noOfSprintToShow", required = true) int noOfsprintsToShow) {
 
 		List<Sprint> sprintsInDB = sprintService.getSprints(projectId);
