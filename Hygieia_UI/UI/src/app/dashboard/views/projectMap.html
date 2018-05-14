@@ -188,10 +188,10 @@
                                  />
                            </svg>
     <ul class="onclick-menu-content" style="cursor: pointer;">
-                              <div class="newclas" ng-if="proj.automated == true"><a ng-click="pm.addSprint(proj)" >Sprints</a></div>
-                              <div ng-if="proj.automated == true"><a ng-click="pm.addRelease(proj)">Releases</a></div>
-                              <div ng-if="proj.automated == true"><a ng-click="pm.addDefect(proj)">Defects</a></div>
-                              <div ng-if="proj.automated == true"><a ng-click="pm.editDefect(proj)">Update Defects</a></div>
+                              <div class="newclas" ng-if="proj.automated == false"><a ng-click="pm.addSprint(proj)" >Sprints</a></div>
+                              <div ng-if="proj.automated == false"><a ng-click="pm.addRelease(proj)">Releases</a></div>
+                              <div ng-if="proj.automated == false"><a ng-click="pm.addDefect(proj)">Defects</a></div>
+                              <div ng-if="proj.automated == false"><a ng-click="pm.editDefect(proj)">Update Defects</a></div>
                                <div><a ng-click="pm.heatMap(proj)">Heat Map</a></div>
     </ul>
 </div>
