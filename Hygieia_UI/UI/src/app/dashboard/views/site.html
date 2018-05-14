@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-12 dashboard-page-row-bold">
                            <div class="col-md-6 dashboard-page-row-inner">{{myitem.createdOn | date}}</div>
-                           <div class="col-md-6">{{myitem.owner}}</div>
+                           <div class="col-md-6" style="word-wrap: break-word;">{{myitem.owner}}</div>
                         </div>
                         <div class="col-md-12 dashboard-page-icons">
                            <a href ng-click="ctrl.renameDashboard(myitem)" class="dashboard-page-icons-outline" style="outline:none;" ng-if="ctrl.editDashboard">

@@ -40,7 +40,7 @@
     ctrl.numberOfSprintTypes = $scope.widgetConfig.options.sprintType === "scrumkanban" ? 2 : 1;
     ctrl.listType = $scope.widgetConfig.options.listType === undefined ? "epics" : $scope.widgetConfig.options.listType;
     ctrl.estimateMetricType = $scope.widgetConfig.options.estimateMetricType === undefined ? "storypoints" : $scope.widgetConfig.options.estimateMetricType;
-    
+    ctrl.prId = $cookies.get('ProSpId');
     var timeoutPromise = null;
     ctrl.changeDetect = null;
     ctrl.pauseAgileView = pauseAgileView;
@@ -390,8 +390,8 @@
       }
     };
     ctrl.ppiidss = $cookies.get('projectIdd');
-    featureData.sprintDta(ctrl.projectpathId,ctrl.projectpath).then(sprintdataProcessMain);
-
+    featureData.sprintDta(ctrl.prId,ctrl.projectpath).then(sprintdataProcessMain);
+    
     function sprintdataProcessMain(data){
         var data = data.reverse();
         var progress = ['Defect Closure'];

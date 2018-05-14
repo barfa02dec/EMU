@@ -16,6 +16,7 @@
         ctrl.ppiidss = $cookies.get('projectIdd');
         ctrl.projectpath = $cookies.get('projectNameJira');
         ctrl.projectpathId = $cookies.get('projectIdJira');
+        ctrl.prId = $cookies.get('ProSpId');
         ctrl.projectiddefects = $cookies.get('ProSpId');
         ctrl.usernamepro = $cookies.get('username');
 
@@ -234,7 +235,7 @@
 
         }
 
-        featureData.sprintDta(ctrl.projectpathId, ctrl.projectpath).then(sprintdataProcess);
+        featureData.sprintDta(ctrl.prId, ctrl.projectpath).then(sprintdataProcess);
 
         function sprintdataProcess(data) {
             ctrl.jirametricsdatanormal = data;

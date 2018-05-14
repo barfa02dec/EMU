@@ -504,7 +504,7 @@
                     </div>
                 </div>
                 <div class="col-md-1">
-                    <span alt="Green-Done|Is the process carried out on a regular basis?|Sufficient
+                    <span alt2="Green-Done|Is the process carried out on a regular basis?|Sufficient
                     artifacts are available|Process has been reviewed">
                         <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
                     </span>
@@ -517,7 +517,7 @@
                     </div>
                 </div>
                 <div class="col-md-1">
-                    <span alt="Amber-WIP|Process is carried out on sporadic basis.Implementation
+                    <span alt2="Amber-WIP|Process is carried out on sporadic basis.Implementation
                     is not uniform across the team | Required artifacts are absent or not updated on a regular basis|There are known weaknesses in the process and needs to be improved">
                         <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
                     </span>
@@ -530,7 +530,19 @@
                     </div>
                 </div>
                 <div class="col-md-1">
-                    <span alt="Not implemented-Not Done|Process is not initiated in the project|Required artifacts are not captured or saved| No other evidence to support the implementation">
+                    <span alt2="Not implemented-Not Done|Process is not initiated in the project|Required artifacts are not captured or saved| No other evidence to support the implementation">
+                        <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
+                    </span>
+                </div>
+            </div>
+             <div class="col-md-2">
+                <div class="col-md-1">
+                    <div value="NA">
+                        &#xf1fc;
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <span alt2="Process is not initiated in the project so its not Applicable">
                         <img src="assets/images/helptext_icon.png" class="widget-page-settings-icon">
                     </span>
                 </div>
@@ -577,13 +589,13 @@
                     <tr class="font-props">
                         <td>Team Size(Development/Testing)</td>
                         <td data-ng-repeat="val in hmc.heatMapDetails">
-                            {{val.projectHeatmapData.teamSize.development}} / {{val.projectHeatmapData.teamSize.testing}}
+                            <span class="heatmap-list-alignment">{{val.projectHeatmapData.teamSize.development}} / {{val.projectHeatmapData.teamSize.testing}}</span>
                         </td>
                     </tr>
                     <tr class="font-props">
                         <td>Product Knowledge</td>
                         <td data-ng-repeat="val in hmc.heatMapDetails">
-                            {{val.projectHeatmapData.productKnowledge.productKnowledgeIndex}}
+                            <span class="heatmap-list-alignment">{{val.projectHeatmapData.productKnowledge.productKnowledgeIndex}}</span>
                         </td>
                     </tr>
                     <tr class="font-props">
@@ -613,7 +625,7 @@
                     <tr class="font-props">
                         <td>Static Code Analysis</td>
                         <td data-ng-repeat="val in hmc.heatMapDetails">
-                            {{val.projectHeatmapData.staticCodeAnalysis.staticCodeAnalysisIndex}}
+                            <span class="heatmap-list-alignment">{{val.projectHeatmapData.staticCodeAnalysis.staticCodeAnalysisIndex}}</span>
                         </td>
                     </tr>
                     <tr class="font-props">
@@ -632,13 +644,13 @@
                     <tr class="font-props">
                         <td>Code Coverage</td>
                         <td data-ng-repeat="val in hmc.heatMapDetails">
-                            {{val.projectHeatmapData.codeCoverage.codeCoveragePercentage}}%
+                            <span class="heatmap-list-alignment">{{val.projectHeatmapData.codeCoverage.codeCoveragePercentage}}%</span>
                         </td>
                     </tr>
                     <tr class="font-props">
                         <td>Continous Integration</td>
                         <td data-ng-repeat="val in hmc.heatMapDetails">
-                            {{val.projectHeatmapData.continuousIntegration.continuousIntegrationIndex}}</span>
+                            <span class="heatmap-list-alignment">{{val.projectHeatmapData.continuousIntegration.continuousIntegrationIndex}}</span>
                         </td>
                     </tr>
                     <tr class="font-props">
@@ -650,19 +662,19 @@
                     <tr class="font-props">
                         <td>Performance Assessment</td>
                         <td data-ng-repeat="val in hmc.heatMapDetails">
-                            {{val.projectHeatmapData.performanceAssessment.performanceAssessmentPercentage}}%
+                            <span class="heatmap-list-alignment">{{val.projectHeatmapData.performanceAssessment.performanceAssessmentPercentage}}%</span>
                         </td>
                     </tr>
                     <tr class="font-props">
                         <td>Security Assessment</td>
                         <td data-ng-repeat="val in hmc.heatMapDetails">
-                            {{val.projectHeatmapData.securityAssessment.securityAssessmentIndex}}
+                            <span class="heatmap-list-alignment">{{val.projectHeatmapData.securityAssessment.securityAssessmentIndex}}</span>
                         </td>
                     </tr>
                     <tr class="font-props">
                         <td>Test Automation</td>
                         <td data-ng-repeat="val in hmc.heatMapDetails">
-                            {{val.projectHeatmapData.testAutomation.testAutomationPercentage}}%
+                            <span class="heatmap-list-alignment">{{val.projectHeatmapData.testAutomation.testAutomationPercentage}}%</span>
                         </td>
                     </tr>
                     <tr class="font-props">
