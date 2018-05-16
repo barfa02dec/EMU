@@ -24,7 +24,7 @@
         }
 
         $scope.curPage = 0;
-        ctrl.pageSize = 10;
+        ctrl.pageSize = 50;
 
 
         $scope.adduser = "User created succcessfully";
@@ -1190,13 +1190,14 @@
             ];
             ctrl.usernamepro = $cookies.get('username');
             
-            /*var substrData = data.submissionDate.substr(0,2);
+           /* var substrData = data.submissionDate.substr(0,2);
             if(substrData == '06') {
                 var newDate = substrData.replace(substrData,'June');
                 console.log(newDate+','+ data.submissionDate.substr(2,5));
                 data.submissionDate = newDate+','+ data.submissionDate.substr(2,5);
-            
             }*/
+            
+
             /*var monthName = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
             "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
             var d1 = new Date(data.submissionDate),

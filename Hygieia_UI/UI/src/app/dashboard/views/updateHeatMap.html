@@ -47,7 +47,7 @@
                 <div class="col-md-3">
                     <form-group input="pk" errors="{required: 'product knowledge is required',pattern : 'please enter value between [0-3]'}">
                         <input type="number" string-to-number step="0.01" oninput="validity.valid||(value='');" name="pk" class="form-control" ng-model="uhc.updateHeatmapPayload.productKnowledgeIndex"
-                            maxlength="50" placeholder="Enter value [0-3]" min=0 max=3 autocomplete="off" />
+                            maxlength="50" placeholder="Enter value [0-3]" ng-pattern="/^([0-2]){1}(\.[0-9]{1,2})?$|^[0-3]$/" autocomplete="off" />
                     </form-group>
                 </div>
                 <div class="col-md-1">
@@ -211,7 +211,7 @@
                 <div class="col-md-3">
                     <form-group input="sca" errors="{pattern : 'please enter value between [0-5]'}">
                         <input type="number" string-to-number oninput="validity.valid||(value='');" step=0.01 name="sca" ng-model="uhc.updateHeatmapPayload.staticCodeAnalysisIndex"
-                            class="form-control" min=0 max=5 maxlength="50" autocomplete="off" />
+                            class="form-control" ng-pattern="/^([0-2]){1}(\.[0-9]{1,4})?$|^[0-5]$/" maxlength="50" autocomplete="off" />
                     </form-group>
                 </div>
                 <div class="col-md-1">
@@ -289,9 +289,9 @@
                     <label class="control-label createproj-label-props">Code coverage(%)</label>
                 </div>
                 <div class="col-md-3">
-                    <form-group input="cc">
+                    <form-group input="cc" errors="{pattern: 'Enter the value between 0 to 100'}">
                         <input type="number" string-to-number name="cc" oninput="validity.valid||(value='');" class="form-control" ng-model="uhc.updateHeatmapPayload.codeCoveragePercentage"
-                            maxlength="50" autocomplete="off" min=0 max=100 />
+                            maxlength="50" autocomplete="off" ng-pattern="/^([0-9]|[1-9][0-9]|100)$/" />
                     </form-group>
                 </div>
                 <div class="col-md-1">
@@ -309,7 +309,7 @@
                 <div class="col-md-3">
                     <form-group input="ci" errors="{pattern: 'please enter value between [0-5]'}">
                         <input type="number" string-to-number name="ci" step=0.01 oninput="validity.valid||(value='');" class="form-control" ng-model="uhc.updateHeatmapPayload.continuousIntegrationIndex"
-                            placeholder="Enter value [0-5]" min=0 max=5 maxlength="50" autocomplete="off" />
+                            placeholder="Enter value [0-5]" ng-pattern="/^([0-4]){1}(\.[0-9]{1,2})?$|^[0-5]$/" maxlength="50" autocomplete="off" />
                     </form-group>
                 </div>
                 <div class="col-md-1">
@@ -356,9 +356,9 @@
                     <label class="control-label createproj-label-props">Performance assessment(%)</label>
                 </div>
                 <div class="col-md-3">
-                    <form-group input="pa">
+                    <form-group input="pa" errors="{pattern: 'Enter the value between 0 to 100'}">
                         <input oninput="validity.valid||(value='');" string-to-number type="number" name="pa" class="form-control" ng-model="uhc.updateHeatmapPayload.performanceAssessmentPercentage"
-                            maxlength="50" autocomplete="off" min=0 max=100 />
+                            maxlength="50" autocomplete="off" ng-pattern="/^([0-9]|[1-9][0-9]|100)$/" />
                     </form-group>
                 </div>
                 <div class="col-md-1">
@@ -372,9 +372,9 @@
                     <label class="control-label createproj-label-props">Security assessment</label>
                 </div>
                 <div class="col-md-3">
-                    <form-group input="sa">
+                    <form-group input="sa" errors="{pattern : 'please enter value between [0-5]'}">
                         <input type="number" string-to-number name="sa" oninput="validity.valid||(value='');" step=0.01 class="form-control" ng-model="uhc.updateHeatmapPayload.securityAssessmentIndex"
-                            maxlength="50" placeholder="Enter value [0-5]" min=0 max=5 autocomplete="off" />
+                            maxlength="50" placeholder="Enter value [0-5]" ng-pattern="/^([0-4]){1}(\.[0-9]{1,2})?$|^[0-5]$/" autocomplete="off" />
                     </form-group>
                 </div>
                 <div class="col-md-1">
@@ -390,9 +390,9 @@
                     <label class="control-label createproj-label-props">Test automation(%)</label>
                 </div>
                 <div class="col-md-3">
-                    <form-group input="ta">
+                    <form-group input="ta" errors="{pattern: 'Enter the value between 0 to 100'}">
                         <input oninput="validity.valid||(value='');" string-to-number type="number" name="ta" class="form-control" ng-model="uhc.updateHeatmapPayload.testAutomationPercentage"
-                            maxlength="50" autocomplete="off" min=0 max=100 />
+                            maxlength="50" autocomplete="off" ng-pattern="/^([0-9]|[1-9][0-9]|100)$/" />
                     </form-group>
                 </div>
                 <div class="col-md-1">
