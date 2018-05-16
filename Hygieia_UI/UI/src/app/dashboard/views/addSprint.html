@@ -95,8 +95,8 @@
                     <label class="control-label createproj-label-props">Sprint name<span style="color:red">*</span></label>
                 </div>
                 <div class="col-md-8">
-                    <form-group input="sprintname" errors="{required: 'Sprint name is required', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
-                        <input tabindex="2" type="text" name="sprintname" class="form-control" placeholder="Sprint name" ng-model="asc.sprintPayload.sprintName" required maxlength="50" autocomplete="off" ng-pattern="/^[a-zA-Z0-9 ]*$/" />
+                    <form-group input="sprintname" errors="{required: 'Sprint name is required', maxlength: 'Max length of 50 characters'}">
+                        <input tabindex="2" type="text" name="sprintname" class="form-control" placeholder="Sprint name" ng-model="asc.sprintPayload.sprintName" required maxlength="50" autocomplete="off" />
                     </form-group>
                 </div>
             </div>
