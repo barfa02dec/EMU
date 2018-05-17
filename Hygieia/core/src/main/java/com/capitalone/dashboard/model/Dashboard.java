@@ -1,14 +1,13 @@
 package com.capitalone.dashboard.model;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.data.mongodb.core.index.CompoundIndex;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * A collection of widgets, collectors and application components that represent a software
@@ -16,11 +15,12 @@ import java.util.Set;
  *
  */
 @Document(collection="dashboards")
+@CompoundIndex(def = "{'projectId':1, 'title':1}", name = "index_Dashboard_projectId_title", unique=true)
 public class Dashboard extends BaseModel {
     private String template;
 
     //NOTE Mongodb treats strings as different if they have different case
-    @Indexed(unique=true, name="index_Dashboard_title")
+    //@Indexed(unique=true, name="index_Dashboard_title")
     private String title;
 
     private List<Widget> widgets = new ArrayList<>();
@@ -28,14 +28,13 @@ public class Dashboard extends BaseModel {
     private Set<String> usersList;
     private DashboardType type;
     private Application application;
-    
-    private ObjectId projectId;
+    private String projectId;
 
-    public ObjectId getProjectId() {
+    public String getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(ObjectId projectId) {
+	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
 
@@ -49,13 +48,13 @@ public class Dashboard extends BaseModel {
         this.owner = owner;
         this.type = type;
     }
-    public Dashboard(String template, String title, Application application,String owner, DashboardType type, ObjectId projectId) {
+    public Dashboard(String template, String title, Application application,String owner, DashboardType type, String projectId) {
         this.template = template;
         this.title = title;
         this.application = application;
         this.owner = owner;
         this.type = type;
-        this.projectId=projectId;
+        this.projectId = projectId;
     }
 
     public String getTemplate() {

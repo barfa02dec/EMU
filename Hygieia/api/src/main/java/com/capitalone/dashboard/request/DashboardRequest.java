@@ -4,8 +4,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.bson.types.ObjectId;
-
 import com.capitalone.dashboard.model.Application;
 import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.model.Dashboard;
@@ -32,15 +30,14 @@ public class DashboardRequest {
     private String type;
     
     @NotNull
-    ObjectId projectId;
-    
+    String projectId;
     
 
-    public ObjectId getProjectId() {
+    public String getProjectId() {
 		return projectId;
 	}
 
-	public void setProjectId(ObjectId projectId) {
+	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
 
@@ -97,7 +94,7 @@ public class DashboardRequest {
 	public Dashboard toDashboard() {
         DashboardType type = DashboardType.fromString(this.type);
         Application application = new Application(applicationName, new Component(componentName));
-        return new Dashboard(template, dashboardRequestTitle.getTitle(), application, owner, type,projectId);
+        return new Dashboard(template, dashboardRequestTitle.getTitle(), application, owner, type, projectId);
     }
 
     public Dashboard copyTo(Dashboard dashboard) {
