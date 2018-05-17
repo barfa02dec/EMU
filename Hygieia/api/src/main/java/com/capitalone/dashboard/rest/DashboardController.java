@@ -198,7 +198,7 @@ public class DashboardController {
 
     @RequestMapping(value = "/dashboard/mydashboard", method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public List<Dashboard> getOwnedDashboards(@RequestParam String username,@RequestParam ObjectId projectId) {
+    public List<Dashboard> getOwnedDashboards(@RequestParam String username,@RequestParam String projectId) {
     	
         List<Dashboard> myDashboard = dashboardService.getOwnedDashboards(username,projectId);
         return myDashboard;
@@ -207,7 +207,7 @@ public class DashboardController {
     
     @RequestMapping(value = "/dashboard/projectdashboard", method = GET,
             produces = APPLICATION_JSON_VALUE)
-    public List<Dashboard> getProjectOwnedDashboards(@RequestParam ObjectId projectId) {
+    public List<Dashboard> getProjectOwnedDashboards(@RequestParam String projectId) {
         List<Dashboard> myDashboard = dashboardService.getProjectOwnedDashboards(projectId);
         return myDashboard;
 

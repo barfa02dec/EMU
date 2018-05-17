@@ -255,14 +255,14 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
 	@Override
-	public List<Dashboard> getOwnedDashboards(String user,ObjectId projectId) {
+	public List<Dashboard> getOwnedDashboards(String user,String projectId) {
 		
 		List<Dashboard> myDashboard=dashboardRepository.findByProjectId(projectId).stream().filter(record->record.getUsersList().contains(user)).collect(Collectors.toList());;
 		return myDashboard;
 	}
 	
 	@Override
-	public List<Dashboard> getProjectOwnedDashboards(ObjectId projectId) {
+	public List<Dashboard> getProjectOwnedDashboards(String projectId) {
 		
 		List<Dashboard> projectDashboards=dashboardRepository.findByProjectId(projectId);
 		

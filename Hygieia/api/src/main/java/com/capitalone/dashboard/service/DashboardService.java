@@ -1,12 +1,13 @@
 package com.capitalone.dashboard.service;
 
+import java.util.List;
+
+import org.bson.types.ObjectId;
+
 import com.capitalone.dashboard.misc.HygieiaException;
 import com.capitalone.dashboard.model.Component;
 import com.capitalone.dashboard.model.Dashboard;
 import com.capitalone.dashboard.model.Widget;
-import org.bson.types.ObjectId;
-
-import java.util.List;
 
 
 public interface DashboardService {
@@ -93,7 +94,7 @@ public interface DashboardService {
      * @return List of dashboards
      */
     
-    List<Dashboard> getOwnedDashboards(String username, ObjectId projectId);
+    List<Dashboard> getOwnedDashboards(String username, String projectId);
     
     /**
      * Get owner of dashboard on supplying dashboard Title
@@ -105,7 +106,7 @@ public interface DashboardService {
     String getDashboardOwner(String dashboardTitle);
 
 
-	List<Dashboard> getProjectOwnedDashboards(ObjectId projectId);
+	List<Dashboard> getProjectOwnedDashboards(String projectId);
 }
 
 
