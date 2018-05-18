@@ -278,7 +278,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 					sprint.setSid(jiraSprint.getId());
 					sprint.setName(jiraSprint.getName());
 					sprint.setViewBoardsUrl(jiraSprint.getViewBoardsUrl());
-					sprint.setProjectId(projectId);
+					sprint.setJiraProjectId(Long.parseLong(projectId));
+					sprint.setProjectId(featureSettings.getProjectId());
 					sprint.setStartDate(StringUtils.isEmpty(jiraSprint.getStart()) ? null : new Date(Long.parseLong(jiraSprint.getStart())));
 					sprint.setEndDate(StringUtils.isEmpty(jiraSprint.getEnd()) ? null : new Date(Long.parseLong(jiraSprint.getEnd())));
 					sprint.setClosed(jiraSprint.getClosed());

@@ -34,6 +34,7 @@ public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 
 		private String projectId;
 	    private Long sprintId;
+	    private Long jiraProjectId;
 	    
 	    private Date startDate;
 	    private Date endDate;
@@ -122,6 +123,21 @@ public class Sprint extends BaseModel implements java.lang.Comparable<Sprint> {
 			this.automated = automated;
 		}
 
+		public Long getSprintId() {
+			return sprintId;
+		}
+		public void setSprintId(Long sprintId) {
+			this.sprintId = sprintId;
+		}
+		
+		public Long getJiraProjectId() {
+			return jiraProjectId;
+		}
+		public void setJiraProjectId(Long jiraProjectId) {
+			this.jiraProjectId = jiraProjectId;
+		}
+		
+		
 		@Override
 		public boolean equals(Object o) {
 			if (this == o)
