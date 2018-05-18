@@ -327,7 +327,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 				if (release == null) {
 					release = new Release();
 					release.setReleaseId(jiraVersion.getId());
-					release.setProjectId(projectId);
+					release.setProjectId(featureSettings.getProjectId());
+					release.setJiraProjectId(projectId);
 					release.setName(jiraVersion.getName());
 					release.setStartDate(StringUtils.isEmpty(jiraVersion.getStartDate()) ? null : new SimpleDateFormat("yyyy-MM-dd").parse(jiraVersion.getStartDate()));
 					release.setReleaseDate(StringUtils.isEmpty(jiraVersion.getReleaseDate()) ? null : new SimpleDateFormat("yyyy-MM-dd").parse(jiraVersion.getReleaseDate()));

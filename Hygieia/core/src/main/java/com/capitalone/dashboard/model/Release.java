@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Release extends BaseModel implements java.lang.Comparable<Release>{
 	private Long releaseId;
     private String projectId;
+    private String jiraProjectId;
 	
     private String description;
     private String name;
@@ -111,6 +112,12 @@ public class Release extends BaseModel implements java.lang.Comparable<Release>{
 		this.automated = automated;
 	}
 	
+	public String getJiraProjectId() {
+		return jiraProjectId;
+	}
+	public void setJiraProjectId(String jiraProjectId) {
+		this.jiraProjectId = jiraProjectId;
+	}
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
