@@ -172,7 +172,7 @@ public class ProjectServiceImpl implements ProjectService {
 			Set<Dashboard> dashboardsListToPersist=new HashSet<Dashboard>();
 			Set<Dashboard> dashboardsListToRemove=new HashSet<Dashboard>();
 			//edit existing dashboards if it is deferenced.
-			List<Dashboard> existingProjectDashboards=dashboardRepository.findByProjectId(project.getProjectId());
+			List<Dashboard> existingProjectDashboards=dashboardRepository.findByProjectId(project.getId().toString());
 			List<Dashboard> dashboardsToAssignToTheUser=new ArrayList<Dashboard>(projectUserRoleRequest.getDashboardsToAssign());
 
 			for(Dashboard dbDashboard: existingProjectDashboards){
@@ -254,7 +254,7 @@ public class ProjectServiceImpl implements ProjectService {
 		List<Dashboard> dashboardsToSave= new ArrayList<Dashboard>();
 		for(Project project: dbProjectsList){
 			project.getUsersGroup().add(defaultProjectAccessUser);
-			existingProjectDashboards=dashboardRepository.findByProjectId(project.getProjectId());
+			existingProjectDashboards=dashboardRepository.findByProjectId(project.getId().toString());
 			for(Dashboard dbDashboard: existingProjectDashboards){
 				dbDashboard.getUsersList().add(user);
 				dashboardsToSave.add(dbDashboard);
@@ -282,7 +282,7 @@ public class ProjectServiceImpl implements ProjectService {
 		List<Dashboard> dashboardsToSave= new ArrayList<Dashboard>();
 		for(Project project: dbProjectsList){
 			project.getUsersGroup().add(defaultProjectAccessUser);
-			existingProjectDashboards=dashboardRepository.findByProjectId(project.getProjectId());
+			existingProjectDashboards=dashboardRepository.findByProjectId(project.getId().toString());
 			for(Dashboard dbDashboard: existingProjectDashboards){
 				dbDashboard.getUsersList().add(user);
 				dashboardsToSave.add(dbDashboard);
@@ -306,7 +306,7 @@ public class ProjectServiceImpl implements ProjectService {
 			for( Project project: userAccessibleProjects){
 				if(null!=project.getUsersGroup()){
 					project.getUsersGroup().remove(userToPurge);
-					existingProjectDashboards=dashboardRepository.findByProjectId(project.getProjectId());
+					existingProjectDashboards=dashboardRepository.findByProjectId(project.getId().toString());
 					for(Dashboard dbDashboard: existingProjectDashboards){
 						dbDashboard.getUsersList().remove(user);
 						dashboardsToSave.add(dbDashboard);
