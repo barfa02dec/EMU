@@ -1,7 +1,7 @@
 package com.capitalone.dashboard.rest;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,14 +59,25 @@ public class HeatMapRestController {
 			@RequestParam(value = "noOfHeatMapToShow", required = true) int noOfHeatMapToShow) {
 		
 		LOGGER.debug("List all the project");
+		List<HeatMap> heatmaps = heatMapService.getHeatmaps(projectId);
 		
-		List<HeatMap> heatMapList = new ArrayList<HeatMap>();
-		List<HeatMap> heatMapListinDB = heatMapService.getHeatmaps(projectId);
-		
-		Collections.sort(heatMapListinDB);
+/*		Collections.sort(heatMapListinDB);
 		heatMapListinDB.stream().limit(noOfHeatMapToShow)
 				 .forEach(heatMap -> heatMapList.add(heatMap));
-		return heatMapList;
+*/
+		
+		if(!CollectionUtils.isEmpty(heatmaps)){
+			Collections.sort(heatmaps, new Comparator<HeatMap>() {
+				  public int compare(HeatMap o1, HeatMap o2) {
+				      if (o1.getFormattedSubmissionDate() == null || o2.getFormattedSubmissionDate() == null)
+				        return 0;
+				      return o1.getFormattedSubmissionDate().compareTo(o2.getFormattedSubmissionDate());
+				  }
+				});
+			Collections.reverse(heatmaps);
+		}
+		
+		return heatmaps != null && heatmaps.size() > 4 ? heatmaps.subList(0, 4) : heatmaps;
 	}
 
 	/**

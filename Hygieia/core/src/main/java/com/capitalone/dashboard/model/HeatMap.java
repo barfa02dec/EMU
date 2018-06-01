@@ -1,6 +1,9 @@
 package com.capitalone.dashboard.model;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "heatmap")
 @CompoundIndex(def = "{'projectId':1, 'submissionDate':1}", name = "index_heatmap_projectId_submissionDate", unique=true)
-public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
+public class HeatMap extends BaseModel { // implements Comparable<HeatMap>  {
 	
 	private String projectId;
 	//@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
@@ -51,6 +54,16 @@ public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
 		return result;
 	}
 
+    public Date getFormattedSubmissionDate() {
+    	Date date1 = null;
+    	try{
+    		date1 = new SimpleDateFormat("MMyyyy").parse(getSubmissionDate());
+    	}catch(Exception ex){
+    		ex.printStackTrace();
+    	}
+        return date1;
+    }
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -70,8 +83,9 @@ public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
 			return false;
 		return true;
 	}
+	
 
-	@Override
+	/*@Override
 	public int compareTo(HeatMap arg0) {
 		//sort by descending order
 		if((arg0.submissionDate).compareTo(this.submissionDate) > 0){
@@ -79,6 +93,10 @@ public class HeatMap extends BaseModel implements Comparable<HeatMap>  {
 		}else if ((arg0.submissionDate).compareTo(this.submissionDate) == 0){
 			return 0;
 		}
-		return -1;
-	}
+		return -1; 
+		
+      if (arg0.getFormattedSubmissionDate() == null || this.getFormattedSubmissionDate() == null)
+        return 0;
+      return arg0.getFormattedSubmissionDate().compareTo(arg0.getFormattedSubmissionDate());
+	}*/
 }
