@@ -1205,6 +1205,12 @@
             y = d1.getFullYear();
 
             var dateString = monthName[m] + "," + y; */
+	    
+	    var months = [{"01": "Jan","02": "Feb","03": "Mar","04": "Apr","05": "May","06": "Jun","07": "Jul","08": "Aug","09": "Sep","10": "Oct","11": "Nov","12": "Dec"}]
+            var selectedMonth = data.submissionDate.slice(0,2);
+            data.submissionMonth = months[0][selectedMonth];
+            data.submissionYear = data.submissionDate.slice(2,6);
+            ctrl.submissionDate = data.submissionMonth + " " + data.submissionYear;
 
             ctrl.updateHeatmapPayload = {
                 "user": ctrl.usernamepro,

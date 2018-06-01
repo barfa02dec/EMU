@@ -18,6 +18,7 @@
         ctrl.applicationName = '';
         ctrl.availableTemplates = [];
         ctrl.ppiids = $cookies.get('ProId');
+        ctrl.prId = $cookies.get('ProSpId');
         /*$scope.$on("ProId", function (event, ProId) {
             console.log(ProId);
         $scope.ProId = ProId;
@@ -86,13 +87,13 @@
             form.dashboardTitle.$setValidity('createError', true);
             // perform basic validation and send to the api
             if (form.$valid) {
-                var appName = document.cdf.applicationName ? document.cdf.applicationName.value : document.cdf.dashboardType.value,
-                    submitData = {
+                //var appName = document.cdf.applicationName ? document.cdf.applicationName.value : document.cdf.dashboardType.value,
+                    var submitData = {
                         template: 'capone',
                         title: document.cdf.dashboardTitle.value,
                         type: 'team',
-                        applicationName: appName,
-                        componentName: appName,
+                        applicationName: ctrl.prId,
+                        componentName: ctrl.prId,
                         owner: $cookies.get('username'),
                         projectId:ctrl.ppiids
                     };

@@ -38,7 +38,7 @@
 
          function fetchallprojects(usrnam){
 
-            return   $http.get("/api/projects/?username=" + usrnam)
+            return   $http.get("/api/getProjectsByUser/?username=" + usrnam)
                     .then(function(response) {
                        return response.data;
             });

@@ -22,7 +22,7 @@
             </select>
         </form-group> -->
 
-        <form-group input="dashboardTitle" errors="{required: 'Dashboard title is required', minlength: 'Min length of 6 characters', maxlength: 'Max length of 50 characters', createError: 'Error creating dashboard. Change title and try again.', pattern : 'Special character(s) found. Please enter only letters, numbers or spaces.'}">
+        <form-group input="dashboardTitle" errors="{required: 'Dashboard title is required'}">
             <input
                 type="text"
                 name="dashboardTitle"
@@ -30,13 +30,11 @@
                 placeholder="Dashboard title"
                 ng-model="ctrl.dashboardTitle"
                 required
-                maxlength="50"
                 autocomplete="off"
-                minlength="6"
-                ng-pattern="/^[a-zA-Z0-9 ]*$/"/>
+                />
 
         </form-group>
-
+<!-- 
         <form-group input="applicationName" errors="{required: 'Application name is required', maxlength: 'Max length of 50 characters'}">
             <input
                 type="text"
@@ -47,7 +45,7 @@
                 maxlength="50"
                 autocomplete="off"
                 required />
-        </form-group>
+        </form-group> -->
        <!--  <form-group input="projectName" errors="{required: 'Project name is required', maxlength: 'Max length of 50 characters'}">
             <input
                 type="text"

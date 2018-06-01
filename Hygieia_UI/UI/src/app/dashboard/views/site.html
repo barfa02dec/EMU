@@ -22,13 +22,13 @@
    <div class="gradient-header" style="background-image: url('assets/images/bg_page_header.png');">
       <div class="row">
          <div class="col-md-12">
-            <div class="col-md-4 gradient-header-padding">
+            <div class="col-md-6 gradient-header-padding">
                <div class="gradient-header-project-name">
                   {{ctrl.projectName}} / Dashboards
                </div>
                <div class="gradient-header-project-link"><a href="#/projects" class="gradient-header-project-link-color">All projects</a></div>
             </div>
-            <div class="col-md-6"></div>
+            <div class="col-md-4"></div>
             <div class="col-md-2 gradient-header-create-btn" ng-if="ctrl.createDashboards">
                <div>
                   <input type="submit" class="btn btn-info project-map-add-btn" value="New dashboard"  ng-click="ctrl.createDashboard()"> 
@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-12 dashboard-page-row-bold">
                            <div class="col-md-6 dashboard-page-row-inner">{{myitem.createdOn | date}}</div>
-                           <div class="col-md-6" style="word-wrap: break-word;">{{myitem.owner}}</div>
+                           <div class="col-md-6 project-map-list-data" ng-attr-title="{{myitem.owner}}">{{myitem.owner}}</div>
                         </div>
                         <div class="col-md-12 dashboard-page-icons">
                            <a href ng-click="ctrl.renameDashboard(myitem)" class="dashboard-page-icons-outline" style="outline:none;" ng-if="ctrl.editDashboard">
