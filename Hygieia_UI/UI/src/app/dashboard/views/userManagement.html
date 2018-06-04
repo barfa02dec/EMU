@@ -212,7 +212,7 @@
         <div class="panel-heading col-md-12" style="cursor: pointer;border: 1px solid #d6d6d6;" ng-click="active = !active" ng-class="{'expandcollapse-heading-collapsed': active, 'expandcollapse-heading-expanded': !active}"><span class="col-md-4">{{fetchPro}}</span>
           <span class="col-md-1">
               <!-- <input type="button" name="" ng-click="umc.createGlobalDelivery(fetchPro)" value="Create global"> -->
-              <span ng-click="umc.createGlobalDelivery(fetchPro)" ng-attr-title="Create Global Delivery">
+              <span ng-click="umc.createGlobalDeliveryModel(fetchPro)" ng-attr-title="Create Global Delivery">
                 <svg version="1.1"
                 x="0px" y="0px" width="22.2px" height="24.1px" viewBox="0 0 22.2 24.1" style="enable-background:new 0 0 22.2 24.1;"
                 xml:space="preserve">
@@ -265,7 +265,7 @@
               </span>
           </span>
           <span class="col-md-1" ng-attr-title="Revoke User">
-          <span ng-click="umc.revokeAppUser(fetchPro)">
+          <span ng-click="umc.revokeUserModel(fetchPro)">
             <svg version="1.1"
                 x="0px" y="0px" width="21.2px" height="22.9px" viewBox="0 0 21.2 22.9" style="enable-background:new 0 0 21.2 22.9;"
                 xml:space="preserve">
@@ -292,7 +292,7 @@
           </span>
             <span class="col-md-1">
               <!-- <input type="button" name="" ng-click="umc.createGlobalDeliverySysAdmin(fetchPro)" value="Create global sys"> -->
-              <span ng-click="umc.createGlobalDeliverySysAdmin(fetchPro)" ng-attr-title="Create System Admin">
+              <span ng-click="umc.createGlobalDeliverySysAdminModel(fetchPro)" ng-attr-title="Create System Admin">
                 <svg version="1.1"
                 x="0px" y="0px" width="22.1px" height="24.1px" viewBox="0 0 22.1 24.1" style="enable-background:new 0 0 22.1 24.1;"
                 xml:space="preserve">
@@ -316,7 +316,7 @@
               </span>
           </span>
            <span class="col-md-1">
-           <span ng-click="umc.purgeUser(fetchPro)" ng-attr-title="Purge User">
+           <span ng-click="umc.purgeUserModel(fetchPro)" ng-attr-title="Purge User">
              <svg version="1.1"
                 x="0px" y="0px" width="22.2px" height="20.7px" viewBox="0 0 22.2 20.7" style="enable-background:new 0 0 22.2 20.7;"
                 xml:space="preserve">

@@ -592,30 +592,113 @@
                 })
             }
         }
-        ctrl.createGlobalDelivery = function(fetchPro) {
-            $http.post('/api/createGlobalDeliveryUser?username=' + fetchPro).then(function(response) {
-                alert("Created Successfully");
-            })
+        ctrl.createGlobalDeliveryModel = function (fetchDelivery) {
+            $uibModal.open({
+                templateUrl: 'app/dashboard/views/createGlobalDelivery.html',
+                controller: createGlobalDeliveryCtrl,
+                controllerAs: 'cgdc',
+                resolve: {
+                    fetchDelivery: function () {
+                        return fetchDelivery;
+                    }
+                }
+            });
         }
 
-        ctrl.revokeAppUser = function(fetchPro) {
-            $http.delete('/api/RevokeAppUserAccess?username=' + fetchPro).then(function(response) {
-                alert("Revoked Successfully");
+        function createGlobalDeliveryCtrl(fetchDelivery, $uibModalInstance, $route) {
+            var ctrl = this;
+            ctrl.createGlobalDeliveryPost = function() {
+                $http.post('/api/createGlobalDeliveryUser?username=' + fetchDelivery).then(function(response) {
+                $uibModalInstance.dismiss("cancel");
+                $route.reload();
+                $uibModal.open({
+                    templateUrl: 'app/dashboard/views/ConfirmationModals/createGlobalDeliveryConfirmation.html',
+                    controller: 'userManagementController',
+                    controllerAs: 'umc'
+                });
             })
+            } 
+        }
+        ctrl.revokeUserModel = function (fetchRevoke) {
+            $uibModal.open({
+                templateUrl: 'app/dashboard/views/revokeUser.html',
+                controller: fetchRevokeCtrl,
+                controllerAs: 'frc',
+                resolve: {
+                    fetchRevoke: function () {
+                        return fetchRevoke;
+                    }
+                }
+            });
         }
 
-        ctrl.createGlobalDeliverySysAdmin = function(fetchPro) {
-            $http.post('/api/createGlobalDeliverySysAdmin?username=' + fetchPro).then(function(response) {
-                alert("Created Successfully");
+        function fetchRevokeCtrl(fetchRevoke, $uibModalInstance, $route) {
+            var ctrl = this;
+            ctrl.fetchRevokePost = function() {
+                $http.delete('/api/RevokeAppUserAccess?username=' + fetchRevoke).then(function(response) {
+                $uibModalInstance.dismiss("cancel");
+                $route.reload();
+                $uibModal.open({
+                    templateUrl: 'app/dashboard/views/ConfirmationModals/revokeUserConfirmation.html',
+                    controller: 'userManagementController',
+                    controllerAs: 'umc'
+                });
             })
+            }
+        }
+        ctrl.createGlobalDeliverySysAdminModel = function (fetchPro) {
+            $uibModal.open({
+                templateUrl: 'app/dashboard/views/createSysAdmin.html',
+                controller: createGlobalDeliverySysAdminCtrl,
+                controllerAs: 'cgd',
+                resolve: {
+                    fetchPro: function () {
+                        return fetchPro;
+                    }
+                }
+            });
         }
 
-        ctrl.purgeUser = function(fetchPro) {
-            $http.delete('/api/purgeAppUser?username=' + fetchPro).then(function(response) {
-                alert("Removed Successfully");
+        function createGlobalDeliverySysAdminCtrl(fetchPro, $uibModalInstance, $route) {
+            var ctrl = this;
+            ctrl.createGlobalDeliverySysAdminPost = function(pro) {
+                $http.post('/api/createGlobalDeliverySysAdmin?username=' + fetchPro).then(function(response) {
+                $uibModalInstance.dismiss("cancel");
+                $route.reload();
+                $uibModal.open({
+                    templateUrl: 'app/dashboard/views/ConfirmationModals/createSysAdminConfirmation.html',
+                    controller: 'userManagementController',
+                    controllerAs: 'umc'
+                });
             })
+            }
+        }
+        ctrl.purgeUserModel = function (purgeData) {
+            $uibModal.open({
+                templateUrl: 'app/dashboard/views/purgeUserModel.html',
+                controller: purgeUserModelCtrl,
+                controllerAs: 'puc',
+                resolve: {
+                    purgeData: function () {
+                        return purgeData;
+                    }
+                }
+            });
         }
 
-
+        function purgeUserModelCtrl(purgeData, $uibModalInstance, $route) {
+            var ctrl = this;
+            ctrl.purgeUserPost = function() {
+                $http.delete('/api/purgeAppUser?username=' + purgeData).then(function(response) {
+                $uibModalInstance.dismiss("cancel");
+                $route.reload();
+                $uibModal.open({
+                    templateUrl: 'app/dashboard/views/ConfirmationModals/purgeUserConfirmation.html',
+                    controller: 'userManagementController',
+                    controllerAs: 'umc'
+                });
+            })
+            }
+        }
     }
 })();
