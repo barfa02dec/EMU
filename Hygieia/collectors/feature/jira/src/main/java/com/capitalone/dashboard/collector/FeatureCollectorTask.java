@@ -138,16 +138,16 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			featureSettings.setProjectId(hmFeatureSettings.getProjectId().get(i));
 			featureSettings.setJiraProjectIdList(hmFeatureSettings.getJiraProjectIdList().get(i));
 			featureSettings.setNoOfSprintsToShow(hmFeatureSettings.getNoOfSprintsToShow());
-			featureSettings.setEnvironmentFoundInFieldName(hmFeatureSettings.getEnvironmentFoundInFieldName());
-			featureSettings.setOpenDefectsQuery(hmFeatureSettings.getOpenDefectsQuery());
-			featureSettings.setClosedDefectsQuery(hmFeatureSettings.getClosedDefectsQuery());
-			featureSettings.setDefectsCreatedQuery(hmFeatureSettings.getDefectsCreatedQuery());
+			featureSettings.setEnvironmentFoundInFieldName(hmFeatureSettings.getEnvironmentFoundInFieldName().get(i));
+			featureSettings.setOpenDefectsQuery(hmFeatureSettings.getOpenDefectsQuery().get(i));
+			featureSettings.setClosedDefectsQuery(hmFeatureSettings.getClosedDefectsQuery().get(i));
+			featureSettings.setDefectsCreatedQuery(hmFeatureSettings.getDefectsCreatedQuery().get(i));
 			
-			featureSettings.setSprintDefectsResolvedQuery(hmFeatureSettings.getSprintDefectsResolvedQuery());
-			featureSettings.setSprintAllDefectsResolvedQuery(hmFeatureSettings.getSprintAllDefectsResolvedQuery());
-			featureSettings.setSprintDefectsUnresolvedQuery(hmFeatureSettings.getSprintDefectsUnresolvedQuery());
-			featureSettings.setVersionDefectsCreatedQuery(hmFeatureSettings.getVersionDefectsCreatedQuery());
-			featureSettings.setVersionDefectsResolvedQuery(hmFeatureSettings.getVersionDefectsResolvedQuery());
+			featureSettings.setSprintDefectsResolvedQuery(hmFeatureSettings.getSprintDefectsResolvedQuery().get(i));
+			featureSettings.setSprintAllDefectsResolvedQuery(hmFeatureSettings.getSprintAllDefectsResolvedQuery().get(i));
+			featureSettings.setSprintDefectsUnresolvedQuery(hmFeatureSettings.getSprintDefectsUnresolvedQuery().get(i));
+			featureSettings.setVersionDefectsCreatedQuery(hmFeatureSettings.getVersionDefectsCreatedQuery().get(i));
+			featureSettings.setVersionDefectsResolvedQuery(hmFeatureSettings.getVersionDefectsResolvedQuery().get(i));
 			
 			logBanner(featureSettings.getJiraBaseUrl());
 		    int count = 0;
