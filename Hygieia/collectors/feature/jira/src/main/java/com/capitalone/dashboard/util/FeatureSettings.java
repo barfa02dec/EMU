@@ -75,6 +75,8 @@ public class FeatureSettings {
 	private List<String> versionDefectsCreatedQuery;
 	private List<String> versionDefectsResolvedQuery;
 	
+	private List<String> authenticationReq;  //default is yes. The no case is only applicable for VPN
+	
 	public List<String[]> getJiraProjectIdList() {
 		return jiraProjectIdList;
 	}
@@ -483,6 +485,14 @@ public class FeatureSettings {
 
 	public void setVersionDefectsResolvedQuery(List<String> versionDefectsResolvedQuery) {
 		this.versionDefectsResolvedQuery = versionDefectsResolvedQuery;
+	}
+
+	public List<String> getAuthenticationReq() {
+		return authenticationReq;
+	}
+
+	public void setAuthenticationReq(List<String> authenticationReq) {
+		this.authenticationReq = authenticationReq;
 	}
 
 }

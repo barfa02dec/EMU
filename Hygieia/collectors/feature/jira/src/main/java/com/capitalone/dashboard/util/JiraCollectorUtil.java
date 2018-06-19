@@ -14,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
+import com.atlassian.jira.rest.client.api.domain.BasicProject;
 import com.capitalone.dashboard.model.JiraIssue;
 import com.capitalone.dashboard.model.JiraSprint;
 import com.capitalone.dashboard.model.JiraVersion;
@@ -31,6 +32,7 @@ public class JiraCollectorUtil {
 
 	public static final String GET_ISSUE = "issue/%1s?fields=%2s";
 	public static final String GET_JIRA_PRIORITY =  "priority";
+	public static final String GET_JIRA_PROJECTS =  "project";
 	
 	//Defect related jira queries
 	//public static final String GET_OPEN_DEFECTS_SEVERITY =  "/rest/api/2/search?jql=project=%1s and type in (Bug) and  resolution in (Unresolved) &maxResults=100";
@@ -299,7 +301,21 @@ public class JiraCollectorUtil {
 		}
 		return priorties;
 	}
+
+	public static List<BasicProject> getJiraProjects(NewFeatureSettings featureSettings){
+		StringBuffer restQuery = new StringBuffer().append(featureSettings.getJiraBaseUrl())
+				.append(featureSettings.getJiraQueryEndpoint()).append(GET_JIRA_PROJECTS);
+
+		String json = executeJiraQuery(featureSettings, restQuery.toString());
+		JsonArray jsonArr = new GsonBuilder().create().fromJson(json, JsonArray.class);
 		
+		ArrayList<BasicProject> projects = new ArrayList<BasicProject>();
+		for (int i = 0; i < jsonArr.size(); i++){
+			projects.add(new GsonBuilder().create().fromJson(jsonArr.get(i), BasicProject.class));
+		}
+		return projects;
+	}
+
 	private static List<JiraIssue> getIssues(String query,  NewFeatureSettings featureSettings){
 		int startAt = 0, total = 0;
 		List<JiraIssue> issuelist = new ArrayList<JiraIssue>();
@@ -324,7 +340,14 @@ public class JiraCollectorUtil {
 	}
 
 	private static String executeJiraQuery(NewFeatureSettings featureSettings, String query){
+		/*HttpEntity<String> entity;
+		if(featureSettings.isCredentialReq())
+			entity = new HttpEntity<String>(getHeader(featureSettings.getJiraCredentials()));
+		else 
+			entity = null;*/
+		
 		HttpEntity<String> entity = new HttpEntity<String>(getHeader(featureSettings.getJiraCredentials()));
+		//RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> result = restTemplate.exchange(query, HttpMethod.GET, entity, String.class);
 

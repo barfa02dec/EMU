@@ -1,8 +1,5 @@
 package com.capitalone.dashboard.client.story;
 
-import java.util.List;
-
-import com.capitalone.dashboard.model.Defect;
 import com.capitalone.dashboard.model.Scope;
 
 /**
@@ -19,5 +16,5 @@ public interface StoryDataClient {
 	 */
 	int updateStoryInformation();
 	
-	void defectMetricsAggregation(List<Defect> defectsInDB, Scope scopeProject);
+	void defectMetricsAggregation(Scope scopeProject);
 }

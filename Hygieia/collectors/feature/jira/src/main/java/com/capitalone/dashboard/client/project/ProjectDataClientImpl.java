@@ -15,6 +15,7 @@ import com.capitalone.dashboard.repository.FeatureCollectorRepository;
 import com.capitalone.dashboard.repository.ScopeRepository;
 import com.capitalone.dashboard.util.ClientUtil;
 import com.capitalone.dashboard.util.FeatureCollectorConstants;
+import com.capitalone.dashboard.util.JiraCollectorUtil;
 import com.capitalone.dashboard.util.NewFeatureSettings;
 
 /**
@@ -56,11 +57,13 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 	 * update to MongoDB from those calls.
 	 */
 	public void updateJiraProjectInfo() {
-		List<BasicProject> projects = jiraClient.getProjects(featureSettings);
+		LOGGER.info("Collection of project data started for Project ID : " + featureSettings.getProjectId());
+		List<BasicProject> projects = JiraCollectorUtil.getJiraProjects(featureSettings);
 		
 		if (projects != null && !projects.isEmpty()) {
 			updateMongoInfo(projects);
 		}
+		LOGGER.info("Collection of project data completed for Project ID : " + featureSettings.getProjectId());
 	}
 	
 	/**
@@ -77,13 +80,13 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 		
 		if (currentPagedJiraRs != null) {
 			ObjectId jiraCollectorId = featureCollectorRepository.findByName(FeatureCollectorConstants.JIRA).getId();
+			
 			List<String> jiraProjectsToShowInDashboard = new ArrayList<String>();
 			jiraProjectsToShowInDashboard = Arrays.asList(featureSettings.getJiraProjectIdList());
 			
 			for (BasicProject jiraScope : currentPagedJiraRs) {
 				String scopeId = TOOLS.sanitizeResponse(jiraScope.getId());
-				
-				Scope scope = projectRepo.getScopeByIdAndProjectName(scopeId, jiraScope.getName());
+				Scope scope = projectRepo.getScopeByIdAndProjectId(featureSettings.getProjectId(), scopeId);
 				
 				if (scope == null && jiraProjectsToShowInDashboard.contains(scopeId)) {
 					scope = new Scope();
@@ -93,28 +96,13 @@ public class ProjectDataClientImpl implements ProjectDataClient {
 
 				scope.setCollectorId(jiraCollectorId);
 
-				// ID;
 				scope.setpId(TOOLS.sanitizeResponse(scopeId));
-				//project ID
-				
 				scope.setProjectId(featureSettings.getProjectId());
-
-				// name;
 				scope.setName(TOOLS.sanitizeResponse(jiraScope.getName()));
-
-				/*scope.setBeginDate("");
-				scope.setEndDate("");
-				scope.setChangeDate("");
-				scope.setAssetState("Active");*/
-
-				// isDeleted - does not exist for jira
 				scope.setIsDeleted("False");
-
-				// path - does not exist for Jira
 				scope.setProjectPath(TOOLS.sanitizeResponse(jiraScope.getName()));
-				//set whether this project is exposed to emu dashboard/not
 				scope.setToShowInEMUDashboard(jiraProjectsToShowInDashboard.contains(scope.getpId()));
-				// Saving back to MongoDB
+
 				projectRepo.save(scope);
 			}
 		}
