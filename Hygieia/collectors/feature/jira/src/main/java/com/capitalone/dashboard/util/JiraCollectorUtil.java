@@ -86,6 +86,8 @@ public class JiraCollectorUtil {
 	
 	public static void getSprintMetrics(JiraSprint jiraSprint, String projectId, NewFeatureSettings featureSettings) {
 		
+		LOGGER.info("Processing Sprint Metrics for Project Id: " + projectId + " Sprint Name: " + jiraSprint.getName());
+		
 		String originalSprintData = getSprintDetails(projectId,jiraSprint.getId(), featureSettings);
 
 		SprintData sprintdata = ClientUtil.parseToSprintData(jiraSprint,originalSprintData);
@@ -156,7 +158,7 @@ public class JiraCollectorUtil {
 	public static VersionData getReleaseData(String versionDetailJson, String projectId , NewFeatureSettings featureSettings){
 
 		VersionData versionData = parseToVersionData(versionDetailJson);
-		LOGGER.info("Processing Release Metrics "+ versionData.getReleaseName());
+		LOGGER.info("Processing Release Metrics for Project Id: " + projectId + " Release Id: " + versionData.getReleaseName());
 
 		List<JiraIssue> issues = new ArrayList<JiraIssue>();
 	
