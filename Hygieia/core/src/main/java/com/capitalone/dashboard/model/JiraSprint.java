@@ -1,7 +1,9 @@
 package com.capitalone.dashboard.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 
 public class JiraSprint implements Comparable<JiraSprint> {
 
@@ -52,7 +54,10 @@ public class JiraSprint implements Comparable<JiraSprint> {
 		}
 
 		public Boolean getClosed() {
-			return closed;
+			if((closed != null && closed == true)  || (!StringUtils.isEmpty(this.state) && this.state.equalsIgnoreCase("CLOSED")))
+				return true;
+			else
+				return false;
 		}
 		public void setClosed(Boolean closed) {
 			this.closed = closed;

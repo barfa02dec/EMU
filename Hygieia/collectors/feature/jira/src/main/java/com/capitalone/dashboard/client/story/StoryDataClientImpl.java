@@ -546,12 +546,12 @@ public class StoryDataClientImpl implements StoryDataClient {
 		 * Logic for bucketing the defects based on resolution days and priority
 		 * in each class of resolution.
 		 */
-		resolutionTimeForClosedDefects(summary, project);
+		resolutionTimeForClosedDefects(summary);
 
 		/*
 		 * Logic for bucketing the defects based on age of open defects.
 		 */
-		ageOfOpenDefects(summary, project);
+		ageOfOpenDefects(summary);
 
 		defectAggregationRepository.save(summary);
 		
@@ -608,7 +608,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		}
 	}
 
-	private void resolutionTimeForClosedDefects(DefectAggregation aggregation, Scope scopeProject) {
+	private void resolutionTimeForClosedDefects(DefectAggregation aggregation) {
 		List<JiraIssue> issues = JiraCollectorUtil.getClosedDefectsByProject(featureSettings);
 		
 		if(CollectionUtils.isEmpty(issues)) 
@@ -687,7 +687,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 	}
 	
 	
-	private void ageOfOpenDefects(DefectAggregation aggregation, Scope scopeProject) {
+	private void ageOfOpenDefects(DefectAggregation aggregation) {
 		
 		List<Integer> defectAgePeriodRanges = new ArrayList<Integer>();
 		for (int i = 0; i < featureSettings.getDefectAge().length; i++) {

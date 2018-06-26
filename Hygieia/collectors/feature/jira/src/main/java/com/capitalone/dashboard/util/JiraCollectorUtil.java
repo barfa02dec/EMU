@@ -45,6 +45,7 @@ public class JiraCollectorUtil {
 	//private static final String GET_SPRINT_DEFECTS_UNRESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) and createddate<\"%2s\" and (resolutiondate > \"%2s\" or resolution in (unresolved)) &maxResults=100";
 
 	private static final String GET_PROJECT_SPRINTS = "rest/greenhopper/1.0/integration/teamcalendars/sprint/list?jql=project in (%1s)";
+	private static final String GET_PROJECT_SPRINTS_USING_RAPIDVIEW = "rest/greenhopper/latest/sprintquery/%1s?includeHistoricSprints=true";
 	private static final String GET_PROJECT_SPRINT_DETAILS = "rest/greenhopper/1.0/rapid/charts/sprintreport?rapidViewId=%1s&sprintId=%2$d";
 	public static final String GET_SPRINT_VELOCITY_REPORT = "rest/greenhopper/1.0/rapid/charts/velocity?rapidViewId=%1s";
 
@@ -65,8 +66,10 @@ public class JiraCollectorUtil {
 	
 	public static List<JiraSprint> getSprintList(String projectId, NewFeatureSettings featureSettings){
 		try{
+			/*StringBuffer query = new StringBuffer().append(featureSettings.getJiraBaseUrl())
+					.append(String.format(GET_PROJECT_SPRINTS_, projectId));*/
 			StringBuffer query = new StringBuffer().append(featureSettings.getJiraBaseUrl())
-					.append(String.format(GET_PROJECT_SPRINTS, projectId));
+			.append(String.format(GET_PROJECT_SPRINTS_USING_RAPIDVIEW, featureSettings.getRapidView()));
 
 			String sprints = executeJiraQuery(featureSettings, query.toString());	
 			JsonArray sprintArray = new GsonBuilder().create().fromJson(sprints, JsonObject.class).getAsJsonArray("sprints");
@@ -88,7 +91,7 @@ public class JiraCollectorUtil {
 		
 		LOGGER.info("Processing Sprint Metrics for Project Id: " + projectId + " Sprint Name: " + jiraSprint.getName());
 		
-		String originalSprintData = getSprintDetails(projectId,jiraSprint.getId(), featureSettings);
+		String originalSprintData = getSprintDetails(jiraSprint.getId(), featureSettings);
 
 		SprintData sprintdata = ClientUtil.parseToSprintData(jiraSprint,originalSprintData);
 		
@@ -143,7 +146,7 @@ public class JiraCollectorUtil {
 		jiraSprint.getSprintData().setDefectsUnresolved(DefectUtil.defectCount(DefectUtil.defectCountBySeverity(issues)));
 	}
 	
-	private static String getSprintDetails(String projectId, Long sprintId, NewFeatureSettings featureSettings){
+	private static String getSprintDetails(Long sprintId, NewFeatureSettings featureSettings){
 		try{
 			StringBuffer restQuery = new StringBuffer().append(featureSettings.getJiraBaseUrl())
 					.append(String.format(GET_PROJECT_SPRINT_DETAILS, StringUtils.trimWhitespace(featureSettings.getRapidView()), sprintId));
