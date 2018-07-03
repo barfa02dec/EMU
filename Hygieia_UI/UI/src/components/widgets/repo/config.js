@@ -49,6 +49,7 @@
 		ctrl.gitBranch = widgetConfig.options.branch;
 		ctrl.repouser = widgetConfig.options.userID;
 		ctrl.repopass = widgetConfig.options.password;
+		ctrl.gitPath = widgetConfig.options.path;
 		$cookies.put('repourl', ctrl.repoUrl);
 		// public variables
 		ctrl.submitted = false;
@@ -136,7 +137,8 @@
 						url: ctrl.repoUrl,
 						branch: ctrl.gitBranch,
 						userID: ctrl.repouser,
-						password: ctrl.repopass
+						password: ctrl.repopass,
+						path:ctrl.gitPath
 					}
 				};
 			} else if (ctrl.repoOption.name.indexOf("Bitbucket") != -1) {
@@ -189,7 +191,8 @@
 					url : ctrl.repoUrl,
 					branch : ctrl.gitBranch,
 					userID : ctrl.repouser,
-					password : ctrl.repopass
+					password : ctrl.repopass,
+					path: ctrl.gitPath
 				},
 				componentId : modalData.dashboard.application.components[0].id,
 				collectorItemId : response.data.id

@@ -48,6 +48,21 @@
 
 	</form-group>
 
+	<form-group ng-if="repoConfig.repoOption.name == 'GitHub'  || repoConfig.repoOption.name == 'Bitbucket' || repoConfig.repoOption.name == 'Gitlab'"
+				input="gitPath"
+				class="">
+
+		<label class="all-opopups-text-left" id="repoLabel">Project Path</label>
+
+		<input
+			type="text"
+			name="gitPath"
+			class="form-control"
+			ng-model="repoConfig.gitPath"
+			placeholder="Enter Path"
+			 />
+
+	</form-group>
 	<!-- <form-group ng-if="repoConfig.repoOption.name != 'Gitlab'" input="repouser"
 				errors="{}">
 
