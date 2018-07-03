@@ -81,7 +81,6 @@ public class GitHubCollectorTask extends CollectorTask<Collector> {
 	 * @param collector
 	 *            the {@link Collector}
 	 */
-    @SuppressWarnings("PMD.AvoidDeeplyNestedIfStmts") // agreed, fixme
 	private void clean(Collector collector) {
 		Set<ObjectId> uniqueIDs = new HashSet<ObjectId>();
 		/**

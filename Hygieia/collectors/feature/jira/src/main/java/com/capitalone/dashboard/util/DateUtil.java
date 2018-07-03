@@ -153,7 +153,7 @@ public final class DateUtil {
 
 	public static String format(Date date, String pattern) {
 	    DateFormat formatter = new SimpleDateFormat(pattern, Locale.US);
-	    return formatter.format(date);
+	    return date != null ? formatter.format(date) : null;
 	  }
 	
 	 public static Date convertStringToDate(String datestr, String format) {

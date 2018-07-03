@@ -304,7 +304,6 @@ public final class ClientUtil {
 		return sprints;
 	}
 	
-	@SuppressWarnings({ "PMD.NPathComplexity" })
 	public Sprint parseSprint(String rawSprintToString) throws ParseException {
 		Sprint sprint = new Sprint();
 		

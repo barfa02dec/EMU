@@ -147,9 +147,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			featureSettings.setSprintDefectsUnresolvedQuery(hmFeatureSettings.getSprintDefectsUnresolvedQuery().get(i));
 			featureSettings.setVersionDefectsCreatedQuery(hmFeatureSettings.getVersionDefectsCreatedQuery().get(i));
 			featureSettings.setVersionDefectsResolvedQuery(hmFeatureSettings.getVersionDefectsResolvedQuery().get(i));
-/*			featureSettings.setCredentialReq(!(!StringUtils.isEmpty(hmFeatureSettings.getCredentialReq().get(i)) 
-					&& hmFeatureSettings.getCredentialReq().get(i).equalsIgnoreCase("N")));
-*/			
+		
 			logBanner(featureSettings.getJiraBaseUrl());
 		    int count = 0;
 

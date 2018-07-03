@@ -27,6 +27,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 
@@ -37,6 +38,7 @@ import com.capitalone.dashboard.model.GitProjectSettings;
 import com.capitalone.dashboard.util.Encryption;
 import com.capitalone.dashboard.util.EncryptionException;
 import com.capitalone.dashboard.util.Supplier;
+
 
 /**
  * GitHubClient implementation that uses SVNKit to fetch information about
@@ -64,7 +66,6 @@ public class DefaultGitHubClient implements GitHubClient {
 	}
 
 	@Override
-	@SuppressWarnings({"PMD.NPathComplexity","PMD.ExcessiveMethodLength"}) // agreed, fixme
 	public List<Commit> getCommits(GitHubRepo repo, boolean firstRun) {
 
 		initializeGitSettings();
@@ -118,6 +119,9 @@ public class DefaultGitHubClient implements GitHubClient {
 
 		String queryUrl = apiUrl.concat("/commits?sha=" + repo.getBranch()
 				+ "&since=" + thisMoment + "&access_token=" + gitSettingsMap.get(repo.getProject()).getApiToken());
+		
+		if(!StringUtils.isEmpty(repo.getPath()))
+			queryUrl = queryUrl.concat("&path=" + repo.getPath());
 		
 		//String queryUrl = apiUrl.concat("/commits?access_token="+key);
 		

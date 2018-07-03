@@ -267,10 +267,12 @@ public class StoryDataClientImpl implements StoryDataClient {
 		LOGGER.info("Collection of Sprint data started for Project ID : " + projectId + " and Project Name: " + projectName);
 		
 		List<JiraSprint> jiraSprints = JiraCollectorUtil.getSprintList(projectId, featureSettings);
+
+		Collections.reverse(jiraSprints); 
+		if(jiraSprints.size() > 30)
+			jiraSprints.stream().limit(30);
 		
-		List<Sprint> list = new ArrayList<Sprint>();
 		for (JiraSprint jiraSprint : jiraSprints) {
-			
 			try{
 				Sprint sprint = sprintRepository.findOne(QSprint.sprint.sprintId.eq(jiraSprint.getId()).and(QSprint.sprint.name.eq(jiraSprint.getName())));
 				
@@ -302,17 +304,19 @@ public class StoryDataClientImpl implements StoryDataClient {
 				
 				if(sprint.getSprintData() != null){
 					sprint.setStartDate(sprint.getSprintData().getStartDate());
-					sprint.setEndDate(sprint.getSprintData().getCompleteDate());
+					
+					if(sprint.getSprintData().getCompleteDate() != null)
+						sprint.setEndDate(sprint.getSprintData().getCompleteDate());
+					else
+						sprint.setEndDate(sprint.getSprintData().getEndDate());
 				}
 				
-				list.add(sprint);
+				sprintRepository.save(sprint);
+				//list.add(sprint);
 			}catch(Exception ex){
 				ex.printStackTrace();
 				LOGGER.error("Collection of Sprint data failed for Project ID : " + projectId + " and Project Name: " + projectName + " and sprint " + jiraSprint.getName() , ex);
 			}
-		}
-		if (!list.isEmpty()) {
-			sprintRepository.save(list);
 		}
 		
 		LOGGER.info("Collection of Sprint data completed for Project ID : " + projectId + " and Project Name: " + projectName);
@@ -322,7 +326,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 		LOGGER.info("Collection of release data started for Project ID : " + projectId + " and Project Name: " + projectName);
 		
 		List<JiraVersion> jiraVersions = JiraCollectorUtil.getVersionsFromJira(projectId, featureSettings);
-		List<Release> releaseList = new ArrayList<Release>();
 
 		for (JiraVersion jiraVersion : jiraVersions) {
 			try{
@@ -346,7 +349,6 @@ public class StoryDataClientImpl implements StoryDataClient {
 					release.setUpdatedOn(new Date());
 				}
 				
-
 				// Get the detailed version metrics for release with status [not release] 
 				// Get the detailed version metrics for release with status[released] but detailed metrics/versionData is null
 				if ((release.getReleased() && null == release.getVersionData())|| !release.getReleased()) {
@@ -357,15 +359,11 @@ public class StoryDataClientImpl implements StoryDataClient {
 					jiraVersion.setVersionData(JiraCollectorUtil.getReleaseData(versionDetails, projectId, featureSettings));
 					release.setVersionData(jiraVersion.getVersionData());
 				}
-	
-				releaseList.add(release);
+				releaseRepository.save(release);
 			}catch(Exception ex){
 				ex.printStackTrace();
 				LOGGER.error("Collection of release data failed for Project ID : " + projectId + " and Project Name: " + projectName + jiraVersion.getName() , ex);
 			}
-		}
-		if (!jiraVersions.isEmpty()) {
-			releaseRepository.save(releaseList);
 		}
 		LOGGER.info("Collection of release data completed for Project ID : " + projectId + " and Project Name: " + projectName);
 	}

@@ -44,7 +44,7 @@ public class JiraCollectorUtil {
 	//public static final String GET_SPRINT_ALL_DEFECTS_RESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) and status = Done and Sprint = %2s &maxResults=100";
 	//private static final String GET_SPRINT_DEFECTS_UNRESOLVED = "/rest/api/2/search?jql=project=%1s and type in (Bug) and createddate<\"%2s\" and (resolutiondate > \"%2s\" or resolution in (unresolved)) &maxResults=100";
 
-	private static final String GET_PROJECT_SPRINTS = "rest/greenhopper/1.0/integration/teamcalendars/sprint/list?jql=project in (%1s)";
+	//private static final String GET_PROJECT_SPRINTS = "rest/greenhopper/1.0/integration/teamcalendars/sprint/list?jql=project in (%1s)";
 	private static final String GET_PROJECT_SPRINTS_USING_RAPIDVIEW = "rest/greenhopper/latest/sprintquery/%1s?includeHistoricSprints=true";
 	private static final String GET_PROJECT_SPRINT_DETAILS = "rest/greenhopper/1.0/rapid/charts/sprintreport?rapidViewId=%1s&sprintId=%2$d";
 	public static final String GET_SPRINT_VELOCITY_REPORT = "rest/greenhopper/1.0/rapid/charts/velocity?rapidViewId=%1s";
@@ -124,7 +124,12 @@ public class JiraCollectorUtil {
 		// Get new defects found in the sprint
 		List<JiraIssue> issues = new ArrayList<JiraIssue>();
 		String startDate=DateUtil.format(jiraSprint.getSprintData().getStartDate(),	ClientUtil.DATE_FORMAT_5);
-		String endDate=DateUtil.format(	jiraSprint.getSprintData().getCompleteDate(),ClientUtil.DATE_FORMAT_5);
+		String endDate;
+		
+		if(jiraSprint.getSprintData().getCompleteDate() !=null)
+			endDate=DateUtil.format(jiraSprint.getSprintData().getCompleteDate(),ClientUtil.DATE_FORMAT_5);
+		else
+			endDate=DateUtil.format(jiraSprint.getSprintData().getEndDate(),ClientUtil.DATE_FORMAT_5);
 
 		String query = String.format(featureSettings.getDefectsCreatedQuery(), projectId, startDate,endDate);
 		issues = getIssues(query, featureSettings);
