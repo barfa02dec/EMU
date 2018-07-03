@@ -304,7 +304,6 @@ public final class ClientUtil {
 		return sprints;
 	}
 	
-	@SuppressWarnings({ "PMD.NPathComplexity" })
 	public Sprint parseSprint(String rawSprintToString) throws ParseException {
 		Sprint sprint = new Sprint();
 		
@@ -412,9 +411,22 @@ public final class ClientUtil {
     	sprintdata.setSprintName(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("name").toString());
     	sprintdata.setState(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("state").toString());
     	sprintdata.setDaysRemaining(gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("daysRemaining").getAsInt());
-    	sprintdata.setStartDate(DateUtil.convertStringToDate(sprint.getStart(), DATE_FORMAT_2));     			
-    	sprintdata.setEndDate(DateUtil.convertStringToDate(sprint.getEnd(), DATE_FORMAT_2));
-    	sprintdata.setCompleteDate(DateUtil.convertStringToDate(sprint.getEnd(), DATE_FORMAT_2));
+    	/*if(sprint.getStart() != null)
+    		sprintdata.setStartDate(DateUtil.convertStringToDate(sprint.getStart(), DATE_FORMAT_2));
+    	
+    	if(sprint.getEnd() != null){
+    		sprintdata.setEndDate(DateUtil.convertStringToDate(sprint.getEnd(), DATE_FORMAT_2));
+    		sprintdata.setCompleteDate(DateUtil.convertStringToDate(sprint.getEnd(), DATE_FORMAT_2));
+    	}*/
+    	
+    	
+    	String startdatestr =  gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("startDate").getAsString();
+    	if(!startdatestr.equalsIgnoreCase("None"))
+    		sprintdata.setStartDate(DateUtil.convertStringToDate(startdatestr, DATE_FORMAT_1));
+
+    	String enddatestr =  gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("endDate").getAsString();
+    	if(!enddatestr.equalsIgnoreCase("None"))
+    		sprintdata.setEndDate(DateUtil.convertStringToDate(enddatestr, DATE_FORMAT_1));
     	
     	String completedatestr =  gson.fromJson(sprintDetailJson, JsonObject.class).getAsJsonObject("sprint").get("completeDate").getAsString();
     	if(!completedatestr.equalsIgnoreCase("None"))

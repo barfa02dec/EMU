@@ -66,8 +66,6 @@ public class DefaultJiraClient implements JiraClient {
 	private static final String TEMPO_TEAMS_REST_SUFFIX = "rest/tempo-teams/1/team";
 	
 	private final DateFormat QUERY_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-	//private static final String GET_OPEN_DEFECTS_SEVERITY =  "type in (Bug) and  resolution in (Unresolved)";
-	//private static final String GET_OPEN_DEFECTS_SEVERITY =  "project=%1s and type in (Bug) and  resolution in (Unresolved)";
 	private static final Set<String> DEFAULT_FIELDS = new HashSet<>();
 	static {
 		DEFAULT_FIELDS.add("*all,-comment,-watches,-worklog,-votes,-reporter,-creator,-attachment");

@@ -38,8 +38,12 @@ public interface ScopeRepository extends CrudRepository<Scope, ObjectId>,
 	@Query(value = "{'pId' : ?0 }")
 	List<Scope> getScopeById(String pId);
 	
-	@Query(value = "{'pId' : ?0 , 'name' : ?1 }")
+	/*@Query(value = "{'pId' : ?0 , 'name' : ?1 }")
 	Scope getScopeByIdAndProjectName(String pId, String name);
+*/
+
+	@Query(value = "{'projectId' : ?0, 'pId' : ?1}")
+	Scope getScopeByIdAndProjectId(String projectId, String pId);
 
 	@Query(value = "{ 'collectorId' : ?0 }")
 	List<Scope> findByCollectorId(ObjectId collectorId);

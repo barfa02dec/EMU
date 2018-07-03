@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import com.capitalone.dashboard.client.JiraClient;
 import com.capitalone.dashboard.client.project.ProjectDataClientImpl;
 import com.capitalone.dashboard.client.story.StoryDataClientImpl;
-import com.capitalone.dashboard.model.Defect;
 import com.capitalone.dashboard.model.FeatureCollector;
 import com.capitalone.dashboard.model.Scope;
 import com.capitalone.dashboard.repository.BaseCollectorRepository;
@@ -138,17 +137,17 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			featureSettings.setProjectId(hmFeatureSettings.getProjectId().get(i));
 			featureSettings.setJiraProjectIdList(hmFeatureSettings.getJiraProjectIdList().get(i));
 			featureSettings.setNoOfSprintsToShow(hmFeatureSettings.getNoOfSprintsToShow());
-			featureSettings.setEnvironmentFoundInFieldName(hmFeatureSettings.getEnvironmentFoundInFieldName());
-			featureSettings.setOpenDefectsQuery(hmFeatureSettings.getOpenDefectsQuery());
-			featureSettings.setClosedDefectsQuery(hmFeatureSettings.getClosedDefectsQuery());
-			featureSettings.setDefectsCreatedQuery(hmFeatureSettings.getDefectsCreatedQuery());
+			featureSettings.setEnvironmentFoundInFieldName(hmFeatureSettings.getEnvironmentFoundInFieldName().get(i));
+			featureSettings.setOpenDefectsQuery(hmFeatureSettings.getOpenDefectsQuery().get(i));
+			featureSettings.setClosedDefectsQuery(hmFeatureSettings.getClosedDefectsQuery().get(i));
+			featureSettings.setDefectsCreatedQuery(hmFeatureSettings.getDefectsCreatedQuery().get(i));
 			
-			featureSettings.setSprintDefectsResolvedQuery(hmFeatureSettings.getSprintDefectsResolvedQuery());
-			featureSettings.setSprintAllDefectsResolvedQuery(hmFeatureSettings.getSprintAllDefectsResolvedQuery());
-			featureSettings.setSprintDefectsUnresolvedQuery(hmFeatureSettings.getSprintDefectsUnresolvedQuery());
-			featureSettings.setVersionDefectsCreatedQuery(hmFeatureSettings.getVersionDefectsCreatedQuery());
-			featureSettings.setVersionDefectsResolvedQuery(hmFeatureSettings.getVersionDefectsResolvedQuery());
-			
+			featureSettings.setSprintDefectsResolvedQuery(hmFeatureSettings.getSprintDefectsResolvedQuery().get(i));
+			featureSettings.setSprintAllDefectsResolvedQuery(hmFeatureSettings.getSprintAllDefectsResolvedQuery().get(i));
+			featureSettings.setSprintDefectsUnresolvedQuery(hmFeatureSettings.getSprintDefectsUnresolvedQuery().get(i));
+			featureSettings.setVersionDefectsCreatedQuery(hmFeatureSettings.getVersionDefectsCreatedQuery().get(i));
+			featureSettings.setVersionDefectsResolvedQuery(hmFeatureSettings.getVersionDefectsResolvedQuery().get(i));
+		
 			logBanner(featureSettings.getJiraBaseUrl());
 		    int count = 0;
 
@@ -171,17 +170,11 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			long storyDataStart = System.currentTimeMillis();
 			StoryDataClientImpl storyData = new StoryDataClientImpl(this.coreFeatureSettings,
 					featureSettings, this.featureRepository,this.defectRepository,this.sprintRepository,this.defectAggregationRepository,this.releaseRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
-			count = storyData.updateJiraDefectInfo();
 
 			List<Scope> projects=(List<Scope>) projectRepository.findByProjectId(featureSettings.getProjectId(),true);
 			
 			for(Scope project: projects){
-				List<Defect> opendefects = (List<Defect>) defectRepository.findByProjectId(project.getpId(),project.getProjectId());
-				
-				LOGGER.info("DATA COLLECTION FOR PROJECT CODE:: " + project.getProjectId() + 
-						"  AND PROJECT ID:: " + project.getpId() + " AND OPEN DEFECTS COUNT:: " + opendefects.size());
-				
-				storyData.defectMetricsAggregation(opendefects, project);
+				storyData.defectMetricsAggregation(project);
 				
 				//logic to handle sprint and releases
 				storyData.saveDetailedSprintData(project.getpId(),project.getName());
@@ -189,6 +182,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			}
 			log("Story Data", storyDataStart, count);
 		} catch (Exception e) {
+			e.printStackTrace();
 			LOGGER.error("Failed to collect jira information", e);
 		}
 	}

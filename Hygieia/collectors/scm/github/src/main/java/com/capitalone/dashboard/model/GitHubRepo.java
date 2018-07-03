@@ -8,6 +8,7 @@ import java.util.Date;
 public class GitHubRepo extends CollectorItem {
     private static final String REPO_URL = "url"; // http://github.company.com/jack/somejavacode
     private static final String BRANCH = "branch"; // master, development etc.
+    private static final String PATH = "path"; // master, development etc.
     private static final String USER_ID = "userID";
     private static final String PASSWORD = "password";
     private static final String LAST_UPDATE_TIME = "lastUpdate";
@@ -45,6 +46,13 @@ public class GitHubRepo extends CollectorItem {
         getOptions().put(BRANCH, branch);
     }
 
+    public String getPath() {
+        return (String) getOptions().get(PATH);
+    }
+
+    public void setPath(String path) {
+        getOptions().put(PATH, path);
+    }
 
     public Date getLastUpdateTime() {
         Object latest = getOptions().get(LAST_UPDATE_TIME);

@@ -73,6 +73,8 @@ public class NewFeatureSettings {
 	private String sprintDefectsUnresolvedQuery;
 	private String versionDefectsCreatedQuery;
 	private String versionDefectsResolvedQuery;
+	
+	private boolean isAuthenticationReq;
 
 	public String getDefectsCreatedQuery() {
 		return defectsCreatedQuery;
@@ -481,6 +483,14 @@ public class NewFeatureSettings {
 
 	public void setVersionDefectsResolvedQuery(String versionDefectsResolvedQuery) {
 		this.versionDefectsResolvedQuery = versionDefectsResolvedQuery;
+	}
+
+	public boolean isAuthenticationReq() {
+		return isAuthenticationReq;
+	}
+
+	public void setAuthenticationReq(boolean isAuthenticationReq) {
+		this.isAuthenticationReq = isAuthenticationReq;
 	}
 
 }

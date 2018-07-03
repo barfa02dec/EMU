@@ -1,10 +1,5 @@
 package com.capitalone.dashboard.model;
 
-
-
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-
 public class JiraIssue {
 	
 	private String key;
