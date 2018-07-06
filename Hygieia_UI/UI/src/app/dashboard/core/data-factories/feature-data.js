@@ -96,9 +96,9 @@
 					});
 		}
 		
-		function ReleaseDataFetch(filterProjectId,projectsname) {  
-			 var uri_enc = encodeURIComponent(projectsname);
-			return $http.get('/api/releases?projectId=' + filterProjectId + "&projectName=" + uri_enc + "&noOfReleaseToShow=" + "6")
+		function ReleaseDataFetch(filterProjectId) {  
+			 //var uri_enc = encodeURIComponent(projectsname);
+			return $http.get('/api/releases?projectId=' + filterProjectId + "&noOfReleaseToShow=" + "6")
 					.then(function(response) { 
 						return response.data;
 					});

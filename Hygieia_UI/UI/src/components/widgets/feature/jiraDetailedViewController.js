@@ -442,7 +442,7 @@
 
 
         //Fetching Release  Data
-        featureData.ReleaseData(ctrl.projectpathId, ctrl.projectpath).then(ReleaseDataProcessing);
+        featureData.ReleaseData(ctrl.prId).then(ReleaseDataProcessing);
 
         //Processing Release Data
         function ReleaseDataProcessing(data) {
