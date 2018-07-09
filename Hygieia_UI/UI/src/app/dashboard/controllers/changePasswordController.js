@@ -24,6 +24,7 @@
         vm.changePassword = function() {
             //vm.changePasswordPayload = {};
             vm.changePasswordPayload.username = vm.usernamepro;
+            if (vm.changePwd.$valid == true) {
             projectData.changePasswordFn(vm.changePasswordPayload).then(function (response) {
                     if(response == "User Does not Exist"){
                          $uibModal.open({
@@ -40,6 +41,8 @@
                             });
                     }
                     else{
+                        vm.changePasswordPayload = {};
+                        vm.confirmPassword = "";
                          $uibModal.open({
                                 templateUrl: 'app/dashboard/views/ConfirmationModals/confirmationChangePassword.html',
                                 controller: 'changePasswordController',
@@ -48,6 +51,7 @@
                     }
                     
                 })
+        }
         }
     }
 })();
