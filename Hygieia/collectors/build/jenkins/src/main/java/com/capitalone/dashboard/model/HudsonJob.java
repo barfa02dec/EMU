@@ -16,7 +16,7 @@ public class HudsonJob extends JobCollectorItem {
 
         HudsonJob hudsonJob = (HudsonJob) o;
 
-        return getInstanceUrl().equals(hudsonJob.getInstanceUrl()) && getJobName().equals(hudsonJob.getJobName());
+        return getInstanceUrl().equals(hudsonJob.getInstanceUrl()) && getJobName().equals(hudsonJob.getJobName()) && getProject().equals(hudsonJob.getProject());
     }
 
     @Override
