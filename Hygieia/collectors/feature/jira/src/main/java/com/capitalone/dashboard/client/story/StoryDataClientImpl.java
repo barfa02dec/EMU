@@ -274,7 +274,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 		
 		for (JiraSprint jiraSprint : jiraSprints) {
 			try{
-				Sprint sprint = sprintRepository.findOne(QSprint.sprint.sprintId.eq(jiraSprint.getId()).and(QSprint.sprint.name.eq(jiraSprint.getName())));
+				//Sprint sprint = sprintRepository.findOne(QSprint.sprint.sprintId.eq(jiraSprint.getId()).and(QSprint.sprint.name.eq(jiraSprint.getName())));
+				Sprint sprint = sprintRepository.findOne(QSprint.sprint.projectId.eq(featureSettings.getProjectId()).and(QSprint.sprint.sprintId.eq(jiraSprint.getId())));
 				
 				if (null == sprint) {
 					sprint = new Sprint();
@@ -300,6 +301,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 				if(((sprint.getClosed() && null == sprint.getSprintData()) ||!sprint.getClosed())){
 					JiraCollectorUtil.getSprintMetrics(jiraSprint, projectId, featureSettings);
 					sprint.setSprintData(jiraSprint.getSprintData());
+					sprint.setClosed(jiraSprint.getClosed());
 				}
 				
 				if(sprint.getSprintData() != null){
@@ -329,7 +331,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 
 		for (JiraVersion jiraVersion : jiraVersions) {
 			try{
-				Release release = releaseRepository.findOne(QRelease.release.releaseId.eq(jiraVersion.getId()).and(QRelease.release.name.eq(jiraVersion.getName())));
+				//Release release = releaseRepository.findOne(QRelease.release.releaseId.eq(jiraVersion.getId()).and(QRelease.release.name.eq(jiraVersion.getName())));
+				Release release = releaseRepository.findOne(QRelease.release.projectId.eq(featureSettings.getProjectId()).and(QRelease.release.releaseId.eq(jiraVersion.getId())));
 				
 				if (release == null) {
 					release = new Release();
@@ -358,6 +361,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 					// setting the detailed metrics to release.
 					jiraVersion.setVersionData(JiraCollectorUtil.getReleaseData(versionDetails, projectId, featureSettings));
 					release.setVersionData(jiraVersion.getVersionData());
+					release.setReleased(jiraVersion.getReleased());
 				}
 				releaseRepository.save(release);
 			}catch(Exception ex){
@@ -511,7 +515,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 		 
 		LOGGER.info("Collection of defect data started for Project ID : " + project.getProjectId() + " and Project Name: " + project.getName());
 		
-		DefectAggregation summary = defectAggregationRepository.findByProjectIdAndName(project.getProjectId(), project.getName());
+		//DefectAggregation summary = defectAggregationRepository.findByProjectIdAndName(project.getProjectId(), project.getName());
+		DefectAggregation summary = defectAggregationRepository.findByProjectIdAndJiraId(project.getProjectId(), project.getpId());
 		
 		if (null == summary) {
 			summary = new DefectAggregation();
@@ -566,12 +571,14 @@ public class StoryDataClientImpl implements StoryDataClient {
 			Map<String,Integer> defectsByEnvironment= new LinkedHashMap<String,Integer>();
 				
 				for(JiraIssue defect: issues){
-					if(null!=defect.getEnvironment()){
-						if(defectsByEnvironment.containsKey(defect.getEnvironment()))
+					String environment = StringUtils.isEmpty(defect.getEnvironment()) ? null :  defect.getEnvironment().replace(".", "_");
+					
+					if(null != environment){
+						if(defectsByEnvironment.containsKey(environment))
 						{
-							defectsByEnvironment.put(defect.getEnvironment(), defectsByEnvironment.get(defect.getEnvironment())+1);
+							defectsByEnvironment.put(environment, defectsByEnvironment.get(environment)+1);
 						}else{
-							defectsByEnvironment.put(defect.getEnvironment(), 1);
+							defectsByEnvironment.put(environment, 1);
 						}
 					}
 				}
