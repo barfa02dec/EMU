@@ -34,4 +34,8 @@ public interface ReleaseRepository extends CrudRepository<Release, ObjectId>,
 	 	
 	 	@Query(value = "{ 'projectId' : ?0}")
 	 	Iterable<Release> findByProjectId(String projectId);
+	 	
+	 	@Query(value = "{ 'projectId' : ?0, 'released' : ?1}")
+	 	Iterable<Release> findByProjectId(String projectId, Boolean released);
+
 }
