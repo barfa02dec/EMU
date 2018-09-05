@@ -272,6 +272,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		if(jiraSprints.size() > 30)
 			jiraSprints.stream().limit(30);
 		
+		int count = 0;		
 		for (JiraSprint jiraSprint : jiraSprints) {
 			try{
 				//Sprint sprint = sprintRepository.findOne(QSprint.sprint.sprintId.eq(jiraSprint.getId()).and(QSprint.sprint.name.eq(jiraSprint.getName())));
@@ -314,7 +315,9 @@ public class StoryDataClientImpl implements StoryDataClient {
 				}
 				
 				sprintRepository.save(sprint);
-				//list.add(sprint);
+				
+				if(++count > 30) break;
+				
 			}catch(Exception ex){
 				ex.printStackTrace();
 				LOGGER.error("Collection of Sprint data failed for Project ID : " + projectId + " and Project Name: " + projectName + " and sprint " + jiraSprint.getName() , ex);
@@ -329,6 +332,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 		
 		List<JiraVersion> jiraVersions = JiraCollectorUtil.getVersionsFromJira(projectId, featureSettings);
 
+		int count = 0;
 		for (JiraVersion jiraVersion : jiraVersions) {
 			try{
 				//Release release = releaseRepository.findOne(QRelease.release.releaseId.eq(jiraVersion.getId()).and(QRelease.release.name.eq(jiraVersion.getName())));
@@ -346,6 +350,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 					release.setProjectName(projectName);
 					release.setCreatedOn(new Date());
 					release.setAutomated(true);
+					release.setArchived(jiraVersion.getArchived());
 				}else{
 					release.setOverdue(jiraVersion.getOverdue());
 					release.setReleaseDate(StringUtils.isEmpty(jiraVersion.getReleaseDate()) ? null : new SimpleDateFormat("yyyy-MM-dd").parse(jiraVersion.getReleaseDate()));
@@ -354,7 +359,8 @@ public class StoryDataClientImpl implements StoryDataClient {
 				
 				// Get the detailed version metrics for release with status [not release] 
 				// Get the detailed version metrics for release with status[released] but detailed metrics/versionData is null
-				if ((release.getReleased() && null == release.getVersionData())|| !release.getReleased()) {
+				if (((release.getReleased() && null == release.getVersionData())|| !release.getReleased())  
+						&& (release.getArchived() == null || (release.getArchived() != null && !release.getArchived())) ) {  //&&(release.getArchived() == null || (release.getArchived() != null && !release.getArchived()))
 					String versionDetails = JiraCollectorUtil.getVersionDetailsFromJira(jiraVersion.getId(), featureSettings);
 					if (versionDetails == null) continue;
 					
@@ -364,6 +370,7 @@ public class StoryDataClientImpl implements StoryDataClient {
 					release.setReleased(jiraVersion.getReleased());
 				}
 				releaseRepository.save(release);
+				if(++count > 30) break;
 			}catch(Exception ex){
 				ex.printStackTrace();
 				LOGGER.error("Collection of release data failed for Project ID : " + projectId + " and Project Name: " + projectName + jiraVersion.getName() , ex);
