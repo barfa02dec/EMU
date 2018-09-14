@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.capitalone.dashboard.model.Permission;
@@ -26,6 +27,9 @@ public class UserRoleServiceImpl implements UserRoleService {
 	private final UserRoleRepository roleRepository;
 	private final PermissionsRepository permissionsRepository;
 	private final ProjectRepository projectRepository;
+	private static final Sort sort = new Sort(Sort.Direction.ASC, "projectName");
+	
+	
 	@Autowired
 	public UserRoleServiceImpl(UserRoleRepository roleRepository,PermissionsRepository permissionsRepository,ProjectRepository projectRepository) {
 		this.roleRepository = roleRepository;
@@ -103,7 +107,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 		if(null!=roleInDb){
 			roleInDb.setEnabled(false);
 			
-			List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true);
+			List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true, sort);
 			//remove the role from all associated project roles
 			for(Project proj: dbActiveProjects){
 				for(UserGroup group:proj.getUsersGroup()){
@@ -143,7 +147,7 @@ public class UserRoleServiceImpl implements UserRoleService {
 			roleInDb.setUpdatedBy(role.getUpdatedBy());
 			roleInDb.setUpdatedOn(new Date());
 			
-			List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true);
+			List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true, sort);
 			//update the roles for all associated project roles
 			for(Project proj: dbActiveProjects){
 				

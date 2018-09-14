@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.capitalone.dashboard.model.Customer;
@@ -35,6 +36,7 @@ public class ProjectServiceImpl implements ProjectService {
 	private final DashboardRepository  dashboardRepository;
 	private static final String SYS_ADMIN="SYS_ADMIN";
 	private static final String TEAM_MEMBER="TEAM_MEMBER";
+	private static final Sort sort = new Sort(Sort.Direction.ASC, "projectName");
 	
 	@Autowired
 	public ProjectServiceImpl(ProjectRepository projectRepository,UserRoleRepository userRoleRepository,DashboardRepository  dashboardRepository,
@@ -129,7 +131,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Iterable<Project> getProjectsOwnedByUser(String username) {
-		return projectRepository.findByProjectUser(username,true);
+		return projectRepository.findByProjectUser(username,true, sort);
 	}
 
 	@Override
@@ -199,7 +201,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public Iterable<Project> getActiveProjects() {
-		return projectRepository.getAllActiveProjects(true);
+		return projectRepository.getAllActiveProjects(true, sort);
 	}
 
 	@Override
@@ -241,7 +243,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public String createGlobalDeliveryUser(String user) {
-		List<Project> dbProjectsList=(List<Project>) projectRepository.getAllActiveProjects(true);
+		List<Project> dbProjectsList=(List<Project>) projectRepository.getAllActiveProjects(true, sort);
 		UserGroup defaultProjectAccessUser= new UserGroup(user);
 		ProjectRoles projRole= new ProjectRoles();
 		projRole.setRole(TEAM_MEMBER);
@@ -269,7 +271,7 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public String createAdditionalSysAdmins(String user) {
-		List<Project> dbProjectsList=(List<Project>) projectRepository.getAllActiveProjects(true);
+		List<Project> dbProjectsList=(List<Project>) projectRepository.getAllActiveProjects(true, sort);
 		UserGroup defaultProjectAccessUser= new UserGroup(user);
 		ProjectRoles projRole= new ProjectRoles();
 		projRole.setRole(SYS_ADMIN);
@@ -298,10 +300,13 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public String purgeUser(String user) {
 		try{
+			Sort sort = new Sort(Sort.Direction.ASC, "projectName");
+			
 			UserGroup userToPurge= new UserGroup(user);
-			List<Project> userAccessibleProjects= (List<Project>) projectRepository.findByProjectUser(user, true);
+			List<Project> userAccessibleProjects= (List<Project>) projectRepository.findByProjectUser(user, true, sort);
 			List<Dashboard> existingProjectDashboards= new ArrayList<Dashboard>();
 			List<Dashboard> dashboardsToSave= new ArrayList<Dashboard>();
+			
 			int counter=0;
 			for( Project project: userAccessibleProjects){
 				if(null!=project.getUsersGroup()){
@@ -316,6 +321,7 @@ public class ProjectServiceImpl implements ProjectService {
 			}
 			projectRepository.save(userAccessibleProjects);
 			dashboardRepository.save(dashboardsToSave);
+			
 			return "User has been disassociated from "+counter+" project(s)";
 		}catch (Exception e) {
 			return null;

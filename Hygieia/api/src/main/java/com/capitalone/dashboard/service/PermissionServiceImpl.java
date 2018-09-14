@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.capitalone.dashboard.model.Permission;
@@ -25,6 +26,8 @@ public class PermissionServiceImpl implements PermissionService {
 	UserRoleRepository rolesRepository;
 	@Autowired
 	ProjectRepository projectRepository;
+	
+	private static final Sort sort = new Sort(Sort.Direction.ASC, "projectName");
 	
 	public ProjectRepository getProjectRepository() {
 		return projectRepository;
@@ -74,7 +77,7 @@ public class PermissionServiceImpl implements PermissionService {
 						urole.getPermissions().put(name, Boolean.FALSE);
 					}
 				}
-				List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true);
+				List<Project> dbActiveProjects=(List<Project>) projectRepository.getAllActiveProjects(true,sort);
 				//remove the permission from all associated project roles
 				for(Project proj: dbActiveProjects){
 					
