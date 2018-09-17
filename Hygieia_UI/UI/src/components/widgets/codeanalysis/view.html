@@ -36,6 +36,8 @@
     
                             <td class="ca-value staticanalysis-textProps"  ng-if="gate.formattedValue == 'FAILED'"><img src="assets/images/status_failed.png" style="padding-left: 10px;"></td>
 
+                            <td class="ca-value staticanalysis-textProps"  ng-if="gate.formattedValue == 'OK'">PASSED</td>
+
                               <td class="ca-name staticanalysis-textProps" style="line-height: 3.25em;text-transform: uppercase;padding-left: 5% !important;padding-right: 14px !important;">{{gate.statusMessage}}</td>
 
                              <!--   <td class="ca-value staticanalysis-textProps" >&nbsp;&nbsp;&nbsp;&nbsp;{{gate.formattedValue}}</td> -->

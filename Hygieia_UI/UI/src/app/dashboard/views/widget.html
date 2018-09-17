@@ -41,14 +41,16 @@
                 </select> -->
                
                 <select ng-model="selectedNameSonar" ng-change="checkSonar(selectedNameSonar)" class="widget-page-dropdownprops" ng-if="collectorDetailsSonar">
+
                          <option ng-repeat="eachselectedNameSonar in collectorDetailsSonar" value={{eachselectedNameSonar.id}}>{{eachselectedNameSonar.description}}</option>
                         </select>
 
            </span>
 
         <span ng-show=" {{(title == 'Code Repo')}}"  ng-if="widgetDefinition && widgetDefinition.config && state == widget_state.READY">
-                <select ng-model="selectedNameRepo" class="widget-page-dropdownprops" ng-change="checkRepo(selectedNameRepo)">
-                <option ng-repeat="eachselectedNameRepo in collectorDetailsRepo" value={{eachselectedNameRepo.id}}>{{eachselectedNameRepo.options.branch}}</option>
+                <select ng-model="selectedNameRepo" class="widget-page-dropdownprops" ng-change="checkRepo(selectedNameRepo)" ng-if="collectorDetailsRepo">
+                    
+                <option ng-repeat="eachselectedNameRepo in collectorDetailsRepo" value={{eachselectedNameRepo.id}}>{{eachselectedNameRepo.options.path}}</option>
                 </select>
         </span>
 
