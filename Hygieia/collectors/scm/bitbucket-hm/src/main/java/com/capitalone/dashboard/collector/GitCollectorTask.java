@@ -87,7 +87,7 @@ public class GitCollectorTask extends CollectorTask<Collector> {
      *
      * @param collector the {@link Collector}
      */
-
+ 
     private void clean(Collector collector) {
         Set<ObjectId> uniqueIDs = new HashSet<ObjectId>();
         /**

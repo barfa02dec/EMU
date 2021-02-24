@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Built-By: Dharmendra.barfa
+Build-Jdk: 15.0.1
+Implementation-Title: com.capitalone.dashboard:core
+Implementation-Version: 2.0.5-SNAPSHOT
+Implementation-Vendor-Id: com.capitalone.dashboard
+Implementation-Vendor: Pivotal Software, Inc.
+Created-By: Maven Integration for Eclipse
+

@@ -17,7 +17,7 @@ public class Project extends BaseModel {
 	private String projectOwner;
 	private String program;
 	private Set<UserGroup> usersGroup;
-	
+
 	private String customerName;
 	private String customerCode;
 	private boolean automated;

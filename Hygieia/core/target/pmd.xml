@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd version="5.3.5" timestamp="2021-01-18T16:17:32.123">
+<file name="C:\Users\dharmendra.barfa\Desktop\repo_hygieia\Hygieia\core\src\main\java\com\capitalone\dashboard\model\Customer.java">
+<violation beginline="21" endline="23" begincolumn="16" endcolumn="9" rule="BooleanGetMethodName" ruleset="Naming" package="com.capitalone.dashboard.model" class="Customer" method="getEnabled" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/naming.html#BooleanGetMethodName" priority="4">
+A getX() method which returns a boolean should be named isX()
+</violation>
+</file>
+<file name="C:\Users\dharmendra.barfa\Desktop\repo_hygieia\Hygieia\core\src\main\java\com\capitalone\dashboard\model\HeatMap.java">
+<violation beginline="62" endline="62" begincolumn="17" endcolumn="36" rule="AvoidPrintStackTrace" ruleset="Java Logging" package="com.capitalone.dashboard.model" class="HeatMap" method="getFormattedSubmissionDate" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/logging-java.html#AvoidPrintStackTrace" priority="3">
+Avoid printStackTrace(); use a logger call instead.
+</violation>
+</file>
+<file name="C:\Users\dharmendra.barfa\Desktop\repo_hygieia\Hygieia\core\src\main\java\com\capitalone\dashboard\model\JiraSprint.java">
+<violation beginline="57" endline="57" begincolumn="57" endcolumn="60" rule="SimplifyBooleanExpressions" ruleset="Design" package="com.capitalone.dashboard.model" class="JiraSprint" method="getClosed" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/design.html#SimplifyBooleanExpressions" priority="3">
+Avoid unnecessary comparisons in boolean expressions
+</violation>
+<violation beginline="58" endline="58" begincolumn="33" endcolumn="44" rule="IfElseStmtsMustUseBraces" ruleset="Braces" package="com.capitalone.dashboard.model" class="JiraSprint" method="getClosed" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/braces.html#IfElseStmtsMustUseBraces" priority="3">
+Avoid using if...else statements without curly braces
+</violation>
+<violation beginline="60" endline="60" begincolumn="33" endcolumn="45" rule="IfElseStmtsMustUseBraces" ruleset="Braces" package="com.capitalone.dashboard.model" class="JiraSprint" method="getClosed" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/braces.html#IfElseStmtsMustUseBraces" priority="3">
+Avoid using if...else statements without curly braces
+</violation>
+</file>
+<file name="C:\Users\dharmendra.barfa\Desktop\repo_hygieia\Hygieia\core\src\main\java\com\capitalone\dashboard\model\ProjectHeatmapData.java">
+<violation beginline="673" endline="673" begincolumn="32" endcolumn="49" rule="VariableNamingConventions" ruleset="Naming" package="com.capitalone.dashboard.model" class="ProjectHeatmapData$Requirements" variable="RequirementsStatus" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/naming.html#VariableNamingConventions" priority="1">
+Variables should start with a lowercase character, 'RequirementsStatus' starts with uppercase character.
+</violation>
+</file>
+<file name="C:\Users\dharmendra.barfa\Desktop\repo_hygieia\Hygieia\core\src\main\java\com\capitalone\dashboard\model\Release.java">
+<violation beginline="108" endline="110" begincolumn="16" endcolumn="9" rule="BooleanGetMethodName" ruleset="Naming" package="com.capitalone.dashboard.model" class="Release" method="getAutomated" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/naming.html#BooleanGetMethodName" priority="4">
+A getX() method which returns a boolean should be named isX()
+</violation>
+</file>
+<file name="C:\Users\dharmendra.barfa\Desktop\repo_hygieia\Hygieia\core\src\main\java\com\capitalone\dashboard\model\Sprint.java">
+<violation beginline="119" endline="121" begincolumn="24" endcolumn="17" rule="BooleanGetMethodName" ruleset="Naming" package="com.capitalone.dashboard.model" class="Sprint" method="getAutomated" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/naming.html#BooleanGetMethodName" priority="4">
+A getX() method which returns a boolean should be named isX()
+</violation>
+</file>
+<file name="C:\Users\dharmendra.barfa\Desktop\repo_hygieia\Hygieia\core\src\main\java\com\capitalone\dashboard\repository\CustomerRepository.java">
+<violation beginline="9" endline="9" begincolumn="1" endcolumn="70" rule="UnusedImports" ruleset="Import Statements" package="com.capitalone.dashboard.repository" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'org.springframework.data.repository.PagingAndSortingRepository'
+</violation>
+<violation beginline="12" endline="12" begincolumn="1" endcolumn="46" rule="UnusedImports" ruleset="Import Statements" package="com.capitalone.dashboard.repository" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'com.capitalone.dashboard.model.HeatMap'
+</violation>
+</file>
+<file name="C:\Users\dharmendra.barfa\Desktop\repo_hygieia\Hygieia\core\src\main\java\com\capitalone\dashboard\request\CustomerRequest.java">
+<violation beginline="23" endline="25" begincolumn="16" endcolumn="9" rule="BooleanGetMethodName" ruleset="Naming" package="com.capitalone.dashboard.request" class="CustomerRequest" method="getEnabled" externalInfoUrl="https://pmd.github.io/pmd-5.3.5/pmd-java/rules/java/naming.html#BooleanGetMethodName" priority="4">
+A getX() method which returns a boolean should be named isX()
+</violation>
+</file>
+</pmd>

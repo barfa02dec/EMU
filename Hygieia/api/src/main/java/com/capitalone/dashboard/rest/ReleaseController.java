@@ -53,6 +53,7 @@ public class ReleaseController {
 		}catch (org.springframework.dao.DuplicateKeyException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("release already exists");
 		}catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("heatmap create failed"); 
 		}
 	}

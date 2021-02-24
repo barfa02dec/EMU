@@ -168,6 +168,7 @@ public class FeatureCollectorTask extends CollectorTask<FeatureCollector> {
 			log("Project information query took " + (projectDataEnd - projectDataStart) + " ms");
 	
 			long storyDataStart = System.currentTimeMillis();
+			
 			StoryDataClientImpl storyData = new StoryDataClientImpl(this.coreFeatureSettings,
 					featureSettings, this.featureRepository,this.defectRepository,this.sprintRepository,this.defectAggregationRepository,this.releaseRepository, this.featureCollectorRepository, this.teamRepository, jiraClient);
 

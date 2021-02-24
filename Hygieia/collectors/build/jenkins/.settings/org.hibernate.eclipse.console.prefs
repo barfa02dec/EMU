@@ -1,0 +1,3 @@
+default.configuration=jenkins-build-collector
+eclipse.preferences.version=1
+hibernate3.enabled=true

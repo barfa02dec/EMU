@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         name="M2Eclipse PMD RuleSet"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+   <description>M2Eclipse PMD RuleSet</description>
+   <exclude-pattern>.*C:/Users/dharmendra.barfa/Desktop/repo_hygieia/Hygieia/collectors/feature/jira/target/generated-sources/java.*</exclude-pattern>
+   <exclude-pattern>.*C:/Users/dharmendra.barfa/Desktop/repo_hygieia/Hygieia/collectors/feature/jira/target.*</exclude-pattern>
+   <exclude-pattern>.*C:/Users/dharmendra.barfa/Desktop/repo_hygieia/Hygieia/collectors/feature/jira/src/test/java.*</exclude-pattern>
+   <rule ref="rulesets/internal/all-java.xml">
+      <exclude name="MethodArgumentCouldBeFinal"/>
+      <exclude name="ShortClassName"/>
+      <exclude name="AtLeastOneConstructor"/>
+      <exclude name="UncommentedEmptyMethodBody"/>
+      <exclude name="AvoidSynchronizedAtMethodLevel"/>
+      <exclude name="ShortMethodName"/>
+      <exclude name="NullAssignment"/>
+      <exclude name="UseObjectForClearerAPI"/>
+      <exclude name="LoosePackageCoupling"/>
+      <exclude name="AvoidThrowingRawExceptionTypes"/>
+      <exclude name="UseConcurrentHashMap"/>
+      <exclude name="BeanMembersShouldSerialize"/>
+      <exclude name="OnlyOneReturn"/>
+      <exclude name="FieldDeclarationsShouldBeAtStartOfClass"/>
+      <exclude name="AvoidUsingShortType"/>
+      <exclude name="EmptyMethodInAbstractClassShouldBeAbstract"/>
+      <exclude name="ImmutableField"/>
+      <exclude name="UnnecessaryConstructor"/>
+      <exclude name="DoNotUseThreads"/>
+      <exclude name="StdCyclomaticComplexity"/>
+      <exclude name="ShortVariable"/>
+      <exclude name="UseUtilityClass"/>
+      <exclude name="CyclomaticComplexity"/>
+      <exclude name="AvoidLiteralsInIfCondition"/>
+      <exclude name="UnusedPrivateMethod"/>
+      <exclude name="CommentSize"/>
+      <exclude name="PositionLiteralsFirstInComparisons"/>
+      <exclude name="AddEmptyString"/>
+      <exclude name="ModifiedCyclomaticComplexity"/>
+      <exclude name="SimpleDateFormatNeedsLocale"/>
+      <exclude name="AppendCharacterWithChar"/>
+      <exclude name="LocalVariableCouldBeFinal"/>
+      <exclude name="GodClass"/>
+      <exclude name="RedundantFieldInitializer"/>
+      <exclude name="AvoidFinalLocalVariable"/>
+      <exclude name="UseIndexOfChar"/>
+      <exclude name="MethodReturnsInternalArray"/>
+      <exclude name="UncommentedEmptyConstructor"/>
+      <exclude name="TooManyMethods"/>
+      <exclude name="AvoidInstantiatingObjectsInLoops"/>
+      <exclude name="CommentRequired"/>
+      <exclude name="DefaultPackage"/>
+      <exclude name="SimplifyConditional"/>
+      <exclude name="ConfusingTernary"/>
+      <exclude name="GuardLogStatement"/>
+      <exclude name="AvoidDuplicateLiterals"/>
+      <exclude name="AvoidPrefixingMethodParameters"/>
+      <exclude name="PreserveStackTrace"/>
+      <exclude name="AvoidThrowingNullPointerException"/>
+      <exclude name="UselessParentheses"/>
+      <exclude name="LoggerIsNotStaticFinal"/>
+      <exclude name="UseCorrectExceptionLogging"/>
+      <exclude name="AssignmentInOperand"/>
+      <exclude name="UseVarargs"/>
+      <exclude name="DuplicateImports"/>
+      <exclude name="CompareObjectsWithEquals"/>
+      <exclude name="LawOfDemeter"/>
+      <exclude name="ForLoopsMustUseBraces"/>
+      <exclude name="UseStringBufferForStringAppends"/>
+      <exclude name="TooManyStaticImports"/>
+      <exclude name="LongVariable"/>
+      <exclude name="CallSuperInConstructor"/>
+      <exclude name="UnnecessaryLocalBeforeReturn"/>
+      <exclude name="IfStmtsMustUseBraces"/>
+      <exclude name="SignatureDeclareThrowsException"/>
+      <exclude name="AvoidCatchingGenericException"/>
+      <exclude name="AvoidFieldNameMatchingMethodName"/>
+      <exclude name="ExcessivePublicCount"/>
+      <exclude name="OneDeclarationPerLine"/>
+      <exclude name="ExcessiveImports"/>
+      <exclude name="GuardLogStatementJavaUtil"/>
+      <exclude name="ArrayIsStoredDirectly"/>
+      <exclude name="PrematureDeclaration"/>
+      <exclude name="TooManyFields"/>
+      <exclude name="AbstractNaming"/>
+      <exclude name="DataflowAnomalyAnalysis"/>
+   </rule>
+   <rule ref="rulesets/java/empty.xml/EmptyCatchBlock">
+      <properties>
+         <property name="allowCommentedBlocks" value="true"/>
+      </properties>
+   </rule>
+</ruleset>
